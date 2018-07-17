@@ -9,6 +9,8 @@ using System.Web.Http;
 
 namespace DS.MainModule.Controllers
 {
+    [AllowAnonymous]
+    [RoutePrefix("api/seguridad")]
     public class SeguridadController : ApiController
     {
         private Seguridad _seguridad;
@@ -18,9 +20,9 @@ namespace DS.MainModule.Controllers
             _seguridad = new Seguridad();
         }
 
-        [Route("api/seguridad/login")]
+        [Route("login")]
         public HttpResponseMessage PostLogin(AutenticacionDto autenticacionDto)
-        {   ;
+        {   
             return Request.CreateResponse(HttpStatusCode.OK, _seguridad.Autenticacion(autenticacionDto));
         }
     }

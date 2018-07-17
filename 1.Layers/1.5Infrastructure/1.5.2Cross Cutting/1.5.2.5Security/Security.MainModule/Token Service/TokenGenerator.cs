@@ -11,7 +11,23 @@ namespace Security.MainModule.Token_Service
 {
     public static class TokenGenerator
     {
-        public static string GenerateTokenJwt(string username)
+        // Fuente del proceso: http://enmilocalfunciona.io/construyendo-una-web-api-rest-segura-con-json-web-token-en-net-parte-ii/
+
+        public static string GenerateTokenJwt(string email, string password, string minutosExpiracion)
+        {
+            var secretKey = ConfigurationManager.AppSettings["JWT_SECRET_KEY"]; // Cambiarlo por el password (encriptado)
+            var audienceToken = ConfigurationManager.AppSettings["JWT_AUDIENCE_TOKEN"];
+            var issuerToken = ConfigurationManager.AppSettings["JWT_ISSUER_TOKEN"];
+
+            var securityKey = new SymmetricSecurityKey(System.Text.Encoding.Default.GetBytes(secretKey));
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Email, email) });
+
+            return CreateJwtSecurityToken(audienceToken, issuerToken, claimsIdentity, minutosExpiracion, signingCredentials);
+        }
+
+        public static string GenerateTokenJwt(string email)
         {
             // appsetting for Token JWT
             var secretKey = ConfigurationManager.AppSettings["JWT_SECRET_KEY"];
@@ -23,7 +39,7 @@ namespace Security.MainModule.Token_Service
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
             // create a claimsIdentity
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) });
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Email, email) });
 
             // create token to the user
             var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
@@ -37,6 +53,20 @@ namespace Security.MainModule.Token_Service
 
             var jwtTokenString = tokenHandler.WriteToken(jwtSecurityToken);
             return jwtTokenString;
+        }
+
+        private static string CreateJwtSecurityToken(string audienceToken, string issuerToken, ClaimsIdentity claimsIdentity, string expireTime, SigningCredentials signingCredentials)
+        {
+            var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+            var jwtSecurityToken = tokenHandler.CreateJwtSecurityToken(
+                audience: audienceToken,
+                issuer: issuerToken,
+                subject: claimsIdentity,
+                notBefore: DateTime.UtcNow,
+                expires: DateTime.UtcNow.AddMinutes(Convert.ToInt32(expireTime)),
+                signingCredentials: signingCredentials);
+
+            return tokenHandler.WriteToken(jwtSecurityToken);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Flujos
 {
-    public class Inventario
+    public class Ventas
     {
     }
 }

@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using Security.MainModule.Token_Service;
 
 namespace DS.MainModule
 {
@@ -19,6 +20,9 @@ namespace DS.MainModule
 
             // Rutas de Web API
             config.MapHttpAttributeRoutes();
+
+            // Para que funcione la validaición del Token
+            config.MessageHandlers.Add(new TokenValidationHandler());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

@@ -6,6 +6,7 @@
     [Apellido1] VARCHAR(80) NOT NULL, 
     [Apellido2] VARCHAR(80) NOT NULL, 
 	[Email] VARCHAR(200) NOT NULL,
+	[Password] VARCHAR(200) NOT NULL,
     [FechaRegistro] DATETIME NOT NULL DEFAULT getDate()
     
 )

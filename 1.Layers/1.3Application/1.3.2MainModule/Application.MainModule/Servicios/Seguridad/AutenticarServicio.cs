@@ -12,9 +12,19 @@ namespace Application.MainModule.Servicios.Seguridad
     {
         public static RespuestaAutenticacionDto AutenticarUsuario(AutenticacionDto autenticacionDto)
         {
+            // Buscamos la existencia del usuario, validando su contraseña
+            // var usuario = ObtenerUsuario()
+
+            //if(usuario == null)
+            //    return new RespuestaAutenticacionDto()
+            //    {
+            //        token = string.Empty,
+
+            //    };
+
             var respuesta = new RespuestaAutenticacionDto()
             {
-                token = TokenGenerator.GenerateTokenJwt(autenticacionDto.Usuario)
+                token = TokenGenerator.GenerateTokenJwt(autenticacionDto.Usuario, autenticacionDto.Password, "30")
             };
 
             return respuesta;
