@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Respuesta
 {
-    public abstract class RespuestaDto
+    public class RespuestaDto
     {
         public bool Exito { get; set; }
+        public string Mensaje { get; set; }
     }
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0b2cd14df01a433ca042ada055bcf2a6" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AdministracionCentral" Width="1.5" PointX="0.75" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AdministracionCentralDireccion" Width="1.5" PointX="6" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AdministracionCentralFiscal" Width="1.5" PointX="3" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AdministracionCentralImagen" Width="1.5" PointX="3" PointY="25.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AdministracionCetralContacto" Width="1.5" PointX="3" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CEstadosRep" Width="1.5" PointX="3.75" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CPais" Width="1.5" PointX="3.75" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.Empresa" Width="1.5" PointX="3" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.EmpresaConfiguracion" Width="1.5" PointX="5.25" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.EmpresaContacto" Width="1.5" PointX="5.25" PointY="35.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.EmpresaDireccion" Width="1.5" PointX="8.25" PointY="36.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.EmpresaFiscal" Width="1.5" PointX="5.25" PointY="44.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.EmpresaImagen" Width="1.5" PointX="5.25" PointY="46.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.Rol" Width="1.5" PointX="3.75" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.RolAccion" Width="1.5" PointX="6" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.Usuario" Width="1.5" PointX="8.25" PointY="31.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.UsuarioAC" Width="1.5" PointX="6" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.UsuarioACContacto" Width="1.5" PointX="8.25" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.UsuarioACCredencial" Width="1.5" PointX="8.25" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.UsuarioACDireccion" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.UsuarioContacto" Width="1.5" PointX="10.5" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.UsuarioCredencial" Width="1.5" PointX="10.5" PointY="32.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.UsuarioDireccion" Width="1.5" PointX="10.5" PointY="35.25" IsExpanded="true" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AdministracionCentralDireccion_AdministracionCentral" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AdministracionCentralFiscal_AdministracionCentral" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AdministracionCentralImagen_AdministracionCentral" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AdministracionCetralContacto_AdministracionCentral" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Empresa_AdministracionCentral" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioAC_AdministracionCentral" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AdministracionCentralDireccion_CEstadosRep" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AdministracionCentralDireccion_CPais" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_EmpresaDireccion_CEstadosRep" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_EmpresaDireccion_CPais" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_EmpresaConfiguracion_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_EmpresaContacto_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_EmpresaDireccion_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_EmpresaFiscal_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_EmpresaImagen_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Usuario_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RolAccion_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Usuario_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioAC_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioContacto_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioCredencial_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioDireccion_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioACContacto_UsuarioAC" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioACCredencial_UsuarioAC" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioACDireccion_UsuarioAC" ManuallyRouted="false" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioACDireccion_CEstadosRep" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioDireccion_CEstadosRep" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioACDireccion_CPais" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioDireccion_CPais" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,12 +1,12 @@
 ﻿CREATE TABLE [dbo].[Usuario]
 (
-	[IdUsuario] SMALLINT NOT NULL PRIMARY KEY, 
+	[IdUsuario] INT NOT NULL PRIMARY KEY IDENTITY, 
 	[IdEmpresa] SMALLINT NOT NULL,
+	[IdRol] SMALLINT NOT NULL,
     [Nombre] VARCHAR(100) NOT NULL, 
     [Apellido1] VARCHAR(80) NOT NULL, 
-    [Apellido2] VARCHAR(80) NOT NULL, 
-	[Email] VARCHAR(200) NOT NULL,
-	[Password] VARCHAR(200) NOT NULL,
+    [Apellido2] VARCHAR(80) NULL, 
+	[Activo] BIT NOT NULL DEFAULT 1,
     [FechaRegistro] DATETIME NOT NULL DEFAULT getDate()
     
 )

@@ -42,5 +42,11 @@ namespace Utilities.MainModule
 
             return contador;
         }
+
+        public double ObtenerMinutosEntreDosFechas(DateTime fechaMenor, DateTime fechaMayor)
+        {
+            TimeSpan resultado = fechaMayor.Subtract(fechaMenor);
+            return resultado.TotalMinutes;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Seguridad;
+﻿using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.DTOs.Seguridad;
 using Application.MainModule.Flujos;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,12 @@ namespace DS.MainModule.Controllers
         public SeguridadController()
         {
             _seguridad = new Seguridad();
+        }
+
+        [Route("servicio/disponible")]
+        public HttpResponseMessage PostServicioDisponible()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, new RespuestaDto() { Exito = true });
         }
 
         [Route("login")]
