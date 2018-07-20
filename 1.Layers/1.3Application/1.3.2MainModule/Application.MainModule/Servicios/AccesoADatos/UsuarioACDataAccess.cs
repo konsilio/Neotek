@@ -12,6 +12,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
     {
         private SagasDataUow uow;
 
+        public UsuarioACDataAccess()
+        {
+            uow = new SagasDataUow();
+        }
+
         public UsuarioAC Buscar(int idUsuario)
         {
             return uow.Repository<UsuarioAC>().GetSingle(x => x.IdAdministracionCentral.Equals(1)

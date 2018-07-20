@@ -41,6 +41,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,6 +64,7 @@
     <Compile Include="Servicios\AccesoADatos\UsuarioACDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
     <Compile Include="Servicios\Seguridad\AutenticarServicio.cs" />
+    <Compile Include="Servicios\Seguridad\UsuarioAplicacionServicio.cs" />
     <Compile Include="UnitOfWork\GenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\IGenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\SagasDataUow.cs" />

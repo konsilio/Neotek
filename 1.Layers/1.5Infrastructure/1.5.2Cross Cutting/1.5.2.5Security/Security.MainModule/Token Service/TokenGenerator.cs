@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -65,6 +66,13 @@ namespace Security.MainModule.Token_Service
 
             var jwtTokenString = tokenHandler.WriteToken(jwtSecurityToken);
             return jwtTokenString;
+        }
+
+        public static List<Claim> GetClaimsIdentityFromJwtSecurityToken(string tokenJwt)
+        {
+            //ClaimsIdentity
+            var jwtToken = new JwtSecurityToken(tokenJwt.Replace("Bearer ", string.Empty));
+            return jwtToken.Claims.ToList();            
         }
 
         private static string CreateJwtSecurityToken(string audienceToken, string issuerToken, ClaimsIdentity claimsIdentity, string expireTime, SigningCredentials signingCredentials)

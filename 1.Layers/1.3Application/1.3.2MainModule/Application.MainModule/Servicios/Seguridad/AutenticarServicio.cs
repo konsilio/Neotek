@@ -28,20 +28,20 @@ namespace Application.MainModule.Servicios.Seguridad
             {
                 var claims = new[]
                 {
-                    new Claim(ClaimTypes.Authentication, usuario.autenticado.ToString()), // autenticado
-                    new Claim(ClaimTypes.Email, autDto.Usuario), //NombreUsuario
-                    new Claim(ClaimTypes.Role, usuario.IdRol.ToString()), //Rol
-                    new Claim(ClaimTypes.Sid, usuario.IdUsuario.ToString()), //IdUsuario
-                    new Claim(ClaimTypes.PrimarySid, usuario.IdEmpresa.ToString()), //IdEmpresa
-                    new Claim(ClaimTypes.PrimaryGroupSid, usuario.AdminCentral ? "true": "false"), //IdAdministracionCentral
-                    new Claim(ClaimTypes.GroupSid, usuario.SuperUsuario ? "true": "false"), //SuperUsuario
+                    new Claim("Autenticado", usuario.autenticado.ToString()),
+                    new Claim("NombreUsuario", autDto.Usuario),
+                    new Claim("Rol", usuario.IdRol.ToString()),
+                    new Claim("IdUsuario", usuario.IdUsuario.ToString()),
+                    new Claim("IdEmpresa", usuario.IdEmpresa.ToString()),
+                    new Claim("EsAdminCentral", usuario.AdminCentral ? "true": "false"),
+                    new Claim("EsSuperUsuario", usuario.SuperUsuario ? "true": "false"),
                 };
 
-                var a = ObtenerMinutosEntreDosFechas(DateTime.Now, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59));
-
+                var min = Math.Truncate(FechasFunciones.ObtenerMinutosEntreDosFechas(DateTime.Now, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59)));
+                
                 return new RespuestaAutenticacionDto()
                 {
-                    token = TokenGenerator.GenerateTokenJwt(claims, autDto.Password, "30")
+                    token = TokenGenerator.GenerateTokenJwt(claims, autDto.Password, Convert.ToInt32(min).ToString())
                 };
             }
             else

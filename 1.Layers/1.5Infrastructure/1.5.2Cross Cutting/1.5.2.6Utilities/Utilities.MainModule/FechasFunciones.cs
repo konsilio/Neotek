@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Utilities.MainModule
 {
-    public class FechasFunciones
+    public static class FechasFunciones
     {
-        private Dictionary<string, DateTime> DiasFestivos = new Dictionary<string, DateTime>()
+        private static Dictionary<string, DateTime> DiasFestivos = new Dictionary<string, DateTime>()
         {
             { "AñoNuevo", Convert.ToDateTime("01/01/" + DateTime.Now.Year.ToString() ) },
             { "ConstitucionMexicana", Convert.ToDateTime("06/02/" + DateTime.Now.Year.ToString() ) },
@@ -21,12 +21,7 @@ namespace Utilities.MainModule
             { "Navidad", Convert.ToDateTime("25/12/" + DateTime.Now.Year.ToString() ) }
         };
 
-        public FechasFunciones()
-        {
-
-        }
-
-        public int diasHabilesEntreDosFechas(DateTime fechaMenor, DateTime fechaMayor)
+        public static int diasHabilesEntreDosFechas(DateTime fechaMenor, DateTime fechaMayor)
         {
             int contador = 0;
             DateTime fechaContador = fechaMenor;            
@@ -43,7 +38,7 @@ namespace Utilities.MainModule
             return contador;
         }
 
-        public double ObtenerMinutosEntreDosFechas(DateTime fechaMenor, DateTime fechaMayor)
+        public static double ObtenerMinutosEntreDosFechas(DateTime fechaMenor, DateTime fechaMayor)
         {
             TimeSpan resultado = fechaMayor.Subtract(fechaMenor);
             return resultado.TotalMinutes;

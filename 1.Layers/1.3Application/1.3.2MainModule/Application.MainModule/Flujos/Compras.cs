@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Compras;
+using Application.MainModule.Servicios.Seguridad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace Application.MainModule.Flujos
     {
         public RespuestaCompraDto ComprarGas()
         {
+            UsuarioAplicacionServicio.Obtener();
+
             return new RespuestaCompraDto()
             {
                 Exito = true
