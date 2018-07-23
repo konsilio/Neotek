@@ -38,9 +38,11 @@ namespace Application.MainModule.Servicios.Seguridad
                 };
 
                 var min = Math.Truncate(FechasFunciones.ObtenerMinutosEntreDosFechas(DateTime.Now, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59)));
-                
+
                 return new RespuestaAutenticacionDto()
                 {
+                    Exito = true,
+                    Mensaje = "OK",
                     token = TokenGenerator.GenerateTokenJwt(claims, autDto.Password, Convert.ToInt32(min).ToString())
                 };
             }

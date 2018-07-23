@@ -1,0 +1,812 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Sagas.MainModuleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AdministracionCentral">
+    <Key>
+      <PropertyRef Name="IdAdministracionCentral" />
+    </Key>
+    <Property Name="IdAdministracionCentral" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreComercial" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdministracionCentralDireccion">
+    <Key>
+      <PropertyRef Name="IdAdministracionCentral" />
+    </Key>
+    <Property Name="IdAdministracionCentral" Type="tinyint" Nullable="false" />
+    <Property Name="IdPais" Type="tinyint" Nullable="false" />
+    <Property Name="IdEstadoRep" Type="tinyint" />
+    <Property Name="EstadoProvincia" Type="varchar" MaxLength="150" />
+    <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CodigoPostal" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Colonia" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Calle" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="NumExt" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="NumInt" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="AdministracionCentralFiscal">
+    <Key>
+      <PropertyRef Name="IdAdministracionCentral" />
+    </Key>
+    <Property Name="IdAdministracionCentral" Type="tinyint" Nullable="false" />
+    <Property Name="Rfc" Type="varchar" MaxLength="13" Nullable="false" />
+    <Property Name="RazonSocial" Type="varchar" MaxLength="350" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdministracionCentralImagen">
+    <Key>
+      <PropertyRef Name="IdAdministracionCentral" />
+    </Key>
+    <Property Name="IdAdministracionCentral" Type="tinyint" Nullable="false" />
+    <Property Name="UrlLogotipoMenu" Type="varchar" MaxLength="350" />
+    <Property Name="UrlLogotipoLogin" Type="varchar" MaxLength="350" />
+  </EntityType>
+  <EntityType Name="AdministracionCetralContacto">
+    <Key>
+      <PropertyRef Name="IdAdministracionCentral" />
+    </Key>
+    <Property Name="IdAdministracionCentral" Type="tinyint" Nullable="false" />
+    <Property Name="Telefono1" Type="varchar" MaxLength="50" />
+    <Property Name="Telefono2" Type="varchar" MaxLength="50" />
+    <Property Name="Telefono3" Type="varchar" MaxLength="50" />
+    <Property Name="Celular1" Type="varchar" MaxLength="50" />
+    <Property Name="Celular2" Type="varchar" MaxLength="50" />
+    <Property Name="Celular3" Type="varchar" MaxLength="50" />
+    <Property Name="Email1" Type="varchar" MaxLength="200" />
+    <Property Name="Email2" Type="varchar" MaxLength="200" />
+    <Property Name="Email3" Type="varchar" MaxLength="200" />
+    <Property Name="SitioWeb1" Type="varchar" MaxLength="150" />
+    <Property Name="SitioWeb2" Type="varchar" MaxLength="150" />
+    <Property Name="SitioWeb3" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="CEstadosRep">
+    <Key>
+      <PropertyRef Name="IdEstadoRep" />
+    </Key>
+    <Property Name="IdEstadoRep" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Abreviatura" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CPais">
+    <Key>
+      <PropertyRef Name="IdPais" />
+    </Key>
+    <Property Name="IdPais" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Pais" Type="varchar" MaxLength="100" />
+    <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Empresa">
+    <Key>
+      <PropertyRef Name="IdEmpresa" />
+    </Key>
+    <Property Name="IdEmpresa" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdAdministracionCentral" Type="tinyint" Nullable="false" />
+    <Property Name="NombreComercial" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmpresaConfiguracion">
+    <Key>
+      <PropertyRef Name="IdEmpresa" />
+    </Key>
+    <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+    <Property Name="FactorLitrosAKilos" Type="decimal" Precision="8" Scale="4" Nullable="false" />
+    <Property Name="CierreInventario" Type="smalldatetime" Nullable="false" />
+    <Property Name="InventarioSano" Type="tinyint" Nullable="false" />
+    <Property Name="InventarioCrítico" Type="tinyint" Nullable="false" />
+    <Property Name="MaxRemaGaseraMensual" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmpresaContacto">
+    <Key>
+      <PropertyRef Name="IdEmpresa" />
+    </Key>
+    <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+    <Property Name="Telefono1" Type="varchar" MaxLength="50" />
+    <Property Name="Telefono2" Type="varchar" MaxLength="50" />
+    <Property Name="Telefono3" Type="varchar" MaxLength="50" />
+    <Property Name="Celular1" Type="varchar" MaxLength="50" />
+    <Property Name="Celular2" Type="varchar" MaxLength="50" />
+    <Property Name="Celular3" Type="varchar" MaxLength="50" />
+    <Property Name="Email1" Type="varchar" MaxLength="200" />
+    <Property Name="Email2" Type="varchar" MaxLength="200" />
+    <Property Name="Email3" Type="varchar" MaxLength="200" />
+    <Property Name="SitioWeb1" Type="varchar" MaxLength="150" />
+    <Property Name="SitioWeb2" Type="varchar" MaxLength="150" />
+    <Property Name="SitioWeb3" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="EmpresaDireccion">
+    <Key>
+      <PropertyRef Name="IdEmpresa" />
+    </Key>
+    <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+    <Property Name="IdPais" Type="tinyint" Nullable="false" />
+    <Property Name="IdEstadoRep" Type="tinyint" />
+    <Property Name="EstadoProvincia" Type="varchar" MaxLength="150" />
+    <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CodigoPostal" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Colonia" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Calle" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="NumExt" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="NumInt" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="EmpresaFiscal">
+    <Key>
+      <PropertyRef Name="IdEmpresa" />
+    </Key>
+    <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+    <Property Name="Rfc" Type="varchar" MaxLength="13" Nullable="false" />
+    <Property Name="RazonSocial" Type="varchar" MaxLength="350" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmpresaImagen">
+    <Key>
+      <PropertyRef Name="IdEmpresa" />
+    </Key>
+    <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+    <Property Name="UrlLogotipoMenu" Type="varchar" MaxLength="350" />
+    <Property Name="UrlLogotipoLogin" Type="varchar" MaxLength="350" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="IdRol" />
+    </Key>
+    <Property Name="IdRol" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Rol" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="NombreRol" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RolAccion">
+    <Key>
+      <PropertyRef Name="IdRol" />
+    </Key>
+    <Property Name="IdRol" Type="smallint" Nullable="false" />
+    <Property Name="CompraCapRequisicion" Type="bit" Nullable="false" />
+    <Property Name="CompraRevRequisicion" Type="bit" Nullable="false" />
+    <Property Name="CompraGenOCompra" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+    <Property Name="IdRol" Type="smallint" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Apellido1" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="Apellido2" Type="varchar" MaxLength="80" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsuarioAC">
+    <Key>
+      <PropertyRef Name="IdUsuarioAC" />
+    </Key>
+    <Property Name="IdUsuarioAC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdAdministracionCentral" Type="tinyint" Nullable="false" />
+    <Property Name="IdRol" Type="smallint" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Apellido1" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="Apellido2" Type="varchar" MaxLength="80" />
+    <Property Name="SuperAdmin" Type="bit" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+    <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsuarioACContacto">
+    <Key>
+      <PropertyRef Name="IdUsuarioAC" />
+    </Key>
+    <Property Name="IdUsuarioAC" Type="int" Nullable="false" />
+    <Property Name="Telefono1" Type="varchar" MaxLength="50" />
+    <Property Name="Telefono2" Type="varchar" MaxLength="50" />
+    <Property Name="Telefono3" Type="varchar" MaxLength="50" />
+    <Property Name="Celular1" Type="varchar" MaxLength="50" />
+    <Property Name="Celular2" Type="varchar" MaxLength="50" />
+    <Property Name="Celular3" Type="varchar" MaxLength="50" />
+    <Property Name="Email1" Type="varchar" MaxLength="200" />
+    <Property Name="Email2" Type="varchar" MaxLength="200" />
+    <Property Name="Email3" Type="varchar" MaxLength="200" />
+    <Property Name="SitioWeb1" Type="varchar" MaxLength="150" />
+    <Property Name="SitioWeb2" Type="varchar" MaxLength="150" />
+    <Property Name="SitioWeb3" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="UsuarioACCredencial">
+    <Key>
+      <PropertyRef Name="IdUsuarioAC" />
+    </Key>
+    <Property Name="IdUsuarioAC" Type="int" Nullable="false" />
+    <Property Name="Usuario" Type="varchar" MaxLength="350" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsuarioACDireccion">
+    <Key>
+      <PropertyRef Name="IdUsuarioAC" />
+    </Key>
+    <Property Name="IdUsuarioAC" Type="int" Nullable="false" />
+    <Property Name="IdPais" Type="tinyint" Nullable="false" />
+    <Property Name="IdEstadoRep" Type="tinyint" />
+    <Property Name="EstadoProvincia" Type="varchar" MaxLength="150" />
+    <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CodigoPostal" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Colonia" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Calle" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="NumExt" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="NumInt" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="UsuarioContacto">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="Telefono1" Type="varchar" MaxLength="50" />
+    <Property Name="Telefono2" Type="varchar" MaxLength="50" />
+    <Property Name="Telefono3" Type="varchar" MaxLength="50" />
+    <Property Name="Celular1" Type="varchar" MaxLength="50" />
+    <Property Name="Celular2" Type="varchar" MaxLength="50" />
+    <Property Name="Celular3" Type="varchar" MaxLength="50" />
+    <Property Name="Email1" Type="varchar" MaxLength="200" />
+    <Property Name="Email2" Type="varchar" MaxLength="200" />
+    <Property Name="Email3" Type="varchar" MaxLength="200" />
+    <Property Name="SitioWeb1" Type="varchar" MaxLength="150" />
+    <Property Name="SitioWeb2" Type="varchar" MaxLength="150" />
+    <Property Name="SitioWeb3" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="UsuarioCredencial">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="Usuario" Type="varchar" MaxLength="350" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UsuarioDireccion">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="IdPais" Type="tinyint" Nullable="false" />
+    <Property Name="IdEstadoRep" Type="tinyint" />
+    <Property Name="EstadoProvincia" Type="varchar" MaxLength="150" />
+    <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CodigoPostal" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Colonia" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Calle" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="NumExt" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="NumInt" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_AdministracionCentralDireccion_AdministracionCentral">
+    <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AdministracionCentralDireccion" Type="Self.AdministracionCentralDireccion" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="AdministracionCentral">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Principal>
+      <Dependent Role="AdministracionCentralDireccion">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdministracionCentralDireccion_CEstadosRep">
+    <End Role="CEstadosRep" Type="Self.CEstadosRep" Multiplicity="0..1" />
+    <End Role="AdministracionCentralDireccion" Type="Self.AdministracionCentralDireccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CEstadosRep">
+        <PropertyRef Name="IdEstadoRep" />
+      </Principal>
+      <Dependent Role="AdministracionCentralDireccion">
+        <PropertyRef Name="IdEstadoRep" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdministracionCentralDireccion_CPais">
+    <End Role="CPais" Type="Self.CPais" Multiplicity="1" />
+    <End Role="AdministracionCentralDireccion" Type="Self.AdministracionCentralDireccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CPais">
+        <PropertyRef Name="IdPais" />
+      </Principal>
+      <Dependent Role="AdministracionCentralDireccion">
+        <PropertyRef Name="IdPais" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdministracionCentralFiscal_AdministracionCentral">
+    <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AdministracionCentralFiscal" Type="Self.AdministracionCentralFiscal" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="AdministracionCentral">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Principal>
+      <Dependent Role="AdministracionCentralFiscal">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdministracionCentralImagen_AdministracionCentral">
+    <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AdministracionCentralImagen" Type="Self.AdministracionCentralImagen" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="AdministracionCentral">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Principal>
+      <Dependent Role="AdministracionCentralImagen">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdministracionCetralContacto_AdministracionCentral">
+    <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AdministracionCetralContacto" Type="Self.AdministracionCetralContacto" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="AdministracionCentral">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Principal>
+      <Dependent Role="AdministracionCetralContacto">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Empresa_AdministracionCentral">
+    <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AdministracionCentral">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Principal>
+      <Dependent Role="Empresa">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmpresaConfiguracion_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EmpresaConfiguracion" Type="Self.EmpresaConfiguracion" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="IdEmpresa" />
+      </Principal>
+      <Dependent Role="EmpresaConfiguracion">
+        <PropertyRef Name="IdEmpresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmpresaContacto_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EmpresaContacto" Type="Self.EmpresaContacto" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="IdEmpresa" />
+      </Principal>
+      <Dependent Role="EmpresaContacto">
+        <PropertyRef Name="IdEmpresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmpresaDireccion_CEstadosRep">
+    <End Role="CEstadosRep" Type="Self.CEstadosRep" Multiplicity="0..1" />
+    <End Role="EmpresaDireccion" Type="Self.EmpresaDireccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CEstadosRep">
+        <PropertyRef Name="IdEstadoRep" />
+      </Principal>
+      <Dependent Role="EmpresaDireccion">
+        <PropertyRef Name="IdEstadoRep" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmpresaDireccion_CPais">
+    <End Role="CPais" Type="Self.CPais" Multiplicity="1" />
+    <End Role="EmpresaDireccion" Type="Self.EmpresaDireccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CPais">
+        <PropertyRef Name="IdPais" />
+      </Principal>
+      <Dependent Role="EmpresaDireccion">
+        <PropertyRef Name="IdPais" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmpresaDireccion_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EmpresaDireccion" Type="Self.EmpresaDireccion" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="IdEmpresa" />
+      </Principal>
+      <Dependent Role="EmpresaDireccion">
+        <PropertyRef Name="IdEmpresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmpresaFiscal_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EmpresaFiscal" Type="Self.EmpresaFiscal" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="IdEmpresa" />
+      </Principal>
+      <Dependent Role="EmpresaFiscal">
+        <PropertyRef Name="IdEmpresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmpresaImagen_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EmpresaImagen" Type="Self.EmpresaImagen" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="IdEmpresa" />
+      </Principal>
+      <Dependent Role="EmpresaImagen">
+        <PropertyRef Name="IdEmpresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolAccion_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RolAccion" Type="Self.RolAccion" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="IdRol" />
+      </Principal>
+      <Dependent Role="RolAccion">
+        <PropertyRef Name="IdRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Empresa">
+    <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Empresa">
+        <PropertyRef Name="IdEmpresa" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="IdEmpresa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="IdRol" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="IdRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioAC_AdministracionCentral">
+    <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AdministracionCentral">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Principal>
+      <Dependent Role="UsuarioAC">
+        <PropertyRef Name="IdAdministracionCentral" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioAC_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="IdRol" />
+      </Principal>
+      <Dependent Role="UsuarioAC">
+        <PropertyRef Name="IdRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioACContacto_UsuarioAC">
+    <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UsuarioACContacto" Type="Self.UsuarioACContacto" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UsuarioAC">
+        <PropertyRef Name="IdUsuarioAC" />
+      </Principal>
+      <Dependent Role="UsuarioACContacto">
+        <PropertyRef Name="IdUsuarioAC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioACCredencial_UsuarioAC">
+    <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UsuarioACCredencial" Type="Self.UsuarioACCredencial" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UsuarioAC">
+        <PropertyRef Name="IdUsuarioAC" />
+      </Principal>
+      <Dependent Role="UsuarioACCredencial">
+        <PropertyRef Name="IdUsuarioAC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioACDireccion_CEstadosRep">
+    <End Role="CEstadosRep" Type="Self.CEstadosRep" Multiplicity="0..1" />
+    <End Role="UsuarioACDireccion" Type="Self.UsuarioACDireccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CEstadosRep">
+        <PropertyRef Name="IdEstadoRep" />
+      </Principal>
+      <Dependent Role="UsuarioACDireccion">
+        <PropertyRef Name="IdEstadoRep" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioACDireccion_CPais">
+    <End Role="CPais" Type="Self.CPais" Multiplicity="1" />
+    <End Role="UsuarioACDireccion" Type="Self.UsuarioACDireccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CPais">
+        <PropertyRef Name="IdPais" />
+      </Principal>
+      <Dependent Role="UsuarioACDireccion">
+        <PropertyRef Name="IdPais" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioACDireccion_UsuarioAC">
+    <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UsuarioACDireccion" Type="Self.UsuarioACDireccion" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UsuarioAC">
+        <PropertyRef Name="IdUsuarioAC" />
+      </Principal>
+      <Dependent Role="UsuarioACDireccion">
+        <PropertyRef Name="IdUsuarioAC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioContacto_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UsuarioContacto" Type="Self.UsuarioContacto" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="UsuarioContacto">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioCredencial_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UsuarioCredencial" Type="Self.UsuarioCredencial" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="UsuarioCredencial">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioDireccion_CEstadosRep">
+    <End Role="CEstadosRep" Type="Self.CEstadosRep" Multiplicity="0..1" />
+    <End Role="UsuarioDireccion" Type="Self.UsuarioDireccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CEstadosRep">
+        <PropertyRef Name="IdEstadoRep" />
+      </Principal>
+      <Dependent Role="UsuarioDireccion">
+        <PropertyRef Name="IdEstadoRep" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioDireccion_CPais">
+    <End Role="CPais" Type="Self.CPais" Multiplicity="1" />
+    <End Role="UsuarioDireccion" Type="Self.UsuarioDireccion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CPais">
+        <PropertyRef Name="IdPais" />
+      </Principal>
+      <Dependent Role="UsuarioDireccion">
+        <PropertyRef Name="IdPais" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UsuarioDireccion_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UsuarioDireccion" Type="Self.UsuarioDireccion" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="UsuarioDireccion">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SagasMainModuleModelStoreContainer">
+    <EntitySet Name="AdministracionCentral" EntityType="Self.AdministracionCentral" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdministracionCentralDireccion" EntityType="Self.AdministracionCentralDireccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdministracionCentralFiscal" EntityType="Self.AdministracionCentralFiscal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdministracionCentralImagen" EntityType="Self.AdministracionCentralImagen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdministracionCetralContacto" EntityType="Self.AdministracionCetralContacto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CEstadosRep" EntityType="Self.CEstadosRep" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CPais" EntityType="Self.CPais" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmpresaConfiguracion" EntityType="Self.EmpresaConfiguracion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmpresaContacto" EntityType="Self.EmpresaContacto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmpresaDireccion" EntityType="Self.EmpresaDireccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmpresaFiscal" EntityType="Self.EmpresaFiscal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmpresaImagen" EntityType="Self.EmpresaImagen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RolAccion" EntityType="Self.RolAccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsuarioAC" EntityType="Self.UsuarioAC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsuarioACContacto" EntityType="Self.UsuarioACContacto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsuarioACCredencial" EntityType="Self.UsuarioACCredencial" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsuarioACDireccion" EntityType="Self.UsuarioACDireccion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsuarioContacto" EntityType="Self.UsuarioContacto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsuarioCredencial" EntityType="Self.UsuarioCredencial" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UsuarioDireccion" EntityType="Self.UsuarioDireccion" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AdministracionCentralDireccion_AdministracionCentral" Association="Self.FK_AdministracionCentralDireccion_AdministracionCentral">
+      <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
+      <End Role="AdministracionCentralDireccion" EntitySet="AdministracionCentralDireccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdministracionCentralDireccion_CEstadosRep" Association="Self.FK_AdministracionCentralDireccion_CEstadosRep">
+      <End Role="CEstadosRep" EntitySet="CEstadosRep" />
+      <End Role="AdministracionCentralDireccion" EntitySet="AdministracionCentralDireccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdministracionCentralDireccion_CPais" Association="Self.FK_AdministracionCentralDireccion_CPais">
+      <End Role="CPais" EntitySet="CPais" />
+      <End Role="AdministracionCentralDireccion" EntitySet="AdministracionCentralDireccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdministracionCentralFiscal_AdministracionCentral" Association="Self.FK_AdministracionCentralFiscal_AdministracionCentral">
+      <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
+      <End Role="AdministracionCentralFiscal" EntitySet="AdministracionCentralFiscal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdministracionCentralImagen_AdministracionCentral" Association="Self.FK_AdministracionCentralImagen_AdministracionCentral">
+      <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
+      <End Role="AdministracionCentralImagen" EntitySet="AdministracionCentralImagen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdministracionCetralContacto_AdministracionCentral" Association="Self.FK_AdministracionCetralContacto_AdministracionCentral">
+      <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
+      <End Role="AdministracionCetralContacto" EntitySet="AdministracionCetralContacto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Empresa_AdministracionCentral" Association="Self.FK_Empresa_AdministracionCentral">
+      <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
+      <End Role="Empresa" EntitySet="Empresa" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmpresaConfiguracion_Empresa" Association="Self.FK_EmpresaConfiguracion_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="EmpresaConfiguracion" EntitySet="EmpresaConfiguracion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmpresaContacto_Empresa" Association="Self.FK_EmpresaContacto_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="EmpresaContacto" EntitySet="EmpresaContacto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmpresaDireccion_CEstadosRep" Association="Self.FK_EmpresaDireccion_CEstadosRep">
+      <End Role="CEstadosRep" EntitySet="CEstadosRep" />
+      <End Role="EmpresaDireccion" EntitySet="EmpresaDireccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmpresaDireccion_CPais" Association="Self.FK_EmpresaDireccion_CPais">
+      <End Role="CPais" EntitySet="CPais" />
+      <End Role="EmpresaDireccion" EntitySet="EmpresaDireccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmpresaDireccion_Empresa" Association="Self.FK_EmpresaDireccion_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="EmpresaDireccion" EntitySet="EmpresaDireccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmpresaFiscal_Empresa" Association="Self.FK_EmpresaFiscal_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="EmpresaFiscal" EntitySet="EmpresaFiscal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmpresaImagen_Empresa" Association="Self.FK_EmpresaImagen_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="EmpresaImagen" EntitySet="EmpresaImagen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolAccion_Rol" Association="Self.FK_RolAccion_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="RolAccion" EntitySet="RolAccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Empresa" Association="Self.FK_Usuario_Empresa">
+      <End Role="Empresa" EntitySet="Empresa" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioAC_AdministracionCentral" Association="Self.FK_UsuarioAC_AdministracionCentral">
+      <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
+      <End Role="UsuarioAC" EntitySet="UsuarioAC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioAC_Rol" Association="Self.FK_UsuarioAC_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="UsuarioAC" EntitySet="UsuarioAC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioACContacto_UsuarioAC" Association="Self.FK_UsuarioACContacto_UsuarioAC">
+      <End Role="UsuarioAC" EntitySet="UsuarioAC" />
+      <End Role="UsuarioACContacto" EntitySet="UsuarioACContacto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioACCredencial_UsuarioAC" Association="Self.FK_UsuarioACCredencial_UsuarioAC">
+      <End Role="UsuarioAC" EntitySet="UsuarioAC" />
+      <End Role="UsuarioACCredencial" EntitySet="UsuarioACCredencial" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioACDireccion_CEstadosRep" Association="Self.FK_UsuarioACDireccion_CEstadosRep">
+      <End Role="CEstadosRep" EntitySet="CEstadosRep" />
+      <End Role="UsuarioACDireccion" EntitySet="UsuarioACDireccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioACDireccion_CPais" Association="Self.FK_UsuarioACDireccion_CPais">
+      <End Role="CPais" EntitySet="CPais" />
+      <End Role="UsuarioACDireccion" EntitySet="UsuarioACDireccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioACDireccion_UsuarioAC" Association="Self.FK_UsuarioACDireccion_UsuarioAC">
+      <End Role="UsuarioAC" EntitySet="UsuarioAC" />
+      <End Role="UsuarioACDireccion" EntitySet="UsuarioACDireccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioContacto_Usuario" Association="Self.FK_UsuarioContacto_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="UsuarioContacto" EntitySet="UsuarioContacto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioCredencial_Usuario" Association="Self.FK_UsuarioCredencial_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="UsuarioCredencial" EntitySet="UsuarioCredencial" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioDireccion_CEstadosRep" Association="Self.FK_UsuarioDireccion_CEstadosRep">
+      <End Role="CEstadosRep" EntitySet="CEstadosRep" />
+      <End Role="UsuarioDireccion" EntitySet="UsuarioDireccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioDireccion_CPais" Association="Self.FK_UsuarioDireccion_CPais">
+      <End Role="CPais" EntitySet="CPais" />
+      <End Role="UsuarioDireccion" EntitySet="UsuarioDireccion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UsuarioDireccion_Usuario" Association="Self.FK_UsuarioDireccion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="UsuarioDireccion" EntitySet="UsuarioDireccion" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

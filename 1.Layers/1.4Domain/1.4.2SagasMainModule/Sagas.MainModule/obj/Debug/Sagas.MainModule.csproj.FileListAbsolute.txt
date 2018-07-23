@@ -1,0 +1,4 @@
+C:\codGasMundial\1.Layers\1.4Domain\1.4.2SagasMainModule\Sagas.MainModule\bin\Debug\Sagas.MainModule.dll
+C:\codGasMundial\1.Layers\1.4Domain\1.4.2SagasMainModule\Sagas.MainModule\bin\Debug\Sagas.MainModule.pdb
+C:\codGasMundial\1.Layers\1.4Domain\1.4.2SagasMainModule\Sagas.MainModule\obj\Debug\Sagas.MainModule.dll
+C:\codGasMundial\1.Layers\1.4Domain\1.4.2SagasMainModule\Sagas.MainModule\obj\Debug\Sagas.MainModule.pdb
