@@ -1,4 +1,3 @@
-C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.csprojResolveAssemblyReference.cache
 C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\ApplicationInsights.config
 C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn\csc.exe
 C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -168,5 +167,6 @@ C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\
 C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\ru\Microsoft.ReportViewer.DataVisualization.resources.dll
 C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\zh-CHS\Microsoft.ReportViewer.DataVisualization.resources.dll
 C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\zh-CHT\Microsoft.ReportViewer.DataVisualization.resources.dll
+C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.csprojResolveAssemblyReference.cache
 C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.dll
 C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.pdb

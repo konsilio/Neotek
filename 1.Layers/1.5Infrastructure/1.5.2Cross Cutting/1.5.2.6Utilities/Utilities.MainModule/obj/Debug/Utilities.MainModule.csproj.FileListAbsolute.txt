@@ -1,3 +1,7 @@
+C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\Imagenes\footerInfotec.PNG
+C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\Imagenes\headerInfotec.PNG
+C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\Utilities.MainModule.dll
+C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\Utilities.MainModule.pdb
 C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\Microsoft.ReportViewer.Common.dll
 C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\Microsoft.ReportViewer.DataVisualization.dll
 C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\Microsoft.ReportViewer.Design.dll
@@ -84,7 +88,3 @@ C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\
 C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\obj\Debug\Utilities.MainModule.csprojResolveAssemblyReference.cache
 C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\obj\Debug\Utilities.MainModule.dll
 C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\obj\Debug\Utilities.MainModule.pdb
-C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\Imagenes\footerInfotec.PNG
-C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\Imagenes\headerInfotec.PNG
-C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\Utilities.MainModule.dll
-C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\Utilities.MainModule.pdb

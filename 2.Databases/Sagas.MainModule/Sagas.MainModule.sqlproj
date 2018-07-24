@@ -59,6 +59,7 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Contruccion" />
+    <Folder Include="Datos" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Contruccion\AdministracionCentral.sql" />
@@ -84,6 +85,8 @@
     <Build Include="Contruccion\CPais.sql" />
     <Build Include="Contruccion\CEstadosRep.sql" />
     <Build Include="Contruccion\EmpresaConfiguracion.sql" />
+    <Build Include="Datos\DatosBD.sql" />
+    <Build Include="Contruccion\CreateDataBase.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sagas.MainModule.refactorlog" />
