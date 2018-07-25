@@ -11,13 +11,25 @@ namespace Web.MainModule
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            CargarEmpresas();
         }
 
         protected void btnIniciar_Click(object sender, EventArgs e)
         {
             new Seguridad.Servicio.AutenticacionServicio().Autenticar(1, Email.Text, Password.Text);
             
+        }
+        private void CargarEmpresas()
+        {
+            foreach (var item in new Seguridad.Servicio.AutenticacionServicio().EmpresasLogin())
+            {
+                ddlRazon.Items.Add(new ListItem( item.RazonSocial, item.IdEmpresa.ToString()));
+                ddlRazon.DataBind();
+            }
+            //ddlRazon.DataSource = new Seguridad.Servicio.AutenticacionServicio().EmpresasLogin();
+            //ddlRazon.DataValueField = "IdEmpresa";
+            //ddlRazon.DataTextField = "NombreComercial";
+            //ddlRazon.DataBind();
         }
     }     
 }

@@ -7,10 +7,24 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Login</title>
     <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
-
+    <!-- Morris Chart Css-->
+    <link rel="stylesheet" href="assets/plugins/morrisjs/morris.css" />
+    <!-- Colorpicker Css -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
+    <!-- Multi Select Css -->
+    <link rel="stylesheet" href="assets/plugins/multi-select/css/multi-select.css">
+    <!-- Bootstrap Spinner Css -->
+    <link rel="stylesheet" href="assets/plugins/jquery-spinner/css/bootstrap-spinner.css">
+    <!-- Bootstrap Tagsinput Css -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
+    <!-- Bootstrap Select Css -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+    <!-- noUISlider Css -->
+    <link rel="stylesheet" href="assets/plugins/nouislider/nouislider.min.css" />
     <!-- Custom Css -->
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/color_skins.css">
+
 </head>
 <body class="theme-black">
     <form runat="server">
@@ -21,7 +35,7 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="company_detail">
                                 <h4 class="logo">
-                                    <img src="assets/images/logo.svg" alt="">
+                                    <img src="assets/images/logo.svg" alt="" />
                                     Alfa</h4>
                                 <h3>Gas Mundial<strong>Ver. 1.0</strong></h3>
                                 <p>Ingrese los datos de inicio</p>
@@ -55,30 +69,35 @@
                         <div class="col-lg-5 col-md-12 offset-lg-1">
                             <div class="card-plain">
                                 <div class="header">
-                                    <h5>Log in</h5>
+                                    <h5>Inicio de Sesion</h5>
                                 </div>
-                                <form class="form">                                    
+                                <div class="body">
+                                    <div class="row">
+                                        <%--<asp:DropDownList class="form-control selectpicker show-menu-arrow" data-live-search="true" runat="server" ID="ddlRazon" onkeyup="filterFunction()">                                    
+                                    </asp:DropDownList>--%>
+                                        <select class="z-index show-tick" data-style="form-control" runat="server" id="ddlRazon" data-live-search="true" type="text" name="sel_veh" title="Razon social">
+                                        </select>
+                                    </div>
+                                    <br />
                                     <div class="input-group">
                                         <asp:TextBox runat="server" ID="Email" CssClass="form-control" class="form-control" placeholder="Usuario" />
                                         <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
                                     </div>
                                     <div class="input-group">
-                                        <asp:TextBox runat="server" ID="Password" TextMode="Password" class="form-control" placeholder="Contraseña"/>
+                                        <asp:TextBox runat="server" ID="Password" TextMode="Password" class="form-control" placeholder="Contraseña" />
                                         <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
                                     </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <asp:CheckBox runat="server" ID="RememberMe" />
-                                                <asp:Label runat="server" AssociatedControlID="RememberMe">¿Recordar cuenta?</asp:Label>
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control" aria-label="Text input with checkbox">
+                                    <div class="checkbox">
+                                        <input id="remember_me" type="checkbox" />
+                                        <label for="remember_me">
+                                            Recordarme?
+                                        </label>
                                     </div>
-                                </form>
+                                </div>
                                 <div class="footer">
-                                    <asp:Button ID="btnIniciar" runat="server" OnClick="btnIniciar_Click" class="btn btn-primary btn-round btn-block" Text="Inicar"/>
-                                    <asp:Button ID="btnRegistra" runat="server"  class="btn btn-primary btn-simple btn-round btn-block" Text="Registrate" />
+                                    <%--<asp:Button ID="btnIniciar" runat="server" OnClick="btnIniciar_Click" class="btn btn-primary btn-round btn-block" Text="Inicar"/>--%>
+                                    <a href="Dashboard.aspx" class="btn btn-primary btn-round btn-block">Iniciar</a>
+                                    <asp:Button ID="btnRegistra" runat="server" class="btn btn-primary btn-simple btn-round btn-block" Text="Registrate" />
                                 </div>
                                 <a href="forgot-password.html" class="link">¿Perdiste tu contraseña?</a>
                             </div>
@@ -88,14 +107,34 @@
                         </p>
                         <p>
                             <%-- Habilite esta opción cuando haya habilitado la confirmación de cuentas para la funcionalidad de restablecimiento de contraseña--%>
-                           <%-- <asp:HyperLink runat="server" ID="ForgotPasswordHyperLink" ViewStateMode="Disabled">¿Olvidó su contraseña?</asp:HyperLink>--%>
+                            <%-- <asp:HyperLink runat="server" ID="ForgotPasswordHyperLink" ViewStateMode="Disabled">¿Olvidó su contraseña?</asp:HyperLink>--%>
                     </div>
                 </div>
             </div>
         </div>
     </form>
     <script src="assets/bundles/libscripts.bundle.js"></script>
+    <!-- Lib Scripts Plugin Js -->
     <script src="assets/bundles/vendorscripts.bundle.js"></script>
     <!-- Lib Scripts Plugin Js -->
+    <script src="assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+    <!-- Bootstrap Colorpicker Js -->
+    <script src="assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+    <!-- Input Mask Plugin Js -->
+    <script src="assets/plugins/multi-select/js/jquery.multi-select.js"></script>
+    <!-- Multi Select Plugin Js -->
+    <script src="assets/plugins/jquery-spinner/js/jquery.spinner.js"></script>
+    <!-- Jquery Spinner Plugin Js -->
+    <script src="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    <!-- Bootstrap Tags Input Plugin Js -->
+    <script src="assets/plugins/nouislider/nouislider.js"></script>
+    <!-- noUISlider Plugin Js -->
+    <script src="assets/bundles/mainscripts.bundle.js"></script>
+    <!-- Custom Js -->
+    <script src="assets/js/pages/forms/advanced-form-elements.js"></script>
+    <!-- Lib Scripts Plugin Js -->
+<%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>--%>
+ <%--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--%>
+ <%--   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>--%>
 </body>
 </html>
