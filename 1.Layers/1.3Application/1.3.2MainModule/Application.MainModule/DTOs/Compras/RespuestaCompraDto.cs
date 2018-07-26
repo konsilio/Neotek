@@ -9,5 +9,6 @@ namespace Application.MainModule.DTOs.Compras
 {
     public class RespuestaCompraDto : RespuestaDto
     {
+
     }
 }

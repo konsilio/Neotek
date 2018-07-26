@@ -11,25 +11,38 @@ namespace Web.MainModule
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            CargarEmpresas();
+            if (!IsPostBack)
+            {
+                CargarEmpresas();
+            }
         }
-
+        
         protected void btnIniciar_Click(object sender, EventArgs e)
         {
-            new Seguridad.Servicio.AutenticacionServicio().Autenticar(1, Email.Text, Password.Text);
-            
+            Autenticar();
+        }
+        private void Autenticar()
+        {
+            var respuesta = new Seguridad.Servicio.AutenticacionServicio().Autenticar(Convert.ToInt16(ddlRazon.SelectedValue), Email.Text, Password.Text);
+            if (respuesta.Exito)
+            {
+                Session["RespuestaAutenticacionDto"] = respuesta;
+                Response.Redirect("~/Dashboard.aspx");                
+            }
+            else
+            {
+                divMensaje.Visible = true;
+                lblMensaje.Text = respuesta.Mensaje;
+            }
         }
         private void CargarEmpresas()
         {
-            foreach (var item in new Seguridad.Servicio.AutenticacionServicio().EmpresasLogin())
-            {
-                ddlRazon.Items.Add(new ListItem( item.RazonSocial, item.IdEmpresa.ToString()));
-                ddlRazon.DataBind();
-            }
-            //ddlRazon.DataSource = new Seguridad.Servicio.AutenticacionServicio().EmpresasLogin();
-            //ddlRazon.DataValueField = "IdEmpresa";
-            //ddlRazon.DataTextField = "NombreComercial";
-            //ddlRazon.DataBind();
+            //ddlRazon.DataSource = null;
+            ddlRazon.DataSource = new Seguridad.Servicio.AutenticacionServicio().EmpresasLogin();
+            ddlRazon.DataValueField = "IdEmpresa";
+            ddlRazon.DataTextField = "NombreComercial";
+            ddlRazon.DataBind();
+            ddlRazon.SelectedValue = "-1";
         }
-    }     
+    }
 }

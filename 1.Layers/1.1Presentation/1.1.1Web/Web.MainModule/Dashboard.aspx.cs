@@ -11,7 +11,7 @@ namespace Web.MainModule
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            lblMensaje.Text= ((Seguridad.Model.RespuestaAutenticacionDto)Session["RespuestaAutenticacionDto"]).Mensaje;
         }
     }
 }

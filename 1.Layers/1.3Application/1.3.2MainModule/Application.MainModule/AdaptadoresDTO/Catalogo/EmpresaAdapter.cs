@@ -107,7 +107,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             Empresa empresa = new Empresa()
             {
-                IdEmpresa = -1,
+                IdEmpresa = -2,
                 IdAdministracionCentral = ac.IdAdministracionCentral,
                 NombreComercial = ac.NombreComercial,
                 FechaRegistro = ac.FechaRegistro,

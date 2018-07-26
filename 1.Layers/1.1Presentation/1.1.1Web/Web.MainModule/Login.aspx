@@ -24,7 +24,6 @@
     <!-- Custom Css -->
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/color_skins.css">
-
 </head>
 <body class="theme-black">
     <form runat="server">
@@ -36,25 +35,26 @@
                             <div class="company_detail">
                                 <h4 class="logo">
                                     <img src="assets/images/logo.svg" alt="" />
-                                    Alfa</h4>
-                                <h3>Gas Mundial<strong>Ver. 1.0</strong></h3>
-                                <p>Ingrese los datos de inicio</p>
+                                    SAGAS</h4>
+                                <h3>Sistema de Administracion de Gas <strong>Ver. 1.0</strong></h3>
+                                <p>
+                                    </p>
                                 <div class="footer">
                                     <ul class="social_link list-unstyled">
-                                        <li><a href="https://thememakker.com" title="ThemeMakker"><i class="zmdi zmdi-globe"></i></a></li>
+                                        <%-- <li><a href="https://thememakker.com" title="ThemeMakker"><i class="zmdi zmdi-globe"></i></a></li>
                                         <li><a href="https://themeforest.net/user/thememakker" title="Themeforest"><i class="zmdi zmdi-shield-check"></i></a></li>
                                         <li><a href="https://www.linkedin.com/company/thememakker/" title="LinkedIn"><i class="zmdi zmdi-linkedin"></i></a></li>
                                         <li><a href="https://www.facebook.com/thememakkerteam" title="Facebook"><i class="zmdi zmdi-facebook"></i></a></li>
                                         <li><a href="http://twitter.com/thememakker" title="Twitter"><i class="zmdi zmdi-twitter"></i></a></li>
                                         <li><a href="http://plus.google.com/+thememakker" title="Google plus"><i class="zmdi zmdi-google-plus"></i></a></li>
-                                        <li><a href="https://www.behance.net/thememakker" title="Behance"><i class="zmdi zmdi-behance"></i></a></li>
+                                        <li><a href="https://www.behance.net/thememakker" title="Behance"><i class="zmdi zmdi-behance"></i></a></li>--%>
                                     </ul>
                                     <hr>
                                     <ul>
-                                        <li><a href="http://thememakker.com/contact/" target="_blank">Contactanos</a></li>
+                                        <%--     <li><a href="http://thememakker.com/contact/" target="_blank">Contactanos</a></li>
                                         <li><a href="http://thememakker.com/about/" target="_blank">Nosotros</a></li>
                                         <li><a href="http://thememakker.com/services/" target="_blank">Servicios</a></li>
-                                        <li><a href="javascript:void(0);">FAQ</a></li>
+                                        <li><a href="javascript:void(0);">FAQ</a></li>--%>
                                     </ul>
                                     <ul>
                                         <%--   <asp:PlaceHolder runat="server" ID="ErrorMessage" Visible="false">
@@ -72,34 +72,37 @@
                                     <h5>Inicio de Sesion</h5>
                                 </div>
                                 <div class="body">
-                                    <div class="row">
-                                        <%--<asp:DropDownList class="form-control selectpicker show-menu-arrow" data-live-search="true" runat="server" ID="ddlRazon" onkeyup="filterFunction()">                                    
-                                    </asp:DropDownList>--%>
-                                        <select class="z-index show-tick" data-style="form-control" runat="server" id="ddlRazon" data-live-search="true" type="text" name="sel_veh" title="Razon social">
-                                        </select>
+                                    <div>
+                                        <asp:DropDownList class="form-control z-index show-tick" data-live-search="true" runat="server" ID="ddlRazon">                                    
+                                    </asp:DropDownList>
+                                       <%-- <select runat="server" id="ddlRazon" class="form-control z-index show-tick" data-show-subtext="true" data-live-search="true" title="Razon social">
+                                        </select>--%>
                                     </div>
                                     <br />
                                     <div class="input-group">
-                                        <asp:TextBox runat="server" ID="Email" CssClass="form-control" class="form-control" placeholder="Usuario" />
+                                        <asp:TextBox runat="server" ID="Email" CssClass="form-control" placeholder="Usuario" />
                                         <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
                                     </div>
                                     <div class="input-group">
                                         <asp:TextBox runat="server" ID="Password" TextMode="Password" class="form-control" placeholder="Contraseña" />
                                         <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
                                     </div>
-                                    <div class="checkbox">
+                                    <%--  <div class="checkbox">
                                         <input id="remember_me" type="checkbox" />
                                         <label for="remember_me">
                                             Recordarme?
                                         </label>
-                                    </div>
+                                    </div>--%>
                                 </div>
                                 <div class="footer">
-                                    <%--<asp:Button ID="btnIniciar" runat="server" OnClick="btnIniciar_Click" class="btn btn-primary btn-round btn-block" Text="Inicar"/>--%>
-                                    <a href="Dashboard.aspx" class="btn btn-primary btn-round btn-block">Iniciar</a>
-                                    <asp:Button ID="btnRegistra" runat="server" class="btn btn-primary btn-simple btn-round btn-block" Text="Registrate" />
+                                    <asp:Button ID="btnIniciar" runat="server" OnClick="btnIniciar_Click" class="btn btn-primary btn-round btn-block" Text="Inicar" />
+                                    <%--<a href="Dashboard.aspx" class="btn btn-primary btn-round btn-block">Iniciar</a>--%>
+                                    <%--<asp:Button ID="btnRegistra" runat="server" class="btn btn-primary btn-simple btn-round btn-block" Text="Registrate" />--%>
                                 </div>
-                                <a href="forgot-password.html" class="link">¿Perdiste tu contraseña?</a>
+                                <div class="alert alert-danger" runat="server" id="divMensaje" visible="false">
+                                    <asp:Label ID="lblMensaje" runat="server" Text="Error"></asp:Label>
+                                </div>
+                                <%--<a href="forgot-password.html" class="link">¿Perdiste tu contraseña?</a>--%>
                             </div>
                         </div>
                         <p>
@@ -133,8 +136,6 @@
     <!-- Custom Js -->
     <script src="assets/js/pages/forms/advanced-form-elements.js"></script>
     <!-- Lib Scripts Plugin Js -->
-<%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>--%>
- <%--   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--%>
- <%--   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/js/bootstrap-select.min.js"></script>--%>
+    <script src="assets/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
 </body>
 </html>

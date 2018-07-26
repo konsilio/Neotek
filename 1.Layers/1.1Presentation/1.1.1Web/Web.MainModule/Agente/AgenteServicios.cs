@@ -16,18 +16,18 @@ namespace Web.MainModule.Agente
         private static string UrlBase;
         private string ApiLogin;
         private string ApiListaEmpresas;
+        private string ApiCompras;
                 
         public RespuestaAutenticacionDto _respuestaAutenticacion;
         public List<EmpresaDTO> _listaEmpresas;
+        public ComprasDTO _respuestacompra;
 
         public AgenteServicios()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];            
         }
 
-        #region Login
-
-       
+        #region Login       
         public void ListaEmpresasLogin()
         {
             this.ApiListaEmpresas = ConfigurationManager.AppSettings["GetListaEmpresasLogin"];
@@ -94,13 +94,50 @@ namespace Web.MainModule.Agente
                     respuesta.Mensaje = ex.Message.ToString();
                     client.CancelPendingRequests();
                     client.Dispose();
-                }
+                }              
                 _respuestaAutenticacion = respuesta;
             }
         }
-
         #endregion
+        #region Compras / Requisicion
+        public void Compras(string token)
+        {
+            this.ApiCompras = ConfigurationManager.AppSettings["PostCompraGas"];
+            Compra(token).Wait();
+        }
+        private async Task Compra(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                ComprasDTO respuesta = new ComprasDTO();
 
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiCompras, respuesta).ConfigureAwait(false);
+
+                    if (response.IsSuccessStatusCode)
+                        respuesta = await response.Content.ReadAsAsync<ComprasDTO>();
+                    else
+                    {
+                        //respuesta.Mensaje = "La respuesta a la petición no fue exitosa");
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    respuesta.Mensaje = ex.Message.ToString();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestacompra = respuesta;
+            }
+        }
+        #endregion
     }
 
 }
