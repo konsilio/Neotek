@@ -23,6 +23,6 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostCompraGas(string empty)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _compras.ComprarGas());
-        }
+        }       
     }
 }

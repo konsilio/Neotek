@@ -15,6 +15,10 @@ namespace Application.MainModule.Flujos
         {
             return EmpresaServicio.BuscarEmpresasLogin();
         }
+        public List<EmpresaDTO> ListaEmpresas()
+        {
+            return EmpresaServicio.BuscarEmpresas();
+        }
         #endregion
     }
 }

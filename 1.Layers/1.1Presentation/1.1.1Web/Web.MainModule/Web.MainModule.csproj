@@ -3817,6 +3817,8 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="fonts\Logo GMG.JPG" />
     <Content Include="Login.aspx" />
+    <Content Include="OrdenCompra.aspx" />
+    <Content Include="Requisicion.aspx" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -3895,7 +3897,21 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="OrdenCompra.aspx.cs">
+      <DependentUpon>OrdenCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrdenCompra.aspx.designer.cs">
+      <DependentUpon>OrdenCompra.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requisicion.aspx.cs">
+      <DependentUpon>Requisicion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Requisicion.aspx.designer.cs">
+      <DependentUpon>Requisicion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Seguridad\Model\AutenticacionDTO.cs" />
     <Compile Include="Seguridad\Model\ComprasDTO.cs" />
     <Compile Include="Seguridad\Model\EmpresaDTO.cs" />

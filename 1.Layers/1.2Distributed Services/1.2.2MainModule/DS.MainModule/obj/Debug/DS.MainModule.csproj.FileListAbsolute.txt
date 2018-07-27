@@ -183,8 +183,6 @@ C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn\vbc.exe
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn\VBCSCompiler.exe
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn\VBCSCompiler.exe.config
-C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Imagenes\footerInfotec.PNG
-C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Imagenes\headerInfotec.PNG
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\DS.MainModule.dll.config
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\DS.MainModule.dll
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\DS.MainModule.pdb

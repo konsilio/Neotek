@@ -14,5 +14,11 @@ namespace Web.MainModule.Seguridad.Servicio
             respuesta.Compras(token);
             return respuesta._respuestacompra;
         }
+        public List<Model.EmpresaDTO> Empresas(string _tok)
+        {
+            var agente = new AgenteServicios();
+            agente.ListaEmpresas(_tok);
+            return agente._listaEmpresas;
+        }
     }
 }

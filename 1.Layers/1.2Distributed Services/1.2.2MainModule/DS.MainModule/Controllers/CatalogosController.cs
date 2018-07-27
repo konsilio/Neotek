@@ -10,7 +10,7 @@ using System.Web.Http;
 
 namespace DS.MainModule.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     [RoutePrefix("api/catalogos")]
     public class CatalogosController : ApiController
     {
@@ -21,10 +21,17 @@ namespace DS.MainModule.Controllers
             _catalogos = new Catalogos();
         }
         #region Empresas
+        [AllowAnonymous]
         [Route("empresas/listaempresaslogin")]
         public HttpResponseMessage GetListaEmpresasLogin()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresasLogin());
+        }
+        
+        [Route("empresas/listaempresa")]
+        public HttpResponseMessage GetListaEmpresas()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresas());
         }
         #endregion
         #region Administracion Central
