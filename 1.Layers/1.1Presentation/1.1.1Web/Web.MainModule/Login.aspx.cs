@@ -26,7 +26,7 @@ namespace Web.MainModule
             var respuesta = new Seguridad.Servicio.AutenticacionServicio().Autenticar(Convert.ToInt16(ddlRazon.SelectedValue), Email.Text, Password.Text);
             if (respuesta.Exito)
             {
-                Session["RespuestaAutenticacionDto"] = respuesta;
+                Session["StringToken"] = respuesta.token;
                 Response.Redirect("~/Dashboard.aspx");                
             }
             else

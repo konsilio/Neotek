@@ -99,6 +99,7 @@
     <Build Include="Contruccion\CProveedorContacto.sql" />
     <Build Include="Contruccion\CProveedorDireccion.sql" />
     <Build Include="Contruccion\CproveedorFiscal.sql" />
+    <Build Include="Contruccion\CPorveedorTipoProveedor.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sagas.MainModule.refactorlog" />

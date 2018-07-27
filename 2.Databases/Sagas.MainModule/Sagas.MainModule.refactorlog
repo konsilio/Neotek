@@ -287,4 +287,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ProdutoPrinicpal" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="84dbc686-d9a3-4ebe-a118-4cc1eca40aa6" ChangeDateTime="07/27/2018 13:38:43">
+    <Property Name="ElementName" Value="[dbo].[PorveedorTipoProveedor].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PorveedorTipoProveedor]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Proveedor" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e2c0cc4f-f884-4a63-bb8d-40e1498d69b6" ChangeDateTime="07/27/2018 13:39:48">
+    <Property Name="ElementName" Value="[dbo].[PorveedorTipoProveedor].[Proveedor]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PorveedorTipoProveedor]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="idTipoProveedor" />
+  </Operation>
 </Operations>

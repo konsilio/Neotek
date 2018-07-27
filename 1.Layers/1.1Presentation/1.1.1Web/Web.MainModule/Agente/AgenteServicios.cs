@@ -27,7 +27,7 @@ namespace Web.MainModule.Agente
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];            
         }
 
-        #region Login       
+        #region Lista de Empresas Login       
         public void ListaEmpresasLogin()
         {
             this.ApiListaEmpresas = ConfigurationManager.AppSettings["GetListaEmpresasLogin"];
@@ -62,6 +62,8 @@ namespace Web.MainModule.Agente
                 _listaEmpresas = emp;
             }
         }
+        #endregion
+        #region Login
         public void Acceder(AutenticacionDto autDto)
         {
             this.ApiLogin = ConfigurationManager.AppSettings["PostLogin"];
@@ -99,6 +101,7 @@ namespace Web.MainModule.Agente
             }
         }
         #endregion
+       
         #region Compras / Requisicion
         public void Compras(string token)
         {
@@ -110,14 +113,14 @@ namespace Web.MainModule.Agente
             using (var client = new HttpClient())
             {
                 ComprasDTO respuesta = new ComprasDTO();
-
+                //HttpResponseMessage resp = new HttpResponseMessage();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 try
                 {
-                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiCompras, respuesta).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiCompras, string.Empty).ConfigureAwait(false);
 
                     if (response.IsSuccessStatusCode)
                         respuesta = await response.Content.ReadAsAsync<ComprasDTO>();

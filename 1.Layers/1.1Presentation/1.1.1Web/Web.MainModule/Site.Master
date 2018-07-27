@@ -453,8 +453,8 @@
                                     <img src="fonts/Logo GMG.JPG" alt="User"></a>
                             </div>
                             <div class="detail">
-                                <h6>Michael</h6>
-                                <p class="m-b-0">mail@correo.com</p>                              
+                                <h6><asp:Label runat="server" ID="lblNombre" Text="Michael" /> </h6>
+                                <p class="m-b-0"><asp:Label runat="server" ID="lblUsuario" Text="-----"></asp:Label></p>                              
                             </div>
                         </div>
                     </li>

@@ -175,6 +175,6 @@ C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.
 C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\zh-CHS\Microsoft.ReportViewer.WinForms.resources.dll
 C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\zh-CHT\Microsoft.ReportViewer.WinForms.resources.dll
 C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\bin\Debug\es\Microsoft.VisualStudio.GraphModel.resources.dll
-C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\obj\Debug\Utilities.MainModule.csprojResolveAssemblyReference.cache
 C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\obj\Debug\Utilities.MainModule.dll
 C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\obj\Debug\Utilities.MainModule.pdb
+C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\obj\Debug\Utilities.MainModule.csprojResolveAssemblyReference.cache
