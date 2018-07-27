@@ -13,11 +13,12 @@ namespace Web.MainModule
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var _tok = Session["StringToken"].ToString();
+            string _tok = string.Empty;
             if (!IsPostBack)
             {
                 if (Session["StringToken"] != null)
                 {
+                    _tok = Session["StringToken"].ToString();
                     Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
                     if (Convert.ToBoolean(_autenticado.Value))
                     {

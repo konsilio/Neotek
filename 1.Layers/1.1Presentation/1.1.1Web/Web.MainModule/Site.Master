@@ -108,7 +108,7 @@
                 <a href="javascript:void(0);" class="menu-sm"><i class="zmdi zmdi-swap"></i></a>       
                 <a href="javascript:void(0);" class="fullscreen" data-provide="fullscreen"><i class="zmdi zmdi-fullscreen"></i></a>
                 <a href="javascript:void(0);" class="js-right-sidebar"><i class="zmdi zmdi-settings zmdi-hc-spin"></i></a>
-                <a href="sign-in.html" class="mega-menu"><i class="zmdi zmdi-power"></i></a>
+                <a href="Login.aspx" class="mega-menu"><i class="zmdi zmdi-power"></i></a>
             </li>
         </ul>
     </aside>

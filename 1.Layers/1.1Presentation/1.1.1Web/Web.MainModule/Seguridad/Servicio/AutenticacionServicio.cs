@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,7 +20,7 @@ namespace Web.MainModule.Seguridad.Servicio
         {
             var agente = new AgenteServicios();
             agente.ListaEmpresasLogin();
-           return agente._listaEmpresas;
-        }
+            return agente._listaEmpresas;
+        }       
     }
 }

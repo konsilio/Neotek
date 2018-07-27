@@ -12,14 +12,15 @@ namespace Web.MainModule
 {
     public partial class Compras : System.Web.UI.Page
     {
-        string _tok = null;
+        string _tok = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
-            _tok = Session["StringToken"].ToString();
+            
             if (!IsPostBack)
             {
                 if (Session["StringToken"] != null)
                 {
+                    _tok = Session["StringToken"].ToString();
                     Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
                     if (Convert.ToBoolean(_autenticado.Value))
                     {

@@ -72,13 +72,12 @@
                                     <h5>Inicio de Sesion</h5>
                                 </div>
                                 <div class="body">
-                                    <div>
-                                        <asp:DropDownList class="form-control z-index show-tick" data-live-search="true" runat="server" ID="ddlRazon">                                    
+                                    <div class="input-group" >
+                                        <asp:DropDownList CssClass="form-control z-index show-tick" data-live-search="true" runat="server" ID="ddlRazon">                                    
                                     </asp:DropDownList>
                                        <%-- <select runat="server" id="ddlRazon" class="form-control z-index show-tick" data-show-subtext="true" data-live-search="true" title="Razon social">
                                         </select>--%>
-                                    </div>
-                                    <br />
+                                    </div>                                    
                                     <div class="input-group">
                                         <asp:TextBox runat="server" ID="Email" CssClass="form-control" placeholder="Usuario" />
                                         <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
@@ -95,7 +94,7 @@
                                     </div>--%>
                                 </div>
                                 <div class="footer">
-                                    <asp:Button ID="btnIniciar" runat="server" OnClick="btnIniciar_Click" class="btn btn-primary btn-round btn-block" Text="Inicar" />
+                                    <asp:Button ID="btnIniciar" runat="server" OnClick="btnIniciar_Click" class="btn btn-primary btn-round btn-block" Text="Iniciar" />
                                     <%--<a href="Dashboard.aspx" class="btn btn-primary btn-round btn-block">Iniciar</a>--%>
                                     <%--<asp:Button ID="btnRegistra" runat="server" class="btn btn-primary btn-simple btn-round btn-block" Text="Registrate" />--%>
                                 </div>

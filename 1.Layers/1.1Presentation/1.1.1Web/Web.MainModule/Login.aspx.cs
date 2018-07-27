@@ -14,6 +14,7 @@ namespace Web.MainModule
         {
             if (!IsPostBack)
             {
+                if(Session["StringToken"] != null) Session["StringToken"] = null;
                 CargarEmpresas();
             }
         }
