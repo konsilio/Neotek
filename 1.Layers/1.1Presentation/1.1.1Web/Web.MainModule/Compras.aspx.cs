@@ -39,7 +39,7 @@ namespace Web.MainModule
         protected void btnCompra_Click(object sender, EventArgs e)
         {
             var respuesta = new Seguridad.Servicio.ComprasServicio().Compra(_tok);
-            lblMensaje.Text = respuesta.Mensaje;
+            //lblMensaje.Text = respuesta.Mensaje;
         }
     }
 }

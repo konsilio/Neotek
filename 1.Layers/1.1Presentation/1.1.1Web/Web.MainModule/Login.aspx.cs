@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Security.MainModule.Criptografia;
 
 namespace Web.MainModule
 {
@@ -23,7 +24,7 @@ namespace Web.MainModule
         }
         private void Autenticar()
         {
-            var respuesta = new Seguridad.Servicio.AutenticacionServicio().Autenticar(Convert.ToInt16(ddlRazon.SelectedValue), Email.Text, Password.Text);
+            var respuesta = new Seguridad.Servicio.AutenticacionServicio().Autenticar(Convert.ToInt16(ddlRazon.SelectedValue), Email.Text, SHA.GenerateSHA256String(Password.Text));
             if (respuesta.Exito)
             {
                 Session["StringToken"] = respuesta.token;
