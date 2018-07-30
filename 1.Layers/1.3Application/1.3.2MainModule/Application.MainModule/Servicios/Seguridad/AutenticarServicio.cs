@@ -19,7 +19,7 @@ namespace Application.MainModule.Servicios.Seguridad
             UsuarioAplicacionDto usuario;
             // Validamos si es un usuario de la administración central
             // y buscamos la existencia del usuario, validando su contraseña
-            if (autDto.IdEmpresa.Equals(-1))
+            if (autDto.IdEmpresa.Equals(-2))
                 usuario = AutenticarUsuarioAdminCentral(autDto);
             else
                 usuario = AutenticarUsuarioDeEmpresa(autDto);

@@ -10,5 +10,6 @@ namespace Application.MainModule.DTOs.Respuesta
     {
         public bool Exito { get; set; }
         public string Mensaje { get; set; }
+        public string token { get; set; }
     }
 }

@@ -19,10 +19,10 @@ namespace DS.MainModule.Controllers
             _compras = new Compras();
         }
 
-        [Route("comprar/gas")]
-        public HttpResponseMessage PostCompraGas()
+        [Route("gas")]
+        public HttpResponseMessage PostCompraGas(string empty)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _compras.ComprarGas());
-        }
+        }       
     }
 }

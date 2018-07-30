@@ -38,7 +38,6 @@ namespace Security.MainModule.Token_Service
                 statusCode = HttpStatusCode.Unauthorized;
                 return base.SendAsync(request, cancellationToken);
             }
-
             try
             {
                 var secretKey = ConfigurationManager.AppSettings["JWT_SECRET_KEY"];

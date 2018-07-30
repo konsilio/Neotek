@@ -87,6 +87,19 @@
     <Build Include="Contruccion\EmpresaConfiguracion.sql" />
     <Build Include="Datos\DatosBD.sql" />
     <Build Include="Contruccion\CreateDataBase.sql" />
+    <Build Include="Datos\Insertar Empresa.sql" />
+    <Build Include="Contruccion\CompraRequisicion.sql" />
+    <Build Include="Contruccion\CompraRequisicionPorducto.sql" />
+    <Build Include="Contruccion\CompraRequisicionCentroCosto.sql" />
+    <Build Include="Contruccion\CompraOrdenCompra.sql" />
+    <Build Include="Contruccion\CompraOrdeCompraProducto.sql" />
+    <Build Include="Contruccion\CompraRequisicionEstatus.sql" />
+    <Build Include="Contruccion\CompraOrdenCompraEstatus.sql" />
+    <Build Include="Contruccion\CProveedor.sql" />
+    <Build Include="Contruccion\CProveedorContacto.sql" />
+    <Build Include="Contruccion\CProveedorDireccion.sql" />
+    <Build Include="Contruccion\CproveedorFiscal.sql" />
+    <Build Include="Contruccion\CPorveedorTipoProveedor.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sagas.MainModule.refactorlog" />

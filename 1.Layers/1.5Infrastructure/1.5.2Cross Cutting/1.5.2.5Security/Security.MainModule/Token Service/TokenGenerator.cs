@@ -72,9 +72,20 @@ namespace Security.MainModule.Token_Service
         {
             //ClaimsIdentity
             var jwtToken = new JwtSecurityToken(tokenJwt.Replace("Bearer ", string.Empty));
-            return jwtToken.Claims.ToList();            
+            return jwtToken.Claims.ToList();
         }
-
+        public static Claim GetClaimsIdentityFromJwtSecurityToken(string tokenJwt, string type)
+        {
+            //ClaimsIdentity
+            var lclaims = GetClaimsIdentityFromJwtSecurityToken(tokenJwt);
+            return lclaims.SingleOrDefault(x => x.Type.Equals(type));    
+        }
+        public static string GetClaimsValueFromJwtSecurityToken(string tokenJwt, string type)
+        {
+            //ClaimsIdentity
+            var lclaims = GetClaimsIdentityFromJwtSecurityToken(tokenJwt, type);
+            return lclaims.Value;
+        }
         private static string CreateJwtSecurityToken(string audienceToken, string issuerToken, ClaimsIdentity claimsIdentity, string expireTime, SigningCredentials signingCredentials)
         {
             var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();

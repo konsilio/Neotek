@@ -13,6 +13,15 @@ namespace Web.MainModule {
     public partial class Login {
         
         /// <summary>
+        /// Control ddlRazon.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlRazon;
+        
+        /// <summary>
         /// Control Email.
         /// </summary>
         /// <remarks>
@@ -31,15 +40,6 @@ namespace Web.MainModule {
         protected global::System.Web.UI.WebControls.TextBox Password;
         
         /// <summary>
-        /// Control RememberMe.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox RememberMe;
-        
-        /// <summary>
         /// Control btnIniciar.
         /// </summary>
         /// <remarks>
@@ -49,12 +49,21 @@ namespace Web.MainModule {
         protected global::System.Web.UI.WebControls.Button btnIniciar;
         
         /// <summary>
-        /// Control btnRegistra.
+        /// Control divMensaje.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRegistra;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMensaje;
+        
+        /// <summary>
+        /// Control lblMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }

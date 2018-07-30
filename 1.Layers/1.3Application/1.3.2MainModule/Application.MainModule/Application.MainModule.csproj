@@ -50,28 +50,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdaptadoresDTO\Catalogo\AdministracionCentralAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="DTOs\Catalogo\AdministracionCentralDto.cs" />
+    <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
     <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaDto.cs" />
     <Compile Include="DTOs\Seguridad\AutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioAplicacionDto.cs" />
+    <Compile Include="Flujos\Catalogos.cs" />
     <Compile Include="Flujos\Compras.cs" />
     <Compile Include="Flujos\Inventarios.cs" />
     <Compile Include="Flujos\Seguridad.cs" />
     <Compile Include="Flujos\Ventas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servicios\AccesoADatos\AdministracionCentralDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\EmpresaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioACDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
+    <Compile Include="Servicios\Catalogos\EmpresaServicio.cs" />
     <Compile Include="Servicios\Seguridad\AutenticarServicio.cs" />
     <Compile Include="Servicios\Seguridad\UsuarioAplicacionServicio.cs" />
     <Compile Include="UnitOfWork\GenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\IGenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\SagasDataUow.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AdaptadoresDTO\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\..\1.4Domain\1.4.2SagasMainModule\Sagas.MainModule\Sagas.MainModule.csproj">
       <Project>{ff128402-ecef-4aae-a189-3a61e225b25e}</Project>
