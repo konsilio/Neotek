@@ -340,3 +340,5 @@ C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\zh-CHT
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.csprojResolveAssemblyReference.cache
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.dll
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.pdb
+C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Imagenes\footerInfotec.PNG
+C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Imagenes\headerInfotec.PNG
