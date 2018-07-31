@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Requisicion]
 (
-	[IdRequisicion] INT NOT NULL PRIMARY KEY, 
+	[IdRequisicion] INT NOT NULL PRIMARY KEY IDENTITY, 
 	[IdUsuarioSolicitante] INT NOT NULL, 
 	[IdEmpresa] SMALLINT NOT NULL, 
     [NumeroRequisicion] VARCHAR(15) NOT NULL,

@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[RequisicionEstatus]
 (
-	[IdEstatus] INT NOT NULL, 
-    [Estatus] VARCHAR(50) NULL 
+	[IdRequisicionEstatus] TINYINT NOT NULL IDENTITY, 
+    [Estatus] VARCHAR(50) NULL, 
+    CONSTRAINT [PK_RequisicionEstatus] PRIMARY KEY ([IdRequisicionEstatus]) 
 )
