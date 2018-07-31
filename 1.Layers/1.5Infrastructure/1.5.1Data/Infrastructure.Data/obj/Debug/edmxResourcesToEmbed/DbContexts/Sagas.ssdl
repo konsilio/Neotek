@@ -143,6 +143,78 @@
     <Property Name="UrlLogotipoMenu" Type="varchar" MaxLength="350" />
     <Property Name="UrlLogotipoLogin" Type="varchar" MaxLength="350" />
   </EntityType>
+  <EntityType Name="Requisicion">
+    <Key>
+      <PropertyRef Name="IdRequisicion" />
+    </Key>
+    <Property Name="IdRequisicion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUsuarioSolicitante" Type="int" Nullable="false" />
+    <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+    <Property Name="NumeroRequisicion" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="MotivoRequisicion" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="RequeridoEn" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="IdRequisicionEstatus" Type="tinyint" Nullable="false" />
+    <Property Name="FechaRequerida" Type="datetime" Nullable="false" />
+    <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RequisicionAlmacen">
+    <Key>
+      <PropertyRef Name="IdRequisicion" />
+    </Key>
+    <Property Name="IdRequisicion" Type="int" Nullable="false" />
+    <Property Name="IdUsuarioRevision" Type="int" />
+    <Property Name="OpinionAlmacen" Type="varchar" MaxLength="500" />
+    <Property Name="FechaRevision" Type="datetime" />
+    <Property Name="MotivoCancelacion" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="RequisicionAlmacenProducto">
+    <Key>
+      <PropertyRef Name="IdRequisicion" />
+      <PropertyRef Name="IdProducto" />
+    </Key>
+    <Property Name="IdRequisicion" Type="int" Nullable="false" />
+    <Property Name="IdProducto" Type="int" Nullable="false" />
+    <Property Name="RevisionFisica" Type="bit" />
+    <Property Name="CantidadAlmacenActual" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CantidadAComprar" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="RequisicionAutorizacion">
+    <Key>
+      <PropertyRef Name="IdRequisicion" />
+    </Key>
+    <Property Name="IdRequisicion" Type="int" Nullable="false" />
+    <Property Name="IdUsuarioAutorizacion" Type="int" />
+    <Property Name="FechaAutorizacion" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RequisicionAutorizacionProducto">
+    <Key>
+      <PropertyRef Name="IdRequisicion" />
+      <PropertyRef Name="IdProducto" />
+    </Key>
+    <Property Name="IdRequisicion" Type="int" Nullable="false" />
+    <Property Name="IdProducto" Type="int" Nullable="false" />
+    <Property Name="AutorizaEntrega" Type="bit" />
+    <Property Name="AutorizaCompra" Type="bit" />
+  </EntityType>
+  <EntityType Name="RequisicionEstatus">
+    <Key>
+      <PropertyRef Name="IdRequisicionEstatus" />
+    </Key>
+    <Property Name="IdRequisicionEstatus" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Estatus" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="RequisicionProducto">
+    <Key>
+      <PropertyRef Name="IdRequisicion" />
+      <PropertyRef Name="IdProducto" />
+    </Key>
+    <Property Name="IdRequisicion" Type="int" Nullable="false" />
+    <Property Name="IdProducto" Type="int" Nullable="false" />
+    <Property Name="IdTipoProducto" Type="int" Nullable="false" />
+    <Property Name="IdCentroCosto" Type="int" Nullable="false" />
+    <Property Name="Cantidad" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Aplicacion" Type="varchar" MaxLength="500" Nullable="false" />
+  </EntityType>
   <EntityType Name="Rol">
     <Key>
       <PropertyRef Name="IdRol" />
@@ -469,6 +541,132 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Requisicion_RequisicionEstatus">
+    <End Role="RequisicionEstatus" Type="Self.RequisicionEstatus" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Requisicion" Type="Self.Requisicion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequisicionEstatus">
+        <PropertyRef Name="IdRequisicionEstatus" />
+      </Principal>
+      <Dependent Role="Requisicion">
+        <PropertyRef Name="IdRequisicionEstatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requisicion_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Requisicion" Type="Self.Requisicion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="Requisicion">
+        <PropertyRef Name="IdUsuarioSolicitante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequisicionAlmacen_Requisicion">
+    <End Role="Requisicion" Type="Self.Requisicion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RequisicionAlmacen" Type="Self.RequisicionAlmacen" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Requisicion">
+        <PropertyRef Name="IdRequisicion" />
+      </Principal>
+      <Dependent Role="RequisicionAlmacen">
+        <PropertyRef Name="IdRequisicion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequisicionAlmacen_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="RequisicionAlmacen" Type="Self.RequisicionAlmacen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="RequisicionAlmacen">
+        <PropertyRef Name="IdUsuarioRevision" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequisicionAlmacenProducto_RequisicionProducto">
+    <End Role="RequisicionProducto" Type="Self.RequisicionProducto" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RequisicionAlmacenProducto" Type="Self.RequisicionAlmacenProducto" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="RequisicionProducto">
+        <PropertyRef Name="IdRequisicion" />
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="RequisicionAlmacenProducto">
+        <PropertyRef Name="IdRequisicion" />
+        <PropertyRef Name="IdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequisicionAutorizacion_Requisicion">
+    <End Role="Requisicion" Type="Self.Requisicion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RequisicionAutorizacion" Type="Self.RequisicionAutorizacion" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Requisicion">
+        <PropertyRef Name="IdRequisicion" />
+      </Principal>
+      <Dependent Role="RequisicionAutorizacion">
+        <PropertyRef Name="IdRequisicion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequisicionAutorizacion_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="RequisicionAutorizacion" Type="Self.RequisicionAutorizacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="RequisicionAutorizacion">
+        <PropertyRef Name="IdUsuarioAutorizacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequisicionAutorizacionProducto_RequisicionProducto">
+    <End Role="RequisicionProducto" Type="Self.RequisicionProducto" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RequisicionAutorizacionProducto" Type="Self.RequisicionAutorizacionProducto" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="RequisicionProducto">
+        <PropertyRef Name="IdRequisicion" />
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="RequisicionAutorizacionProducto">
+        <PropertyRef Name="IdRequisicion" />
+        <PropertyRef Name="IdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequisicionProducto_Requisicion">
+    <End Role="Requisicion" Type="Self.Requisicion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RequisicionProducto" Type="Self.RequisicionProducto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requisicion">
+        <PropertyRef Name="IdRequisicion" />
+      </Principal>
+      <Dependent Role="RequisicionProducto">
+        <PropertyRef Name="IdRequisicion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_RolAccion_Rol">
     <End Role="Rol" Type="Self.Rol" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -681,6 +879,13 @@
     <EntitySet Name="EmpresaDireccion" EntityType="Self.EmpresaDireccion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EmpresaFiscal" EntityType="Self.EmpresaFiscal" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="EmpresaImagen" EntityType="Self.EmpresaImagen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Requisicion" EntityType="Self.Requisicion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequisicionAlmacen" EntityType="Self.RequisicionAlmacen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequisicionAlmacenProducto" EntityType="Self.RequisicionAlmacenProducto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequisicionAutorizacion" EntityType="Self.RequisicionAutorizacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequisicionAutorizacionProducto" EntityType="Self.RequisicionAutorizacionProducto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequisicionEstatus" EntityType="Self.RequisicionEstatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequisicionProducto" EntityType="Self.RequisicionProducto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RolAccion" EntityType="Self.RolAccion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -747,6 +952,42 @@
     <AssociationSet Name="FK_EmpresaImagen_Empresa" Association="Self.FK_EmpresaImagen_Empresa">
       <End Role="Empresa" EntitySet="Empresa" />
       <End Role="EmpresaImagen" EntitySet="EmpresaImagen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requisicion_RequisicionEstatus" Association="Self.FK_Requisicion_RequisicionEstatus">
+      <End Role="RequisicionEstatus" EntitySet="RequisicionEstatus" />
+      <End Role="Requisicion" EntitySet="Requisicion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requisicion_Usuario" Association="Self.FK_Requisicion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Requisicion" EntitySet="Requisicion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequisicionAlmacen_Requisicion" Association="Self.FK_RequisicionAlmacen_Requisicion">
+      <End Role="Requisicion" EntitySet="Requisicion" />
+      <End Role="RequisicionAlmacen" EntitySet="RequisicionAlmacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequisicionAlmacen_Usuario" Association="Self.FK_RequisicionAlmacen_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="RequisicionAlmacen" EntitySet="RequisicionAlmacen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequisicionAlmacenProducto_RequisicionProducto" Association="Self.FK_RequisicionAlmacenProducto_RequisicionProducto">
+      <End Role="RequisicionProducto" EntitySet="RequisicionProducto" />
+      <End Role="RequisicionAlmacenProducto" EntitySet="RequisicionAlmacenProducto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequisicionAutorizacion_Requisicion" Association="Self.FK_RequisicionAutorizacion_Requisicion">
+      <End Role="Requisicion" EntitySet="Requisicion" />
+      <End Role="RequisicionAutorizacion" EntitySet="RequisicionAutorizacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequisicionAutorizacion_Usuario" Association="Self.FK_RequisicionAutorizacion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="RequisicionAutorizacion" EntitySet="RequisicionAutorizacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequisicionAutorizacionProducto_RequisicionProducto" Association="Self.FK_RequisicionAutorizacionProducto_RequisicionProducto">
+      <End Role="RequisicionProducto" EntitySet="RequisicionProducto" />
+      <End Role="RequisicionAutorizacionProducto" EntitySet="RequisicionAutorizacionProducto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequisicionProducto_Requisicion" Association="Self.FK_RequisicionProducto_Requisicion">
+      <End Role="Requisicion" EntitySet="Requisicion" />
+      <End Role="RequisicionProducto" EntitySet="RequisicionProducto" />
     </AssociationSet>
     <AssociationSet Name="FK_RolAccion_Rol" Association="Self.FK_RolAccion_Rol">
       <End Role="Rol" EntitySet="Rol" />

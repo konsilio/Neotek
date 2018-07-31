@@ -99,11 +99,11 @@
     <Build Include="Contruccion\CProveedorProdcuto.sql" />
     <Build Include="Contruccion\Requisicion.sql" />
     <Build Include="Contruccion\RequisicionEstatus.sql" />
-    <Build Include="Contruccion\RequisicionPorducto.sql" />
     <Build Include="Contruccion\RequisicionAlmacen.sql" />
     <Build Include="Contruccion\RequisicionAlmacenProducto.sql" />
     <Build Include="Contruccion\RequisicionAutorizacion.sql" />
     <Build Include="Contruccion\RequisicionAutorizacionProducto.sql" />
+    <Build Include="Contruccion\RequisicionProducto.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sagas.MainModule.refactorlog" />

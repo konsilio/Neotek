@@ -170,6 +170,7 @@ C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\
 C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.csprojResolveAssemblyReference.cache
 C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.dll
 C:\codGasMundial\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.pdb
+C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Microsoft.ReportViewer.WebForms.dll
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\ApplicationInsights.config
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn\csc.exe
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -183,6 +184,8 @@ C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn\vbc.exe
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn\VBCSCompiler.exe
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\roslyn\VBCSCompiler.exe.config
+C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Imagenes\footerInfotec.PNG
+C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Imagenes\headerInfotec.PNG
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\DS.MainModule.dll.config
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\DS.MainModule.dll
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\DS.MainModule.pdb
@@ -231,7 +234,6 @@ C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Infras
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Utilities.MainModule.dll
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Microsoft.IdentityModel.Tokens.dll
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\System.IdentityModel.Tokens.Jwt.dll
-C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Microsoft.ReportViewer.WebForms.dll
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Microsoft.IdentityModel.Logging.dll
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Microsoft.ReportViewer.Common.dll
@@ -340,5 +342,3 @@ C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\zh-CHT
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.csprojResolveAssemblyReference.cache
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.dll
 C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\obj\Debug\DS.MainModule.pdb
-C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Imagenes\footerInfotec.PNG
-C:\cgm\1.Layers\1.2Distributed Services\1.2.2MainModule\DS.MainModule\bin\Imagenes\headerInfotec.PNG

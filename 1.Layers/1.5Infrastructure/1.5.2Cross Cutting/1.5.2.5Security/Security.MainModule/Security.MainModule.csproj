@@ -86,7 +86,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthRepository.cs" />
     <Compile Include="Criptografia\AES.cs" />
     <Compile Include="Criptografia\SHA.cs" />
     <Compile Include="DirectorioINFOTEC.cs" />

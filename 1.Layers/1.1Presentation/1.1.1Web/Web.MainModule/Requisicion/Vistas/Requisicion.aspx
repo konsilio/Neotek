@@ -116,54 +116,54 @@
                                     <div class="row clearfix">
                                         <div class="col-lg-12 col-md-12">
                                             <!--Data Grid con los productos Agregados -->
-                                            <asp:DataGrid runat="server" ID="dgListaproductos" ShowHeader="true" AutoGenerateColumns="false">
+                                            <asp:GridView runat="server" ID="dgListaproductos" EmptyDataText="No se han agregado productos al requerimiento">                                                
                                                 <Columns>
-                                                    <asp:TemplateColumn>
+                                                    <asp:TemplateField>
                                                         <%--Tipo de compra--%>
                                                         <HeaderTemplate>
                                                             <label>Tipo</label>
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label ID="lbldgTipo" runat="server" Text="<%# Eval("TipoProducto") %>"> />
+                                                            <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto")%>' />
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <%--Producto--%>
                                                         <HeaderTemplate>
                                                             <label>Producto</label>
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label ID="lbldgProducto" runat="server" Text="<%# Eval("Prodcuto") %>"></asp:Label> />
+                                                            <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Prodcuto") %>' />
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <%--Cantidad--%>
                                                         <HeaderTemplate>
                                                             <label>Cantidad</label>
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label ID="lbldgCantidad" runat="server" Text="<%# Eval("Cantidad") %>" />
+                                                            <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("Cantidad") %>' />
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <%--Unidad--%>
                                                         <HeaderTemplate>
                                                             <label>Unidad</label>
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label ID="lbldgUnidad" runat="server" Text="<%# Eval("Unidad") %>" />
+                                                            <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <%--Aplicacion--%>
                                                         <HeaderTemplate>
                                                             <label>Aplicación</label>
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label ID="lbldgAplicacion" runat="server" Text="<%# Eval("Aplicacion") %>" />
+                                                            <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <%--Accion--%>
                                                         <HeaderTemplate>
                                                             <label>Acción</label>
@@ -180,9 +180,9 @@
                                                                 </asp:LinkButton>
                                                             </div>
                                                         </HeaderTemplate>
-                                                    </asp:TemplateColumn>
+                                                    </asp:TemplateField>                                                    
                                                 </Columns>
-                                            </asp:DataGrid>
+                                            </asp:GridView>
                                         </div>
                                     </div>
                                     <div class="row clearfix">

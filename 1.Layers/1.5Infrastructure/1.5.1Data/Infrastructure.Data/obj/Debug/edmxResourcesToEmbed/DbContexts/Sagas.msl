@@ -242,5 +242,81 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Requisicion">
+      <EntityTypeMapping TypeName="Sagas.MainModuleModel.Requisicion">
+        <MappingFragment StoreEntitySet="Requisicion">
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="FechaRequerida" ColumnName="FechaRequerida" />
+          <ScalarProperty Name="IdRequisicionEstatus" ColumnName="IdRequisicionEstatus" />
+          <ScalarProperty Name="RequeridoEn" ColumnName="RequeridoEn" />
+          <ScalarProperty Name="MotivoRequisicion" ColumnName="MotivoRequisicion" />
+          <ScalarProperty Name="NumeroRequisicion" ColumnName="NumeroRequisicion" />
+          <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+          <ScalarProperty Name="IdUsuarioSolicitante" ColumnName="IdUsuarioSolicitante" />
+          <ScalarProperty Name="IdRequisicion" ColumnName="IdRequisicion" />
+        </MappingFragment>
+        <!--</EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequisicionAlmacen">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.RequisicionAlmacen">-->
+        <MappingFragment StoreEntitySet="RequisicionAlmacen">
+          <ScalarProperty Name="MotivoCancelacion" ColumnName="MotivoCancelacion" />
+          <ScalarProperty Name="FechaRevision" ColumnName="FechaRevision" />
+          <ScalarProperty Name="OpinionAlmacen" ColumnName="OpinionAlmacen" />
+          <ScalarProperty Name="IdUsuarioRevision" ColumnName="IdUsuarioRevision" />
+          <ScalarProperty Name="IdRequisicion" ColumnName="IdRequisicion" />
+        </MappingFragment>
+        <!--</EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequisicionAutorizacion">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.RequisicionAutorizacion">-->
+        <MappingFragment StoreEntitySet="RequisicionAutorizacion">
+          <ScalarProperty Name="FechaAutorizacion" ColumnName="FechaAutorizacion" />
+          <ScalarProperty Name="IdUsuarioAutorizacion" ColumnName="IdUsuarioAutorizacion" />
+          <ScalarProperty Name="IdRequisicion" ColumnName="IdRequisicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RequisicionProducto">
+      <EntityTypeMapping TypeName="Sagas.MainModuleModel.RequisicionProducto">
+        <MappingFragment StoreEntitySet="RequisicionProducto">
+          <ScalarProperty Name="Aplicacion" ColumnName="Aplicacion" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+          <ScalarProperty Name="IdTipoProducto" ColumnName="IdTipoProducto" />
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+          <ScalarProperty Name="IdRequisicion" ColumnName="IdRequisicion" />
+        </MappingFragment>
+        <!--</EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequisicionAlmacenProducto">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.RequisicionAlmacenProducto">-->
+        <MappingFragment StoreEntitySet="RequisicionAlmacenProducto">
+          <ScalarProperty Name="CantidadAComprar" ColumnName="CantidadAComprar" />
+          <ScalarProperty Name="CantidadAlmacenActual" ColumnName="CantidadAlmacenActual" />
+          <ScalarProperty Name="RevisionFisica" ColumnName="RevisionFisica" />
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+          <ScalarProperty Name="IdRequisicion" ColumnName="IdRequisicion" />
+        </MappingFragment>
+        <!--</EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequisicionAutorizacionProducto">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.RequisicionAutorizacionProducto">-->
+        <MappingFragment StoreEntitySet="RequisicionAutorizacionProducto">
+          <ScalarProperty Name="AutorizaCompra" ColumnName="AutorizaCompra" />
+          <ScalarProperty Name="AutorizaEntrega" ColumnName="AutorizaEntrega" />
+          <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+          <ScalarProperty Name="IdRequisicion" ColumnName="IdRequisicion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RequisicionEstatus">
+      <EntityTypeMapping TypeName="Sagas.MainModuleModel.RequisicionEstatus">
+        <MappingFragment StoreEntitySet="RequisicionEstatus">
+          <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+          <ScalarProperty Name="IdRequisicionEstatus" ColumnName="IdRequisicionEstatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

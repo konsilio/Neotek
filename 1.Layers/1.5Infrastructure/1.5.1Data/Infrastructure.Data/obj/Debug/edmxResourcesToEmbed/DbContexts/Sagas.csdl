@@ -220,6 +220,9 @@
     <NavigationProperty Name="Rol" Relationship="Self.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
     <NavigationProperty Name="EstadosRepublica" Relationship="Sagas.MainModuleModel.FK_Usuario_EstadosRepublica" FromRole="Usuario" ToRole="EstadosRepublica" />
     <NavigationProperty Name="Pais" Relationship="Sagas.MainModuleModel.FK_Usuario_Pais" FromRole="Usuario" ToRole="Pais" />
+    <NavigationProperty Name="Requisiciones" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario" FromRole="Usuario" ToRole="Requisicion" />
+    <!--<NavigationProperty Name="Requisiciones" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario" FromRole="Usuario" ToRole="Requisicion" />
+          <NavigationProperty Name="RequisicionAutorizacion" Relationship="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Usuario" FromRole="Usuario" ToRole="RequisicionAutorizacion" />-->
     <!--<NavigationProperty Name="UsuarioContacto" Relationship="Self.FK_UsuarioContacto_Usuario" FromRole="Usuario" ToRole="UsuarioContacto" />
           <NavigationProperty Name="UsuarioCredencial" Relationship="Self.FK_UsuarioCredencial_Usuario" FromRole="Usuario" ToRole="UsuarioCredencial" />
           <NavigationProperty Name="UsuarioDireccion" Relationship="Self.FK_UsuarioDireccion_Usuario" FromRole="Usuario" ToRole="UsuarioDireccion" />          
@@ -783,6 +786,49 @@
       <End Role="Pais" EntitySet="Pais" />
       <End Role="Usuario" EntitySet="Usuario" />
     </AssociationSet>
+    <EntitySet Name="Requisicion" EntityType="Sagas.MainModuleModel.Requisicion" />
+    <!--<EntitySet Name="RequisicionAlmacen" EntityType="Sagas.MainModuleModel.RequisicionAlmacen" />
+          <EntitySet Name="RequisicionAlmacenProducto" EntityType="Sagas.MainModuleModel.RequisicionAlmacenProducto" />
+          <EntitySet Name="RequisicionAutorizacion" EntityType="Sagas.MainModuleModel.RequisicionAutorizacion" />
+          <EntitySet Name="RequisicionAutorizacionProducto" EntityType="Sagas.MainModuleModel.RequisicionAutorizacionProducto" />-->
+    <EntitySet Name="RequisicionEstatus" EntityType="Sagas.MainModuleModel.RequisicionEstatus" />
+    <EntitySet Name="RequisicionProducto" EntityType="Sagas.MainModuleModel.RequisicionProducto" />
+    <AssociationSet Name="FK_Requisicion_RequisicionEstatus" Association="Sagas.MainModuleModel.FK_Requisicion_RequisicionEstatus">
+      <End Role="RequisicionEstatus" EntitySet="RequisicionEstatus" />
+      <End Role="Requisicion" EntitySet="Requisicion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requisicion_Usuario" Association="Sagas.MainModuleModel.FK_Requisicion_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Requisicion" EntitySet="Requisicion" />
+    </AssociationSet>
+    <!--<AssociationSet Name="FK_RequisicionAlmacen_Requisicion" Association="Sagas.MainModuleModel.FK_RequisicionAlmacen_Requisicion">
+            <End Role="Requisicion" EntitySet="Requisicion" />
+            <End Role="RequisicionAlmacen" EntitySet="RequisicionAlmacen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequisicionAutorizacion_Requisicion" Association="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Requisicion">
+            <End Role="Requisicion" EntitySet="Requisicion" />
+            <End Role="RequisicionAutorizacion" EntitySet="RequisicionAutorizacion" />
+          </AssociationSet>-->
+    <AssociationSet Name="FK_RequisicionProducto_Requisicion" Association="Sagas.MainModuleModel.FK_RequisicionProducto_Requisicion">
+      <End Role="Requisicion" EntitySet="Requisicion" />
+      <End Role="RequisicionProducto" EntitySet="RequisicionProducto" />
+    </AssociationSet>
+    <!--<AssociationSet Name="FK_RequisicionAlmacenProducto_RequisicionProducto" Association="Sagas.MainModuleModel.FK_RequisicionAlmacenProducto_RequisicionProducto">
+            <End Role="RequisicionProducto" EntitySet="RequisicionProducto" />
+            <End Role="RequisicionAlmacenProducto" EntitySet="RequisicionAlmacenProducto" />
+          </AssociationSet>-->
+    <!--<AssociationSet Name="FK_RequisicionAutorizacionProducto_RequisicionProducto" Association="Sagas.MainModuleModel.FK_RequisicionAutorizacionProducto_RequisicionProducto">
+            <End Role="RequisicionProducto" EntitySet="RequisicionProducto" />
+            <End Role="RequisicionAutorizacionProducto" EntitySet="RequisicionAutorizacionProducto" />
+          </AssociationSet>-->
+    <AssociationSet Name="FK_Requisicion_Usuario1" Association="Sagas.MainModuleModel.FK_Requisicion_Usuario1">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Requisicion" EntitySet="Requisicion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requisicion_Usuario2" Association="Sagas.MainModuleModel.FK_Requisicion_Usuario2">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Requisicion" EntitySet="Requisicion" />
+    </AssociationSet>
     <!--<AssociationSet Name="FK_UsuarioContacto_Usuario" Association="Self.FK_UsuarioContacto_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioContacto" EntitySet="UsuarioContacto" />
@@ -808,4 +854,199 @@
             <End Role="UsuarioACDireccion" EntitySet="UsuarioACDireccion" />
           </AssociationSet>-->
   </EntityContainer>
+  <EntityType Name="Requisicion">
+    <Key>
+      <PropertyRef Name="IdRequisicion" />
+    </Key>
+    <Property Name="IdRequisicion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdUsuarioSolicitante" Type="Int32" Nullable="false" />
+    <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+    <Property Name="NumeroRequisicion" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="MotivoRequisicion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="RequeridoEn" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="IdRequisicionEstatus" Type="Byte" Nullable="false" />
+    <Property Name="FechaRequerida" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <!--RequisicionAlmacen-->
+    <!--<Property Name="IdRequisicion" Type="Int32" Nullable="false" />-->
+    <Property Name="IdUsuarioRevision" Type="Int32" />
+    <Property Name="OpinionAlmacen" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="FechaRevision" Type="DateTime" Precision="3" />
+    <Property Name="MotivoCancelacion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <!--RequisicionAutorizacion-->
+    <!--<Property Name="IdRequisicion" Type="Int32" Nullable="false" />-->
+    <Property Name="IdUsuarioAutorizacion" Type="Int32" />
+    <Property Name="FechaAutorizacion" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="RequisicionEstatus" Relationship="Sagas.MainModuleModel.FK_Requisicion_RequisicionEstatus" FromRole="Requisicion" ToRole="RequisicionEstatus" />
+    <NavigationProperty Name="Solicitante" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario" FromRole="Requisicion" ToRole="Usuario" />
+    <!--<NavigationProperty Name="RequisicionAlmacen" Relationship="Sagas.MainModuleModel.FK_RequisicionAlmacen_Requisicion" FromRole="Requisicion" ToRole="RequisicionAlmacen" />-->
+    <!--<NavigationProperty Name="RequisicionAutorizacion" Relationship="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Requisicion" FromRole="Requisicion" ToRole="RequisicionAutorizacion" />-->
+    <NavigationProperty Name="Productos" Relationship="Sagas.MainModuleModel.FK_RequisicionProducto_Requisicion" FromRole="Requisicion" ToRole="RequisicionProducto" />
+    <!--<NavigationProperty Name="Requisicion" Relationship="Sagas.MainModuleModel.FK_RequisicionAlmacen_Requisicion" FromRole="RequisicionAlmacen" ToRole="Requisicion" />-->
+    <NavigationProperty Name="Almacenista" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario1" FromRole="Requisicion" ToRole="Usuario" />
+    <!--<NavigationProperty Name="Requisicion" Relationship="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Requisicion" FromRole="RequisicionAutorizacion" ToRole="Requisicion" />-->
+    <NavigationProperty Name="Autorizador" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario2" FromRole="Requisicion" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="RequisicionProducto">
+    <Key>
+      <PropertyRef Name="IdRequisicion" />
+      <PropertyRef Name="IdProducto" />
+    </Key>
+    <Property Name="IdRequisicion" Type="Int32" Nullable="false" />
+    <Property Name="IdProducto" Type="Int32" Nullable="false" />
+    <Property Name="IdTipoProducto" Type="Int32" Nullable="false" />
+    <Property Name="IdCentroCosto" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="Aplicacion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <!--RequisicionAlmacenProducto-->
+    <!--<Property Name="IdRequisicion" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />-->
+    <Property Name="RevisionFisica" Type="Boolean" />
+    <Property Name="CantidadAlmacenActual" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CantidadAComprar" Type="Decimal" Precision="18" Scale="2" />
+    <!--RequisicionAutorizacionProducto-->
+    <!--<Property Name="IdRequisicion" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />-->
+    <Property Name="AutorizaEntrega" Type="Boolean" />
+    <Property Name="AutorizaCompra" Type="Boolean" />
+    <NavigationProperty Name="Requisicion" Relationship="Sagas.MainModuleModel.FK_RequisicionProducto_Requisicion" FromRole="RequisicionProducto" ToRole="Requisicion" />
+    <!--<NavigationProperty Name="RequisicionAlmacenProducto" Relationship="Sagas.MainModuleModel.FK_RequisicionAlmacenProducto_RequisicionProducto" FromRole="RequisicionProducto" ToRole="RequisicionAlmacenProducto" />-->
+    <!--<NavigationProperty Name="RequisicionAutorizacionProducto" Relationship="Sagas.MainModuleModel.FK_RequisicionAutorizacionProducto_RequisicionProducto" FromRole="RequisicionProducto" ToRole="RequisicionAutorizacionProducto" />-->
+    <!--<NavigationProperty Name="RequisicionProducto" Relationship="Sagas.MainModuleModel.FK_RequisicionAlmacenProducto_RequisicionProducto" FromRole="RequisicionAlmacenProducto" ToRole="RequisicionProducto" />-->
+    <!--<NavigationProperty Name="RequisicionProducto" Relationship="Sagas.MainModuleModel.FK_RequisicionAutorizacionProducto_RequisicionProducto" FromRole="RequisicionAutorizacionProducto" ToRole="RequisicionProducto" />-->
+  </EntityType>
+  <EntityType Name="RequisicionEstatus">
+    <Key>
+      <PropertyRef Name="IdRequisicionEstatus" />
+    </Key>
+    <Property Name="IdRequisicionEstatus" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Estatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Requisicion" Relationship="Sagas.MainModuleModel.FK_Requisicion_RequisicionEstatus" FromRole="RequisicionEstatus" ToRole="Requisicion" />
+  </EntityType>
+  <Association Name="FK_Requisicion_RequisicionEstatus">
+    <End Type="Sagas.MainModuleModel.RequisicionEstatus" Role="RequisicionEstatus" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RequisicionEstatus">
+        <PropertyRef Name="IdRequisicionEstatus" />
+      </Principal>
+      <Dependent Role="Requisicion">
+        <PropertyRef Name="IdRequisicionEstatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requisicion_Usuario">
+    <End Type="Sagas.MainModuleModel.Usuario" Role="Usuario" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="Requisicion">
+        <PropertyRef Name="IdUsuarioSolicitante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--<Association Name="FK_RequisicionAlmacen_Requisicion">
+          <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.RequisicionAlmacen" Role="RequisicionAlmacen" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Requisicion">
+              <PropertyRef Name="IdRequisicion" />
+            </Principal>
+            <Dependent Role="RequisicionAlmacen">
+              <PropertyRef Name="IdRequisicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->
+  <!--<Association Name="FK_RequisicionAutorizacion_Requisicion">
+          <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.RequisicionAutorizacion" Role="RequisicionAutorizacion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Requisicion">
+              <PropertyRef Name="IdRequisicion" />
+            </Principal>
+            <Dependent Role="RequisicionAutorizacion">
+              <PropertyRef Name="IdRequisicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->
+  <Association Name="FK_RequisicionProducto_Requisicion">
+    <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="Sagas.MainModuleModel.RequisicionProducto" Role="RequisicionProducto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requisicion">
+        <PropertyRef Name="IdRequisicion" />
+      </Principal>
+      <Dependent Role="RequisicionProducto">
+        <PropertyRef Name="IdRequisicion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--<Association Name="FK_RequisicionAlmacenProducto_RequisicionProducto">
+          <End Type="Sagas.MainModuleModel.RequisicionProducto" Role="RequisicionProducto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.RequisicionAlmacenProducto" Role="RequisicionAlmacenProducto" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="RequisicionProducto">
+              <PropertyRef Name="IdRequisicion" />
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="RequisicionAlmacenProducto">
+              <PropertyRef Name="IdRequisicion" />
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->
+  <!--<Association Name="FK_RequisicionAutorizacionProducto_RequisicionProducto">-->
+  <!--<End Type="Sagas.MainModuleModel.RequisicionProducto" Role="RequisicionProducto" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.RequisicionAutorizacionProducto" Role="RequisicionAutorizacionProducto" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="RequisicionProducto">
+              <PropertyRef Name="IdRequisicion" />
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="RequisicionAutorizacionProducto">
+              <PropertyRef Name="IdRequisicion" />
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->
+  <Association Name="FK_Requisicion_Usuario1">
+    <End Type="Sagas.MainModuleModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+    <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="Requisicion">
+        <PropertyRef Name="IdUsuarioRevision" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requisicion_Usuario2">
+    <End Type="Sagas.MainModuleModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+    <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="Requisicion">
+        <PropertyRef Name="IdUsuarioAutorizacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

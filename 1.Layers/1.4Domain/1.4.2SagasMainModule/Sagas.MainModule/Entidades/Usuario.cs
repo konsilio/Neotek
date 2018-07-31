@@ -14,6 +14,12 @@ namespace Sagas.MainModule.Entidades
     
     public partial class Usuario
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Usuario()
+        {
+            this.Requisiciones = new HashSet<Requisicion>();
+        }
+    
         public int IdUsuario { get; set; }
         public short IdEmpresa { get; set; }
         public short IdRol { get; set; }
@@ -50,5 +56,7 @@ namespace Sagas.MainModule.Entidades
         public virtual Rol Rol { get; set; }
         public virtual EstadosRepublica EstadosRepublica { get; set; }
         public virtual Pais Pais { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Requisicion> Requisiciones { get; set; }
     }
 }

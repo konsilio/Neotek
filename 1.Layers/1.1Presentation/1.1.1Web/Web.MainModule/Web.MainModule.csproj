@@ -155,9 +155,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Compras\Model\" />
-    <Folder Include="Compras\Servicio\" />
     <Folder Include="OrdenCompra\Servisio\" />
-    <Folder Include="Requisicion\Model\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\bundles\chartscripts.bundle.js" />
@@ -3909,6 +3907,9 @@
       <DependentUpon>OrdenCompra.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionProductoDTO.cs" />
+    <Compile Include="Requisicion\Serivicio\RequisicionServicio.cs" />
     <Compile Include="Requisicion\Vistas\Requisicion.aspx.cs">
       <DependentUpon>Requisicion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3921,7 +3922,7 @@
     <Compile Include="Seguridad\Model\EmpresaDTO.cs" />
     <Compile Include="Seguridad\Model\RespuestaAutenticacionDto.cs" />
     <Compile Include="Seguridad\Servicio\AutenticacionServicio.cs" />
-    <Compile Include="Requisicion\Serivicio\ComprasServicio.cs" />
+    <Compile Include="Compras\Servicio\ComprasServicio.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
