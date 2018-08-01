@@ -37,3 +37,4 @@ C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.5Security\Security.Ma
 C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.5Security\Security.MainModule\bin\Debug\System.IdentityModel.Tokens.Jwt.xml
 C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.5Security\Security.MainModule\obj\Debug\Security.MainModule.dll
 C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.5Security\Security.MainModule\obj\Debug\Security.MainModule.pdb
+C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.5Security\Security.MainModule\obj\Debug\Security.MainModule.csprojResolveAssemblyReference.cache
