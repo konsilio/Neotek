@@ -1,9 +1,0 @@
-C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\bin\Debug\Exceptions.MainModule.dll
-C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\bin\Debug\Exceptions.MainModule.pdb
-C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\obj\Debug\Exceptions.MainModule.dll
-C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\obj\Debug\Exceptions.MainModule.pdb
-C:\codGasMundial\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\obj\Debug\Exceptions.MainModule.csprojResolveAssemblyReference.cache
-C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\bin\Debug\Exceptions.MainModule.dll
-C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\bin\Debug\Exceptions.MainModule.pdb
-C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\obj\Debug\Exceptions.MainModule.dll
-C:\cgm\1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\obj\Debug\Exceptions.MainModule.pdb
