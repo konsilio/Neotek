@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Respuesta
 {
-    public class RespuestaDto
+    public class RespuestaRequisicionDto 
     {
+        public int IdRequisicion { get; set; }
         public bool Exito { get; set; }
         public string Mensaje { get; set; }
-       
     }
 }

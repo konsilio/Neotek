@@ -10,6 +10,6 @@ namespace Application.MainModule.DTOs.Seguridad
     public class RespuestaAutenticacionDto : RespuestaDto
     {
         //public string token { get; set; }
-        public new string token { get; set; }
+        public string token { get; set; }
     }
 }
