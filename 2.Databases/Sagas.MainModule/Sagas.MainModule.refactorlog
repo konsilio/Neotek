@@ -301,4 +301,123 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="idTipoProveedor" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="8ba420cd-42b9-4984-9db4-c5cf53fdbc89" ChangeDateTime="07/30/2018 18:08:24">
+    <Property Name="ElementName" Value="[dbo].[CProveedorProdcuto].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CProveedorProdcuto]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdPProdcuto" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="56c8f0fb-9079-4d65-b0d3-7d0bb3867584" ChangeDateTime="07/30/2018 22:23:07">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntregaRecepcion].[Receptor]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntregaRecepcion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdUsuarioEntrega" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="19e60eb1-866d-4bd0-b0d5-f3e83a3505ae" ChangeDateTime="07/30/2018 22:24:56">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntregaRecepcion].[idRequisicion]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntregaRecepcion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdRequisicion" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="74c55c68-dd26-493e-9441-97154d7420bf" ChangeDateTime="07/30/2018 22:24:59">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntregaRecepcion].[idOrdenCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntregaRecepcion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdOrdenCompra" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="dd6af3c2-e2f8-442f-9892-8cda603524a0" ChangeDateTime="07/30/2018 22:26:19">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntregaRecepcion].[TipoER]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntregaRecepcion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdTipoER" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="139a13e1-f2cb-4c3e-9f46-49ce01de21ed" ChangeDateTime="07/30/2018 22:58:16">
+    <Property Name="ElementName" Value="[dbo].[Requisicion].[Solicitante]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Requisicion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdUsuarioSolicitante" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a8faf71b-e40e-475e-a063-a4fe57808874" ChangeDateTime="07/30/2018 23:00:54">
+    <Property Name="ElementName" Value="[dbo].[Requisicion].[MotivoCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Requisicion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MotivoRequisicion" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cb569898-da76-4841-b304-209590bff61a" ChangeDateTime="07/30/2018 23:08:25">
+    <Property Name="ElementName" Value="[dbo].[RequisicionEstatus].[Descripcion]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RequisicionEstatus]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Estatus" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="21923087-6e09-46b5-aed0-b73bd47589ea" ChangeDateTime="07/30/2018 23:10:22">
+    <Property Name="ElementName" Value="[dbo].[RequisicionPorducto].[IdPorducto]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RequisicionPorducto]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdProducto" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d6c059de-d802-4752-9db4-b2df17788ec0" ChangeDateTime="07/30/2018 23:12:55">
+    <Property Name="ElementName" Value="[dbo].[RequisicionPorducto].[Comentario]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RequisicionPorducto]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Aplicacion" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9df81223-226b-4789-8a75-e45e5330c346" ChangeDateTime="07/30/2018 23:17:18">
+    <Property Name="ElementName" Value="[dbo].[RequsicionAlmacen].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RequsicionAlmacen]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdRequisicion" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0d446242-eccf-4320-8743-d9c43990a7f5" ChangeDateTime="07/30/2018 23:21:30">
+    <Property Name="ElementName" Value="[dbo].[RequisicionAlmacenProducto].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RequisicionAlmacenProducto]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdRequisicion" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="433eb969-eeac-48fd-8367-591298dd2b51" ChangeDateTime="07/30/2018 23:24:35">
+    <Property Name="ElementName" Value="[dbo].[RequisicionAlmacenProducto].[CantidadAlmacen]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RequisicionAlmacenProducto]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CantidadAlmacenActual" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ea970e21-b0dd-4184-b194-1af573ee1ce4" ChangeDateTime="07/30/2018 23:29:06">
+    <Property Name="ElementName" Value="[dbo].[RequisicionAutorizacion].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RequisicionAutorizacion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdRequisicion" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b63c8170-9123-411b-9e71-853dcafc462f" ChangeDateTime="07/30/2018 23:31:07">
+    <Property Name="ElementName" Value="[dbo].[RequisicionAlmacen].[FechaRegistro]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RequisicionAlmacen]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FechaRevision" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="745a5165-64cb-45a8-b715-1fddd146d34c" ChangeDateTime="07/30/2018 23:34:52">
+    <Property Name="ElementName" Value="[dbo].[RequisicionAutorizacionProducto].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RequisicionAutorizacionProducto]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdRequisicion" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5e1d8b2a-5868-4461-8e1b-0338d3fb555f" ChangeDateTime="07/31/2018 15:06:24">
+    <Property Name="ElementName" Value="[dbo].[RequisicionEstatus].[IdEstatus]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RequisicionEstatus]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdRequisicionEstatus" />
+  </Operation>
 </Operations>

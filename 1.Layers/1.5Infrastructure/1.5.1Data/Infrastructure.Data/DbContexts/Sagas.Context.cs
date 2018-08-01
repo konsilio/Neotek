@@ -34,5 +34,8 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<UsuarioAC> UsuarioAC { get; set; }
+        public virtual DbSet<Requisicion> Requisicion { get; set; }
+        public virtual DbSet<RequisicionEstatus> RequisicionEstatus { get; set; }
+        public virtual DbSet<RequisicionProducto> RequisicionProducto { get; set; }
     }
 }

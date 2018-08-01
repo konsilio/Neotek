@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[CproveedorFiscal]
+﻿CREATE TABLE [dbo].[CProveedorFiscal]
 (
 		[IdProveedor] SMALLINT NOT NULL, 
     [Rfc] VARCHAR(13) NOT NULL, 

@@ -52,6 +52,15 @@
     <Compile Include="Entidades\Pais.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\Requisicion.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\RequisicionEstatus.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\RequisicionProducto.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Rol.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -74,6 +83,9 @@
     <Compile Include="IRepositorios\IEstadosRepRepositorio.cs" />
     <Compile Include="IRepositorios\IPaisRepositorio.cs" />
     <Compile Include="IRepositorios\IRepository.cs" />
+    <Compile Include="IRepositorios\IRequisicionEstatusRepositorio.cs" />
+    <Compile Include="IRepositorios\IRequisicionProductoRepositorio.cs" />
+    <Compile Include="IRepositorios\IRequisicionRepositorio.cs" />
     <Compile Include="IRepositorios\IRolRepositorio.cs" />
     <Compile Include="IRepositorios\IUsuarioACRepositorio.cs" />
     <Compile Include="IRepositorios\IUsuarioRepositorio.cs" />

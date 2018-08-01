@@ -88,18 +88,22 @@
     <Build Include="Datos\DatosBD.sql" />
     <Build Include="Contruccion\CreateDataBase.sql" />
     <Build Include="Datos\Insertar Empresa.sql" />
-    <Build Include="Contruccion\CompraRequisicion.sql" />
-    <Build Include="Contruccion\CompraRequisicionPorducto.sql" />
-    <Build Include="Contruccion\CompraRequisicionCentroCosto.sql" />
-    <Build Include="Contruccion\CompraOrdenCompra.sql" />
-    <Build Include="Contruccion\CompraOrdeCompraProducto.sql" />
-    <Build Include="Contruccion\CompraRequisicionEstatus.sql" />
-    <Build Include="Contruccion\CompraOrdenCompraEstatus.sql" />
     <Build Include="Contruccion\CProveedor.sql" />
     <Build Include="Contruccion\CProveedorContacto.sql" />
     <Build Include="Contruccion\CProveedorDireccion.sql" />
-    <Build Include="Contruccion\CproveedorFiscal.sql" />
+    <Build Include="Contruccion\CProveedorFiscal.sql" />
     <Build Include="Contruccion\CPorveedorTipoProveedor.sql" />
+    <Build Include="Contruccion\Almacen.sql" />
+    <Build Include="Contruccion\AlmacenEntregaRecepcion.sql" />
+    <Build Include="Contruccion\AlmacenEntregaRecepcionProducto.sql" />
+    <Build Include="Contruccion\CProveedorProdcuto.sql" />
+    <Build Include="Contruccion\Requisicion.sql" />
+    <Build Include="Contruccion\RequisicionEstatus.sql" />
+    <Build Include="Contruccion\RequisicionAlmacen.sql" />
+    <Build Include="Contruccion\RequisicionAlmacenProducto.sql" />
+    <Build Include="Contruccion\RequisicionAutorizacion.sql" />
+    <Build Include="Contruccion\RequisicionAutorizacionProducto.sql" />
+    <Build Include="Contruccion\RequisicionProducto.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sagas.MainModule.refactorlog" />

@@ -44,7 +44,7 @@ namespace Web.MainModule
 
         protected void btnNuevaReq_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Requisicion.aspx");
+            Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx");
         }
         private void CargarEmpresas()
         {

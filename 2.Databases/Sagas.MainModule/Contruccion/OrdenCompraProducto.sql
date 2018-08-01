@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[CompraOrdeCompraProducto]
+﻿CREATE TABLE [dbo].[OrdenCompraProducto]
 (
 	[IdOrdenCompra] VARCHAR(15) NOT NULL, 
     [TipoPoducto] TINYINT NULL, 

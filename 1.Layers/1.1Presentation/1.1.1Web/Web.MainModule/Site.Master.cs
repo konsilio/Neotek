@@ -22,7 +22,7 @@ namespace Web.MainModule
 
                     if (Convert.ToBoolean(_autenticado.Value))
                     {
-                        lblUsuario.Text = "Nombre: " + TokenGenerator.GetClaimsValueFromJwtSecurityToken(_tok, "NombreUsuario");
+                        lblUsuario.Text = "Usuario: " + TokenGenerator.GetClaimsValueFromJwtSecurityToken(_tok, "NombreUsuario");
                         //Habilitar opciones segun el rol
                     }
                 }

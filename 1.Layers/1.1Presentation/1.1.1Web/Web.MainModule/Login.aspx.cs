@@ -29,7 +29,7 @@ namespace Web.MainModule
             if (respuesta.Exito)
             {
                 Session["StringToken"] = respuesta.token;
-                Response.Redirect("~/Dashboard.aspx");                
+                Response.Redirect("~/DashBoard/Vista/Dashboard.aspx");                
             }
             else
             {

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0b2cd14df01a433ca042ada055bcf2a6" Name="Diagram1" ZoomLevel="81">
+      <Diagram DiagramId="0b2cd14df01a433ca042ada055bcf2a6" Name="Diagram1" ZoomLevel="16">
         <EntityTypeShape EntityType="Sagas.MainModuleModel.AdministracionCentral" Width="1.5" PointX="0.75" PointY="27.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.AdministracionCentralDireccion" Width="1.5" PointX="6" PointY="27.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.AdministracionCentralFiscal" Width="1.5" PointX="3" PointY="22.875" IsExpanded="true" />
@@ -58,6 +58,29 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioDireccion_CEstadosRep" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioACDireccion_CPais" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_UsuarioDireccion_CPais" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.Requisicion" Width="1.5" PointX="7.625" PointY="3.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.RequisicionAlmacen" Width="1.75" PointX="10.75" PointY="3.875" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.RequisicionAlmacenProducto" Width="2.25" PointX="0.5" PointY="3.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.RequisicionAutorizacion" Width="2.375" PointX="4.375" PointY="8.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.RequisicionAutorizacionProducto" Width="2.5" PointX="0.5" PointY="7.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.RequisicionProducto" Width="1.875" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.RequisicionEstatus" Width="1.625" PointX="8" PointY="8.875" />
+        <AssociationConnector Association="Sagas.MainModuleModel.RequisicionRequisicionEstatus" />
+        <AssociationConnector Association="Sagas.MainModuleModel.RequisicionRequisicionPorducto" />
+        <AssociationConnector Association="Sagas.MainModuleModel.RequisicionRequisicionAlmacen" />
+        <AssociationConnector Association="Sagas.MainModuleModel.RequisicionRequisicionAutorizacion" />
+        <AssociationConnector Association="Sagas.MainModuleModel.RequisicionAutorizacionRequisicionAutorizacionProducto" />
+        <AssociationConnector Association="Sagas.MainModuleModel.RequisicionProductoRequisicionAlmacenProducto" />
+        <AssociationConnector Association="Sagas.MainModuleModel.RequisicionProductoRequisicionAlmacenProducto1" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Requisicion_RequisicionEstatus" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Requisicion_Usuario" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RequisicionAlmacen_Requisicion" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Requisicion" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RequisicionProducto_Requisicion" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RequisicionAlmacenProducto_RequisicionProducto" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RequisicionAutorizacionProducto_RequisicionProducto" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RequisicionAlmacen_Usuario" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Usuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

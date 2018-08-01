@@ -7,7 +7,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         <h2>Dashboard</h2>
                         <ul class="breadcrumb padding-0">
-                            <li class="breadcrumb-item"><a href="Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ul>
                         <%--<asp:Label ID="lblMensaje" runat="server" Text="Sin token"></asp:Label>--%>

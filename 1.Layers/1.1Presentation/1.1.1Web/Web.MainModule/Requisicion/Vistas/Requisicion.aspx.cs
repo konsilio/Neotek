@@ -22,6 +22,7 @@ namespace Web.MainModule
                     Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
                     if (Convert.ToBoolean(_autenticado.Value))
                     {
+                        dgListaproductos.DataBind();
                         //Habilitar opciones segun el rol
                     }
                     else
@@ -30,10 +31,29 @@ namespace Web.MainModule
                 else
                     Salir();
             }
+            else
+            {
+
+            }
         }
         private void Salir()
         {
-            Response.Redirect("~/Login.aspx");
+            Response.Redirect("../../Login.aspx");
+        }
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void BtnCrear_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnRegresar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -268,7 +268,7 @@ namespace Utilities.MainModule
             {
                 s = new StringBuilder(File.ReadAllText(ruta));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Si no se encuentra la plantilla, se debe cargar una por default.
                 
