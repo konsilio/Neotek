@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[CProveedorDireccion]
 (
-	[IdProveedor] SMALLINT NOT NULL , 
+	[IdProveedor] INT NOT NULL , 
     [IdPais] TINYINT NOT NULL, 
     [IdEstadoRep] TINYINT NULL, 
 	[EstadoProvincia] VARCHAR(150) NULL,

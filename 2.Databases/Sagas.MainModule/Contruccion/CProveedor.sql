@@ -1,8 +1,10 @@
 ﻿CREATE TABLE [dbo].[CProveedor]
 (
 	[IdProveedor] INT NOT NULL PRIMARY KEY, 
-	[NombreComercial] VARCHAR(100) NOT NULL, 
-    [FechaRegistro] DATETIME NOT NULL DEFAULT getdate(), 
-    [ProdutoPrinicpal] BIT NOT NULL, 
-    [Transportista] BIT NOT NULL
+	[IdEmpresa] SMALLINT NOT NULL,
+	[NombreComercial] VARCHAR(100) NOT NULL,      
+    [ProdutoPrinicpal] BIT NOT NULL DEFAULT 0, 
+    [TransportistaProdutoPrinicpal] BIT NOT NULL DEFAULT 0,
+	[Activo] BIT NOT NULL DEFAULT 1,
+	[FechaRegistro] DATETIME NOT NULL DEFAULT getdate()
 )

@@ -92,7 +92,7 @@
     <Build Include="Contruccion\CProveedorContacto.sql" />
     <Build Include="Contruccion\CProveedorDireccion.sql" />
     <Build Include="Contruccion\CProveedorFiscal.sql" />
-    <Build Include="Contruccion\CPorveedorTipoProveedor.sql" />
+    <Build Include="Contruccion\CProveedorTipoProveedor.sql" />
     <Build Include="Contruccion\Almacen.sql" />
     <Build Include="Contruccion\AlmacenEntregaRecepcion.sql" />
     <Build Include="Contruccion\AlmacenEntregaRecepcionProducto.sql" />
@@ -104,6 +104,12 @@
     <Build Include="Contruccion\RequisicionAutorizacion.sql" />
     <Build Include="Contruccion\RequisicionAutorizacionProducto.sql" />
     <Build Include="Contruccion\RequisicionProducto.sql" />
+    <Build Include="Contruccion\CProductoUnidadMedida.sql" />
+    <Build Include="Contruccion\CProductoCategoria.sql" />
+    <Build Include="Contruccion\CProductoServicioTipo.sql" />
+    <Build Include="Contruccion\CProductoLinea.sql" />
+    <Build Include="Contruccion\CProductoAsociado.sql" />
+    <Build Include="Contruccion\CProducto.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sagas.MainModule.refactorlog" />
