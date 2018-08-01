@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Requisicion.aspx.cs" Inherits="Web.MainModule.Requisicion" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Requisicion.aspx.cs" Inherits="Web.MainModule.Requisicion.Vista.Requisicion" %>
 
 <asp:Content ID="ContentRequisicion" ContentPlaceHolderID="ctRequisicion" runat="server">
     <form runat="server">
@@ -124,7 +124,7 @@
                                                             <label>Tipo</label>
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label ID="lbldgTipo" runat="server" Text='<%# Eval("TipoProducto") %>'  />
+                                                            <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto") %>'  />
                                                         </ItemTemplate>
                                                     </asp:TemplateColumn>
                                                     <asp:TemplateColumn>
@@ -133,7 +133,7 @@
                                                             <label>Producto</label>
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label ID="lbldgProducto" runat="server" Text='<%# Eval("Prodcuto") %>'></asp:Label> />
+                                                            <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Prodcuto") %>'></asp:Label> />
                                                         </ItemTemplate>
                                                     </asp:TemplateColumn>
                                                     <asp:TemplateColumn>
@@ -142,7 +142,7 @@
                                                             <label>Cantidad</label>
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Eval("Cantidad") %>' />
+                                                            <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("Cantidad") %>' />
                                                         </ItemTemplate>
                                                     </asp:TemplateColumn>
                                                     <asp:TemplateColumn>
@@ -151,7 +151,7 @@
                                                             <label>Unidad</label>
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Eval("Unidad") %>' />
+                                                            <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
                                                         </ItemTemplate>
                                                     </asp:TemplateColumn>
                                                     <asp:TemplateColumn>
@@ -160,7 +160,7 @@
                                                             <label>Aplicación</label>
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Eval("Aplicacion") %>' />
+                                                            <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
                                                         </ItemTemplate>
                                                     </asp:TemplateColumn>
                                                     <asp:TemplateColumn>

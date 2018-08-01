@@ -7,11 +7,12 @@ using System.Web.UI.WebControls;
 using Security.MainModule.Token_Service;
 using System.Security.Claims;
 
-namespace Web.MainModule
+namespace Web.MainModule.Requisicion.Vista
 {
-    public partial class Requisicion : System.Web.UI.Page
+    public partial class Requisicion : Page
     {
         string _tok = string.Empty;
+        List<Model.RequisicionProductoDTO> LProductos;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -43,7 +44,7 @@ namespace Web.MainModule
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            
+            //LProductos = new Serivicio.RequsicionServicio().GenerarLista(LProductos, new Serivicio.RequsicionServicio().CrearProductoLocal())
         }
 
         protected void BtnCrear_Click(object sender, EventArgs e)

@@ -7,7 +7,7 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Web.MainModule {
+namespace Web.MainModule.Requisicion.Vista {
     
     
     public partial class Requisicion {
