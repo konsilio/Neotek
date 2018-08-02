@@ -41,7 +41,7 @@
                                             <div class="form-group">
                                                 <%--Fecha requerida--%>
                                                 <label class="card-inside-title">Fecha requerida:</label>
-                                                <input type="text" class="form-control datetimepicker" placeholder="Fecha requerida...">
+                                                <input runat="server" id="txtFechaRequerida" type="text" class="form-control datetimepicker" placeholder="Fecha requerida...">
                                             </div>
                                         </div>
                                         <div class="col-lg-3 col-md-12">
@@ -191,7 +191,25 @@
                                             <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Regresar" OnClick="btnRegresar_Click" />
                                         </div>
                                         <div class="col-lg-6 col-md-12" align="right">
-                                            <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Crear" OnClick="BtnCrear_Click" />
+                                            <asp:Button ID="BtnCrear" CssClass="btn btn-primary" data-toggle="modal" runat="server" Text="Crear" OnClick="BtnCrear_Click" />
+                                            <div class="modal fade" id="ModalNumRequi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Requisicon exitosa</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <asp:Label runat="server" ID="lblNoRequisicion" ></asp:Label>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Application.MainModule.DTOs.Respuesta
+namespace Web.MainModule.Requisicion.Model
 {
-    public class RespuestaRequisicionDto 
+    public class RespuestaRequisicionDto
     {
         public int IdRequisicion { get; set; }
         public string NumRequisicion { get; set; }

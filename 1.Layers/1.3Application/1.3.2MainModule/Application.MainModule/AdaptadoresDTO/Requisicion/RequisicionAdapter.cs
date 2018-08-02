@@ -37,7 +37,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
         {
             Sagas.MainModule.Entidades.Requisicion requiscionDTO = new Sagas.MainModule.Entidades.Requisicion()
             {
-                IdRequisicion = _requisicion.IdRequisicion,
+                //IdRequisicion = _requisicion.IdRequisicion,
                 IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
                 IdEmpresa = _requisicion.IdEmpresa,
                 NumeroRequisicion = _requisicion.NumeroRequisicion,
@@ -45,13 +45,13 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 RequeridoEn = _requisicion.RequeridoEn,
                 IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
                 FechaRequerida = _requisicion.FechaRequerida,
-                FechaRegistro = _requisicion.FechaRegistro,
-                IdUsuarioRevision = _requisicion.IdUsuarioRevision,
-                OpinionAlmacen = _requisicion.OpinionAlmacen,
-                FechaRevision = _requisicion.FechaRevision,
-                MotivoCancelacion = _requisicion.MotivoCancelacion,
-                IdUsuarioAutorizacion = _requisicion.IdUsuarioAutorizacion,
-                FechaAutorizacion = _requisicion.FechaAutorizacion
+                FechaRegistro = _requisicion.FechaRegistro
+                //,IdUsuarioRevision = _requisicion.IdUsuarioRevision,
+                //OpinionAlmacen = _requisicion.OpinionAlmacen,
+                //FechaRevision = _requisicion.FechaRevision,
+                //MotivoCancelacion = _requisicion.MotivoCancelacion,
+                //IdUsuarioAutorizacion = _requisicion.IdUsuarioAutorizacion,
+                //FechaAutorizacion = _requisicion.FechaAutorizacion
             };
             return requiscionDTO;
         }
@@ -60,6 +60,51 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             List<Sagas.MainModule.Entidades.Requisicion> requisicionesDTO = _requisiciones.ToList().Select(x => FromDTO(x)).ToList();
             return requisicionesDTO;
         }
-
+        public static Sagas.MainModule.Entidades.Requisicion UnirFromDTO(RequisicionDTO _requisicion, List<RequisicionProductoDTO> _prod)
+        {
+            Sagas.MainModule.Entidades.Requisicion requiscionDTO = new Sagas.MainModule.Entidades.Requisicion()
+            {
+                //IdRequisicion = _requisicion.IdRequisicion,
+                IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
+                IdEmpresa = _requisicion.IdEmpresa,
+                NumeroRequisicion = _requisicion.NumeroRequisicion,
+                MotivoRequisicion = _requisicion.MotivoRequisicion,
+                RequeridoEn = _requisicion.RequeridoEn,
+                IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
+                FechaRequerida = _requisicion.FechaRequerida,
+                FechaRegistro = _requisicion.FechaRegistro,
+                //IdUsuarioRevision = _requisicion.IdUsuarioRevision,
+                //OpinionAlmacen = _requisicion.OpinionAlmacen,
+                //FechaRevision = _requisicion.FechaRevision,
+                //MotivoCancelacion = _requisicion.MotivoCancelacion,
+                //IdUsuarioAutorizacion = _requisicion.IdUsuarioAutorizacion,
+                //FechaAutorizacion = _requisicion.FechaAutorizacion,
+                Productos = RequisicionProductoAdapter.FromDTO(_prod)
+            };
+            return requiscionDTO;
+        }
+        public static Sagas.MainModule.Entidades.Requisicion FromEDTO(RequisicionEDTO _requisicion)
+        {
+            Sagas.MainModule.Entidades.Requisicion requiscionDTO = new Sagas.MainModule.Entidades.Requisicion()
+            {
+                //IdRequisicion = _requisicion.IdRequisicion,
+                IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
+                IdEmpresa = _requisicion.IdEmpresa,
+                NumeroRequisicion = Servicios.FolioServicio.GenerarNumeroRequisicion(_requisicion),
+            MotivoRequisicion = _requisicion.MotivoRequisicion,
+                RequeridoEn = _requisicion.RequeridoEn,
+                IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
+                FechaRequerida = _requisicion.FechaRequerida,
+                FechaRegistro = _requisicion.FechaRegistro,
+                //IdUsuarioRevision = _requisicion.IdUsuarioRevision,
+                //OpinionAlmacen = _requisicion.OpinionAlmacen,
+                //FechaRevision = _requisicion.FechaRevision,
+                //MotivoCancelacion = _requisicion.MotivoCancelacion,
+                //IdUsuarioAutorizacion = _requisicion.IdUsuarioAutorizacion,
+                //FechaAutorizacion = _requisicion.FechaAutorizacion,
+                Productos = RequisicionProductoAdapter.FromDTO(_requisicion.ListaProductos)
+            };
+            return requiscionDTO;
+        }
     }
 }

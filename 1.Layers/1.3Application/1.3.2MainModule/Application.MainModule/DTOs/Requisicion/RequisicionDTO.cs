@@ -23,5 +23,6 @@ namespace Application.MainModule.DTOs.Requisicion
         public string MotivoCancelacion { get; set; }
         public Nullable<int> IdUsuarioAutorizacion { get; set; }
         public Nullable<System.DateTime> FechaAutorizacion { get; set; }
+        
     }
 }

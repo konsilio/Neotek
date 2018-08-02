@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using Web.MainModule.Agente;
 
 namespace Web.MainModule.Requisicion.Serivicio
 {
     public class RequsicionServicio
     {
+        public Model.RespuestaRequisicionDto GuardarRequisicion(Model.RequisicionEDTO Req, string tkn)
+        {
+            var respuestaReq = new AgenteServicios();
+            respuestaReq.GuardarRequisicon(Req, tkn);
+            return respuestaReq._respuestaRequisicion;
+        }
+        #region Operadores
         public List<Model.RequisicionProductoDTO> GenerarLista(List<Model.RequisicionProductoDTO> lP, Model.RequisicionProductoDTO p)
         {
             lP.Add(p);
@@ -28,6 +36,7 @@ namespace Web.MainModule.Requisicion.Serivicio
         {
             return new Model.RequisicionProductoGridDTO
             {
+                IdRequisicion = 0,
                 IdTipoProducto = int.Parse(_tipoProducto.SelectedItem.Value),
                 TipoProducto = _tipoProducto.SelectedItem.Text,
                 IdProducto = int.Parse(_producto.SelectedItem.Value),
@@ -35,9 +44,14 @@ namespace Web.MainModule.Requisicion.Serivicio
                 IdCentroCosto = int.Parse(_centroCosto.SelectedItem.Value),
                 CentroCosto = _centroCosto.SelectedItem.Text,
                 Cantidad = _cantidad,
-                Aplicacion =_aplicacion,
-                IdUnidad = 1, //Falta metodo para buscar la unidad con el ID del prodcuto
-                Unidad = "Unidad" //Falta metodo para buscar la unidad con el ID del prodcuto
+                Aplicacion = _aplicacion,
+                IdUnidad = 1, //Falta servicio para buscar la unidad con el ID del prodcuto
+                Unidad = "Unidad", //Falta servicio para buscar la unidad con el ID del prodcuto
+                RevisionFisica = false,
+                CantidadAlmacenActual = 0,
+                CantidadAComprar = 0,
+                AutorizaEntrega = false,
+                AutorizaCompra = false
             };
         }
         public List<Model.RequisicionProductoGridDTO> GenerarListaGrid(List<Model.RequisicionProductoGridDTO> LProductos, Model.RequisicionProductoGridDTO Producto)
@@ -45,10 +59,78 @@ namespace Web.MainModule.Requisicion.Serivicio
             LProductos.Add(Producto);
             return LProductos;
         }
+        #endregion
 
-        public bool GuardarRequisicion(Model.RequisicionDTO Req, List<Model.RequisicionProductoDTO> lProdcutos)
+        #region Adaptadores
+        public Model.RequisicionProductoDTO ToDTO (Model.RequisicionProductoGridDTO _ReqGridDTO)
         {
-            return true;
-        }        
+            Model.RequisicionProductoDTO DTO = new Model.RequisicionProductoDTO()
+            {
+                IdRequisicion = _ReqGridDTO.IdRequisicion,
+                IdProducto = _ReqGridDTO.IdProducto,
+                IdTipoProducto = _ReqGridDTO.IdTipoProducto,
+                IdCentroCosto = _ReqGridDTO.IdCentroCosto,
+                Cantidad = _ReqGridDTO.Cantidad,
+                Aplicacion = _ReqGridDTO.Aplicacion,
+                RevisionFisica =_ReqGridDTO.RevisionFisica,
+                CantidadAlmacenActual = _ReqGridDTO.CantidadAlmacenActual,
+                CantidadAComprar = _ReqGridDTO.CantidadAComprar,
+                AutorizaEntrega = _ReqGridDTO.AutorizaEntrega,
+                AutorizaCompra = _ReqGridDTO.AutorizaCompra                
+            };
+            return DTO;
+        }
+        public Model.RequisicionProductoEDTO ToEDTO(Model.RequisicionProductoDTO _ReqGridDTO)
+        {
+            Model.RequisicionProductoEDTO EDTO = new Model.RequisicionProductoEDTO()
+            {
+                IdRequisicion = _ReqGridDTO.IdRequisicion,
+                IdProducto = _ReqGridDTO.IdProducto,
+                IdTipoProducto = _ReqGridDTO.IdTipoProducto,
+                IdCentroCosto = _ReqGridDTO.IdCentroCosto,
+                Cantidad = _ReqGridDTO.Cantidad,
+                Aplicacion = _ReqGridDTO.Aplicacion,
+                RevisionFisica = _ReqGridDTO.RevisionFisica,
+                CantidadAlmacenActual = _ReqGridDTO.CantidadAlmacenActual,
+                CantidadAComprar = _ReqGridDTO.CantidadAComprar,
+                AutorizaEntrega = _ReqGridDTO.AutorizaEntrega,
+                AutorizaCompra = _ReqGridDTO.AutorizaCompra
+            };
+            return EDTO;
+        }
+        public Model.RequisicionEDTO UnirDtos(Model.RequisicionDTO _reqDto, List<Model.RequisicionProductoDTO> _lProdDto)
+        {
+            Model.RequisicionEDTO EDTO = new Model.RequisicionEDTO()
+            {
+                IdRequisicion = _reqDto.IdRequisicion,
+                IdUsuarioSolicitante = _reqDto.IdUsuarioSolicitante,
+                IdEmpresa = _reqDto.IdEmpresa,
+                NumeroRequisicion = _reqDto.NumeroRequisicion,
+                MotivoRequisicion = _reqDto.MotivoRequisicion,
+                RequeridoEn = _reqDto.RequeridoEn,
+                IdRequisicionEstatus = _reqDto.IdRequisicionEstatus,
+                FechaRequerida = _reqDto.FechaRequerida,
+                FechaRegistro = _reqDto.FechaRegistro,
+                IdUsuarioRevision = _reqDto.IdUsuarioRevision,
+                OpinionAlmacen = _reqDto.OpinionAlmacen,
+                FechaRevision = _reqDto.FechaRevision,
+                MotivoCancelacion = _reqDto.MotivoCancelacion,
+                IdUsuarioAutorizacion = _reqDto.IdUsuarioAutorizacion,
+                FechaAutorizacion = _reqDto.FechaAutorizacion,
+                ListaProductos = ToEDTO(_lProdDto)
+            };
+            return EDTO;
+        }
+        public List<Model.RequisicionProductoDTO> ToDTO(List<Model.RequisicionProductoGridDTO> _reqProdDTO)
+        {
+            List<Model.RequisicionProductoDTO> reqProdDTO = _reqProdDTO.ToList().Select(x => ToDTO(x)).ToList();
+            return reqProdDTO;
+        }
+        public List<Model.RequisicionProductoEDTO> ToEDTO(List<Model.RequisicionProductoDTO> _reqProdDTO)
+        {
+            List<Model.RequisicionProductoEDTO> reqProdDTO = _reqProdDTO.ToList().Select(x => ToEDTO(x)).ToList();
+            return reqProdDTO;
+        }
+        #endregion
     }
 }

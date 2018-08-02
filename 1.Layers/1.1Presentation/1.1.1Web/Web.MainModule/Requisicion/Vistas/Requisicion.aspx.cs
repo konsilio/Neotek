@@ -19,7 +19,7 @@ namespace Web.MainModule.Requisicion.Vista
             {                
                 if (Session["StringToken"] != null)
                 {
-                    _tok = Session["StringToken"].ToString();
+                    _tok  =  Session["StringToken"].ToString();
                     Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
                     if (Convert.ToBoolean(_autenticado.Value))
                     {
@@ -52,12 +52,42 @@ namespace Web.MainModule.Requisicion.Vista
 
         protected void BtnCrear_Click(object sender, EventArgs e)
         {
-
+            Serivicio.RequsicionServicio serv = new Serivicio.RequsicionServicio();
+            if (ValidarCampos())
+            {
+                Model.RequisicionEDTO Edto = serv.UnirDtos(new Model.RequisicionDTO {
+                    //IdRequisicion = 0,
+                    IdUsuarioSolicitante = 1,
+                    IdEmpresa = 1,
+                    NumeroRequisicion = string.Empty,
+                    IdRequisicionEstatus = 1,
+                    FechaRequerida = DateTime.Today.AddDays(5),
+                    MotivoRequisicion = txtMotivoCompra.Text,
+                    RequeridoEn = txtRequeridoEn.Text,
+                    FechaRegistro = DateTime.Today,
+                    //IdUsuarioRevision = 0,
+                    //OpinionAlmacen = string.Empty,
+                    //MotivoCancelacion = string.Empty,
+                    //IdUsuarioAutorizacion = 0,
+                    //FechaAutorizacion = DateTime.Today,
+                    //FechaRevision = DateTime.Today
+                    }, serv.ToDTO((List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"]));
+                var respuesta = serv.GuardarRequisicion(Edto, Session["StringToken"].ToString());
+                if (respuesta.Exito)
+                {
+                    lblNombreEmpresa.Text = respuesta.Mensaje;
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "none", "<script>$('#ModalNumRequi').modal('show');</script>", false);
+                }
+            }
         }
 
         protected void btnRegresar_Click(object sender, EventArgs e)
         {
 
+        }
+        private bool ValidarCampos()
+        {
+            return true;
         }
     }
 }

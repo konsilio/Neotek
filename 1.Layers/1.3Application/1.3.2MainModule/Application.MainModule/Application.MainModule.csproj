@@ -59,6 +59,7 @@
     <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
     <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionEDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionProductoDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaDto.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaRequisicionDto.cs" />
@@ -78,15 +79,15 @@
     <Compile Include="Servicios\AccesoADatos\UsuarioACDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
     <Compile Include="Servicios\Catalogos\EmpresaServicio.cs" />
+    <Compile Include="Servicios\FolioServicio.cs" />
+    <Compile Include="Servicios\Requisicion\RequisicionServicio.cs" />
     <Compile Include="Servicios\Seguridad\AutenticarServicio.cs" />
     <Compile Include="Servicios\Seguridad\UsuarioAplicacionServicio.cs" />
     <Compile Include="UnitOfWork\GenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\IGenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\SagasDataUow.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Servicios\Requisicion\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\..\1.4Domain\1.4.2SagasMainModule\Sagas.MainModule\Sagas.MainModule.csproj">
       <Project>{ff128402-ecef-4aae-a189-3a61e225b25e}</Project>

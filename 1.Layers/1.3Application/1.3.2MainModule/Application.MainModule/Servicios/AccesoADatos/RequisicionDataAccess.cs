@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sagas.MainModule.Entidades;
 using Application.MainModule.UnitOfWork;
 using Application.MainModule.DTOs.Respuesta;
 
@@ -17,28 +16,53 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-        public void Acualizar(Requisicion req)
+        public void Acualizar(Sagas.MainModule.Entidades.Requisicion req)
         {
-            uow.Repository<Requisicion>().Update(req);
+            uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Update(req);
         }
-        public Requisicion Buscar(int IdRequisicion)
+        public Sagas.MainModule.Entidades.Requisicion Buscar(int IdRequisicion)
         {
-            return uow.Repository<Requisicion>().GetSingle(x => x.IdRequisicion.Equals(IdRequisicion) && x.IdRequisicionEstatus.Equals(0));
+            return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetSingle(x => x.IdRequisicion.Equals(IdRequisicion) && x.IdRequisicionEstatus.Equals(0));
         }
-        public List<Requisicion> BuscarTodas()
+        public List<Sagas.MainModule.Entidades.Requisicion> BuscarTodas()
         {
-            return uow.Repository<Requisicion>().GetAll().ToList();
+            return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetAll().ToList();
         }
-        public RespuestaRequisicionDto Insertar(Requisicion _req)
+        public RespuestaRequisicionDto InsertarNueva(Sagas.MainModule.Entidades.Requisicion _req)
         {
             RespuestaRequisicionDto _respuesta = new RespuestaRequisicionDto();
             using (uow)
             {
                 try
-                {                    
-                    uow.Repository<Requisicion>().Insert(_req);
+                {
+                    _req.RequisicionEstatus = new Sagas.MainModule.Entidades.RequisicionEstatus()
+                    {
+                        IdRequisicionEstatus = 1,
+                        Estatus = "Iniciada"
+                    };
+                    uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Insert(_req);
                     uow.SaveChanges();
                     _respuesta.IdRequisicion = _req.IdRequisicion;
+                    _respuesta.Exito = true;
+                    _respuesta.Mensaje = _req.NumeroRequisicion;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = ex.Message;
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaRequisicionDto Actualizar(Sagas.MainModule.Entidades.Requisicion _req)
+        {
+            RespuestaRequisicionDto _respuesta = new RespuestaRequisicionDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Update(_req);
+                    uow.SaveChanges();
                     _respuesta.Exito = true;
                     _respuesta.Mensaje = string.Empty;
                 }
@@ -49,28 +73,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
             }
             return _respuesta;
-        }
-
-
-        public RespuestaOperacionDto Actualizar(ZonaMenosEconomica zona)
-        {
-            using (uow)
-            {
-                try
-                {
-                    uow.Repository<ZonaMenosEconomica>().Update(zona);
-                    uow.SaveChanges();
-                    _respuesta.Guardado = true;
-                    _respuesta.ModeloValido = true;
-                }
-                catch (Exception ex)
-                {
-                    _respuesta.Guardado = false;
-                    _respuesta.Mensaje = ex.Message;
-                }
-            }
-
-            return _respuesta;
-        }
+        }        
     }
 }

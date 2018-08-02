@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Web.MainModule.Seguridad.Model;
+using Web.MainModule.Requisicion.Model;
 
 using System.Configuration;
 
@@ -18,8 +19,10 @@ namespace Web.MainModule.Agente
         private string ApiListaEmpresasLogin;
         private string ApiCompras;
         private string ApiListaEmpresas;
+        private string ApiRequisicion;
 
         public RespuestaAutenticacionDto _respuestaAutenticacion;
+        public RespuestaRequisicionDto _respuestaRequisicion;
         public List<EmpresaDTO> _listaEmpresasLogin;
         public List<EmpresaDTO> _listaEmpresas;
         public ComprasDTO _respuestacompra;
@@ -69,7 +72,7 @@ namespace Web.MainModule.Agente
                 _listaEmpresas = emp;
             }
         }
-
+        #region MetodoComentado
         //private async Task ListaEmpresasLog()
         //{
         //    using (var client = new HttpClient())
@@ -98,6 +101,7 @@ namespace Web.MainModule.Agente
         //        _listaEmpresasLogin = emp;
         //    }
         //}     
+        #endregion
         public void Acceder(AutenticacionDto autDto)
         {
             this.ApiLogin = ConfigurationManager.AppSettings["PostLogin"];
@@ -135,8 +139,7 @@ namespace Web.MainModule.Agente
             }
         }
         #endregion
-
-        #region Compras / Requisicion
+        #region Compras
         public void Compras(string token)
         {
             this.ApiCompras = ConfigurationManager.AppSettings["PostCompraGas"];
@@ -174,8 +177,46 @@ namespace Web.MainModule.Agente
                 _respuestacompra = respuesta;
             }
         }
-        
+
+        #endregion
+        #region Requisicion
+        public void GuardarRequisicon(RequisicionEDTO _requi, string token)
+        {
+            this.ApiRequisicion = ConfigurationManager.AppSettings["PostRequisicion"];
+            SaveRequisicon(_requi, token).Wait();
+        }
+        private async Task SaveRequisicon(RequisicionEDTO _requi, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaRequisicionDto resp = new RespuestaRequisicionDto();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        resp = await response.Content.ReadAsAsync<RespuestaRequisicionDto>();
+                    }
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaRequisicion = resp;
+            }
+        }
         #endregion
     }
-
 }

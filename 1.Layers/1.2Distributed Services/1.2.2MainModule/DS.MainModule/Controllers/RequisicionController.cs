@@ -5,20 +5,26 @@ using System.Web;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.Flujos;
 
 namespace DS.MainModule.Controllers
 {
     [Authorize]
     [RoutePrefix("api/requisicion")]
-    public class RequisicionController:ApiController
+    public class RequisicionController : ApiController
     {
-        private Requisicion _Requisicion;
-       
-        [Route("savereq")]
-        public HttpResponseMessage PutRequisicion(Requisicion req)
-        {
+        private Requisicion _requisicion;
 
+        public RequisicionController()
+        {
+            _requisicion = new Requisicion();
+        }
+       
+        [Route("guardarrquisicion")]
+        public HttpResponseMessage PostRequisicion(RequisicionEDTO req)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _requisicion.InsertRequisicionNueva(req));   
         }
     }
 }

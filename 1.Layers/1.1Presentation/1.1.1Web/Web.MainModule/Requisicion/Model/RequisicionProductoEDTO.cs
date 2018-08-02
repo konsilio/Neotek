@@ -5,8 +5,7 @@ using System.Web;
 
 namespace Web.MainModule.Requisicion.Model
 {
-    [Serializable]
-    public class RequisicionProductoDTO
+    public class RequisicionProductoEDTO
     {
         public int IdRequisicion { get; set; }
         public int IdProducto { get; set; }

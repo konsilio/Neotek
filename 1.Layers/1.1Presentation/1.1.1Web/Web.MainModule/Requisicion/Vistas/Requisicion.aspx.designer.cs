@@ -40,6 +40,15 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.Label lblIdRequisicion;
         
         /// <summary>
+        /// Control txtFechaRequerida.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFechaRequerida;
+        
+        /// <summary>
         /// Control txtSolicitante.
         /// </summary>
         /// <remarks>
@@ -146,5 +155,14 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnCrear;
+        
+        /// <summary>
+        /// Control lblNoRequisicion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNoRequisicion;
     }
 }
