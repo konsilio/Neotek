@@ -8,5 +8,6 @@ namespace Web.MainModule.Requisicion.Model
     public class RequisicionEDTO : RequisicionDTO
     {
         public List<RequisicionProductoEDTO> ListaProductos { get; set; }
+
     }
 }

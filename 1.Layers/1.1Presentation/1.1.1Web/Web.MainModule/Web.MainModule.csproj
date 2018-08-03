@@ -3907,6 +3907,7 @@
     <Compile Include="Requisicion\Model\RequicisionProductoGridDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionEDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionProductoEDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisiconEstatus.cs" />
     <Compile Include="Requisicion\Model\RespuestaRequisicionDto.cs" />
     <Compile Include="Requisicion\Serivicio\RequsicionServicio.cs" />
     <Compile Include="Requisicion\Vistas\Requisicion.aspx.cs">

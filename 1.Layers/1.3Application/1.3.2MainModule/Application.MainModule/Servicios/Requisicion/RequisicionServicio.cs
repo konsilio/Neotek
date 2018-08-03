@@ -14,23 +14,27 @@ namespace Application.MainModule.Servicios.Requisicion
     {
         public static RespuestaRequisicionDto GuardarRequisicionNueva(RequisicionEDTO _req)
         {
-
-           
             var requisicionResp = new RequisicionDataAccess().InsertarNueva(RequisicionAdapter.FromEDTO(_req));
-            if (requisicionResp != null)            
+            if (requisicionResp != null)
                 return new RespuestaRequisicionDto()
                 {
                     IdRequisicion = requisicionResp.IdRequisicion,
                     NumRequisicion = requisicionResp.NumRequisicion,
                     Exito = true,
                     Mensaje = requisicionResp.Mensaje
-                };            
+                };
             else
                 return new RespuestaRequisicionDto()
                 {
+                    IdRequisicion = 0,
+                    NumRequisicion = string.Empty,
                     Exito = false,
                     Mensaje = "Error" //Agregar mensaje espesifico en Exceptions
-                };            
+                };
+        }
+        public static List<RequisicionDTO> BuscarRequisicionPorIdEmpresa(Int16 _IdEmpresa)
+        {
+            return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas().Where(x => x.IdEmpresa.Equals(_IdEmpresa)).ToList());
         }
     }
 }

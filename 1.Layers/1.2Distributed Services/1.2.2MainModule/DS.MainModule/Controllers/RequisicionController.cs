@@ -21,10 +21,15 @@ namespace DS.MainModule.Controllers
             _requisicion = new Requisicion();
         }
        
-        [Route("guardarrquisicion")]
+        [Route("guardar/requisicion")]
         public HttpResponseMessage PostRequisicion(RequisicionEDTO req)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.InsertRequisicionNueva(req));   
+        }
+        [Route("buscar/requisiciones/{idEmpresa}")]
+        public HttpResponseMessage GetRequisicionesByIdEmpresa(short idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _requisicion.BuscarRequisicionesPorEmpresa(idEmpresa));
         }
     }
 }

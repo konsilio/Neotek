@@ -12,10 +12,11 @@
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item active">
                                     <asp:Label runat="server" ID="lblRuta" Text="Compras / Ordern de Compra "></asp:Label>
-                                </li>
-                                <%--<asp:Label ID="lblMensaje" runat="server"></asp:Label>--%>
-                                <%--<asp:Button runat="server" ID="btnCompra" OnClick="btnCompra_Click" CssClass="form-control" Text="Compras" />--%>
+                                </li>                               
                             </ul>
+                        </div>
+                        <div class="row clearfix">
+                           
                         </div>
                     </div>
                 </div>

@@ -15,5 +15,9 @@ namespace Application.MainModule.Flujos
         {            
             return RequisicionServicio.GuardarRequisicionNueva(_req);
         }
+        public List<RequisicionDTO> BuscarRequisicionesPorEmpresa(Int16 idEmpresa)
+        {
+            return RequisicionServicio.BuscarRequisicionPorIdEmpresa(idEmpresa);
+        }
     }
 }

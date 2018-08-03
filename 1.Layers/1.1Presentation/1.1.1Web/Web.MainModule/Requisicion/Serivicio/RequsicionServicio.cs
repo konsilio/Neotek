@@ -9,13 +9,13 @@ namespace Web.MainModule.Requisicion.Serivicio
 {
     public class RequsicionServicio
     {
+        #region Operadores
         public Model.RespuestaRequisicionDto GuardarRequisicion(Model.RequisicionEDTO Req, string tkn)
         {
             var respuestaReq = new AgenteServicios();
             respuestaReq.GuardarRequisicon(Req, tkn);
             return respuestaReq._respuestaRequisicion;
-        }
-        #region Operadores
+        }        
         public List<Model.RequisicionProductoDTO> GenerarLista(List<Model.RequisicionProductoDTO> lP, Model.RequisicionProductoDTO p)
         {
             lP.Add(p);
@@ -26,13 +26,13 @@ namespace Web.MainModule.Requisicion.Serivicio
             return new Model.RequisicionProductoDTO
             {
                 IdProducto = _idProducto,
-                IdTipoProducto =_idTipoProducto,
-                IdCentroCosto =_idCentroCosto,
+                IdTipoProducto = _idTipoProducto,
+                IdCentroCosto = _idCentroCosto,
                 Cantidad = _cantidad,
                 Aplicacion = _aplicacion
             };
         }
-        public Model.RequisicionProductoGridDTO GenerarProductoGrid( DropDownList _tipoProducto ,DropDownList _producto, DropDownList _centroCosto, string _aplicacion, decimal _cantidad)
+        public Model.RequisicionProductoGridDTO GenerarProductoGrid(DropDownList _tipoProducto, DropDownList _producto, DropDownList _centroCosto, string _aplicacion, decimal _cantidad)
         {
             return new Model.RequisicionProductoGridDTO
             {
@@ -58,6 +58,12 @@ namespace Web.MainModule.Requisicion.Serivicio
         {
             LProductos.Add(Producto);
             return LProductos;
+        }
+        public List<Model.RequisicionDTO> BuscarRequisiciones(short idEmpresa, string token)
+        {
+            var respuestaReq = new AgenteServicios();
+            respuestaReq.BuscarRequisiciones(idEmpresa, token);
+            return respuestaReq._listaRequisiciones;
         }
         #endregion
 

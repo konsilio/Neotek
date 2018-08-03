@@ -24,6 +24,7 @@ namespace Web.MainModule
                     if (Convert.ToBoolean(_autenticado.Value))
                     {
                         CargarEmpresas();
+                        CargarRequisiciones();
                     }
                     else
                         Salir();
@@ -54,6 +55,11 @@ namespace Web.MainModule
             ddlEmpresas.DataTextField = "NombreComercial";
             ddlEmpresas.DataBind();
             ddlEmpresas.SelectedValue = "-1";
+        }
+        private void CargarRequisiciones()
+        {
+            dgRequisisiones.DataSource = new Requisicion.Serivicio.RequsicionServicio().BuscarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value), Session["StringToken"].ToString());
+            dgRequisisiones.DataBind();
         }
     }
 }

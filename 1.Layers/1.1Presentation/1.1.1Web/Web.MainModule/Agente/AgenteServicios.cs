@@ -26,6 +26,7 @@ namespace Web.MainModule.Agente
         public List<EmpresaDTO> _listaEmpresasLogin;
         public List<EmpresaDTO> _listaEmpresas;
         public ComprasDTO _respuestacompra;
+        public List<RequisicionDTO> _listaRequisiciones;
 
         public AgenteServicios()
         {
@@ -49,7 +50,7 @@ namespace Web.MainModule.Agente
                 List<EmpresaDTO> emp = new List<EmpresaDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
-                if(!string.IsNullOrEmpty(token))
+                if (!string.IsNullOrEmpty(token))
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 try
                 {
@@ -58,7 +59,6 @@ namespace Web.MainModule.Agente
                         emp = await response.Content.ReadAsAsync<List<EmpresaDTO>>();
                     else
                     {
-                        //respuesta.Mensaje = "La respuesta a la petición no fue exitosa");
                         client.CancelPendingRequests();
                         client.Dispose();
                     }
@@ -72,36 +72,7 @@ namespace Web.MainModule.Agente
                 _listaEmpresas = emp;
             }
         }
-        #region MetodoComentado
-        //private async Task ListaEmpresasLog()
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        List<EmpresaDTO> emp = new List<EmpresaDTO>();
-        //        client.BaseAddress = new Uri(UrlBase);
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
-        //        try
-        //        {
-        //            HttpResponseMessage response = await client.GetAsync(ApiListaEmpresasLogin).ConfigureAwait(false);
-        //            if (response.IsSuccessStatusCode)
-        //                emp = await response.Content.ReadAsAsync<List<EmpresaDTO>>();
-        //            else
-        //            {
-        //                //respuesta.Mensaje = "La respuesta a la petición no fue exitosa");
-        //                client.CancelPendingRequests();
-        //                client.Dispose();
-        //            }
-        //        }
-        //        catch (Exception)
-        //        {
-        //            emp = new List<EmpresaDTO>();
-        //            client.CancelPendingRequests();
-        //            client.Dispose(); ;
-        //        }
-        //        _listaEmpresasLogin = emp;
-        //    }
-        //}     
-        #endregion
+   
         public void Acceder(AutenticacionDto autDto)
         {
             this.ApiLogin = ConfigurationManager.AppSettings["PostLogin"];
@@ -112,19 +83,16 @@ namespace Web.MainModule.Agente
             using (var client = new HttpClient())
             {
                 RespuestaAutenticacionDto respuesta = new RespuestaAutenticacionDto();
-
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 try
                 {
                     HttpResponseMessage response = await client.PostAsJsonAsync(ApiLogin, autDto).ConfigureAwait(false);
-
                     if (response.IsSuccessStatusCode)
                         respuesta = await response.Content.ReadAsAsync<RespuestaAutenticacionDto>();
                     else
                     {
-                        //respuesta.Mensaje = "La respuesta a la petición no fue exitosa");
                         client.CancelPendingRequests();
                         client.Dispose();
                     }
@@ -177,8 +145,8 @@ namespace Web.MainModule.Agente
                 _respuestacompra = respuesta;
             }
         }
-
         #endregion
+
         #region Requisicion
         public void GuardarRequisicon(RequisicionEDTO _requi, string token)
         {
@@ -215,6 +183,40 @@ namespace Web.MainModule.Agente
                     client.Dispose();
                 }
                 _respuestaRequisicion = resp;
+            }
+        }
+
+        public void BuscarRequisiciones(short idEmpresa, string tkn)
+        {
+            this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionesByIdEmpresa"];
+            ListaRequisicionesPorIdEmpresa(idEmpresa, tkn).Wait();
+        }
+        private async Task ListaRequisicionesPorIdEmpresa(short idEmpresa, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RequisicionDTO> emp = new List<RequisicionDTO>();
+                client.BaseAddress = new Uri(UrlBase);             
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiRequisicion + idEmpresa.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<RequisicionDTO>>();
+                    else
+                    {                        
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<RequisicionDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaRequisiciones = emp;
             }
         }
         #endregion

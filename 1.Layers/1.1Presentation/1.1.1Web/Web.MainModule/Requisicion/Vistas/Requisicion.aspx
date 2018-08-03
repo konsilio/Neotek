@@ -66,7 +66,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
+                                    <div class="row clearfix" runat="server" id="divDatos1">
                                         <div class="col-lg-2 col-md-12">
                                             <%--Tipo de compra--%>
                                             <label class="card-inside-title">Tipo de compra:</label>
@@ -100,7 +100,7 @@
                                             </asp:DropDownList>
                                         </div>
                                     </div>
-                                    <div class="row clearfix js-sweetalert">
+                                    <div class="row clearfix js-sweetalert" id="divDatos2" runat="server">
                                         <div class="col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <%--Aplicacion--%>
@@ -116,12 +116,33 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row clearfix" runat="server" id="divOpinion">
+                                        <div class="col-lg-12">
+                                            <div class="card">
+                                                <div class="header">
+                                                    <h2><strong></strong></h2>
+                                                </div>
+                                                <div class="body">
+                                                    <h2 class="card-inside-title">Opinión de Almacen</h2>
+                                                    <div class="row clearfix">
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                <div class="form-line">
+                                                                    <textarea runat="server" id="txtOpinion" rows="4" class="form-control no-resize" placeholder="Porfavor escriba su opinion"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row clearfix">
                                         <div class="body table-responsive">
                                             <!--Data Grid con los productos Agregados -->
-                                            <asp:DataGrid CssClass="table table-hover" runat="server" ID="dgListaproductos" Width="100%" ShowHeader="true" AutoGenerateColumns="false">
+                                            <asp:GridView CssClass="table table-hover" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
                                                 <Columns>
-                                                    <asp:TemplateColumn>
+                                                    <asp:TemplateField>
                                                         <%--Tipo de compra--%>
                                                         <HeaderTemplate>
                                                             <b>Tipo</b>
@@ -129,8 +150,8 @@
                                                         <ItemTemplate>
                                                             <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto") %>' />
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <%--Producto--%>
                                                         <HeaderTemplate>
                                                             <b>Producto</b>
@@ -138,8 +159,8 @@
                                                         <ItemTemplate>
                                                             <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Producto") %>' />
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <%--Cantidad--%>
                                                         <HeaderTemplate>
                                                             <b>Cantidad</b>
@@ -147,8 +168,8 @@
                                                         <ItemTemplate>
                                                             <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("Cantidad") %>' />
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <%--Unidad--%>
                                                         <HeaderTemplate>
                                                             <b>Unidad</b>
@@ -156,8 +177,8 @@
                                                         <ItemTemplate>
                                                             <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <%--Aplicacion--%>
                                                         <HeaderTemplate>
                                                             <b>Aplicación</b>
@@ -165,8 +186,8 @@
                                                         <ItemTemplate>
                                                             <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <%--Accion--%>
                                                         <HeaderTemplate>
                                                             <b>Acción</b>
@@ -181,33 +202,74 @@
                                                                     <span class="icon-name"></span>
                                                             </asp:LinkButton>
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField Visible="false">
+                                                        <%--Almacen--%>
+                                                        <HeaderTemplate>
+                                                            Aplicacion
+                                                        </HeaderTemplate>
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblAlmacen" runat="server" Text='<%# Bind("CantidadAlmacenActual") %>' />
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField Visible="false">
+                                                        <%--Revision Fisica--%>
+                                                        <HeaderTemplate>
+                                                            Revision Fisica
+                                                        </HeaderTemplate>
+                                                        <ItemTemplate>
+                                                            <div class="checkbox">
+                                                                <asp:CheckBox ID="chbRevision" runat="server" Checked="false" />
+                                                            </div>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField Visible="false">
+                                                        <%--Autoriza Entrega--%>
+                                                        <HeaderTemplate>
+                                                            Autoriza entrega
+                                                        </HeaderTemplate>
+                                                        <ItemTemplate>
+                                                            <div class="checkbox">
+                                                                <asp:CheckBox ID="chbAutEntrega" runat="server" Checked="false" />
+                                                            </div>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField Visible="false">
+                                                        <%--Requiere comprar--%>
+                                                        <HeaderTemplate>
+                                                            Requiere comprar
+                                                        </HeaderTemplate>
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblRequiereComp" runat="server"></asp:Label>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField Visible="false">
+                                                        <%--Autoriza Compra--%>
+                                                        <HeaderTemplate>
+                                                            Autoriza Compra
+                                                        </HeaderTemplate>
+                                                        <ItemTemplate>
+                                                            <div class="checkbox">
+                                                                <asp:CheckBox ID="chbAutCompra" runat="server" Checked="false" />
+                                                            </div>
+                                                        </ItemTemplate>
+                                                    </asp:TemplateField>
                                                 </Columns>
-                                            </asp:DataGrid>
+                                            </asp:GridView>
                                         </div>
                                     </div>
                                     <div class="row clearfix">
-                                        <div class="col-lg-6 col-md-12">
+                                        <div class="col-lg-6 col-md-8">
                                             <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Regresar" OnClick="btnRegresar_Click" />
                                         </div>
-                                        <div class="col-lg-6 col-md-12" align="right">
-                                            <asp:Button ID="BtnCrear" CssClass="btn btn-primary" data-toggle="modal" runat="server" Text="Crear" OnClick="BtnCrear_Click" />
-                                            <div class="modal fade" id="ModalNumRequi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Requisicon exitosa</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <asp:Label runat="server" ID="lblNoRequisicion" ></asp:Label>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
-                                                        </div>
-                                                    </div>
+                                        <div class="col-lg-6 col-md-8" align="center">
+                                            <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" Visible="false" />
+                                        </div>
+                                        <div class="col-lg-6 col-md-8" align="right">
+                                            <asp:Button ID="BtnCrear" CssClass="btn btn-primary" runat="server" Text="Crear" OnClick="BtnCrear_Click" />
+                                            <div class="body" id="divNoRequi" runat="server" visible="false">
+                                                <div class="alert alert-success">
+                                                    <asp:Label ID="lblNoRequisicion" runat="server" />
                                                 </div>
                                             </div>
                                         </div>
@@ -219,6 +281,37 @@
                 </div>
             </div>
         </section>
+        <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <asp:TextBox ID="txtMotivoCancela" runat="server" placeholder="Por cual motivo decea cancelar..."></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-round waves-effect">Cancelar</button>
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-round waves-effect">SI</button>
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </asp:Content>
 

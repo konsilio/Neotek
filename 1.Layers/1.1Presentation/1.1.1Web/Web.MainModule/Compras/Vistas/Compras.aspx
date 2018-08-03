@@ -84,168 +84,53 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row clearfix">
                                         <div class="body table-responsive">
-                                            <table class="table m-b-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Gasera</th>
-                                                        <th>N° Requisición</th>
-                                                        <th>Fecha Requerida</th>
-                                                        <th>Solicitante</th>
-                                                        <th>Estatus</th>
-                                                        <th>Accion</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row">Empresa 1</th>
-                                                        <td>R20180001</td>
-                                                        <td>15/08/2018</td>
-                                                        <td>Kevin Salomon</td>
-                                                        <td>Revisar Existencias</td>
-                                                        <td>
-                                                            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                                                                <div class="demo-google-material-icon">
-                                                                    <asp:LinkButton runat="server" ID="lbDgPDF" Text=" ">
-                                                                    <i class="material-icons">picture_as_pdf</i>                                                                    
-                                                                    <span class="icon-name"></span>
-                                                                    </asp:LinkButton>
-                                                                    <asp:LinkButton runat="server" ID="LinkButton9" Text=" ">
-                                                                    <i class="material-icons">remove_red_eye</i>                                                                    
-                                                                    <span class="icon-name"></span>
-                                                                    </asp:LinkButton>
-                                                                </div>
-                                                            </div>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Empresa 2</th>
-                                                        <td>R20180002</td>
-                                                        <td>15/08/2018</td>
-                                                        <td>Kevin Salomon</td>
-                                                        <td>Generar orden de compra</td>
-                                                        <td>
-                                                            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                                                                <div class="demo-google-material-icon">
-                                                                    <asp:LinkButton runat="server" ID="LinkButton1" Text=" ">
-                                                                    <i class="material-icons">picture_as_pdf</i>                                                                    
-                                                                    <span class="icon-name"></span>
-                                                                    </asp:LinkButton>
-                                                                    <asp:LinkButton runat="server" ID="LinkButton2" Text=" ">
-                                                                    <i class="material-icons">remove_red_eye</i>                                                                    
-                                                                    <span class="icon-name"></span>
-                                                                    </asp:LinkButton>
-                                                                </div>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Empresa 3</th>
-                                                        <td>R20180003</td>
-                                                        <td>15/08/2018</td>
-                                                        <td>Kevin Salomon</td>
-                                                        <td>Autorizar orden de compra</td>
-                                                        <td>
-                                                            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                                                                <div class="demo-google-material-icon">
-                                                                    <asp:LinkButton runat="server" ID="LinkButton3" Text=" ">
-                                                                    <i class="material-icons">picture_as_pdf</i>                                                                    
-                                                                    <span class="icon-name"></span>
-                                                                    </asp:LinkButton>
-                                                                    <asp:LinkButton runat="server" ID="LinkButton4" Text=" ">
-                                                                    <i class="material-icons">remove_red_eye</i>                                                                    
-                                                                    <span class="icon-name"></span>
-                                                                    </asp:LinkButton>
-                                                                </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Empresa 2</th>
-                                                        <td>R20180004</td>
-                                                        <td>15/08/2018</td>
-                                                        <td>Kevin Salomon</td>
-                                                        <td>Proceso de compra</td>
-                                                        <td>
-                                                            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                                                                <div class="demo-google-material-icon">
-                                                                    <asp:LinkButton runat="server" ID="LinkButton5" Text=" ">
-                                                                    <i class="material-icons">picture_as_pdf</i>                                                                    
-                                                                    <span class="icon-name"></span>
-                                                                    </asp:LinkButton>
-                                                                    <asp:LinkButton runat="server" ID="LinkButton6" Text=" ">
-                                                                    <i class="material-icons">remove_red_eye</i>                                                                    
-                                                                    <span class="icon-name"></span>
-                                                                    </asp:LinkButton>
-                                                                </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Empresa 4</th>
-                                                        <td>R20180005</td>
-                                                        <td>15/08/2018</td>
-                                                        <td>Kevin Salomon</td>
-                                                        <td>Atendida</td>
-                                                        <td>
-                                                            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                                                                <div class="demo-google-material-icon">
-                                                                    <asp:LinkButton runat="server" ID="LinkButton7" Text=" ">
-                                                                    <i class="material-icons">picture_as_pdf</i>                                                                    
-                                                                    <span class="icon-name"></span>
-                                                                    </asp:LinkButton>
-                                                                    <asp:LinkButton runat="server" ID="LinkButton8" Text=" ">
-                                                                    <i class="material-icons">remove_red_eye</i>                                                                    
-                                                                    <span class="icon-name"></span>
-                                                                    </asp:LinkButton>
-                                                                </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-
-                                            <%--<asp:DataGrid runat="server" ID="dgRequisisiones" CssClass="table m-b-0">
+                                            <asp:DataGrid runat="server" AutoGenerateColumns="false" ID="dgRequisisiones" CssClass="table m-b-0">
                                                 <Columns>
                                                     <asp:TemplateColumn>
                                                         <HeaderTemplate>
-                                                            <th>Gasera</th>
+                                                            Gasera
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label runat="server" ID="lblDgGasera"></asp:Label>
+                                                            <asp:Label runat="server" ID="lblDgGasera" Text='<%# Bind("IdEmpresa") %>' ></asp:Label>
                                                         </ItemTemplate>
                                                     </asp:TemplateColumn>
                                                     <asp:TemplateColumn>
                                                         <HeaderTemplate>
-                                                            <th>N° Requisición</th>
+                                                            N° Requisición
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label runat="server" ID="lblDgNoRequisicion"></asp:Label>
+                                                            <asp:Label runat="server" ID="lblDgNoRequisicion" Text='<%# Bind("NumeroRequisicion") %>' ></asp:Label>
                                                         </ItemTemplate>
                                                     </asp:TemplateColumn>
                                                     <asp:TemplateColumn>
                                                         <HeaderTemplate>
-                                                            <th>Fecha Requerida</th>
+                                                            Fecha Requerida
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label runat="server" ID="lblDgFechaRequerida"></asp:Label>
+                                                            <asp:Label runat="server" ID="lblDgFechaRequerida" Text='<%# Bind("FechaRequerida") %>'></asp:Label>
                                                         </ItemTemplate>
                                                     </asp:TemplateColumn>
                                                     <asp:TemplateColumn>
                                                         <HeaderTemplate>
-                                                            <th>Solicitante</th>
+                                                            Solicitante
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label runat="server" ID="lblDgSolicitante"></asp:Label>
+                                                            <asp:Label runat="server" ID="lblDgSolicitante" Text='<%# Bind("IdUsuarioSolicitante") %>'></asp:Label>
                                                         </ItemTemplate>
                                                     </asp:TemplateColumn>
                                                     <asp:TemplateColumn>
                                                         <HeaderTemplate>
-                                                            <th>Estatus</th>
+                                                            Estatus
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
-                                                            <asp:Label runat="server" ID="Estatus"></asp:Label>
+                                                            <asp:Label runat="server" ID="Estatus" Text="Creada"></asp:Label>
                                                         </ItemTemplate>
                                                     </asp:TemplateColumn>
                                                     <asp:TemplateColumn>
                                                         <HeaderTemplate>
-                                                            <th>Accion</th>
+                                                            Accion
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
                                                             <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
@@ -255,14 +140,14 @@
                                                                     <span class="icon-name"></span>
                                                                     </asp:LinkButton>                                                                
                                                                     <asp:LinkButton runat="server" ID="lbDgOjo" Text=" ">
-                                                                    <i class="material-icons">remove_red_eye</i>                                                                    
+                                                                    <i class="material-icons">content_paste</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                                     </asp:LinkButton>
                                                                 </div>
                                                         </ItemTemplate>
                                                     </asp:TemplateColumn>
                                                 </Columns>
-                                            </asp:DataGrid>--%>
+                                            </asp:DataGrid>
                                         </div>
                                     </div>
                                 </div>
