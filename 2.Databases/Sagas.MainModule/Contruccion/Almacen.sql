@@ -1,8 +1,10 @@
-﻿CREATE TABLE [dbo].[AlmacenMercancia]
+﻿CREATE TABLE [dbo].[Almacen]
 (
-	[IdAlmacen] INT NOT NULL PRIMARY KEY, 
+	[IdAlmacen] INT NOT NULL PRIMARY KEY IDENTITY, 
+	[IdEmpresa] SMALLINT NOT NULL,
     [IdProduto] INT NOT NULL, 
-    [Cantidad] DECIMAL(18, 2) NOT NULL, 
+    [Cantidad] DECIMAL(18, 4) NOT NULL, 
     [Ubicacion] VARCHAR(100) NOT NULL, 
-    [FechaActualizacion ] DATETIME NOT NULL
+    [FechaActualizacion] SMALLDATETIME NOT NULL, 
+    [FechaRegistro] SMALLDATETIME NOT NULL DEFAULT GetDate()
 )

@@ -11,7 +11,7 @@
     [Minimos] DECIMAL(18, 4) NULL, 
     [Maximo] DECIMAL(18, 4) NULL, 
     [UrlImagen] VARCHAR(350) NULL, 
-    [RutaFisicaImagen] VARCHAR(350) NULL, 
+    [PathImagen] VARCHAR(350) NULL, 
     [Activo] BIT NOT NULL DEFAULT 1, 
     [FechaRegistro] SMALLDATETIME NULL DEFAULT getdate(),
 )

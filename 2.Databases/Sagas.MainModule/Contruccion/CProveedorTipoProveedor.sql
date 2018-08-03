@@ -1,7 +1,8 @@
-﻿CREATE TABLE [dbo].[CPorveedorTipoProveedor]
+﻿CREATE TABLE [dbo].[CProveedorTipoProveedor]
 (
-	[idTipoProveedor] BIT NOT NULL , 
-    [Acreeedor] BIT NOT NULL, 
-    [Proveedor] INT NOT NULL, 
+	[IdTipoProveedor] TINYINT NOT NULL IDENTITY , 
+    [Tipo] VARCHAR(50) NOT NULL, 
+	[Activo] BIT NOT NULL DEFAULT 1,
+	[FechaRegistro] DATETIME NOT NULL DEFAULT getdate()
     CONSTRAINT [PK_PorveedorTipoProveedor] PRIMARY KEY ([idTipoProveedor]) 
 )

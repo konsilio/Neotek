@@ -94,9 +94,7 @@
     <Build Include="Contruccion\CProveedorFiscal.sql" />
     <Build Include="Contruccion\CProveedorTipoProveedor.sql" />
     <Build Include="Contruccion\Almacen.sql" />
-    <Build Include="Contruccion\AlmacenEntregaRecepcion.sql" />
-    <Build Include="Contruccion\AlmacenEntregaRecepcionProducto.sql" />
-    <Build Include="Contruccion\CProveedorProdcuto.sql" />
+    <Build Include="Contruccion\AlmacenEntradaProducto.sql" />
     <Build Include="Contruccion\Requisicion.sql" />
     <Build Include="Contruccion\RequisicionEstatus.sql" />
     <Build Include="Contruccion\RequisicionAlmacen.sql" />
@@ -110,6 +108,26 @@
     <Build Include="Contruccion\CProductoLinea.sql" />
     <Build Include="Contruccion\CProductoAsociado.sql" />
     <Build Include="Contruccion\CProducto.sql" />
+    <Build Include="Contruccion\CProveedorBancario.sql" />
+    <Build Include="Contruccion\CFormaPago.sql" />
+    <Build Include="Contruccion\CCuentaContable.sql" />
+    <Build Include="Contruccion\CCentroCosto.sql" />
+    <Build Include="Contruccion\CAlmacenGas.sql" />
+    <Build Include="Contruccion\CAlmacenGasTipo.sql" />
+    <Build Include="Contruccion\CAlmacenGasCalibracion.sql" />
+    <Build Include="Contruccion\CAlmacenGasCilindro.sql" />
+    <Build Include="Contruccion\CCamionetaCilindro.sql" />
+    <Build Include="Contruccion\CCamioneta.sql" />
+    <Build Include="Contruccion\CPipa.sql" />
+    <Build Include="Contruccion\CEstacionCarburacion.sql" />
+    <Build Include="Contruccion\CAlmacenGasTipoMedidor.sql" />
+    <Build Include="Contruccion\AlmacenSalidaProducto.sql" />
+    <Build Include="Contruccion\OrdenDeCompra.sql" />
+    <Build Include="Contruccion\OrdenCompra.sql" />
+    <Build Include="Contruccion\OrdenCompraEstatus.sql" />
+    <Build Include="Contruccion\OrdenCompraProducto.sql" />
+    <Build Include="Contruccion\OrdenCompraImporte.sql" />
+    <Build Include="Contruccion\CAlmacenGasTotal.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sagas.MainModule.refactorlog" />
