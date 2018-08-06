@@ -24,6 +24,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetSingle(x => x.IdRequisicion.Equals(IdRequisicion) && x.IdRequisicionEstatus.Equals(0));
         }
+        public int BuscarUltimaRequi()
+        {
+            return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetAll().ToList().Last().IdRequisicion;
+        }
+        public Sagas.MainModule.Entidades.Requisicion BuscarPorNumeroRequisicion(string NumRequisicion)
+        {
+            return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetSingle(x => x.NumeroRequisicion.Equals(NumRequisicion));
+        }
         public List<Sagas.MainModule.Entidades.Requisicion> BuscarTodas()
         {
             return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetAll().ToList();

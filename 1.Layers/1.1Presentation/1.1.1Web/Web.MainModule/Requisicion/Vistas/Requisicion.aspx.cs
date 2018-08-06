@@ -24,9 +24,13 @@ namespace Web.MainModule.Requisicion.Vista
                     Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
                     if (Convert.ToBoolean(_autenticado.Value))
                     {
-                        if (Request.QueryString["NoRequisicion"] != null)
+                        if (Request.QueryString["nr"] != null)
                         {
-                            ActivarRevisarExistencias();
+                            if (Request.QueryString["Sts"] != null)
+                            {
+                                RquisicionAlternativa(Request.QueryString["nr"].ToString(), Convert.ToInt32(Request.QueryString["Sts"]));
+                            }
+                            
                             dgListaproductos.DataBind();
                         }
                         else
@@ -52,13 +56,13 @@ namespace Web.MainModule.Requisicion.Vista
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             LProductos = (List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"] == null ? new List<Model.RequisicionProductoGridDTO>() : (List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"];
-            LProductos = new Serivicio.RequsicionServicio().GenerarListaGrid(LProductos, new Serivicio.RequsicionServicio().GenerarProductoGrid(ddlTipoCompra, ddlProdcutos, ddlCentroCostos, txtDetalle.Text, Convert.ToDecimal(txtCantidad.Text)));
+            LProductos = new Servicio.RequsicionServicio().GenerarListaGrid(LProductos, new Servicio.RequsicionServicio().GenerarProductoGrid(ddlTipoCompra, ddlProdcutos, ddlCentroCostos, txtDetalle.Text, Convert.ToDecimal(txtCantidad.Text)));
             dgListaproductos.DataSource = ViewState["ListaRequisicionProductoGridDTO"] = LProductos;
             dgListaproductos.DataBind();
         }
         protected void BtnCrear_Click(object sender, EventArgs e)
         {
-            Serivicio.RequsicionServicio serv = new Serivicio.RequsicionServicio();
+            Servicio.RequsicionServicio serv = new Servicio.RequsicionServicio();
             if (ValidarCampos())
             {
                 Model.RequisicionEDTO Edto = serv.UnirDtos(new Model.RequisicionDTO
@@ -98,17 +102,41 @@ namespace Web.MainModule.Requisicion.Vista
         {
 
         }
+        private void RquisicionAlternativa(string NumRueq, int Estatus)
+        {
+            ActivarRevisarExistencias();
+            //if (!Estatus.Equals(2))
+            //{
+            //    ActivarRevisarExistencias();
+            //}
+            //else
+            //{
+            //    ActivarRevisarAutorizacion();
+            //}
+        }
         private void ActivarRevisarExistencias()
         {
-            lblRuta.Text = "Requisición / Revisar Existencias";
-            lblIdRequisicion.Text = Request.QueryString["NoRequisicion"].ToString();
+            Model.RequisicionEDTO _reqEDTO = new Model.RequisicionEDTO();
+            _reqEDTO = new Servicio.RequsicionServicio().BuscarRequisicionByNumRequi(Request.QueryString["nr"].ToString(), Session["StringToken"].ToString());
+
             divDatos1.Visible = false;
             divDatos2.Visible = false;
+            lblRuta.Text = "Requisición / Revisar Existencias";
+            lblIdRequisicion.Text = Request.QueryString["nr"].ToString();
             txtFechaRequerida.Disabled = true;
             txtSolicitante.Enabled = false;
             txtMotivoCompra.Enabled = false;
             txtRequeridoEn.Enabled = false;
-            divOpinion.Visible = true;
+            txtFechaRequerida.Value = _reqEDTO.FechaRequerida.ToShortDateString();
+            txtMotivoCompra.Text = _reqEDTO.MotivoRequisicion;
+            txtRequeridoEn.Text = _reqEDTO.RequeridoEn;
+            txtSolicitante.Text = _reqEDTO.IdUsuarioSolicitante.ToString();// Buscar al solicitante por el ID
+
+            dgListaproductos.DataSource = ViewState["ListaRequisicionProductoEDTO"] = _reqEDTO.ListaProductos;
+            dgListaproductos.DataBind();
+            dgListaproductos.Columns[5].Visible = false;
+            dgListaproductos.Columns[6].Visible = true;
+            dgListaproductos.Columns[7].Visible = true;
         }
         private void ActivarRevisarAutorizacion()
         {

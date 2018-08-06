@@ -116,7 +116,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row clearfix" runat="server" id="divOpinion">
+                                    <div class="row clearfix" runat="server" id="divOpinion" visible="false">
                                         <div class="col-lg-12">
                                             <div class="card">
                                                 <div class="header">
@@ -143,7 +143,7 @@
                                             <asp:GridView CssClass="table table-hover" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
                                                 <Columns>
                                                     <asp:TemplateField>
-                                                        <%--Tipo de compra--%>
+                                                        <%--0 Tipo de compra--%>
                                                         <HeaderTemplate>
                                                             <b>Tipo</b>
                                                         </HeaderTemplate>
@@ -152,7 +152,7 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField>
-                                                        <%--Producto--%>
+                                                        <%--1 Producto--%>
                                                         <HeaderTemplate>
                                                             <b>Producto</b>
                                                         </HeaderTemplate>
@@ -161,7 +161,7 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField>
-                                                        <%--Cantidad--%>
+                                                        <%--2 Cantidad--%>
                                                         <HeaderTemplate>
                                                             <b>Cantidad</b>
                                                         </HeaderTemplate>
@@ -170,7 +170,7 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField>
-                                                        <%--Unidad--%>
+                                                        <%--3 Unidad--%>
                                                         <HeaderTemplate>
                                                             <b>Unidad</b>
                                                         </HeaderTemplate>
@@ -179,7 +179,7 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField>
-                                                        <%--Aplicacion--%>
+                                                        <%--4 Aplicacion--%>
                                                         <HeaderTemplate>
                                                             <b>Aplicación</b>
                                                         </HeaderTemplate>
@@ -188,7 +188,7 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField>
-                                                        <%--Accion--%>
+                                                        <%--5 Accion--%>
                                                         <HeaderTemplate>
                                                             <b>Acción</b>
                                                         </HeaderTemplate>
@@ -204,7 +204,7 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField Visible="false">
-                                                        <%--Almacen--%>
+                                                        <%--6 Almacen--%>
                                                         <HeaderTemplate>
                                                             Aplicacion
                                                         </HeaderTemplate>
@@ -213,7 +213,7 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField Visible="false">
-                                                        <%--Revision Fisica--%>
+                                                        <%--7 Revision Fisica--%>
                                                         <HeaderTemplate>
                                                             Revision Fisica
                                                         </HeaderTemplate>
@@ -224,7 +224,7 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField Visible="false">
-                                                        <%--Autoriza Entrega--%>
+                                                        <%--8 Autoriza Entrega--%>
                                                         <HeaderTemplate>
                                                             Autoriza entrega
                                                         </HeaderTemplate>
@@ -235,7 +235,7 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField Visible="false">
-                                                        <%--Requiere comprar--%>
+                                                        <%--9 Requiere comprar--%>
                                                         <HeaderTemplate>
                                                             Requiere comprar
                                                         </HeaderTemplate>
@@ -244,7 +244,7 @@
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     <asp:TemplateField Visible="false">
-                                                        <%--Autoriza Compra--%>
+                                                        <%--10 Autoriza Compra--%>
                                                         <HeaderTemplate>
                                                             Autoriza Compra
                                                         </HeaderTemplate>

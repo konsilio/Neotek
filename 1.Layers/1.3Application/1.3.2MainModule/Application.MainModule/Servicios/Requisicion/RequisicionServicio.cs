@@ -36,5 +36,9 @@ namespace Application.MainModule.Servicios.Requisicion
         {
             return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas().Where(x => x.IdEmpresa.Equals(_IdEmpresa)).ToList());
         }
+        public static RequisicionEDTO BuscarRequisicion(string _nrequi)
+        {
+            return RequisicionAdapter.ToEDTO(new RequisicionDataAccess().BuscarPorNumeroRequisicion(_nrequi));
+        }
     }
 }

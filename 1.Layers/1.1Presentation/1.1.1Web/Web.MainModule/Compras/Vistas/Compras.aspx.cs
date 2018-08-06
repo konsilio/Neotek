@@ -58,8 +58,15 @@ namespace Web.MainModule
         }
         private void CargarRequisiciones()
         {
-            dgRequisisiones.DataSource = new Requisicion.Serivicio.RequsicionServicio().BuscarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value), Session["StringToken"].ToString());
+            dgRequisisiones.DataSource = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value), Session["StringToken"].ToString());
             dgRequisisiones.DataBind();
+        }
+        protected void dgRequisisiones_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("VerRequi"))
+            {
+                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0] + "&Sts=" + e.CommandArgument.ToString().Split('|')[1]);
+            }         
         }
     }
 }

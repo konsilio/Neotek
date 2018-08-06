@@ -38,7 +38,7 @@
                                     SAGAS</h4>
                                 <h3>Sistema de Administracion de Gas <strong>Ver. 1.0</strong></h3>
                                 <p>
-                                    </p>
+                                </p>
                                 <div class="footer">
                                     <ul class="social_link list-unstyled">
                                         <%-- <li><a href="https://thememakker.com" title="ThemeMakker"><i class="zmdi zmdi-globe"></i></a></li>
@@ -71,13 +71,13 @@
                                 <div class="header">
                                     <h5>Inicio de Sesion</h5>
                                 </div>
-                                <div class="body">
-                                    <div class="input-group" >
-                                        <asp:DropDownList CssClass="form-control z-index show-tick" data-live-search="true" runat="server" ID="ddlRazon">                                    
-                                    </asp:DropDownList>
-                                       <%-- <select runat="server" id="ddlRazon" class="form-control z-index show-tick" data-show-subtext="true" data-live-search="true" title="Razon social">
+                                <div class="from">
+                                    <div class="input-group">
+                                        <asp:DropDownList CssClass="form-control z-index show-tick" data-live-search="true" runat="server" ID="ddlRazon">
+                                        </asp:DropDownList>
+                                    </div>
+                                    <%-- <select runat="server" id="ddlRazon" class="form-control z-index show-tick" data-show-subtext="true" data-live-search="true" title="Razon social">
                                         </select>--%>
-                                    </div>                                    
                                     <div class="input-group">
                                         <asp:TextBox runat="server" ID="Email" CssClass="form-control" placeholder="Usuario" />
                                         <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>

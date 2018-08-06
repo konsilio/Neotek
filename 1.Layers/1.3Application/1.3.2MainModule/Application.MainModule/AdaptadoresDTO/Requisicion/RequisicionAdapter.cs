@@ -108,7 +108,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
                 IdEmpresa = _requisicion.IdEmpresa,
                 NumeroRequisicion = Servicios.FolioServicio.GenerarNumeroRequisicion(_requisicion),
-            MotivoRequisicion = _requisicion.MotivoRequisicion,
+                MotivoRequisicion = _requisicion.MotivoRequisicion,
                 RequeridoEn = _requisicion.RequeridoEn,
                 IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
                 FechaRequerida = _requisicion.FechaRequerida,
@@ -122,6 +122,29 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 Productos = RequisicionProductoAdapter.FromDTO(_requisicion.ListaProductos)
             };
             return requiscionDTO;
+        }
+        public static RequisicionEDTO ToEDTO(Sagas.MainModule.Entidades.Requisicion _requisicion)
+        {
+            RequisicionEDTO requiscionEDTO = new RequisicionEDTO
+            {
+                IdRequisicion = _requisicion.IdRequisicion,
+                IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
+                IdEmpresa = _requisicion.IdEmpresa,
+                NumeroRequisicion = _requisicion.NumeroRequisicion,
+                MotivoRequisicion = _requisicion.MotivoRequisicion,
+                RequeridoEn = _requisicion.RequeridoEn,
+                IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
+                FechaRequerida = _requisicion.FechaRequerida,
+                FechaRegistro = _requisicion.FechaRegistro,
+                //IdUsuarioRevision = _requisicion.IdUsuarioRevision,
+                //OpinionAlmacen = _requisicion.OpinionAlmacen,
+                //FechaRevision = _requisicion.FechaRevision,
+                //MotivoCancelacion = _requisicion.MotivoCancelacion,
+                //IdUsuarioAutorizacion = _requisicion.IdUsuarioAutorizacion,
+                //FechaAutorizacion = _requisicion.FechaAutorizacion,
+                ListaProductos = RequisicionProductoAdapter.ToDTO(_requisicion.Productos.ToList())
+            };
+            return requiscionEDTO;
         }
     }
 }

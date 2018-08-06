@@ -19,5 +19,9 @@ namespace Application.MainModule.Flujos
         {
             return RequisicionServicio.BuscarRequisicionPorIdEmpresa(idEmpresa);
         }
+        public RequisicionEDTO BuscarRequisicion(string numRequisicon)
+        {
+            return RequisicionServicio.BuscarRequisicion(numRequisicon);
+        }
     }
 }

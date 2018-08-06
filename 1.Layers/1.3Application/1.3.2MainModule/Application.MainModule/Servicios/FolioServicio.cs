@@ -11,7 +11,7 @@ namespace Application.MainModule.Servicios
     {
         public static string GenerarNumeroRequisicion(RequisicionEDTO _req)
         {
-            var contador = 12;// Busca el contador en la BD
+            var contador = new AccesoADatos.RequisicionDataAccess().BuscarUltimaRequi() + 1;
 
             string numReq = "R";
             numReq += _req.IdEmpresa.ToString("D3");

@@ -86,68 +86,68 @@
                                     </div>
                                     <div class="row clearfix">
                                         <div class="body table-responsive">
-                                            <asp:DataGrid runat="server" AutoGenerateColumns="false" ID="dgRequisisiones" CssClass="table m-b-0">
+                                            <asp:GridView runat="server" AutoGenerateColumns="false" ID="dgRequisisiones" CssClass="table m-b-0" OnRowCommand="dgRequisisiones_RowCommand"  >
                                                 <Columns>
-                                                    <asp:TemplateColumn>
+                                                    <asp:TemplateField>
                                                         <HeaderTemplate>
                                                             Gasera
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
                                                             <asp:Label runat="server" ID="lblDgGasera" Text='<%# Bind("IdEmpresa") %>' ></asp:Label>
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <HeaderTemplate>
                                                             N° Requisición
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
                                                             <asp:Label runat="server" ID="lblDgNoRequisicion" Text='<%# Bind("NumeroRequisicion") %>' ></asp:Label>
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <HeaderTemplate>
                                                             Fecha Requerida
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
                                                             <asp:Label runat="server" ID="lblDgFechaRequerida" Text='<%# Bind("FechaRequerida") %>'></asp:Label>
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <HeaderTemplate>
                                                             Solicitante
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
                                                             <asp:Label runat="server" ID="lblDgSolicitante" Text='<%# Bind("IdUsuarioSolicitante") %>'></asp:Label>
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <HeaderTemplate>
                                                             Estatus
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
                                                             <asp:Label runat="server" ID="Estatus" Text="Creada"></asp:Label>
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
-                                                    <asp:TemplateColumn>
+                                                    </asp:TemplateField>
+                                                    <asp:TemplateField>
                                                         <HeaderTemplate>
                                                             Accion
                                                         </HeaderTemplate>
                                                         <ItemTemplate>
                                                             <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
                                                                 <div class="demo-google-material-icon">
-                                                                    <asp:LinkButton runat="server" ID="lbDgPDF" Text=" ">
+                                                                    <asp:LinkButton runat="server" ID="lbDgPDF" Text=" " CommnadnName="VerPDF" CommandArgument='<%# Bind("NumeroRequisicion") %>' >
                                                                     <i class="material-icons">picture_as_pdf</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                                     </asp:LinkButton>                                                                
-                                                                    <asp:LinkButton runat="server" ID="lbDgOjo" Text=" ">
+                                                                    <asp:LinkButton runat="server" ID="lbDgOjo" Text=" " CommandName="VerRequi" CommandArgument='<%# Eval("NumeroRequisicion") + "|" + Eval("IdRequisicionEstatus") %>' >
                                                                     <i class="material-icons">content_paste</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                                     </asp:LinkButton>
                                                                 </div>
                                                         </ItemTemplate>
-                                                    </asp:TemplateColumn>
+                                                    </asp:TemplateField>
                                                 </Columns>
-                                            </asp:DataGrid>
+                                            </asp:GridView>
                                         </div>
                                     </div>
                                 </div>

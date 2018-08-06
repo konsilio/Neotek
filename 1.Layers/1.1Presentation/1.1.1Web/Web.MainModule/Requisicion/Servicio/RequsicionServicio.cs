@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI.WebControls;
 using Web.MainModule.Agente;
 
-namespace Web.MainModule.Requisicion.Serivicio
+namespace Web.MainModule.Requisicion.Servicio
 {
     public class RequsicionServicio
     {
@@ -64,6 +64,12 @@ namespace Web.MainModule.Requisicion.Serivicio
             var respuestaReq = new AgenteServicios();
             respuestaReq.BuscarRequisiciones(idEmpresa, token);
             return respuestaReq._listaRequisiciones;
+        }
+        public Model.RequisicionEDTO BuscarRequisicionByNumRequi(string numreq, string token)
+        {
+            var respuestaReq = new AgenteServicios();
+            respuestaReq.BuscarRequisicio(numreq, token);
+            return respuestaReq._requisicionEDTO;
         }
         #endregion
 
