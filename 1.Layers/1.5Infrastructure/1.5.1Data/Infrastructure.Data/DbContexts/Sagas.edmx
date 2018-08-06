@@ -79,6 +79,164 @@
           <Property Name="Pais" Type="varchar" MaxLength="100" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="CProducto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="IdProductoServicioTipo" Type="smallint" Nullable="false" />
+          <Property Name="IdCategoria" Type="smallint" Nullable="false" />
+          <Property Name="IdProductoLinea" Type="smallint" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="smallint" Nullable="false" />
+          <Property Name="IdUnidadMedida2" Type="smallint" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Minimos" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Maximo" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="UrlImagen" Type="varchar" MaxLength="350" />
+          <Property Name="PathImagen" Type="varchar" MaxLength="350" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="CProductoAsociado">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="IdProductoAsociado" />
+            <PropertyRef Name="Activo" />
+            <PropertyRef Name="FechaRegistro" />
+          </Key>
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="IdProductoAsociado" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CProductoCategoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CProductoLinea">
+          <Key>
+            <PropertyRef Name="IdProductoLinea" />
+          </Key>
+          <Property Name="IdProductoLinea" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Linea" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CProductoServicioTipo">
+          <Key>
+            <PropertyRef Name="IdProductoServicioTipo" />
+          </Key>
+          <Property Name="IdProductoServicioTipo" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CProductoUnidadMedida">
+          <Key>
+            <PropertyRef Name="IdUnidadMedida" />
+          </Key>
+          <Property Name="IdUnidadMedida" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Acronimo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CProveedor">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="int" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="IdTipoProveedor" Type="tinyint" Nullable="false" />
+          <Property Name="IdCuentaContable" Type="int" />
+          <Property Name="NombreComercial" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProdutoPrinicpal" Type="bit" Nullable="false" />
+          <Property Name="TransportistaProdutoPrinicpal" Type="bit" Nullable="false" />
+          <Property Name="Vende" Type="varchar" MaxLength="250" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CProveedorBancario">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="int" Nullable="false" />
+          <Property Name="IdFormaDePago" Type="tinyint" Nullable="false" />
+          <Property Name="IdBanco" Type="tinyint" Nullable="false" />
+          <Property Name="Cuenta" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="DiasCredito" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CProveedorContacto">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="int" Nullable="false" />
+          <Property Name="Persona1" Type="varchar" MaxLength="150" />
+          <Property Name="Persona2" Type="varchar" MaxLength="150" />
+          <Property Name="Persona3" Type="varchar" MaxLength="150" />
+          <Property Name="Telefono1" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono2" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono3" Type="varchar" MaxLength="50" />
+          <Property Name="Celular1" Type="varchar" MaxLength="50" />
+          <Property Name="Celular2" Type="varchar" MaxLength="50" />
+          <Property Name="Celular3" Type="varchar" MaxLength="50" />
+          <Property Name="Email1" Type="varchar" MaxLength="200" />
+          <Property Name="Email2" Type="varchar" MaxLength="200" />
+          <Property Name="Email3" Type="varchar" MaxLength="200" />
+          <Property Name="SitioWeb1" Type="varchar" MaxLength="150" />
+          <Property Name="SitioWeb2" Type="varchar" MaxLength="150" />
+          <Property Name="SitioWeb3" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="CProveedorDireccion">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="int" Nullable="false" />
+          <Property Name="IdPais" Type="tinyint" Nullable="false" />
+          <Property Name="IdEstadoRep" Type="tinyint" />
+          <Property Name="EstadoProvincia" Type="varchar" MaxLength="150" />
+          <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CodigoPostal" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Colonia" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Calle" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="NumExt" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumInt" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="CProveedorFiscal">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="int" Nullable="false" />
+          <Property Name="IdTipoPersona" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="IdRegimenFiscal" Type="int" Nullable="false" />
+          <Property Name="Rfc" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="350" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CProveedorTipoProveedor">
+          <Key>
+            <PropertyRef Name="IdTipoProveedor" />
+          </Key>
+          <Property Name="IdTipoProveedor" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Empresa">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -147,6 +305,71 @@
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="UrlLogotipoMenu" Type="varchar" MaxLength="350" />
           <Property Name="UrlLogotipoLogin" Type="varchar" MaxLength="350" />
+        </EntityType>
+        <EntityType Name="OrdenCompra">
+          <Key>
+            <PropertyRef Name="IdOrdenCompra" />
+          </Key>
+          <Property Name="IdOrdenCompra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="IdOrdenCompraEstatus" Type="tinyint" Nullable="false" />
+          <Property Name="IdRequisicion" Type="int" Nullable="false" />
+          <Property Name="IdProveedor" Type="int" Nullable="false" />
+          <Property Name="IdCentroCosto" Type="int" Nullable="false" />
+          <Property Name="IdCuentaContable" Type="int" Nullable="false" />
+          <Property Name="NumOrdenCompra" Type="varbinary" MaxLength="25" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrdenCompraEstatus">
+          <Key>
+            <PropertyRef Name="IdOrdenCompraEstatus" />
+          </Key>
+          <Property Name="IdOrdenCompraEstatus" Type="tinyint" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrdenCompraImporte">
+          <Key>
+            <PropertyRef Name="IdOrdenCompra" />
+          </Key>
+          <Property Name="IdOrdenCompra" Type="int" Nullable="false" />
+          <Property Name="SubtotalSinIva" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="SubtotalSinIeps" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Iva" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Ieps" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="4" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="OrdenCompraProducto">
+          <Key>
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="ProductoServicioTipo" />
+            <PropertyRef Name="Producto" />
+            <PropertyRef Name="UnidadMedida" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="Precio" />
+            <PropertyRef Name="Descuento" />
+            <PropertyRef Name="IVA" />
+            <PropertyRef Name="IEPS" />
+            <PropertyRef Name="Importe" />
+          </Key>
+          <Property Name="IdOrdenCompra" Type="int" Nullable="false" />
+          <Property Name="ProductoServicioTipo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Producto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Categoria" Type="varchar" MaxLength="50" />
+          <Property Name="Linea" Type="varchar" MaxLength="50" />
+          <Property Name="UnidadMedida" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UnidadMedida2" Type="varchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Descuento" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IVA" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IEPS" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Importe" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Requisicion">
           <Key>
@@ -438,6 +661,230 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CProducto_CProductoCategoria">
+          <End Role="CProductoCategoria" Type="Self.CProductoCategoria" Multiplicity="1" />
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoCategoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProducto_CProductoLinea">
+          <End Role="CProductoLinea" Type="Self.CProductoLinea" Multiplicity="1" />
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoLinea">
+              <PropertyRef Name="IdProductoLinea" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdProductoLinea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProducto_CProductoServicioTipo">
+          <End Role="CProductoServicioTipo" Type="Self.CProductoServicioTipo" Multiplicity="1" />
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoServicioTipo">
+              <PropertyRef Name="IdProductoServicioTipo" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdProductoServicioTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProducto_CProductoUnidadMedida">
+          <End Role="CProductoUnidadMedida" Type="Self.CProductoUnidadMedida" Multiplicity="1" />
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoUnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProducto_CProductoUnidadMedida1">
+          <End Role="CProductoUnidadMedida" Type="Self.CProductoUnidadMedida" Multiplicity="0..1" />
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoUnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdUnidadMedida2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProducto_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoAsociado_CProducto">
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="1" />
+          <End Role="CProductoAsociado" Type="Self.CProductoAsociado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProducto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="CProductoAsociado">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoAsociado_CProducto1">
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="1" />
+          <End Role="CProductoAsociado" Type="Self.CProductoAsociado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProducto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="CProductoAsociado">
+              <PropertyRef Name="IdProductoAsociado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoCategoria_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="CProductoCategoria" Type="Self.CProductoCategoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProductoCategoria">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoLinea_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="CProductoLinea" Type="Self.CProductoLinea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProductoLinea">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoServicioTipo_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="CProductoServicioTipo" Type="Self.CProductoServicioTipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProductoServicioTipo">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoUnidadMedida_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="CProductoUnidadMedida" Type="Self.CProductoUnidadMedida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProductoUnidadMedida">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CProveedorTipoProveedor">
+          <End Role="CProveedorTipoProveedor" Type="Self.CProveedorTipoProveedor" Multiplicity="1" />
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedorTipoProveedor">
+              <PropertyRef Name="IdTipoProveedor" />
+            </Principal>
+            <Dependent Role="CProveedor">
+              <PropertyRef Name="IdTipoProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProveedor">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedorBancario_CProveedor">
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CProveedorBancario" Type="Self.CProveedorBancario" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="CProveedorBancario">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedorContacto_CProveedor">
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CProveedorContacto" Type="Self.CProveedorContacto" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="CProveedorContacto">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedorDireccion_CProveedor">
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CProveedorDireccion" Type="Self.CProveedorDireccion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="CProveedorDireccion">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedorFiscal_CProveedor">
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CProveedorFiscal" Type="Self.CProveedorFiscal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="CProveedorFiscal">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Empresa_AdministracionCentral">
           <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -542,6 +989,94 @@
               <PropertyRef Name="IdEmpresa" />
             </Principal>
             <Dependent Role="EmpresaImagen">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompra_CProveedor">
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="1" />
+          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="OrdenCompra">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompra_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="OrdenCompra">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompra_OrdenCompraEstatus">
+          <End Role="OrdenCompraEstatus" Type="Self.OrdenCompraEstatus" Multiplicity="1" />
+          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompraEstatus">
+              <PropertyRef Name="IdOrdenCompraEstatus" />
+            </Principal>
+            <Dependent Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompraEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompra_Requisicion">
+          <End Role="Requisicion" Type="Self.Requisicion" Multiplicity="1" />
+          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requisicion">
+              <PropertyRef Name="IdRequisicion" />
+            </Principal>
+            <Dependent Role="OrdenCompra">
+              <PropertyRef Name="IdRequisicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompraImporte_OrdenCompra">
+          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrdenCompraImporte" Type="Self.OrdenCompraImporte" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraImporte">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompraProducto_OrdenCompra">
+          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrdenCompraProducto" Type="Self.OrdenCompraProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraProducto">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requisicion_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Requisicion" Type="Self.Requisicion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Requisicion">
               <PropertyRef Name="IdEmpresa" />
             </Dependent>
           </ReferentialConstraint>
@@ -878,12 +1413,26 @@
           <EntitySet Name="AdministracionCetralContacto" EntityType="Self.AdministracionCetralContacto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CEstadosRep" EntityType="Self.CEstadosRep" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CPais" EntityType="Self.CPais" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProducto" EntityType="Self.CProducto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProductoCategoria" EntityType="Self.CProductoCategoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProductoLinea" EntityType="Self.CProductoLinea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProductoServicioTipo" EntityType="Self.CProductoServicioTipo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProductoUnidadMedida" EntityType="Self.CProductoUnidadMedida" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProveedor" EntityType="Self.CProveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProveedorBancario" EntityType="Self.CProveedorBancario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProveedorContacto" EntityType="Self.CProveedorContacto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProveedorDireccion" EntityType="Self.CProveedorDireccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProveedorFiscal" EntityType="Self.CProveedorFiscal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProveedorTipoProveedor" EntityType="Self.CProveedorTipoProveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpresaConfiguracion" EntityType="Self.EmpresaConfiguracion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpresaContacto" EntityType="Self.EmpresaContacto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpresaDireccion" EntityType="Self.EmpresaDireccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpresaFiscal" EntityType="Self.EmpresaFiscal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpresaImagen" EntityType="Self.EmpresaImagen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenCompra" EntityType="Self.OrdenCompra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenCompraEstatus" EntityType="Self.OrdenCompraEstatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenCompraImporte" EntityType="Self.OrdenCompraImporte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Requisicion" EntityType="Self.Requisicion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequisicionAlmacen" EntityType="Self.RequisicionAlmacen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequisicionAlmacenProducto" EntityType="Self.RequisicionAlmacenProducto" Schema="dbo" store:Type="Tables" />
@@ -902,6 +1451,32 @@
           <EntitySet Name="UsuarioContacto" EntityType="Self.UsuarioContacto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioCredencial" EntityType="Self.UsuarioCredencial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioDireccion" EntityType="Self.UsuarioDireccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CProductoAsociado" EntityType="Self.CProductoAsociado" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CProductoAsociado].[IdProducto] AS [IdProducto], 
+    [CProductoAsociado].[IdProductoAsociado] AS [IdProductoAsociado], 
+    [CProductoAsociado].[Activo] AS [Activo], 
+    [CProductoAsociado].[FechaRegistro] AS [FechaRegistro]
+    FROM [dbo].[CProductoAsociado] AS [CProductoAsociado]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="OrdenCompraProducto" EntityType="Self.OrdenCompraProducto" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [OrdenCompraProducto].[IdOrdenCompra] AS [IdOrdenCompra], 
+    [OrdenCompraProducto].[ProductoServicioTipo] AS [ProductoServicioTipo], 
+    [OrdenCompraProducto].[Producto] AS [Producto], 
+    [OrdenCompraProducto].[Categoria] AS [Categoria], 
+    [OrdenCompraProducto].[Linea] AS [Linea], 
+    [OrdenCompraProducto].[UnidadMedida] AS [UnidadMedida], 
+    [OrdenCompraProducto].[UnidadMedida2] AS [UnidadMedida2], 
+    [OrdenCompraProducto].[Descripcion] AS [Descripcion], 
+    [OrdenCompraProducto].[Cantidad] AS [Cantidad], 
+    [OrdenCompraProducto].[Precio] AS [Precio], 
+    [OrdenCompraProducto].[Descuento] AS [Descuento], 
+    [OrdenCompraProducto].[IVA] AS [IVA], 
+    [OrdenCompraProducto].[IEPS] AS [IEPS], 
+    [OrdenCompraProducto].[Importe] AS [Importe]
+    FROM [dbo].[OrdenCompraProducto] AS [OrdenCompraProducto]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_AdministracionCentralDireccion_AdministracionCentral" Association="Self.FK_AdministracionCentralDireccion_AdministracionCentral">
             <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
             <End Role="AdministracionCentralDireccion" EntitySet="AdministracionCentralDireccion" />
@@ -925,6 +1500,78 @@
           <AssociationSet Name="FK_AdministracionCetralContacto_AdministracionCentral" Association="Self.FK_AdministracionCetralContacto_AdministracionCentral">
             <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
             <End Role="AdministracionCetralContacto" EntitySet="AdministracionCetralContacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProducto_CProductoCategoria" Association="Self.FK_CProducto_CProductoCategoria">
+            <End Role="CProductoCategoria" EntitySet="CProductoCategoria" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProducto_CProductoLinea" Association="Self.FK_CProducto_CProductoLinea">
+            <End Role="CProductoLinea" EntitySet="CProductoLinea" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProducto_CProductoServicioTipo" Association="Self.FK_CProducto_CProductoServicioTipo">
+            <End Role="CProductoServicioTipo" EntitySet="CProductoServicioTipo" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProducto_CProductoUnidadMedida" Association="Self.FK_CProducto_CProductoUnidadMedida">
+            <End Role="CProductoUnidadMedida" EntitySet="CProductoUnidadMedida" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProducto_CProductoUnidadMedida1" Association="Self.FK_CProducto_CProductoUnidadMedida1">
+            <End Role="CProductoUnidadMedida" EntitySet="CProductoUnidadMedida" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProducto_Empresa" Association="Self.FK_CProducto_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoAsociado_CProducto" Association="Self.FK_CProductoAsociado_CProducto">
+            <End Role="CProducto" EntitySet="CProducto" />
+            <End Role="CProductoAsociado" EntitySet="CProductoAsociado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoAsociado_CProducto1" Association="Self.FK_CProductoAsociado_CProducto1">
+            <End Role="CProducto" EntitySet="CProducto" />
+            <End Role="CProductoAsociado" EntitySet="CProductoAsociado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoCategoria_Empresa" Association="Self.FK_CProductoCategoria_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProductoCategoria" EntitySet="CProductoCategoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoLinea_Empresa" Association="Self.FK_CProductoLinea_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProductoLinea" EntitySet="CProductoLinea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoServicioTipo_Empresa" Association="Self.FK_CProductoServicioTipo_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProductoServicioTipo" EntitySet="CProductoServicioTipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoUnidadMedida_Empresa" Association="Self.FK_CProductoUnidadMedida_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProductoUnidadMedida" EntitySet="CProductoUnidadMedida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CProveedorTipoProveedor" Association="Self.FK_CProveedor_CProveedorTipoProveedor">
+            <End Role="CProveedorTipoProveedor" EntitySet="CProveedorTipoProveedor" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_Empresa" Association="Self.FK_CProveedor_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedorBancario_CProveedor" Association="Self.FK_CProveedorBancario_CProveedor">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="CProveedorBancario" EntitySet="CProveedorBancario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedorContacto_CProveedor" Association="Self.FK_CProveedorContacto_CProveedor">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="CProveedorContacto" EntitySet="CProveedorContacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedorDireccion_CProveedor" Association="Self.FK_CProveedorDireccion_CProveedor">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="CProveedorDireccion" EntitySet="CProveedorDireccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedorFiscal_CProveedor" Association="Self.FK_CProveedorFiscal_CProveedor">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="CProveedorFiscal" EntitySet="CProveedorFiscal" />
           </AssociationSet>
           <AssociationSet Name="FK_Empresa_AdministracionCentral" Association="Self.FK_Empresa_AdministracionCentral">
             <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
@@ -957,6 +1604,34 @@
           <AssociationSet Name="FK_EmpresaImagen_Empresa" Association="Self.FK_EmpresaImagen_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="EmpresaImagen" EntitySet="EmpresaImagen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompra_CProveedor" Association="Self.FK_OrdenCompra_CProveedor">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompra_Empresa" Association="Self.FK_OrdenCompra_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompra_OrdenCompraEstatus" Association="Self.FK_OrdenCompra_OrdenCompraEstatus">
+            <End Role="OrdenCompraEstatus" EntitySet="OrdenCompraEstatus" />
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompra_Requisicion" Association="Self.FK_OrdenCompra_Requisicion">
+            <End Role="Requisicion" EntitySet="Requisicion" />
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompraImporte_OrdenCompra" Association="Self.FK_OrdenCompraImporte_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraImporte" EntitySet="OrdenCompraImporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompraProducto_OrdenCompra" Association="Self.FK_OrdenCompraProducto_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraProducto" EntitySet="OrdenCompraProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requisicion_Empresa" Association="Self.FK_Requisicion_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Requisicion" EntitySet="Requisicion" />
           </AssociationSet>
           <AssociationSet Name="FK_Requisicion_RequisicionEstatus" Association="Self.FK_Requisicion_RequisicionEstatus">
             <End Role="RequisicionEstatus" EntitySet="RequisicionEstatus" />
@@ -1204,6 +1879,14 @@
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaContacto_Empresa" FromRole="EmpresaContacto" ToRole="Empresa" />-->
           <NavigationProperty Name="EstadosRepublica" Relationship="Self.FK_Empresa_EstadosRepublica" FromRole="Empresa" ToRole="EstadosRepublica" />
           <NavigationProperty Name="Pais" Relationship="Self.FK_Empresa_Pais" FromRole="Empresa" ToRole="Pais" />
+          <NavigationProperty Name="CProducto" Relationship="Sagas.MainModuleModel.FK_CProducto_Empresa" FromRole="Empresa" ToRole="CProducto" />
+          <NavigationProperty Name="CProductoCategoria" Relationship="Sagas.MainModuleModel.FK_CProductoCategoria_Empresa" FromRole="Empresa" ToRole="CProductoCategoria" />
+          <NavigationProperty Name="CProductoLinea" Relationship="Sagas.MainModuleModel.FK_CProductoLinea_Empresa" FromRole="Empresa" ToRole="CProductoLinea" />
+          <NavigationProperty Name="CProductoServicioTipo" Relationship="Sagas.MainModuleModel.FK_CProductoServicioTipo_Empresa" FromRole="Empresa" ToRole="CProductoServicioTipo" />
+          <NavigationProperty Name="CProductoUnidadMedida" Relationship="Sagas.MainModuleModel.FK_CProductoUnidadMedida_Empresa" FromRole="Empresa" ToRole="CProductoUnidadMedida" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_Empresa" FromRole="Empresa" ToRole="CProveedor" />
+          <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_Empresa" FromRole="Empresa" ToRole="OrdenCompra" />
+          <NavigationProperty Name="Requisicion" Relationship="Sagas.MainModuleModel.FK_Requisicion_Empresa" FromRole="Empresa" ToRole="Requisicion" />
           <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaFiscal_Empresa" FromRole="EmpresaFiscal" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaImagen_Empresa" FromRole="EmpresaImagen" ToRole="Empresa" />-->
@@ -1892,6 +2575,122 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Requisicion" EntitySet="Requisicion" />
           </AssociationSet>
+          <EntitySet Name="CProducto" EntityType="Sagas.MainModuleModel.CProducto" />
+          <EntitySet Name="CProductoCategoria" EntityType="Sagas.MainModuleModel.CProductoCategoria" />
+          <EntitySet Name="CProductoLinea" EntityType="Sagas.MainModuleModel.CProductoLinea" />
+          <EntitySet Name="CProductoServicioTipo" EntityType="Sagas.MainModuleModel.CProductoServicioTipo" />
+          <EntitySet Name="CProductoUnidadMedida" EntityType="Sagas.MainModuleModel.CProductoUnidadMedida" />
+          <EntitySet Name="CProveedor" EntityType="Sagas.MainModuleModel.CProveedor" />
+          <EntitySet Name="CProveedorBancario" EntityType="Sagas.MainModuleModel.CProveedorBancario" />
+          <EntitySet Name="CProveedorContacto" EntityType="Sagas.MainModuleModel.CProveedorContacto" />
+          <EntitySet Name="CProveedorDireccion" EntityType="Sagas.MainModuleModel.CProveedorDireccion" />
+          <EntitySet Name="CProveedorFiscal" EntityType="Sagas.MainModuleModel.CProveedorFiscal" />
+          <EntitySet Name="CProveedorTipoProveedor" EntityType="Sagas.MainModuleModel.CProveedorTipoProveedor" />
+          <EntitySet Name="OrdenCompra" EntityType="Sagas.MainModuleModel.OrdenCompra" />
+          <EntitySet Name="OrdenCompraEstatus" EntityType="Sagas.MainModuleModel.OrdenCompraEstatus" />
+          <EntitySet Name="OrdenCompraImporte" EntityType="Sagas.MainModuleModel.OrdenCompraImporte" />
+          <EntitySet Name="CProductoAsociado" EntityType="Sagas.MainModuleModel.CProductoAsociado" />
+          <EntitySet Name="OrdenCompraProducto" EntityType="Sagas.MainModuleModel.OrdenCompraProducto" />
+          <AssociationSet Name="FK_CProducto_CProductoCategoria" Association="Sagas.MainModuleModel.FK_CProducto_CProductoCategoria">
+            <End Role="CProductoCategoria" EntitySet="CProductoCategoria" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProducto_CProductoLinea" Association="Sagas.MainModuleModel.FK_CProducto_CProductoLinea">
+            <End Role="CProductoLinea" EntitySet="CProductoLinea" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProducto_CProductoServicioTipo" Association="Sagas.MainModuleModel.FK_CProducto_CProductoServicioTipo">
+            <End Role="CProductoServicioTipo" EntitySet="CProductoServicioTipo" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProducto_CProductoUnidadMedida" Association="Sagas.MainModuleModel.FK_CProducto_CProductoUnidadMedida">
+            <End Role="CProductoUnidadMedida" EntitySet="CProductoUnidadMedida" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProducto_CProductoUnidadMedida1" Association="Sagas.MainModuleModel.FK_CProducto_CProductoUnidadMedida1">
+            <End Role="CProductoUnidadMedida" EntitySet="CProductoUnidadMedida" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProducto_Empresa" Association="Sagas.MainModuleModel.FK_CProducto_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProducto" EntitySet="CProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoAsociado_CProducto" Association="Sagas.MainModuleModel.FK_CProductoAsociado_CProducto">
+            <End Role="CProducto" EntitySet="CProducto" />
+            <End Role="CProductoAsociado" EntitySet="CProductoAsociado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoAsociado_CProducto1" Association="Sagas.MainModuleModel.FK_CProductoAsociado_CProducto1">
+            <End Role="CProducto" EntitySet="CProducto" />
+            <End Role="CProductoAsociado" EntitySet="CProductoAsociado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoCategoria_Empresa" Association="Sagas.MainModuleModel.FK_CProductoCategoria_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProductoCategoria" EntitySet="CProductoCategoria" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoLinea_Empresa" Association="Sagas.MainModuleModel.FK_CProductoLinea_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProductoLinea" EntitySet="CProductoLinea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoServicioTipo_Empresa" Association="Sagas.MainModuleModel.FK_CProductoServicioTipo_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProductoServicioTipo" EntitySet="CProductoServicioTipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProductoUnidadMedida_Empresa" Association="Sagas.MainModuleModel.FK_CProductoUnidadMedida_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProductoUnidadMedida" EntitySet="CProductoUnidadMedida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CProveedorTipoProveedor" Association="Sagas.MainModuleModel.FK_CProveedor_CProveedorTipoProveedor">
+            <End Role="CProveedorTipoProveedor" EntitySet="CProveedorTipoProveedor" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_Empresa" Association="Sagas.MainModuleModel.FK_CProveedor_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedorBancario_CProveedor" Association="Sagas.MainModuleModel.FK_CProveedorBancario_CProveedor">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="CProveedorBancario" EntitySet="CProveedorBancario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedorContacto_CProveedor" Association="Sagas.MainModuleModel.FK_CProveedorContacto_CProveedor">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="CProveedorContacto" EntitySet="CProveedorContacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedorDireccion_CProveedor" Association="Sagas.MainModuleModel.FK_CProveedorDireccion_CProveedor">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="CProveedorDireccion" EntitySet="CProveedorDireccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedorFiscal_CProveedor" Association="Sagas.MainModuleModel.FK_CProveedorFiscal_CProveedor">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="CProveedorFiscal" EntitySet="CProveedorFiscal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompra_CProveedor" Association="Sagas.MainModuleModel.FK_OrdenCompra_CProveedor">
+            <End Role="CProveedor" EntitySet="CProveedor" />
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompra_Empresa" Association="Sagas.MainModuleModel.FK_OrdenCompra_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Requisicion_Empresa" Association="Sagas.MainModuleModel.FK_Requisicion_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Requisicion" EntitySet="Requisicion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompra_OrdenCompraEstatus" Association="Sagas.MainModuleModel.FK_OrdenCompra_OrdenCompraEstatus">
+            <End Role="OrdenCompraEstatus" EntitySet="OrdenCompraEstatus" />
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompra_Requisicion" Association="Sagas.MainModuleModel.FK_OrdenCompra_Requisicion">
+            <End Role="Requisicion" EntitySet="Requisicion" />
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompraImporte_OrdenCompra" Association="Sagas.MainModuleModel.FK_OrdenCompraImporte_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraImporte" EntitySet="OrdenCompraImporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompraProducto_OrdenCompra" Association="Sagas.MainModuleModel.FK_OrdenCompraProducto_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraProducto" EntitySet="OrdenCompraProducto" />
+          </AssociationSet>
           <!--<AssociationSet Name="FK_UsuarioContacto_Usuario" Association="Self.FK_UsuarioContacto_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioContacto" EntitySet="UsuarioContacto" />
@@ -1950,6 +2749,8 @@
           <NavigationProperty Name="Almacenista" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario1" FromRole="Requisicion" ToRole="Usuario" />
           <!--<NavigationProperty Name="Requisicion" Relationship="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Requisicion" FromRole="RequisicionAutorizacion" ToRole="Requisicion" />-->
           <NavigationProperty Name="Autorizador" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario2" FromRole="Requisicion" ToRole="Usuario" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Requisicion_Empresa" FromRole="Requisicion" ToRole="Empresa" />
+          <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_Requisicion" FromRole="Requisicion" ToRole="OrdenCompra" />
         </EntityType>
         <EntityType Name="RequisicionProducto">
           <Key>
@@ -2111,6 +2912,577 @@
             </Principal>
             <Dependent Role="Requisicion">
               <PropertyRef Name="IdUsuarioAutorizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CProducto">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="IdProductoServicioTipo" Type="Int16" Nullable="false" />
+          <Property Name="IdCategoria" Type="Int16" Nullable="false" />
+          <Property Name="IdProductoLinea" Type="Int16" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="Int16" Nullable="false" />
+          <Property Name="IdUnidadMedida2" Type="Int16" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Minimos" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Maximo" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="UrlImagen" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="PathImagen" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CProductoCategoria" Relationship="Sagas.MainModuleModel.FK_CProducto_CProductoCategoria" FromRole="CProducto" ToRole="CProductoCategoria" />
+          <NavigationProperty Name="CProductoLinea" Relationship="Sagas.MainModuleModel.FK_CProducto_CProductoLinea" FromRole="CProducto" ToRole="CProductoLinea" />
+          <NavigationProperty Name="CProductoServicioTipo" Relationship="Sagas.MainModuleModel.FK_CProducto_CProductoServicioTipo" FromRole="CProducto" ToRole="CProductoServicioTipo" />
+          <NavigationProperty Name="CProductoUnidadMedida" Relationship="Sagas.MainModuleModel.FK_CProducto_CProductoUnidadMedida" FromRole="CProducto" ToRole="CProductoUnidadMedida" />
+          <NavigationProperty Name="CProductoUnidadMedida1" Relationship="Sagas.MainModuleModel.FK_CProducto_CProductoUnidadMedida1" FromRole="CProducto" ToRole="CProductoUnidadMedida" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CProducto_Empresa" FromRole="CProducto" ToRole="Empresa" />
+          <NavigationProperty Name="CProductoAsociado" Relationship="Sagas.MainModuleModel.FK_CProductoAsociado_CProducto" FromRole="CProducto" ToRole="CProductoAsociado" />
+          <NavigationProperty Name="CProductoAsociado1" Relationship="Sagas.MainModuleModel.FK_CProductoAsociado_CProducto1" FromRole="CProducto" ToRole="CProductoAsociado" />
+        </EntityType>
+        <EntityType Name="CProductoCategoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CProducto" Relationship="Sagas.MainModuleModel.FK_CProducto_CProductoCategoria" FromRole="CProductoCategoria" ToRole="CProducto" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CProductoCategoria_Empresa" FromRole="CProductoCategoria" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="CProductoLinea">
+          <Key>
+            <PropertyRef Name="IdProductoLinea" />
+          </Key>
+          <Property Name="IdProductoLinea" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="Linea" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CProducto" Relationship="Sagas.MainModuleModel.FK_CProducto_CProductoLinea" FromRole="CProductoLinea" ToRole="CProducto" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CProductoLinea_Empresa" FromRole="CProductoLinea" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="CProductoServicioTipo">
+          <Key>
+            <PropertyRef Name="IdProductoServicioTipo" />
+          </Key>
+          <Property Name="IdProductoServicioTipo" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CProducto" Relationship="Sagas.MainModuleModel.FK_CProducto_CProductoServicioTipo" FromRole="CProductoServicioTipo" ToRole="CProducto" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CProductoServicioTipo_Empresa" FromRole="CProductoServicioTipo" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="CProductoUnidadMedida">
+          <Key>
+            <PropertyRef Name="IdUnidadMedida" />
+          </Key>
+          <Property Name="IdUnidadMedida" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Acronimo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CProducto" Relationship="Sagas.MainModuleModel.FK_CProducto_CProductoUnidadMedida" FromRole="CProductoUnidadMedida" ToRole="CProducto" />
+          <NavigationProperty Name="CProducto1" Relationship="Sagas.MainModuleModel.FK_CProducto_CProductoUnidadMedida1" FromRole="CProductoUnidadMedida" ToRole="CProducto" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CProductoUnidadMedida_Empresa" FromRole="CProductoUnidadMedida" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="CProveedor">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="IdTipoProveedor" Type="Byte" Nullable="false" />
+          <Property Name="IdCuentaContable" Type="Int32" />
+          <Property Name="NombreComercial" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ProdutoPrinicpal" Type="Boolean" Nullable="false" />
+          <Property Name="TransportistaProdutoPrinicpal" Type="Boolean" Nullable="false" />
+          <Property Name="Vende" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CProveedorTipoProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_CProveedorTipoProveedor" FromRole="CProveedor" ToRole="CProveedorTipoProveedor" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CProveedor_Empresa" FromRole="CProveedor" ToRole="Empresa" />
+          <NavigationProperty Name="CProveedorBancario" Relationship="Sagas.MainModuleModel.FK_CProveedorBancario_CProveedor" FromRole="CProveedor" ToRole="CProveedorBancario" />
+          <NavigationProperty Name="CProveedorContacto" Relationship="Sagas.MainModuleModel.FK_CProveedorContacto_CProveedor" FromRole="CProveedor" ToRole="CProveedorContacto" />
+          <NavigationProperty Name="CProveedorDireccion" Relationship="Sagas.MainModuleModel.FK_CProveedorDireccion_CProveedor" FromRole="CProveedor" ToRole="CProveedorDireccion" />
+          <NavigationProperty Name="CProveedorFiscal" Relationship="Sagas.MainModuleModel.FK_CProveedorFiscal_CProveedor" FromRole="CProveedor" ToRole="CProveedorFiscal" />
+          <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_CProveedor" FromRole="CProveedor" ToRole="OrdenCompra" />
+        </EntityType>
+        <EntityType Name="CProveedorBancario">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+          <Property Name="IdFormaDePago" Type="Byte" Nullable="false" />
+          <Property Name="IdBanco" Type="Byte" Nullable="false" />
+          <Property Name="Cuenta" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DiasCredito" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedorBancario_CProveedor" FromRole="CProveedorBancario" ToRole="CProveedor" />
+        </EntityType>
+        <EntityType Name="CProveedorContacto">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+          <Property Name="Persona1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Persona2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Persona3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SitioWeb1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="SitioWeb2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="SitioWeb3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedorContacto_CProveedor" FromRole="CProveedorContacto" ToRole="CProveedor" />
+        </EntityType>
+        <EntityType Name="CProveedorDireccion">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+          <Property Name="IdPais" Type="Byte" Nullable="false" />
+          <Property Name="IdEstadoRep" Type="Byte" />
+          <Property Name="EstadoProvincia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Municipio" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoPostal" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Colonia" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Calle" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="NumExt" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NumInt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedorDireccion_CProveedor" FromRole="CProveedorDireccion" ToRole="CProveedor" />
+        </EntityType>
+        <EntityType Name="CProveedorFiscal">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoPersona" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="IdRegimenFiscal" Type="Int32" Nullable="false" />
+          <Property Name="Rfc" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="RazonSocial" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedorFiscal_CProveedor" FromRole="CProveedorFiscal" ToRole="CProveedor" />
+        </EntityType>
+        <EntityType Name="CProveedorTipoProveedor">
+          <Key>
+            <PropertyRef Name="IdTipoProveedor" />
+          </Key>
+          <Property Name="IdTipoProveedor" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_CProveedorTipoProveedor" FromRole="CProveedorTipoProveedor" ToRole="CProveedor" />
+        </EntityType>
+        <EntityType Name="OrdenCompra">
+          <Key>
+            <PropertyRef Name="IdOrdenCompra" />
+          </Key>
+          <Property Name="IdOrdenCompra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="IdOrdenCompraEstatus" Type="Byte" Nullable="false" />
+          <Property Name="IdRequisicion" Type="Int32" Nullable="false" />
+          <Property Name="IdProveedor" Type="Int32" Nullable="false" />
+          <Property Name="IdCentroCosto" Type="Int32" Nullable="false" />
+          <Property Name="IdCuentaContable" Type="Int32" Nullable="false" />
+          <Property Name="NumOrdenCompra" Type="Binary" Nullable="false" MaxLength="25" FixedLength="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_CProveedor" FromRole="OrdenCompra" ToRole="CProveedor" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_Empresa" FromRole="OrdenCompra" ToRole="Empresa" />
+          <NavigationProperty Name="OrdenCompraEstatus" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_OrdenCompraEstatus" FromRole="OrdenCompra" ToRole="OrdenCompraEstatus" />
+          <NavigationProperty Name="Requisicion" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_Requisicion" FromRole="OrdenCompra" ToRole="Requisicion" />
+          <NavigationProperty Name="OrdenCompraImporte" Relationship="Sagas.MainModuleModel.FK_OrdenCompraImporte_OrdenCompra" FromRole="OrdenCompra" ToRole="OrdenCompraImporte" />
+          <NavigationProperty Name="OrdenCompraProducto" Relationship="Sagas.MainModuleModel.FK_OrdenCompraProducto_OrdenCompra" FromRole="OrdenCompra" ToRole="OrdenCompraProducto" />
+        </EntityType>
+        <EntityType Name="OrdenCompraEstatus">
+          <Key>
+            <PropertyRef Name="IdOrdenCompraEstatus" />
+          </Key>
+          <Property Name="IdOrdenCompraEstatus" Type="Byte" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_OrdenCompraEstatus" FromRole="OrdenCompraEstatus" ToRole="OrdenCompra" />
+        </EntityType>
+        <EntityType Name="OrdenCompraImporte">
+          <Key>
+            <PropertyRef Name="IdOrdenCompra" />
+          </Key>
+          <Property Name="IdOrdenCompra" Type="Int32" Nullable="false" />
+          <Property Name="SubtotalSinIva" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="SubtotalSinIeps" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Iva" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Ieps" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="4" />
+          <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompraImporte_OrdenCompra" FromRole="OrdenCompraImporte" ToRole="OrdenCompra" />
+        </EntityType>
+        <EntityType Name="CProductoAsociado">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+            <PropertyRef Name="IdProductoAsociado" />
+            <PropertyRef Name="Activo" />
+            <PropertyRef Name="FechaRegistro" />
+          </Key>
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="IdProductoAsociado" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CProducto" Relationship="Sagas.MainModuleModel.FK_CProductoAsociado_CProducto" FromRole="CProductoAsociado" ToRole="CProducto" />
+          <NavigationProperty Name="CProducto1" Relationship="Sagas.MainModuleModel.FK_CProductoAsociado_CProducto1" FromRole="CProductoAsociado" ToRole="CProducto" />
+        </EntityType>
+        <EntityType Name="OrdenCompraProducto">
+          <Key>
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="ProductoServicioTipo" />
+            <PropertyRef Name="Producto" />
+            <PropertyRef Name="UnidadMedida" />
+            <PropertyRef Name="Cantidad" />
+            <PropertyRef Name="Precio" />
+            <PropertyRef Name="Descuento" />
+            <PropertyRef Name="IVA" />
+            <PropertyRef Name="IEPS" />
+            <PropertyRef Name="Importe" />
+          </Key>
+          <Property Name="IdOrdenCompra" Type="Int32" Nullable="false" />
+          <Property Name="ProductoServicioTipo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Producto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Categoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Linea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UnidadMedida" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UnidadMedida2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Descuento" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IVA" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IEPS" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Importe" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompraProducto_OrdenCompra" FromRole="OrdenCompraProducto" ToRole="OrdenCompra" />
+        </EntityType>
+        <Association Name="FK_CProducto_CProductoCategoria">
+          <End Type="Sagas.MainModuleModel.CProductoCategoria" Role="CProductoCategoria" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProducto" Role="CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoCategoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProducto_CProductoLinea">
+          <End Type="Sagas.MainModuleModel.CProductoLinea" Role="CProductoLinea" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProducto" Role="CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoLinea">
+              <PropertyRef Name="IdProductoLinea" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdProductoLinea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProducto_CProductoServicioTipo">
+          <End Type="Sagas.MainModuleModel.CProductoServicioTipo" Role="CProductoServicioTipo" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProducto" Role="CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoServicioTipo">
+              <PropertyRef Name="IdProductoServicioTipo" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdProductoServicioTipo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProducto_CProductoUnidadMedida">
+          <End Type="Sagas.MainModuleModel.CProductoUnidadMedida" Role="CProductoUnidadMedida" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProducto" Role="CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoUnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProducto_CProductoUnidadMedida1">
+          <End Type="Sagas.MainModuleModel.CProductoUnidadMedida" Role="CProductoUnidadMedida" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.CProducto" Role="CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoUnidadMedida">
+              <PropertyRef Name="IdUnidadMedida" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdUnidadMedida2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProducto_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProducto" Role="CProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProducto">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoAsociado_CProducto">
+          <End Type="Sagas.MainModuleModel.CProducto" Role="CProducto" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProductoAsociado" Role="CProductoAsociado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProducto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="CProductoAsociado">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoAsociado_CProducto1">
+          <End Type="Sagas.MainModuleModel.CProducto" Role="CProducto" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProductoAsociado" Role="CProductoAsociado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProducto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="CProductoAsociado">
+              <PropertyRef Name="IdProductoAsociado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoCategoria_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProductoCategoria" Role="CProductoCategoria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProductoCategoria">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoLinea_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProductoLinea" Role="CProductoLinea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProductoLinea">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoServicioTipo_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProductoServicioTipo" Role="CProductoServicioTipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProductoServicioTipo">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProductoUnidadMedida_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProductoUnidadMedida" Role="CProductoUnidadMedida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProductoUnidadMedida">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CProveedorTipoProveedor">
+          <End Type="Sagas.MainModuleModel.CProveedorTipoProveedor" Role="CProveedorTipoProveedor" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProveedor" Role="CProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedorTipoProveedor">
+              <PropertyRef Name="IdTipoProveedor" />
+            </Principal>
+            <Dependent Role="CProveedor">
+              <PropertyRef Name="IdTipoProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CProveedor" Role="CProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CProveedor">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedorBancario_CProveedor">
+          <End Type="Sagas.MainModuleModel.CProveedor" Role="CProveedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CProveedorBancario" Role="CProveedorBancario" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="CProveedorBancario">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedorContacto_CProveedor">
+          <End Type="Sagas.MainModuleModel.CProveedor" Role="CProveedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CProveedorContacto" Role="CProveedorContacto" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="CProveedorContacto">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedorDireccion_CProveedor">
+          <End Type="Sagas.MainModuleModel.CProveedor" Role="CProveedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CProveedorDireccion" Role="CProveedorDireccion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="CProveedorDireccion">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedorFiscal_CProveedor">
+          <End Type="Sagas.MainModuleModel.CProveedor" Role="CProveedor" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CProveedorFiscal" Role="CProveedorFiscal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="CProveedorFiscal">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompra_CProveedor">
+          <End Type="Sagas.MainModuleModel.CProveedor" Role="CProveedor" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="OrdenCompra">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompra_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="OrdenCompra">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Requisicion_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Requisicion">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompra_OrdenCompraEstatus">
+          <End Type="Sagas.MainModuleModel.OrdenCompraEstatus" Role="OrdenCompraEstatus" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompraEstatus">
+              <PropertyRef Name="IdOrdenCompraEstatus" />
+            </Principal>
+            <Dependent Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompraEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompra_Requisicion">
+          <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requisicion">
+              <PropertyRef Name="IdRequisicion" />
+            </Principal>
+            <Dependent Role="OrdenCompra">
+              <PropertyRef Name="IdRequisicion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompraImporte_OrdenCompra">
+          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.OrdenCompraImporte" Role="OrdenCompraImporte" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraImporte">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompraProducto_OrdenCompra">
+          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.OrdenCompraProducto" Role="OrdenCompraProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraProducto">
+              <PropertyRef Name="IdOrdenCompra" />
             </Dependent>
           </ReferentialConstraint>
         </Association>        
@@ -2451,6 +3823,229 @@
               <MappingFragment StoreEntitySet="RequisicionEstatus">
                 <ScalarProperty Name="Estatus" ColumnName="Estatus" />
                 <ScalarProperty Name="IdRequisicionEstatus" ColumnName="IdRequisicionEstatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProducto">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProducto">
+              <MappingFragment StoreEntitySet="CProducto">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="PathImagen" ColumnName="PathImagen" />
+                <ScalarProperty Name="UrlImagen" ColumnName="UrlImagen" />
+                <ScalarProperty Name="Maximo" ColumnName="Maximo" />
+                <ScalarProperty Name="Minimos" ColumnName="Minimos" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdUnidadMedida2" ColumnName="IdUnidadMedida2" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+                <ScalarProperty Name="IdProductoLinea" ColumnName="IdProductoLinea" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="IdProductoServicioTipo" ColumnName="IdProductoServicioTipo" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProductoCategoria">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProductoCategoria">
+              <MappingFragment StoreEntitySet="CProductoCategoria">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProductoLinea">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProductoLinea">
+              <MappingFragment StoreEntitySet="CProductoLinea">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Linea" ColumnName="Linea" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdProductoLinea" ColumnName="IdProductoLinea" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProductoServicioTipo">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProductoServicioTipo">
+              <MappingFragment StoreEntitySet="CProductoServicioTipo">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdProductoServicioTipo" ColumnName="IdProductoServicioTipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProductoUnidadMedida">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProductoUnidadMedida">
+              <MappingFragment StoreEntitySet="CProductoUnidadMedida">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Acronimo" ColumnName="Acronimo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProveedor">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProveedor">
+              <MappingFragment StoreEntitySet="CProveedor">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Vende" ColumnName="Vende" />
+                <ScalarProperty Name="TransportistaProdutoPrinicpal" ColumnName="TransportistaProdutoPrinicpal" />
+                <ScalarProperty Name="ProdutoPrinicpal" ColumnName="ProdutoPrinicpal" />
+                <ScalarProperty Name="NombreComercial" ColumnName="NombreComercial" />
+                <ScalarProperty Name="IdCuentaContable" ColumnName="IdCuentaContable" />
+                <ScalarProperty Name="IdTipoProveedor" ColumnName="IdTipoProveedor" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProveedorBancario">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProveedorBancario">
+              <MappingFragment StoreEntitySet="CProveedorBancario">
+                <ScalarProperty Name="DiasCredito" ColumnName="DiasCredito" />
+                <ScalarProperty Name="Cuenta" ColumnName="Cuenta" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="IdFormaDePago" ColumnName="IdFormaDePago" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProveedorContacto">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProveedorContacto">
+              <MappingFragment StoreEntitySet="CProveedorContacto">
+                <ScalarProperty Name="SitioWeb3" ColumnName="SitioWeb3" />
+                <ScalarProperty Name="SitioWeb2" ColumnName="SitioWeb2" />
+                <ScalarProperty Name="SitioWeb1" ColumnName="SitioWeb1" />
+                <ScalarProperty Name="Email3" ColumnName="Email3" />
+                <ScalarProperty Name="Email2" ColumnName="Email2" />
+                <ScalarProperty Name="Email1" ColumnName="Email1" />
+                <ScalarProperty Name="Celular3" ColumnName="Celular3" />
+                <ScalarProperty Name="Celular2" ColumnName="Celular2" />
+                <ScalarProperty Name="Celular1" ColumnName="Celular1" />
+                <ScalarProperty Name="Telefono3" ColumnName="Telefono3" />
+                <ScalarProperty Name="Telefono2" ColumnName="Telefono2" />
+                <ScalarProperty Name="Telefono1" ColumnName="Telefono1" />
+                <ScalarProperty Name="Persona3" ColumnName="Persona3" />
+                <ScalarProperty Name="Persona2" ColumnName="Persona2" />
+                <ScalarProperty Name="Persona1" ColumnName="Persona1" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProveedorDireccion">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProveedorDireccion">
+              <MappingFragment StoreEntitySet="CProveedorDireccion">
+                <ScalarProperty Name="NumInt" ColumnName="NumInt" />
+                <ScalarProperty Name="NumExt" ColumnName="NumExt" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Municipio" ColumnName="Municipio" />
+                <ScalarProperty Name="EstadoProvincia" ColumnName="EstadoProvincia" />
+                <ScalarProperty Name="IdEstadoRep" ColumnName="IdEstadoRep" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProveedorFiscal">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProveedorFiscal">
+              <MappingFragment StoreEntitySet="CProveedorFiscal">
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Rfc" ColumnName="Rfc" />
+                <ScalarProperty Name="IdRegimenFiscal" ColumnName="IdRegimenFiscal" />
+                <ScalarProperty Name="IdTipoPersona" ColumnName="IdTipoPersona" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProveedorTipoProveedor">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProveedorTipoProveedor">
+              <MappingFragment StoreEntitySet="CProveedorTipoProveedor">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="IdTipoProveedor" ColumnName="IdTipoProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenCompra">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompra">
+              <MappingFragment StoreEntitySet="OrdenCompra">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="NumOrdenCompra" ColumnName="NumOrdenCompra" />
+                <ScalarProperty Name="IdCuentaContable" ColumnName="IdCuentaContable" />
+                <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="IdRequisicion" ColumnName="IdRequisicion" />
+                <ScalarProperty Name="IdOrdenCompraEstatus" ColumnName="IdOrdenCompraEstatus" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenCompraEstatus">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompraEstatus">
+              <MappingFragment StoreEntitySet="OrdenCompraEstatus">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdOrdenCompraEstatus" ColumnName="IdOrdenCompraEstatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenCompraImporte">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompraImporte">
+              <MappingFragment StoreEntitySet="OrdenCompraImporte">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Ieps" ColumnName="Ieps" />
+                <ScalarProperty Name="Iva" ColumnName="Iva" />
+                <ScalarProperty Name="SubtotalSinIeps" ColumnName="SubtotalSinIeps" />
+                <ScalarProperty Name="SubtotalSinIva" ColumnName="SubtotalSinIva" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CProductoAsociado">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CProductoAsociado">
+              <MappingFragment StoreEntitySet="CProductoAsociado">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdProductoAsociado" ColumnName="IdProductoAsociado" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenCompraProducto">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompraProducto">
+              <MappingFragment StoreEntitySet="OrdenCompraProducto">
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="IEPS" ColumnName="IEPS" />
+                <ScalarProperty Name="IVA" ColumnName="IVA" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="UnidadMedida2" ColumnName="UnidadMedida2" />
+                <ScalarProperty Name="UnidadMedida" ColumnName="UnidadMedida" />
+                <ScalarProperty Name="Linea" ColumnName="Linea" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Producto" ColumnName="Producto" />
+                <ScalarProperty Name="ProductoServicioTipo" ColumnName="ProductoServicioTipo" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>         

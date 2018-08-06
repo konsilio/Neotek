@@ -133,6 +133,7 @@
     <Build Include="Contruccion\AlmacenEntradaGasDescargaFoto.sql" />
     <Build Include="Contruccion\AlmacenEntradaGasDescargaIniciar.sql" />
     <Build Include="Contruccion\AlmacenEntradaGasDescargaFinalizar.sql" />
+    <Build Include="Contruccion\ImagenDe.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sagas.MainModule.refactorlog" />
