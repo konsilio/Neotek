@@ -658,4 +658,88 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="SubtotalSinIva" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="c48d6308-efc3-468b-a29c-4251ddee2bfe" ChangeDateTime="08/06/2018 14:34:19">
+    <Property Name="ElementName" Value="[dbo].[AlmacenGasTotal].[IdAlmacenGasTotal]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenGasTotal]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdAlmacenGas" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cf36d3b1-8c27-4ffe-bfb9-3c93eea6f11a" ChangeDateTime="08/06/2018 15:21:53">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntradaGasPuerta].[CapacidadTanque]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntradaGasPuerta]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CapacidadTanqueLt" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="57f6c179-72ae-412f-bd95-d03c7025c1ee" ChangeDateTime="08/06/2018 15:35:02">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntradaGas].[IdAlmacenEntradaGas]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntradaGas]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdAlmacenEntradaGasDescarga" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d3698b03-80bd-4fd6-8f5c-5a842599cf1a" ChangeDateTime="08/06/2018 15:37:23">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntradaGas].[IdOrdenCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntradaGas]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdOrdenCompraGas" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b80186af-0334-466b-8f10-4f710484976c" ChangeDateTime="08/06/2018 15:43:43">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntradaGasDescargaPuerta].[PorcenMagnatel]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntradaGasDescargaPuerta]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PorcenMagnatelPapeleta" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="414c0e49-046b-4e2a-8678-a64734399da2" ChangeDateTime="08/06/2018 15:51:04">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntradaGasDescargaFoto].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntradaGasDescargaFoto]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdAlmacenEntradaGasDescargaFoto" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d4628dec-765c-425c-a981-67df2a18fdfe" ChangeDateTime="08/06/2018 17:18:38">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntradaGasDescargaIniciar].[PorcenMagnatelOcular]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntradaGasDescargaIniciar]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PorcenMagnatelOcularTractor" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e975ab04-12a0-4729-9caf-fe8aea979323" ChangeDateTime="08/06/2018 17:25:30">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntradaGasDescargaFinalizar].[IdTipoMedidorTractor]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntradaGasDescargaFinalizar]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdTipoMedidorTractorFIN" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="84af1d73-279f-4615-8bf6-374ef1590b3c" ChangeDateTime="08/06/2018 17:25:34">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntradaGasDescargaFinalizar].[IdTipoMedidorAlmacen]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntradaGasDescargaFinalizar]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdTipoMedidorAlmacenFIN" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="29eba1da-89fb-481b-9c79-4528efb73e4c" ChangeDateTime="08/06/2018 17:25:48">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntradaGasDescargaFinalizar].[PorcenMagnatelOcularTractor]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntradaGasDescargaFinalizar]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PorcenMagnatelOcularTractorFIN" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6216df09-d878-43d0-97cd-36a64a0562f3" ChangeDateTime="08/06/2018 17:25:52">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntradaGasDescargaFinalizar].[PorcenMagnatelOcularAlmacen]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntradaGasDescargaFinalizar]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PorcenMagnatelOcularAlmacenFIN" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a48814fb-9e54-4ab5-81ab-c53842a0bf9b" ChangeDateTime="08/06/2018 17:25:59">
+    <Property Name="ElementName" Value="[dbo].[AlmacenEntradaGasDescargaFinalizar].[FechaInicioDescarga]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AlmacenEntradaGasDescargaFinalizar]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FechaFinDescarga" />
+  </Operation>
 </Operations>

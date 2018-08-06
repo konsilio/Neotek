@@ -1,6 +1,6 @@
-﻿CREATE TABLE [dbo].[CAlmacenGasTotal]
+﻿CREATE TABLE [dbo].[AlmacenGas]
 (
-	[IdCAlmacenGasTotal] SMALLINT NOT NULL PRIMARY KEY IDENTITY, 
+	[IdAlmacenGas] SMALLINT NOT NULL PRIMARY KEY IDENTITY, 
     [IdEmpresa] SMALLINT NOT NULL, 
     [CapacidadTotalLt] DECIMAL(18, 4) NOT NULL DEFAULT 0, 
     [CapacidadTotalKg] DECIMAL(18, 4) NOT NULL DEFAULT 0, 

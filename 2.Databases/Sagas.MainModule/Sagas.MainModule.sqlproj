@@ -127,7 +127,12 @@
     <Build Include="Contruccion\OrdenCompraEstatus.sql" />
     <Build Include="Contruccion\OrdenCompraProducto.sql" />
     <Build Include="Contruccion\OrdenCompraImporte.sql" />
-    <Build Include="Contruccion\CAlmacenGasTotal.sql" />
+    <Build Include="Contruccion\AlmacenGas.sql" />
+    <Build Include="Contruccion\AlmacenEntradaGasDescarga.sql" />
+    <Build Include="Contruccion\AlmacenEntradaGasDescargaPuerta.sql" />
+    <Build Include="Contruccion\AlmacenEntradaGasDescargaFoto.sql" />
+    <Build Include="Contruccion\AlmacenEntradaGasDescargaIniciar.sql" />
+    <Build Include="Contruccion\AlmacenEntradaGasDescargaFinalizar.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sagas.MainModule.refactorlog" />
