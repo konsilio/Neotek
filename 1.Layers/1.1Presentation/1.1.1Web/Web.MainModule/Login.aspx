@@ -6,6 +6,8 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Login</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Favicon-->
     <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
     <!-- Morris Chart Css-->
     <link rel="stylesheet" href="assets/plugins/morrisjs/morris.css" />
@@ -71,13 +73,14 @@
                                 <div class="header">
                                     <h5>Inicio de Sesion</h5>
                                 </div>
+                               
                                 <div class="from">
-                                    <div class="input-group">
-                                        <asp:DropDownList CssClass="form-control z-index show-tick" data-live-search="true" runat="server" ID="ddlRazon">
-                                        </asp:DropDownList>
-                                    </div>
+                                    <div >
+                                     <asp:DropDownList CssClass="selectpicker" data-live-search="true" runat="server" ID="ddlRazon"></asp:DropDownList>
                                     <%-- <select runat="server" id="ddlRazon" class="form-control z-index show-tick" data-show-subtext="true" data-live-search="true" title="Razon social">
                                         </select>--%>
+                                        </div>
+                                    <br />
                                     <div class="input-group">
                                         <asp:TextBox runat="server" ID="Email" CssClass="form-control" placeholder="Usuario" />
                                         <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
@@ -119,22 +122,23 @@
     <!-- Lib Scripts Plugin Js -->
     <script src="assets/bundles/vendorscripts.bundle.js"></script>
     <!-- Lib Scripts Plugin Js -->
-    <script src="assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+
+    <script src="../../assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
     <!-- Bootstrap Colorpicker Js -->
-    <script src="assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+    <script src="../../assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
     <!-- Input Mask Plugin Js -->
-    <script src="assets/plugins/multi-select/js/jquery.multi-select.js"></script>
+    <script src="../../assets/plugins/multi-select/js/jquery.multi-select.js"></script>
     <!-- Multi Select Plugin Js -->
-    <script src="assets/plugins/jquery-spinner/js/jquery.spinner.js"></script>
+    <script src="../../assets/plugins/jquery-spinner/js/jquery.spinner.js"></script>
     <!-- Jquery Spinner Plugin Js -->
-    <script src="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    <script src="../../assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
     <!-- Bootstrap Tags Input Plugin Js -->
-    <script src="assets/plugins/nouislider/nouislider.js"></script>
+    <script src="../../assets/plugins/nouislider/nouislider.js"></script>
     <!-- noUISlider Plugin Js -->
-    <script src="assets/bundles/mainscripts.bundle.js"></script>
+    <script src="../../assets/plugins/bootstrap-select/css/bootstrap-select.css"></script>
+
+    <script src="../../assets/bundles/mainscripts.bundle.js"></script>
     <!-- Custom Js -->
-    <script src="assets/js/pages/forms/advanced-form-elements.js"></script>
-    <!-- Lib Scripts Plugin Js -->
-    <script src="assets/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="../../assets/js/pages/forms/advanced-form-elements.js"></script>
 </body>
 </html>

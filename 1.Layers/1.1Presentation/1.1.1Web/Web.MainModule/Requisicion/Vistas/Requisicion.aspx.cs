@@ -30,7 +30,7 @@ namespace Web.MainModule.Requisicion.Vista
                             {
                                 RquisicionAlternativa(Request.QueryString["nr"].ToString(), Convert.ToInt32(Request.QueryString["Sts"]));
                             }
-                            
+
                             dgListaproductos.DataBind();
                         }
                         else
@@ -140,15 +140,24 @@ namespace Web.MainModule.Requisicion.Vista
         }
         private void ActivarRevisarAutorizacion()
         {
-            lblRuta.Text = "Requisición / Autorización";
+            Model.RequisicionEDTO _reqEDTO = new Model.RequisicionEDTO();
+
+            divOpinion.Visible = true;
+            divOpinion.Disabled = true;
             divDatos1.Visible = false;
             divDatos2.Visible = false;
+            lblRuta.Text = "Requisición / Autorización";
             txtFechaRequerida.Disabled = true;
             txtSolicitante.Enabled = false;
             txtMotivoCompra.Enabled = false;
             txtRequeridoEn.Enabled = false;
-            divOpinion.Visible = true;
-            divOpinion.Disabled = true;
+
+            dgListaproductos.DataSource = ViewState["ListaRequisicionProductoEDTO"] = _reqEDTO.ListaProductos;
+            dgListaproductos.DataBind();
+            dgListaproductos.Columns[5].Visible = false;
+            dgListaproductos.Columns[8].Visible = true;
+            dgListaproductos.Columns[9].Visible = true;
+            dgListaproductos.Columns[10].Visible = true;
         }
     }
 }
