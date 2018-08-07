@@ -25,6 +25,8 @@ namespace Sagas.MainModule.Entidades
         public int IdUsuario { get; set; }
         public short IdEmpresa { get; set; }
         public short IdRol { get; set; }
+        public bool EsAdministracionCentral { get; set; }
+        public bool EsSuperAdmin { get; set; }
         public string Nombre { get; set; }
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }

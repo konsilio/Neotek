@@ -17,7 +17,6 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AdministracionCentral()
         {
-            this.Empresa = new HashSet<Empresa>();
             this.UsuarioAC = new HashSet<UsuarioAC>();
         }
     
@@ -50,8 +49,6 @@ namespace Sagas.MainModule.Entidades
         public string SitioWeb2 { get; set; }
         public string SitioWeb3 { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Empresa> Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioAC> UsuarioAC { get; set; }
         public virtual EstadosRepublica EstadosRepublica { get; set; }
