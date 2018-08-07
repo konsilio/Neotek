@@ -64,9 +64,6 @@
     <Compile Include="Entidades\CAlmacenGasCilindro.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\CAlmacenGasTipo.cs">
-      <DependentUpon>Sagas.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entidades\Camioneta.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -136,6 +133,9 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\sysdiagrams.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\TipoMedidorUnidadAlmacenGas.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\TipoProveedor.cs">
