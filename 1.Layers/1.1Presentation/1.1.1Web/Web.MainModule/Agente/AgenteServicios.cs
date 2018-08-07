@@ -24,6 +24,8 @@ namespace Web.MainModule.Agente
         public List<EmpresaDTO> _listaEmpresas;
         public ComprasDTO _respuestacompra;
 
+        
+
         public AgenteServicios()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
