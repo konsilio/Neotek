@@ -1,7 +1,0 @@
-#Tue Aug 07 10:31:08 CDT 2018
-base.0=/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_4c90a04b4b795fe8f3fe6c90a118b1af1deaf4b3
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_df47b8092aa72cc00a10f72f859a0a9ae0f0ddf6/classes.dex
-base.1=/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_df47b8092aa72cc00a10f72f859a0a9ae0f0ddf6
-file.0=/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_4c90a04b4b795fe8f3fe6c90a118b1af1deaf4b3/classes.dex
