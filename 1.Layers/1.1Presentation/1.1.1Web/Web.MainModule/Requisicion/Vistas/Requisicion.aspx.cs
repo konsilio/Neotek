@@ -63,36 +63,43 @@ namespace Web.MainModule.Requisicion.Vista
         protected void BtnCrear_Click(object sender, EventArgs e)
         {
             Servicio.RequsicionServicio serv = new Servicio.RequsicionServicio();
-            if (ValidarCampos())
-            {
-                Model.RequisicionEDTO Edto = serv.UnirDtos(new Model.RequisicionDTO
+            if (BtnCrear.Text.Equals("Crear"))
+            {              
+                if (ValidarCampos())
                 {
-                    IdUsuarioSolicitante = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdUsuario").Value),
-                    IdEmpresa = Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdEmpresa").Value),
-                    NumeroRequisicion = string.Empty,
-                    IdRequisicionEstatus = 1,
-                    FechaRequerida = DateTime.Today.AddDays(5), //DateTime.Parse(txtFechaRequerida.Value, new CultureInfo("en-US")), //(es-MX) 
-                    MotivoRequisicion = txtMotivoCompra.Text,
-                    RequeridoEn = txtRequeridoEn.Text,
-                    FechaRegistro = DateTime.Today,
-                }, serv.ToDTO((List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"]));
-                var respuesta = serv.GuardarRequisicion(Edto, Session["StringToken"].ToString());
-                if (respuesta != null)
-                {
-                    if (respuesta.Exito)
+                    Model.RequisicionEDTO Edto = serv.UnirDtos(new Model.RequisicionDTO
                     {
-                        lblNoRequisicion.Text = respuesta.NumRequisicion;
-                        lblIdRequisicion.Text = respuesta.NumRequisicion;
-                        divNoRequi.Visible = true;
+                        IdUsuarioSolicitante = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdUsuario").Value),
+                        IdEmpresa = Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdEmpresa").Value),
+                        NumeroRequisicion = string.Empty,
+                        IdRequisicionEstatus = 1,
+                        FechaRequerida = DateTime.Today.AddDays(5), //DateTime.Parse(txtFechaRequerida.Value, new CultureInfo("en-US")), //(es-MX) 
+                        MotivoRequisicion = txtMotivoCompra.Text,
+                        RequeridoEn = txtRequeridoEn.Text,
+                        FechaRegistro = DateTime.Today,
+                    }, serv.ToDTO((List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"]));
+                    var respuesta = serv.GuardarRequisicion(Edto, Session["StringToken"].ToString());
+                    if (respuesta != null)
+                    {
+                        if (respuesta.Exito)
+                        {
+                            lblNoRequisicion.Text = respuesta.NumRequisicion;
+                            lblIdRequisicion.Text = respuesta.NumRequisicion;
+                            divNoRequi.Visible = true;
+                        }
+                        else
+                            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Aviso", "alert('" + respuesta.Mensaje + "')", true);
                     }
-                    else
-                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Aviso", "alert('" + respuesta.Mensaje + "')", true);
                 }
+            }
+            if (BtnCrear.Text.Equals("Finalizar"))
+            {
+                serv.ActualizarRequisicionRevision(new Model.RequisicionEDTO { }, Session["StringToken"].ToString());
             }
         }
         protected void btnRegresar_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("~/Compras/Vistas/Compras.aspx");
         }
         private bool ValidarCampos()
         {
@@ -100,12 +107,13 @@ namespace Web.MainModule.Requisicion.Vista
         }
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "ModalCancelar", "$('#ModalCancelar').modal();", true);
+            upModalCancelar.Update();
         }
         private void RquisicionAlternativa(string NumRueq, int Estatus)
         {
-            ActivarRevisarExistencias();
-            if ( Estatus < 15)
+            //ActivarRevisarExistencias();
+            if (Estatus.Equals(1))
             {
                 ActivarRevisarExistencias();
             }
@@ -121,8 +129,11 @@ namespace Web.MainModule.Requisicion.Vista
 
             divDatos1.Visible = false;
             divDatos2.Visible = false;
+            divOpinion.Visible = true;
             lblRuta.Text = "Requisición / Revisar Existencias";
             lblIdRequisicion.Text = Request.QueryString["nr"].ToString();
+            btnCancelar.Enabled = true;
+            BtnCrear.Text = "Finalizar";
             txtFechaRequerida.Disabled = true;
             txtSolicitante.Enabled = false;
             txtMotivoCompra.Enabled = false;
@@ -132,7 +143,7 @@ namespace Web.MainModule.Requisicion.Vista
             txtRequeridoEn.Text = _reqEDTO.RequeridoEn;
             txtSolicitante.Text = _reqEDTO.IdUsuarioSolicitante.ToString();// Buscar al solicitante por el ID
 
-            dgListaproductos.DataSource = ViewState["ListaRequisicionProductoEDTO"] = _reqEDTO.ListaProductos;
+            dgListaproductos.DataSource = ViewState["ListaRequisicionProductoEDTO"] = new Servicio.RequsicionServicio().ToGridDTO(_reqEDTO.ListaProductos);
             dgListaproductos.DataBind();
             dgListaproductos.Columns[5].Visible = false;
             dgListaproductos.Columns[6].Visible = true;
@@ -141,12 +152,15 @@ namespace Web.MainModule.Requisicion.Vista
         private void ActivarRevisarAutorizacion()
         {
             Model.RequisicionEDTO _reqEDTO = new Model.RequisicionEDTO();
+            _reqEDTO = new Servicio.RequsicionServicio().BuscarRequisicionByNumRequi(Request.QueryString["nr"].ToString(), Session["StringToken"].ToString());
 
             divOpinion.Visible = true;
             divOpinion.Disabled = true;
             divDatos1.Visible = false;
             divDatos2.Visible = false;
             lblRuta.Text = "Requisición / Autorización";
+            BtnCrear.Text = "Autorizar";
+            btnCancelar.Enabled = true;
             txtFechaRequerida.Disabled = true;
             txtSolicitante.Enabled = false;
             txtMotivoCompra.Enabled = false;

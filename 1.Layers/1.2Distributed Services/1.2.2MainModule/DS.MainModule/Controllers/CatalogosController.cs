@@ -21,6 +21,7 @@ namespace DS.MainModule.Controllers
             _catalogos = new Catalogos();
         }
         #region Empresas
+        [AllowAnonymous]
         [Route("empresas/listaempresaslogin")]
         public HttpResponseMessage GetListaEmpresasLogin()
         {

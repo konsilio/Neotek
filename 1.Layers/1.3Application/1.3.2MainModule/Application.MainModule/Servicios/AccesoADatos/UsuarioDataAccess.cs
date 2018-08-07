@@ -31,5 +31,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.Password.Equals(password)
                                                          && x.Activo);
         }
+        public Usuario Buscar(Empresa _empresa, int idUsuario)
+        {
+            if (_empresa.Usuario != null)
+            {
+                return _empresa.Usuario.SingleOrDefault(x => x.IdUsuario.Equals(idUsuario) && x.Activo);
+            }
+            else
+            {
+                return Buscar(_empresa.IdEmpresa ,idUsuario);
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace Web.MainModule
     {
         string _tok = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
-        {            
+        {
             if (!IsPostBack)
             {
                 if (Session["StringToken"] != null)
@@ -58,15 +58,25 @@ namespace Web.MainModule
         }
         private void CargarRequisiciones()
         {
-            dgRequisisiones.DataSource = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value), Session["StringToken"].ToString());
+            dgRequisisiones.DataSource = ViewState[""] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value), Session["StringToken"].ToString());
             dgRequisisiones.DataBind();
         }
         protected void dgRequisisiones_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("VerRequi"))
             {
-                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0] + "&Sts=" + e.CommandArgument.ToString().Split('|')[1]);
-            }         
+                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0] + "&Sts=1" /* + e.CommandArgument.ToString().Split('|')[1]*/);
+            }
+            if (e.CommandName.Equals("VerAut"))
+            {
+                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0] + "&Sts=2" /* + e.CommandArgument.ToString().Split('|')[1]*/);
+            }
+        }
+
+        protected void dgRequisisiones_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dgRequisisiones.PageIndex = e.NewPageIndex;
+            dgRequisisiones.DataBind();
         }
     }
 }

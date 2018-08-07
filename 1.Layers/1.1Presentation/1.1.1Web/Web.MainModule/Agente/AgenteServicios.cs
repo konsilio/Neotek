@@ -64,7 +64,7 @@ namespace Web.MainModule.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     emp = new List<EmpresaDTO>();
                     client.CancelPendingRequests();
@@ -146,7 +146,6 @@ namespace Web.MainModule.Agente
             }
         }
         #endregion
-
         #region Requisicion
         public void GuardarRequisicon(RequisicionEDTO _requi, string token)
         {
@@ -192,6 +191,36 @@ namespace Web.MainModule.Agente
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["PutActulizarAutorizacion"];
             UpdateRequisicon(_requi, token).Wait();
+        }
+        private async Task UpdateRequisicon(RequisicionEDTO _requi, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaRequisicionDto resp = new RespuestaRequisicionDto();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaRequisicionDto>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaRequisicion = resp;
+            }
         }
         public void BuscarRequisiciones(short idEmpresa, string tkn)
         {

@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OrdenCompra.aspx.cs" Inherits="Web.MainModule.OrdenCompra" %>
 
 <asp:Content ID="OrdenCompra" ContentPlaceHolderID="ctOrdenCompra" runat="server">
-    <form runat="server">
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -22,5 +21,4 @@
                 </div>
             </div>
         </section>
-    </form>
 </asp:Content>

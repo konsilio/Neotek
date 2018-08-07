@@ -512,10 +512,14 @@
         </div>
     </aside>
     <section>
-        <asp:ContentPlaceHolder ID="ctCompras" runat="server" />
-        <asp:ContentPlaceHolder ID="ctDashBoard" runat="server" />
-        <asp:ContentPlaceHolder ID="ctRequisicion" runat="server" />
-        <asp:ContentPlaceHolder ID="ctOrdenCompra" runat="server" />
+        <form runat="server">
+            <asp:ScriptManager ID="ScriptManager1" runat="server">
+            </asp:ScriptManager>
+            <asp:ContentPlaceHolder ID="ctCompras" runat="server" />
+            <asp:ContentPlaceHolder ID="ctDashBoard" runat="server" />
+            <asp:ContentPlaceHolder ID="ctRequisicion" runat="server" />
+            <asp:ContentPlaceHolder ID="ctOrdenCompra" runat="server" />
+        </form>
     </section>
     <script src="../../assets/bundles/libscripts.bundle.js"></script>
     <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
@@ -555,7 +559,7 @@
     <script src="../../assets/js/pages/ui/dialogs.js"></script>
     <script src="../../assets/js/pages/index.js"></script>
     <script src="../../assets/js/pages/forms/basic-form-elements.js"></script>
-    <script src="assets/js/pages/forms/advanced-form-elements.js"></script> 
+    <script src="assets/js/pages/forms/advanced-form-elements.js"></script>
 
 
 </body>

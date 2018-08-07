@@ -15,7 +15,19 @@ namespace Web.MainModule.Requisicion.Servicio
             var respuestaReq = new AgenteServicios();
             respuestaReq.GuardarRequisicon(Req, tkn);
             return respuestaReq._respuestaRequisicion;
-        }        
+        }
+        public Model.RespuestaRequisicionDto ActualizarRequisicionRevision(Model.RequisicionEDTO Req, string tkn)
+        {
+            var respuestaReq = new AgenteServicios();
+            respuestaReq.ActualizarRequisicionRevision(Req, tkn);
+            return respuestaReq._respuestaRequisicion;
+        }
+        public Model.RespuestaRequisicionDto ActualizarRequisicionAutorizacion(Model.RequisicionEDTO Req, string tkn)
+        {
+            var respuestaReq = new AgenteServicios();
+            respuestaReq.ActualizarRequisicionAutorizacion(Req, tkn);
+            return respuestaReq._respuestaRequisicion;
+        }
         public List<Model.RequisicionProductoDTO> GenerarLista(List<Model.RequisicionProductoDTO> lP, Model.RequisicionProductoDTO p)
         {
             lP.Add(p);
@@ -72,9 +84,8 @@ namespace Web.MainModule.Requisicion.Servicio
             return respuestaReq._requisicionEDTO;
         }
         #endregion
-
         #region Adaptadores
-        public Model.RequisicionProductoDTO ToDTO (Model.RequisicionProductoGridDTO _ReqGridDTO)
+        public Model.RequisicionProductoDTO ToDTO(Model.RequisicionProductoGridDTO _ReqGridDTO)
         {
             Model.RequisicionProductoDTO DTO = new Model.RequisicionProductoDTO()
             {
@@ -84,11 +95,12 @@ namespace Web.MainModule.Requisicion.Servicio
                 IdCentroCosto = _ReqGridDTO.IdCentroCosto,
                 Cantidad = _ReqGridDTO.Cantidad,
                 Aplicacion = _ReqGridDTO.Aplicacion,
-                RevisionFisica =_ReqGridDTO.RevisionFisica,
+                RevisionFisica = _ReqGridDTO.RevisionFisica,
                 CantidadAlmacenActual = _ReqGridDTO.CantidadAlmacenActual,
                 CantidadAComprar = _ReqGridDTO.CantidadAComprar,
                 AutorizaEntrega = _ReqGridDTO.AutorizaEntrega,
-                AutorizaCompra = _ReqGridDTO.AutorizaCompra                
+                AutorizaCompra = _ReqGridDTO.AutorizaCompra
+                
             };
             return DTO;
         }
@@ -142,6 +154,31 @@ namespace Web.MainModule.Requisicion.Servicio
         {
             List<Model.RequisicionProductoEDTO> reqProdDTO = _reqProdDTO.ToList().Select(x => ToEDTO(x)).ToList();
             return reqProdDTO;
+        }
+        public Model.RequisicionProductoGridDTO ToGridDTO(Model.RequisicionProductoEDTO _reqProdEDTO)
+        {
+            Model.RequisicionProductoGridDTO GridDTO = new Model.RequisicionProductoGridDTO();
+            GridDTO.IdRequisicion = _reqProdEDTO.IdRequisicion;
+            GridDTO.IdProducto = _reqProdEDTO.IdProducto;
+            GridDTO.Producto = "Nombre del produto o servicio";
+            GridDTO.Unidad = "PZA";
+            GridDTO.IdTipoProducto = _reqProdEDTO.IdTipoProducto;
+            GridDTO.TipoProducto = _reqProdEDTO.IdTipoProducto.Equals(1) ? "Producto" : "Servicio";
+            GridDTO.IdCentroCosto = _reqProdEDTO.IdCentroCosto;
+            GridDTO.CentroCosto = "Centro de Costos";
+            GridDTO.Cantidad = _reqProdEDTO.Cantidad;
+            GridDTO.Aplicacion = _reqProdEDTO.Aplicacion;
+            GridDTO.RevisionFisica = _reqProdEDTO.RevisionFisica;
+            GridDTO.CantidadAlmacenActual = 0;
+            GridDTO.CantidadAComprar = 0;
+            GridDTO.AutorizaEntrega = _reqProdEDTO.AutorizaEntrega;
+            GridDTO.AutorizaCompra = _reqProdEDTO.AutorizaCompra;
+            return GridDTO;
+        }
+        public List<Model.RequisicionProductoGridDTO> ToGridDTO(List<Model.RequisicionProductoEDTO> _reqProdEDTO)
+        {
+            List<Model.RequisicionProductoGridDTO> reqProdGridDTO = _reqProdEDTO.ToList().Select(x => ToGridDTO(x)).ToList();
+            return reqProdGridDTO;
         }
         #endregion
     }

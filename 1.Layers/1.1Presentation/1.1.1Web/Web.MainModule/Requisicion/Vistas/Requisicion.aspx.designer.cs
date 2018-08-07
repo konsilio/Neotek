@@ -220,6 +220,15 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.Label lblNoRequisicion;
         
         /// <summary>
+        /// Control upModalCancelar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upModalCancelar;
+        
+        /// <summary>
         /// Control txtMotivoCancela.
         /// </summary>
         /// <remarks>
