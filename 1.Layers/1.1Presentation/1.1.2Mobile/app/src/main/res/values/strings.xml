@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">Sagas</string>
+
+    <string name="activity_menu">Menú</string>
+    <string name="title_iniciar_descarga">Iniciar descarga</string>
+    <string name="title_finalizar_descarga">Finalizar descarga</string>
+    <string name="title_registro_papeleta">Registro de papeleta</string>
+    <string name="title_medidor_almacen">Medidor almacen</string>
+    <string name="title_medidor_tractor">Medidor tractor</string>
+    <string name="title_foto_magnatel_almacen">Foto Magnatel - Almacen Principal</string>
+    <string name="title_foto_magnatel_tractor">Foto Magnatel - Tractor</string>
+    <string name="title_foto_rotogate_tractor">Foto Rotogate - Tractor</string>
+    <string name="title_foto_rotogate_almacen">Foto Rotogate - Almacen Principal</string>
+    <string name="title_orden_compra">Orden de Compra</string>
+    <string name="activity_capturar_procentaje">Capturar Porcentaje</string>
+
+    <string name="porcentaje_medidor">¿Porcentaje del medidor?</string>
+    <string name="porcentaje_medidor_tractor_message">Registra el porcentaje del medidor del tractor</string>
+    <string name="porcentaje_medidor_almacen_message">Registra el porcentaje del medidor del almacen</string>
+    <string name="message_imagen_nitida">¿La imagen esta nitida?</string>
+    <string name="message_nitida_si">Si,esta nitida/bien tomada</string>
+    <string name="message_nitida_no">No, esta borrosa/mal tomada</string>
+    <string name="login_hint_username">Correo electronico</string>
+    <string name="login_hint_password">Contraseña</string>
+    <string name="login_button">Login</string>
+    <string name="spinner_gaseras">Gasera</string>
+    <string name="spinner_num_compra">No. de orden de compra</string>
+    <string name="num_embarque">No. de embarque</string>
+    <string name="nombre_expedidor">Nombre expedidor</string>
+    <string name="nombre_porteador">Nombre porteador</string>
+    <string name="nombre_operador">Nombre operador</string>
+    <string name="name_proveedor">Proveedor</string>
+    <string name="placas_tractor">Placas tractor</string>
+    <string name="producto">Producto</string>
+    <string name="num_tanque">No. de tanque</string>
+    <string name="capacidad_tanque">Capacidad tanque (lt.)</string>
+    <string name="porcentaje_tanque">Porcentaje del Tanque</string>
+    <string name="masa">Masa (kg.)</string>
+    <string name="presion_tanque">Presión tanque</string>
+    <string name="sello">Sello</string>
+    <string name="valor_carga">Valor de la carga</string>
+    <string name="nombre_responsable">Nombre del responsable</string>
+    <string name="tanque_prestado">¿Tanque prestado?</string>
+    <string name="label_si">Si</string>
+    <string name="label_no">No</string>
+    <string name="tipo_medidor_tractor">Tipo de medidor del tractor</string>
+    <string name="tipo_medidor_almacen">Tipo de medidor del almacen</string>
+    <string name="fecha">Fecha</string>
+    <string name="fecha_embarque">Fecha de embarque</string>
+    <string name="seleccionar_fecha">Seleccione fecha...</string>
+    
+    
+    <string name="empty_field">Hay campos vacios</string>
+
+    <string name="registrar">Registrar</string>
+    <string name="limpiar_campos">Limpiar campos</string>
+    <string name="message_cancel">Cancelar</string>
+    <string name="message_acept">Aceptar</string>
+    <string name="invalid_email">El correo electronico no es valido</string>
+    <string name="message_continuar">Una vez iniciado el proceso no es posible regresar, ¿esta seguro de continuar?</string>
+
+    <string name="punto">.</string>
+    <string name="porcentaje">%</string>
+
+
+    <string-array name="gaseras_array">
+        <item>Gas 1</item>
+        <item>Gas 2</item>
+    </string-array>
+
+    <string-array name="tipos_medidor">
+        <item>Magnatel</item>
+        <item>Rotogate</item>
+    </string-array>
+</resources>
