@@ -6,6 +6,8 @@ using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Security.MainModule.Token_Service;
+using System.Net.Http.Headers;
+using DS.MainModule.Filters;
 
 namespace DS.MainModule
 {
@@ -29,6 +31,12 @@ namespace DS.MainModule
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+
+            // Se agrega el filtro para validar los campos obligatorios y otras reglas de los DTOs
+            //config.Filters.Add(new ValidateModelAttribute());
         }
     }
 }

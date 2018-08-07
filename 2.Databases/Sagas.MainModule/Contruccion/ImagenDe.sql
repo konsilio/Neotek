@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[ImagenDe]
+(
+	[IdImagenDe] SMALLINT NOT NULL PRIMARY KEY IDENTITY, 
+    [ImagenDe] VARCHAR(50) NOT NULL, 
+    [Activo] BIT NOT NULL DEFAULT 1, 
+    [FechaRegistro] SMALLDATETIME NOT NULL DEFAULT GetDate()
+)

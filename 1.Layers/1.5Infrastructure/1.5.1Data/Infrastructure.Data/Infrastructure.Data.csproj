@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbContexts\Sagas.Context.cs">
+    <Compile Include="DbContexts\Sagas.Context1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Sagas.Context.tt</DependentUpon>
@@ -81,7 +81,7 @@
     <Content Include="DbContexts\Sagas.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Sagas.edmx</DependentUpon>
-      <LastGenOutput>Sagas.Context.cs</LastGenOutput>
+      <LastGenOutput>Sagas.Context1.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
