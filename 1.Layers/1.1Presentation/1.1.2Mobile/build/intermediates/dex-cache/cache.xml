@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_4c90a04b4b795fe8f3fe6c90a118b1af1deaf4b3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="cad0df5b2f2e2d65261306869f1c70db208c3b35">
+        <dex dex="/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_df47b8092aa72cc00a10f72f859a0a9ae0f0ddf6/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_25be869198e56ebedec46f623506a7c54fe1b1c0/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="cfad1d2d80eb6a46db5ea090783a3bde81692c12">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_73867f58f59ab0d6a25b8bcc27e133940b8d1952/classes.dex" />
+    </item>
+
+</items>

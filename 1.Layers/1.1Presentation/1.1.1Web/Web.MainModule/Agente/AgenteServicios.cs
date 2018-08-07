@@ -29,6 +29,8 @@ namespace Web.MainModule.Agente
         public List<RequisicionDTO> _listaRequisiciones;
         public RequisicionEDTO _requisicionEDTO;
 
+        
+
         public AgenteServicios()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];

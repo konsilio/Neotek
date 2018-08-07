@@ -19,6 +19,10 @@ namespace Sagas.MainModule.Entidades
         {
             this.ProductoAsociado = new HashSet<ProductoAsociado>();
             this.ProductoAsociado1 = new HashSet<ProductoAsociado>();
+            this.Almacen = new HashSet<Almacen>();
+            this.EntradasAAlmacenMercancias = new HashSet<AlmacenEntradaProducto>();
+            this.SalidasAlmacenMercancias = new HashSet<AlmacenSalidaProducto>();
+            this.RequisicionProducto = new HashSet<RequisicionProducto>();
         }
     
         public int IdProducto { get; set; }
@@ -46,5 +50,13 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<ProductoAsociado> ProductoAsociado { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductoAsociado> ProductoAsociado1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Almacen> Almacen { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenEntradaProducto> EntradasAAlmacenMercancias { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenSalidaProducto> SalidasAlmacenMercancias { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequisicionProducto> RequisicionProducto { get; set; }
     }
 }

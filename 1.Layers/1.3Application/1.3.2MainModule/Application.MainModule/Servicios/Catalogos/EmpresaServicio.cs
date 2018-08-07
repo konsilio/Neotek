@@ -11,15 +11,15 @@ namespace Application.MainModule.Servicios.Catalogos
 {
     public static class EmpresaServicio
     {
-        public static List<EmpresaDTO> BuscarEmpresasLogin()
-        {
-            List<EmpresaDTO> lEmpresas = new List<EmpresaDTO>(EmpresaAdapter.ToDTO(new EmpresaDataAccess().EmpresasLogin()));
-            return lEmpresas;
-        }
         public static List<EmpresaDTO> BuscarEmpresas()
         {
             List<EmpresaDTO> lEmpresas = new List<EmpresaDTO>(EmpresaAdapter.ToDTO(new EmpresaDataAccess().BuscarTodos()));
             return lEmpresas;
+        }
+
+        public static List<EmpresaDTO> BuscarEmpresasLogin()
+        {            
+            return BuscarEmpresas();
         }
     }
 }
