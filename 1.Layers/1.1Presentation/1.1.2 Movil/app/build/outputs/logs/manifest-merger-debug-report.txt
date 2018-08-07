@@ -1,0 +1,167 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:2:1-54:12
+	package
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:3:5-45
+		INJECTED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml
+application
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:5:5-40:19
+MERGED from [com.android.support.constraint:constraint-layout:1.0.1] /Users/neotecknewts/.android/build-cache/0a11625a828c5a828bfbf4e2e837f4d7824fb170/output/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:design:26.0.2] /Users/neotecknewts/.android/build-cache/613cd6df14c5b5f2812658033ab370f9f482b09b/output/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:recyclerview-v7:26.0.2] /Users/neotecknewts/.android/build-cache/bec3fc050c72ccf90f29d3175d970835042aa4bd/output/AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:transition:26.0.2] /Users/neotecknewts/.android/build-cache/5727552806ede19352356b457dcd75f4ce4c3100/output/AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:appcompat-v7:26.0.2] /Users/neotecknewts/.android/build-cache/8a79e83a42fca81050ef3eee65d4cfa8ac4c8b17/output/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-v4:26.0.2] /Users/neotecknewts/.android/build-cache/f62e6cc98470d5631f71c42d750557e28f8fadd9/output/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.0.2] /Users/neotecknewts/.android/build-cache/dfc22054a5cf47d36cbbe8f19081279208062eda/output/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-fragment:26.0.2] /Users/neotecknewts/.android/build-cache/f90b8cc73eb2e9201355219aedd505f97fc1cd10/output/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-utils:26.0.2] /Users/neotecknewts/.android/build-cache/6be6765aeeb2c4ce2f3cc657d386c7c03bac5e0c/output/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:animated-vector-drawable:26.0.2] /Users/neotecknewts/.android/build-cache/6381760a476b5d75d4107123daba57c5409c54d2/output/AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-vector-drawable:26.0.2] /Users/neotecknewts/.android/build-cache/7e3409d973ca2b744e8186074452323728252e5e/output/AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-core-ui:26.0.2] /Users/neotecknewts/.android/build-cache/8f01f0a39225e8e0d73411c1b00fa2d3a5c4eb48/output/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-compat:26.0.2] /Users/neotecknewts/.android/build-cache/fa7db499ef2b607320bc4c6c3e09eb0ee0e0b52f/output/AndroidManifest.xml:25:5-29:19
+	android:label
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:8:9-41
+	android:supportsRtl
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:10:9-35
+	android:roundIcon
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:9:9-54
+	android:allowBackup
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:6:9-35
+	android:icon
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:7:9-43
+	android:theme
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:11:9-40
+activity#com.example.neotecknewts.sagas.MainActivity
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:12:9-18:20
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:12:19-47
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:13:13-17:29
+action#android.intent.action.MAIN
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:14:17-69
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:14:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:16:17-77
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:16:27-74
+activity#com.example.neotecknewts.sagas.Activity.MenuActivity
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:19:9-21:53
+	android:label
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:21:13-50
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:20:13-50
+activity#com.example.neotecknewts.sagas.Activity.IniciarDescargaActivity
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:22:9-24:62
+	android:label
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:24:13-59
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:23:13-61
+activity#com.example.neotecknewts.sagas.Activity.FinalizarDescargaActivity
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:25:9-27:64
+	android:label
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:27:13-61
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:26:13-63
+activity#com.example.neotecknewts.sagas.Activity.CapturaPorcentajeActivity
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:28:9-30:68
+	android:label
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:30:13-65
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:29:13-63
+activity#com.example.neotecknewts.sagas.Activity.RegistrarPapeletaActivity
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:31:9-33:63
+	android:label
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:33:13-60
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:32:13-63
+activity#com.example.neotecknewts.sagas.Activity.CameraActivity
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:34:9-36:63
+	android:label
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:36:13-60
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:35:13-52
+activity#com.example.neotecknewts.sagas.Activity.VistaOrdenCompraActivity
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:37:9-39:58
+	android:label
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:39:13-55
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:38:13-62
+uses-permission#android.permission.CAMERA
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:42:5-65
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:42:22-62
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:43:5-81
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:43:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:44:5-80
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:44:22-77
+uses-permission#android.permission.INTERNET
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:45:5-67
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:45:22-64
+uses-feature#android.hardware.camera.any
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:47:5-49:35
+	android:required
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:49:9-32
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:48:9-51
+uses-feature#android.hardware.camera.autofocus
+ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:50:5-52:36
+	android:required
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:52:9-33
+	android:name
+		ADDED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml:51:9-57
+uses-sdk
+INJECTED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support.constraint:constraint-layout:1.0.1] /Users/neotecknewts/.android/build-cache/0a11625a828c5a828bfbf4e2e837f4d7824fb170/output/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:design:26.0.2] /Users/neotecknewts/.android/build-cache/613cd6df14c5b5f2812658033ab370f9f482b09b/output/AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:recyclerview-v7:26.0.2] /Users/neotecknewts/.android/build-cache/bec3fc050c72ccf90f29d3175d970835042aa4bd/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:26.0.2] /Users/neotecknewts/.android/build-cache/5727552806ede19352356b457dcd75f4ce4c3100/output/AndroidManifest.xml:20:5-44
+MERGED from [com.jsibbold:zoomage:1.1.0] /Users/neotecknewts/.android/build-cache/151dca610ee4848311b82dd10d6882463fa4b441/output/AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:appcompat-v7:26.0.2] /Users/neotecknewts/.android/build-cache/8a79e83a42fca81050ef3eee65d4cfa8ac4c8b17/output/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:26.0.2] /Users/neotecknewts/.android/build-cache/f62e6cc98470d5631f71c42d750557e28f8fadd9/output/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-media-compat:26.0.2] /Users/neotecknewts/.android/build-cache/dfc22054a5cf47d36cbbe8f19081279208062eda/output/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-fragment:26.0.2] /Users/neotecknewts/.android/build-cache/f90b8cc73eb2e9201355219aedd505f97fc1cd10/output/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-core-utils:26.0.2] /Users/neotecknewts/.android/build-cache/6be6765aeeb2c4ce2f3cc657d386c7c03bac5e0c/output/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:animated-vector-drawable:26.0.2] /Users/neotecknewts/.android/build-cache/6381760a476b5d75d4107123daba57c5409c54d2/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:26.0.2] /Users/neotecknewts/.android/build-cache/7e3409d973ca2b744e8186074452323728252e5e/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:26.0.2] /Users/neotecknewts/.android/build-cache/8f01f0a39225e8e0d73411c1b00fa2d3a5c4eb48/output/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.0.2] /Users/neotecknewts/.android/build-cache/fa7db499ef2b607320bc4c6c3e09eb0ee0e0b52f/output/AndroidManifest.xml:21:5-23:58
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:26.0.2] /Users/neotecknewts/.android/build-cache/613cd6df14c5b5f2812658033ab370f9f482b09b/output/AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/src/main/AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:design:26.0.2] /Users/neotecknewts/.android/build-cache/613cd6df14c5b5f2812658033ab370f9f482b09b/output/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:recyclerview-v7:26.0.2] /Users/neotecknewts/.android/build-cache/bec3fc050c72ccf90f29d3175d970835042aa4bd/output/AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:transition:26.0.2] /Users/neotecknewts/.android/build-cache/5727552806ede19352356b457dcd75f4ce4c3100/output/AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:appcompat-v7:26.0.2] /Users/neotecknewts/.android/build-cache/8a79e83a42fca81050ef3eee65d4cfa8ac4c8b17/output/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-v4:26.0.2] /Users/neotecknewts/.android/build-cache/f62e6cc98470d5631f71c42d750557e28f8fadd9/output/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.0.2] /Users/neotecknewts/.android/build-cache/dfc22054a5cf47d36cbbe8f19081279208062eda/output/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-fragment:26.0.2] /Users/neotecknewts/.android/build-cache/f90b8cc73eb2e9201355219aedd505f97fc1cd10/output/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-utils:26.0.2] /Users/neotecknewts/.android/build-cache/6be6765aeeb2c4ce2f3cc657d386c7c03bac5e0c/output/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:animated-vector-drawable:26.0.2] /Users/neotecknewts/.android/build-cache/6381760a476b5d75d4107123daba57c5409c54d2/output/AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-vector-drawable:26.0.2] /Users/neotecknewts/.android/build-cache/7e3409d973ca2b744e8186074452323728252e5e/output/AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-core-ui:26.0.2] /Users/neotecknewts/.android/build-cache/8f01f0a39225e8e0d73411c1b00fa2d3a5c4eb48/output/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-compat:26.0.2] /Users/neotecknewts/.android/build-cache/fa7db499ef2b607320bc4c6c3e09eb0ee0e0b52f/output/AndroidManifest.xml:26:9-28:38
+	android:value
+		ADDED from [com.android.support:design:26.0.2] /Users/neotecknewts/.android/build-cache/613cd6df14c5b5f2812658033ab370f9f482b09b/output/AndroidManifest.xml:28:13-35
+	android:name
+		ADDED from [com.android.support:design:26.0.2] /Users/neotecknewts/.android/build-cache/613cd6df14c5b5f2812658033ab370f9f482b09b/output/AndroidManifest.xml:27:13-51
