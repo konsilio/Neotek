@@ -122,6 +122,60 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompra_Requisicion" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraImporte_OrdenCompra" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraProducto_OrdenCompra" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.Almacen" Width="1.5" PointX="8.25" PointY="14.25" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenEntradaGasDescarga" Width="1.5" PointX="16.625" PointY="13.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenEntradaGasDescargaFinalizar" Width="1.5" PointX="18.875" PointY="19.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenEntradaGasDescargaIniciar" Width="1.5" PointX="18.875" PointY="22.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenEntradaGasDescargaPuerta" Width="1.5" PointX="18.875" PointY="11" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGas" Width="1.5" PointX="14.375" PointY="6.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CAlmacenGas" Width="1.5" PointX="16.625" PointY="26.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CAlmacenGasCalibracion" Width="1.5" PointX="18.875" PointY="28.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CAlmacenGasCilindro" Width="1.5" PointX="14.375" PointY="36.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CAlmacenGasTipo" Width="1.5" PointX="14.375" PointY="29.875" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CAlmacenGasTipoMedidor" Width="1.5" PointX="14.375" PointY="10.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CCamioneta" Width="1.5" PointX="14.375" PointY="23.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CEstacionCarburacion" Width="1.5" PointX="14.375" PointY="26.625" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CFormaPago" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CPipa" Width="1.5" PointX="14.375" PointY="32.625" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.ImagenDe" Width="1.5" PointX="19.625" PointY="8.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenEntradaGasDescargaFoto" Width="1.5" PointX="21.875" PointY="15.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenEntradaProducto" Width="1.5" PointX="13.125" PointY="16.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenSalidaProducto" Width="1.5" PointX="10.5" PointY="16.875" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CCamionetaCilindro" Width="1.5" PointX="16.625" PointY="34.5" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Almacen_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_Almacen" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Almacen" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_AlmacenGas" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_CAlmacenGas" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_CAlmacenGasTipoMedidor_Almacen" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_CAlmacenGasTipoMedidor_Tractor" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_OrdenCompra_Expedidor" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_OrdenCompra_Porteador" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_Requisicion" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescargaFinalizar_AlmacenEntradaGasDescarga" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescargaFoto_AlmacenEntradaGasDescarga" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescargaIniciar_AlmacenEntradaGasDescarga" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescargaPuerta_AlmacenEntradaGasDescarga" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGas_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CAlmacenGas_CAlmacenGasTipo" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CAlmacenGas_CAlmacenGasTipoMedidor" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CAlmacenGas_CCamioneta" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CAlmacenGas_CEstacionCarburacion" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CAlmacenGas_CPipa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CAlmacenGas_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CAlmacenGasCalibracion_CAlmacenGas" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CCamionetaCilindro_CAlmacenGasCilindro" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CCamioneta_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CCamionetaCilindro_CCamioneta" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CEstacionCarburacion_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CPipa_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CCamionetaCilindro_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescargaFoto_ImagenDe" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_OrdenCompra" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_Requisicion" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Requisicion" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_Usuario" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Usuario" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

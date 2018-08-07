@@ -18,6 +18,8 @@ namespace Sagas.MainModule.Entidades
         public Usuario()
         {
             this.Requisiciones = new HashSet<Requisicion>();
+            this.AlmacenEntradaProducto = new HashSet<AlmacenEntradaProducto>();
+            this.AlmacenSalidaProducto = new HashSet<AlmacenSalidaProducto>();
         }
     
         public int IdUsuario { get; set; }
@@ -58,5 +60,9 @@ namespace Sagas.MainModule.Entidades
         public virtual Pais Pais { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Requisicion> Requisiciones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenEntradaProducto> AlmacenEntradaProducto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenSalidaProducto> AlmacenSalidaProducto { get; set; }
     }
 }
