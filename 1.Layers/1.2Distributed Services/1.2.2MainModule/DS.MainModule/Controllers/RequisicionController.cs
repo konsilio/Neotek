@@ -45,6 +45,6 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PutActulizarAutorizacion(RequisicionEDTO req)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.ActualizarRequisicionAutorizacion(req));
-        }
+        }        
     }
 }

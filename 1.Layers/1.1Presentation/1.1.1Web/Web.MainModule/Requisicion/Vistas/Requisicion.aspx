@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" EnableViewState="true" EnableViewStateMac="true" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Requisicion.aspx.cs" Inherits="Web.MainModule.Requisicion.Vista.Requisicion" %>
 
 <asp:Content ID="ContentRequisicion" ContentPlaceHolderID="ctRequisicion" runat="server">
-
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
@@ -12,9 +11,13 @@
                             <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                             <li class="breadcrumb-item active">
                                 <asp:Label runat="server" ID="lblRuta" Text="Requisición / Nueva "></asp:Label>
-
                             </li>
                         </ul>
+                    </div>
+                </div>
+                <div class="body" id="divNoRequi" runat="server" visible="false">
+                    <div class="alert alert-success">
+                        <asp:Label ID="lblNoRequisicion" runat="server" />
                     </div>
                 </div>
                 <div class="row clearfix">
@@ -36,22 +39,25 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row clearfix">
                                     <div class="col-lg-3 col-md-12">
-                                        <div class="form-group">
+                                        <div class="form-group form-float">
                                             <%--Fecha requerida--%>
                                             <label class="card-inside-title">Fecha requerida:</label>
                                             <input runat="server" id="txtFechaRequerida" type="text" class="form-control datetimepicker" placeholder="Fecha requerida...">
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-12">
-                                        <div class="form-group">
+                                        <div class="form-group form-float">
                                             <%--Solicitante--%>
                                             <label class="card-inside-title">Solicitante:</label>
-                                            <asp:TextBox runat="server" ID="txtSolicitante" placeholder="Michael (sa)" CssClass="form-control"></asp:TextBox>
+                                            <asp:DropDownList runat="server" ID="ddlSolicitante" CssClass="form-control datetimepicker" placeholder="Fecha requerida...">
+                                                <asp:ListItem Value="1" Text="Usuario"></asp:ListItem>
+                                            </asp:DropDownList>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-12">
+                                    <div class="col-lg-3 col-md-12 form-float">
                                         <div class="form-group">
                                             <%--Motivo de compra--%>
                                             <label class="card-inside-title">Motivo de compra:</label>
@@ -59,13 +65,14 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-12">
-                                        <div class="form-group">
+                                        <div class="form-group form-float">
                                             <%--Se requiere en--%>
                                             <label class="card-inside-title">Se requiere en:</label>
                                             <asp:TextBox runat="server" ID="txtRequeridoEn" CssClass="form-control" placeholder="Se requiere en..." TextMode="MultiLine"></asp:TextBox>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row clearfix" runat="server" id="divDatos1">
                                     <div class="col-lg-2 col-md-12">
                                         <%--Tipo de compra--%>
@@ -140,7 +147,7 @@
                                 <div class="row clearfix">
                                     <div class="body table-responsive">
                                         <!--Data Grid con los productos Agregados -->
-                                        <asp:GridView CssClass="table table-hover" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
+                                        <asp:GridView CssClass="table table-hover" OnRowCommand="dgListaproductos_RowCommand" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <%--0 Tipo de compra--%>
@@ -193,11 +200,11 @@
                                                         <b>Acción</b>
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:LinkButton runat="server" ID="lbEdit">
+                                                        <asp:LinkButton runat="server" ID="lbEdit" CommandName="Edit" CommandArgument='<%# Eval("IdProducto") %>'>
                                                                     <i class="material-icons">edit</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                         </asp:LinkButton>
-                                                        <asp:LinkButton runat="server" ID="lbBorrar">
+                                                        <asp:LinkButton runat="server" ID="lbBorrar" CommandName="Delete" CommandArgument='<%# Eval("IdProducto") %>'>
                                                                     <i class="material-icons">delete</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                         </asp:LinkButton>
@@ -265,11 +272,6 @@
                                     </div>
                                     <div class="col-lg-4 col-md-8" align="center">
                                         <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Crear" OnClick="BtnCrear_Click" />
-                                    </div>
-                                </div>
-                                <div class="body" id="divNoRequi" runat="server" visible="false">
-                                    <div class="alert alert-success">
-                                        <asp:Label ID="lblNoRequisicion" runat="server" />
                                     </div>
                                 </div>
                             </div>

@@ -5,6 +5,7 @@ using System.Web;
 
 namespace Web.MainModule.Requisicion.Model
 {
+    [Serializable]
     public class RequisicionDTO
     {
         public int IdRequisicion { get; set; }

@@ -58,7 +58,7 @@ namespace Web.MainModule
         }
         private void CargarRequisiciones()
         {
-            dgRequisisiones.DataSource = ViewState[""] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value), Session["StringToken"].ToString());
+            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value), Session["StringToken"].ToString());
             dgRequisisiones.DataBind();
         }
         protected void dgRequisisiones_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -75,6 +75,7 @@ namespace Web.MainModule
 
         protected void dgRequisisiones_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"];
             dgRequisisiones.PageIndex = e.NewPageIndex;
             dgRequisisiones.DataBind();
         }

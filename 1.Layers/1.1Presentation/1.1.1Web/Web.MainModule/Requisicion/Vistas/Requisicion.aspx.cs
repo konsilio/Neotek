@@ -88,8 +88,15 @@ namespace Web.MainModule.Requisicion.Vista
                             divNoRequi.Visible = true;
                         }
                         else
+                        {
                             ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Aviso", "alert('" + respuesta.Mensaje + "')", true);
+                            ClientScript.RegisterStartupScript(this.GetType(), "ErrorAlert", "alert('"+ respuesta.Mensaje + "');", true);
+                        }
                     }
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Aviso", "alert('Verifique los datos')", true);
                 }
             }
             if (BtnCrear.Text.Equals("Finalizar"))
@@ -103,7 +110,14 @@ namespace Web.MainModule.Requisicion.Vista
         }
         private bool ValidarCampos()
         {
-            return true;
+            bool correcto = true;
+            if (txtFechaRequerida.Value.Equals(string.Empty)) correcto = false;
+            if (ddlSolicitante.SelectedValue.Equals(-1)) correcto = false;
+            if (txtMotivoCompra.Text.Equals(string.Empty)) correcto = false;
+            if (txtRequeridoEn.Text.Equals(string.Empty)) correcto = false;
+            if (ViewState["ListaRequisicionProductoGridDTO"] == null) correcto = false;
+            else if (((List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"]).Count.Equals(0)) correcto = false;
+            return correcto;
         }
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -134,16 +148,16 @@ namespace Web.MainModule.Requisicion.Vista
             lblIdRequisicion.Text = Request.QueryString["nr"].ToString();
             btnCancelar.Enabled = true;
             BtnCrear.Text = "Finalizar";
-            txtFechaRequerida.Disabled = true;
-            txtSolicitante.Enabled = false;
+            ddlSolicitante.Enabled = false;
+            txtFechaRequerida.Disabled = true;            
             txtMotivoCompra.Enabled = false;
             txtRequeridoEn.Enabled = false;
             txtFechaRequerida.Value = _reqEDTO.FechaRequerida.ToShortDateString();
             txtMotivoCompra.Text = _reqEDTO.MotivoRequisicion;
             txtRequeridoEn.Text = _reqEDTO.RequeridoEn;
-            txtSolicitante.Text = _reqEDTO.IdUsuarioSolicitante.ToString();// Buscar al solicitante por el ID
+            ddlSolicitante.Text = _reqEDTO.IdUsuarioSolicitante.ToString();// Buscar al solicitante por el ID
 
-            dgListaproductos.DataSource = ViewState["ListaRequisicionProductoEDTO"] = new Servicio.RequsicionServicio().ToGridDTO(_reqEDTO.ListaProductos);
+            dgListaproductos.DataSource = ViewState["ListaRequisicionProductoGridDTO"] = new Servicio.RequsicionServicio().ToGridDTO(_reqEDTO.ListaProductos);
             dgListaproductos.DataBind();
             dgListaproductos.Columns[5].Visible = false;
             dgListaproductos.Columns[6].Visible = true;
@@ -161,17 +175,35 @@ namespace Web.MainModule.Requisicion.Vista
             lblRuta.Text = "Requisición / Autorización";
             BtnCrear.Text = "Autorizar";
             btnCancelar.Enabled = true;
-            txtFechaRequerida.Disabled = true;
-            txtSolicitante.Enabled = false;
+            ddlSolicitante.Enabled = false;
+            txtFechaRequerida.Disabled = true;           
             txtMotivoCompra.Enabled = false;
             txtRequeridoEn.Enabled = false;
 
-            dgListaproductos.DataSource = ViewState["ListaRequisicionProductoEDTO"] = _reqEDTO.ListaProductos;
+            dgListaproductos.DataSource = ViewState["ListaRequisicionProductoGridDTO"] = new Servicio.RequsicionServicio().ToGridDTO(_reqEDTO.ListaProductos);
             dgListaproductos.DataBind();
             dgListaproductos.Columns[5].Visible = false;
             dgListaproductos.Columns[8].Visible = true;
             dgListaproductos.Columns[9].Visible = true;
             dgListaproductos.Columns[10].Visible = true;
+        }
+
+        protected void dgListaproductos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+            List<Model.RequisicionProductoGridDTO> lprod = (List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoEDTO"];
+            if (e.CommandName.Equals("Delete"))
+            {
+                ViewState["ListaRequisicionProductoEDTO"] = lprod.Where(x => !x.IdProducto.Equals(int.Parse(e.CommandArgument.ToString())));
+                dgListaproductos.DataSource = ViewState["ListaRequisicionProductoEDTO"];
+                dgListaproductos.DataBind();
+            }
+            if (e.CommandName.Equals("Edit"))
+            {
+                Model.RequisicionProductoGridDTO prodEdit = new Model.RequisicionProductoGridDTO();
+                ViewState["ListaRequisicionProductoEDTO"] = lprod.Where(x => !x.IdProducto.Equals(int.Parse(e.CommandArgument.ToString())));
+                btnAgregar.Text = "Modificar";
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.DTOs.Seguridad;
 using Application.MainModule.Servicios.Requisicion;
 
 namespace Application.MainModule.Flujos
@@ -30,6 +31,6 @@ namespace Application.MainModule.Flujos
         public RespuestaRequisicionDto ActualizarRequisicionAutorizacion(RequisicionEDTO _req)
         {
             return RequisicionServicio.UpDateRequisicionAutoriza(_req);
-        }
+        }        
     }
 }
