@@ -36,7 +36,7 @@ namespace Sagas.MainModule.Entidades
         }
     
         public short IdEmpresa { get; set; }
-        public byte IdAdministracionCentral { get; set; }
+        public bool EsAdministracionCentral { get; set; }
         public string NombreComercial { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public byte IdPais { get; set; }
@@ -70,7 +70,6 @@ namespace Sagas.MainModule.Entidades
         public string UrlLogotipoMenu { get; set; }
         public string UrlLogotipoLogin { get; set; }
     
-        public virtual AdministracionCentral AdministracionCentral { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
         public virtual EstadosRepublica EstadosRepublica { get; set; }

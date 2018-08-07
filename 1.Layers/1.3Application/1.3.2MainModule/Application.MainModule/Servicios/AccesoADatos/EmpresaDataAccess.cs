@@ -16,14 +16,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public EmpresaDataAccess()
         {
             uow = new SagasDataUow();
-        }
-        public List<Empresa> EmpresasLogin()
-        {
-            List<Empresa> lEmpresas = new List<Empresa>();
-            lEmpresas.Add(EmpresaAdapter.FromAdministracionCentral(new AdministracionCentralDataAccess().Buscar()));
-            lEmpresas.AddRange(BuscarTodos());
-            return lEmpresas;
-        }
+        }       
 
         public Empresa Buscar(short idEmpresa)
         {
