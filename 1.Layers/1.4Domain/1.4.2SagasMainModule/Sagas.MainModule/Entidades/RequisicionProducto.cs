@@ -27,5 +27,6 @@ namespace Sagas.MainModule.Entidades
         public Nullable<bool> AutorizaCompra { get; set; }
     
         public virtual Requisicion Requisicion { get; set; }
+        public virtual Producto Producto { get; set; }
     }
 }
