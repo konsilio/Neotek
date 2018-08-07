@@ -81,6 +81,47 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_RequisicionAutorizacionProducto_RequisicionProducto" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_RequisicionAlmacen_Usuario" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Usuario" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProducto" Width="1.5" PointX="7.5" PointY="49.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProductoCategoria" Width="1.5" PointX="5.25" PointY="39" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProductoLinea" Width="1.5" PointX="5.25" PointY="66.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProductoServicioTipo" Width="1.5" PointX="5.25" PointY="63" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProductoUnidadMedida" Width="1.5" PointX="5.25" PointY="35.25" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProveedor" Width="1.5" PointX="5.25" PointY="42.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProveedorBancario" Width="1.5" PointX="7.5" PointY="44.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProveedorContacto" Width="1.5" PointX="7.5" PointY="55.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProveedorDireccion" Width="1.5" PointX="7.5" PointY="40.625" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProveedorFiscal" Width="1.5" PointX="7.5" PointY="60.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProveedorTipoProveedor" Width="1.5" PointX="3" PointY="47.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.OrdenCompra" Width="1.5" PointX="9.875" PointY="23.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.OrdenCompraEstatus" Width="1.5" PointX="7.625" PointY="18.875" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.OrdenCompraImporte" Width="1.5" PointX="12.125" PointY="26.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CProductoAsociado" Width="1.5" PointX="9.75" PointY="51" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.OrdenCompraProducto" Width="1.5" PointX="12.125" PointY="21.625" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProducto_CProductoCategoria" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProducto_CProductoLinea" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProducto_CProductoServicioTipo" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProducto_CProductoUnidadMedida" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProducto_CProductoUnidadMedida1" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProducto_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProductoAsociado_CProducto" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProductoAsociado_CProducto1" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProductoCategoria_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProductoLinea_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProductoServicioTipo_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProductoUnidadMedida_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProveedor_CProveedorTipoProveedor" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProveedor_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProveedorBancario_CProveedor" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProveedorContacto_CProveedor" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProveedorDireccion_CProveedor" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CProveedorFiscal_CProveedor" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompra_CProveedor" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompra_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Requisicion_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompra_OrdenCompraEstatus" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompra_Requisicion" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraImporte_OrdenCompra" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraProducto_OrdenCompra" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
