@@ -38,20 +38,15 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<RequisicionEstatus> RequisicionEstatus { get; set; }
         public virtual DbSet<RequisicionProducto> RequisicionProducto { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
-        public virtual DbSet<CProductoCategoria> CProductoCategoria { get; set; }
-        public virtual DbSet<CProductoLinea> CProductoLinea { get; set; }
-        public virtual DbSet<CProductoServicioTipo> CProductoServicioTipo { get; set; }
-        public virtual DbSet<CProductoUnidadMedida> CProductoUnidadMedida { get; set; }
-        public virtual DbSet<CProveedor> CProveedor { get; set; }
-        public virtual DbSet<CProveedorBancario> CProveedorBancario { get; set; }
-        public virtual DbSet<CProveedorContacto> CProveedorContacto { get; set; }
-        public virtual DbSet<CProveedorDireccion> CProveedorDireccion { get; set; }
-        public virtual DbSet<CProveedorFiscal> CProveedorFiscal { get; set; }
-        public virtual DbSet<CProveedorTipoProveedor> CProveedorTipoProveedor { get; set; }
+        public virtual DbSet<CategoriaProducto> CategoriaProducto { get; set; }
+        public virtual DbSet<LineaProducto> LineaProducto { get; set; }
+        public virtual DbSet<TipoServicioOProducto> TipoServicioOProducto { get; set; }
+        public virtual DbSet<UnidadMedida> UnidadMedida { get; set; }
+        public virtual DbSet<Proveedor> Proveedor { get; set; }
+        public virtual DbSet<TipoProveedor> TipoProveedor { get; set; }
         public virtual DbSet<OrdenCompra> OrdenCompra { get; set; }
         public virtual DbSet<OrdenCompraEstatus> OrdenCompraEstatus { get; set; }
-        public virtual DbSet<OrdenCompraImporte> OrdenCompraImporte { get; set; }
-        public virtual DbSet<CProductoAsociado> CProductoAsociado { get; set; }
+        public virtual DbSet<ProductoAsociado> ProductoAsociado { get; set; }
         public virtual DbSet<OrdenCompraProducto> OrdenCompraProducto { get; set; }
     }
 }

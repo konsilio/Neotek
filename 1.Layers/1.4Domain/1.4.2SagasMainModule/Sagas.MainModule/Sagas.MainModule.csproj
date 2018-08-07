@@ -88,11 +88,6 @@
     <Compile Include="Entidades\Rol.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\Sagas.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Sagas.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entidades\Sagas1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
