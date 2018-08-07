@@ -23,5 +23,13 @@ namespace Application.MainModule.Flujos
         {
             return RequisicionServicio.BuscarRequisicion(numRequisicon);
         }
+        public RespuestaRequisicionDto ActualizarRequisicionRevision(RequisicionEDTO _req)
+        {
+            return RequisicionServicio.UpdateRequisicionRevision(_req);
+        }
+        public RespuestaRequisicionDto ActualizarRequisicionAutorizacion(RequisicionEDTO _req)
+        {
+            return RequisicionServicio.UpDateRequisicionAutoriza(_req);
+        }
     }
 }

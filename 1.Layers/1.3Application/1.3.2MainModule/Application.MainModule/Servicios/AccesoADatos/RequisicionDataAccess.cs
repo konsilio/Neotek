@@ -16,10 +16,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-        public void Acualizar(Sagas.MainModule.Entidades.Requisicion req)
-        {
-            uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Update(req);
-        }
         public Sagas.MainModule.Entidades.Requisicion Buscar(int IdRequisicion)
         {
             return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetSingle(x => x.IdRequisicion.Equals(IdRequisicion) && x.IdRequisicionEstatus.Equals(0));

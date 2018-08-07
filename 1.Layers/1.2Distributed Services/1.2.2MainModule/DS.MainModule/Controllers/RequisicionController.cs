@@ -36,6 +36,15 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.BuscarRequisicion(numRequi));
         }
-
+        [Route("update/requisicion")]
+        public HttpResponseMessage PutActulizarRevision(RequisicionEDTO req)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _requisicion.ActualizarRequisicionRevision(req));
+        }
+        [Route("update/requisicion")]
+        public HttpResponseMessage PutActulizarAutorizacion(RequisicionEDTO req)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _requisicion.ActualizarRequisicionAutorizacion(req));
+        }
     }
 }

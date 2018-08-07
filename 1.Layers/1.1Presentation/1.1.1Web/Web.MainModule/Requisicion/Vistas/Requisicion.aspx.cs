@@ -105,14 +105,14 @@ namespace Web.MainModule.Requisicion.Vista
         private void RquisicionAlternativa(string NumRueq, int Estatus)
         {
             ActivarRevisarExistencias();
-            //if (!Estatus.Equals(2))
-            //{
-            //    ActivarRevisarExistencias();
-            //}
-            //else
-            //{
-            //    ActivarRevisarAutorizacion();
-            //}
+            if ( Estatus < 15)
+            {
+                ActivarRevisarExistencias();
+            }
+            else
+            {
+                ActivarRevisarAutorizacion();
+            }
         }
         private void ActivarRevisarExistencias()
         {

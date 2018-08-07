@@ -17,7 +17,7 @@ namespace Web.MainModule.Requisicion.Model
             Autoriza_entrega = 6,
             Cerrada = 7,
             Orden_de_compra_generada = 8,
-            Solicitante_fotificado = 9
+            Solicitante_Notificado = 9
         }
     }
 }

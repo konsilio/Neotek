@@ -73,7 +73,6 @@ namespace Web.MainModule.Agente
                 _listaEmpresas = emp;
             }
         }
-
         public void Acceder(AutenticacionDto autDto)
         {
             this.ApiLogin = ConfigurationManager.AppSettings["PostLogin"];
@@ -167,10 +166,8 @@ namespace Web.MainModule.Agente
                 try
                 {
                     HttpResponseMessage response = await client.PostAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        resp = await response.Content.ReadAsAsync<RespuestaRequisicionDto>();
-                    }
+                    if (response.IsSuccessStatusCode)                    
+                        resp = await response.Content.ReadAsAsync<RespuestaRequisicionDto>();                    
                     else
                     {
                         client.CancelPendingRequests();
@@ -185,6 +182,16 @@ namespace Web.MainModule.Agente
                 }
                 _respuestaRequisicion = resp;
             }
+        }
+        public void ActualizarRequisicionRevision(RequisicionEDTO _requi, string token)
+        {
+            this.ApiRequisicion = ConfigurationManager.AppSettings["PutActulizarRevision"];
+            UpdateRequisicon(_requi, token).Wait();
+        }
+        public void ActualizarRequisicionAutorizacion(RequisicionEDTO _requi, string token)
+        {
+            this.ApiRequisicion = ConfigurationManager.AppSettings["PutActulizarAutorizacion"];
+            UpdateRequisicon(_requi, token).Wait();
         }
         public void BuscarRequisiciones(short idEmpresa, string tkn)
         {
