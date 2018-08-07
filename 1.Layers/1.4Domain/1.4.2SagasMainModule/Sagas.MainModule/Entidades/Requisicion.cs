@@ -18,6 +18,7 @@ namespace Sagas.MainModule.Entidades
         public Requisicion()
         {
             this.Productos = new HashSet<RequisicionProducto>();
+            this.OrdenesCompra = new HashSet<OrdenCompra>();
         }
     
         public int IdRequisicion { get; set; }
@@ -42,5 +43,8 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<RequisicionProducto> Productos { get; set; }
         public virtual Usuario Almacenista { get; set; }
         public virtual Usuario Autorizador { get; set; }
+        public virtual Empresa Empresa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrdenCompra> OrdenesCompra { get; set; }
     }
 }

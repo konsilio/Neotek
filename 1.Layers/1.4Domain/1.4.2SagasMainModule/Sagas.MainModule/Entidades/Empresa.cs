@@ -18,6 +18,14 @@ namespace Sagas.MainModule.Entidades
         public Empresa()
         {
             this.Usuario = new HashSet<Usuario>();
+            this.Productos = new HashSet<Producto>();
+            this.CategoriasProducto = new HashSet<CategoriaProducto>();
+            this.LineasProducto = new HashSet<LineaProducto>();
+            this.TiposServicioOProducto = new HashSet<TipoServicioOProducto>();
+            this.UnidadesMedida = new HashSet<UnidadMedida>();
+            this.Proveedores = new HashSet<Proveedor>();
+            this.OrdenesCompra = new HashSet<OrdenCompra>();
+            this.Requisiciones = new HashSet<Requisicion>();
         }
     
         public short IdEmpresa { get; set; }
@@ -60,5 +68,21 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<Usuario> Usuario { get; set; }
         public virtual EstadosRepublica EstadosRepublica { get; set; }
         public virtual Pais Pais { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Producto> Productos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CategoriaProducto> CategoriasProducto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LineaProducto> LineasProducto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TipoServicioOProducto> TiposServicioOProducto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UnidadMedida> UnidadesMedida { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Proveedor> Proveedores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrdenCompra> OrdenesCompra { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Requisicion> Requisiciones { get; set; }
     }
 }

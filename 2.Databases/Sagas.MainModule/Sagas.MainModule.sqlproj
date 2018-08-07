@@ -122,7 +122,6 @@
     <Build Include="Contruccion\CEstacionCarburacion.sql" />
     <Build Include="Contruccion\CAlmacenGasTipoMedidor.sql" />
     <Build Include="Contruccion\AlmacenSalidaProducto.sql" />
-    <Build Include="Contruccion\OrdenDeCompra.sql" />
     <Build Include="Contruccion\OrdenCompra.sql" />
     <Build Include="Contruccion\OrdenCompraEstatus.sql" />
     <Build Include="Contruccion\OrdenCompraProducto.sql" />
