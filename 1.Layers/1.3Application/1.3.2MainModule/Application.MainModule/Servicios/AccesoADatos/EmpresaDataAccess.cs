@@ -16,7 +16,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public EmpresaDataAccess()
         {
             uow = new SagasDataUow();
-        }       
+        }
 
         public Empresa Buscar(short idEmpresa)
         {
@@ -26,6 +26,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<Empresa> BuscarTodos()
         {
             return uow.Repository<Empresa>().GetAll().ToList();
+        }
+        public List<Empresa> BuscarTodos(bool conAC)
+        {
+            return uow.Repository<Empresa>().Get(x => x.EsAdministracionCentral.Equals(conAC)).ToList();
         }
     }
 }

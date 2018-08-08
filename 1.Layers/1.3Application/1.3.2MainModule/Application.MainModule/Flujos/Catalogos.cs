@@ -19,6 +19,22 @@ namespace Application.MainModule.Flujos
         {
             return EmpresaServicio.BuscarEmpresas();
         }
+        public List<EmpresaDTO> ListaEmpresas(bool conAC)
+        {
+            return EmpresaServicio.BuscarEmpresas(conAC);
+        }
+        #endregion
+        #region Usuarios
+        public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
+        {
+            return UsuarioServicio.ListaUsuarios(idEmpresa);
+        }
+        #endregion
+        #region Productos
+        public List<ProductoDTO> ListaProductos(short idEmpresa)
+        {
+            return ProductoServicios.ListaProductos(idEmpresa);
+        }
         #endregion
     }
 }

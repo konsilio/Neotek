@@ -24,7 +24,7 @@ namespace Web.MainModule
                     if (Convert.ToBoolean(_autenticado.Value))
                     {
                         CargarEmpresas();
-                        CargarRequisiciones();
+                        CargarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
                     }
                     else
                         Salir();
@@ -56,9 +56,9 @@ namespace Web.MainModule
             ddlEmpresas.DataBind();
             ddlEmpresas.SelectedValue = "-1";
         }
-        private void CargarRequisiciones()
+        private void CargarRequisiciones(short idEmpresa)
         {
-            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value), Session["StringToken"].ToString());
+            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString());
             dgRequisisiones.DataBind();
         }
         protected void dgRequisisiones_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -78,6 +78,19 @@ namespace Web.MainModule
             dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"];
             dgRequisisiones.PageIndex = e.NewPageIndex;
             dgRequisisiones.DataBind();
+        }
+
+        protected void ddlEmpresas_SelectedIndexChanged(object sender, EventArgs e)
+        {            
+            if (!ddlEmpresas.SelectedValue.Equals("0"))
+            {
+                CargarRequisiciones(Int16.Parse(ddlEmpresas.SelectedValue));
+            }            
+        }
+
+        protected void txtNoRequisicion_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

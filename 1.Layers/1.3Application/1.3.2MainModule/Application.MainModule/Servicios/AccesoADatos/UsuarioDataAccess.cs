@@ -23,6 +23,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.IdUsuario.Equals(idUsuario)
                                                          && x.Activo);
         }
+        public List<Usuario> Buscar(short idEmpresa)
+        {
+            return uow.Repository<Usuario>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                         && x.EsAdministracionCentral.Equals(false)
+                                                         && x.Activo).ToList();
+        }
 
         public Usuario Buscar(short idEmpresa, string NombreUsuario, string password)
         {

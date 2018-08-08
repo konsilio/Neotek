@@ -22,7 +22,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public int BuscarUltimaRequi()
         {
-            return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetAll().ToList().Last().IdRequisicion;
+            if (uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetAll().ToList().Count.Equals(0))
+                return 0;
+            else
+                return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetAll().ToList().Last().IdRequisicion;
         }
         public Sagas.MainModule.Entidades.Requisicion BuscarPorNumeroRequisicion(string NumRequisicion)
         {
@@ -77,6 +80,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
             }
             return _respuesta;
-        }        
+        }
     }
 }

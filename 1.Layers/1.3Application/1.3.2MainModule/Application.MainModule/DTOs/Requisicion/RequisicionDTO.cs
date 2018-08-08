@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Requisicion
 {
+    [Serializable]
     public class RequisicionDTO
     {
         public int IdRequisicion { get; set; }
@@ -23,6 +24,6 @@ namespace Application.MainModule.DTOs.Requisicion
         public string MotivoCancelacion { get; set; }
         public Nullable<int> IdUsuarioAutorizacion { get; set; }
         public Nullable<System.DateTime> FechaAutorizacion { get; set; }
-        
+
     }
 }

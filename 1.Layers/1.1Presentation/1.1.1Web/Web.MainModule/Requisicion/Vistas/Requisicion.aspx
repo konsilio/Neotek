@@ -27,6 +27,8 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-4">
                                         <div class="form-group">
+                                            <asp:DropDownList ID="ddlEmpresas" runat="server" Visible="false" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged">
+                                            </asp:DropDownList>
                                             <asp:Label ID="lblNombreEmpresa" runat="server" Text="Nombre de la empresa"></asp:Label>
                                         </div>
                                     </div>
@@ -52,8 +54,7 @@
                                         <div class="form-group form-float">
                                             <%--Solicitante--%>
                                             <label class="card-inside-title">Solicitante:</label>
-                                            <asp:DropDownList runat="server" ID="ddlSolicitante" CssClass="form-control datetimepicker" placeholder="Fecha requerida...">
-                                                <asp:ListItem Value="1" Text="Usuario"></asp:ListItem>
+                                            <asp:DropDownList runat="server" ID="ddlSolicitante" CssClass="form-control datetimepicker" placeholder="Solicitante...">
                                             </asp:DropDownList>
                                         </div>
                                     </div>
@@ -78,6 +79,7 @@
                                         <%--Tipo de compra--%>
                                         <label class="card-inside-title">Tipo de compra:</label>
                                         <asp:DropDownList ID="ddlTipoCompra" runat="server" CssClass="form-control z-index show-tick">
+                                            <asp:ListItem Value="0" Text="Seleccione tipo de producto"></asp:ListItem>
                                             <asp:ListItem Value="1" Text="Producto"></asp:ListItem>
                                             <asp:ListItem Value="2" Text="Servicio"></asp:ListItem>
                                         </asp:DropDownList>
@@ -86,8 +88,6 @@
                                         <%--Producto--%>
                                         <label class="card-inside-title">Producto:</label>
                                         <asp:DropDownList runat="server" ID="ddlProdcutos" CssClass="form-control z-index show-tick" data-live-search="true">
-                                            <asp:ListItem Value="0" Text="Nombre del producto"></asp:ListItem>
-                                            <asp:ListItem Value="1" Text="Esto es un producto"></asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
                                     <div class="col-lg-2 col-md-12">
@@ -95,7 +95,6 @@
                                         <div class="form-group">
                                             <label class="card-inside-title">Cantidad:</label>
                                             <asp:TextBox ID="txtCantidad" runat="server" placeholder="0" CssClass="form-control" />
-
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-12">
@@ -146,8 +145,8 @@
                                 </div>
                                 <div class="row clearfix">
                                     <div class="body table-responsive">
-                                        <!--Data Grid con los productos Agregados -->
-                                        <asp:GridView CssClass="table table-hover" OnRowCommand="dgListaproductos_RowCommand" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
+                                        <!--Grid con los productos Agregados -->
+                                        <asp:GridView CssClass="table table-hover"  OnRowCommand="dgListaproductos_RowCommand" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <%--0 Tipo de compra--%>
@@ -200,11 +199,11 @@
                                                         <b>Acción</b>
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:LinkButton runat="server" ID="lbEdit" CommandName="Edit" CommandArgument='<%# Eval("IdProducto") %>'>
+                                                        <asp:LinkButton runat="server" ID="lbEdit" CommandName="Editar" CommandArgument='<%# Eval("IdProducto") %>'>
                                                                     <i class="material-icons">edit</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                         </asp:LinkButton>
-                                                        <asp:LinkButton runat="server" ID="lbBorrar" CommandName="Delete" CommandArgument='<%# Eval("IdProducto") %>'>
+                                                        <asp:LinkButton runat="server" ID="lbBorrar" CommandName="Borrar" CommandArgument='<%# Eval("IdProducto") %>'>
                                                                     <i class="material-icons">delete</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                         </asp:LinkButton>

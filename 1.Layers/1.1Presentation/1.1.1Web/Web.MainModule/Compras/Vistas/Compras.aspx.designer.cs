@@ -31,6 +31,15 @@ namespace Web.MainModule {
         protected global::System.Web.UI.WebControls.DropDownList ddlEmpresas;
         
         /// <summary>
+        /// Control txtNoRequisicion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNoRequisicion;
+        
+        /// <summary>
         /// Control btnNuevaReq.
         /// </summary>
         /// <remarks>

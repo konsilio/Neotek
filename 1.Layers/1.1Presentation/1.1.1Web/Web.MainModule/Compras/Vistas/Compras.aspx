@@ -24,15 +24,12 @@
                             <div class="body">
                                 <div class="row clearfix">
                                     <div class="col-sm-4">
-                                        <asp:DropDownList runat="server" ID="ddlEmpresas" data-live-search="true" CssClass="form-control z-index show-tick">
+                                        <asp:DropDownList runat="server" ID="ddlEmpresas" data-live-search="true" AutoPostBack="true" CssClass="form-control z-index show-tick" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged" >
                                         </asp:DropDownList>
-                                        <%--<select class="form-control show-tick" runat="server" id="ddlGaseras">
-                                                
-                                            </select>--%>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="N° de Requisición" />
+                                            <asp:TextBox runat="server" ID="txtNoRequisicion" class="form-control" placeholder="N° de Requisición" OnTextChanged="txtNoRequisicion_TextChanged" />
                                         </div>
                                     </div>
                                     <div class="col-sm-4">

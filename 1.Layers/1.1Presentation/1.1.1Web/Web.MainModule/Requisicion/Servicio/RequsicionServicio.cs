@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 using Web.MainModule.Agente;
+using Web.MainModule.Seguridad.Model;
 
 namespace Web.MainModule.Requisicion.Servicio
 {
@@ -82,6 +83,24 @@ namespace Web.MainModule.Requisicion.Servicio
             var respuestaReq = new AgenteServicios();
             respuestaReq.BuscarRequisicio(numreq, token);
             return respuestaReq._requisicionEDTO;
+        }
+        public List<Model.UsuarioDTO> ListaUsuarios(short idEmpresa, string token)
+        {
+            var agente = new AgenteServicios();
+            agente.BuscarListaUsuarios(idEmpresa, token);
+            return agente._listUsuarios;
+        }
+        public List<EmpresaDTO> Empresas(string tkn)
+        {
+            var agente = new AgenteServicios();
+            agente.ListaEmpresasConAC(false, tkn);
+            return agente._listaEmpresas;
+        }
+        public List<Model.ProductoDTO> ListaPriductos(short idEmpresa, string Token)
+        {
+            var agente = new AgenteServicios();
+            agente.BuscarProductos(idEmpresa, Token);
+            return agente._listProductos;
         }
         #endregion
         #region Adaptadores

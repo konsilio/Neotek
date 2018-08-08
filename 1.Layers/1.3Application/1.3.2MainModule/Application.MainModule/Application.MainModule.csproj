@@ -52,11 +52,15 @@
   <ItemGroup>
     <Compile Include="AdaptadoresDTO\Catalogo\AdministracionCentralAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\UsuarioAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Requisicion\RequisicionAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Requisicion\RequisicionProductoAdapter.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DTOs\Catalogo\AdministracionCentralDto.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
+    <Compile Include="DTOs\Catalogo\ProductoDTO.cs" />
+    <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
     <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEDTO.cs" />
@@ -75,10 +79,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\AccesoADatos\AdministracionCentralDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EmpresaDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\ProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\RequisicionDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioACDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
     <Compile Include="Servicios\Catalogos\EmpresaServicio.cs" />
+    <Compile Include="Servicios\Catalogos\ProductoServicios.cs" />
+    <Compile Include="Servicios\Catalogos\UsuarioServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
     <Compile Include="Servicios\Requisicion\RequisicionServicio.cs" />
     <Compile Include="Servicios\Seguridad\AutenticarServicio.cs" />

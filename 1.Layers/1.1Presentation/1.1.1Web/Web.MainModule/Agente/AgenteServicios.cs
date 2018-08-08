@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Web.MainModule.Seguridad.Model;
 using Web.MainModule.Requisicion.Model;
-
 using System.Configuration;
 
 namespace Web.MainModule.Agente
@@ -20,6 +19,8 @@ namespace Web.MainModule.Agente
         private string ApiCompras;
         private string ApiListaEmpresas;
         private string ApiRequisicion;
+        private string ApiUsuarios;
+        private string ApiProducto;
 
         public RespuestaAutenticacionDto _respuestaAutenticacion;
         public RespuestaRequisicionDto _respuestaRequisicion;
@@ -28,8 +29,8 @@ namespace Web.MainModule.Agente
         public ComprasDTO _respuestacompra;
         public List<RequisicionDTO> _listaRequisiciones;
         public RequisicionEDTO _requisicionEDTO;
-
-        
+        public List<UsuarioDTO> _listUsuarios;
+        public List<ProductoDTO> _listProductos;
 
         public AgenteServicios()
         {
@@ -45,6 +46,11 @@ namespace Web.MainModule.Agente
         {
             this.ApiListaEmpresas = ConfigurationManager.AppSettings["GetListaEmpresas"];
             ListaEmp(this.ApiListaEmpresas, _tok).Wait();
+        }
+        public void ListaEmpresasConAC(bool conAC, string _tok)
+        {
+            this.ApiListaEmpresas = ConfigurationManager.AppSettings["GetListaEmpresascad"];
+            ListaEmp(this.ApiListaEmpresas + conAC.ToString(), _tok).Wait();
         }
         private async Task ListaEmp(string api, string token = null)
         {
@@ -106,6 +112,41 @@ namespace Web.MainModule.Agente
                     client.Dispose();
                 }
                 _respuestaAutenticacion = respuesta;
+            }
+        }
+        #endregion
+        #region Usuarios
+        public void BuscarListaUsuarios(short idEmpresa, string tkn)
+        {
+            this.ApiUsuarios = ConfigurationManager.AppSettings["GetListaUsuarios"];
+            GetListaUsuarios(idEmpresa, tkn).Wait();
+        }
+        private async Task GetListaUsuarios(short IdEmpresa, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<UsuarioDTO> lus = new List<UsuarioDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiUsuarios + IdEmpresa.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<UsuarioDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<UsuarioDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listUsuarios = lus;
             }
         }
         #endregion
@@ -289,7 +330,42 @@ namespace Web.MainModule.Agente
                 }
                 _requisicionEDTO = emp;
             }
-            #endregion
+           
         }
+
+        public void BuscarProductos(short idEmpresa, string tkn)
+        {
+            this.ApiProducto = ConfigurationManager.AppSettings["GetListaProductos"];
+            ListaProductosPorIdEmpresa(idEmpresa, tkn).Wait();
+        }
+        private async Task ListaProductosPorIdEmpresa(short idEmpresa, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ProductoDTO> emp = new List<ProductoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiProducto + idEmpresa.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<ProductoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<ProductoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listProductos = emp;
+            }
+        }
+        #endregion
     }
 }
