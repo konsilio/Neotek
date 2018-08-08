@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.Servicios.Mobile;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
@@ -38,6 +39,7 @@ namespace Application.MainModule.Servicios.Seguridad
 
                 return new RespuestaAutenticacionDto()
                 {
+                    IdUsuario = usuario.IdUsuario,
                     Exito = true,
                     Mensaje = "OK",
                     token = TokenGenerator.GenerateTokenJwt(claims, autDto.Password, Convert.ToInt32(min).ToString())
@@ -46,11 +48,26 @@ namespace Application.MainModule.Servicios.Seguridad
             else
                 return new RespuestaAutenticacionDto()
                 {
+                    IdUsuario = 0,
                     Exito = false,
                     Mensaje = Error.S0003,
                     token = string.Empty
                 };
-        }        
+        } 
+        
+        public static RespuestaAutenticacionMobileDto AutenticarUsuarioMobile(AutenticacionDto autDto)
+        {
+            var aut = AutenticarUsuario(autDto);
+            return new RespuestaAutenticacionMobileDto()
+            {
+                Exito = aut.Exito,
+                Mensaje = aut.Mensaje,
+                token = aut.token,
+                listMenu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : null,
+            };
+
+        
+        }       
 
         private static UsuarioAplicacionDto AutenticarUsuarioDeEmpresa(AutenticacionDto autDto)
         {

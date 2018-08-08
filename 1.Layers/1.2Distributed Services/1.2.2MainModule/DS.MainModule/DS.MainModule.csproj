@@ -238,6 +238,7 @@
     <Compile Include="Controllers\CatalogosController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SeguridadController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\ValidateModelAttribute.cs" />
