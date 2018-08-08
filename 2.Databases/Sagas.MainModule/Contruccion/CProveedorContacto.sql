@@ -1,6 +1,9 @@
 ﻿CREATE TABLE [dbo].[CProveedorContacto]
 (
-	[IdProveedor] SMALLINT NOT NULL, 
+	[IdProveedor] INT NOT NULL, 
+	[Persona1] VARCHAR(150) NULL, 
+    [Persona2] VARCHAR(150) NULL, 
+    [Persona3] VARCHAR(150) NULL,
     [Telefono1] VARCHAR(50) NULL, 
     [Telefono2] VARCHAR(50) NULL, 
     [Telefono3] VARCHAR(50) NULL, 

@@ -19,10 +19,7 @@ namespace Application.MainModule.Servicios.Seguridad
             UsuarioAplicacionDto usuario;
             // Validamos si es un usuario de la administración central
             // y buscamos la existencia del usuario, validando su contraseña
-            if (autDto.IdEmpresa.Equals(-2))
-                usuario = AutenticarUsuarioAdminCentral(autDto);
-            else
-                usuario = AutenticarUsuarioDeEmpresa(autDto);
+            usuario = AutenticarUsuarioDeEmpresa(autDto);
 
             if (usuario.autenticado)
             {
@@ -53,40 +50,29 @@ namespace Application.MainModule.Servicios.Seguridad
                     Mensaje = Error.S0003,
                     token = string.Empty
                 };
-        }
-
-        private static UsuarioAplicacionDto AutenticarUsuarioAdminCentral(AutenticacionDto autDto)
-        {
-            var usuario = new UsuarioACDataAccess().Buscar(autDto.Usuario, autDto.Password);
-            if (usuario != null)
-                return new UsuarioAplicacionDto()
-                {
-                    autenticado = true,
-                    AdminCentral = true,
-                    SuperUsuario = usuario.SuperAdmin,
-                    IdUsuario = usuario.IdUsuarioAC,
-                    IdRol = usuario.IdRol,
-                };
-            else
-                return new UsuarioAplicacionDto()
-                {
-                    autenticado = false,
-                };
-        }
+        }        
 
         private static UsuarioAplicacionDto AutenticarUsuarioDeEmpresa(AutenticacionDto autDto)
         {
             var usuario = new UsuarioDataAccess().Buscar(autDto.IdEmpresa, autDto.Usuario, autDto.Password);
             if (usuario != null)
-                return new UsuarioAplicacionDto()
+            {
+                var autUsuario =  new UsuarioAplicacionDto()
                 {
                     autenticado = true,
-                    AdminCentral = false,
-                    SuperUsuario = false,
+                    SuperUsuario = usuario.EsSuperAdmin,
                     IdEmpresa = usuario.IdEmpresa,
                     IdUsuario = usuario.IdUsuario,
-                    IdRol = usuario.IdRol,
+                    IdRol = usuario.IdRol,                    
                 };
+
+                if (usuario.EsAdministracionCentral)
+                    autUsuario.AdminCentral = true;
+                else
+                    autUsuario.AdminCentral = false;
+
+                return autUsuario;
+            }
             else
                 return new UsuarioAplicacionDto()
                 {
