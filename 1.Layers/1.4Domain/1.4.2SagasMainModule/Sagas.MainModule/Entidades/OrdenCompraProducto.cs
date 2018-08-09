@@ -28,7 +28,11 @@ namespace Sagas.MainModule.Entidades
         public decimal IVA { get; set; }
         public decimal IEPS { get; set; }
         public decimal Importe { get; set; }
+        public int IdProducto { get; set; }
+        public int IdCentroCosto { get; set; }
     
         public virtual OrdenCompra OrdenCompra { get; set; }
+        public virtual CentroCosto CentroCosto { get; set; }
+        public virtual Producto CProducto { get; set; }
     }
 }

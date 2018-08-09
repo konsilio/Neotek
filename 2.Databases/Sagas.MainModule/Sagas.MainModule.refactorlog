@@ -861,4 +861,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="AppCompraGasFinalizarDescarga" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="1962725a-22d9-4e16-8d0e-c3642d8f680c" ChangeDateTime="08/09/2018 13:04:43">
+    <Property Name="ElementName" Value="[dbo].[UsuarioRol].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UsuarioRol]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdUsuario" />
+  </Operation>
 </Operations>

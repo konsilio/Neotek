@@ -17,22 +17,31 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Rol()
         {
-            this.Usuario = new HashSet<Usuario>();
-            this.UsuarioAC = new HashSet<UsuarioAC>();
+            this.ListaUsuarios = new HashSet<Usuario>();
         }
     
         public short IdRol { get; set; }
+        public short IdEmpresa { get; set; }
         public string Rol1 { get; set; }
         public string NombreRol { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
-        public bool CompraCapRequisicion { get; set; }
-        public bool CompraRevRequisicion { get; set; }
-        public bool CompraGenOCompra { get; set; }
+        public bool RequisicionVerRequisiciones { get; set; }
+        public bool RequisicionGenerarNueva { get; set; }
+        public bool RequisicionRevisarExistencia { get; set; }
+        public bool RequisicionAutorizar { get; set; }
+        public bool CompraVerOCompra { get; set; }
+        public bool CompraGenerarOCompra { get; set; }
+        public bool CompraAutorizarOCompra { get; set; }
+        public bool AppCompraVerOCompra { get; set; }
+        public bool CompraEntraProductoOCompra { get; set; }
+        public bool CompraAtiendeServicioOCompra { get; set; }
+        public bool AppCompraEntraGas { get; set; }
+        public bool AppCompraGasIniciarDescarga { get; set; }
+        public bool AppCompraGasFinalizarDescarga { get; set; }
     
+        public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Usuario> Usuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioAC> UsuarioAC { get; set; }
+        public virtual ICollection<Usuario> ListaUsuarios { get; set; }
     }
 }

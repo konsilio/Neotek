@@ -28,5 +28,6 @@ namespace Sagas.MainModule.Entidades
     
         public virtual Requisicion Requisicion { get; set; }
         public virtual Producto Producto { get; set; }
+        public virtual CentroCosto CentroCosto { get; set; }
     }
 }

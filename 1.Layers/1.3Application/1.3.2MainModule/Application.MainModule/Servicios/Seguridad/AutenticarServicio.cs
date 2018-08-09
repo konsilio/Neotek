@@ -28,7 +28,6 @@ namespace Application.MainModule.Servicios.Seguridad
                 {
                     new Claim("Autenticado", usuario.autenticado.ToString()),
                     new Claim("NombreUsuario", autDto.Usuario),
-                    new Claim("Rol", usuario.IdRol.ToString()),
                     new Claim("IdUsuario", usuario.IdUsuario.ToString()),
                     new Claim("IdEmpresa", usuario.IdEmpresa.ToString()),
                     new Claim("EsAdminCentral", usuario.AdminCentral ? "true": "false"),
@@ -60,6 +59,7 @@ namespace Application.MainModule.Servicios.Seguridad
             var aut = AutenticarUsuario(autDto);
             return new RespuestaAutenticacionMobileDto()
             {
+                IdUsuario = aut.IdUsuario,
                 Exito = aut.Exito,
                 Mensaje = aut.Mensaje,
                 token = aut.token,
@@ -79,8 +79,7 @@ namespace Application.MainModule.Servicios.Seguridad
                     autenticado = true,
                     SuperUsuario = usuario.EsSuperAdmin,
                     IdEmpresa = usuario.IdEmpresa,
-                    IdUsuario = usuario.IdUsuario,
-                    IdRol = usuario.IdRol,                    
+                    IdUsuario = usuario.IdUsuario,            
                 };
 
                 if (usuario.EsAdministracionCentral)

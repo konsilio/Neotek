@@ -22,11 +22,10 @@ namespace DS.MainModule.Controllers
             _catalogos = new Catalogos();
         }
 
-        [AllowAnonymous]
-        [Route("empresas/listaempresaslogin")]
-        public HttpResponseMessage GetListaEmpresasLogin()
+        [Route("servicio/disponible")]
+        public HttpResponseMessage PostServicioDisponible()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresasLogin());
+            return Request.CreateResponse(HttpStatusCode.OK, new RespuestaDto() { Exito = true });
         }
 
         [AllowAnonymous]

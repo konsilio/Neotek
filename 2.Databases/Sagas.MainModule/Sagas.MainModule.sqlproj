@@ -134,6 +134,7 @@
     <Build Include="Contruccion\AlmacenEntradaGasDescargaFinalizar.sql" />
     <Build Include="Contruccion\ImagenDe.sql" />
     <Build Include="Contruccion\TodaBD0708218.sql" />
+    <Build Include="Contruccion\UsuarioRol.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sagas.MainModule.refactorlog" />
