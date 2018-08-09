@@ -56,6 +56,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
@@ -88,6 +89,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderRDLCtoPDF.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="ValidadorClases.cs" />
+    <Compile Include="ValidadorListaClases.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Imagenes\footerInfotec.PNG">

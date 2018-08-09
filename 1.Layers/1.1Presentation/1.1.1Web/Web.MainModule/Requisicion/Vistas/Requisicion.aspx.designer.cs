@@ -73,7 +73,16 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFechaRequerida;
+        protected global::System.Web.UI.WebControls.TextBox txtFechaRequerida;
+        
+        /// <summary>
+        /// Control reqFecha.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqFecha;
         
         /// <summary>
         /// Control ddlSolicitante.
@@ -85,6 +94,15 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.DropDownList ddlSolicitante;
         
         /// <summary>
+        /// Control reqSol.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqSol;
+        
+        /// <summary>
         /// Control txtMotivoCompra.
         /// </summary>
         /// <remarks>
@@ -94,6 +112,15 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.TextBox txtMotivoCompra;
         
         /// <summary>
+        /// Control reqMotivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqMotivo;
+        
+        /// <summary>
         /// Control txtRequeridoEn.
         /// </summary>
         /// <remarks>
@@ -101,6 +128,33 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtRequeridoEn;
+        
+        /// <summary>
+        /// Control reqReq.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqReq;
+        
+        /// <summary>
+        /// Control divCampos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCampos;
+        
+        /// <summary>
+        /// Control lblErrorCampos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorCampos;
         
         /// <summary>
         /// Control divDatos1.
@@ -121,6 +175,15 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.DropDownList ddlTipoCompra;
         
         /// <summary>
+        /// Control reqTipo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqTipo;
+        
+        /// <summary>
         /// Control ddlProdcutos.
         /// </summary>
         /// <remarks>
@@ -128,6 +191,15 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlProdcutos;
+        
+        /// <summary>
+        /// Control reqProd.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqProd;
         
         /// <summary>
         /// Control txtCantidad.
@@ -139,6 +211,15 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.TextBox txtCantidad;
         
         /// <summary>
+        /// Control reqCant.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqCant;
+        
+        /// <summary>
         /// Control ddlCentroCostos.
         /// </summary>
         /// <remarks>
@@ -146,6 +227,15 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCentroCostos;
+        
+        /// <summary>
+        /// Control reqCC.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqCC;
         
         /// <summary>
         /// Control divDatos2.
@@ -164,6 +254,15 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDetalle;
+        
+        /// <summary>
+        /// Control reqApli.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqApli;
         
         /// <summary>
         /// Control btnAgregar.
@@ -193,6 +292,24 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.HtmlControls.HtmlTextArea txtOpinion;
         
         /// <summary>
+        /// Control DivCamposPord.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivCamposPord;
+        
+        /// <summary>
+        /// Control lblErrorPord.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorPord;
+        
+        /// <summary>
         /// Control dgListaproductos.
         /// </summary>
         /// <remarks>
@@ -200,6 +317,15 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView dgListaproductos;
+        
+        /// <summary>
+        /// Control reqGrid.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqGrid;
         
         /// <summary>
         /// Control btnRegresar.

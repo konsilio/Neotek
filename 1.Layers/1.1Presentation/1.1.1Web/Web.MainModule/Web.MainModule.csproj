@@ -151,6 +151,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Compras\Model\" />
     <Folder Include="OrdenCompra\Servisio\" />
+    <Folder Include="Requisicion\Model\RequisicionProductoDtos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\bundles\chartscripts.bundle.js" />
@@ -3871,6 +3872,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Requisicion\Model\ProductoDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionCrearDTO.cs" />
     <Compile Include="Requisicion\Model\UsuarioDTO.cs" />
     <Compile Include="Compras\Vistas\Compras.aspx.cs">
       <DependentUpon>Compras.aspx</DependentUpon>
@@ -3952,9 +3954,17 @@
       <Project>{2C5F9775-06CF-466F-9873-3166EDE4744C}</Project>
       <Name>Application.MainModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\Exceptions.MainModule.csproj">
+      <Project>{FB4086F4-8177-4175-BEB6-312FD528ABA2}</Project>
+      <Name>Exceptions.MainModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.5Security\Security.MainModule\Security.MainModule.csproj">
       <Project>{f3ba487d-6ff4-4793-8bba-79da05447ec2}</Project>
       <Name>Security.MainModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\Utilities.MainModule.csproj">
+      <Project>{80053147-4263-454b-ba2d-c7ef6a507c0b}</Project>
+      <Name>Utilities.MainModule</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

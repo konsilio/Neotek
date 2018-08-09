@@ -190,12 +190,12 @@ namespace Web.MainModule.Agente
         }
         #endregion
         #region Requisicion
-        public void GuardarRequisicon(RequisicionEDTO _requi, string token)
+        public void GuardarRequisicon(RequisicionCrearDTO _requi, string token)
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["PostRequisicion"];
             SaveRequisicon(_requi, token).Wait();
         }
-        private async Task SaveRequisicon(RequisicionEDTO _requi, string token)
+        private async Task SaveRequisicon(RequisicionCrearDTO _requi, string token)
         {
             using (var client = new HttpClient())
             {

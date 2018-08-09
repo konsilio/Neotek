@@ -5,19 +5,19 @@ using System.Web;
 
 namespace Web.MainModule.Requisicion.Model
 {
-    public class RequisiconEstatus
+    public static class RequisiconEstatus
     {
-        enum Estatus : short
+        public enum Estatus 
         {
-            Creada = 1,
-            En_revision = 2,
-            Revision_exitosa = 3,
-            Revision_parcial = 4,
-            Revision_no_exitosa = 5,
-            Autoriza_entrega = 6,
-            Cerrada = 7,
-            Orden_de_compra_generada = 8,
-            Solicitante_Notificado = 9
+            Creada = 3,
+            En_revision = 4,
+            Revision_exitosa = 5,
+            Revision_parcial = 6,
+            Revision_no_exitosa = 7,
+            Autoriza_entrega = 8,
+            Cerrada = 9,
+            Orden_de_compra_generada = 9,
+            Solicitante_Notificado = 10
         }
     }
 }

@@ -36,7 +36,7 @@ namespace DS.MainModule
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 
             // Se agrega el filtro para validar los campos obligatorios y otras reglas de los DTOs
-            //config.Filters.Add(new ValidateModelAttribute());
+            config.Filters.Add(new ValidateModelAttribute());
         }
     }
 }

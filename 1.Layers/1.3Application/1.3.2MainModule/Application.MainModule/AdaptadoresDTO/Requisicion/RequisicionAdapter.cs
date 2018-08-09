@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Application.MainModule.DTOs.Requisicion;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.AdaptadoresDTO.Requisicion
 {
@@ -152,7 +153,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             _requisicion.NumeroRequisicion = Servicios.FolioServicio.GenerarNumeroRequisicion(requiscionEDTO);
             _requisicion.MotivoRequisicion = requiscionEDTO.MotivoRequisicion;
             _requisicion.RequeridoEn = requiscionEDTO.RequeridoEn;
-            _requisicion.IdRequisicionEstatus = requiscionEDTO.IdRequisicionEstatus;
+            _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Creado;
             _requisicion.FechaRequerida = requiscionEDTO.FechaRequerida;
             _requisicion.FechaRegistro = requiscionEDTO.FechaRegistro;
             _requisicion.Productos = RequisicionProductoAdapter.FromDTO(requiscionEDTO.ListaProductos);

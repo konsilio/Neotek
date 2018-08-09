@@ -17,7 +17,8 @@
                 </div>
                 <div class="body" id="divNoRequi" runat="server" visible="false">
                     <div class="alert alert-success">
-                        <asp:Label ID="lblNoRequisicion" runat="server" />
+                        <strong>
+                            <asp:Label ID="lblNoRequisicion" runat="server" Text="Hola" /></strong>
                     </div>
                 </div>
                 <div class="row clearfix">
@@ -41,39 +42,47 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row clearfix">
                                     <div class="col-lg-3 col-md-12">
                                         <div class="form-group form-float">
                                             <%--Fecha requerida--%>
                                             <label class="card-inside-title">Fecha requerida:</label>
-                                            <input runat="server" id="txtFechaRequerida" type="text" class="form-control datetimepicker" placeholder="Fecha requerida...">
+                                            <asp:TextBox runat="server" ID="txtFechaRequerida" CssClass="form-control datetimepicker" placeholder="Fecha requerida..." name="date" />
+                                            <asp:Label runat="server" ID="reqFecha" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-12">
                                         <div class="form-group form-float">
                                             <%--Solicitante--%>
                                             <label class="card-inside-title">Solicitante:</label>
-                                            <asp:DropDownList runat="server" ID="ddlSolicitante" CssClass="form-control datetimepicker" placeholder="Solicitante...">
+                                            <asp:DropDownList runat="server" ID="ddlSolicitante" CssClass="form-control z-index show-tick" data-live-search="true" OnSelectedIndexChanged="ddlSolicitante_SelectedIndexChanged">
                                             </asp:DropDownList>
+                                            <asp:Label runat="server" ID="reqSol" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-12 form-float">
                                         <div class="form-group">
                                             <%--Motivo de compra--%>
                                             <label class="card-inside-title">Motivo de compra:</label>
-                                            <asp:TextBox runat="server" ID="txtMotivoCompra" CssClass="form-control" placeholder="Motivo de la compra..." TextMode="MultiLine"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtMotivoCompra" CssClass="form-control" placeholder="Motivo de la compra..." TextMode="MultiLine" OnTextChanged="txtMotivoCompra_TextChanged"></asp:TextBox>
+                                            <asp:Label runat="server" ID="reqMotivo" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-12">
                                         <div class="form-group form-float">
                                             <%--Se requiere en--%>
                                             <label class="card-inside-title">Se requiere en:</label>
-                                            <asp:TextBox runat="server" ID="txtRequeridoEn" CssClass="form-control" placeholder="Se requiere en..." TextMode="MultiLine"></asp:TextBox>
+                                            <asp:TextBox runat="server" ID="txtRequeridoEn" CssClass="form-control" placeholder="Se requiere en..." TextMode="MultiLine" OnTextChanged="txtRequeridoEn_TextChanged"></asp:TextBox>
+                                            <asp:Label runat="server" ID="reqReq" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="body" id="divCampos" runat="server" visible="false">
+                                    <div class="alert alert-danger">
+                                        <strong>
+                                            <asp:Label ID="lblErrorCampos" runat="server" Text="" /></strong>
+                                    </div>
+                                </div>
                                 <div class="row clearfix" runat="server" id="divDatos1">
                                     <div class="col-lg-2 col-md-12">
                                         <%--Tipo de compra--%>
@@ -83,19 +92,22 @@
                                             <asp:ListItem Value="1" Text="Producto"></asp:ListItem>
                                             <asp:ListItem Value="2" Text="Servicio"></asp:ListItem>
                                         </asp:DropDownList>
+                                        <asp:Label runat="server" ID="reqTipo" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                     </div>
                                     <div class="col-lg-4 col-md-12">
                                         <%--Producto--%>
                                         <label class="card-inside-title">Producto:</label>
                                         <asp:DropDownList runat="server" ID="ddlProdcutos" CssClass="form-control z-index show-tick" data-live-search="true">
                                         </asp:DropDownList>
+                                        <asp:Label runat="server" ID="reqProd" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                     </div>
                                     <div class="col-lg-2 col-md-12">
                                         <%--Cantidad--%>
                                         <div class="form-group">
                                             <label class="card-inside-title">Cantidad:</label>
-                                            <asp:TextBox ID="txtCantidad" runat="server" placeholder="0" CssClass="form-control" />
+                                            <asp:TextBox ID="txtCantidad" runat="server" placeholder="0" type="number" CssClass="form-control" />
                                         </div>
+                                        <asp:Label runat="server" ID="reqCant" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                     </div>
                                     <div class="col-lg-3 col-md-12">
                                         <%--Centro de costo--%>
@@ -104,6 +116,7 @@
                                             <asp:ListItem Value="0" Text="Nombre del Centro"></asp:ListItem>
                                             <asp:ListItem Value="1" Text="Esto es un centro de costos"></asp:ListItem>
                                         </asp:DropDownList>
+                                        <asp:Label runat="server" ID="reqCC" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                     </div>
                                 </div>
                                 <div class="row clearfix js-sweetalert" id="divDatos2" runat="server">
@@ -112,6 +125,7 @@
                                             <%--Aplicacion--%>
                                             <label class="card-inside-title">Aplicación:</label>
                                             <asp:TextBox ID="txtDetalle" runat="server" placeholder="Comentarios..." CssClass="form-control" />
+                                            <asp:Label runat="server" ID="reqApli" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12" align="right">
@@ -143,10 +157,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="body" id="DivCamposPord" runat="server" visible="false">
+                                    <div class="alert alert-danger">
+                                        <strong>
+                                            <asp:Label ID="lblErrorPord" runat="server" Text="" /></strong>
+                                    </div>
+                                </div>
                                 <div class="row clearfix">
                                     <div class="body table-responsive">
                                         <!--Grid con los productos Agregados -->
-                                        <asp:GridView CssClass="table table-hover"  OnRowCommand="dgListaproductos_RowCommand" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
+                                        <asp:GridView CssClass="table table-hover" OnRowCommand="dgListaproductos_RowCommand" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <%--0 Tipo de compra--%>
@@ -260,6 +280,7 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                         </asp:GridView>
+                                        <asp:Label runat="server" ID="reqGrid" CssClass="alert-danger" Visible="false" Text="Debes agregar al menos un producto" />
                                     </div>
                                 </div>
                                 <div class="row clearfix">

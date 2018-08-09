@@ -170,11 +170,10 @@
     <Compile Include="IRepositorios\IRolRepositorio.cs" />
     <Compile Include="IRepositorios\IUsuarioACRepositorio.cs" />
     <Compile Include="IRepositorios\IUsuarioRepositorio.cs" />
+    <Compile Include="ObjetosValor\Enum\RequisicionEstatusEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ObjetosValor\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Entidades\Sagas.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

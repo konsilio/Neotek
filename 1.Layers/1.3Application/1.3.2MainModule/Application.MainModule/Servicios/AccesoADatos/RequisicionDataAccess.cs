@@ -42,16 +42,17 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    _req.RequisicionEstatus = new Sagas.MainModule.Entidades.RequisicionEstatus()
-                    {
-                        IdRequisicionEstatus = 1,
-                        Estatus = "Iniciada"
-                    };
+                    //_req.RequisicionEstatus = new Sagas.MainModule.Entidades.RequisicionEstatus()
+                    //{
+                    //    IdRequisicionEstatus = 1,
+                    //    Estatus = "Iniciada"
+                    //};
                     uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Insert(_req);
                     uow.SaveChanges();
                     _respuesta.IdRequisicion = _req.IdRequisicion;
+                    _respuesta.NumRequisicion = _req.NumeroRequisicion;
                     _respuesta.Exito = true;
-                    _respuesta.Mensaje = _req.NumeroRequisicion;
+                    _respuesta.Mensaje = "OK";
                 }
                 catch (Exception ex)
                 {
