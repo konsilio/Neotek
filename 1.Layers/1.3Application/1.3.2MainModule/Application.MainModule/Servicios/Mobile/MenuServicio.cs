@@ -1,11 +1,13 @@
 ﻿using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.Servicios.AccesoADatos;
+using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Utilities.MainModule;
 
 namespace Application.MainModule.Servicios.Mobile
 {
@@ -15,21 +17,35 @@ namespace Application.MainModule.Servicios.Mobile
         {
             List<MenuDto> lista = new List<MenuDto>();
             var usuario = new UsuarioDataAccess().Buscar(idUsuario);
-            if (usuario.Rol != null)
+            if (usuario.Roles != null)
             {
-                if (usuario.Rol.CompraCapRequisicion)
+                foreach (Rol rol in usuario.Roles)
                 {
-                    lista.Add(new MenuDto()
-                    {
-                        headerMenu = "Compra - Captura Requisicion",
-                        name = "Iniciar descarga",
-                        imageRef = "ic_iniciar_descarga",
-                    });
+                    if(rol.AppCompraEntraGas)
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraEntraGas"]));
 
-                }
+                    //Aquí continua...
+                    //if (rol.AppCompraEntraGas)
+                    //    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraEntraGas"]));
+
+                    //if (rol.AppCompraEntraGas)
+                    //    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraEntraGas"]));
+
+                }                
                 return lista;
             }
             else return lista;
+        }
+
+        private static MenuDto ObtenerDatosMenu(string cadena)
+        {
+            var lista = FilterFunciones.ObtenerFields(cadena);
+            return new MenuDto()
+            {
+                headerMenu = lista.FirstOrDefault(),
+                name = lista.ElementAt(1),
+                imageRef = lista.LastOrDefault(),
+            };
         }
     }
 }

@@ -48,7 +48,6 @@ namespace Sagas.MainModule.Entidades
         public string NumInt { get; set; }
     
         public virtual AdministracionCentral AdministracionCentral { get; set; }
-        public virtual Rol Rol { get; set; }
         public virtual EstadosRepublica EstadosRepublica { get; set; }
         public virtual Pais Pais { get; set; }
     }

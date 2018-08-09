@@ -1,6 +1,8 @@
 ﻿CREATE TABLE [dbo].[OrdenCompraProducto]
 (
 	[IdOrdenCompra] INT NOT NULL, 
+	[IdProducto] INT NOT NULL,
+	[IdCentroCosto] INT NOT NULL,
 	[ProductoServicioTipo] VARCHAR(50) NOT NULL,
     [Producto] VARCHAR(50) NOT NULL,     
     [Categoria] VARCHAR(50) NULL, 

@@ -12,10 +12,10 @@ namespace Sagas.MainModule.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class CFormaPago
+    public partial class FormaPago
     {
         public byte IdFormaPago { get; set; }
-        public string FormaPago { get; set; }
+        public string Descripcion { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
     }

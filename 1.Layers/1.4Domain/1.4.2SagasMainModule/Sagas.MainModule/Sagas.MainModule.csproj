@@ -73,7 +73,7 @@
     <Compile Include="Entidades\CategoriaProducto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\CFormaPago.cs">
+    <Compile Include="Entidades\CentroCosto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Empresa.cs">
@@ -83,6 +83,9 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\EstadosRepublica.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\FormaPago.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\ImagenDe.cs">

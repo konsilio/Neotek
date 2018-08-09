@@ -2,7 +2,6 @@
 (
 	[IdUsuario] INT NOT NULL PRIMARY KEY IDENTITY, 
 	[IdEmpresa] SMALLINT NOT NULL,
-	[IdRol] SMALLINT NOT NULL,
     [Nombre] VARCHAR(100) NOT NULL, 
     [Apellido1] VARCHAR(80) NOT NULL, 
     [Apellido2] VARCHAR(80) NULL, 

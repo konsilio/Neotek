@@ -749,4 +749,123 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="IdImagenDe" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="fc1f1a1b-6edd-4d10-8025-8e5a87ccc58d" ChangeDateTime="08/08/2018 23:11:22">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraCapRequisicion]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RequisicionGenerarNueva" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="547c29ff-a97b-4927-9b98-c4a2fe3f73d6" ChangeDateTime="08/08/2018 23:11:41">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraRevRequisicion]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RequisicionRevisarExistencia" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="22a3d266-5637-4195-8252-a6340a4da80b" ChangeDateTime="08/08/2018 23:11:56">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraGenOCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RequesicionAutorizar" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d647800d-2a9c-4247-a918-8844827f3354" ChangeDateTime="08/08/2018 23:13:38">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[RequisicionGenerarNueva]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RequisicionVerRequisiciones" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="855136e2-dc50-46fb-afd5-07ed57d0cd47" ChangeDateTime="08/08/2018 23:16:47">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[RequesicionAutorizar]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RequisicionAutorizar" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0ea6f90e-a0b2-4724-874c-22029519a89d" ChangeDateTime="08/08/2018 23:20:47">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraVerOCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompraGenerarOCompra" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="acc84f79-c305-41b9-a326-418dc27eed34" ChangeDateTime="08/08/2018 23:22:06">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraVerOCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompraAutorizarOCompra" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1efb8844-67cb-4d04-a551-fc0854cd8953" ChangeDateTime="08/08/2018 23:23:31">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraVerOCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompraAppVerOCompra" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fdca4c3f-89be-4186-9c1c-397a0461668d" ChangeDateTime="08/08/2018 23:24:48">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraVerOCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompraEntraProductoOCompra" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="57f266fa-2044-4f04-8fb7-0e3a54150998" ChangeDateTime="08/08/2018 23:25:14">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraVerOCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompraAtiendeServicioOCompra" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cf6d4f30-5cf4-42a8-863a-e5d42affb2f1" ChangeDateTime="08/08/2018 23:33:00">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraVerOCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompraGasIniciarDescarga" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4446fab4-7dea-4733-a30d-a27994c66cbc" ChangeDateTime="08/08/2018 23:33:10">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraVerOCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CompraGasFinalizarDescarga" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1590cc87-1820-4218-a797-d2afa441f478" ChangeDateTime="08/08/2018 23:33:55">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraAppVerOCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AppCompraVerOCompra" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="59ca0a00-859d-476a-8278-c4dc3a5a71e2" ChangeDateTime="08/08/2018 23:35:00">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraVerOCompra]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AppCompraEntraGas" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e0783995-8664-4130-a1f2-f4806301c18e" ChangeDateTime="08/08/2018 23:35:07">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraGasIniciarDescarga]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AppCompraGasIniciarDescarga" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="20c54b32-7f99-4e3b-a77b-a8af94547eac" ChangeDateTime="08/08/2018 23:35:10">
+    <Property Name="ElementName" Value="[dbo].[RolAccion].[CompraGasFinalizarDescarga]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[RolAccion]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AppCompraGasFinalizarDescarga" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1962725a-22d9-4e16-8d0e-c3642d8f680c" ChangeDateTime="08/09/2018 13:04:43">
+    <Property Name="ElementName" Value="[dbo].[UsuarioRol].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UsuarioRol]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IdUsuario" />
+  </Operation>
 </Operations>

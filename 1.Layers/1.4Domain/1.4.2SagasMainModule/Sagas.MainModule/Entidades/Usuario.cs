@@ -18,13 +18,13 @@ namespace Sagas.MainModule.Entidades
         public Usuario()
         {
             this.Requisiciones = new HashSet<Requisicion>();
-            this.AlmacenEntradaProducto = new HashSet<AlmacenEntradaProducto>();
-            this.AlmacenSalidaProducto = new HashSet<AlmacenSalidaProducto>();
+            this.RecibeMercancia = new HashSet<AlmacenEntradaProducto>();
+            this.EntregaMercancia = new HashSet<AlmacenSalidaProducto>();
+            this.Roles = new HashSet<Rol>();
         }
     
         public int IdUsuario { get; set; }
         public short IdEmpresa { get; set; }
-        public short IdRol { get; set; }
         public bool EsAdministracionCentral { get; set; }
         public bool EsSuperAdmin { get; set; }
         public string Nombre { get; set; }
@@ -57,14 +57,15 @@ namespace Sagas.MainModule.Entidades
         public string NumInt { get; set; }
     
         public virtual Empresa Empresa { get; set; }
-        public virtual Rol Rol { get; set; }
-        public virtual EstadosRepublica EstadosRepublica { get; set; }
+        public virtual EstadosRepublica EstadoRepublica { get; set; }
         public virtual Pais Pais { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Requisicion> Requisiciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlmacenEntradaProducto> AlmacenEntradaProducto { get; set; }
+        public virtual ICollection<AlmacenEntradaProducto> RecibeMercancia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlmacenSalidaProducto> AlmacenSalidaProducto { get; set; }
+        public virtual ICollection<AlmacenSalidaProducto> EntregaMercancia { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Rol> Roles { get; set; }
     }
 }
