@@ -15,5 +15,7 @@
     [Descuento] DECIMAL(18, 2) NOT NULL, 
     [IVA] DECIMAL(18, 2) NOT NULL, 
     [IEPS] DECIMAL(18, 2) NOT NULL,
-	[Importe] DECIMAL(18, 2) NOT NULL, 
+	[Importe] DECIMAL(18, 2) NOT NULL,
+	[EsActivoVenta] BIT NOT NULL DEFAULT 0, 
+    [EsGas] BIT NOT NULL DEFAULT 0, 
 )
