@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Exceptions.MainModule.Validaciones;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Exceptions.MainModule.Validaciones;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Web.MainModule.Requisicion.Model
+namespace Application.MainModule.DTOs.Requisicion
 {
-    [Serializable]
-    public class RequisicionProductoGridDTO
+    public class RequisicionProductoCrearDTO
     {
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdProducto")]
@@ -42,8 +42,8 @@ namespace Web.MainModule.Requisicion.Model
         [Display(Name = "Unidad")]
         public string Unidad { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]        
-        [Range(typeof(decimal), "0.0001", "9999999", ErrorMessage = Error.R0005 )]
+        [Required(ErrorMessage = Error.R0002)]
+        [Range(typeof(decimal), "0.0001", "9999999", ErrorMessage = Error.R0005)]
         [Display(Name = "Cantidad")]
         public decimal Cantidad { get; set; }
 
@@ -51,6 +51,5 @@ namespace Web.MainModule.Requisicion.Model
         [StringLength(500, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Aplicacion")]
         public string Aplicacion { get; set; }
-
     }
 }

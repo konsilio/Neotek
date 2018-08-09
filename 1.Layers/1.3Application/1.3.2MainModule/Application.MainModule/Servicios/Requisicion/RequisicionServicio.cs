@@ -12,7 +12,7 @@ namespace Application.MainModule.Servicios.Requisicion
 {
     public static class RequisicionServicio
     {
-        public static RespuestaRequisicionDto GuardarRequisicionNueva(RequisicionEDTO _req)
+        public static RespuestaRequisicionDto GuardarRequisicionNueva(RequisicionCrearDTO _req)
         {
             var requisicionResp = new RequisicionDataAccess().InsertarNueva(RequisicionAdapter.FromEDTO(_req));
             if (requisicionResp != null)

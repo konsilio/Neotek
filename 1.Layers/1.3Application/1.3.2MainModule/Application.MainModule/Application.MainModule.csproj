@@ -64,8 +64,10 @@
     <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
     <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\Mobile\MenuDto.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionCrearDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionProductoCrearDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionProductoDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaDto.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaRequisicionDto.cs" />

@@ -97,13 +97,14 @@ namespace Web.MainModule.Requisicion.Vista
             if (list.Exists(x => x.IdentidadError.Equals("ListaProductos"))) { reqGrid.Visible = true; reqGrid.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("Aplicacion")).MensajeError; }
             else reqApli.Visible = false;
         }
-        private void LimpiarCampos()
+        private void LimpiarMensajesProd()
         {
-            ddlEmpresas.SelectedValue = "0";
-            ddlSolicitante.SelectedValue = "0";
-            txtMotivoCompra.Text = string.Empty;
-            txtRequeridoEn.Text = string.Empty;
-        }
+            reqTipo.Visible = false;
+            reqProd.Visible = false;
+            reqCant.Visible = false;
+            reqCC.Visible = false;
+            reqCC.Visible = false;
+        }       
         private void ValidarCamposProductos(List<Result> list)
         {
             if (list.Exists(x => x.IdentidadError.Equals("TipoProducto"))) { reqTipo.Visible = true; reqTipo.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("TipoProducto")).MensajeError; }
@@ -114,6 +115,8 @@ namespace Web.MainModule.Requisicion.Vista
             else reqCant.Visible = false;
             if (list.Exists(x => x.IdentidadError.Equals("IdCentroCosto"))) { reqCC.Visible = true; reqCC.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("IdCentroCosto")).MensajeError; }
             else reqCC.Visible = false;
+            if (list.Exists(x => x.IdentidadError.Equals("Aplicacion"))) { reqApli.Visible = true; reqApli.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("Aplicacion")).MensajeError; }
+            else reqApli.Visible = false;
 
         }
         private bool ValidarListaprodcutos()
@@ -267,6 +270,7 @@ namespace Web.MainModule.Requisicion.Vista
             var validacion = ValidadorClases.EnlistaErrores<Model.RequisicionProductoGridDTO>(prod);
             if (validacion.ModeloValido)
             {
+                ValidarCamposProductos(new List<Result>());
                 List<Model.RequisicionProductoGridDTO> LProductos = new List<Model.RequisicionProductoGridDTO>();
                 if (ValidarProductoRepetido(int.Parse(ddlProdcutos.SelectedValue.ToString())))
                 {
@@ -290,7 +294,6 @@ namespace Web.MainModule.Requisicion.Vista
                 ValidarCamposProductos(validacion.MensajesError);
                 lblErrorPord.Text = "Verifique que los datos esten completos";
                 DivCamposPord.Visible = true;
-                //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Aviso", "alert('Verifique los datos')", true);
             }
         }
         protected void BtnCrear_Click(object sender, EventArgs e)
@@ -300,6 +303,7 @@ namespace Web.MainModule.Requisicion.Vista
             {
                 if (ValidarListaprodcutos())
                 {
+                    ValidarCampos(new List<Result> ());//Se manda lista vacia para limpiar campos
                     Model.RequisicionCrearDTO Edto = CrearReq();
                     var validacion = ValidadorClases.EnlistaErrores<Model.RequisicionCrearDTO>(Edto);
                     if (validacion.ModeloValido)

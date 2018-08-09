@@ -22,7 +22,7 @@ namespace DS.MainModule.Controllers
         }
        
         [Route("guardar/requisicion")]
-        public HttpResponseMessage PostRequisicion(RequisicionEDTO req)
+        public HttpResponseMessage PostRequisicion(RequisicionCrearDTO req)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.InsertRequisicionNueva(req));   
         }

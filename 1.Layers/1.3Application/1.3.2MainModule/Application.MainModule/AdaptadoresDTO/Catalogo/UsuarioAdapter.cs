@@ -15,7 +15,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             UsuarioDTO usDTO = new UsuarioDTO();
             usDTO.IdUsuario = us.IdUsuario;
             usDTO.IdEmpresa = us.IdEmpresa;
-            usDTO.IdRol = us.IdRol;
             usDTO.EsAdministracionCentral = us.EsAdministracionCentral;
             usDTO.EsSuperAdmin = us.EsSuperAdmin;
             usDTO.Nombre = us.Nombre;
@@ -36,7 +35,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             usDTO.Email3 = us.Email3;
             usDTO.SitioWeb1 = us.SitioWeb1;
             usDTO.SitioWeb2 = us.SitioWeb2;
-            usDTO.SitioWeb3 = us.SitioWeb3;      
+            usDTO.SitioWeb3 = us.SitioWeb3;
             usDTO.IdPais = us.IdPais;
             usDTO.IdEstadoRep = us.IdEstadoRep;
             usDTO.EstadoProvincia = us.EstadoProvincia;
@@ -45,7 +44,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             usDTO.Colonia = us.Colonia;
             usDTO.Calle = us.Calle;
             usDTO.NumExt = us.NumExt;
-            usDTO.NumInt = us.NumInt;       
+            usDTO.NumInt = us.NumInt;
             return usDTO;
         }
         public static List<UsuarioDTO> ToDTO(List<Usuario> lu)
@@ -58,7 +57,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             Usuario us = new Usuario();
             us.IdUsuario = usDTO.IdUsuario;
             us.IdEmpresa = usDTO.IdEmpresa;
-            us.IdRol = usDTO.IdRol;
             us.EsAdministracionCentral = usDTO.EsAdministracionCentral;
             us.EsSuperAdmin = usDTO.EsSuperAdmin;
             us.Nombre = usDTO.Nombre;

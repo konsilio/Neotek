@@ -229,8 +229,8 @@
                                                         </asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField Visible="false">
-                                                    <%--6 Almacen--%>
+                                               <%--<% <asp:TemplateField Visible="false">
+                                                    <%--6 Almacen
                                                     <HeaderTemplate>
                                                         Almacen
                                                     </HeaderTemplate>
@@ -239,7 +239,7 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField Visible="false">
-                                                    <%--7 Revision Fisica--%>
+                                                    <%--7 Revision Fisica
                                                     <HeaderTemplate>
                                                         Revision Fisica
                                                     </HeaderTemplate>
@@ -248,7 +248,7 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField Visible="false">
-                                                    <%--8 Autoriza Entrega--%>
+                                                    <%--8 Autoriza Entreg
                                                     <HeaderTemplate>
                                                         Autoriza entrega
                                                     </HeaderTemplate>
@@ -259,7 +259,7 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField Visible="false">
-                                                    <%--9 Requiere comprar--%>
+                                                    <%--9 Requiere comprar
                                                     <HeaderTemplate>
                                                         Requiere comprar
                                                     </HeaderTemplate>
@@ -268,7 +268,7 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField Visible="false">
-                                                    <%--10 Autoriza Compra--%>
+                                                    <%--10 Autoriza Compra
                                                     <HeaderTemplate>
                                                         Autoriza Compra
                                                     </HeaderTemplate>
@@ -277,7 +277,7 @@
                                                             <asp:CheckBox ID="chbAutCompra" runat="server" Checked="false" />
                                                         </div>
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
+                                                </asp:TemplateField>--%>
                                             </Columns>
                                         </asp:GridView>
                                         <asp:Label runat="server" ID="reqGrid" CssClass="alert-danger" Visible="false" Text="Debes agregar al menos un producto" />

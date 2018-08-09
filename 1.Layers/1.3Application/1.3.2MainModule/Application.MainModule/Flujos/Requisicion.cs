@@ -12,7 +12,7 @@ namespace Application.MainModule.Flujos
 {
     public class Requisicion
     {
-        public RespuestaRequisicionDto InsertRequisicionNueva(RequisicionEDTO _req)
+        public RespuestaRequisicionDto InsertRequisicionNueva(RequisicionCrearDTO _req)
         {            
             return RequisicionServicio.GuardarRequisicionNueva(_req);
         }
