@@ -26,6 +26,15 @@
                 android:textSize="25dp"
                 android:textStyle="italic" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/spinner_num_compra"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="25dp" />
+
             <Spinner
                 android:id="@+id/spinner_orden_compra"
                 android:layout_width="match_parent"
@@ -121,16 +130,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <EditText android:id="@+id/input_embarque"
+                <EditText android:id="@+id/input_embarque"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:paddingBottom="15dp"
+                    android:inputType="text"
+                    android:hint="@string/num_embarque"
+                    android:textColorHint="@color/colorTextLogin"
+                    android:textColor="@color/colorTextLogin"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:paddingBottom="15dp"
-                android:inputType="text"
-                android:hint="@string/num_embarque"
-                android:textColorHint="@color/colorTextLogin"
-                android:textColor="@color/colorTextLogin"/>
-            </android.support.design.widget.TextInputLayout>
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/nombre_expedidor"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="25dp" />
 
             <Spinner
                 android:id="@+id/spinner_expedidor"
@@ -139,6 +157,15 @@
                 android:textSize="25dp"
                 android:paddingBottom="10dp"
                 android:textColor="@color/colorTextLogin"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/nombre_porteador"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="25dp" />
 
             <Spinner
                 android:id="@+id/spinner_porteador"
@@ -152,30 +179,30 @@
                 android:id="@+id/input_layout_placas_tractor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <EditText android:id="@+id/input_placas_tractor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:paddingBottom="15dp"
-                android:inputType="text"
-                android:hint="@string/placas_tractor"
-                android:textColorHint="@color/colorTextLogin"
-                android:textColor="@color/colorTextLogin"/>
+                <EditText android:id="@+id/input_placas_tractor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:paddingBottom="15dp"
+                    android:inputType="text"
+                    android:hint="@string/placas_tractor"
+                    android:textColorHint="@color/colorTextLogin"
+                    android:textColor="@color/colorTextLogin"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_nombre_operador"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <EditText android:id="@+id/input_nombre_operador"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:paddingBottom="15dp"
-                android:inputType="text"
-                android:hint="@string/nombre_operador"
-                android:textColorHint="@color/colorTextLogin"
-                android:textColor="@color/colorTextLogin"/>
+                <EditText android:id="@+id/input_nombre_operador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:paddingBottom="15dp"
+                    android:inputType="text"
+                    android:hint="@string/nombre_operador"
+                    android:textColorHint="@color/colorTextLogin"
+                    android:textColor="@color/colorTextLogin"/>
             </android.support.design.widget.TextInputLayout>
 
 
@@ -184,15 +211,15 @@
                 android:id="@+id/input_layout_producto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <EditText android:id="@+id/input_producto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:paddingBottom="15dp"
-                android:inputType="text"
-                android:hint="@string/producto"
-                android:textColorHint="@color/colorTextLogin"
-                android:textColor="@color/colorTextLogin"/>
+                <EditText android:id="@+id/input_producto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:paddingBottom="15dp"
+                    android:inputType="text"
+                    android:hint="@string/producto"
+                    android:textColorHint="@color/colorTextLogin"
+                    android:textColor="@color/colorTextLogin"/>
             </android.support.design.widget.TextInputLayout>
 
 
@@ -217,16 +244,16 @@
                 android:id="@+id/input_layout_presion_tanque"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <EditText android:id="@+id/input_presion_tanque"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:paddingBottom="15dp"
-                android:inputType="numberDecimal"
-                android:hint="@string/presion_tanque"
-                android:layout_weight="1"
-                android:textColorHint="@color/colorTextLogin"
-                android:textColor="@color/colorTextLogin"/>
+                <EditText android:id="@+id/input_presion_tanque"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:paddingBottom="15dp"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/presion_tanque"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/colorTextLogin"
+                    android:textColor="@color/colorTextLogin"/>
             </android.support.design.widget.TextInputLayout>
 
 
@@ -234,7 +261,7 @@
                 android:id="@+id/input_layout_cap_tanque"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <EditText android:id="@+id/input_cap_tanque"
+                <EditText android:id="@+id/input_cap_tanque"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="25dp"
@@ -247,9 +274,9 @@
 
 
             <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_medidor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:id="@+id/input_layout_medidor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <EditText android:id="@+id/input_medidor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -296,30 +323,30 @@
                 android:id="@+id/input_layout_valor_carga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <EditText android:id="@+id/input_valor_carga"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:paddingBottom="15dp"
-                android:inputType="numberDecimal"
-                android:hint="@string/valor_carga"
-                android:textColorHint="@color/colorTextLogin"
-                android:textColor="@color/colorTextLogin"/>
+                <EditText android:id="@+id/input_valor_carga"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:paddingBottom="15dp"
+                    android:inputType="numberDecimal"
+                    android:hint="@string/valor_carga"
+                    android:textColorHint="@color/colorTextLogin"
+                    android:textColor="@color/colorTextLogin"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_nombre_responsable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <EditText android:id="@+id/input_nombre_responsable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:paddingBottom="15dp"
-                android:inputType="text"
-                android:hint="@string/nombre_responsable"
-                android:textColorHint="@color/colorTextLogin"
-                android:textColor="@color/colorTextLogin"/>
+                <EditText android:id="@+id/input_nombre_responsable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:paddingBottom="15dp"
+                    android:inputType="text"
+                    android:hint="@string/nombre_responsable"
+                    android:textColorHint="@color/colorTextLogin"
+                    android:textColor="@color/colorTextLogin"/>
             </android.support.design.widget.TextInputLayout>
 
             <Button
