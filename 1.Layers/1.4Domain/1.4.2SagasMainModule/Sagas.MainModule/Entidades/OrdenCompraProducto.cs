@@ -15,6 +15,8 @@ namespace Sagas.MainModule.Entidades
     public partial class OrdenCompraProducto
     {
         public int IdOrdenCompra { get; set; }
+        public int IdProducto { get; set; }
+        public int IdCentroCosto { get; set; }
         public string ProductoServicioTipo { get; set; }
         public string Producto { get; set; }
         public string Categoria { get; set; }
@@ -28,7 +30,11 @@ namespace Sagas.MainModule.Entidades
         public decimal IVA { get; set; }
         public decimal IEPS { get; set; }
         public decimal Importe { get; set; }
+        public bool EsActivoVenta { get; set; }
+        public bool EsGas { get; set; }
     
         public virtual OrdenCompra OrdenCompra { get; set; }
+        public virtual CentroCosto CentroCosto { get; set; }
+        public virtual Producto CProducto { get; set; }
     }
 }

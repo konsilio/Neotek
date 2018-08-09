@@ -48,5 +48,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 return Buscar(_empresa.IdEmpresa ,idUsuario);
             }
         }
+        public Usuario Buscar(int idUsuario)
+        {
+            return uow.Repository<Usuario>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
+                                                         && x.Activo);
+        }
     }
 }

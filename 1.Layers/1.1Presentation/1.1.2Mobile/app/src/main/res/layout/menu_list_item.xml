@@ -47,4 +47,8 @@
             android:layout_gravity="center"
             android:src="@drawable/right" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:background="@color/colorButtonLogin"/>
 </LinearLayout>

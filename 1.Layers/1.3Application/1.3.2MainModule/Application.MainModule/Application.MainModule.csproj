@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -62,6 +63,7 @@
     <Compile Include="DTOs\Catalogo\ProductoDTO.cs" />
     <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
     <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
+    <Compile Include="DTOs\Mobile\MenuDto.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionProductoDTO.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="DTOs\Respuesta\RespuestaRequisicionDto.cs" />
     <Compile Include="DTOs\Seguridad\AutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionDto.cs" />
+    <Compile Include="DTOs\Seguridad\RespuestaAutenticacionMobileDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioAplicacionDto.cs" />
     <Compile Include="Flujos\Catalogos.cs" />
     <Compile Include="Flujos\Compras.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Servicios\Catalogos\UsuarioServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
     <Compile Include="Servicios\Requisicion\RequisicionServicio.cs" />
+    <Compile Include="Servicios\Mobile\MenuServicio.cs" />
     <Compile Include="Servicios\Seguridad\AutenticarServicio.cs" />
     <Compile Include="Servicios\Seguridad\UsuarioAplicacionServicio.cs" />
     <Compile Include="UnitOfWork\GenericUnitOfWork.cs" />

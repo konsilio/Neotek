@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.Servicios.Mobile;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
@@ -27,7 +28,6 @@ namespace Application.MainModule.Servicios.Seguridad
                 {
                     new Claim("Autenticado", usuario.autenticado.ToString()),
                     new Claim("NombreUsuario", autDto.Usuario),
-                    new Claim("Rol", usuario.IdRol.ToString()),
                     new Claim("IdUsuario", usuario.IdUsuario.ToString()),
                     new Claim("IdEmpresa", usuario.IdEmpresa.ToString()),
                     new Claim("EsAdminCentral", usuario.AdminCentral ? "true": "false"),
@@ -38,6 +38,7 @@ namespace Application.MainModule.Servicios.Seguridad
 
                 return new RespuestaAutenticacionDto()
                 {
+                    IdUsuario = usuario.IdUsuario,
                     Exito = true,
                     Mensaje = "OK",
                     token = TokenGenerator.GenerateTokenJwt(claims, autDto.Password, Convert.ToInt32(min).ToString())
@@ -46,11 +47,27 @@ namespace Application.MainModule.Servicios.Seguridad
             else
                 return new RespuestaAutenticacionDto()
                 {
+                    IdUsuario = 0,
                     Exito = false,
                     Mensaje = Error.S0003,
                     token = string.Empty
                 };
-        }        
+        } 
+        
+        public static RespuestaAutenticacionMobileDto AutenticarUsuarioMobile(AutenticacionDto autDto)
+        {
+            var aut = AutenticarUsuario(autDto);
+            return new RespuestaAutenticacionMobileDto()
+            {
+                IdUsuario = aut.IdUsuario,
+                Exito = aut.Exito,
+                Mensaje = aut.Mensaje,
+                token = aut.token,
+                listMenu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : null,
+            };
+
+        
+        }       
 
         private static UsuarioAplicacionDto AutenticarUsuarioDeEmpresa(AutenticacionDto autDto)
         {
@@ -62,8 +79,7 @@ namespace Application.MainModule.Servicios.Seguridad
                     autenticado = true,
                     SuperUsuario = usuario.EsSuperAdmin,
                     IdEmpresa = usuario.IdEmpresa,
-                    IdUsuario = usuario.IdUsuario,
-                    IdRol = usuario.IdRol,                    
+                    IdUsuario = usuario.IdUsuario,            
                 };
 
                 if (usuario.EsAdministracionCentral)

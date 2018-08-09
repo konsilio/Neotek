@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
-        applicationId "com.example.neotecknewts.sagas"
+        applicationId "com.example.neotecknewts.sagasapp"
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
@@ -28,7 +28,12 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.android.support:recyclerview-v7:26.0.2'
     compile 'com.android.support:design:26.0.2'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
     compile 'com.jsibbold:zoomage:1.1.0'
+
+    compile 'com.google.firebase:firebase-core:11.0.2'
+    compile 'com.google.firebase:firebase-messaging:11.0.2'
     testCompile 'junit:junit:4.12'
 }
 
@@ -41,3 +46,4 @@ repositories {
         name 'Google'
     }
 }
+apply plugin: 'com.google.gms.google-services'

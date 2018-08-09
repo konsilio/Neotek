@@ -3,21 +3,57 @@
 
     <item
         is-multidex="true"
-        jar="/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="/Users/neotecknewts/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.0.2/43eeae0b9fb087bb3194ba59ab63a38a32fbf3e/retrofit-2.0.2.jar"
         jumboMode="true"
         optimize="true"
         revision="26.0.2"
-        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_4c90a04b4b795fe8f3fe6c90a118b1af1deaf4b3/classes.dex" />
+        sha1="043eeae0b9fb087bb3194ba59ab63a38a32fbf3e">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/retrofit-2.0.2_fd13adfd822027f719635dd823db36cc759fc102/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jar="/Users/neotecknewts/.android/build-cache/83cda9c684691a302949b232507c38f7a98055e3/output/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="26.0.2"
-        sha1="cad0df5b2f2e2d65261306869f1c70db208c3b35">
-        <dex dex="/Users/neotecknewts/Documents/AntonioMAC/ProyectosAndroid/Sagas/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_df47b8092aa72cc00a10f72f859a0a9ae0f0ddf6/classes.dex" />
+        sha1="fc5624185d414a0f572bfb3df7d841ceb335aef9">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_887c51173fef066b3594af9cc4f47452cf109a9a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/neotecknewts/.android/build-cache/8147f6578ab506d31caea53e8d89e774934807c3/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a71be5f29a1c1e3fd3e84472742668f101a5b936">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_48997c16a82b3b3a2707c82b5cfc21930da8880c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/neotecknewts/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.0.2/f8d87f15b94b8d74e7ccf61d7eedb558811cdb30/converter-gson-2.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f8d87f15b94b8d74e7ccf61d7eedb558811cdb30">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/converter-gson-2.0.2_07c1d8bd9d9edb0e91061ec85e96218398d65e51/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/neotecknewts/.android/build-cache/21cf61b310360499a2b35e7e084b6d96571f0286/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="2737331564e0084fc0eb30ba500564a6dbe5e98f">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_98f1a2c4fe1f16bcfaa5d196e6f68462a2cc117f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/neotecknewts/.android/build-cache/bf604b6000323de82e9b5342cf0287d1c8f010af/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="2c1d9fbe7d2f686b3dcdbc3f63a983a211401ca3">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_5994fffbb504809f521da33e9e2362c7d816bb89/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -30,12 +66,66 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/neotecknewts/.android/build-cache/03205809d59cbeedc67158f9808746c350a1de2b/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f260cdc1a267b17b911022919f19d568e6624229">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_34fe565c30b4d6e20fa45fa0fa521aa981810b8e/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/neotecknewts/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.1/b9d63507329a7178e026fc334f87587ee5070ac5/gson-2.6.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b9d63507329a7178e026fc334f87587ee5070ac5">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.6.1_47c70b5c4b6ecaf88282f39675acea20c6deea8a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/neotecknewts/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.6.0_67ec46346a462de9ac4cf0b355e071fcdc7f3cfd/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/neotecknewts/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.2.0/f7873a2ebde246a45c2a8d6f3247108b4c88a879/okhttp-3.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f7873a2ebde246a45c2a8d6f3247108b4c88a879">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.2.0_6813d00e1bb7b84e1db11153fcb5a6dcb78d709a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/neotecknewts/.android/build-cache/7f657ddc5156de679629f6c2d56f403d27481354/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="9a6350134db98fb39e212ddca5f0bad9280e8f3f">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_6bbe83c220f4306ecb23338d316e6668082b0054/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="26.0.2"
-        sha1="cfad1d2d80eb6a46db5ea090783a3bde81692c12">
+        sha1="efc95255dd8b08a579d2929ab1418ab129fad6f2">
         <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_73867f58f59ab0d6a25b8bcc27e133940b8d1952/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/neotecknewts/.android/build-cache/bd07db713e92bb448df0438bd909b812c4997c4d/output/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.2"
+        sha1="86baa7d1051901fc1b8e7f596732f71f32175bde">
+        <dex dex="/cgm/codGasMundialGuerrero/1.Layers/1.1Presentation/1.1.2Mobile/app/build/intermediates/transforms/dex/debug/folders/1000/10/classes_649829aa6f0ce972e347d3f78b300002dbf50b4a/classes.dex" />
     </item>
 
 </items>

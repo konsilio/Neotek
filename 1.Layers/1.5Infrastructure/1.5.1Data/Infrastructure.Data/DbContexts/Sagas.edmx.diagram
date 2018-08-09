@@ -176,6 +176,12 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Requisicion" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_Usuario" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Usuario" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CCentroCosto" Width="1.5" PointX="0.75" PointY="4" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RequisicionProducto_CCentroCosto" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_Rol_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.UsuarioRol" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraProducto_CCentroCosto" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CCentroCosto_Empresa" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
