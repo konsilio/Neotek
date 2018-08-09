@@ -26,10 +26,17 @@ namespace Sagas.MainModule.Entidades
             this.Proveedores = new HashSet<Proveedor>();
             this.OrdenesCompra = new HashSet<OrdenCompra>();
             this.Requisiciones = new HashSet<Requisicion>();
+            this.Almacen = new HashSet<Almacen>();
+            this.AlmacenGas = new HashSet<AlmacenGas>();
+            this.UnidadAlmacenGas = new HashSet<UnidadAlmacenGas>();
+            this.Camioneta = new HashSet<Camioneta>();
+            this.EstacionCarburacion = new HashSet<EstacionCarburacion>();
+            this.Pipa = new HashSet<Pipa>();
+            this.CamionetaCilindro = new HashSet<CamionetaCilindro>();
         }
     
         public short IdEmpresa { get; set; }
-        public byte IdAdministracionCentral { get; set; }
+        public bool EsAdministracionCentral { get; set; }
         public string NombreComercial { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public byte IdPais { get; set; }
@@ -63,7 +70,6 @@ namespace Sagas.MainModule.Entidades
         public string UrlLogotipoMenu { get; set; }
         public string UrlLogotipoLogin { get; set; }
     
-        public virtual AdministracionCentral AdministracionCentral { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
         public virtual EstadosRepublica EstadosRepublica { get; set; }
@@ -84,5 +90,19 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<OrdenCompra> OrdenesCompra { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Requisicion> Requisiciones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Almacen> Almacen { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGas> AlmacenGas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UnidadAlmacenGas> UnidadAlmacenGas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Camioneta> Camioneta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EstacionCarburacion> EstacionCarburacion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pipa> Pipa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CamionetaCilindro> CamionetaCilindro { get; set; }
     }
 }

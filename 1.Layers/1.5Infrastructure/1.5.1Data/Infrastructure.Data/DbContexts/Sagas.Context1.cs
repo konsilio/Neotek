@@ -48,5 +48,21 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<OrdenCompraEstatus> OrdenCompraEstatus { get; set; }
         public virtual DbSet<ProductoAsociado> ProductoAsociado { get; set; }
         public virtual DbSet<OrdenCompraProducto> OrdenCompraProducto { get; set; }
+        public virtual DbSet<Almacen> Almacen { get; set; }
+        public virtual DbSet<AlmacenGasDescarga> AlmacenGasDescarga { get; set; }
+        public virtual DbSet<AlmacenGasDescargaFoto> AlmacenGasDescargaFoto { get; set; }
+        public virtual DbSet<AlmacenGas> AlmacenGas { get; set; }
+        public virtual DbSet<UnidadAlmacenGas> UnidadAlmacenGas { get; set; }
+        public virtual DbSet<CAlmacenGasCilindro> CAlmacenGasCilindro { get; set; }
+        public virtual DbSet<TipoUnidadAlmacenGas> TipoUnidadAlmacenGas { get; set; }
+        public virtual DbSet<TipoMedidorUnidadAlmacenGas> TipoMedidorUnidadAlmacenGas { get; set; }
+        public virtual DbSet<Camioneta> Camioneta { get; set; }
+        public virtual DbSet<EstacionCarburacion> EstacionCarburacion { get; set; }
+        public virtual DbSet<CFormaPago> CFormaPago { get; set; }
+        public virtual DbSet<Pipa> Pipa { get; set; }
+        public virtual DbSet<ImagenDe> ImagenDe { get; set; }
+        public virtual DbSet<AlmacenEntradaProducto> AlmacenEntradaProducto { get; set; }
+        public virtual DbSet<AlmacenSalidaProducto> AlmacenSalidaProducto { get; set; }
+        public virtual DbSet<CamionetaCilindro> CamionetaCilindro { get; set; }
     }
 }

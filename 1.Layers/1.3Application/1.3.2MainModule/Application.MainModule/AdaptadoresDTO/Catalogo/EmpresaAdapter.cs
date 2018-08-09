@@ -15,7 +15,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             EmpresaDTO empresaDto = new EmpresaDTO()
             {
                 IdEmpresa = empresa.IdEmpresa,
-                IdAdministracionCentral = empresa.IdAdministracionCentral,
+                EsAdministracionCentral = empresa.EsAdministracionCentral,
                 NombreComercial = empresa.NombreComercial,
                 FechaRegistro = empresa.FechaRegistro,
                 IdPais = empresa.IdPais,
@@ -62,7 +62,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             Empresa empresa = new Empresa()
             {
                 IdEmpresa = empresadto.IdEmpresa,
-                IdAdministracionCentral = empresadto.IdAdministracionCentral,
+                EsAdministracionCentral = empresadto.EsAdministracionCentral,
                 NombreComercial = empresadto.NombreComercial,
                 FechaRegistro = empresadto.FechaRegistro,
                 IdPais = empresadto.IdPais,
@@ -102,47 +102,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             List<Empresa> empreas = empresasDTO.ToList().Select(x => FromDTO(x)).ToList();
             return empreas;
-        }
-        public static Empresa FromAdministracionCentral(AdministracionCentral ac)
-        {
-            Empresa empresa = new Empresa()
-            {
-                IdEmpresa = -2,
-                IdAdministracionCentral = ac.IdAdministracionCentral,
-                NombreComercial = ac.NombreComercial,
-                FechaRegistro = ac.FechaRegistro,
-                IdPais = ac.IdPais,
-                IdEstadoRep = ac.IdEstadoRep,
-                EstadoProvincia = ac.EstadoProvincia,
-                Municipio = ac.Municipio,
-                CodigoPostal = ac.CodigoPostal,
-                Colonia = ac.Colonia,
-                Calle = ac.Calle,
-                NumExt = ac.NumExt,
-                NumInt = ac.NumInt,
-                Telefono1 = ac.Telefono1,
-                Telefono2 = ac.Telefono2,
-                Telefono3 = ac.Telefono3,
-                Celular1 = ac.Celular1,
-                Celular2 = ac.Celular2,
-                Celular3 = ac.Celular3,
-                Email1 = ac.Email1,
-                Email2 = ac.Email2,
-                Email3 = ac.Email3,
-                SitioWeb1 = ac.SitioWeb1,
-                SitioWeb2 = ac.SitioWeb2,
-                SitioWeb3 = ac.SitioWeb3,
-                Rfc = ac.Rfc,
-                RazonSocial = ac.RazonSocial,             
-                UrlLogotipoMenu = ac.UrlLogotipoMenu,
-                UrlLogotipoLogin = ac.UrlLogotipoLogin
-            };
-            return empresa;
-        }
-        public static List<Empresa> FromAdministracionCentral(List<AdministracionCentral> lac)
-        {
-            List<Empresa> lEmpresas = lac.ToList().Select(x => FromAdministracionCentral(x)).ToList();
-            return lEmpresas;
-        }
+        }        
     }
 }

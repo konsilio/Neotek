@@ -14,5 +14,11 @@ namespace Application.MainModule.Flujos
         {
             return AutenticarServicio.AutenticarUsuario(autenticacionDto);
         }
+        public RespuestaAutenticacionMobileDto AutenticacionMobile(AutenticacionDto autenticacionDto)
+        {
+            return AutenticarServicio.AutenticarUsuarioMobile(autenticacionDto);
+          
+
+        }
     }
 }

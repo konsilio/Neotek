@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.Servicios.Mobile;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
@@ -19,10 +20,7 @@ namespace Application.MainModule.Servicios.Seguridad
             UsuarioAplicacionDto usuario;
             // Validamos si es un usuario de la administración central
             // y buscamos la existencia del usuario, validando su contraseña
-            if (autDto.IdEmpresa.Equals(-2))
-                usuario = AutenticarUsuarioAdminCentral(autDto);
-            else
-                usuario = AutenticarUsuarioDeEmpresa(autDto);
+            usuario = AutenticarUsuarioDeEmpresa(autDto);
 
             if (usuario.autenticado)
             {
@@ -41,6 +39,7 @@ namespace Application.MainModule.Servicios.Seguridad
 
                 return new RespuestaAutenticacionDto()
                 {
+                    IdUsuario = usuario.IdUsuario,
                     Exito = true,
                     Mensaje = "OK",
                     token = TokenGenerator.GenerateTokenJwt(claims, autDto.Password, Convert.ToInt32(min).ToString())
@@ -49,44 +48,48 @@ namespace Application.MainModule.Servicios.Seguridad
             else
                 return new RespuestaAutenticacionDto()
                 {
+                    IdUsuario = 0,
                     Exito = false,
                     Mensaje = Error.S0003,
                     token = string.Empty
                 };
-        }
-
-        private static UsuarioAplicacionDto AutenticarUsuarioAdminCentral(AutenticacionDto autDto)
+        } 
+        
+        public static RespuestaAutenticacionMobileDto AutenticarUsuarioMobile(AutenticacionDto autDto)
         {
-            var usuario = new UsuarioACDataAccess().Buscar(autDto.Usuario, autDto.Password);
-            if (usuario != null)
-                return new UsuarioAplicacionDto()
-                {
-                    autenticado = true,
-                    AdminCentral = true,
-                    SuperUsuario = usuario.SuperAdmin,
-                    IdUsuario = usuario.IdUsuarioAC,
-                    IdRol = usuario.IdRol,
-                };
-            else
-                return new UsuarioAplicacionDto()
-                {
-                    autenticado = false,
-                };
-        }
+            var aut = AutenticarUsuario(autDto);
+            return new RespuestaAutenticacionMobileDto()
+            {
+                Exito = aut.Exito,
+                Mensaje = aut.Mensaje,
+                token = aut.token,
+                listMenu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : null,
+            };
+
+        
+        }       
 
         private static UsuarioAplicacionDto AutenticarUsuarioDeEmpresa(AutenticacionDto autDto)
         {
             var usuario = new UsuarioDataAccess().Buscar(autDto.IdEmpresa, autDto.Usuario, autDto.Password);
             if (usuario != null)
-                return new UsuarioAplicacionDto()
+            {
+                var autUsuario =  new UsuarioAplicacionDto()
                 {
                     autenticado = true,
-                    AdminCentral = false,
-                    SuperUsuario = false,
+                    SuperUsuario = usuario.EsSuperAdmin,
                     IdEmpresa = usuario.IdEmpresa,
                     IdUsuario = usuario.IdUsuario,
-                    IdRol = usuario.IdRol,
+                    IdRol = usuario.IdRol,                    
                 };
+
+                if (usuario.EsAdministracionCentral)
+                    autUsuario.AdminCentral = true;
+                else
+                    autUsuario.AdminCentral = false;
+
+                return autUsuario;
+            }
             else
                 return new UsuarioAplicacionDto()
                 {

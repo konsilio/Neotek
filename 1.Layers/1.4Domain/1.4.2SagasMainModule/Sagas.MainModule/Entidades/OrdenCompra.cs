@@ -17,7 +17,10 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OrdenCompra()
         {
-            this.OrdenCompraProducto = new HashSet<OrdenCompraProducto>();
+            this.Productos = new HashSet<OrdenCompraProducto>();
+            this.AlmacenGasDescarga = new HashSet<AlmacenGasDescarga>();
+            this.AlmacenGasDescarga1 = new HashSet<AlmacenGasDescarga>();
+            this.EntradasAAlmacenMercancias = new HashSet<AlmacenEntradaProducto>();
         }
     
         public int IdOrdenCompra { get; set; }
@@ -41,6 +44,12 @@ namespace Sagas.MainModule.Entidades
         public virtual OrdenCompraEstatus OrdenCompraEstatus { get; set; }
         public virtual Requisicion Requisicion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrdenCompraProducto> OrdenCompraProducto { get; set; }
+        public virtual ICollection<OrdenCompraProducto> Productos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasDescarga> AlmacenGasDescarga { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasDescarga> AlmacenGasDescarga1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenEntradaProducto> EntradasAAlmacenMercancias { get; set; }
     }
 }

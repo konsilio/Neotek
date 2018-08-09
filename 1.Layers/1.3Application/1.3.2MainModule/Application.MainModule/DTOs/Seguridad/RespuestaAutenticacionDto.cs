@@ -11,5 +11,6 @@ namespace Application.MainModule.DTOs.Seguridad
     {
         //public string token { get; set; }
         public new string token { get; set; }
+        public int IdUsuario { get; set; }
     }
 }

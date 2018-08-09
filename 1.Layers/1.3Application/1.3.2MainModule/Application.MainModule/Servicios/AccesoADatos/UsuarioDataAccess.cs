@@ -31,5 +31,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.Password.Equals(password)
                                                          && x.Activo);
         }
+        public Usuario Buscar(int idUsuario)
+        {
+            return uow.Repository<Usuario>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
+                                                         && x.Activo);
+        }
     }
 }

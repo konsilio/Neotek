@@ -238,6 +238,7 @@
     <Compile Include="Controllers\CatalogosController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SeguridadController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\ValidateModelAttribute.cs" />
@@ -285,6 +286,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\WebApi.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -9,7 +9,7 @@ namespace Application.MainModule.DTOs.Catalogo
     public class EmpresaDTO
     {
         public short IdEmpresa { get; set; }
-        public byte IdAdministracionCentral { get; set; }
+        public bool EsAdministracionCentral { get; set; }
         public string NombreComercial { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public byte IdPais { get; set; }
