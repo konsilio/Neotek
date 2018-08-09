@@ -16,11 +16,13 @@ namespace DS.MainModule.Controllers
     {
         private Seguridad _seguridad;
         private Catalogos _catalogos;
+        private Mobile _mobile;
 
         public MobileController()
         {
             _seguridad = new Seguridad();
             _catalogos = new Catalogos();
+            _mobile = new Mobile();
         }
 
         [Route("servicio/disponible")]
@@ -34,6 +36,12 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostLogin(AutenticacionDto autenticacionDto)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _seguridad.AutenticacionMobile(autenticacionDto));
+        }
+
+        [Route("lista/ordenes/compra")]
+        public HttpResponseMessage GetListaOrdenesCompra(short IdEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _mobile.ConsultarOrdenesCompra(IdEmpresa));
         }
 
     }
