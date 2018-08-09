@@ -39,15 +39,16 @@ public class MenuActivity extends AppCompatActivity {
         menu = new ArrayList<>();
         menu.add("Iniciar Descarga");
         menu.add("Finalizar Descarga");
-
+        menu.add("Inventario General");
+        menu.add("Ordenes de compra");
 
 
         MenuAdapter adapter = new MenuAdapter(menu);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.HORIZONTAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
-
+        //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.HORIZONTAL);
+        DividerItemDecoration decoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.HORIZONTAL                                                                                                                           );
+        recyclerView.addItemDecoration(decoration);
 
 
 

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -45,6 +46,13 @@ public class IniciarDescargaActivity extends AppCompatActivity {
         spinnerMedidorAlmacen = (Spinner) findViewById(R.id.spinner_medidor_almacen);
         spinnerMedidorTractor = (Spinner) findViewById(R.id.spinner_medidor_tractor);
 
+        String[] ordenes = {"OC1", "OC2"};
+        String[] medidores = {"Rotogate", "Magnatel"};
+
+
+        spinnerOrdenCompra.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
+        spinnerMedidorAlmacen.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
+        spinnerMedidorTractor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
 
         final Button buttonRegistrar = (Button) findViewById(R.id.registrar_button);
         buttonRegistrar.setOnClickListener(new View.OnClickListener() {

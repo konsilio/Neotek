@@ -48,6 +48,7 @@
     <string name="fecha">Fecha</string>
     <string name="fecha_embarque">Fecha de embarque</string>
     <string name="seleccionar_fecha">Seleccione fecha...</string>
+    <string name="abr_cantidad">Cant.</string>
     <string name="cantidad">Cantidad</string>
     <string name="abr_unidad_medida">UM</string>
     <string name="precio">Precio</string>
@@ -55,7 +56,7 @@
     <string name="subtotal">Subtotal</string>
     <string name="iva">IVA</string>
     <string name="total">Total</string>
-    <string name="porcentaje_desc">% Descuento</string>
+    <string name="abr_porcentaje_desc">% Desc.</string>
 
     <string name="empty_field">Hay campos vacios</string>
 

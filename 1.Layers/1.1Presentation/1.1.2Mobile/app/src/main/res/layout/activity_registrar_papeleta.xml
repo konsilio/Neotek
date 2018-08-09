@@ -26,6 +26,15 @@
                 android:textSize="25dp"
                 android:textStyle="italic" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/spinner_num_compra"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="25dp" />
+
             <Spinner
                 android:id="@+id/spinner_orden_compra"
                 android:layout_width="match_parent"
@@ -132,6 +141,15 @@
                     android:textColor="@color/colorTextLogin"/>
             </android.support.design.widget.TextInputLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/nombre_expedidor"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="25dp" />
+
             <Spinner
                 android:id="@+id/spinner_expedidor"
                 android:layout_width="match_parent"
@@ -139,6 +157,15 @@
                 android:textSize="25dp"
                 android:paddingBottom="10dp"
                 android:textColor="@color/colorTextLogin"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/nombre_porteador"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="25dp" />
 
             <Spinner
                 android:id="@+id/spinner_porteador"

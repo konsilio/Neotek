@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -39,6 +40,14 @@ public class FinalizarDescargaActivity extends AppCompatActivity {
 
         linearLayoutTanque.setVisibility(View.GONE);
         textViewTitulo.setText(R.string.title_finalizar_descarga);
+
+        String[] ordenes = {"OC1", "OC2"};
+        String[] medidores = {"Rotogate", "Magnatel"};
+
+
+        spinnerOrdenCompra.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
+        spinnerMedidorAlmacen.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
+        spinnerMedidorTractor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
 
 
         final Button buttonRegistrar = (Button) findViewById(R.id.registrar_button);

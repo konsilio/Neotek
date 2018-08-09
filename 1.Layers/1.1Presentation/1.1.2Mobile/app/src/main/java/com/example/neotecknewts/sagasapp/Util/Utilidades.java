@@ -9,6 +9,10 @@ import android.support.v7.app.AlertDialog;
 
 import com.example.neotecknewts.sagasapp.R;
 
+import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +90,19 @@ public class Utilidades {
         }
 
         return listPermissionsNeeded;
+    }
+    public static String getHash(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance( "SHA-256" );
+        String text = password;
+
+        // Change this to UTF-16 if needed
+        md.update( text.getBytes( Charset.forName("UTF-8") ) );
+        byte[] digest = md.digest();
+
+        return bin2hex(digest);
+    }
+    static String bin2hex(byte[] data) {
+        return String.format("%0" + (data.length * 2) + 'x', new BigInteger(1, data)).toUpperCase();
     }
 }
 

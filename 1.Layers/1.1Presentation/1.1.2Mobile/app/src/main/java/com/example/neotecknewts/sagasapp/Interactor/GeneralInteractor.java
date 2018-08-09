@@ -6,4 +6,5 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 public interface GeneralInteractor {
     void webServiceCall();
+    void loadJSON();
 }

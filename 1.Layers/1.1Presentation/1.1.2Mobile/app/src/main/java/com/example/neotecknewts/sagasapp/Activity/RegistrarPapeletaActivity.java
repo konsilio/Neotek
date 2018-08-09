@@ -2,10 +2,15 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -78,6 +83,14 @@ public class RegistrarPapeletaActivity extends AppCompatActivity {
         editTextSello = (EditText) findViewById(R.id.input_sello);
         editTextValorCarga = (EditText) findViewById(R.id.input_valor_carga);
         editTextNombreResponsable = (EditText) findViewById(R.id.input_nombre_responsable);
+
+        String[] ordenes = {"OC1", "OC2"};
+        String[] expedidores = {"Expedidor1", "Expedidor2"};
+
+
+        spinnerOrdenCompra.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
+        spinnerExpedidor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, expedidores));
+        spinnerPorteador.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, expedidores));
 
         final ImageButton buttonFecha = (ImageButton) findViewById(R.id.imageBtnFecha);
         buttonFecha.setOnClickListener(new View.OnClickListener() {
@@ -168,8 +181,81 @@ public class RegistrarPapeletaActivity extends AppCompatActivity {
 
 
     public void onClickRegistrar(){
+        boolean empty = false;
+
+        String numeroEmbarque = editTextNumEmbarque.getText().toString();
+        String placasTractor = editTextPlacasTractor.getText().toString();
+        String nombreOperador = editTextNombreOperador.getText().toString();
+        String producto = editTextProducto.getText().toString();
+        String noTanque = editTextNumTanque.getText().toString();
+
+        String presTanque = editTextPresionTanque.getText().toString();
+        if (TextUtils.isDigitsOnly(presTanque)) {
+            if (presTanque.length() == 0) {
+                empty = true;
+            }
+        }
+
+        String capTanque = editTextCapTanque.getText().toString();
+            if (TextUtils.isDigitsOnly(capTanque)) {
+                if (capTanque.length() == 0) {
+                    empty = true;
+                }
+            }
+
+        String porcentTanque = editTextPorcentajeTanque.getText().toString();
+        if (TextUtils.isDigitsOnly(porcentTanque)) {
+            if (porcentTanque.length() == 0) {
+                empty = true;
+            }
+        }
+
+        String masa = editTextMasa.getText().toString();
+        if (TextUtils.isDigitsOnly(masa)) {
+            if (masa.length() == 0) {
+                empty = true;
+            }
+        }
+
+        String sello = editTextSello.getText().toString();
+        String nombreResponsable = editTextNombreResponsable.getText().toString();
+        String valorCarga = editTextValorCarga.getText().toString();
+        if (TextUtils.isDigitsOnly(valorCarga)) {
+            if (valorCarga.length() == 0) {
+                empty = true;
+            }
+        }
+
+        if(TextUtils.isEmpty(numeroEmbarque) || TextUtils.isEmpty(placasTractor) || TextUtils.isEmpty(nombreOperador)
+                || TextUtils.isEmpty(producto) || TextUtils.isEmpty(noTanque) || TextUtils.isEmpty(sello)
+                || TextUtils.isEmpty(nombreResponsable) || empty ){
+            showDialog(getResources().getString(R.string.empty_field));
+        }
 
     }
+
+    private void showDialog(String mensaje){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage(mensaje);
+        builder1.setCancelable(true);
+
+        builder1.setNegativeButton(
+                R.string.message_acept,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
+    public void startActivity(){
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        startActivity(intent);
+    }
+
 
     public void onClickLimpiar(){
         spinnerOrdenCompra.setSelection(0);

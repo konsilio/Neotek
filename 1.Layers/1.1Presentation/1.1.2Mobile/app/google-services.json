@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "744018811790",
+    "firebase_url": "https://sagas-23404.firebaseio.com",
+    "project_id": "sagas-23404",
+    "storage_bucket": "sagas-23404.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744018811790:android:8d36cc704e00ff24",
+        "android_client_info": {
+          "package_name": "com.example.neotecknewts.sagasapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744018811790-b3l1eh0nv3cnerpp09i6v2f1j74psjdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBjBP-10pNnH_6CctU2uPCyb296lHf_aw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

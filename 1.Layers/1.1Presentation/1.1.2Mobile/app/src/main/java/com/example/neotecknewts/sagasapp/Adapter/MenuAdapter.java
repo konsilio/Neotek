@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Activity.FinalizarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.IniciarDescargaActivity;
+import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaActivity;
+import com.example.neotecknewts.sagasapp.Activity.VistaOrdenCompraActivity;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.util.List;
@@ -68,16 +70,15 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         TextView textView = holder.nameTextView;
         textView.setText(menuItem);
         LinearLayout linearLayout = holder.linearLayout;
-        if (position <= 2) {
+        /*if (position <= 2) {
             linearLayout.setBackgroundColor(context.getResources().getColor(colores[position]));
         } else {
             linearLayout.setBackgroundColor(context.getResources().getColor(colores[position - 3]));
-        }
+        }*/
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if(position==0) {
                     Intent intent = new Intent(view.getContext(), IniciarDescargaActivity.class);
                     view.getContext().startActivity(intent);
@@ -86,6 +87,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     Intent intent = new Intent(view.getContext() , FinalizarDescargaActivity.class);
                     view.getContext().startActivity(intent);
 
+                }else if(position==2){
+                    Intent intent = new Intent(view.getContext() , RegistrarPapeletaActivity.class);
+                    view.getContext().startActivity(intent);
+                }
+                else if(position==3){
+                    Intent intent = new Intent(view.getContext() , VistaOrdenCompraActivity.class);
+                    view.getContext().startActivity(intent);
                 }
 
             }
