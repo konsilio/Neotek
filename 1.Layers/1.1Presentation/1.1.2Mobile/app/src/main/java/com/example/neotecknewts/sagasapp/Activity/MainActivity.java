@@ -55,12 +55,12 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
         mainPresenter = new MainPresenterImpl(this);
 
-        mainPresenter.getEmpresas();
+        //mainPresenter.getEmpresas();
 
-        String[] gaseras = /*{"Gasera 1", "Gasera 2"}; */new String[empresaDTOs.size()];
+        String[] gaseras = {"Gasera 1", "Gasera 2"}; /*new String[empresaDTOs.size()];
        for (int i =0; i<empresaDTOs.size(); i++){
             gaseras[i]=empresaDTOs.get(i).getNombreComercial();
-        }
+        }*/
 
 
         spinnerGaseras.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, gaseras));
