@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.UnitOfWork;
+
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,19 @@ namespace Application.MainModule.Servicios.AccesoADatos
         
         public List<OrdenCompra> Buscar(short idEmpresa, byte idOrdenComprEstatus)
         {
-            return uow.Repository<OrdenCompra>().Get(x => x.IdEmpresa.Equals(idEmpresa) 
-                                                        && x.Activo 
-                                                        && x.OrdenCompraEstatus.Equals(idOrdenComprEstatus))
-                                                        .ToList();
+            var productos = uow.Repository<OrdenCompraProducto>().Get(x => x.EsGas && x.EsActivoVenta);
+
+
+             productos = uow.Repository<OrdenCompraProducto>().Get(x => x.EsGas && x.EsActivoVenta 
+                                                                     && x.OrdenCompra.Activo
+                                                                     && x.OrdenCompra.IdEmpresa.Equals(idEmpresa)
+                                                                     && x.OrdenCompra.OrdenCompraEstatus.Equals(idOrdenComprEstatus));
+            List<OrdenCompra> ordencompra = new List<OrdenCompra>();
+            foreach (OrdenCompraProducto o in productos)
+            {
+                ordencompra.Add(o.OrdenCompra);
+            }
+            return ordencompra;
         }
 
         public List<OrdenCompra> BuscarTodos()

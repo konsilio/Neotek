@@ -38,6 +38,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _seguridad.AutenticacionMobile(autenticacionDto));
         }
 
+        [AllowAnonymous]
         [Route("lista/ordenes/compra")]
         public HttpResponseMessage GetListaOrdenesCompra(short IdEmpresa)
         {
