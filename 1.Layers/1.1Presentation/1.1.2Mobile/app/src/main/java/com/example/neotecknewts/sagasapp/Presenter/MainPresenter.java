@@ -1,6 +1,8 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
+import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
+import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +14,9 @@ import java.util.List;
 public interface MainPresenter {
 
     void getEmpresas();
-    void doLogin();
+    void doLogin(UsuarioLoginDTO usuarioLoginDTO);
 
     void onSuccessGetEmpresas(List<EmpresaDTO> empresaDTOs);
-    void onSuccessLogin();
+    void onSuccessLogin(UsuarioDTO usuarioDTO);
 
 }

@@ -4,6 +4,8 @@ import com.example.neotecknewts.sagasapp.Activity.MainView;
 import com.example.neotecknewts.sagasapp.Interactor.GeneralInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.GeneralInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
+import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
+import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +24,12 @@ public class MainPresenterImpl implements MainPresenter {
     }
     @Override
     public void getEmpresas() {
-        interactor.loadJSON();
+        interactor.getEmpresasLogin();
     }
 
     @Override
-    public void doLogin() {
-        interactor.webServiceCall();
+    public void doLogin(UsuarioLoginDTO usuarioLoginDTO) {
+        interactor.postLogin(usuarioLoginDTO);
 
     }
 
@@ -37,8 +39,8 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void onSuccessLogin() {
-        mainView.onSuccessLogin();
+    public void onSuccessLogin(UsuarioDTO usuarioDTO) {
+        mainView.onSuccessLogin(usuarioDTO);
     }
 
 

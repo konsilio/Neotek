@@ -65,6 +65,8 @@
     <string name="message_cancel">Cancelar</string>
     <string name="message_acept">Aceptar</string>
     <string name="invalid_email">El correo electronico no es valido</string>
+    <string name="usuario_incorrecto">El usuario y la contraseña no coinciden</string>
+    <string name="login_sucess">Usuario correcto</string>
     <string name="message_continuar">Una vez iniciado el proceso no es posible regresar, ¿esta seguro de continuar?</string>
 
     <string name="punto">.</string>

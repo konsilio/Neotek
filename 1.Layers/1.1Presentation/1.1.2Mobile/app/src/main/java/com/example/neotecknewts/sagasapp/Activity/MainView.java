@@ -1,6 +1,7 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
+import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,5 +12,5 @@ import java.util.List;
 
 public interface MainView {
     void onSuccessGetEmpresa(List<EmpresaDTO> empresaDTOs);
-    void onSuccessLogin();
+    void onSuccessLogin(UsuarioDTO usuarioDTO);
 }
