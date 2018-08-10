@@ -27,7 +27,7 @@ namespace Application.MainModule.DTOs.Compras
         public string ProveedorCelular1 { get; set; }
         public string ProveedorCelular2 { get; set; }
         public string ProveedorCelular3 { get; set; }
-        public byte[] NumOrdenCompra { get; set; }
+        public string NumOrdenCompra { get; set; }
         public DateTime FechaRequisicion { get; set; }
         public Nullable<decimal> SubtotalSinIva { get; set; }
         public Nullable<decimal> Iva { get; set; }

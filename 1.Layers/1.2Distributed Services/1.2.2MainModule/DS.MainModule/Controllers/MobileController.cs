@@ -39,7 +39,7 @@ namespace DS.MainModule.Controllers
         }
 
         [AllowAnonymous]
-        [Route("lista/ordenes/compra")]
+        [Route("lista/ordenes/compra/{IdEmpresa}")]
         public HttpResponseMessage GetListaOrdenesCompra(short IdEmpresa)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _mobile.ConsultarOrdenesCompra(IdEmpresa));

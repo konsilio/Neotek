@@ -20,12 +20,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
         
         public List<OrdenCompra> Buscar(short idEmpresa, byte idOrdenComprEstatus)
         {
-            return uow.Repository<OrdenCompra>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                                  && x.Activo
+            return uow.Repository<OrdenCompra>().Get(x => x.Activo
                                                                   && x.EsGas
-                                                                  && x.EsActivoVenta
-                                                                  && x.OrdenCompraEstatus.Equals(idOrdenComprEstatus))
+                                                                  && x.EsActivoVenta 
+                                                                  && x.IdEmpresa.Equals(idEmpresa)
+                                                                  && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus))
                                                                   .ToList();
+
+            //return uow.Repository<OrdenCompra>().GetAll().ToList();
         }
 
         public List<OrdenCompra> BuscarTodos()
