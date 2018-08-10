@@ -27,7 +27,7 @@ public class EmpresaDTO {
     private byte IdPais;
 
     @SerializedName("IdEstadoRep")
-    private byte IdEstadoRep;
+    private Byte IdEstadoRep;
 
     @SerializedName("EstadoProvincia")
     private String EstadoProvincia;

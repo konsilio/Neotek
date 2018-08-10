@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import com.example.neotecknewts.sagasapp.Adapter.MenuAdapter;
+import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
 
-    ArrayList<String> menu;
+    ArrayList<MenuDTO> menu;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,10 +38,19 @@ public class MenuActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         menu = new ArrayList<>();
-        menu.add("Iniciar Descarga");
+/*        menu.add("Iniciar Descarga");
         menu.add("Finalizar Descarga");
         menu.add("Inventario General");
-        menu.add("Ordenes de compra");
+        menu.add("Ordenes de compra");*/
+
+        Bundle extras = getIntent().getExtras();
+
+
+        if (extras != null) {
+            menu =  (ArrayList<MenuDTO>) extras.getSerializable("lista");
+            menu.get(0).getName();
+            // and get whatever type user account id is
+        }
 
 
         MenuAdapter adapter = new MenuAdapter(menu);

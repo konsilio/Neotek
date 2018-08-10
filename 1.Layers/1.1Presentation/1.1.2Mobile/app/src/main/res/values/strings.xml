@@ -55,6 +55,7 @@
     <string name="importe">Importe</string>
     <string name="subtotal">Subtotal</string>
     <string name="iva">IVA</string>
+    <string name="ips">IPS</string>
     <string name="total">Total</string>
     <string name="abr_porcentaje_desc">% Desc.</string>
 
@@ -67,7 +68,12 @@
     <string name="invalid_email">El correo electronico no es valido</string>
     <string name="usuario_incorrecto">El usuario y la contraseña no coinciden</string>
     <string name="login_sucess">Usuario correcto</string>
+    <string name="usuario_sin_permisos">No tienes permisos para usar la aplicacion</string>
     <string name="message_continuar">Una vez iniciado el proceso no es posible regresar, ¿esta seguro de continuar?</string>
+
+    <string name="message_cargando">Cargando...</string>
+    <string name="message_datos_obtenidos">Los datos se obtuvieron correctamente...</string>
+    <string name="error_conexion">Error de conexion</string>
 
     <string name="punto">.</string>
     <string name="porcentaje">%</string>

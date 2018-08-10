@@ -2,11 +2,13 @@ package com.example.neotecknewts.sagasapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by neotecknewts on 09/08/18.
  */
 
-public class MenuDTO {
+public class MenuDTO implements Serializable{
     @SerializedName("headerMenu")
     private String headerMenu;
 
