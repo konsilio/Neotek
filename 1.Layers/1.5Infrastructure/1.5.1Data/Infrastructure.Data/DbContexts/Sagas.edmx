@@ -4369,7 +4369,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="IdProveedor" Type="Int32" Nullable="false" />
           <Property Name="IdCentroCosto" Type="Int32" Nullable="false" />
           <Property Name="IdCuentaContable" Type="Int32" Nullable="false" />
-          <Property Name="NumOrdenCompra" Type="String" Nullable="false" MaxLength="50" FixedLength="false" />
+          <Property Name="NumOrdenCompra" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EsActivoVenta" Type="Boolean" Nullable="false" />
           <Property Name="EsGas" Type="Boolean" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />

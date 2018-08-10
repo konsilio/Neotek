@@ -24,12 +24,15 @@ namespace Application.MainModule.Servicios.Mobile
                     if(rol.AppCompraEntraGas)
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraEntraGas"]));
 
-                    //Aquí continua...
-                    //if (rol.AppCompraEntraGas)
-                    //    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraEntraGas"]));
+                    if (rol.AppCompraGasFinalizarDescarga)
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasFinalizarDescarga"]));
 
-                    //if (rol.AppCompraEntraGas)
-                    //    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraEntraGas"]));
+                    if (rol.AppCompraGasIniciarDescarga)
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasIniciarDescarga"]));
+
+                    if (rol.AppCompraVerOCompra)
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraVerOCompra"]));
+                  
 
                 }                
                 return lista;
