@@ -13,6 +13,10 @@ namespace Application.MainModule.Servicios.Mobile
 {
     public static class MenuServicio
     {
+        private static bool _AppCompraEntraGas = false;
+        private static bool _AppCompraGasFinalizarDescarga = false;
+        private static bool _AppCompraGasIniciarDescarga = false;
+        private static bool _AppCompraVerOCompra = false;
         public static List<MenuDto> Crear(int idUsuario)
         {
             List<MenuDto> lista = new List<MenuDto>();
@@ -21,17 +25,29 @@ namespace Application.MainModule.Servicios.Mobile
             {
                 foreach (Rol rol in usuario.Roles)
                 {
-                    if(rol.AppCompraEntraGas)
+                    if (rol.AppCompraEntraGas && !_AppCompraEntraGas)
+                    {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraEntraGas"]));
+                        _AppCompraEntraGas = true;
+                    }
 
-                    if (rol.AppCompraGasFinalizarDescarga)
+                    if (rol.AppCompraGasFinalizarDescarga && !_AppCompraGasFinalizarDescarga)
+                    { 
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasFinalizarDescarga"]));
+                        _AppCompraGasFinalizarDescarga = true;
+                    }
 
-                    if (rol.AppCompraGasIniciarDescarga)
+                    if (rol.AppCompraGasIniciarDescarga && !_AppCompraGasIniciarDescarga)
+                    {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasIniciarDescarga"]));
+                        _AppCompraGasIniciarDescarga = true;
+                    }
 
-                    if (rol.AppCompraVerOCompra)
+                    if (rol.AppCompraVerOCompra && !_AppCompraVerOCompra)
+                    {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraVerOCompra"]));
+                        _AppCompraVerOCompra = true;
+                    }
                   
 
                 }                
