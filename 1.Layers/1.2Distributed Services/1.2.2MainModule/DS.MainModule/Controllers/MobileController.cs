@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Application.MainModule.Flujos;
 using Application.MainModule.DTOs.Respuesta;
+using DS.MainModule.Results;
 
 namespace DS.MainModule.Controllers
 {
@@ -33,7 +34,7 @@ namespace DS.MainModule.Controllers
         [Route("login")]
         public HttpResponseMessage PostLogin(AutenticacionDto autenticacionDto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _seguridad.AutenticacionMobile(autenticacionDto));
+            return RespuestaHttp.crearRepuesta(_seguridad.AutenticacionMobile(autenticacionDto), Request);
         }
 
     }
