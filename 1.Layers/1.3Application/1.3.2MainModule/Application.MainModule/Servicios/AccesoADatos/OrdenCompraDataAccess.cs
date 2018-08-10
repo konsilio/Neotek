@@ -20,20 +20,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
         
         public List<OrdenCompra> Buscar(short idEmpresa, byte idOrdenComprEstatus)
         {
-            var productos = uow.Repository<OrdenCompraProducto>().Get(x => x.EsGas && x.EsActivoVenta);
-
-
-            //productos = uow.Repository<OrdenCompraProducto>().Get(x => x.EsGas && x.EsActivoVenta 
-            //                                                        && x.OrdenCompra.Activo
-            //                                                        && x.OrdenCompra.IdEmpresa.Equals(idEmpresa)
-            //                                                        && x.OrdenCompra.OrdenCompraEstatus.Equals(idOrdenComprEstatus));
-
-            List<OrdenCompra> ordencompra = new List<OrdenCompra>();
-            foreach (OrdenCompraProducto o in productos)
-            {
-                ordencompra.Add(o.OrdenCompra);
-            }
-            return ordencompra;
+            return uow.Repository<OrdenCompra>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                  && x.Activo
+                                                                  && x.EsGas
+                                                                  && x.EsActivoVenta
+                                                                  && x.OrdenCompraEstatus.Equals(idOrdenComprEstatus))
+                                                                  .ToList();
         }
 
         public List<OrdenCompra> BuscarTodos()
