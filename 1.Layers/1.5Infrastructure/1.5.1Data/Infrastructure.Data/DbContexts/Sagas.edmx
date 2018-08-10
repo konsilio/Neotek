@@ -598,7 +598,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdProveedor" Type="int" Nullable="false" />
           <Property Name="IdCentroCosto" Type="int" Nullable="false" />
           <Property Name="IdCuentaContable" Type="int" Nullable="false" />
-          <Property Name="NumOrdenCompra" Type="varbinary" MaxLength="25" Nullable="false" />
+          <Property Name="NumOrdenCompra" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EsActivoVenta" Type="bit" Nullable="false" />
+          <Property Name="EsGas" Type="bit" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
@@ -4367,7 +4369,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="IdProveedor" Type="Int32" Nullable="false" />
           <Property Name="IdCentroCosto" Type="Int32" Nullable="false" />
           <Property Name="IdCuentaContable" Type="Int32" Nullable="false" />
-          <Property Name="NumOrdenCompra" Type="Binary" Nullable="false" MaxLength="25" FixedLength="false" />
+          <Property Name="NumOrdenCompra" Type="String" Nullable="false" MaxLength="50" FixedLength="false" />
+          <Property Name="EsActivoVenta" Type="Boolean" Nullable="false" />
+          <Property Name="EsGas" Type="Boolean" Nullable="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
 
@@ -4387,7 +4391,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <NavigationProperty Name="Productos" Relationship="Sagas.MainModuleModel.FK_OrdenCompraProducto_OrdenCompra" FromRole="OrdenCompra" ToRole="OrdenCompraProducto" />
           <NavigationProperty Name="AlmacenGasDescarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasDescarga_OrdenCompra_Expedidor" FromRole="OrdenCompra" ToRole="AlmacenGasDescarga" />
           <NavigationProperty Name="AlmacenGasDescarga1" Relationship="Sagas.MainModuleModel.FK_AlmacenGasDescarga_OrdenCompra_Porteador" FromRole="OrdenCompra" ToRole="AlmacenGasDescarga" />
-          <NavigationProperty Name="EntradasAAlmacenMercancias" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_OrdenCompra" FromRole="OrdenCompra" ToRole="AlmacenEntradaProducto" />          
+          <NavigationProperty Name="EntradasAAlmacenMercancias" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_OrdenCompra" FromRole="OrdenCompra" ToRole="AlmacenEntradaProducto" />                    
           <!--<NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompraImporte_OrdenCompra" FromRole="OrdenCompraImporte" ToRole="OrdenCompra" />-->
         </EntityType>
         <EntityType Name="OrdenCompraProducto">
@@ -6120,6 +6124,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySetMapping Name="OrdenCompra">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompra">
               <MappingFragment StoreEntitySet="OrdenCompra">
+                <ScalarProperty Name="EsGas" ColumnName="EsGas" />
+                <ScalarProperty Name="EsActivoVenta" ColumnName="EsActivoVenta" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="NumOrdenCompra" ColumnName="NumOrdenCompra" />

@@ -30,7 +30,9 @@ namespace Sagas.MainModule.Entidades
         public int IdProveedor { get; set; }
         public int IdCentroCosto { get; set; }
         public int IdCuentaContable { get; set; }
-        public byte[] NumOrdenCompra { get; set; }
+        public string NumOrdenCompra { get; set; }
+        public bool EsActivoVenta { get; set; }
+        public bool EsGas { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public Nullable<decimal> SubtotalSinIva { get; set; }
