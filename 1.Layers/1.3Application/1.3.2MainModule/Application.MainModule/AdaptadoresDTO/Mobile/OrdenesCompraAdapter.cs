@@ -12,9 +12,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
    public static class OrdenesCompraAdapter
     {
-        public static RespuestaOrdenesCompraDTO ToDTO(OrdenCompra ordenCompra)
+        public static OrdenCompraDTO ToDTO(OrdenCompra ordenCompra)
         {
-            return new RespuestaOrdenesCompraDTO()
+            return new OrdenCompraDTO()
             {
                 IdOrdenCompra = ordenCompra.IdOrdenCompra,
                 NumOrdenCompra = ordenCompra.NumOrdenCompra,
@@ -44,7 +44,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return ordenCompraProducto.ToList().Select(x => ToDTO(x)).ToList();
         }
 
-        public static List<RespuestaOrdenesCompraDTO> ToDTO(List<OrdenCompra> listOrdenCompra)
+        public static List<OrdenCompraDTO> ToDTO(List<OrdenCompra> listOrdenCompra)
         {
             return listOrdenCompra.ToList().Select(x => ToDTO(x)).ToList();
         }

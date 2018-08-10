@@ -39,11 +39,10 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRepuesta(_seguridad.AutenticacionMobile(autenticacionDto), Request);
         }
 
-        [AllowAnonymous]
-        [Route("lista/ordenes/compra/{IdEmpresa}")]
+        [Route("lista/ordenes/compra")]
         public HttpResponseMessage GetListaOrdenesCompra(short IdEmpresa)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _mobile.ConsultarOrdenesCompra(IdEmpresa));
+            return RespuestaHttp.crearRepuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa), Request);
         }
 
     }

@@ -12,10 +12,9 @@ namespace Application.MainModule.Flujos
     public class Mobile
     {
 
-        public List<RespuestaOrdenesCompraDTO> ConsultarOrdenesCompra(short IdEmpresa)
+        public RespuestaOrdenesCompraDTO ConsultarOrdenesCompra(short IdEmpresa)
         {
            return OrdenesCompraServicio.Consultar(IdEmpresa);
-
         }
     }
 }

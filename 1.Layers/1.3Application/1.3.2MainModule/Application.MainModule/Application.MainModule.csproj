@@ -58,6 +58,7 @@
     <Compile Include="DTOs\Catalogo\AdministracionCentralDto.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
     <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
+    <Compile Include="DTOs\Mobile\OrdenCompraDTO.cs" />
     <Compile Include="DTOs\Mobile\ProductoDTO.cs" />
     <Compile Include="DTOs\Mobile\RespuestaOrdenesCompraDTO.cs" />
     <Compile Include="DTOs\Mobile\MenuDto.cs" />

@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Mobile;
-using Application.MainModule.DTOs.Compras;
+using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.Servicios.AccesoADatos;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,25 @@ namespace Application.MainModule.Servicios.Mobile
 {
    public static class OrdenesCompraServicio
     {
-        public static List<RespuestaOrdenesCompraDTO> Consultar(short idEmpresa)
+        public static RespuestaOrdenesCompraDTO Consultar(short idEmpresa)
         {
             var ordenCompraDataAccess = new OrdenCompraDataAccess();
-            return OrdenesCompraAdapter.ToDTO(ordenCompraDataAccess.Buscar(idEmpresa, OrdenCompraEstatusEnum.Proceso_compra));
+            var ordenes = OrdenesCompraAdapter.ToDTO(ordenCompraDataAccess.Buscar(idEmpresa, OrdenCompraEstatusEnum.Proceso_compra));
+            if(ordenes != null)
+                if(ordenes.Count > 0)
+                    return new RespuestaOrdenesCompraDTO()
+                    {
+                        Exito = true,
+                        Mensaje = "OK",
+                        OrdenesCompra = ordenes,
+                    };
+
+            return new RespuestaOrdenesCompraDTO()
+            {
+                Exito = false,
+                Mensaje = string.Format(Error.M0001, "ordenes de compra"),
+                OrdenesCompra = ordenes,
+            };
         }
     }
 }
