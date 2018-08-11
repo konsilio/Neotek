@@ -17,8 +17,7 @@
                 </div>
                 <div class="body" id="divNoRequi" runat="server" visible="false">
                     <div class="alert alert-success">
-                        <strong>
-                            <asp:Label ID="lblNoRequisicion" runat="server" Text="Hola" /></strong>
+                        <strong><asp:Label ID="lblNoRequisicion" runat="server" Text="Hola" /></strong>
                     </div>
                 </div>
                 <div class="row clearfix">
@@ -28,7 +27,7 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <asp:DropDownList ID="ddlEmpresas" runat="server" Visible="false" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged">
+                                            <asp:DropDownList ID="ddlEmpresas" runat="server" Visible="false" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged" AutoPostBack="true">
                                             </asp:DropDownList>
                                             <asp:Label ID="lblNombreEmpresa" runat="server" Text="Nombre de la empresa"></asp:Label>
                                         </div>
@@ -229,8 +228,57 @@
                                                         </asp:LinkButton>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                               <%--<% <asp:TemplateField Visible="false">
-                                                    <%--6 Almacen
+                                            </Columns>
+                                        </asp:GridView>
+                                        <asp:GridView runat="server" ID="gvProductosRevision" AutoGenerateColumns="false" CssClass="table table-hover" Visible="false" OnRowCommand="gvProductosRevision_RowCommand">
+                                            <Columns>
+                                                <asp:TemplateField>
+                                                    <%--0 Tipo de compra--%>
+                                                <headertemplate>
+                                                        <b>Tipo</b>
+                                                    </headertemplate>
+                                                <itemtemplate>
+                                                        <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto") %>' />
+                                                    </itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--1 Producto--%>
+                                                    <HeaderTemplate>
+                                                        <b>Producto</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Producto") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--2 Cantidad--%>
+                                                    <HeaderTemplate>
+                                                        <b>Cantidad</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("Cantidad") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--3 Unidad--%>
+                                                    <HeaderTemplate>
+                                                        <b>Unidad</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--4 Aplicacion--%>
+                                                    <HeaderTemplate>
+                                                        <b>Aplicación</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--6 Almacen--%>
                                                     <HeaderTemplate>
                                                         Almacen
                                                     </HeaderTemplate>
@@ -238,17 +286,17 @@
                                                         <asp:Label ID="lblAlmacen" runat="server" Text='<%# Bind("CantidadAlmacenActual") %>' />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField Visible="false">
-                                                    <%--7 Revision Fisica
+                                                <asp:TemplateField>
+                                                    <%--7 Revision Fisica--%>
                                                     <HeaderTemplate>
                                                         Revision Fisica
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:CheckBox ID="chbRevision" runat="server" Checked='<%# Bind("RevisionFisica") %>' />
+                                                        <asp:CheckBox ID="chbRevision" runat="server" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField Visible="false">
-                                                    <%--8 Autoriza Entreg
+                                                <%--<asp:TemplateField>
+                                                   8 Autoriza Entrega
                                                     <HeaderTemplate>
                                                         Autoriza entrega
                                                     </HeaderTemplate>
@@ -258,17 +306,17 @@
                                                         </div>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField Visible="false">
-                                                    <%--9 Requiere comprar
-                                                    <HeaderTemplate>
+                                                 <%--<asp:TemplateField >
+                                                    9 Requiere comprar
+                                                <headertemplate>
                                                         Requiere comprar
-                                                    </HeaderTemplate>
-                                                    <ItemTemplate>
+                                                    </headertemplate>
+                                                <itemtemplate>
                                                         <asp:Label ID="lblRequiereComp" runat="server"></asp:Label>
-                                                    </ItemTemplate>
+                                                    </itemtemplate>
                                                 </asp:TemplateField>
-                                                <asp:TemplateField Visible="false">
-                                                    <%--10 Autoriza Compra
+                                                <asp:TemplateField>
+                                                   10 Autoriza Compra
                                                     <HeaderTemplate>
                                                         Autoriza Compra
                                                     </HeaderTemplate>

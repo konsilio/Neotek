@@ -102,6 +102,20 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             };
             return requiscionDTO;
         }
+        public static Sagas.MainModule.Entidades.Requisicion FromDTO(RequisicionRevisionDTO _requisicion)
+        {
+            Sagas.MainModule.Entidades.Requisicion requiscionDTO = new Sagas.MainModule.Entidades.Requisicion()
+            {
+                IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
+                NumeroRequisicion = _requisicion.NumeroRequisicion,
+                MotivoCancelacion = _requisicion.MotivoCancelacion,
+                OpinionAlmacen =_requisicion.OpinionAlmacen,
+                IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
+                FechaRevision = new System.DateTime(),
+                Productos = RequisicionProductoAdapter.FromDTO(_requisicion.ListaProductos)
+            };
+            return requiscionDTO;
+        }
         #endregion
         #region ToEDTO
         public static RequisicionEDTO ToEDTO(Sagas.MainModule.Entidades.Requisicion _requisicion)
@@ -118,6 +132,21 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 FechaRequerida = _requisicion.FechaRequerida,
                 FechaRegistro = _requisicion.FechaRegistro,
                 ListaProductos = RequisicionProductoAdapter.ToDTO(_requisicion.Productos.ToList())
+            };
+            return requiscionEDTO;
+        }
+        public static RequisicionRevisionDTO ToRevDTO(Sagas.MainModule.Entidades.Requisicion _requisicion)
+        {
+            RequisicionRevisionDTO requiscionEDTO = new RequisicionRevisionDTO
+            {               
+                IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
+                IdEmpresa = _requisicion.IdEmpresa,
+                NumeroRequisicion = _requisicion.NumeroRequisicion,
+                MotivoRequisicion = _requisicion.MotivoRequisicion,
+                RequeridoEn = _requisicion.RequeridoEn,
+                IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
+                FechaRequerida = _requisicion.FechaRequerida,
+                ListaProductos = RequisicionProductoAdapter.ToRevDTO(_requisicion.Productos.ToList())
             };
             return requiscionEDTO;
         }
@@ -145,7 +174,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
         }
         #endregion
         #region FromEDTO
-        public static Sagas.MainModule.Entidades.Requisicion FromEDTO(RequisicionCrearDTO requiscionEDTO)
+        public static Sagas.MainModule.Entidades.Requisicion FromEDTO(RequisicionEDTO requiscionEDTO)
         {
             Sagas.MainModule.Entidades.Requisicion _requisicion = new Sagas.MainModule.Entidades.Requisicion();
             _requisicion.IdUsuarioSolicitante = requiscionEDTO.IdUsuarioSolicitante;
@@ -156,7 +185,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Creado;
             _requisicion.FechaRequerida = requiscionEDTO.FechaRequerida;
             _requisicion.FechaRegistro = requiscionEDTO.FechaRegistro;
-            //_requisicion.Productos = RequisicionProductoAdapter.FromDTO(requiscionEDTO.ListaProductos);
+            _requisicion.Productos = RequisicionProductoAdapter.FromDTO(requiscionEDTO.ListaProductos);
             return _requisicion;
         }
         public static Sagas.MainModule.Entidades.Requisicion FromEDTORevision(RequisicionEDTO requiscionEDTO)

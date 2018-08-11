@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Exceptions.MainModule.Validaciones;
+﻿using Exceptions.MainModule.Validaciones;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Web.MainModule.Requisicion.Model
+namespace Application.MainModule.DTOs.Requisicion
 {
-
-    public class RequisicionCrearDTO
+    public class RequisicionRevisionDTO 
     {
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "NumeroRequisicion")]
+        public string NumeroRequisicion { get; set; }
+
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdUsuarioSolicitante")]
         public int IdUsuarioSolicitante { get; set; }
@@ -35,8 +41,12 @@ namespace Web.MainModule.Requisicion.Model
         public System.DateTime FechaRequerida { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "FechaRegistro")]
-        public System.DateTime FechaRegistro { get; set; }
-        public List<RequisicionProductoGridDTO> ListaProductos { get; set; }
+        [Display(Name = "OpinionAlmacen")]
+        public string OpinionAlmacen { get; set; }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "MotivoCancelacion")]
+        public string MotivoCancelacion { get; set; }
+        public List<RequisicionProductoRevisionDTO> ListaProductos { get; set; }
     }
 }

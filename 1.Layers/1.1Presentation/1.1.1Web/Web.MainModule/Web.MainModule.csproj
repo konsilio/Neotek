@@ -151,7 +151,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Compras\Model\" />
     <Folder Include="OrdenCompra\Servisio\" />
-    <Folder Include="Requisicion\Model\RequisicionProductoDtos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\bundles\chartscripts.bundle.js" />
@@ -3873,6 +3872,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Requisicion\Model\ProductoDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionCrearDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionRevisionDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionProductoDtos\RequisicionProductoRevisionDTO.cs" />
     <Compile Include="Requisicion\Model\UsuarioDTO.cs" />
     <Compile Include="Compras\Vistas\Compras.aspx.cs">
       <DependentUpon>Compras.aspx</DependentUpon>

@@ -42,11 +42,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    //_req.RequisicionEstatus = new Sagas.MainModule.Entidades.RequisicionEstatus()
-                    //{
-                    //    IdRequisicionEstatus = 1,
-                    //    Estatus = "Iniciada"
-                    //};
                     uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Insert(_req);
                     uow.SaveChanges();
                     _respuesta.IdRequisicion = _req.IdRequisicion;

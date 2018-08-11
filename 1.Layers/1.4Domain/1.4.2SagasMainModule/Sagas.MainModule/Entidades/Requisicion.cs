@@ -38,8 +38,7 @@ namespace Sagas.MainModule.Entidades
         public Nullable<System.DateTime> FechaRevision { get; set; }
         public string MotivoCancelacion { get; set; }
         public Nullable<int> IdUsuarioAutorizacion { get; set; }
-        public Nullable<System.DateTime> FechaAutorizacion { get; set; }
-    
+        public Nullable<System.DateTime> FechaAutorizacion { get; set; }    
         public virtual RequisicionEstatus RequisicionEstatus { get; set; }
         public virtual Usuario Solicitante { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

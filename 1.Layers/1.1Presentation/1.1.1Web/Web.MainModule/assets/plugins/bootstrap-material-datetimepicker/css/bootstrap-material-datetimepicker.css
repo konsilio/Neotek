@@ -37,7 +37,7 @@
 .dtp .dtp-picker-time > .dtp-select-hour { cursor: pointer; }
 .dtp .dtp-picker-time > .dtp-select-minute { cursor: pointer; }
 
-.dtp .dtp-buttons { padding: 0 1em 1em 1em; text-align: right; }
+.dtp .dtp-buttons { /*padding: 0 1em 1em 1em; text-align: right;*/ }
 
 .dtp.hidden, .dtp .hidden { display: none; }
 .dtp .invisible { visibility: hidden; }

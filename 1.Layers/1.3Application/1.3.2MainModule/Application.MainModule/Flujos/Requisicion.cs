@@ -12,7 +12,7 @@ namespace Application.MainModule.Flujos
 {
     public class Requisicion
     {
-        public RespuestaRequisicionDto InsertRequisicionNueva(RequisicionCrearDTO _req)
+        public RespuestaRequisicionDto InsertRequisicionNueva(RequisicionEDTO _req)
         {            
             return RequisicionServicio.GuardarRequisicionNueva(_req);
         }
@@ -20,11 +20,11 @@ namespace Application.MainModule.Flujos
         {
             return RequisicionServicio.BuscarRequisicionPorIdEmpresa(idEmpresa);
         }
-        public RequisicionEDTO BuscarRequisicion(string numRequisicon)
+        public RequisicionRevisionDTO BuscarRequisicion(string numRequisicon)
         {
             return RequisicionServicio.BuscarRequisicion(numRequisicon);
         }
-        public RespuestaRequisicionDto ActualizarRequisicionRevision(RequisicionEDTO _req)
+        public RespuestaRequisicionDto ActualizarRequisicionRevision(RequisicionRevisionDTO _req)
         {
             return RequisicionServicio.UpdateRequisicionRevision(_req);
         }

@@ -1,10 +1,11 @@
 ﻿using Exceptions.MainModule.Validaciones;
-using System.ComponentModel.DataAnnotations;
 using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace Application.MainModule.DTOs.Requisicion
 {
     [Serializable]
-    public class RequisicionProductoGridDTO
+    public class RequisicionProductoRevisionDTO
     {
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdProducto")]
@@ -47,5 +48,17 @@ namespace Application.MainModule.DTOs.Requisicion
         [StringLength(500, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Aplicacion")]
         public string Aplicacion { get; set; }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "RevisionFisica")]
+        public bool RevisionFisica { get; set; }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "CantidadAlmacenActual")]
+        public decimal CantidadAlmacenActual  { get; set;   }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "CantidadAComprar")]
+        public decimal CantidadAComprar { get; set; }
     }
 }

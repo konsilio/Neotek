@@ -31,6 +31,7 @@ namespace Web.MainModule.Agente
         public RequisicionEDTO _requisicionEDTO;
         public List<UsuarioDTO> _listUsuarios;
         public List<ProductoDTO> _listProductos;
+        public RequisicionRevisionDTO _requisicionRevisionDTO;
 
         public AgenteServicios()
         {
@@ -190,12 +191,12 @@ namespace Web.MainModule.Agente
         }
         #endregion
         #region Requisicion
-        public void GuardarRequisicon(RequisicionCrearDTO _requi, string token)
+        public void GuardarRequisicon(RequisicionEDTO _requi, string token)
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["PostRequisicion"];
             SaveRequisicon(_requi, token).Wait();
         }
-        private async Task SaveRequisicon(RequisicionCrearDTO _requi, string token)
+        private async Task SaveRequisicon(RequisicionEDTO _requi, string token)
         {
             using (var client = new HttpClient())
             {
@@ -225,7 +226,7 @@ namespace Web.MainModule.Agente
                 _respuestaRequisicion = resp;
             }
         }
-        public void ActualizarRequisicionRevision(RequisicionEDTO _requi, string token)
+        public void ActualizarRequisicionRevision(RequisicionRevisionDTO _requi, string token)
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["PutActulizarRevision"];
             UpdateRequisicon(_requi, token).Wait();
@@ -248,6 +249,37 @@ namespace Web.MainModule.Agente
                 try
                 {
                     HttpResponseMessage response = await client.PostAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaRequisicionDto>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaRequisicion = resp;
+            }
+        }
+
+        private async Task UpdateRequisicon(RequisicionRevisionDTO _requi, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaRequisicionDto resp = new RespuestaRequisicionDto();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaRequisicionDto>();
                     else
@@ -307,7 +339,7 @@ namespace Web.MainModule.Agente
         {
             using (var client = new HttpClient())
             {
-                RequisicionEDTO emp = new RequisicionEDTO();
+                RequisicionRevisionDTO emp = new RequisicionRevisionDTO();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -315,7 +347,7 @@ namespace Web.MainModule.Agente
                 {
                     HttpResponseMessage response = await client.GetAsync(ApiRequisicion + numReq.ToString()).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        emp = await response.Content.ReadAsAsync<RequisicionEDTO>();
+                        emp = await response.Content.ReadAsAsync<RequisicionRevisionDTO>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -324,15 +356,14 @@ namespace Web.MainModule.Agente
                 }
                 catch (Exception)
                 {
-                    emp = new RequisicionEDTO() { IdRequisicionEstatus = 0 };
+                    emp = new RequisicionRevisionDTO() { IdRequisicionEstatus = 0 };
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                _requisicionEDTO = emp;
+                _requisicionRevisionDTO = emp;
             }
            
         }
-
         public void BuscarProductos(short idEmpresa, string tkn)
         {
             this.ApiProducto = ConfigurationManager.AppSettings["GetListaProductos"];

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Exceptions.MainModule.Validaciones;
+﻿using Exceptions.MainModule.Validaciones;
 using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace Web.MainModule.Requisicion.Model
 {
@@ -51,6 +48,5 @@ namespace Web.MainModule.Requisicion.Model
         [StringLength(500, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Aplicacion")]
         public string Aplicacion { get; set; }
-
     }
 }

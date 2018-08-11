@@ -20,6 +20,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string R0006 = "La lista de '{0}' debe contener al menos un elemento";
         public const string R0007 = "Debes agregar al menos un producto";
         public const string R0008 = "No se puede exceder la cantidad de {2}";
+        public const string R0009 = "La requiscion no se actualizo correctamente";
 
     }
 }

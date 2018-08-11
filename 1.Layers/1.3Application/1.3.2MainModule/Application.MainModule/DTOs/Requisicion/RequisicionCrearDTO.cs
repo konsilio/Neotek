@@ -1,13 +1,11 @@
-﻿using Exceptions.MainModule.Validaciones;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Exceptions.MainModule.Validaciones;
+using System;
 
 namespace Application.MainModule.DTOs.Requisicion
 {
+
     public class RequisicionCrearDTO
     {
         [Required(ErrorMessage = Error.R0002)]
@@ -38,10 +36,7 @@ namespace Application.MainModule.DTOs.Requisicion
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "FechaRegistro")]
-        public System.DateTime FechaRegistro { get; set; }
-
-        [EnsureMinimumElements(1, ErrorMessage = Error.R0006)]
-        [Display(Name = "ListaProductos")]
-        public List<RequisicionProductoCrearDTO> ListaProductos { get; set; }
+        public System.DateTime FechaRegistro { get; set; }        
+        public List<RequisicionProductoGridDTO> ListaProductos { get; set; }
     }
 }

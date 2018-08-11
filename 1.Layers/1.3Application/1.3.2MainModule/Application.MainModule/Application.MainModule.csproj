@@ -69,6 +69,8 @@
     <Compile Include="DTOs\Requisicion\RequisicionEDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionProductoCrearDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionProductoDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionProductoRevisionDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionRevisionDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaDto.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaRequisicionDto.cs" />
     <Compile Include="DTOs\Seguridad\AutenticacionDto.cs" />

@@ -22,7 +22,7 @@ namespace DS.MainModule.Controllers
         }
        
         [Route("guardar/requisicion")]
-        public HttpResponseMessage PostRequisicion(RequisicionCrearDTO req)
+        public HttpResponseMessage PostRequisicion(RequisicionEDTO req)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.InsertRequisicionNueva(req));   
         }
@@ -36,12 +36,12 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.BuscarRequisicion(numRequi));
         }
-        [Route("update/requisicion")]
-        public HttpResponseMessage PutActulizarRevision(RequisicionEDTO req)
+        [Route("update/requisicion/revision")]
+        public HttpResponseMessage PutActulizarRevision(RequisicionRevisionDTO req)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.ActualizarRequisicionRevision(req));
         }
-        [Route("update/requisicion")]
+        [Route("update/requisicion/autorizacion")]
         public HttpResponseMessage PutActulizarAutorizacion(RequisicionEDTO req)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.ActualizarRequisicionAutorizacion(req));

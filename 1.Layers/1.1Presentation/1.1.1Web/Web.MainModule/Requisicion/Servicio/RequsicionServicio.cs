@@ -11,13 +11,13 @@ namespace Web.MainModule.Requisicion.Servicio
     public class RequsicionServicio
     {
         #region Operadores
-        public Model.RespuestaRequisicionDto GuardarRequisicion(Model.RequisicionCrearDTO Req, string tkn)
+        public Model.RespuestaRequisicionDto GuardarRequisicion(Model.RequisicionEDTO Req, string tkn)
         {
             var respuestaReq = new AgenteServicios();
             respuestaReq.GuardarRequisicon(Req, tkn);
             return respuestaReq._respuestaRequisicion;
         }
-        public Model.RespuestaRequisicionDto ActualizarRequisicionRevision(Model.RequisicionEDTO Req, string tkn)
+        public Model.RespuestaRequisicionDto ActualizarRequisicionRevision(Model.RequisicionRevisionDTO Req, string tkn)
         {
             var respuestaReq = new AgenteServicios();
             respuestaReq.ActualizarRequisicionRevision(Req, tkn);
@@ -73,11 +73,17 @@ namespace Web.MainModule.Requisicion.Servicio
             respuestaReq.BuscarRequisiciones(idEmpresa, token);
             return respuestaReq._listaRequisiciones;
         }
-        public Model.RequisicionEDTO BuscarRequisicionByNumRequi(string numreq, string token)
+        public Model.RequisicionEDTO BuscarRequisicionByNumRequiAuto(string numreq, string token)
         {
             var respuestaReq = new AgenteServicios();
             respuestaReq.BuscarRequisicio(numreq, token);
             return respuestaReq._requisicionEDTO;
+        }
+        public Model.RequisicionRevisionDTO BuscarRequisicionByNumRequiRevi(string numreq, string token)
+        {
+            var respuestaReq = new AgenteServicios();
+            respuestaReq.BuscarRequisicio(numreq, token);
+            return respuestaReq._requisicionRevisionDTO;
         }
         public List<Model.UsuarioDTO> ListaUsuarios(short idEmpresa, string token)
         {
@@ -102,18 +108,12 @@ namespace Web.MainModule.Requisicion.Servicio
         public Model.RequisicionProductoDTO ToDTO(Model.RequisicionProductoGridDTO _ReqGridDTO)
         {
             Model.RequisicionProductoDTO DTO = new Model.RequisicionProductoDTO()
-            {
-                //IdRequisicion = _ReqGridDTO.IdRequisicion,
+            {              
                 IdProducto = _ReqGridDTO.IdProducto,
                 IdTipoProducto = _ReqGridDTO.IdTipoProducto,
                 IdCentroCosto = _ReqGridDTO.IdCentroCosto,
                 Cantidad = _ReqGridDTO.Cantidad,
-                Aplicacion = _ReqGridDTO.Aplicacion
-                //RevisionFisica = _ReqGridDTO.RevisionFisica,
-                //CantidadAlmacenActual = _ReqGridDTO.CantidadAlmacenActual,
-                //CantidadAComprar = _ReqGridDTO.CantidadAComprar,
-                //AutorizaEntrega = _ReqGridDTO.AutorizaEntrega,
-                //AutorizaCompra = _ReqGridDTO.AutorizaCompra                
+                Aplicacion = _ReqGridDTO.Aplicacion               
             };
             return DTO;
         }
@@ -132,6 +132,24 @@ namespace Web.MainModule.Requisicion.Servicio
                 CantidadAComprar = _ReqGridDTO.CantidadAComprar,
                 AutorizaEntrega = _ReqGridDTO.AutorizaEntrega,
                 AutorizaCompra = _ReqGridDTO.AutorizaCompra
+            };
+            return EDTO;
+        }
+        public Model.RequisicionProductoEDTO ToEDTO(Model.RequisicionProductoGridDTO _ReqGridDTO)
+        {
+            Model.RequisicionProductoEDTO EDTO = new Model.RequisicionProductoEDTO()
+            {
+                IdRequisicion = 0,
+                IdProducto = _ReqGridDTO.IdProducto,
+                IdTipoProducto = _ReqGridDTO.IdTipoProducto,
+                IdCentroCosto = _ReqGridDTO.IdCentroCosto,
+                Cantidad = _ReqGridDTO.Cantidad,
+                Aplicacion = _ReqGridDTO.Aplicacion,
+                RevisionFisica = false,
+                CantidadAlmacenActual = 0,
+                CantidadAComprar = 0,
+                AutorizaEntrega = false,
+                AutorizaCompra = false
             };
             return EDTO;
         }
@@ -158,6 +176,21 @@ namespace Web.MainModule.Requisicion.Servicio
             };
             return EDTO;
         }
+        public Model.RequisicionEDTO UnirDtos(Model.RequisicionCrearDTO _reqDto)
+        {
+            Model.RequisicionEDTO EDTO = new Model.RequisicionEDTO()
+            {
+                IdUsuarioSolicitante = _reqDto.IdUsuarioSolicitante,
+                IdEmpresa = _reqDto.IdEmpresa,              
+                MotivoRequisicion = _reqDto.MotivoRequisicion,
+                RequeridoEn = _reqDto.RequeridoEn,
+                IdRequisicionEstatus = _reqDto.IdRequisicionEstatus,
+                FechaRequerida = _reqDto.FechaRequerida,
+                FechaRegistro = _reqDto.FechaRegistro,           
+                ListaProductos = ToEDTO(_reqDto.ListaProductos)
+            };
+            return EDTO;
+        }
         public List<Model.RequisicionProductoDTO> ToDTO(List<Model.RequisicionProductoGridDTO> _reqProdDTO)
         {
             List<Model.RequisicionProductoDTO> reqProdDTO = _reqProdDTO.ToList().Select(x => ToDTO(x)).ToList();
@@ -168,10 +201,15 @@ namespace Web.MainModule.Requisicion.Servicio
             List<Model.RequisicionProductoEDTO> reqProdDTO = _reqProdDTO.ToList().Select(x => ToEDTO(x)).ToList();
             return reqProdDTO;
         }
+        public List<Model.RequisicionProductoEDTO> ToEDTO(List<Model.RequisicionProductoGridDTO> _reqProdDTO)
+        {
+            List<Model.RequisicionProductoEDTO> reqProdDTO = _reqProdDTO.ToList().Select(x => ToEDTO(x)).ToList();
+            return reqProdDTO;
+        }
         public Model.RequisicionProductoGridDTO ToGridDTO(Model.RequisicionProductoEDTO _reqProdEDTO)
         {
             Model.RequisicionProductoGridDTO GridDTO = new Model.RequisicionProductoGridDTO();
-            //GridDTO.IdRequisicion = _reqProdEDTO.IdRequisicion;
+
             GridDTO.IdProducto = _reqProdEDTO.IdProducto;
             GridDTO.Producto = "Nombre del produto o servicio";
             GridDTO.Unidad = "PZA";
@@ -181,18 +219,14 @@ namespace Web.MainModule.Requisicion.Servicio
             GridDTO.CentroCosto = "Centro de Costos";
             GridDTO.Cantidad = _reqProdEDTO.Cantidad;
             GridDTO.Aplicacion = _reqProdEDTO.Aplicacion;
-            //GridDTO.RevisionFisica = _reqProdEDTO.RevisionFisica;
-            //GridDTO.CantidadAlmacenActual = 0;
-            //GridDTO.CantidadAComprar = 0;
-            //GridDTO.AutorizaEntrega = _reqProdEDTO.AutorizaEntrega;
-            //GridDTO.AutorizaCompra = _reqProdEDTO.AutorizaCompra;
+
             return GridDTO;
         }
         public List<Model.RequisicionProductoGridDTO> ToGridDTO(List<Model.RequisicionProductoEDTO> _reqProdEDTO)
         {
             List<Model.RequisicionProductoGridDTO> reqProdGridDTO = _reqProdEDTO.ToList().Select(x => ToGridDTO(x)).ToList();
             return reqProdGridDTO;
-        }
+        }     
         #endregion
     }
 }
