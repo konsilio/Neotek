@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -9,9 +10,12 @@ import java.util.List;
  * Created by neotecknewts on 07/08/18.
  */
 
-public class OrdenCompraDTO {
+public class OrdenCompraDTO implements Serializable{
     @SerializedName("IdOrdenCompra")
     private int IdOrdenCompra;
+
+    @SerializedName("IdProveedor")
+    private int IdProveedor;
 
     @SerializedName("ProveedorNombreComercial")
     private String ProveedorNombreComercial;
@@ -261,5 +265,13 @@ public class OrdenCompraDTO {
 
     public void setProductos(List<ProductoDTO> productos) {
         Productos = productos;
+    }
+
+    public int getIdProveedor() {
+        return IdProveedor;
+    }
+
+    public void setIdProveedor(int idProveedor) {
+        IdProveedor = idProveedor;
     }
 }

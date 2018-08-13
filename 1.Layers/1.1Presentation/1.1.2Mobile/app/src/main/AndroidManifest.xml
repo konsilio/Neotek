@@ -32,12 +32,15 @@
             android:name=".Activity.RegistrarPapeletaActivity"
             android:label="@string/title_registro_papeleta" />
         <activity
-            android:name=".Activity.CameraActivity"
+            android:name=".Activity.CameraPapeletaActivity"
             android:label="@string/title_registro_papeleta" />
         <activity
             android:name=".Activity.VistaOrdenCompraActivity"
             android:label="@string/title_orden_compra" />
 
+        <activity
+            android:name=".Activity.CameraDescargaActivity"
+            android:label="@string/title_registro_papeleta" />
 
         <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
      See README(https://goo.gl/l4GJaQ) for more. -->

@@ -4,18 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.NumberPicker;
-
+import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 /**
@@ -27,11 +21,20 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public Double porcentaje;
     public NumberPicker numberPickerProcentaje;
     public NumberPicker numberPickerDecimal;
+    PrecargaPapeletaDTO papeletaDTO;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_captura_porcentaje);
+
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras !=null){
+            papeletaDTO = (PrecargaPapeletaDTO) extras.getSerializable("Papeleta");
+            Log.w("CapPorcentaje",papeletaDTO.getMasa()+"");
+        }
 
         numberPickerDecimal = (NumberPicker) findViewById(R.id.number_picker_decimal);
         numberPickerProcentaje = (NumberPicker) findViewById(R.id.number_picker_porcentaje);
@@ -69,8 +72,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     }
 
     public void startActivity(){
-        Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-        CameraActivity.fotoTomada = false;
+        Intent intent = new Intent(getApplicationContext(), CameraDescargaActivity.class);
+        CameraPapeletaActivity.fotoTomada = false;
         startActivity(intent);
     }
 

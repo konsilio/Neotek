@@ -11,6 +11,7 @@
     <string name="title_foto_magnatel_tractor">Foto Magnatel - Tractor</string>
     <string name="title_foto_rotogate_tractor">Foto Rotogate - Tractor</string>
     <string name="title_foto_rotogate_almacen">Foto Rotogate - Almacen Principal</string>
+    <string name="title_foto_papeleta">Foto Papeleta</string>
     <string name="title_orden_compra">Orden de Compra</string>
     <string name="activity_capturar_procentaje">Capturar Porcentaje</string>
 
@@ -25,6 +26,8 @@
     <string name="login_button">Login</string>
     <string name="spinner_gaseras">Gasera</string>
     <string name="spinner_num_compra">No. de orden de compra</string>
+    <string name="spinner_num_compra_porteador">No. de orden de compra porteador</string>
+    <string name="spinner_num_compra_expedidor">No. de orden de compra expedidor</string>
     <string name="num_embarque">No. de embarque</string>
     <string name="nombre_expedidor">Nombre expedidor</string>
     <string name="nombre_porteador">Nombre porteador</string>
