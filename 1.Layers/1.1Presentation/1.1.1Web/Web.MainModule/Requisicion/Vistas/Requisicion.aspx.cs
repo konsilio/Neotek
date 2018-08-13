@@ -82,7 +82,7 @@ namespace Web.MainModule.Requisicion.Vista
             {
                 reqCrearDTO.IdUsuarioSolicitante = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdUsuario").Value);
                 reqCrearDTO.IdEmpresa = Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdEmpresa").Value);
-            }            
+            }
             reqCrearDTO.MotivoRequisicion = txtMotivoCompra.Text;
             reqCrearDTO.RequeridoEn = txtRequeridoEn.Text;
             reqCrearDTO.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Estatus.Creada;
@@ -103,23 +103,60 @@ namespace Web.MainModule.Requisicion.Vista
             else reqReq.Visible = false;
             if (list.Exists(x => x.IdentidadError.Equals("ListaProductos"))) { reqGrid.Visible = true; reqGrid.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("Aplicacion")).MensajeError; }
             else reqApli.Visible = false;
+
+            if (list.Exists(x => x.IdentidadError.Equals("TipoProducto"))) { reqTipo.Visible = true; reqTipo.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("TipoProducto")).MensajeError; }
+            else reqTipo.Visible = false;
+            if (list.Exists(x => x.IdentidadError.Equals("Producto"))) { reqProd.Visible = true; reqProd.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("Producto")).MensajeError; }
+            else reqProd.Visible = false;
+            if (list.Exists(x => x.IdentidadError.Equals("Cantidad"))) { reqCant.Visible = true; reqCant.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("Cantidad")).MensajeError; }
+            else reqCant.Visible = false;
+            if (list.Exists(x => x.IdentidadError.Equals("IdCentroCosto"))) { reqCC.Visible = true; reqCC.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("IdCentroCosto")).MensajeError; }
+            else reqCC.Visible = false;
+            if (list.Exists(x => x.IdentidadError.Equals("Aplicacion"))) { reqApli.Visible = true; reqApli.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("Aplicacion")).MensajeError; }
+            else reqApli.Visible = false;
+        }
+        private Model.RequisicionAutPutDTO CrearAut()
+        {
+            Model.RequisicionAutPutDTO _aut = new Model.RequisicionAutPutDTO();
+            _aut.IdRequisicion = (int)ViewState["idRequisicion"];
+            _aut.NumeroRequisicion = lblIdRequisicion.Text;
+            _aut.FechaAutorizacion = DateTime.Today;
+            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
+                _aut.IdUsuarioAutorizacion = int.Parse(ddlSolicitante.SelectedValue);
+            else
+                _aut.IdUsuarioAutorizacion = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdUsuario").Value);
+            _aut.ListaProductos = (List<Model.RequisicionProdAutPutDTO>)ViewState["ListaRequisicionProdAutPutDTO"];
+            return _aut;
         }
         private bool ValidarRevisionAlmacen()
         {
             bool resp = true;
-            foreach (GridViewRow _row in gvProductosRevision.Rows)
+            if (txtOpinion.Text.Equals(string.Empty))
             {
-                if (_row.RowType.Equals(DataControlRowType.DataRow))
-                    if (!(_row.Cells[0].FindControl("chbRevision") as CheckBox).Checked)
-                    {
-                        resp = false;
-                        break;
-                    }
+                List<Model.RequisicionProdReviPutDTO> LProdPutDTO = new List<Model.RequisicionProdReviPutDTO>();
+                
+                foreach (GridViewRow _row in gvProductosRevision.Rows)
+                {
+                    if (_row.RowType.Equals(DataControlRowType.DataRow))
+                        if (!(_row.Cells[0].FindControl("chbRevision") as CheckBox).Checked)
+                        {
+                            resp = false;
+                            break;
+                        }
+                        else
+                            LProdPutDTO.Add(new Model.RequisicionProdReviPutDTO { IdProducto = Int16.Parse((_row.Cells[0].FindControl("lbldgProductoID") as Label).Text), RevisionFisica = true });
+                }
+                if (!resp)
+                {
+                    DivCamposPord.Visible = true;
+                    lblErrorPord.Text = "Debes revisar todos los productos en el almacen";
+                }
+                ViewState["LIstaReqProdRevPutDTO"] = LProdPutDTO;
             }
-            if (!resp)
+            else
             {
-                DivCamposPord.Visible = true;
-                lblErrorPord.Text = "Debes revisar todos los productos en el almacen";
+                reqOpinion.Visible = true;
+                resp = false;
             }
             return resp;
         }
@@ -132,19 +169,6 @@ namespace Web.MainModule.Requisicion.Vista
             reqCC.Visible = false;
             DivCamposPord.Visible = false;
             lblErrorPord.Text = string.Empty;
-        }
-        private void ValidarCamposProductos(List<Result> list)
-        {
-            if (list.Exists(x => x.IdentidadError.Equals("TipoProducto"))) { reqTipo.Visible = true; reqTipo.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("TipoProducto")).MensajeError; }
-            else reqTipo.Visible = false;
-            if (list.Exists(x => x.IdentidadError.Equals("Producto"))) { reqProd.Visible = true; reqProd.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("Producto")).MensajeError; }
-            else reqProd.Visible = false;
-            if (list.Exists(x => x.IdentidadError.Equals("Cantidad"))) { reqCant.Visible = true; reqCant.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("Cantidad")).MensajeError; }
-            else reqCant.Visible = false;
-            if (list.Exists(x => x.IdentidadError.Equals("IdCentroCosto"))) { reqCC.Visible = true; reqCC.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("IdCentroCosto")).MensajeError; }
-            else reqCC.Visible = false;
-            if (list.Exists(x => x.IdentidadError.Equals("Aplicacion"))) { reqApli.Visible = true; reqApli.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("Aplicacion")).MensajeError; }
-            else reqApli.Visible = false;
         }
         private bool ValidarListaprodcutos()
         {
@@ -188,12 +212,12 @@ namespace Web.MainModule.Requisicion.Vista
                 ActivarRevisarExistencias();
             else
                 ActivarRevisarAutorizacion();
-
         }
         private void ActivarRevisarExistencias()
         {
             Model.RequisicionRevisionDTO _reqEDTO = new Model.RequisicionRevisionDTO();
             _reqEDTO = new Servicio.RequsicionServicio().BuscarRequisicionByNumRequiRevi(Request.QueryString["nr"].ToString(), Session["StringToken"].ToString());
+            ViewState["idRequisicion"] = _reqEDTO.IdRequisicion;
             CargarUsuariosSolicitante(_reqEDTO.IdEmpresa);
             divDatos1.Visible = false;
             divDatos2.Visible = false;
@@ -201,14 +225,14 @@ namespace Web.MainModule.Requisicion.Vista
             lblRuta.Text = "Requisición / Revisar Existencias";
             lblIdRequisicion.Text = Request.QueryString["nr"].ToString();
             btnCancelar.Enabled = true;
-            BtnCrear.Text = "Finalizar";
-            ddlSolicitante.Enabled = false;
+            BtnCrear.Text = "Finalizar";           
             txtFechaRequerida.Enabled = false;
             txtMotivoCompra.Enabled = false;
             txtRequeridoEn.Enabled = false;
             txtFechaRequerida.Text = _reqEDTO.FechaRequerida.ToShortDateString();
             txtMotivoCompra.Text = _reqEDTO.MotivoRequisicion;
             txtRequeridoEn.Text = _reqEDTO.RequeridoEn;
+            ddlSolicitante.Enabled = false;
             ddlSolicitante.SelectedValue = _reqEDTO.IdUsuarioSolicitante.ToString();
 
             dgListaproductos.Visible = false;
@@ -218,27 +242,31 @@ namespace Web.MainModule.Requisicion.Vista
         }
         private void ActivarRevisarAutorizacion()
         {
-            Model.RequisicionEDTO _reqEDTO = new Model.RequisicionEDTO();
+            Model.RequisicionAutorizacion _reqEDTO = new Model.RequisicionAutorizacion();
             _reqEDTO = new Servicio.RequsicionServicio().BuscarRequisicionByNumRequiAuto(Request.QueryString["nr"].ToString(), Session["StringToken"].ToString());
-
-            divOpinion.Visible = true;
-            divOpinion.Disabled = true;
-            divDatos1.Visible = false;
-            divDatos2.Visible = false;
-            lblRuta.Text = "Requisición / Autorización";
-            BtnCrear.Text = "Autorizar";
-            btnCancelar.Enabled = true;
-            ddlSolicitante.Enabled = false;
+            ViewState["idRequisicion"] = _reqEDTO.IdRequisicion;
+            CargarUsuariosSolicitante(_reqEDTO.IdEmpresa);
+            txtOpinion.Text = _reqEDTO.OpinionAlmacen;
+            txtOpinion.Enabled = false;
             txtFechaRequerida.Enabled = false;
             txtMotivoCompra.Enabled = false;
             txtRequeridoEn.Enabled = false;
-
-            dgListaproductos.DataSource = ViewState["ListaRequisicionProductoGridDTO"] = new Servicio.RequsicionServicio().ToGridDTO(_reqEDTO.ListaProductos);
-            dgListaproductos.DataBind();
-            dgListaproductos.Columns[5].Visible = false;
-            dgListaproductos.Columns[8].Visible = true;
-            dgListaproductos.Columns[9].Visible = true;
-            dgListaproductos.Columns[10].Visible = true;
+            txtFechaRequerida.Text = _reqEDTO.FechaRequerida.ToShortDateString();
+            txtMotivoCompra.Text = _reqEDTO.MotivoRequisicion;
+            txtRequeridoEn.Text = _reqEDTO.RequeridoEn;
+            divOpinion.Visible = true;
+            divOpinion.Disabled = false;
+            divDatos1.Visible = false;
+            divDatos2.Visible = false;
+            lblRuta.Text = "Requisición / Autorización";
+            lblIdRequisicion.Text = _reqEDTO.NumeroRequisicion;
+            BtnCrear.Text = "Autorizar";
+            btnCancelar.Enabled = true;
+            ddlSolicitante.Enabled = false;    
+            ddlSolicitante.SelectedValue = _reqEDTO.IdUsuarioSolicitante.ToString();
+            dgListaproductos.Visible = false;
+            gvProductoAut.DataSource = ViewState["ListaRequisicionProductoGridDTO"] = _reqEDTO.ListaProductos;
+            gvProductoAut.DataBind();
         }
         private void BorrarProductoLista(int id)
         {
@@ -288,14 +316,125 @@ namespace Web.MainModule.Requisicion.Vista
             ddlProdcutos.DataValueField = "IdProducto";
             ddlProdcutos.DataBind();
         }
-        private Model.RequisicionRevisionDTO RequisicionRevisionDTO()
+        private void GuardarRequisicion()
         {
-            Model.RequisicionRevisionDTO requReqvision = new Model.RequisicionRevisionDTO();
-            requReqvision.NumeroRequisicion = lblNoRequisicion.Text;
-            requReqvision.OpinionAlmacen = txtOpinion.Value.ToString();
-            requReqvision.MotivoCancelacion = string.Empty;
-            requReqvision.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Estatus.En_revision;
-            requReqvision.ListaProductos = (List<Model.RequisicionProductoRevisionDTO>)ViewState["ListaRequisicionProductoGridDTO"];
+            Servicio.RequsicionServicio serv = new Servicio.RequsicionServicio();
+            if (ValidarListaprodcutos())
+            {
+                Model.RequisicionCrearDTO Edto = CrearReq();
+                var validacion = ValidadorClases.EnlistaErrores<Model.RequisicionCrearDTO>(Edto);
+                if (validacion.ModeloValido)
+                {
+                    ValidarCampos(new List<Result>());//Se manda lista vacia para limpiar campos
+                    var respuesta = serv.GuardarRequisicion(new Servicio.RequsicionServicio().UnirDtos(Edto), Session["StringToken"].ToString());
+                    if (respuesta != null)
+                    {
+                        if (respuesta.Exito)
+                        {
+                            lblNoRequisicion.Text = respuesta.NumRequisicion;
+                            lblIdRequisicion.Text = respuesta.NumRequisicion;
+                            divNoRequi.Visible = true;
+                            divCampos.Visible = false;
+                            LimpiarCamposProductos();
+                            LimpiarMensajesProd();
+                        }
+                        else
+                        {
+                            lblErrorCampos.Text = "Ocurrio un error";
+                            divCampos.Visible = true;
+                        }
+                    }
+                }
+                else
+                {
+                    ValidarCampos(validacion.MensajesError);
+                    lblErrorCampos.Text = "Verifique que los datos esten completos";
+                    divCampos.Visible = true;
+                }
+            }
+        }
+        private void FinalizarRevision()
+        {
+            Servicio.RequsicionServicio serv = new Servicio.RequsicionServicio();
+            if (ValidarRevisionAlmacen())
+            {
+                Model.RequisicionRevPutDTO dto = RequisicionRevisionDTO();
+                var validacion = ValidadorClases.EnlistaErrores<Model.RequisicionRevPutDTO>(dto);
+                if (validacion.ModeloValido)
+                {
+                    LimpiarMensajesProd();
+                    Model.RespuestaRequisicionDto resp = new Model.RespuestaRequisicionDto();
+                    resp = serv.ActualizarRequisicionRevision(RequisicionRevisionDTO(), Session["StringToken"].ToString());
+                    if (resp.Exito)
+                    {
+                        lblNoRequisicion.Text = resp.Mensaje.Equals(string.Empty) ? "Correcto" : resp.Mensaje;
+                        lblIdRequisicion.Text = resp.NumRequisicion;
+                        txtOpinion.Enabled = false;
+                        divNoRequi.Visible = true;
+                        divCampos.Visible = false;
+                        btnCancelar.Enabled = false;
+                        BtnCrear.Enabled = false;
+                    }
+                    else
+                    {
+                        ValidarCampos(validacion.MensajesError);
+                        lblErrorCampos.Text = "Ocurrio un error";
+                        divCampos.Visible = true;
+                    }
+                }
+                else
+                {
+                    ValidarCampos(validacion.MensajesError);
+                    lblErrorCampos.Text = "Verifique que los datos esten completos";
+                    divCampos.Visible = true;
+                }
+            }
+        }
+        private void FinalizarAutorizacion()
+        {
+            ValidarAutorizados();
+            Model.RespuestaRequisicionDto _resp =  new Servicio.RequsicionServicio().ActualizarRequisicionAutorizacion(CrearAut(), Session["StringToken"].ToString());
+            if (_resp.Exito)
+            {
+                lblNoRequisicion.Text = _resp.Mensaje.Equals(string.Empty) ? "Correcto" : _resp.Mensaje;
+                lblIdRequisicion.Text = _resp.NumRequisicion;
+                btnCancelar.Enabled = false;
+                BtnCrear.Enabled = false;
+                divNoRequi.Visible = true;
+                divCampos.Visible = false;
+            }
+            else
+            {
+                lblErrorCampos.Text = "Ocurrio un error";
+                divCampos.Visible = true;
+            }
+        }
+        private void ValidarAutorizados()
+        {
+            List<Model.RequisicionProdAutPutDTO> lProd = new List<Model.RequisicionProdAutPutDTO>();
+            foreach (GridViewRow _row in gvProductoAut.Rows)
+            {
+                lProd.Add(new Model.RequisicionProdAutPutDTO
+                {
+                    IdProducto =int.Parse((_row.Cells[0].FindControl("lbldgProductoID") as Label).Text),
+                    AutorizaCompra = (_row.Cells[0].FindControl("chbAutCompra") as CheckBox).Checked,
+                    AutorizaEntrega =(_row.Cells[0].FindControl("chbAutEntrega") as CheckBox).Checked,
+                });
+            }
+            ViewState["ListaRequisicionProdAutPutDTO"] = lProd;
+        }
+        private Model.RequisicionRevPutDTO RequisicionRevisionDTO()
+        {
+            Model.RequisicionRevPutDTO requReqvision = new Model.RequisicionRevPutDTO();
+            requReqvision.IdRequisicion = (int)ViewState["idRequisicion"];
+            requReqvision.NumeroRequisicion = lblIdRequisicion.Text;
+            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
+                requReqvision.IdUsuarioRevision = int.Parse(ddlSolicitante.SelectedValue);
+            else
+                requReqvision.IdUsuarioRevision = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdUsuario").Value);
+            requReqvision.OpinionAlmacen = txtOpinion.Text;
+            requReqvision.FechaRevision = DateTime.Today;
+            requReqvision.ListaProductos = (List<Model.RequisicionProdReviPutDTO>)ViewState["LIstaReqProdRevPutDTO"];
             return requReqvision;
         }
         protected void btnAgregar_Click(object sender, EventArgs e)
@@ -304,7 +443,7 @@ namespace Web.MainModule.Requisicion.Vista
             var validacion = ValidadorClases.EnlistaErrores<Model.RequisicionProductoGridDTO>(prod);
             if (validacion.ModeloValido)
             {
-                ValidarCamposProductos(new List<Result>());
+                ValidarCampos(new List<Result>());//Limpia los campos de error 
                 List<Model.RequisicionProductoGridDTO> LProductos = new List<Model.RequisicionProductoGridDTO>();
                 if (ValidarProductoRepetido(int.Parse(ddlProdcutos.SelectedValue.ToString())))
                 {
@@ -325,66 +464,19 @@ namespace Web.MainModule.Requisicion.Vista
             }
             else
             {
-                ValidarCamposProductos(validacion.MensajesError);
+                ValidarCampos(validacion.MensajesError);
                 lblErrorPord.Text = "Verifique que los datos esten completos";
                 DivCamposPord.Visible = true;
             }
         }
         protected void BtnCrear_Click(object sender, EventArgs e)
         {
-            Servicio.RequsicionServicio serv = new Servicio.RequsicionServicio();
             if (BtnCrear.Text.Equals("Crear"))
-            {
-                if (ValidarListaprodcutos())
-                {
-                    Model.RequisicionCrearDTO Edto = CrearReq();
-                    var validacion = ValidadorClases.EnlistaErrores<Model.RequisicionCrearDTO>(Edto);
-                    if (validacion.ModeloValido)
-                    {
-                        ValidarCampos(new List<Result>());//Se manda lista vacia para limpiar campos
-                        var respuesta = serv.GuardarRequisicion(new Servicio.RequsicionServicio().UnirDtos(Edto), Session["StringToken"].ToString());
-                        if (respuesta != null)
-                        {
-                            if (respuesta.Exito)
-                            {
-                                lblNoRequisicion.Text = respuesta.NumRequisicion;
-                                lblIdRequisicion.Text = respuesta.NumRequisicion;
-                                divNoRequi.Visible = true;
-                                divCampos.Visible = false;
-                                LimpiarCamposProductos();
-                                LimpiarMensajesProd();
-                            }
-                            else
-                            {
-                                lblErrorCampos.Text = "Ocurrio un error";
-                                divCampos.Visible = true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        ValidarCampos(validacion.MensajesError);
-                        lblErrorCampos.Text = "Verifique que los datos esten completos";
-                        divCampos.Visible = true;
-                    }
-                }
-            }
+                GuardarRequisicion();
             if (BtnCrear.Text.Equals("Finalizar"))
-            {
-                if (ValidarRevisionAlmacen())
-                {
-                    LimpiarMensajesProd();
-                    Model.RespuestaRequisicionDto resp = new Model.RespuestaRequisicionDto();
-                    resp = serv.ActualizarRequisicionRevision(RequisicionRevisionDTO(), Session["StringToken"].ToString());
-                    if (resp.Exito)
-                    {
-                        lblNoRequisicion.Text = resp.Mensaje;
-                        lblIdRequisicion.Text = resp.NumRequisicion;
-                        divNoRequi.Visible = true;
-                        divCampos.Visible = false;
-                    }
-                }                
-            }
+                FinalizarRevision();
+            if (BtnCrear.Text.Equals("Autorizar"))            
+                FinalizarAutorizacion();            
         }
         protected void ddlEmpresas_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -433,6 +525,18 @@ namespace Web.MainModule.Requisicion.Vista
         protected void gvProductosRevision_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
+        }
+        protected void gvProductoAut_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+        }
+
+        protected void gvProductoAut_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (decimal.Parse((e.Row.Cells[0].FindControl("lblAlmacen") as Label).Text).Equals(0))            
+                (e.Row.Cells[0].FindControl("chbAutEntrega") as CheckBox).Enabled = false;
+            if (decimal.Parse((e.Row.Cells[0].FindControl("lblRequiereComp") as Label).Text).Equals(0))
+                (e.Row.Cells[0].FindControl("chbAutCompra") as CheckBox).Enabled = false;           
         }
     }
 }

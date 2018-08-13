@@ -289,7 +289,16 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtOpinion;
+        protected global::System.Web.UI.WebControls.TextBox txtOpinion;
+        
+        /// <summary>
+        /// Control reqOpinion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqOpinion;
         
         /// <summary>
         /// Control DivCamposPord.
@@ -326,6 +335,15 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvProductosRevision;
+        
+        /// <summary>
+        /// Control gvProductoAut.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvProductoAut;
         
         /// <summary>
         /// Control reqGrid.

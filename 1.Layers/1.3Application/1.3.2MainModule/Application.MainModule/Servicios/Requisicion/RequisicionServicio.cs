@@ -13,9 +13,9 @@ namespace Application.MainModule.Servicios.Requisicion
 {
     public static class RequisicionServicio
     {
-        public static RespuestaRequisicionDto GuardarRequisicionNueva(RequisicionEDTO _req)
+        public static RespuestaRequisicionDto GuardarRequisicionNueva(Sagas.MainModule.Entidades.Requisicion _req)
         {
-            var requisicionResp = new RequisicionDataAccess().InsertarNueva(RequisicionAdapter.FromEDTO(_req));
+            var requisicionResp = new RequisicionDataAccess().InsertarNueva(_req);
             if (requisicionResp != null)
                 return new RespuestaRequisicionDto()
                 {
@@ -33,17 +33,18 @@ namespace Application.MainModule.Servicios.Requisicion
                     Mensaje = "Error" //Agregar mensaje espesifico en Exceptions
                 };
         }
-        public static RespuestaRequisicionDto UpdateRequisicionRevision(RequisicionRevisionDTO _req)
+        public static RespuestaRequisicionDto UpdateRequisicionRevision(RequisicionRevPutDTO _req)
         {
-            var requisicionResp = new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req));
+            var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
+            var requisicionResp = new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad), RequisicionProductoAdapter.FromDTO(_req.ListaProductos, entidad.Productos.ToList()));
             if (requisicionResp != null && requisicionResp.Exito)
             {
                 return new RespuestaRequisicionDto()
                 {
                     IdRequisicion = requisicionResp.IdRequisicion,
                     NumRequisicion = requisicionResp.NumRequisicion,
-                    Exito = true,
-                    Mensaje = "Requisicion revisada con exito"
+                    Exito = requisicionResp.Exito,
+                    Mensaje = requisicionResp.Mensaje
                 };
             }
             else
@@ -55,15 +56,16 @@ namespace Application.MainModule.Servicios.Requisicion
                     Mensaje = Error.R0009
                 };
         }
-        public static RespuestaRequisicionDto UpDateRequisicionAutoriza(RequisicionEDTO _req)
+        public static RespuestaRequisicionDto UpDateRequisicionAutoriza(RequisicionAutPutDTO _req)
         {
-            var requisicionResp = new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromEDTOAutorizacion(_req));
+            var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
+            var requisicionResp = new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
             if (requisicionResp != null)
                 return new RespuestaRequisicionDto()
                 {
                     IdRequisicion = requisicionResp.IdRequisicion,
                     NumRequisicion = requisicionResp.NumRequisicion,
-                    Exito = true,
+                    Exito = requisicionResp.Exito,
                     Mensaje = requisicionResp.Mensaje
                 };
             else
@@ -82,6 +84,10 @@ namespace Application.MainModule.Servicios.Requisicion
         public static RequisicionRevisionDTO BuscarRequisicion(string _nrequi)
         {
             return RequisicionAdapter.ToRevDTO(new RequisicionDataAccess().BuscarPorNumeroRequisicion(_nrequi));
+        }
+        public static RequisicionAutorizacionDTO BuscarRequisicionAuto(string _nrequi)
+        {
+            return RequisicionAdapter.ToAutDTO(new RequisicionDataAccess().BuscarPorNumeroRequisicion(_nrequi));
         }
     }
 }

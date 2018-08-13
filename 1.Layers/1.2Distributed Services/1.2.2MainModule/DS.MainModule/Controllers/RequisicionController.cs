@@ -36,13 +36,18 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.BuscarRequisicion(numRequi));
         }
+        [Route("buscar/requisicion/autorizacion/{numRequi}")]
+        public HttpResponseMessage GetRequisicionByNumRequisicionAut(string numRequi)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _requisicion.BuscarRequisicionAuto(numRequi));
+        }
         [Route("update/requisicion/revision")]
-        public HttpResponseMessage PutActulizarRevision(RequisicionRevisionDTO req)
+        public HttpResponseMessage PutActulizarRevision(RequisicionRevPutDTO req)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.ActualizarRequisicionRevision(req));
         }
         [Route("update/requisicion/autorizacion")]
-        public HttpResponseMessage PutActulizarAutorizacion(RequisicionEDTO req)
+        public HttpResponseMessage PutActulizarAutorizacion(RequisicionAutPutDTO req)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.ActualizarRequisicionAutorizacion(req));
         }        

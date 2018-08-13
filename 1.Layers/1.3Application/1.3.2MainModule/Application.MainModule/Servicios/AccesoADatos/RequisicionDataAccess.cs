@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.UnitOfWork;
 using Application.MainModule.DTOs.Respuesta;
+using Sagas.MainModule.Entidades;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
@@ -30,6 +31,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public Sagas.MainModule.Entidades.Requisicion BuscarPorNumeroRequisicion(string NumRequisicion)
         {
             return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetSingle(x => x.NumeroRequisicion.Equals(NumRequisicion));
+        }
+        public Sagas.MainModule.Entidades.Requisicion BuscarPorIdRequisicion(int IdRequisicion)
+        {
+            return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetSingle(x => x.IdRequisicion.Equals(IdRequisicion));
         }
         public List<Sagas.MainModule.Entidades.Requisicion> BuscarTodas()
         {
@@ -65,6 +70,28 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 try
                 {
                     uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Update(_req);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.Mensaje = string.Empty;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = ex.Message;
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaRequisicionDto Actualizar(Sagas.MainModule.Entidades.Requisicion _req, List<RequisicionProducto> _reqProd)
+        {
+            RespuestaRequisicionDto _respuesta = new RespuestaRequisicionDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Update(_req);
+                    foreach (RequisicionProducto _prod in _reqProd)
+                        uow.Repository<RequisicionProducto>().Update(_prod);
                     uow.SaveChanges();
                     _respuesta.Exito = true;
                     _respuesta.Mensaje = string.Empty;

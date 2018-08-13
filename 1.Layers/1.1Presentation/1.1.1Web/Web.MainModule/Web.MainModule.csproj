@@ -3871,8 +3871,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Requisicion\Model\ProductoDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionAutorizacion.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionAutPutDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionCrearDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionRevisionDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionRevPutDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionProductoDtos\RequisicionProdAutPutDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionProductoDtos\RequisicionProdReviPutDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionProductoDtos\RequisicionProductoAutorizacionDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionProductoDtos\RequisicionProductoRevisionDTO.cs" />
     <Compile Include="Requisicion\Model\UsuarioDTO.cs" />
     <Compile Include="Compras\Vistas\Compras.aspx.cs">

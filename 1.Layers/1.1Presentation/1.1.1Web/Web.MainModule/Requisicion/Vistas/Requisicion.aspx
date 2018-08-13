@@ -17,7 +17,8 @@
                 </div>
                 <div class="body" id="divNoRequi" runat="server" visible="false">
                     <div class="alert alert-success">
-                        <strong><asp:Label ID="lblNoRequisicion" runat="server" Text="Hola" /></strong>
+                        <strong>
+                            <asp:Label ID="lblNoRequisicion" runat="server" Text="" /></strong>
                     </div>
                 </div>
                 <div class="row clearfix">
@@ -147,7 +148,8 @@
                                                     <div class="col-sm-12">
                                                         <div class="form-group">
                                                             <div class="form-line">
-                                                                <textarea runat="server" id="txtOpinion" rows="4" class="form-control no-resize" placeholder="Porfavor escriba su opinion"></textarea>
+                                                                <asp:TextBox runat="server" TextMode="MultiLine" ID="txtOpinion" rows="4" CssClass="form-control no-resize" placeholder="Porfavor escriba su opinion"></asp:TextBox>
+                                                             <asp:Label runat="server" ID="reqOpinion" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -164,7 +166,7 @@
                                 </div>
                                 <div class="row clearfix">
                                     <div class="body table-responsive">
-                                        <!--Grid con los productos Agregados -->
+                                        <!--Grid productos agregados nueva requisicion-->
                                         <asp:GridView CssClass="table table-hover" OnRowCommand="dgListaproductos_RowCommand" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
                                             <Columns>
                                                 <asp:TemplateField>
@@ -230,16 +232,17 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                         </asp:GridView>
+                                        <%--Grid productos revision--%>
                                         <asp:GridView runat="server" ID="gvProductosRevision" AutoGenerateColumns="false" CssClass="table table-hover" Visible="false" OnRowCommand="gvProductosRevision_RowCommand">
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <%--0 Tipo de compra--%>
-                                                <headertemplate>
+                                                    <HeaderTemplate>
                                                         <b>Tipo</b>
-                                                    </headertemplate>
-                                                <itemtemplate>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
                                                         <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto") %>' />
-                                                    </itemtemplate>
+                                                    </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
                                                     <%--1 Producto--%>
@@ -248,6 +251,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Producto") %>' />
+                                                        <asp:Label ID="lbldgProductoID" runat="server" Text='<%# Bind("IdProducto") %>' Visible="false" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -295,37 +299,95 @@
                                                         <asp:CheckBox ID="chbRevision" runat="server" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
-                                                <%--<asp:TemplateField>
-                                                   8 Autoriza Entrega
+                                            </Columns>
+                                        </asp:GridView>
+                                        <%--Grid productos autorizacion--%>
+                                        <asp:GridView ID="gvProductoAut" runat="server" AutoGenerateColumns="false" OnRowCommand="gvProductoAut_RowCommand" OnRowDataBound="gvProductoAut_RowDataBound">
+                                            <Columns>
+                                                <asp:TemplateField>
+                                                    <%--0 Tipo de compra--%>
+                                                    <HeaderTemplate>
+                                                        <b>Tipo</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--1 Producto--%>
+                                                    <HeaderTemplate>
+                                                        <b>Producto</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Producto") %>' />
+                                                        <asp:Label ID="lbldgProductoID" runat="server" Text='<%# Bind("IdProducto") %>' Visible="false" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--2 Cantidad--%>
+                                                    <HeaderTemplate>
+                                                        <b>Cantidad</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("Cantidad") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--3 Unidad--%>
+                                                    <HeaderTemplate>
+                                                        <b>Unidad</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--4 Aplicacion--%>
+                                                    <HeaderTemplate>
+                                                        <b>Aplicación</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--6 Almacen--%>
+                                                    <HeaderTemplate>
+                                                        Existencias
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblAlmacen" runat="server" Text='<%# Bind("CantidadAlmacenActual") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--7 Autoriza Entrega--%>
                                                     <HeaderTemplate>
                                                         Autoriza entrega
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <div class="checkbox">
-                                                            <asp:CheckBox ID="chbAutEntrega" runat="server" Checked="false" />
-                                                        </div>
+                                                        <asp:CheckBox ID="chbAutEntrega" runat="server" />
                                                     </ItemTemplate>
-                                                </asp:TemplateField>
-                                                 <%--<asp:TemplateField >
-                                                    9 Requiere comprar
-                                                <headertemplate>
-                                                        Requiere comprar
-                                                    </headertemplate>
-                                                <itemtemplate>
-                                                        <asp:Label ID="lblRequiereComp" runat="server"></asp:Label>
-                                                    </itemtemplate>
+                                                    <ItemStyle HorizontalAlign="Center" />
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
-                                                   10 Autoriza Compra
+                                                    <%-- 8 Requiere comprar--%>
+                                                    <HeaderTemplate>
+                                                        Requiere comprar
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lblRequiereComp" runat="server" Text='<%# Bind("CantidadAComprar") %>'></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <%--9 Autoriza Compra--%>
                                                     <HeaderTemplate>
                                                         Autoriza Compra
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <div class="checkbox">
-                                                            <asp:CheckBox ID="chbAutCompra" runat="server" Checked="false" />
-                                                        </div>
+                                                        <asp:CheckBox ID="chbAutCompra" runat="server" />
                                                     </ItemTemplate>
-                                                </asp:TemplateField>--%>
+                                                    <ItemStyle HorizontalAlign="Center" />
+                                                </asp:TemplateField>
                                             </Columns>
                                         </asp:GridView>
                                         <asp:Label runat="server" ID="reqGrid" CssClass="alert-danger" Visible="false" Text="Debes agregar al menos un producto" />

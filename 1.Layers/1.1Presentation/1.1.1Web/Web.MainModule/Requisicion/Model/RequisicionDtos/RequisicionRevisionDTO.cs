@@ -9,6 +9,9 @@ namespace Web.MainModule.Requisicion.Model
 {
     public class RequisicionRevisionDTO
     {
+        [Required(ErrorMessage = Error.S0001)]
+        [Display(Name = "IdRequisicion")]
+        public int IdRequisicion { get; set; }
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "NumeroRequisicion")]
         public string NumeroRequisicion { get; set; }

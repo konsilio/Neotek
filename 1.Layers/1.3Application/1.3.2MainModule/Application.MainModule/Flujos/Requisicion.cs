@@ -13,8 +13,10 @@ namespace Application.MainModule.Flujos
     public class Requisicion
     {
         public RespuestaRequisicionDto InsertRequisicionNueva(RequisicionEDTO _req)
-        {            
-            return RequisicionServicio.GuardarRequisicionNueva(_req);
+        {
+            var _requisicion = AdaptadoresDTO.Requisicion.RequisicionAdapter.FromEDTO(_req);
+            _requisicion =  Servicios.Almacen.ProductoAlmacenServicio.CalcularAlmacenProcutos(_requisicion);
+            return RequisicionServicio.GuardarRequisicionNueva(_requisicion);
         }
         public List<RequisicionDTO> BuscarRequisicionesPorEmpresa(Int16 idEmpresa)
         {
@@ -24,11 +26,15 @@ namespace Application.MainModule.Flujos
         {
             return RequisicionServicio.BuscarRequisicion(numRequisicon);
         }
-        public RespuestaRequisicionDto ActualizarRequisicionRevision(RequisicionRevisionDTO _req)
+        public RequisicionAutorizacionDTO BuscarRequisicionAuto(string numRequisicon)
+        {
+            return RequisicionServicio.BuscarRequisicionAuto(numRequisicon);
+        }
+        public RespuestaRequisicionDto ActualizarRequisicionRevision(RequisicionRevPutDTO _req)
         {
             return RequisicionServicio.UpdateRequisicionRevision(_req);
         }
-        public RespuestaRequisicionDto ActualizarRequisicionAutorizacion(RequisicionEDTO _req)
+        public RespuestaRequisicionDto ActualizarRequisicionAutorizacion(RequisicionAutPutDTO _req)
         {
             return RequisicionServicio.UpDateRequisicionAutoriza(_req);
         }        

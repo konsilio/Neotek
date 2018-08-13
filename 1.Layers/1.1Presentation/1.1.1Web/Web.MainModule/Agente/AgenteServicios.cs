@@ -32,6 +32,7 @@ namespace Web.MainModule.Agente
         public List<UsuarioDTO> _listUsuarios;
         public List<ProductoDTO> _listProductos;
         public RequisicionRevisionDTO _requisicionRevisionDTO;
+        public RequisicionAutorizacion _requsicionAutorizacion;
 
         public AgenteServicios()
         {
@@ -226,17 +227,17 @@ namespace Web.MainModule.Agente
                 _respuestaRequisicion = resp;
             }
         }
-        public void ActualizarRequisicionRevision(RequisicionRevisionDTO _requi, string token)
+        public void ActualizarRequisicionRevision(RequisicionRevPutDTO _requi, string token)
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["PutActulizarRevision"];
             UpdateRequisicon(_requi, token).Wait();
         }
-        public void ActualizarRequisicionAutorizacion(RequisicionEDTO _requi, string token)
+        public void ActualizarRequisicionAutorizacion(RequisicionAutPutDTO _requi, string token)
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["PutActulizarAutorizacion"];
             UpdateRequisicon(_requi, token).Wait();
         }
-        private async Task UpdateRequisicon(RequisicionEDTO _requi, string token)
+        private async Task UpdateRequisicon(RequisicionAutPutDTO _requi, string token)
         {
             using (var client = new HttpClient())
             {
@@ -248,7 +249,7 @@ namespace Web.MainModule.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 try
                 {
-                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaRequisicionDto>();
                     else
@@ -266,8 +267,7 @@ namespace Web.MainModule.Agente
                 _respuestaRequisicion = resp;
             }
         }
-
-        private async Task UpdateRequisicon(RequisicionRevisionDTO _requi, string token)
+        private async Task UpdateRequisicon(RequisicionRevPutDTO _requi, string token)
         {
             using (var client = new HttpClient())
             {
@@ -335,6 +335,7 @@ namespace Web.MainModule.Agente
             this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionByNumRequisicion"];
             RequisicionesPorNumRequisicion(NumRequisicion, tkn).Wait();
         }
+       
         private async Task RequisicionesPorNumRequisicion(string numReq, string token)
         {
             using (var client = new HttpClient())
@@ -356,13 +357,45 @@ namespace Web.MainModule.Agente
                 }
                 catch (Exception)
                 {
-                    emp = new RequisicionRevisionDTO() { IdRequisicionEstatus = 0 };
+                    emp = new RequisicionRevisionDTO() { NumeroRequisicion = "0" };
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
                 _requisicionRevisionDTO = emp;
+            }           
+        }
+        public void BuscarRequisicioAuto(string NumRequisicion, string tkn)
+        {
+            this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionByNumRequisicionAut"];
+            RequisicionesPorNumRequisicionAuto(NumRequisicion, tkn).Wait();
+        }
+        private async Task RequisicionesPorNumRequisicionAuto(string numReq, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RequisicionAutorizacion emp = new RequisicionAutorizacion();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiRequisicion + numReq.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<RequisicionAutorizacion>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new RequisicionAutorizacion() { NumeroRequisicion = "0" };
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _requsicionAutorizacion = emp;
             }
-           
         }
         public void BuscarProductos(short idEmpresa, string tkn)
         {

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Requisicion
 {
-    public class RequisicionRevisionDTO 
+    public class RequisicionAutorizacionDTO
     {
         [Required(ErrorMessage = Error.S0001)]
         [Display(Name = "IdRequisicion")]
@@ -20,11 +20,9 @@ namespace Application.MainModule.DTOs.Requisicion
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdUsuarioSolicitante")]
         public int IdUsuarioSolicitante { get; set; }
-
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdEmpresa")]
         public short IdEmpresa { get; set; }
-
         [Required(ErrorMessage = Error.R0002)]
         [StringLength(500, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "MotivoRequisicion")]
@@ -34,22 +32,10 @@ namespace Application.MainModule.DTOs.Requisicion
         [StringLength(500, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "RequeridoEn")]
         public string RequeridoEn { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdRequisicionEstatus")]
-        public byte IdRequisicionEstatus { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "FechaRequerida")]
-        public System.DateTime FechaRequerida { get; set; }
-
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "OpinionAlmacen")]
         public string OpinionAlmacen { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "MotivoCancelacion")]
-        public string MotivoCancelacion { get; set; }
-        public List<RequisicionProductoRevisionDTO> ListaProductos { get; set; }
+        public DateTime FechaRequerida { get; set; }
+        public List<RequisicionProductoAutorizacionDTO> ListaProductos { get; set; }
     }
 }
