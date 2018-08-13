@@ -1,11 +1,13 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -13,19 +15,33 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.OrdenCompraDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
+import com.example.neotecknewts.sagasapp.Presenter.FinalizarDescargaPresenter;
+import com.example.neotecknewts.sagasapp.Presenter.FinalizarDescargaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Session;
+
+import java.util.List;
 
 
 /**
  * Created by neotecknewts on 06/08/18.
  */
 
-public class FinalizarDescargaActivity extends AppCompatActivity {
+public class FinalizarDescargaActivity extends AppCompatActivity implements FinalizarDescargaView{
     public Spinner spinnerOrdenCompra;
     public LinearLayout linearLayoutTanque;
     public Spinner spinnerMedidorAlmacen;
     public Spinner spinnerMedidorTractor;
     public TextView textViewTitulo;
+    ProgressDialog progressDialog;
+    public Session session;
+
+    public OrdenCompraDTO ordenCompraDTO;
+    List<OrdenCompraDTO> ordenesCompraDTO;
+
+    public FinalizarDescargaPresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,8 +56,9 @@ public class FinalizarDescargaActivity extends AppCompatActivity {
 
         linearLayoutTanque.setVisibility(View.GONE);
         textViewTitulo.setText(R.string.title_finalizar_descarga);
+        presenter = new FinalizarDescargaPresenterImpl(this);
 
-        String[] ordenes = {"OC1", "OC2"};
+        String[] ordenes = {"prueba1", "prueba2"};
         String[] medidores = {"Rotogate", "Magnatel"};
 
 
@@ -56,6 +73,8 @@ public class FinalizarDescargaActivity extends AppCompatActivity {
                 onClickRegistrar();
             }
         });
+
+        presenter.getOrdenesCompra(1,session.getTokenWithBearer());
     }
 
     public void onClickRegistrar(){
@@ -91,9 +110,55 @@ public class FinalizarDescargaActivity extends AppCompatActivity {
         alert11.show();
     }
 
+    private void showDialogAceptar(String mensaje){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage(mensaje);
+        builder1.setCancelable(true);
+
+        builder1.setNegativeButton(
+                R.string.message_acept,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CapturaPorcentajeActivity.class);
         startActivity(intent);
     }
 
+    @Override
+    public void showProgress(int mensaje) {
+        progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
+                getResources().getString(mensaje), true);
+    }
+
+    @Override
+    public void hideProgress() {
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void messageError(int mensaje) {
+        showDialogAceptar(getResources().getString(mensaje));
+    }
+
+    @Override
+    public void onSuccessGetOrdenesCompra(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO) {
+        Log.w("VIEW", respuestaOrdenesCompraDTO.getOrdenesCompra().size()+"");
+        this.ordenesCompraDTO = respuestaOrdenesCompraDTO.getOrdenesCompra();
+        String[] ordenes = new String[ordenesCompraDTO.size()];
+        for (int i =0; i<ordenes.length; i++){
+            ordenes[i]=ordenesCompraDTO.get(i).getNumOrdenCompra();
+        }
+
+        spinnerOrdenCompra.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
+    }
 }

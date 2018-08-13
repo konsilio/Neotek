@@ -76,8 +76,6 @@ public class VistaOrdenCompraActivity extends AppCompatActivity implements Vista
 
         ordenesCompraDTO = new ArrayList<>();
 
-        session = new Session(getApplicationContext());
-
         spinnerOrdenCompra.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
         textViewProveedor.setMovementMethod(new ScrollingMovementMethod());
         textViewProveedor.setText("Proveedor S.A. de C.V. \nAv. Universidad #435 Col. Lazaro Cardenas \nChilpancingo Guerrero, Mex. \n" +
@@ -170,7 +168,6 @@ public class VistaOrdenCompraActivity extends AppCompatActivity implements Vista
 
     @Override
     public void hideProgress() {
-        Log.e("error", "ocultar");
         if(progressDialog != null){
             progressDialog.dismiss();
         }
