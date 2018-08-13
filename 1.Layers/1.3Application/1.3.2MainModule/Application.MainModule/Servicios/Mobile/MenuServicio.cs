@@ -32,7 +32,7 @@ namespace Application.MainModule.Servicios.Mobile
                     }
 
                     if (rol.AppCompraGasFinalizarDescarga && !_AppCompraGasFinalizarDescarga)
-                    { 
+                    {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasFinalizarDescarga"]));
                         _AppCompraGasFinalizarDescarga = true;
                     }
@@ -48,12 +48,17 @@ namespace Application.MainModule.Servicios.Mobile
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraVerOCompra"]));
                         _AppCompraVerOCompra = true;
                     }
-                  
 
-                }                
+
+                }
+                setFalse();
                 return lista;
             }
-            else return lista;
+            else
+            {
+                setFalse();
+                return lista;
+            }
         }
 
         private static MenuDto ObtenerDatosMenu(string cadena)
@@ -66,5 +71,13 @@ namespace Application.MainModule.Servicios.Mobile
                 imageRef = lista.LastOrDefault(),
             };
         }
+
+        private static void setFalse()
+        {
+            _AppCompraEntraGas = false;
+            _AppCompraGasFinalizarDescarga = false;
+            _AppCompraGasIniciarDescarga = false;
+            _AppCompraVerOCompra = false;
+    }
     }
 }
