@@ -65,7 +65,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        MenuDTO menuItem = menuItems.get(position);
+        final MenuDTO menuItem = menuItems.get(position);
 
 
         // Set item views based on your views and data model
@@ -83,19 +83,19 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(position==0) {
-                    Intent intent = new Intent(view.getContext(), VistaOrdenCompraActivity.class);
+                if(menuItem.getName().equals("Iniciar Descarga")) {
+                    Intent intent = new Intent(view.getContext(), IniciarDescargaActivity.class);
                     view.getContext().startActivity(intent);
 
-                }else if(position==1){
+                }else if(menuItem.getName().equals("Finalizar Descarga")){
                     Intent intent = new Intent(view.getContext() , FinalizarDescargaActivity.class);
                     view.getContext().startActivity(intent);
 
-                }else if(position==2){
+                }else if(menuItem.getName().equals("Registrar Papeleta")){
                     Intent intent = new Intent(view.getContext() , RegistrarPapeletaActivity.class);
                     view.getContext().startActivity(intent);
                 }
-                else if(position==3){
+                else if(menuItem.getName().equals("Ordenes de compra")){
                     Intent intent = new Intent(view.getContext() , VistaOrdenCompraActivity.class);
                     view.getContext().startActivity(intent);
                 }

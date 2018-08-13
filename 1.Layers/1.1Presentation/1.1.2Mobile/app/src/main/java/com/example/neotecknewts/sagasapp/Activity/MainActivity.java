@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
     public String contraseña;
     public String usuario;
 
+    public int IdEmpresa;
     List<EmpresaDTO> empresaDTOs;
 
     LoginPresenter loginPresenter;
@@ -92,18 +93,18 @@ public class MainActivity extends AppCompatActivity implements MainView{
     }
 
     private void onClickLogin(){
-        String correoElectronico = editTextCorreoElectronico.getText().toString();
-        String contraseña = editTextContraseña.getText().toString();
-        short idEmpresa = empresaDTOs.get(spinnerGaseras.getSelectedItemPosition()).getIdEmpresa();
+        usuario = editTextCorreoElectronico.getText().toString();
+        contraseña = editTextContraseña.getText().toString();
+        IdEmpresa = empresaDTOs.get(spinnerGaseras.getSelectedItemPosition()).getIdEmpresa();
 
-        if(TextUtils.isEmpty(correoElectronico) || TextUtils.isEmpty(contraseña)){
+        if(TextUtils.isEmpty(usuario) || TextUtils.isEmpty(contraseña)){
             showDialog(getResources().getString(R.string.empty_field));
-        }else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(correoElectronico).matches()) {
+        }else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(usuario).matches()) {
             showDialog(getResources().getString(R.string.invalid_email));
         }else{
             try{
                 Log.e("SAAAA", Utilidades.getHash(contraseña));
-                Log.e("SAAAA", idEmpresa+"");
+                Log.e("SAAAA", IdEmpresa+"");
                 //showDialog( Utilidades.getHash(contraseña));
                 this.contraseña = Utilidades.getHash(contraseña);
 
@@ -112,9 +113,9 @@ public class MainActivity extends AppCompatActivity implements MainView{
             }
             //startActivity();
             UsuarioLoginDTO usuarioLoginDTO = new UsuarioLoginDTO();
-            usuarioLoginDTO.setIdEmpresa(idEmpresa);
+            usuarioLoginDTO.setIdEmpresa(IdEmpresa);
             usuarioLoginDTO.setPassword(this.contraseña);
-            usuarioLoginDTO.setUsuario(correoElectronico);
+            usuarioLoginDTO.setUsuario(usuario);
             loginPresenter.doLogin(usuarioLoginDTO);
         }
 
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 showDialog(getResources().getString(R.string.usuario_sin_permisos));
             }else{
                 showDialog(getResources().getString(R.string.login_sucess));
-                session.createLoginSession(contraseña,usuario,usuarioDTO.getToken());
+                session.createLoginSession(contraseña,usuario,usuarioDTO.getToken(),IdEmpresa);
                 ArrayList<MenuDTO> menuDTOs = new ArrayList<MenuDTO>(Arrays.asList(usuarioDTO.getListMenu()));
                 startActivity(menuDTOs);
             }

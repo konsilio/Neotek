@@ -27,6 +27,7 @@ public class IniciarDescargaPresenterImpl implements IniciarDescargaPresenter {
     @Override
     public void onSuccessGetOrdenesCompra(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO) {
         iniciarDescargaView.hideProgress();
+        iniciarDescargaView.onSuccessGetOrdenesCompra(respuestaOrdenesCompraDTO);
 
     }
 

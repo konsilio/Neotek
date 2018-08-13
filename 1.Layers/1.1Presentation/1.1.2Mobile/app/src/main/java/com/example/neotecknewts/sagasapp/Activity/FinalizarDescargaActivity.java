@@ -53,6 +53,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
         spinnerMedidorAlmacen = (Spinner) findViewById(R.id.spinner_medidor_almacen);
         spinnerMedidorTractor = (Spinner) findViewById(R.id.spinner_medidor_tractor);
         textViewTitulo = (TextView) findViewById(R.id.textTitulo);
+        session = new Session(getApplicationContext());
 
         linearLayoutTanque.setVisibility(View.GONE);
         textViewTitulo.setText(R.string.title_finalizar_descarga);
@@ -74,7 +75,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
             }
         });
 
-        presenter.getOrdenesCompra(1,session.getTokenWithBearer());
+        presenter.getOrdenesCompra(session.getIdEmpresa(),session.getTokenWithBearer());
     }
 
     public void onClickRegistrar(){

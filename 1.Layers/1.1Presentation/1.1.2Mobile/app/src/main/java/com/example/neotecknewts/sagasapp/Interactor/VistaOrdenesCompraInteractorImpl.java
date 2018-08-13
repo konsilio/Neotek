@@ -46,7 +46,7 @@ public class VistaOrdenesCompraInteractorImpl implements VistaOrdenesCompraInter
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<RespuestaOrdenesCompraDTO> call = restClient.getOrdenesCompra(IdEmpresa,token);
+        Call<RespuestaOrdenesCompraDTO> call = restClient.getOrdenesCompra(IdEmpresa,true,true,false,token);
         Log.w(TAG,retrofit.baseUrl().toString());
 
         call.enqueue(new Callback<RespuestaOrdenesCompraDTO>() {

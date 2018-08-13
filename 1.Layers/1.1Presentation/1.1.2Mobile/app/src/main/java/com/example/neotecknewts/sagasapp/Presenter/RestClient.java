@@ -26,10 +26,15 @@ public interface RestClient {
     Call<List<EmpresaDTO>> getListEmpresas();
 
     @POST(Constantes.LOGIN_URL)
-    Call<UsuarioDTO> postLogin(@Body UsuarioLoginDTO loginBody,@Header("Content-Type") String contentType);
+    Call<UsuarioDTO> postLogin(@Body UsuarioLoginDTO loginBody,
+                               @Header("Content-Type") String contentType);
 
     @GET(Constantes.LISTA_ORDENESCOMPRA_GAS)
-    Call<RespuestaOrdenesCompraDTO> getOrdenesCompra(@Query("IdEmpresa") int IdEmpresa, @Header("Authorization")String token);
+    Call<RespuestaOrdenesCompraDTO> getOrdenesCompra(@Query("IdEmpresa") int IdEmpresa,
+                                                     @Query("EsGas") boolean EsGas,
+                                                     @Query("EsActivoVenta") boolean EsActivoVenta,
+                                                     @Query("EsTransporteGas") boolean EsTransporteGas,
+                                                     @Header("Authorization")String token);
 
 
 }

@@ -138,6 +138,15 @@
                 </TableRow>
             </TableLayout>
 
+            <TableLayout
+                android:id="@+id/tableProductos2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:stretchColumns="0,1,2,3,4,5">
+            </TableLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

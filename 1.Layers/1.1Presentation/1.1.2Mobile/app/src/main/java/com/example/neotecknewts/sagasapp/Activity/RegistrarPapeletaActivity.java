@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,14 +22,20 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import com.example.neotecknewts.sagasapp.Model.OrdenCompraDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
+import com.example.neotecknewts.sagasapp.Presenter.RegistrarPapeletaPresenter;
+import com.example.neotecknewts.sagasapp.Presenter.RegistrarPapeletaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Session;
 
 /**
  * Created by neotecknewts on 03/08/18.
  */
 
-public class RegistrarPapeletaActivity extends AppCompatActivity {
+public class RegistrarPapeletaActivity extends AppCompatActivity implements RegistrarPapeletaView{
 
     public Spinner spinnerOrdenCompra;
     public TextView textViewFecha;
@@ -56,12 +64,21 @@ public class RegistrarPapeletaActivity extends AppCompatActivity {
     public int fechaSeleccionada =0;
     static final int DATE_DIALOG_ID = 0;
 
+    public OrdenCompraDTO ordenCompraDTO;
+    List<OrdenCompraDTO> ordenesCompraDTO;
+
+    ProgressDialog progressDialog;
+    Session session;
+    RegistrarPapeletaPresenter presenter;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_papeleta);
+
+        session = new Session(getApplicationContext());
+        presenter = new RegistrarPapeletaPresenterImpl(this);
 
         fecha = new Date();
         fechaEmbarque = new Date();
@@ -84,7 +101,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity {
         editTextValorCarga = (EditText) findViewById(R.id.input_valor_carga);
         editTextNombreResponsable = (EditText) findViewById(R.id.input_nombre_responsable);
 
-        String[] ordenes = {"OC1", "OC2"};
+        String[] ordenes = {"prueba", "prueba"};
         String[] expedidores = {"Expedidor1", "Expedidor2"};
 
 
@@ -131,6 +148,8 @@ public class RegistrarPapeletaActivity extends AppCompatActivity {
                 onClickLimpiar();
             }
         });
+
+        presenter.getOrdenesCompra(session.getIdEmpresa(),session.getTokenWithBearer());
     }
 
     private void updateDisplay() {
@@ -277,4 +296,33 @@ public class RegistrarPapeletaActivity extends AppCompatActivity {
         editTextNombreResponsable.setText("");
     }
 
+    @Override
+    public void showProgress(int mensaje) {
+        progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
+                getResources().getString(mensaje), true);
+    }
+
+    @Override
+    public void hideProgress() {
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void messageError(int mensaje) {
+        showDialog(getResources().getString(mensaje));
+    }
+
+    @Override
+    public void onSuccessGetOrdenesCompra(RespuestaOrdenesCompraDTO respuesta) {
+        Log.w("VIEW", respuesta.getOrdenesCompra().size()+"");
+        this.ordenesCompraDTO = respuesta.getOrdenesCompra();
+        String[] ordenes = new String[ordenesCompraDTO.size()];
+        for (int i =0; i<ordenes.length; i++){
+            ordenes[i]=ordenesCompraDTO.get(i).getNumOrdenCompra();
+        }
+
+        spinnerOrdenCompra.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
+    }
 }

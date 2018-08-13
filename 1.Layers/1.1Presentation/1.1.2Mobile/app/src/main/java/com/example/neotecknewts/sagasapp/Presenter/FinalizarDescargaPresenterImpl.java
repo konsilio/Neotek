@@ -27,6 +27,7 @@ public class FinalizarDescargaPresenterImpl implements FinalizarDescargaPresente
     @Override
     public void onSuccessGetOrdenesCompra(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO) {
         finalizarDescargaView.hideProgress();
+        finalizarDescargaView.onSuccessGetOrdenesCompra(respuestaOrdenesCompraDTO);
 
     }
 

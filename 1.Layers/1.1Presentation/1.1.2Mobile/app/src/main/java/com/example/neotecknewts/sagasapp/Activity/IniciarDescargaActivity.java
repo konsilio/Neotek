@@ -63,6 +63,8 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
         spinnerMedidorAlmacen = (Spinner) findViewById(R.id.spinner_medidor_almacen);
         spinnerMedidorTractor = (Spinner) findViewById(R.id.spinner_medidor_tractor);
 
+        session = new Session(getApplicationContext());
+
         presenter = new IniciarDescargaPresenterImpl(this);
 
         String[] ordenes = {"prueba1", "prueba2"};
@@ -80,7 +82,7 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
             }
         });
 
-        presenter.getOrdenesCompra(1,session.getTokenWithBearer());
+        presenter.getOrdenesCompra(session.getIdEmpresa(),session.getTokenWithBearer());
     }
 
 

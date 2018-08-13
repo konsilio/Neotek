@@ -37,6 +37,8 @@ public class Session {
 
     public static final String KEY_TOKEN = "token";
 
+    public static final String KEY_ID_EMPRESA = "idEmpresa";
+
     // Constructor
     public Session(Context context){
         this._context = context;
@@ -45,7 +47,7 @@ public class Session {
     }
 
 
-    public void createLoginSession(String password, String email, String token){
+    public void createLoginSession(String password, String email, String token, int idEmpresa){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -56,6 +58,8 @@ public class Session {
         editor.putString(KEY_EMAIL, email);
 
         editor.putString(KEY_TOKEN, token);
+
+        editor.putInt(KEY_ID_EMPRESA,idEmpresa);
 
         // commit changes
         editor.commit();
@@ -75,6 +79,8 @@ public class Session {
 
         user.put(KEY_TOKEN, pref.getString(KEY_TOKEN,null));
 
+        user.put(KEY_ID_EMPRESA, pref.getString(KEY_ID_EMPRESA,null));
+
         // return user
         return user;
     }
@@ -85,5 +91,9 @@ public class Session {
 
     public String getToken(){
         return pref.getString(KEY_TOKEN,null);
+    }
+
+    public int getIdEmpresa(){
+        return pref.getInt(KEY_ID_EMPRESA,0);
     }
 }

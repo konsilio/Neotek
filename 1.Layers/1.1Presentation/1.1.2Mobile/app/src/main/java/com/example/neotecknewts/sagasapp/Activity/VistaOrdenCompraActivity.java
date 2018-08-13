@@ -62,7 +62,7 @@ public class VistaOrdenCompraActivity extends AppCompatActivity implements Vista
         session = new Session(getApplicationContext());
 
         textViewProveedor = (TextView) findViewById(R.id.textViewProovedor);
-        tableLayout = (TableLayout) findViewById(R.id.tableProductos);
+        tableLayout = (TableLayout) findViewById(R.id.tableProductos2);
         spinnerOrdenCompra = (Spinner) findViewById(R.id.spinner_orden_compra);
         textViewFecha = (TextView) findViewById(R.id.textFecha);
         textViewsubtotal = (TextView) findViewById(R.id.textViewSubtotal);
@@ -139,7 +139,7 @@ public class VistaOrdenCompraActivity extends AppCompatActivity implements Vista
 
         });
 
-        vistaOrdenesCompraPresenter.getOrdenesCompra(1,session.getTokenWithBearer());
+        vistaOrdenesCompraPresenter.getOrdenesCompra(session.getIdEmpresa(),session.getTokenWithBearer());
 
     }
 
@@ -204,6 +204,8 @@ public class VistaOrdenCompraActivity extends AppCompatActivity implements Vista
                     ordenCompraDTO.getProveedorCelular1() + "," + ordenCompraDTO.getProveedorCelular2() + " y " +
                     ordenCompraDTO.getProveedorCelular3();
             textViewProveedor.setText(proveedor);
+
+            tableLayout.removeAllViews();
 
             for (ProductoDTO producto : ordenCompraDTO.getProductos()) {
                 TableRow row = new TableRow(this);
