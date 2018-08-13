@@ -38,8 +38,10 @@
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
-                            <div class="header">
-                                
+                            <div class="header text-right">
+                                <button class="btn btn-primary btn-round">
+                                    <i class="material-icons"></i> Agregar
+                                </button>
                             </div>
                             <div class="body table-responsive">
                                 <table class="table table-hover">
