@@ -12,9 +12,9 @@ namespace Application.MainModule.Flujos
     public class Mobile
     {
 
-        public RespuestaOrdenesCompraDTO ConsultarOrdenesCompra(short IdEmpresa)
+        public RespuestaOrdenesCompraDTO ConsultarOrdenesCompra(short IdEmpresa, bool EsGas, bool EsActivoVenta, bool EsTransporteGas)
         {
-           return OrdenesCompraServicio.Consultar(IdEmpresa);
+           return OrdenesCompraServicio.Consultar(IdEmpresa,EsGas,EsActivoVenta,EsTransporteGas);
         }
     }
 }
