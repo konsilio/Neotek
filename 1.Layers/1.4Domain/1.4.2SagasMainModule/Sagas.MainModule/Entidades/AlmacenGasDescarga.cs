@@ -25,6 +25,8 @@ namespace Sagas.MainModule.Entidades
         public Nullable<int> IdRequisicion { get; set; }
         public Nullable<int> IdOrdenCompraExpedidor { get; set; }
         public Nullable<int> IdOrdenCompraPorteador { get; set; }
+        public Nullable<int> IdProveedorExpedidor { get; set; }
+        public Nullable<int> IdProveedorPorteador { get; set; }
         public Nullable<short> IdCAlmacenGas { get; set; }
         public Nullable<short> IdTipoMedidorTractor { get; set; }
         public Nullable<short> IdTipoMedidorAlmacen { get; set; }
@@ -38,8 +40,6 @@ namespace Sagas.MainModule.Entidades
         public Nullable<decimal> PorcenMagnatelOcularTractorINI { get; set; }
         public Nullable<decimal> PorcenMagnatelOcularAlmacenINI { get; set; }
         public Nullable<System.DateTime> FechaInicioDescarga { get; set; }
-        public Nullable<int> IdProveedorExpedidor { get; set; }
-        public Nullable<int> IdProveedorPorteador { get; set; }
         public Nullable<System.DateTime> FechaPapeleta { get; set; }
         public Nullable<System.DateTime> FechaEmbarque { get; set; }
         public string NumeroEmbarque { get; set; }
@@ -65,5 +65,7 @@ namespace Sagas.MainModule.Entidades
         public virtual Requisicion Requisicion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasDescargaFoto> Fotos { get; set; }
+        public virtual Proveedor Expedidor { get; set; }
+        public virtual Proveedor Porteador { get; set; }
     }
 }

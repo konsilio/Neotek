@@ -40,6 +40,7 @@ namespace Sagas.MainModule.Entidades
         public Nullable<decimal> Iva { get; set; }
         public Nullable<decimal> Ieps { get; set; }
         public Nullable<decimal> Total { get; set; }
+        public bool EsTransporteGas { get; set; }
     
         public virtual Proveedor Proveedor { get; set; }
         public virtual Empresa Empresa { get; set; }

@@ -18,6 +18,8 @@ namespace Sagas.MainModule.Entidades
         public Proveedor()
         {
             this.OrdenesCompra = new HashSet<OrdenCompra>();
+            this.AlmacenEntradaGasDescarga = new HashSet<AlmacenGasDescarga>();
+            this.AlmacenEntradaGasDescarga1 = new HashSet<AlmacenGasDescarga>();
         }
     
         public int IdProveedor { get; set; }
@@ -67,5 +69,9 @@ namespace Sagas.MainModule.Entidades
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrdenCompra> OrdenesCompra { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasDescarga> AlmacenEntradaGasDescarga { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasDescarga> AlmacenEntradaGasDescarga1 { get; set; }
     }
 }
