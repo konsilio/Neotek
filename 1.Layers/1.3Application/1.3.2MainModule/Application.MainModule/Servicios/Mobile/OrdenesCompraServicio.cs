@@ -13,10 +13,10 @@ namespace Application.MainModule.Servicios.Mobile
 {
    public static class OrdenesCompraServicio
     {
-        public static RespuestaOrdenesCompraDTO Consultar(short idEmpresa)
+        public static RespuestaOrdenesCompraDTO Consultar(short idEmpresa, bool EsGas, bool EsActivoVenta, bool EsTransporteGas)
         {
             var ordenCompraDataAccess = new OrdenCompraDataAccess();
-            var ordenes = OrdenesCompraAdapter.ToDTO(ordenCompraDataAccess.Buscar(idEmpresa, OrdenCompraEstatusEnum.Proceso_compra));
+            var ordenes = OrdenesCompraAdapter.ToDTO(ordenCompraDataAccess.Buscar(idEmpresa, OrdenCompraEstatusEnum.Proceso_compra,EsGas,EsActivoVenta,EsTransporteGas));
             if(ordenes != null)
                 if(ordenes.Count > 0)
                     return new RespuestaOrdenesCompraDTO()
@@ -33,5 +33,6 @@ namespace Application.MainModule.Servicios.Mobile
                 OrdenesCompra = ordenes,
             };
         }
+
     }
 }

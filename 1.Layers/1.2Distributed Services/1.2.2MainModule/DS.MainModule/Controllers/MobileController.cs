@@ -40,10 +40,16 @@ namespace DS.MainModule.Controllers
         }
 
         [Route("lista/ordenes/compra")]
-        public HttpResponseMessage GetListaOrdenesCompra(short IdEmpresa)
+        public HttpResponseMessage GetListaOrdenesCompra(short IdEmpresa, bool EsGas, bool EsActivoVenta, bool EsTransporteGas)
         {
-            return RespuestaHttp.crearRepuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa), Request);
+            return RespuestaHttp.crearRepuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa,EsGas,EsActivoVenta,EsTransporteGas), Request);
         }
+
+        //[Route("lista/ordenes/compra/transportador")]
+        //public HttpResponseMessage GetListaOrdenesCompraTransportador(short IdEmpresa)
+        //{
+        //    return RespuestaHttp.crearRepuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa), Request);
+        //}
 
     }
 }

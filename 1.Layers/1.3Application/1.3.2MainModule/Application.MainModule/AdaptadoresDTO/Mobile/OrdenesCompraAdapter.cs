@@ -32,7 +32,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 ProveedorNumExt = ordenCompra.Proveedor.NumExt,
                 ProveedorNumInt = ordenCompra.Proveedor.NumInt,
                 ProveedorRfc = ordenCompra.Proveedor.Rfc,
-                ProveedorTelefono1 =ordenCompra.Proveedor.Telefono1,
+                ProveedorTelefono1 = ordenCompra.Proveedor.Telefono1,
                 ProveedorTelefono2 = ordenCompra.Proveedor.Telefono2,
                 ProveedorTelefono3 = ordenCompra.Proveedor.Telefono3,
                 Iva = ordenCompra.Iva,

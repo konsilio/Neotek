@@ -18,11 +18,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
             uow = new SagasDataUow();
         }
         
-        public List<OrdenCompra> Buscar(short idEmpresa, byte idOrdenComprEstatus)
+        public List<OrdenCompra> Buscar(short idEmpresa, byte idOrdenComprEstatus, bool EsGas, bool EsActivoVenta, bool EsTransporteGas)
         {
             return uow.Repository<OrdenCompra>().Get(x => x.Activo
-                                                                  && x.EsGas
-                                                                  && x.EsActivoVenta 
+                                                                  && x.EsGas.Equals(EsGas)
+                                                                  && x.EsActivoVenta.Equals(EsActivoVenta)
+                                                                  && x.EsTransporteGas.Equals(EsTransporteGas)
                                                                   && x.IdEmpresa.Equals(idEmpresa)
                                                                   && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus))
                                                                   .ToList();
