@@ -302,7 +302,7 @@
                                             </Columns>
                                         </asp:GridView>
                                         <%--Grid productos autorizacion--%>
-                                        <asp:GridView ID="gvProductoAut" runat="server" AutoGenerateColumns="false" OnRowCommand="gvProductoAut_RowCommand" OnRowDataBound="gvProductoAut_RowDataBound">
+                                        <asp:GridView ID="gvProductoAut" runat="server" AutoGenerateColumns="false" OnRowCommand="gvProductoAut_RowCommand" OnRowDataBound="gvProductoAut_RowDataBound" CssClass="table table-hover">
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <%--0 Tipo de compra--%>

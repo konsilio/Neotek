@@ -14,8 +14,11 @@ namespace Application.MainModule.Servicios.Almacen
             foreach (Sagas.MainModule.Entidades.RequisicionProducto _prod in _requisicion.Productos)
             {
                 var almacen = new AccesoADatos.AlmacenDataAccess().ProductoAlmacen(_prod.IdProducto);
-                _requisicion.Productos.ElementAt(x).CantidadAlmacenActual = almacen != null ? almacen.Cantidad : 0;     
-                _requisicion.Productos.ElementAt(x).CantidadAComprar = Math.Abs(_prod.CantidadAlmacenActual.Value - _prod.Cantidad);            
+                _requisicion.Productos.ElementAt(x).CantidadAlmacenActual = almacen != null ? almacen.Cantidad : 0;
+                if (_prod.CantidadAlmacenActual.Value > _prod.Cantidad)
+                    _requisicion.Productos.ElementAt(x).CantidadAComprar = 0;
+                else
+                    _requisicion.Productos.ElementAt(x).CantidadAComprar = Math.Abs(_prod.CantidadAlmacenActual.Value - _prod.Cantidad);
             }
             return _requisicion;
         }

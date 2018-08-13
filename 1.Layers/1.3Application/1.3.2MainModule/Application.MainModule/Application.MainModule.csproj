@@ -102,6 +102,7 @@
     <Compile Include="Servicios\Catalogos\ProductoServicios.cs" />
     <Compile Include="Servicios\Catalogos\UsuarioServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
+    <Compile Include="Servicios\Notificacion\EnviarCorreosServicio.cs" />
     <Compile Include="Servicios\Requisicion\RequisicionServicio.cs" />
     <Compile Include="Servicios\Mobile\MenuServicio.cs" />
     <Compile Include="Servicios\Seguridad\AutenticarServicio.cs" />

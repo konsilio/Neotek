@@ -82,7 +82,7 @@
                                 </div>
                                 <div class="row clearfix">
                                     <div class="body table-responsive">
-                                        <asp:GridView runat="server" AllowPaging="true" PageSize="6" OnPageIndexChanging="dgRequisisiones_PageIndexChanging" AutoGenerateColumns="false" ID="dgRequisisiones" CssClass="table m-b-0" OnRowCommand="dgRequisisiones_RowCommand">
+                                        <asp:GridView runat="server" AllowPaging="true" PageSize="6" OnPageIndexChanging="dgRequisisiones_PageIndexChanging" AutoGenerateColumns="false" ID="dgRequisisiones" CssClass="table m-b-0" OnRowCommand="dgRequisisiones_RowCommand" OnRowDataBound="dgRequisisiones_RowDataBound">
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <HeaderTemplate>
@@ -98,6 +98,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Label runat="server" ID="lblDgNoRequisicion" Text='<%# Bind("NumeroRequisicion") %>'></asp:Label>
+                                                        <asp:Label runat="server" ID="lblIdRequisiconEstatus" Text='<%# Bind("IdRequisicionEstatus") %>' Visible="false"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>

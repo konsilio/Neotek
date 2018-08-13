@@ -91,6 +91,14 @@ namespace Web.MainModule
         protected void txtNoRequisicion_TextChanged(object sender, EventArgs e)
         {
 
+        }       
+
+        protected void dgRequisisiones_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if ((e.Row.Cells[0].FindControl(""))
+            {
+
+            }
         }
     }
 }
