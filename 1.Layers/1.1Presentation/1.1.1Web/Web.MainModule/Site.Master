@@ -537,6 +537,7 @@
         <asp:ContentPlaceHolder ID="ctDashBoard" runat="server" />
         <asp:ContentPlaceHolder ID="ctRequisicion" runat="server" />
         <asp:ContentPlaceHolder ID="ctOrdenCompra" runat="server" />
+        <asp:ContentPlaceHolder ID="ctProveedor" runat="server" />
     </section>
     <script src="../../assets/bundles/libscripts.bundle.js"></script>
     <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
