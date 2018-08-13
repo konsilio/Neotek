@@ -120,6 +120,10 @@
       <Project>{f4d84d09-bef2-4bd5-9f38-04396ef52bc8}</Project>
       <Name>Infrastructure.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.3Mail\Mail.MainModule.csproj">
+      <Project>{4665e949-2392-4a01-8af5-3ee83a85b903}</Project>
+      <Name>Mail.MainModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\Exceptions.MainModule.csproj">
       <Project>{FB4086F4-8177-4175-BEB6-312FD528ABA2}</Project>
       <Name>Exceptions.MainModule</Name>
