@@ -66,6 +66,7 @@
     <Compile Include="DTOs\Mobile\MenuDto.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionAutorizacionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionAutPutDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionCancelarDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionCrearDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEDTO.cs" />

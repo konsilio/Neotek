@@ -32,12 +32,12 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.BuscarRequisicionesPorEmpresa(idEmpresa));
         }
         [Route("buscar/requisicion/{numRequi}")]
-        public HttpResponseMessage GetRequisicionByNumRequisicion(string numRequi)
+        public HttpResponseMessage GetRequisicionByNumRequisicion(int numRequi)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.BuscarRequisicion(numRequi));
         }
         [Route("buscar/requisicion/autorizacion/{numRequi}")]
-        public HttpResponseMessage GetRequisicionByNumRequisicionAut(string numRequi)
+        public HttpResponseMessage GetRequisicionByNumRequisicionAut(int numRequi)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.BuscarRequisicionAuto(numRequi));
         }
@@ -50,6 +50,11 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PutActulizarAutorizacion(RequisicionAutPutDTO req)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.ActualizarRequisicionAutorizacion(req));
-        }        
+        }
+        //[Route("cancelar")]
+        //public HttpResponseMessage PutCancelarRequisicion(req)
+        //{
+
+        //}
     }
 }

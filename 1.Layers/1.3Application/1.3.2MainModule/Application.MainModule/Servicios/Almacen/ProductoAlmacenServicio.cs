@@ -19,6 +19,7 @@ namespace Application.MainModule.Servicios.Almacen
                     _requisicion.Productos.ElementAt(x).CantidadAComprar = 0;
                 else
                     _requisicion.Productos.ElementAt(x).CantidadAComprar = Math.Abs(_prod.CantidadAlmacenActual.Value - _prod.Cantidad);
+                x++;
             }
             return _requisicion;
         }

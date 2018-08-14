@@ -17,44 +17,49 @@ namespace Web.MainModule.Requisicion.Model
         [Display(Name = "IdUsuarioSolicitante")]
         public int IdUsuarioSolicitante { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
+        [Display(Name = "UsuarioSolicitante")]
+        public string UsuarioSolicitante { get; set; }
+        [Required(ErrorMessage = Error.S0001)]
+        [Display(Name = "IdEmpresa")]
         public short IdEmpresa { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
+        [Display(Name = "NumeroRequisicion")]
         public string NumeroRequisicion { get; set; }
         [Required(ErrorMessage = Error.S0001)]
         [Display(Name = "MotivoRequisicion")]
         public string MotivoRequisicion { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
+        [Display(Name = "RequeridoEn")]
         public string RequeridoEn { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
+        [Display(Name = "IdRequisicionEstatus")]
         public byte IdRequisicionEstatus { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
-        public System.DateTime FechaRequerida { get; set; }
+        [Display(Name = "RequisicionEstatus")]
+        public string RequisicionEstatus { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
-        public System.DateTime FechaRegistro { get; set; }
+        [Display(Name = "FechaRequerida")]
+        public DateTime FechaRequerida { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
-        public Nullable<int> IdUsuarioRevision { get; set; }
+        [Display(Name = "FechaRegistro")]
+        public DateTime FechaRegistro { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
+        [Display(Name = "IdUsuarioRevision")]
+        public int IdUsuarioRevision { get; set; }
+        [Required(ErrorMessage = Error.S0001)]
+        [Display(Name = "OpinionAlmacen")]
         public string OpinionAlmacen { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
-        public Nullable<System.DateTime> FechaRevision { get; set; }
+        [Display(Name = "FechaRevision")]
+        public DateTime FechaRevision { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
+        [Display(Name = "MotivoCancelacion")]
         public string MotivoCancelacion { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
-        public Nullable<int> IdUsuarioAutorizacion { get; set; }
+        [Display(Name = "IdUsuarioAutorizacion")]
+        public int IdUsuarioAutorizacion { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
-        public Nullable<System.DateTime> FechaAutorizacion { get; set; }
-
+        [Display(Name = "FechaAutorizacion")]
+        public DateTime FechaAutorizacion { get; set; }
     }
 }

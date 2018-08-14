@@ -148,8 +148,8 @@
                                                     <div class="col-sm-12">
                                                         <div class="form-group">
                                                             <div class="form-line">
-                                                                <asp:TextBox runat="server" TextMode="MultiLine" ID="txtOpinion" rows="4" CssClass="form-control no-resize" placeholder="Porfavor escriba su opinion"></asp:TextBox>
-                                                             <asp:Label runat="server" ID="reqOpinion" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
+                                                                <asp:TextBox runat="server" TextMode="MultiLine" ID="txtOpinion" Rows="4" CssClass="form-control no-resize" placeholder="Porfavor escriba su opinion"></asp:TextBox>
+                                                                <asp:Label runat="server" ID="reqOpinion" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -401,7 +401,7 @@
                                         <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" Enabled="false" />
                                     </div>
                                     <div class="col-lg-4 col-md-8" align="center">
-                                        <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Crear" OnClick="BtnCrear_Click" />
+                                        <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" OnClientClick="return confirm('¿Esta Seguro?');" Text="Crear" OnClick="BtnCrear_Click" />
                                     </div>
                                 </div>
                             </div>
@@ -410,41 +410,41 @@
                 </div>
             </div>
         </div>
-    </section>
-    <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <asp:UpdatePanel ID="upModalCancelar" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
-                <ContentTemplate>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <asp:TextBox ID="txtMotivoCancela" runat="server" placeholder="Por cual motivo decea cancelar..."></asp:TextBox>
+        <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <asp:UpdatePanel ID="upModalCancelar" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <asp:TextBox ID="txtMotivoCancela" runat="server" placeholder="Por cual motivo decea cancelar..."></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-round waves-effect">Cancelar</button>
+                                <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary btn-round waves-effect">Cancelar</button>
-                            <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
-                        </div>
-                    </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
         </div>
-    </div>
-    <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-round waves-effect">SI</button>
-                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+        <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-round waves-effect">SI</button>
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </asp:Content>
 

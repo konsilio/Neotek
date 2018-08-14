@@ -30,6 +30,10 @@ namespace Application.MainModule.DTOs.Requisicion
         [Display(Name = "FechaRevision")]
         public Nullable<System.DateTime> FechaRevision { get; set; }
 
+        [Required(ErrorMessage = Error.S0001)]
+        [Display(Name = "IdRequisicionEstatus")]
+        public byte IdRequisicionEstatus { get; set; }
+
         public List<RequisicionProdReviPutDTO> ListaProductos { get; set; }
     }
 }

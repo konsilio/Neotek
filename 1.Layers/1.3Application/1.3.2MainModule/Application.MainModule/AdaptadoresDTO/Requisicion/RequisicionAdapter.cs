@@ -15,11 +15,13 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             {
                 IdRequisicion = _requisicion.IdRequisicion,
                 IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
+                UsuarioSolicitante = _requisicion.Solicitante.NombreUsuario,
                 IdEmpresa = _requisicion.IdEmpresa,
                 NumeroRequisicion = _requisicion.NumeroRequisicion,
                 MotivoRequisicion = _requisicion.MotivoRequisicion,
                 RequeridoEn = _requisicion.RequeridoEn,
                 IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
+                RequisicionEstatus = _requisicion.RequisicionEstatus.Estatus,
                 FechaRequerida = _requisicion.FechaRequerida,
                 FechaRegistro = _requisicion.FechaRegistro
             };
@@ -29,9 +31,9 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
         {
             requiscionDTO.IdRequisicion = _requisicion.IdRequisicion;
             requiscionDTO.IdRequisicionEstatus = _requisicion.IdRequisicionEstatus;
-            requiscionDTO.IdUsuarioRevision = _requisicion.IdUsuarioRevision;
+            requiscionDTO.IdUsuarioRevision = _requisicion.IdUsuarioRevision.Value;
             requiscionDTO.OpinionAlmacen = _requisicion.OpinionAlmacen;
-            requiscionDTO.FechaRevision = _requisicion.FechaRevision;
+            requiscionDTO.FechaRevision = _requisicion.FechaRevision.Value;
             requiscionDTO.MotivoCancelacion = _requisicion.MotivoCancelacion;
             return requiscionDTO;
         }
@@ -39,8 +41,8 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
         {
             requiscionDTO.IdRequisicionEstatus = _requisicion.IdRequisicionEstatus;
             requiscionDTO.MotivoCancelacion = _requisicion.MotivoCancelacion;
-            requiscionDTO.IdUsuarioAutorizacion = _requisicion.IdUsuarioAutorizacion;
-            requiscionDTO.FechaAutorizacion = _requisicion.FechaAutorizacion;
+            requiscionDTO.IdUsuarioAutorizacion = _requisicion.IdUsuarioAutorizacion.Value;
+            requiscionDTO.FechaAutorizacion = _requisicion.FechaAutorizacion.Value;
             return requiscionDTO;
         }
         public static List<RequisicionDTO> ToDTO(List<Sagas.MainModule.Entidades.Requisicion> _requisiciones)
@@ -135,7 +137,8 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
         public static Sagas.MainModule.Entidades.Requisicion FromDTO(RequisicionRevPutDTO _requisicionDTO, Sagas.MainModule.Entidades.Requisicion entidadAnterior)
         {//Revision
             Sagas.MainModule.Entidades.Requisicion _requisicion = FromEntity(entidadAnterior);
-            _requisicion.NumeroRequisicion = _requisicionDTO.NumeroRequisicion;
+            //_requisicion.NumeroRequisicion = _requisicionDTO.NumeroRequisicion;
+            _requisicion.IdRequisicionEstatus = _requisicionDTO.IdRequisicionEstatus;
             _requisicion.IdUsuarioRevision = _requisicionDTO.IdUsuarioRevision;
             _requisicion.OpinionAlmacen = _requisicionDTO.OpinionAlmacen;
             _requisicion.FechaRevision = _requisicionDTO.FechaRevision;
@@ -144,9 +147,10 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
         public static Sagas.MainModule.Entidades.Requisicion FromDTO(RequisicionAutPutDTO _requisicionDTO, Sagas.MainModule.Entidades.Requisicion entidadAnterior)
         {//Autorizacion
             Sagas.MainModule.Entidades.Requisicion _requisicion = FromEntity(entidadAnterior);
-            _requisicion.NumeroRequisicion = _requisicionDTO.NumeroRequisicion;
+            //_requisicion.NumeroRequisicion = _requisicionDTO.NumeroRequisicion;
             _requisicionDTO.IdUsuarioAutorizacion = _requisicionDTO.IdUsuarioAutorizacion;
             _requisicion.FechaAutorizacion = _requisicionDTO.FechaAutorizacion;
+            _requisicion.IdRequisicionEstatus = _requisicionDTO.IdRequisicionEstatus;
             return _requisicion;
         }
         public static Sagas.MainModule.Entidades.Requisicion FromEntity(Sagas.MainModule.Entidades.Requisicion _entidadAnterior)
@@ -211,9 +215,9 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             RequisicionEDTO requiscionEDTO = new RequisicionEDTO();
             requiscionEDTO.IdRequisicion = _requisicion.IdRequisicion;
             requiscionEDTO.IdRequisicionEstatus = _requisicion.IdRequisicionEstatus;
-            requiscionEDTO.IdUsuarioRevision = _requisicion.IdUsuarioRevision;
+            requiscionEDTO.IdUsuarioRevision = _requisicion.IdUsuarioRevision.Value;
             requiscionEDTO.OpinionAlmacen = _requisicion.OpinionAlmacen;
-            requiscionEDTO.FechaRevision = _requisicion.FechaRevision;
+            requiscionEDTO.FechaRevision = _requisicion.FechaRevision.Value;
             requiscionEDTO.MotivoCancelacion = _requisicion.MotivoCancelacion;
             requiscionEDTO.ListaProductos = RequisicionProductoAdapter.ToDTO(_requisicion.Productos.ToList());
             return requiscionEDTO;
@@ -223,8 +227,8 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             RequisicionEDTO requiscionEDTO = new RequisicionEDTO();
             requiscionEDTO.IdRequisicionEstatus = _requisicion.IdRequisicionEstatus;
             requiscionEDTO.MotivoCancelacion = _requisicion.MotivoCancelacion;
-            requiscionEDTO.IdUsuarioAutorizacion = _requisicion.IdUsuarioAutorizacion;
-            requiscionEDTO.FechaAutorizacion = _requisicion.FechaAutorizacion;
+            requiscionEDTO.IdUsuarioAutorizacion = _requisicion.IdUsuarioAutorizacion.Value;
+            requiscionEDTO.FechaAutorizacion = _requisicion.FechaAutorizacion.Value;
             requiscionEDTO.ListaProductos = RequisicionProductoAdapter.ToDTO(_requisicion.Productos.ToList());
             return requiscionEDTO;
         }
@@ -238,7 +242,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             _requisicion.NumeroRequisicion = Servicios.FolioServicio.GenerarNumeroRequisicion(requiscionEDTO);
             _requisicion.MotivoRequisicion = requiscionEDTO.MotivoRequisicion;
             _requisicion.RequeridoEn = requiscionEDTO.RequeridoEn;
-            _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Creado;
+            _requisicion.IdRequisicionEstatus = requiscionEDTO.IdRequisicionEstatus;
             _requisicion.FechaRequerida = requiscionEDTO.FechaRequerida;
             _requisicion.FechaRegistro = requiscionEDTO.FechaRegistro;
             _requisicion.Productos = RequisicionProductoAdapter.FromDTO(requiscionEDTO.ListaProductos);

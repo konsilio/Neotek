@@ -49,7 +49,6 @@ namespace Web.MainModule
         }
         private void CargarEmpresas()
         {
-            //ddlRazon.DataSource = null;
             ddlEmpresas.DataSource = new Seguridad.Servicio.ComprasServicio().Empresas(_tok);
             ddlEmpresas.DataValueField = "IdEmpresa";
             ddlEmpresas.DataTextField = "NombreComercial";
@@ -60,7 +59,8 @@ namespace Web.MainModule
         {
             dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString());
             dgRequisisiones.DataBind();
-        }
+            // ModificargvRequisiciones();
+        }    
         protected void dgRequisisiones_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("VerRequi"))
@@ -81,23 +81,38 @@ namespace Web.MainModule
         }
 
         protected void ddlEmpresas_SelectedIndexChanged(object sender, EventArgs e)
-        {            
+        {
             if (!ddlEmpresas.SelectedValue.Equals("0"))
             {
                 CargarRequisiciones(Int16.Parse(ddlEmpresas.SelectedValue));
-            }            
+            }
         }
 
         protected void txtNoRequisicion_TextChanged(object sender, EventArgs e)
         {
 
-        }       
+        }
 
         protected void dgRequisisiones_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            if ((e.Row.Cells[0].FindControl(""))
+            if (e.Row.RowType.Equals(DataControlRowType.DataRow))
             {
-
+                Label lblEstatus = (e.Row.Cells[0].FindControl("lblIdRequisicionEstatus") as Label);
+                if (int.Parse(lblEstatus.Text).Equals(1))
+                {
+                    (e.Row.Cells[0].FindControl("lbAutoriza") as LinkButton).Visible = false;
+                    (e.Row.Cells[0].FindControl("lbDgOjo") as LinkButton).Visible = true;
+                }
+                if (int.Parse(lblEstatus.Text).Equals(3) || int.Parse(lblEstatus.Text).Equals(4))
+                {
+                    (e.Row.Cells[0].FindControl("lbAutoriza") as LinkButton).Visible = true;
+                    (e.Row.Cells[0].FindControl("lbDgOjo") as LinkButton).Visible = false;
+                }
+                if (int.Parse(lblEstatus.Text).Equals(10))
+                {
+                    (e.Row.Cells[0].FindControl("lbAutoriza") as LinkButton).Visible = false;
+                    (e.Row.Cells[0].FindControl("lbDgOjo") as LinkButton).Visible = false;
+                }
             }
         }
     }

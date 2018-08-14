@@ -24,6 +24,9 @@ namespace Web.MainModule.Requisicion.Model
         [Required(ErrorMessage = Error.S0001)]
         [Display(Name = "FechaRevision")]
         public DateTime FechaRevision { get; set; }
+        [Required(ErrorMessage = Error.S0001)]
+        [Display(Name = "IdRequisicionEstatus")]
+        public byte IdRequisicionEstatus { get; set; }
         public List<RequisicionProdReviPutDTO> ListaProductos { get; set; }
     }
 }

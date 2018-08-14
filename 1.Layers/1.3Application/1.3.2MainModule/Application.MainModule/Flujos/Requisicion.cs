@@ -22,11 +22,11 @@ namespace Application.MainModule.Flujos
         {
             return RequisicionServicio.BuscarRequisicionPorIdEmpresa(idEmpresa);
         }
-        public RequisicionRevisionDTO BuscarRequisicion(string numRequisicon)
+        public RequisicionRevisionDTO BuscarRequisicion(int idRequisicion)
         {
-            return RequisicionServicio.BuscarRequisicion(numRequisicon);
+            return RequisicionServicio.BuscarRequisicion(idRequisicion);
         }
-        public RequisicionAutorizacionDTO BuscarRequisicionAuto(string numRequisicon)
+        public RequisicionAutorizacionDTO BuscarRequisicionAuto(int numRequisicon)
         {
             return RequisicionServicio.BuscarRequisicionAuto(numRequisicon);
         }

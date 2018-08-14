@@ -1,5 +1,4 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Compras.aspx.cs" Inherits="Web.MainModule.Compras" %>
-
 <asp:Content ID="ctCompras" ContentPlaceHolderID="ctCompras" runat="server">
     <section class="content home">
         <div class="container-fluid">
@@ -29,7 +28,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <asp:TextBox runat="server" ID="txtNoRequisicion" class="form-control" placeholder="N° de Requisición" OnTextChanged="txtNoRequisicion_TextChanged" />
+                                            <asp:TextBox runat="server" ID="txtNoRequisicion" class="form-control" placeholder="N° de Requisición" AutoPostBack="true" OnTextChanged="txtNoRequisicion_TextChanged" />
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -82,7 +81,7 @@
                                 </div>
                                 <div class="row clearfix">
                                     <div class="body table-responsive">
-                                        <asp:GridView runat="server" AllowPaging="true" PageSize="6" OnPageIndexChanging="dgRequisisiones_PageIndexChanging" AutoGenerateColumns="false" ID="dgRequisisiones" CssClass="table m-b-0" OnRowCommand="dgRequisisiones_RowCommand" OnRowDataBound="dgRequisisiones_RowDataBound">
+                                        <asp:GridView runat="server" AllowPaging="true" PageSize="6" OnPageIndexChanging="dgRequisisiones_PageIndexChanging" AutoGenerateColumns="false" ID="dgRequisisiones" CssClass="table m-b-0" OnRowCommand="dgRequisisiones_RowCommand" OnRowDataBound="dgRequisisiones_RowDataBound" >
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <HeaderTemplate>
@@ -98,7 +97,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Label runat="server" ID="lblDgNoRequisicion" Text='<%# Bind("NumeroRequisicion") %>'></asp:Label>
-                                                        <asp:Label runat="server" ID="lblIdRequisiconEstatus" Text='<%# Bind("IdRequisicionEstatus") %>' Visible="false"></asp:Label>
+                                                        <asp:Label runat="server" ID="lblIdRequisicionEstatus" Text='<%# Bind("IdRequisicionEstatus") %>' Visible="false"></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -114,7 +113,8 @@
                                                         Solicitante
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:Label runat="server" ID="lblDgSolicitante" Text='<%# Bind("IdUsuarioSolicitante") %>'></asp:Label>
+                                                        <%--<asp:Label runat="server" ID="lblDgSolicitante" Text='<%# Bind("IdUsuarioSolicitante") %>'></asp:Label>--%>
+                                                        <asp:Label runat="server" ID="lblSolictante" Text='<%# Bind("UsuarioSolicitante") %>' ></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -122,7 +122,8 @@
                                                         Estatus
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:Label runat="server" ID="Estatus" Text="Creada"></asp:Label>
+                                                        <%--<asp:Label runat="server" ID="IdEstatus" Text='<%# Bind("IdRequisicionEstatus") %>' Visible="false" ></asp:Label>--%>
+                                                        <asp:Label runat="server" ID="Estatus" Text='<%# Bind("RequisicionEstatus") %>' ></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -136,11 +137,11 @@
                                                                     <i class="material-icons">picture_as_pdf</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                                 </asp:LinkButton>
-                                                                <asp:LinkButton runat="server" ID="lbDgOjo" Text=" " CommandName="VerRequi" CommandArgument='<%# Eval("NumeroRequisicion") + "|" + Eval("IdRequisicionEstatus") %>'>
+                                                                <asp:LinkButton runat="server" ID="lbDgOjo" Text=" " CommandName="VerRequi" CommandArgument='<%# Eval("IdRequisicion") + "|" + Eval("IdRequisicionEstatus") %>'>
                                                                     <i class="material-icons">content_paste</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                                 </asp:LinkButton>
-                                                                <asp:LinkButton runat="server" ID="lbAutoriza" Text=" " CommandName="VerAut" CommandArgument='<%# Eval("NumeroRequisicion") + "|" + Eval("IdRequisicionEstatus") %>'>
+                                                                <asp:LinkButton runat="server" ID="lbAutoriza" Text=" " CommandName="VerAut" CommandArgument='<%# Eval("IdRequisicion") + "|" + Eval("IdRequisicionEstatus") %>'>
                                                                     <i class="material-icons">spellcheck</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                                 </asp:LinkButton>

@@ -330,13 +330,13 @@ namespace Web.MainModule.Agente
                 _listaRequisiciones = emp;
             }
         }
-        public void BuscarRequisicio(string NumRequisicion, string tkn)
+        public void BuscarRequisicio(int NumRequisicion, string tkn)
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionByNumRequisicion"];
             RequisicionesPorNumRequisicion(NumRequisicion, tkn).Wait();
         }
        
-        private async Task RequisicionesPorNumRequisicion(string numReq, string token)
+        private async Task RequisicionesPorNumRequisicion(int numReq, string token)
         {
             using (var client = new HttpClient())
             {
@@ -346,7 +346,7 @@ namespace Web.MainModule.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiRequisicion + numReq.ToString()).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(ApiRequisicion + numReq).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<RequisicionRevisionDTO>();
                     else
@@ -364,12 +364,12 @@ namespace Web.MainModule.Agente
                 _requisicionRevisionDTO = emp;
             }           
         }
-        public void BuscarRequisicioAuto(string NumRequisicion, string tkn)
+        public void BuscarRequisicioAuto(int NumRequisicion, string tkn)
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionByNumRequisicionAut"];
             RequisicionesPorNumRequisicionAuto(NumRequisicion, tkn).Wait();
         }
-        private async Task RequisicionesPorNumRequisicionAuto(string numReq, string token)
+        private async Task RequisicionesPorNumRequisicionAuto(int numReq, string token)
         {
             using (var client = new HttpClient())
             {

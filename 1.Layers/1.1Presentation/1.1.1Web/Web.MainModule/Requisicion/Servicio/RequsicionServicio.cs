@@ -72,13 +72,13 @@ namespace Web.MainModule.Requisicion.Servicio
             respuestaReq.BuscarRequisiciones(idEmpresa, token);
             return respuestaReq._listaRequisiciones;
         }
-        public Model.RequisicionAutorizacion BuscarRequisicionByNumRequiAuto(string numreq, string token)
+        public Model.RequisicionAutorizacion BuscarRequisicionByNumRequiAuto(int numreq, string token)
         {
             var respuestaReq = new AgenteServicios();
             respuestaReq.BuscarRequisicioAuto(numreq, token);
             return respuestaReq._requsicionAutorizacion;
         }
-        public Model.RequisicionRevisionDTO BuscarRequisicionByNumRequiRevi(string numreq, string token)
+        public Model.RequisicionRevisionDTO BuscarRequisicionByNumRequiRevi(int numreq, string token)
         {
             var respuestaReq = new AgenteServicios();
             respuestaReq.BuscarRequisicio(numreq, token);

@@ -21,7 +21,7 @@ namespace Application.MainModule.Servicios.Requisicion
                 {
                     IdRequisicion = requisicionResp.IdRequisicion,
                     NumRequisicion = requisicionResp.NumRequisicion,
-                    Exito = true,
+                    Exito = requisicionResp.Exito,
                     Mensaje = requisicionResp.Mensaje
                 };
             else
@@ -81,13 +81,13 @@ namespace Application.MainModule.Servicios.Requisicion
         {
             return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas().Where(x => x.IdEmpresa.Equals(_IdEmpresa)).ToList());
         }
-        public static RequisicionRevisionDTO BuscarRequisicion(string _nrequi)
+        public static RequisicionRevisionDTO BuscarRequisicion(int _idrequi)
         {
-            return RequisicionAdapter.ToRevDTO(new RequisicionDataAccess().BuscarPorNumeroRequisicion(_nrequi));
+            return RequisicionAdapter.ToRevDTO(new RequisicionDataAccess().BuscarPorIdRequisicion(_idrequi));
         }
-        public static RequisicionAutorizacionDTO BuscarRequisicionAuto(string _nrequi)
+        public static RequisicionAutorizacionDTO BuscarRequisicionAuto(int _idequi)
         {
-            return RequisicionAdapter.ToAutDTO(new RequisicionDataAccess().BuscarPorNumeroRequisicion(_nrequi));
+            return RequisicionAdapter.ToAutDTO(new RequisicionDataAccess().BuscarPorIdRequisicion(_idequi));
         }
     }
 }

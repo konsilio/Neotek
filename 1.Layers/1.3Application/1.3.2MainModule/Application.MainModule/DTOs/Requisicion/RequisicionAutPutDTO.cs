@@ -23,6 +23,9 @@ namespace Application.MainModule.DTOs.Requisicion
         [Required(ErrorMessage = Error.S0001)]
         [Display(Name = "FechaAutorizacion")]
         public DateTime FechaAutorizacion { get; set; }
+        [Required(ErrorMessage = Error.S0001)]
+        [Display(Name = "IdRequisicionEstatus")]
+        public byte IdRequisicionEstatus { get; set; }
         public List<RequisicionProdAutPutDTO> ListaProductos { get; set; }
     }
 }
