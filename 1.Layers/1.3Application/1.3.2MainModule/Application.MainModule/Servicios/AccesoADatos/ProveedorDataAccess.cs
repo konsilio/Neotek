@@ -1,4 +1,6 @@
-﻿using Application.MainModule.UnitOfWork;
+﻿using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.UnitOfWork;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -17,7 +19,28 @@ namespace Application.MainModule.Servicios.AccesoADatos
             uow = new SagasDataUow();
         }
 
-
+        public RespuestaDto Insertar(Proveedor _pro)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Proveedor>().Insert(_pro);
+                    uow.SaveChanges();
+                    _respuesta.Id = _pro.IdProveedor;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.Mensaje = Exito.G0001;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = ex.Message;
+                }
+            }
+            return _respuesta;
+        }
 
         public List<Proveedor> BuscarTodos()
         {

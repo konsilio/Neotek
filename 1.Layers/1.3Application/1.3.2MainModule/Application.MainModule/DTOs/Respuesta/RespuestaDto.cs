@@ -9,6 +9,9 @@ namespace Application.MainModule.DTOs.Respuesta
     public class RespuestaDto
     {
         public bool Exito { get; set; }
+        public bool EsInsercion { get; set; }
+        public bool EsActulizacion { get; set; }
         public string Mensaje { get; set; }
+        public int Id { get; set; }
     }
 }
