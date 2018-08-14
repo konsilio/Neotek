@@ -33,9 +33,28 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresas());
         }
+        [Route("empresas/listaempresa/{conAdminCent}")]
+        public HttpResponseMessage GetListaEmpresascad(bool conAdminCent)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresas(conAdminCent));
+        }
+        #endregion
+        #region Usuarios
+        [Route("usuarios/listausuarios/{idEmpresa}")]
+        public HttpResponseMessage GetListaUsuarios(short idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaUsuarios(idEmpresa));
+        }
+        #endregion
+        #region Productos
+        [Route("prodcutos/listaprodcutos/{idEmpresa}")]
+        public HttpResponseMessage GetListaProductos(short idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaProductos(idEmpresa));
+        }
         #endregion
         #region Administracion Central
 
-        #endregion 
+        #endregion
     }
 }

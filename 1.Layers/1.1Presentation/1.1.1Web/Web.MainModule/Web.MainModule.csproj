@@ -3871,6 +3871,17 @@
     <Compile Include="Agente\AgenteServicios.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Requisicion\Model\ProductoDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionAutorizacion.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionAutPutDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionCrearDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionRevisionDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionRevPutDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionProductoDtos\RequisicionProdAutPutDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionProductoDtos\RequisicionProdReviPutDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionProductoDtos\RequisicionProductoAutorizacionDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionProductoDtos\RequisicionProductoRevisionDTO.cs" />
+    <Compile Include="Requisicion\Model\UsuarioDTO.cs" />
     <Compile Include="Catalogos\Proveedor.aspx.cs">
       <DependentUpon>Proveedor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3912,7 +3923,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requisicion\Model\RequisicionDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionProductoDTO.cs" />
-    <Compile Include="Requisicion\Serivicio\RequsicionServicio.cs" />
+    <Compile Include="Requisicion\Model\RequicisionProductoGridDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionEDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionProductoEDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisiconEstatus.cs" />
+    <Compile Include="Requisicion\Model\RespuestaRequisicionDto.cs" />
+    <Compile Include="Requisicion\Servicio\RequsicionServicio.cs" />
     <Compile Include="Requisicion\Vistas\Requisicion.aspx.cs">
       <DependentUpon>Requisicion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3949,9 +3965,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\1.3Application\1.3.2MainModule\Application.MainModule\Application.MainModule.csproj">
+      <Project>{2C5F9775-06CF-466F-9873-3166EDE4744C}</Project>
+      <Name>Application.MainModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\Exceptions.MainModule.csproj">
+      <Project>{FB4086F4-8177-4175-BEB6-312FD528ABA2}</Project>
+      <Name>Exceptions.MainModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.5Security\Security.MainModule\Security.MainModule.csproj">
       <Project>{f3ba487d-6ff4-4793-8bba-79da05447ec2}</Project>
       <Name>Security.MainModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\Utilities.MainModule.csproj">
+      <Project>{80053147-4263-454b-ba2d-c7ef6a507c0b}</Project>
+      <Name>Utilities.MainModule</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

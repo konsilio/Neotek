@@ -53,17 +53,37 @@
   <ItemGroup>
     <Compile Include="AdaptadoresDTO\Catalogo\AdministracionCentralAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Requisicion\RequisicionAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\UsuarioAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Requisicion\RequisicionProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\OrdenesCompraAdapter.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DTOs\Catalogo\AdministracionCentralDto.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
+    <Compile Include="DTOs\Catalogo\ProductoDTO.cs" />
+    <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
     <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\Mobile\OrdenCompraDTO.cs" />
     <Compile Include="DTOs\Mobile\ProductoDTO.cs" />
     <Compile Include="DTOs\Mobile\RespuestaOrdenesCompraDTO.cs" />
     <Compile Include="DTOs\Mobile\MenuDto.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionAutorizacionDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionAutPutDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionCancelarDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionCrearDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionEDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionProdAutPutDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionProdReviPutDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionProductoAutorizacionDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionProductoCrearDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionProductoDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionProductoRevisionDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionRevisionDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionRevPutDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaDto.cs" />
+    <Compile Include="DTOs\Respuesta\RespuestaRequisicionDto.cs" />
     <Compile Include="DTOs\Seguridad\AutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionMobileDto.cs" />
@@ -71,16 +91,26 @@
     <Compile Include="Flujos\Catalogos.cs" />
     <Compile Include="Flujos\Compras.cs" />
     <Compile Include="Flujos\Inventarios.cs" />
+    <Compile Include="Flujos\Requisicion.cs" />
     <Compile Include="Flujos\Mobile.cs" />
     <Compile Include="Flujos\Seguridad.cs" />
     <Compile Include="Flujos\Ventas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\AccesoADatos\AdministracionCentralDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\AlmacenDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EmpresaDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\ProductoDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\RequisicionDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioACDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
+    <Compile Include="Servicios\Almacen\ProductoAlmacenServicio.cs" />
     <Compile Include="Servicios\Catalogos\EmpresaServicio.cs" />
+    <Compile Include="Servicios\Catalogos\ProductoServicios.cs" />
+    <Compile Include="Servicios\Catalogos\UsuarioServicio.cs" />
+    <Compile Include="Servicios\FolioServicio.cs" />
+    <Compile Include="Servicios\Notificacion\EnviarCorreosServicio.cs" />
+    <Compile Include="Servicios\Requisicion\RequisicionServicio.cs" />
     <Compile Include="Servicios\Mobile\MenuServicio.cs" />
     <Compile Include="Servicios\Mobile\OrdenesCompraServicio.cs" />
     <Compile Include="Servicios\Seguridad\AutenticarServicio.cs" />
@@ -98,6 +128,10 @@
     <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.1Data\Infrastructure.Data\Infrastructure.Data.csproj">
       <Project>{f4d84d09-bef2-4bd5-9f38-04396ef52bc8}</Project>
       <Name>Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.3Mail\Mail.MainModule.csproj">
+      <Project>{4665e949-2392-4a01-8af5-3ee83a85b903}</Project>
+      <Name>Mail.MainModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\Exceptions.MainModule.csproj">
       <Project>{FB4086F4-8177-4175-BEB6-312FD528ABA2}</Project>

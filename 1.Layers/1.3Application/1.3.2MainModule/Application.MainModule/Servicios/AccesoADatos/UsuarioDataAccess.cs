@@ -23,6 +23,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.IdUsuario.Equals(idUsuario)
                                                          && x.Activo);
         }
+        public List<Usuario> Buscar(short idEmpresa)
+        {
+            return uow.Repository<Usuario>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                         && x.EsAdministracionCentral.Equals(false)
+                                                         && x.Activo).ToList();
+        }
 
         public Usuario Buscar(short idEmpresa, string NombreUsuario, string password)
         {
@@ -30,6 +36,17 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.NombreUsuario.Equals(NombreUsuario)
                                                          && x.Password.Equals(password)
                                                          && x.Activo);
+        }
+        public Usuario Buscar(Empresa _empresa, int idUsuario)
+        {
+            if (_empresa.Usuario != null)
+            {
+                return _empresa.Usuario.SingleOrDefault(x => x.IdUsuario.Equals(idUsuario) && x.Activo);
+            }
+            else
+            {
+                return Buscar(_empresa.IdEmpresa ,idUsuario);
+            }
         }
         public Usuario Buscar(int idUsuario)
         {

@@ -14,7 +14,7 @@ namespace Web.MainModule
     {
         string _tok = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
-        {            
+        {
             if (!IsPostBack)
             {
                 if (Session["StringToken"] != null)
@@ -24,6 +24,7 @@ namespace Web.MainModule
                     if (Convert.ToBoolean(_autenticado.Value))
                     {
                         CargarEmpresas();
+                        CargarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
                     }
                     else
                         Salir();
@@ -48,12 +49,71 @@ namespace Web.MainModule
         }
         private void CargarEmpresas()
         {
-            //ddlRazon.DataSource = null;
             ddlEmpresas.DataSource = new Seguridad.Servicio.ComprasServicio().Empresas(_tok);
             ddlEmpresas.DataValueField = "IdEmpresa";
             ddlEmpresas.DataTextField = "NombreComercial";
             ddlEmpresas.DataBind();
             ddlEmpresas.SelectedValue = "-1";
+        }
+        private void CargarRequisiciones(short idEmpresa)
+        {
+            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString());
+            dgRequisisiones.DataBind();
+            // ModificargvRequisiciones();
+        }    
+        protected void dgRequisisiones_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName.Equals("VerRequi"))
+            {
+                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0] + "&Sts=1" /* + e.CommandArgument.ToString().Split('|')[1]*/);
+            }
+            if (e.CommandName.Equals("VerAut"))
+            {
+                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0] + "&Sts=2" /* + e.CommandArgument.ToString().Split('|')[1]*/);
+            }
+        }
+
+        protected void dgRequisisiones_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"];
+            dgRequisisiones.PageIndex = e.NewPageIndex;
+            dgRequisisiones.DataBind();
+        }
+
+        protected void ddlEmpresas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!ddlEmpresas.SelectedValue.Equals("0"))
+            {
+                CargarRequisiciones(Int16.Parse(ddlEmpresas.SelectedValue));
+            }
+        }
+
+        protected void txtNoRequisicion_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void dgRequisisiones_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType.Equals(DataControlRowType.DataRow))
+            {
+                Label lblEstatus = (e.Row.Cells[0].FindControl("lblIdRequisicionEstatus") as Label);
+                if (int.Parse(lblEstatus.Text).Equals(1))
+                {
+                    (e.Row.Cells[0].FindControl("lbAutoriza") as LinkButton).Visible = false;
+                    (e.Row.Cells[0].FindControl("lbDgOjo") as LinkButton).Visible = true;
+                }
+                if (int.Parse(lblEstatus.Text).Equals(3) || int.Parse(lblEstatus.Text).Equals(4))
+                {
+                    (e.Row.Cells[0].FindControl("lbAutoriza") as LinkButton).Visible = true;
+                    (e.Row.Cells[0].FindControl("lbDgOjo") as LinkButton).Visible = false;
+                }
+                if (int.Parse(lblEstatus.Text).Equals(10))
+                {
+                    (e.Row.Cells[0].FindControl("lbAutoriza") as LinkButton).Visible = false;
+                    (e.Row.Cells[0].FindControl("lbDgOjo") as LinkButton).Visible = false;
+                }
+            }
         }
     }
 }

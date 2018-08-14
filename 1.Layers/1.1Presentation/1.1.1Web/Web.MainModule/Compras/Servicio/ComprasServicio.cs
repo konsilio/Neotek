@@ -19,6 +19,6 @@ namespace Web.MainModule.Seguridad.Servicio
             var agente = new AgenteServicios();
             agente.ListaEmpresas(_tok);
             return agente._listaEmpresas;
-        }
+        }       
     }
 }
