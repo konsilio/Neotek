@@ -85,7 +85,7 @@ namespace Web.MainModule.Requisicion.Vista
             }
             reqCrearDTO.MotivoRequisicion = txtMotivoCompra.Text;
             reqCrearDTO.RequeridoEn = txtRequeridoEn.Text;
-            reqCrearDTO.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Estatus.Creada;
+            reqCrearDTO.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Creada;
             reqCrearDTO.FechaRequerida = DateTime.Today.AddDays(5); //DateTime.Parse(txtFechaRequerida.Value, new CultureInfo("en-US")), //(es-MX) 
             reqCrearDTO.FechaRegistro = DateTime.Today;
             reqCrearDTO.ListaProductos = (List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"];
@@ -126,7 +126,7 @@ namespace Web.MainModule.Requisicion.Vista
             else
                 _aut.IdUsuarioAutorizacion = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdUsuario").Value);
             _aut.ListaProductos = (List<Model.RequisicionProdAutPutDTO>)ViewState["ListaRequisicionProdAutPutDTO"];
-            _aut.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Estatus.Autorizacion_finalizada;
+            _aut.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Autorizacion_finalizada;
             return _aut;
         }
         private bool ValidarRevisionAlmacen()
@@ -441,7 +441,7 @@ namespace Web.MainModule.Requisicion.Vista
             requRevision.OpinionAlmacen = txtOpinion.Text;
             requRevision.FechaRevision = DateTime.Today;
             requRevision.ListaProductos = (List<Model.RequisicionProdReviPutDTO>)ViewState["LIstaReqProdRevPutDTO"];
-            requRevision.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Estatus.Revision_exitosa;
+            requRevision.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Revision_exitosa;
             return requRevision;
         }
         protected void btnAgregar_Click(object sender, EventArgs e)

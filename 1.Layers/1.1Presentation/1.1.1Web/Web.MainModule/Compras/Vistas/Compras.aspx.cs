@@ -25,6 +25,7 @@ namespace Web.MainModule
                     {
                         CargarEmpresas();
                         CargarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
+                        CargarEstatus();
                     }
                     else
                         Salir();
@@ -55,9 +56,17 @@ namespace Web.MainModule
             ddlEmpresas.DataBind();
             ddlEmpresas.SelectedValue = "-1";
         }
+        private void CargarEstatus()
+        {        
+            foreach (Requisicion.Model.RequisiconEstatus r in Enum.GetValues(typeof(Requisicion.Model.RequisiconEstatus)))
+            {
+                ListItem item = new ListItem(Enum.GetName(typeof(Requisicion.Model.RequisiconEstatus), r).Replace("_", " "), ((byte)r).ToString());
+                ddlFiltroEstatus.Items.Add(item);
+            }
+        }
         private void CargarRequisiciones(short idEmpresa)
         {
-            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString());
+            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString()).ToList().OrderByDescending(x => x.IdRequisicion).ToList();
             dgRequisisiones.DataBind();
             // ModificargvRequisiciones();
         }    
@@ -90,7 +99,16 @@ namespace Web.MainModule
 
         protected void txtNoRequisicion_TextChanged(object sender, EventArgs e)
         {
-
+            List<Requisicion.Model.RequisicionDTO> newList = new List<Requisicion.Model.RequisicionDTO>();
+            foreach (var item in (List<Requisicion.Model.RequisicionDTO>)ViewState["ListRequisicionDTO"])
+            {
+                if (item.NumeroRequisicion.Contains(txtNoRequisicion.Text))
+                {
+                    newList.Add(item);
+                }
+            }
+            dgRequisisiones.DataSource = newList.ToList().OrderByDescending(x => x.IdRequisicion).ToList();
+            dgRequisisiones.DataBind();
         }
 
         protected void dgRequisisiones_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -114,6 +132,19 @@ namespace Web.MainModule
                     (e.Row.Cells[0].FindControl("lbDgOjo") as LinkButton).Visible = false;
                 }
             }
+        }
+        protected void ddlFiltroEstatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<Requisicion.Model.RequisicionDTO> newList = new List<Requisicion.Model.RequisicionDTO>();
+            foreach (var item in (List<Requisicion.Model.RequisicionDTO>)ViewState["ListRequisicionDTO"])
+            {
+                if (item.IdRequisicionEstatus.ToString().Equals(ddlFiltroEstatus.SelectedValue))
+                {
+                    newList.Add(item);
+                }
+            }
+            dgRequisisiones.DataSource = newList.ToList().OrderByDescending(x => x.IdRequisicion).ToList();
+            dgRequisisiones.DataBind();
         }
     }
 }
