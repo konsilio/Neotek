@@ -65,11 +65,11 @@ namespace Web.MainModule
         {
             if (e.CommandName.Equals("VerRequi"))
             {
-                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0] + "&Sts=1" /* + e.CommandArgument.ToString().Split('|')[1]*/);
+                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0]);
             }
             if (e.CommandName.Equals("VerAut"))
             {
-                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0] + "&Sts=2" /* + e.CommandArgument.ToString().Split('|')[1]*/);
+                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0]);
             }
         }
 

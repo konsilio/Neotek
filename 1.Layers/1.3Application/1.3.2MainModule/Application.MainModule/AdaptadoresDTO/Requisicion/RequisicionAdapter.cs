@@ -17,6 +17,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
                 UsuarioSolicitante = _requisicion.Solicitante.NombreUsuario,
                 IdEmpresa = _requisicion.IdEmpresa,
+                NombreComercial = _requisicion.Empresa.NombreComercial,
                 NumeroRequisicion = _requisicion.NumeroRequisicion,
                 MotivoRequisicion = _requisicion.MotivoRequisicion,
                 RequeridoEn = _requisicion.RequeridoEn,
