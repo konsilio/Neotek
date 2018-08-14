@@ -22,10 +22,10 @@ namespace Web.MainModule
                     _tok = Session["StringToken"].ToString();
                     Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
                     if (Convert.ToBoolean(_autenticado.Value))
-                    {
-                        CargarEmpresas();
-                        CargarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
-                        CargarEstatus();
+                    {                       
+                            CargarEmpresas();
+                            CargarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
+                            CargarEstatus();      
                     }
                     else
                         Salir();
@@ -54,10 +54,18 @@ namespace Web.MainModule
             ddlEmpresas.DataValueField = "IdEmpresa";
             ddlEmpresas.DataTextField = "NombreComercial";
             ddlEmpresas.DataBind();
-            ddlEmpresas.SelectedValue = "-1";
-        }
+            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
+            {
+                ddlEmpresas.SelectedValue = "-1";
+            }
+            else
+            {
+                ddlEmpresas.SelectedValue = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value;
+                ddlEmpresas.Enabled = false;
+            }
+        }      
         private void CargarEstatus()
-        {        
+        {
             foreach (Requisicion.Model.RequisiconEstatus r in Enum.GetValues(typeof(Requisicion.Model.RequisiconEstatus)))
             {
                 ListItem item = new ListItem(Enum.GetName(typeof(Requisicion.Model.RequisiconEstatus), r).Replace("_", " "), ((byte)r).ToString());
@@ -69,7 +77,7 @@ namespace Web.MainModule
             dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString()).ToList().OrderByDescending(x => x.IdRequisicion).ToList();
             dgRequisisiones.DataBind();
             // ModificargvRequisiciones();
-        }    
+        }
         protected void dgRequisisiones_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("VerRequi"))
