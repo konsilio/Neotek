@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.DTOs.Respuesta;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,11 @@ namespace Application.MainModule.Servicios.Catalogos
 {
     public static class ProveedorServicio
     {
+        public static RespuestaDto RegistrarProveedor(ProveedorCrearDto proDto)
+        {
+            return new ProveedorDataAccess().Insertar(ProveedorAdapter.FromDto(proDto));
+        }
+
         public static List<ProveedorDto> Obtener(short IdEmpresa)
         {
             var empresa = new EmpresaDataAccess().Buscar(IdEmpresa);

@@ -13,5 +13,9 @@ namespace Application.MainModule.DTOs.Respuesta
         public bool EsActulizacion { get; set; }
         public string Mensaje { get; set; }
         public int Id { get; set; }
+        public string Codigo { get; set; }
+        public bool ModeloValido { get; set; }
+        public List<string> MensajesError { get; set; }
+        public string RedirigirUrl { get; set; }
     }
 }

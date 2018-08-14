@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Catalogos;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,11 @@ namespace Application.MainModule.Flujos
         #endregion
 
         #region Proveedor
+        public RespuestaDto RegistraProveedor(ProveedorCrearDto provDto)
+        {
+            return ProveedorServicio.RegistrarProveedor(provDto);
+        }
+
         public List<ProveedorDto> ConsultaProveedores(short idEmpresa)
         {
             return ProveedorServicio.Obtener(idEmpresa);

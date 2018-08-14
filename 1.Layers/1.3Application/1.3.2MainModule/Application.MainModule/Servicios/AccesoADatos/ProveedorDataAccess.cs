@@ -31,7 +31,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     _respuesta.Id = _pro.IdProveedor;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
-                    _respuesta.Mensaje = Exito.G0001;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = ex.Message;
+                }
+            }
+            return _respuesta;
+        }
+
+        public RespuestaDto Actualizar(Proveedor _pro)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.Proveedor>().Update(_pro);
+                    uow.SaveChanges();
+                    _respuesta.Id = _pro.IdProveedor;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.Mensaje = Exito.OK;
                 }
                 catch (Exception ex)
                 {

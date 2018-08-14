@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.MainModule.UnitOfWork;
 using Application.MainModule.DTOs.Respuesta;
 using Sagas.MainModule.Entidades;
+using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
@@ -52,7 +53,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     _respuesta.IdRequisicion = _req.IdRequisicion;
                     _respuesta.NumRequisicion = _req.NumeroRequisicion;
                     _respuesta.Exito = true;
-                    _respuesta.Mensaje = "OK";
+                    _respuesta.Mensaje = Exito.OK;
                 }
                 catch (Exception ex)
                 {
@@ -72,12 +73,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Update(_req);
                     uow.SaveChanges();
                     _respuesta.Exito = true;
-                    _respuesta.Mensaje = string.Empty;
+                    _respuesta.Mensaje = Exito.OK;
                 }
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = ex.Message;
+                    _respuesta.Mensaje = string.Concat(Error.R0009, " | ", ex.Message);
                 }
             }
             return _respuesta;
@@ -94,12 +95,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                         uow.Repository<RequisicionProducto>().Update(_prod);
                     uow.SaveChanges();
                     _respuesta.Exito = true;
-                    _respuesta.Mensaje = string.Empty;
+                    _respuesta.Mensaje = Exito.OK;
                 }
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = ex.Message;
+                    _respuesta.Mensaje = string.Concat(Error.R0009, " | ", ex.Message);
                 }
             }
             return _respuesta;

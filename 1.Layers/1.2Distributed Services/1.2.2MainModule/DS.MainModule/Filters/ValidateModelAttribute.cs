@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using System.Web.Http.ModelBinding;
+using DS.MainModule.Results;
 
 namespace DS.MainModule.Filters
 {
@@ -16,15 +17,14 @@ namespace DS.MainModule.Filters
         {
             if (actionContext.ModelState.IsValid == false)
             {
-                RespuestaOperacionDto respuesta = new RespuestaOperacionDto()
+                RespuestaDto respuesta = new RespuestaDto()
                 { ModelStates = actionContext.ModelState };
 
                 foreach (var values in respuesta.ModelStates.Values)
                     foreach (var error in values.Errors)
                         respuesta.MensajesError.Add(error.ErrorMessage);
 
-                actionContext.Response = actionContext.Request.CreateResponse(
-                    HttpStatusCode.OK, respuesta);
+                actionContext.Response = RespuestaHttp.crearRepuesta(respuesta, actionContext.Request);
             }
         }
 
@@ -32,25 +32,25 @@ namespace DS.MainModule.Filters
         {
             if (actionExecutedContext.ActionContext.ModelState.IsValid == false)
             {
-                RespuestaOperacionDto respuesta = new RespuestaOperacionDto()
+                RespuestaDto respuesta = new RespuestaDto()
                 { ModelStates = actionExecutedContext.ActionContext.ModelState };
 
                 foreach (var values in respuesta.ModelStates.Values)
                     foreach (var error in values.Errors)
                         respuesta.MensajesError.Add(error.ErrorMessage);
 
-                actionExecutedContext.ActionContext.Response = actionExecutedContext.ActionContext.Request.CreateResponse(
-                    HttpStatusCode.OK, respuesta);
+                actionExecutedContext.ActionContext.Response = RespuestaHttp.crearRepuesta(respuesta, actionExecutedContext.ActionContext.Request);
             }
         }
 
-        private class RespuestaOperacionDto
+        public class RespuestaDto
         {
-            public RespuestaOperacionDto()
+            public RespuestaDto()
             {
                 MensajesError = new List<string>();
             }
 
+            public bool Exito { get; set; }
             public int? Id { get; set; }
             public bool Guardado { get; set; }
             public bool EsInsercion { get; set; }

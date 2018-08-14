@@ -22,6 +22,8 @@ namespace Exceptions.MainModule.Validaciones
         public const string R0008 = "No se puede exceder la cantidad de {2}";
         public const string R0009 = "La requiscion no se actualizo correctamente";
 
+        public const string P0001 = "El '{0}' no coincide con los lineamientos establecidos por el Servicio de Administración Tributaria. Corrígelo por favor.";
+
         public const string M0001 = "No se encontraron {0} para mostrar.";
     }
 }

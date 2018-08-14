@@ -8,6 +8,8 @@ namespace Exceptions.MainModule.Validaciones
 {
     public static class Exito
     {
-        public const string G0001 = "OK";
+        public const string OK = "OK";
+
+        public const string G0001 = "";
     }
 }
