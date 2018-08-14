@@ -20,7 +20,8 @@ namespace Sagas.MainModule.Entidades
             this.AdministracionCentral = new HashSet<AdministracionCentral>();
             this.Empresa = new HashSet<Empresa>();
             this.UsuarioAC = new HashSet<UsuarioAC>();
-            this.Usuario = new HashSet<Usuario>();
+            this.Usuarios = new HashSet<Usuario>();
+            this.Proveedores = new HashSet<Proveedor>();
         }
     
         public byte IdPais { get; set; }
@@ -34,6 +35,8 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioAC> UsuarioAC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Usuario> Usuario { get; set; }
+        public virtual ICollection<Usuario> Usuarios { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Proveedor> Proveedores { get; set; }
     }
 }

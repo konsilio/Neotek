@@ -61,6 +61,9 @@
     <Compile Include="Entidades\AlmacenSalidaProducto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\Banco.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\CAlmacenGasCilindro.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -74,6 +77,9 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\CentroCosto.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\CuentaContable.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Empresa.cs">
@@ -118,6 +124,9 @@
     <Compile Include="Entidades\Proveedor.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\RegimenFiscal.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Requisicion.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -139,6 +148,9 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\TipoMedidorUnidadAlmacenGas.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\TipoPersona.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\TipoProveedor.cs">
@@ -174,6 +186,8 @@
     <Compile Include="IRepositorios\IUsuarioACRepositorio.cs" />
     <Compile Include="IRepositorios\IUsuarioRepositorio.cs" />
     <Compile Include="ObjetosValor\Enum\OrdenCompraEstatusEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\TipoPersonaFiscalEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\TipoProveedorEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

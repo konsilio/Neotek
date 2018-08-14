@@ -182,6 +182,10 @@
         <AssociationConnector Association="Sagas.MainModuleModel.UsuarioRol" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraProducto_CCentroCosto" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CCentroCosto_Empresa" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CBanco" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CCuentaContable" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CRegimenFiscal" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CTipoPersona" Width="1.5" PointX="5.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
