@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 
+import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.OrdenCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Presenter.IniciarDescargaPresenter;
@@ -53,10 +54,14 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
 
     public IniciarDescargaPresenter presenter;
 
+    public IniciarDescargaDTO iniciarDescargaDTO;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iniciar_descarga);
+
+        iniciarDescargaDTO = new IniciarDescargaDTO();
 
         spinnerOrdenCompra = (Spinner)findViewById(R.id.spinner_orden_compra);
         switchTanquePrestado = (Switch)findViewById(R.id.switch_tanque);
@@ -87,11 +92,10 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
 
 
     public void onClickRegistrar(){
-        spinnerOrdenCompra.getSelectedItem();
-        spinnerMedidorTractor.getSelectedItem();
-        spinnerMedidorAlmacen.getSelectedItem();
-        switchTanquePrestado.isChecked();
-
+        iniciarDescargaDTO.setIdOrdenCompra(ordenesCompraDTO.get(spinnerOrdenCompra.getSelectedItemPosition()).getIdOrdenCompra());
+        iniciarDescargaDTO.setIdTipoMedidorAlmacen(spinnerMedidorAlmacen.getSelectedItemPosition());
+        iniciarDescargaDTO.setIdTipoMedidorTractor(spinnerMedidorTractor.getSelectedItemPosition());
+        iniciarDescargaDTO.setTanquePrestado(switchTanquePrestado.isChecked());
         showDialog(getResources().getString(R.string.message_continuar));
 
     }
@@ -139,6 +143,11 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
 
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CapturaPorcentajeActivity.class);
+        intent.putExtra("IniciarDescarga",iniciarDescargaDTO);
+        intent.putExtra("EsPapeleta",false);
+        intent.putExtra("EsDescargaIniciar",true);
+        intent.putExtra("EsDescargaFinalizar",false);
+        intent.putExtra("Almacen",false);
         startActivity(intent);
     }
 

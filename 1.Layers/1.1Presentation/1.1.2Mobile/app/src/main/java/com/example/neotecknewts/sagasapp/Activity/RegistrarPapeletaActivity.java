@@ -42,6 +42,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
     public Spinner spinnerOrdenCompraExpedidor;
     public Spinner spinnerOrdenCompraPorteador;
+    public Spinner spinnerMedidorTractor;
     public TextView textViewFecha;
     public TextView textViewFechaEmbarque;
     public EditText editTextNumEmbarque;
@@ -58,7 +59,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public EditText editTextSello;
     public EditText editTextValorCarga;
     public EditText editTextNombreResponsable;
-
+    public String tipoMedidor;
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -95,6 +96,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
         spinnerOrdenCompraExpedidor = (Spinner) findViewById(R.id.spinner_orden_compra_expedidor);
         spinnerOrdenCompraPorteador = (Spinner) findViewById(R.id.spinner_orden_compra_porteador);
+        spinnerMedidorTractor = (Spinner) findViewById(R.id.spinner_medidor_tractor);
         textViewFecha = (TextView) findViewById(R.id.textFecha);
         textViewFechaEmbarque = (TextView) findViewById(R.id.textFechaEmbarque) ;
         editTextNumEmbarque = (EditText) findViewById(R.id.input_embarque);
@@ -116,9 +118,11 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         ordenesCompraDTOPorteador = new ArrayList<>();
 
         String[] ordenes = {"prueba", "prueba"};
+        final String [] medidores = {"Magnatel", "Rotogate"};
         spinnerOrdenCompraPorteador.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
         spinnerOrdenCompraExpedidor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
-        spinnerOrdenCompraExpedidor.setPrompt("Seleccione");
+        spinnerMedidorTractor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
+
 
         final ImageButton buttonFecha = (ImageButton) findViewById(R.id.imageBtnFecha);
         buttonFecha.setOnClickListener(new View.OnClickListener() {
@@ -189,6 +193,22 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
                     editTextNombrePorteador.setText(ordenCompraDTOPorteador.getProveedorNombreComercial());
                     editTextNombrePorteador.setEnabled(false);
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+
+        });
+
+        spinnerMedidorTractor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                //if (medidores.size()!=0){
+                    Log.w("Selected",""+position);
+                    tipoMedidor = medidores[spinnerMedidorTractor.getSelectedItemPosition()];
+                //}
             }
 
             @Override
@@ -361,6 +381,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CameraPapeletaActivity.class);
         intent.putExtra("Papeleta",papeletaDTO);
+        intent.putExtra("TipoMedidor",tipoMedidor);
         startActivity(intent);
     }
 

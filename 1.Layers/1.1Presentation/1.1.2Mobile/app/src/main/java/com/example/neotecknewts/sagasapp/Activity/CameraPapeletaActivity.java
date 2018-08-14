@@ -41,9 +41,10 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     public ImageView imageViewFoto;
     public Uri imageUri;
     public String imageurl;
+    public TextView textViewTitulo;
 
     PrecargaPapeletaDTO papeletaDTO;
-
+    public String tipoMedidor;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +54,15 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
         if (extras !=null){
             papeletaDTO = (PrecargaPapeletaDTO) extras.getSerializable("Papeleta");
+            tipoMedidor = extras.getString("TipoMedidor");
         }
         layoutCameraButton = (LinearLayout) findViewById(R.id.layout_photo_button);
         layoutNitidez = (LinearLayout) findViewById(R.id.layout_photo_nitida);
         layoutTitle = (LinearLayout) findViewById(R.id.layout_title);
         imageViewFoto = (ImageView) findViewById(R.id.image_view_foto);
+        textViewTitulo = (TextView) findViewById(R.id.textTitulo);
+
+        textViewTitulo.setText(R.string.title_foto_papeleta);
 
         fotoTomada = false;
         if(fotoTomada==true){
@@ -101,6 +106,11 @@ public class CameraPapeletaActivity extends AppCompatActivity {
         final Button buttonFotoCorrecta =(Button) findViewById(R.id.button_foto_correcta);
         buttonFotoCorrecta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                try {
+                    papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                }catch(Exception e){
+
+                }
                 startActivity();
             }
         });
@@ -111,6 +121,10 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CapturaPorcentajeActivity.class);
         intent.putExtra("Papeleta",papeletaDTO);
+        intent.putExtra("TipoMedidor",tipoMedidor);
+        intent.putExtra("EsPapeleta",true);
+        intent.putExtra("EsDescargaIniciar",false);
+        intent.putExtra("EsDescargaFinalizar",false);
         startActivity(intent);
     }
 
@@ -139,10 +153,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
                         getContentResolver(), imageUri);
                 imageViewFoto.setImageBitmap(bitmap);
                 imageurl = getRealPathFromURI(imageUri);
-                ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
-                Log.w("SIZE",bs.size()+"");
-                papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                //papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 fotoTomada=true;
                 layoutTitle.setVisibility(View.GONE);
                 layoutCameraButton.setVisibility(View.GONE);

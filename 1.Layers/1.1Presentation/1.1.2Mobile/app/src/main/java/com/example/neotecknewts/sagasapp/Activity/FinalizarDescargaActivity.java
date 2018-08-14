@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.OrdenCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Presenter.FinalizarDescargaPresenter;
@@ -41,12 +42,15 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
     public OrdenCompraDTO ordenCompraDTO;
     List<OrdenCompraDTO> ordenesCompraDTO;
 
+    public FinalizarDescargaDTO finalizarDescargaDTO;
     public FinalizarDescargaPresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iniciar_descarga);
+
+        finalizarDescargaDTO = new FinalizarDescargaDTO();
 
         spinnerOrdenCompra = (Spinner)findViewById(R.id.spinner_orden_compra);
         linearLayoutTanque = (LinearLayout) findViewById(R.id.layout_tanque);
@@ -79,9 +83,9 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
     }
 
     public void onClickRegistrar(){
-        spinnerOrdenCompra.getSelectedItem();
-        spinnerMedidorTractor.getSelectedItem();
-        spinnerMedidorAlmacen.getSelectedItem();
+        finalizarDescargaDTO.setIdOrdenCompra(ordenesCompraDTO.get(spinnerOrdenCompra.getSelectedItemPosition()).getIdOrdenCompra());
+        finalizarDescargaDTO.setIdTipoMedidorAlmacen(spinnerMedidorAlmacen.getSelectedItemPosition());
+        finalizarDescargaDTO.setIdTipoMedidorTractor(spinnerMedidorTractor.getSelectedItemPosition());
 
         showDialog(getResources().getString(R.string.message_continuar));
     }
@@ -130,6 +134,11 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
 
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CapturaPorcentajeActivity.class);
+        intent.putExtra("FinalizarDescarga", finalizarDescargaDTO);
+        intent.putExtra("EsPapeleta",false);
+        intent.putExtra("EsDescargaFinalizar",true);
+        intent.putExtra("EsDescargaIniciar",false);
+        intent.putExtra("Almacen",false);
         startActivity(intent);
     }
 

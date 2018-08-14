@@ -362,6 +362,35 @@
                     android:textColor="@color/colorTextLogin"/>
             </android.support.design.widget.TextInputLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tipo_medidor_tractor"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="25dp" />
+
+                <Spinner
+                    android:id="@+id/spinner_medidor_tractor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/tipos_medidor"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="25dp" />
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/registrar_button"
                 android:layout_width="match_parent"

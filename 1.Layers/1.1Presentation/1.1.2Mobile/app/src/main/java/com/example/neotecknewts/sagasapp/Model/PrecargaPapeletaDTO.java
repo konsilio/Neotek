@@ -75,6 +75,9 @@ public class PrecargaPapeletaDTO implements Serializable {
     @SerializedName("ImagenesURL")
     private List<URI> ImagenesURI;
 
+    @SerializedName("PorcentajeMedidor")
+    private Double PorcentajeMedidor;
+
 
     public PrecargaPapeletaDTO(){
         Imagenes = new ArrayList<>();
@@ -238,5 +241,13 @@ public class PrecargaPapeletaDTO implements Serializable {
 
     public void setImagenesURI(List<URI> imagenesURI) {
         ImagenesURI = imagenesURI;
+    }
+
+    public Double getPorcentajeMedidor() {
+        return PorcentajeMedidor;
+    }
+
+    public void setPorcentajeMedidor(Double porcentajeMedidor) {
+        PorcentajeMedidor = porcentajeMedidor;
     }
 }
