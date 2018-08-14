@@ -36,11 +36,10 @@
                                     </div>
                                 </div>
                                 <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-6">
+                                    <div class="col-lg-3 col-md-6">
                                         <label>Estatus</label>
-                                        <select class="form-control show-tick" runat="server" id="ddlFiltroEstatus">
-                                            <option value="0">Estatus</option>
-                                        </select>
+                                        <asp:DropDownList CssClass="form-control show-tick" runat="server" ID="ddlFiltroEstatus" AutoPostBack="true" OnSelectedIndexChanged="ddlFiltroEstatus_SelectedIndexChanged">                                           
+                                        </asp:DropDownList>
                                     </div>
                                     <div class="col-lg-2 col-md-6">
                                         <label>Fecha de registro</label>

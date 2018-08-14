@@ -104,5 +104,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        //public List<RequisicionEstatus> ListaEstatus()
+        //{
+        //    return uow.Repository<RequisicionEstatus>().GetAll().ToList();
+        //}
     }
 }
