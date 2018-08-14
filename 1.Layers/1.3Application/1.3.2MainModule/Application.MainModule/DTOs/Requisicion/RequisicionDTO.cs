@@ -14,6 +14,7 @@ namespace Application.MainModule.DTOs.Requisicion
         public int IdUsuarioSolicitante { get; set; }
         public string UsuarioSolicitante { get; set; }
         public short IdEmpresa { get; set; }
+        public string NombreComercial { get; set; }
         public string NumeroRequisicion { get; set; }
         public string MotivoRequisicion { get; set; }
         public string RequeridoEn { get; set; }

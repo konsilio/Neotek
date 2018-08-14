@@ -9,7 +9,7 @@
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                             <li class="breadcrumb-item active">
-                                <asp:Label runat="server" ID="lblRuta" Text="Compras / Requisición "></asp:Label>
+                                <asp:Label runat="server" ID="lblRuta" Text=" Requisición "></asp:Label>
                             </li>
                         </ul>
                     </div>
@@ -88,7 +88,8 @@
                                                         Gasera
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:Label runat="server" ID="lblDgGasera" Text='<%# Bind("IdEmpresa") %>'></asp:Label>
+                                                        <asp:Label runat="server" ID="lblDgGasera" Text='<%# Bind("IdEmpresa") %>' Visible="false"></asp:Label>
+                                                        <asp:Label runat="server" ID="lblDgGaseraNombre" Text='<%# Bind("NombreComercial") %>'></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>

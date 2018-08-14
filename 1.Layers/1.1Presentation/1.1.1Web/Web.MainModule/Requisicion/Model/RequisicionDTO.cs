@@ -23,6 +23,9 @@ namespace Web.MainModule.Requisicion.Model
         [Display(Name = "IdEmpresa")]
         public short IdEmpresa { get; set; }
         [Required(ErrorMessage = Error.S0001)]
+        [Display(Name = "NombreComercial")]
+        public string NombreComercial { get; set; }
+        [Required(ErrorMessage = Error.S0001)]
         [Display(Name = "NumeroRequisicion")]
         public string NumeroRequisicion { get; set; }
         [Required(ErrorMessage = Error.S0001)]
