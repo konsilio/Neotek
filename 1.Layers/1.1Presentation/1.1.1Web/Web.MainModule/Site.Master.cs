@@ -13,17 +13,16 @@ namespace Web.MainModule
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            var _tok = Session["StringToken"].ToString();
+         
             if (!IsPostBack)
             {
                 if (Session["StringToken"] != null)
                 {
-                    Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
+                    Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "Autenticado");
 
                     if (Convert.ToBoolean(_autenticado.Value))
                     {
-                        lblUsuario.Text = "Usuario: " + TokenGenerator.GetClaimsValueFromJwtSecurityToken(_tok, "NombreUsuario");
-                        //Habilitar opciones segun el rol
+                        LlenarDatosUsuario();                   
                     }
                 }
                 else
@@ -34,6 +33,7 @@ namespace Web.MainModule
         }
         private void LlenarDatosUsuario()
         {
+            lblUsuario.Text = TokenGenerator.GetClaimsValueFromJwtSecurityToken(Session["StringToken"].ToString(), "NombreUsuario");
 
         }
     }
