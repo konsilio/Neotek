@@ -53,10 +53,12 @@
   <ItemGroup>
     <Compile Include="AdaptadoresDTO\Catalogo\AdministracionCentralAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\OrdenesCompraAdapter.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DTOs\Catalogo\AdministracionCentralDto.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
+    <Compile Include="DTOs\Catalogo\ProveedorDto.cs" />
     <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\Mobile\OrdenCompraDTO.cs" />
     <Compile Include="DTOs\Mobile\ProductoDTO.cs" />
@@ -78,9 +80,11 @@
     <Compile Include="Servicios\AccesoADatos\AdministracionCentralDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EmpresaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\ProveedorDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioACDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
     <Compile Include="Servicios\Catalogos\EmpresaServicio.cs" />
+    <Compile Include="Servicios\Catalogos\ProveedorServicio.cs" />
     <Compile Include="Servicios\Mobile\MenuServicio.cs" />
     <Compile Include="Servicios\Mobile\OrdenesCompraServicio.cs" />
     <Compile Include="Servicios\Seguridad\AutenticarServicio.cs" />
