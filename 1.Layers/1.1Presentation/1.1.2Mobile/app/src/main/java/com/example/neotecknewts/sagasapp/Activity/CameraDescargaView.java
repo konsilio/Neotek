@@ -5,6 +5,5 @@ package com.example.neotecknewts.sagasapp.Activity;
  */
 
 public interface CameraDescargaView {
-    void showProgress(int message);
-    void hideProgress();
+
 }

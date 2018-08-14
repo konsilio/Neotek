@@ -42,6 +42,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     public Uri imageUri;
     public String imageurl;
     public TextView textViewTitulo;
+    public TextView textViewMensaje;
 
     PrecargaPapeletaDTO papeletaDTO;
     public String tipoMedidor;
@@ -61,6 +62,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
         layoutTitle = (LinearLayout) findViewById(R.id.layout_title);
         imageViewFoto = (ImageView) findViewById(R.id.image_view_foto);
         textViewTitulo = (TextView) findViewById(R.id.textTitulo);
+        textViewMensaje = (TextView) findViewById(R.id.textIndicaciones);
 
         textViewTitulo.setText(R.string.title_foto_papeleta);
 
@@ -69,7 +71,10 @@ public class CameraPapeletaActivity extends AppCompatActivity {
             layoutTitle.setVisibility(View.GONE);
             layoutCameraButton.setVisibility(View.GONE);
             layoutNitidez.setVisibility(View.VISIBLE);
+            textViewMensaje.setVisibility(View.GONE);
+
         }else{
+            textViewMensaje.setVisibility(View.VISIBLE);
             layoutTitle.setVisibility(View.VISIBLE);
             layoutCameraButton.setVisibility(View.VISIBLE);
             layoutNitidez.setVisibility(View.GONE);
@@ -158,6 +163,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
                 layoutTitle.setVisibility(View.GONE);
                 layoutCameraButton.setVisibility(View.GONE);
                 layoutNitidez.setVisibility(View.VISIBLE);
+                textViewMensaje.setVisibility(View.GONE);
                 Log.w("MASA", papeletaDTO.getMasa()+"");
             } catch (Exception e) {
                 e.printStackTrace();

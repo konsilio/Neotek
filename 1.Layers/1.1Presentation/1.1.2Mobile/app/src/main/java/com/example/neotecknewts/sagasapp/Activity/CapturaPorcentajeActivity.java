@@ -34,6 +34,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean finalizar;
     public boolean almacen;
     public TextView textViewTitulo;
+    public TextView textView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
 
 
         textViewTitulo = (TextView) findViewById(R.id.textViewTituloPorcentaje) ;
+        textView = (TextView) findViewById(R.id.textViewCapturaText) ;
         Bundle extras = getIntent().getExtras();
 
         if (extras !=null){
@@ -54,6 +56,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 iniciar=false;
                 finalizar=false;
                 textViewTitulo.setText(tipoMedidor+" - Tractor");
+                textView.setText(R.string.porcentaje_medidor_tractor_message);
             }else if(extras.getBoolean("EsDescargaIniciar")){
                     iniciarDescargaDTO = (IniciarDescargaDTO) extras.getSerializable("IniciarDescarga");
                     papeleta = false;
@@ -62,8 +65,10 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                     almacen = extras.getBoolean("Almacen");
                 if (almacen) {
                     textViewTitulo.setText("Medidor - Almacen");
+                    textView.setText(R.string.porcentaje_medidor_almacen_message);
                 }else{
                     textViewTitulo.setText("Medidor - Tractor");
+                    textView.setText(R.string.porcentaje_medidor_tractor_message);
                 }
             }
             else if(extras.getBoolean("EsDescargaFinalizar")){
@@ -74,8 +79,10 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 almacen = extras.getBoolean("Almacen");
                 if (almacen) {
                     textViewTitulo.setText("Medidor - Almacen");
+                    textView.setText(R.string.porcentaje_medidor_almacen_message);
                 }else{
                     textViewTitulo.setText("Medidor - Tractor");
+                    textView.setText(R.string.porcentaje_medidor_tractor_message);
                 }
             }
         }

@@ -12,8 +12,13 @@
     <string name="title_foto_rotogate_tractor">Foto Rotogate - Tractor</string>
     <string name="title_foto_rotogate_almacen">Foto Rotogate - Almacen Principal</string>
     <string name="title_foto_papeleta">Foto Papeleta</string>
+    <string name="title_proceso_descarga">Proceso descarga</string>
     <string name="title_orden_compra">Orden de Compra</string>
     <string name="activity_capturar_procentaje">Capturar Porcentaje</string>
+
+    <string name="mensaje_primera_foto">Tome la primera foto del medidor</string>
+    <string name="mensaje_segunda_foto">Tome la segunda foto del medidor</string>
+    <string name="mensaje_foto_papeleta">Tome foto a la papeleta</string>
 
     <string name="porcentaje_medidor">¿Porcentaje del medidor?</string>
     <string name="porcentaje_medidor_tractor_message">Registra el porcentaje del medidor del tractor</string>
@@ -21,6 +26,8 @@
     <string name="message_imagen_nitida">¿La imagen esta nitida?</string>
     <string name="message_nitida_si">Si,esta nitida/bien tomada</string>
     <string name="message_nitida_no">No, esta borrosa/mal tomada</string>
+    <string name="cargando_imagenes_inicio">Espere un momento...</string>
+    <string name="cargando_imagenes_fin">Proceso finalizado</string>
     <string name="login_hint_username">Correo electronico</string>
     <string name="login_hint_password">Contraseña</string>
     <string name="login_button">Login</string>
@@ -61,6 +68,7 @@
     <string name="ips">IPS</string>
     <string name="total">Total</string>
     <string name="abr_porcentaje_desc">% Desc.</string>
+
 
     <string name="empty_field">Hay campos vacios</string>
 

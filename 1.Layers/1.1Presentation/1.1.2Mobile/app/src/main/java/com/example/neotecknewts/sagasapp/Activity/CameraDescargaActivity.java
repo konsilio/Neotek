@@ -54,6 +54,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public int cantidadFotos;
     public boolean almacen;
     public TextView textViewTitulo;
+    public TextView textViewMensaje;
 
     ProgressDialog progressDialog;
 
@@ -63,6 +64,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         setContentView(R.layout.activity_camera);
 
         textViewTitulo = (TextView) findViewById(R.id.textTitulo);
+        textViewMensaje = (TextView) findViewById(R.id.textIndicaciones);
 
         Bundle extras = getIntent().getExtras();
 
@@ -82,6 +84,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 papeleta=true;
                 iniciar=false;
                 finalizar=false;
+                textViewMensaje.setText(R.string.mensaje_primera_foto);
             }
             else if(extras.getBoolean("EsDescargaIniciar")){
                 Log.w("CAMARA","DescargaIniciar");
@@ -109,6 +112,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }
                 iniciar=extras.getBoolean("EsDescargaIniciar");
                 almacen = extras.getBoolean("Almacen");
+                textViewMensaje.setText(R.string.mensaje_primera_foto);
             }
             else if(extras.getBoolean("EsDescargaFinalizar")){
                 finalizarDescarga = (FinalizarDescargaDTO) extras.getSerializable("FinalizarDescarga");
@@ -131,6 +135,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }
                 finalizar= extras.getBoolean("EsDescargaFinalizar");
                 almacen = extras.getBoolean("Almacen");
+                textViewMensaje.setText(R.string.mensaje_primera_foto);
             }
 
         }
@@ -143,10 +148,12 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             layoutTitle.setVisibility(View.GONE);
             layoutCameraButton.setVisibility(View.GONE);
             layoutNitidez.setVisibility(View.VISIBLE);
+            textViewMensaje.setVisibility(View.GONE);
         }else{
             layoutTitle.setVisibility(View.VISIBLE);
             layoutCameraButton.setVisibility(View.VISIBLE);
             layoutNitidez.setVisibility(View.GONE);
+            textViewMensaje.setVisibility(View.VISIBLE);
         }
 
         final Button buttonFoto = (Button) findViewById(R.id.button_foto);
@@ -206,17 +213,16 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             layoutTitle.setVisibility(View.VISIBLE);
             layoutCameraButton.setVisibility(View.VISIBLE);
             layoutNitidez.setVisibility(View.GONE);
+            textViewMensaje.setVisibility(View.VISIBLE);
+            textViewMensaje.setText(R.string.mensaje_segunda_foto);
             cantidadFotos--;
             Log.w("Boton","finalizar"+cantidadFotos);
         }else {
             try {
                 if(papeleta) {
                     papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
-                    //startActivity();
-                    Log.w("CAMARA","else");
-                    showProgress(R.string.message_cargando);
-                    processImages();
-                    hideProgress();
+                    //processImages();
+                    startActivity();
                 }else if(iniciar&&!almacen){
                     Log.w("Boton","TractorIniciar"+cantidadFotos);
                     iniciarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
@@ -228,15 +234,13 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }else if(iniciar&&almacen){
                     Log.w("Boton","AlmacenIniciar"+cantidadFotos);
                     iniciarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
-                    showProgress(R.string.message_cargando);
-                    processImages();
-                    hideProgress();
+                    //processImages();
+                    startActivity();
                 }else if(finalizar&&almacen){
                     Log.w("Boton","AlmacenFinalizar"+cantidadFotos);
                     finalizarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
-                    showProgress(R.string.message_cargando);
-                    processImages();
-                    hideProgress();
+                    //processImages();
+                    startActivity();
                 }
             }catch(Exception ex){
 
@@ -246,8 +250,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     }
 
     public void processImages(){
-        showDialog(R.string.message_cargando);
-        if(papeleta && papeletaDTO!=null){
+        startActivity();
+      /*  if(papeleta && papeletaDTO!=null){
             for(int i =0; i<papeletaDTO.getImagenesURI().size();i++){
                 try{
                     Uri uri = Uri.parse(papeletaDTO.getImagenesURI().get(i).toString());
@@ -294,8 +298,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
                 }
             }
-        }
-        hideProgress();
+        }*/
     }
 
 
@@ -315,19 +318,6 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
     }
 
-    @Override
-    public void showProgress(int mensaje) {
-        progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
-                getResources().getString(mensaje), true);
-    }
-
-    @Override
-    public void hideProgress() {
-        if(progressDialog != null){
-            progressDialog.dismiss();
-        }
-    }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
@@ -340,6 +330,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 layoutTitle.setVisibility(View.GONE);
                 layoutCameraButton.setVisibility(View.GONE);
                 layoutNitidez.setVisibility(View.VISIBLE);
+                textViewMensaje.setVisibility(View.GONE);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -376,6 +367,26 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         intent.putExtra("EsDescargaFinalizar",finalizar);
         intent.putExtra("EsDescargaIniciar",iniciar);
         intent.putExtra("Almacen",true);
+        startActivity(intent);
+    }
+
+    public void startActivity(){
+        Intent intent = new Intent(getApplicationContext(), SubirImagenesActivity.class);
+        if(iniciar){
+
+            intent.putExtra("IniciarDescarga", iniciarDescarga);
+        }else if(finalizar){
+            Log.w("START","objeto");
+            intent.putExtra("FinalizarDescarga",finalizarDescarga);
+        }else if(papeleta){
+            intent.putExtra("Papeleta",papeletaDTO);
+        }
+        Log.w("START","bool");
+        intent.putExtra("EsPapeleta",papeleta);
+        intent.putExtra("EsDescargaFinalizar",finalizar);
+        intent.putExtra("EsDescargaIniciar",iniciar);
+        intent.putExtra("Almacen",true);
+        Log.w("START","fin");
         startActivity(intent);
     }
 }

@@ -40,7 +40,10 @@
 
         <activity
             android:name=".Activity.CameraDescargaActivity"
-            android:label="@string/title_registro_papeleta" />
+            android:label="@string/title_proceso_descarga" />
+        <activity
+            android:name=".Activity.SubirImagenesActivity"
+            android:label="@string/title_proceso_descarga" />
 
         <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
      See README(https://goo.gl/l4GJaQ) for more. -->
