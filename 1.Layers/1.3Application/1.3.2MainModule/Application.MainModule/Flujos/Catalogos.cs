@@ -36,5 +36,17 @@ namespace Application.MainModule.Flujos
             return ProductoServicios.ListaProductos(idEmpresa);
         }
         #endregion
+
+        #region Proveedor
+        public List<ProveedorDto> ConsultaProveedores(short idEmpresa)
+        {
+            return ProveedorServicio.Obtener(idEmpresa);
+        }
+
+        public ProveedorDto ConsultaProveedor(int idProveedor)
+        {
+            return ProveedorServicio.Obtener(idProveedor);
+        }
+        #endregion
     }
 }

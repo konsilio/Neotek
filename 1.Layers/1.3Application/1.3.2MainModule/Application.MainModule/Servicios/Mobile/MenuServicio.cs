@@ -31,17 +31,17 @@ namespace Application.MainModule.Servicios.Mobile
                         _AppCompraEntraGas = true;
                     }
 
-                    if (rol.AppCompraGasFinalizarDescarga && !_AppCompraGasFinalizarDescarga)
-                    {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasFinalizarDescarga"]));
-                        _AppCompraGasFinalizarDescarga = true;
-                    }
-
                     if (rol.AppCompraGasIniciarDescarga && !_AppCompraGasIniciarDescarga)
                     {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasIniciarDescarga"]));
                         _AppCompraGasIniciarDescarga = true;
                     }
+
+                    if (rol.AppCompraGasFinalizarDescarga && !_AppCompraGasFinalizarDescarga)
+                    {
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasFinalizarDescarga"]));
+                        _AppCompraGasFinalizarDescarga = true;
+                    }                    
 
                     if (rol.AppCompraVerOCompra && !_AppCompraVerOCompra)
                     {

@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Seguridad;
 using Application.MainModule.Flujos;
+using DS.MainModule.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,20 @@ namespace DS.MainModule.Controllers
         #endregion
         #region Administracion Central
 
+        #endregion
+
+        #region Proveedor
+        [Route("consulta/proveedores/{idEmpresa}")]
+        public HttpResponseMessage GetListaProveedores(short idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedores(idEmpresa));
+        }
+
+        [Route("consulta/proveedor/{idProveedor}")]
+        public HttpResponseMessage GetListaProveedores(int idProveedor)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedor(idProveedor));
+        }
         #endregion
     }
 }
