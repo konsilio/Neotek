@@ -1,21 +1,19 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.NumberPicker;
-
+import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 /**
@@ -27,11 +25,67 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public Double porcentaje;
     public NumberPicker numberPickerProcentaje;
     public NumberPicker numberPickerDecimal;
+    PrecargaPapeletaDTO papeletaDTO;
+    IniciarDescargaDTO iniciarDescargaDTO;
+    FinalizarDescargaDTO finalizarDescargaDTO;
+    public String tipoMedidor;
+    public boolean papeleta;
+    public boolean iniciar;
+    public boolean finalizar;
+    public boolean almacen;
+    public TextView textViewTitulo;
+    public TextView textView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_captura_porcentaje);
+
+
+        textViewTitulo = (TextView) findViewById(R.id.textViewTituloPorcentaje) ;
+        textView = (TextView) findViewById(R.id.textViewCapturaText) ;
+        Bundle extras = getIntent().getExtras();
+
+        if (extras !=null){
+            if(extras.getBoolean("EsPapeleta")) {
+                papeletaDTO = (PrecargaPapeletaDTO) extras.getSerializable("Papeleta");
+                Log.w("Image", Uri.parse(papeletaDTO.getImagenesURI().get(0).toString()) + "");
+                tipoMedidor = extras.getString("TipoMedidor");
+                Log.w("Medidor", tipoMedidor + "");
+                papeleta=true;
+                iniciar=false;
+                finalizar=false;
+                textViewTitulo.setText(tipoMedidor+" - Tractor");
+                textView.setText(R.string.porcentaje_medidor_tractor_message);
+            }else if(extras.getBoolean("EsDescargaIniciar")){
+                    iniciarDescargaDTO = (IniciarDescargaDTO) extras.getSerializable("IniciarDescarga");
+                    papeleta = false;
+                    iniciar = true;
+                    finalizar = false;
+                    almacen = extras.getBoolean("Almacen");
+                if (almacen) {
+                    textViewTitulo.setText("Medidor - Almacen");
+                    textView.setText(R.string.porcentaje_medidor_almacen_message);
+                }else{
+                    textViewTitulo.setText("Medidor - Tractor");
+                    textView.setText(R.string.porcentaje_medidor_tractor_message);
+                }
+            }
+            else if(extras.getBoolean("EsDescargaFinalizar")){
+                finalizarDescargaDTO = (FinalizarDescargaDTO) extras.getSerializable("FinalizarDescarga");
+                papeleta=false;
+                iniciar=false;
+                finalizar=true;
+                almacen = extras.getBoolean("Almacen");
+                if (almacen) {
+                    textViewTitulo.setText("Medidor - Almacen");
+                    textView.setText(R.string.porcentaje_medidor_almacen_message);
+                }else{
+                    textViewTitulo.setText("Medidor - Tractor");
+                    textView.setText(R.string.porcentaje_medidor_tractor_message);
+                }
+            }
+        }
 
         numberPickerDecimal = (NumberPicker) findViewById(R.id.number_picker_decimal);
         numberPickerProcentaje = (NumberPicker) findViewById(R.id.number_picker_porcentaje);
@@ -65,12 +119,35 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             };
     public void onClickAceptar(){
         porcentaje = (numberPickerProcentaje.getValue())+(numberPickerDecimal.getValue()*.10);
+        if(papeleta){
+            papeletaDTO.setPorcentajeMedidor(porcentaje);
+        }else if(iniciar&&almacen){
+            iniciarDescargaDTO.setPorcentajeMedidorAlmacen(porcentaje);
+        }else if(finalizar&&almacen){
+            finalizarDescargaDTO.setPorcentajeMedidorAlmacen(porcentaje);
+        }else if(iniciar&&!almacen){
+            iniciarDescargaDTO.setPorcentajeMedidorTractor(porcentaje);
+        }else if(finalizar&&!almacen){
+            finalizarDescargaDTO.setPorcentajeMedidorTractor(porcentaje);
+        }
         startActivity();
     }
 
     public void startActivity(){
-        Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-        CameraActivity.fotoTomada = false;
+        Intent intent = new Intent(getApplicationContext(), CameraDescargaActivity.class);
+        CameraPapeletaActivity.fotoTomada = false;
+        if(papeleta){
+            intent.putExtra("TipoMedidor",tipoMedidor);
+            intent.putExtra("Papeleta",papeletaDTO);
+        }else if(iniciar) {
+            intent.putExtra("IniciarDescarga",iniciarDescargaDTO);
+        }else if(finalizar){
+            intent.putExtra("FinalizarDescarga",finalizarDescargaDTO);
+        }
+        intent.putExtra("EsPapeleta",papeleta);
+        intent.putExtra("EsDescargaIniciar",iniciar);
+        intent.putExtra("EsDescargaFinalizar",finalizar);
+        intent.putExtra("Almacen",almacen);
         startActivity(intent);
     }
 

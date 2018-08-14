@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -27,6 +28,7 @@ import com.example.neotecknewts.sagasapp.Activity.FinalizarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.IniciarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaActivity;
 import com.example.neotecknewts.sagasapp.Activity.VistaOrdenCompraActivity;
+import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.util.List;
@@ -38,11 +40,11 @@ import java.util.Locale;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
-    private List<String> menuItems;
+    private ArrayList<MenuDTO> menuItems;
     private int[] colores;
     Context context;
 
-    public MenuAdapter(List<String> menuItems) {
+    public MenuAdapter(ArrayList<MenuDTO> menuItems) {
         this.menuItems = menuItems;
         colores = new int[3];
         colores[0] = R.color.colorBackgroundMenu1;
@@ -63,12 +65,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        String menuItem = menuItems.get(position);
+        final MenuDTO menuItem = menuItems.get(position);
 
 
         // Set item views based on your views and data model
         TextView textView = holder.nameTextView;
-        textView.setText(menuItem);
+        textView.setText(menuItem.getName());
+        TextView textViewruta = holder.textViewRuta;
+        textViewruta.setText(menuItem.getHeaderMenu());
         LinearLayout linearLayout = holder.linearLayout;
         /*if (position <= 2) {
             linearLayout.setBackgroundColor(context.getResources().getColor(colores[position]));
@@ -79,19 +83,19 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(position==0) {
+                if(menuItem.getName().equals("Iniciar Descarga")) {
                     Intent intent = new Intent(view.getContext(), IniciarDescargaActivity.class);
                     view.getContext().startActivity(intent);
 
-                }else if(position==1){
+                }else if(menuItem.getName().equals("Finalizar Descarga")){
                     Intent intent = new Intent(view.getContext() , FinalizarDescargaActivity.class);
                     view.getContext().startActivity(intent);
 
-                }else if(position==2){
+                }else if(menuItem.getName().equals("Registrar Papeleta")){
                     Intent intent = new Intent(view.getContext() , RegistrarPapeletaActivity.class);
                     view.getContext().startActivity(intent);
                 }
-                else if(position==3){
+                else if(menuItem.getName().equals("Ordenes de compra")){
                     Intent intent = new Intent(view.getContext() , VistaOrdenCompraActivity.class);
                     view.getContext().startActivity(intent);
                 }
@@ -111,11 +115,13 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         public TextView nameTextView;
         public ImageView imageView;
         public LinearLayout linearLayout;
+        public TextView textViewRuta;
 
         public ViewHolder(View itemView) {
 
             super(itemView);
 
+            textViewRuta = (TextView) itemView.findViewById(R.id.textViewRuta);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayoutMenu);
             nameTextView = (TextView) itemView.findViewById(R.id.menu_item_name);
             imageView = (ImageView) itemView.findViewById(R.id.image_view_menu_item);

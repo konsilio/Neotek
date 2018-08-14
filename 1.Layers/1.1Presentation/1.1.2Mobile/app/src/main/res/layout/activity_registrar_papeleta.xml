@@ -31,12 +31,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/spinner_num_compra"
+                android:text="@string/spinner_num_compra_expedidor"
                 android:textColor="@color/colorTextLogin"
                 android:textSize="25dp" />
 
             <Spinner
-                android:id="@+id/spinner_orden_compra"
+                android:id="@+id/spinner_orden_compra_expedidor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/colorTextLogin"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/spinner_num_compra_porteador"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="25dp" />
+
+            <Spinner
+                android:id="@+id/spinner_orden_compra_porteador"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="25dp"
@@ -141,39 +158,35 @@
                     android:textColor="@color/colorTextLogin"/>
             </android.support.design.widget.TextInputLayout>
 
-            <TextView
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_expedidor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/nombre_expedidor"
-                android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
+                android:layout_height="wrap_content">
+                <EditText android:id="@+id/input_nombre_expedidor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:paddingBottom="15dp"
+                    android:inputType="text"
+                    android:hint="@string/nombre_expedidor"
+                    android:textColorHint="@color/colorTextLogin"
+                    android:textColor="@color/colorTextLogin"/>
+            </android.support.design.widget.TextInputLayout>
 
-            <Spinner
-                android:id="@+id/spinner_expedidor"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_porteador"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/colorTextLogin"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/nombre_porteador"
-                android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
-
-            <Spinner
-                android:id="@+id/spinner_porteador"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:paddingBottom="10dp"
-                android:textColor="@color/colorTextLogin"/>
+                android:layout_height="wrap_content">
+                <EditText android:id="@+id/input_nombre_porteador"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25dp"
+                    android:paddingBottom="15dp"
+                    android:inputType="text"
+                    android:hint="@string/nombre_porteador"
+                    android:textColorHint="@color/colorTextLogin"
+                    android:textColor="@color/colorTextLogin"/>
+            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_placas_tractor"
@@ -297,7 +310,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="25dp"
                     android:paddingBottom="15dp"
-                    android:inputType="numberSigned"
+                    android:inputType="numberDecimal"
                     android:hint="@string/masa"
                     android:textColorHint="@color/colorTextLogin"
                     android:textColor="@color/colorTextLogin"/>
@@ -348,6 +361,35 @@
                     android:textColorHint="@color/colorTextLogin"
                     android:textColor="@color/colorTextLogin"/>
             </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tipo_medidor_tractor"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="25dp" />
+
+                <Spinner
+                    android:id="@+id/spinner_medidor_tractor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/tipos_medidor"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="25dp" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/registrar_button"
