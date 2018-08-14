@@ -265,6 +265,16 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenSalidaProducto' 
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="CBanco">
+          <Key>
+            <PropertyRef Name="IdBanco" />
+          </Key>
+          <Property Name="IdBanco" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Clave" Type="varchar" MaxLength="10" />
+          <Property Name="NombreCorto" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="NombreRazónSocial" Type="varchar" MaxLength="300" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CCamioneta">
           <Key>
             <PropertyRef Name="IdCamioneta" />
@@ -296,6 +306,17 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="IdTipoCentroCosto" Type="tinyint" Nullable="false" />
           <Property Name="IdEquipoTransporte" Type="int" />
+          <Property Name="Numero" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CCuentaContable">
+          <Key>
+            <PropertyRef Name="IdCuentaContable" />
+          </Key>
+          <Property Name="IdCuentaContable" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="Numero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
@@ -437,6 +458,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="IdTipoProveedor" Type="tinyint" Nullable="false" />
           <Property Name="IdCuentaContable" Type="int" />
+          <Property Name="IdFormaDePago" Type="tinyint" Nullable="false" />
+          <Property Name="IdBanco" Type="smallint" Nullable="false" />
+          <Property Name="IdPais" Type="tinyint" Nullable="false" />
+          <Property Name="IdEstadoRep" Type="tinyint" />
+          <Property Name="IdTipoPersona" Type="tinyint" Nullable="false" />
+          <Property Name="IdRegimenFiscal" Type="smallint" Nullable="false" />
           <Property Name="NombreComercial" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ProdutoPrinicpal" Type="bit" Nullable="false" />
           <Property Name="TransportistaProdutoPrinicpal" Type="bit" Nullable="false" />
@@ -449,8 +476,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdProveedor" />
           </Key>
           <Property Name="IdProveedor" Type="int" Nullable="false" />
-          <Property Name="IdFormaDePago" Type="tinyint" Nullable="false" />
-          <Property Name="IdBanco" Type="tinyint" Nullable="false" />
           <Property Name="Cuenta" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="DiasCredito" Type="decimal" Precision="18" Scale="4" Nullable="false" />
         </EntityType>
@@ -480,8 +505,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdProveedor" />
           </Key>
           <Property Name="IdProveedor" Type="int" Nullable="false" />
-          <Property Name="IdPais" Type="tinyint" Nullable="false" />
-          <Property Name="IdEstadoRep" Type="tinyint" />
           <Property Name="EstadoProvincia" Type="varchar" MaxLength="150" />
           <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CodigoPostal" Type="varchar" MaxLength="20" Nullable="false" />
@@ -495,8 +518,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdProveedor" />
           </Key>
           <Property Name="IdProveedor" Type="int" Nullable="false" />
-          <Property Name="IdTipoPersona" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="IdRegimenFiscal" Type="int" Nullable="false" />
           <Property Name="Rfc" Type="varchar" MaxLength="13" Nullable="false" />
           <Property Name="RazonSocial" Type="varchar" MaxLength="350" Nullable="false" />
         </EntityType>
@@ -508,6 +529,27 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CRegimenFiscal">
+          <Key>
+            <PropertyRef Name="IdRegimenFiscal" />
+          </Key>
+          <Property Name="IdRegimenFiscal" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="c_RegimenFiscal" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="AplicaPersonaFisica" Type="bit" Nullable="false" />
+          <Property Name="AplicaPersonaMoral" Type="bit" Nullable="false" />
+          <Property Name="FechaInicioVigencia" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaFinVigencia" Type="smalldatetime" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CTipoPersona">
+          <Key>
+            <PropertyRef Name="IdTipoPersona" />
+          </Key>
+          <Property Name="IdTipoPersona" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -1441,6 +1483,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CCuentaContable_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="CCuentaContable" Type="Self.CCuentaContable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CCuentaContable">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CEstacionCarburacion_Empresa">
           <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
           <End Role="CEstacionCarburacion" Type="Self.CEstacionCarburacion" Multiplicity="*" />
@@ -1609,6 +1663,66 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CProveedor_CBanco">
+          <End Role="CBanco" Type="Self.CBanco" Multiplicity="1" />
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CBanco">
+              <PropertyRef Name="IdBanco" />
+            </Principal>
+            <Dependent Role="CProveedor">
+              <PropertyRef Name="IdBanco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CCuentaContable">
+          <End Role="CCuentaContable" Type="Self.CCuentaContable" Multiplicity="0..1" />
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCuentaContable">
+              <PropertyRef Name="IdCuentaContable" />
+            </Principal>
+            <Dependent Role="CProveedor">
+              <PropertyRef Name="IdCuentaContable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CEstadosRep">
+          <End Role="CEstadosRep" Type="Self.CEstadosRep" Multiplicity="0..1" />
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CEstadosRep">
+              <PropertyRef Name="IdEstadoRep" />
+            </Principal>
+            <Dependent Role="CProveedor">
+              <PropertyRef Name="IdEstadoRep" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CFormaPago">
+          <End Role="CFormaPago" Type="Self.CFormaPago" Multiplicity="1" />
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CFormaPago">
+              <PropertyRef Name="IdFormaPago" />
+            </Principal>
+            <Dependent Role="CProveedor">
+              <PropertyRef Name="IdFormaDePago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CPais">
+          <End Role="CPais" Type="Self.CPais" Multiplicity="1" />
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CPais">
+              <PropertyRef Name="IdPais" />
+            </Principal>
+            <Dependent Role="CProveedor">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CProveedor_CProveedorTipoProveedor">
           <End Role="CProveedorTipoProveedor" Type="Self.CProveedorTipoProveedor" Multiplicity="1" />
           <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
@@ -1618,6 +1732,30 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             </Principal>
             <Dependent Role="CProveedor">
               <PropertyRef Name="IdTipoProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CRegimenFiscal">
+          <End Role="CRegimenFiscal" Type="Self.CRegimenFiscal" Multiplicity="1" />
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRegimenFiscal">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Principal>
+            <Dependent Role="CProveedor">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CTipoPersona">
+          <End Role="CTipoPersona" Type="Self.CTipoPersona" Multiplicity="1" />
+          <End Role="CProveedor" Type="Self.CProveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoPersona">
+              <PropertyRef Name="IdTipoPersona" />
+            </Principal>
+            <Dependent Role="CProveedor">
+              <PropertyRef Name="IdTipoPersona" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2274,8 +2412,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySet Name="CAlmacenGasCilindro" EntityType="Self.CAlmacenGasCilindro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAlmacenGasTipo" EntityType="Self.CAlmacenGasTipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAlmacenGasTipoMedidor" EntityType="Self.CAlmacenGasTipoMedidor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CBanco" EntityType="Self.CBanco" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCamioneta" EntityType="Self.CCamioneta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCentroCosto" EntityType="Self.CCentroCosto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CCuentaContable" EntityType="Self.CCuentaContable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CEstacionCarburacion" EntityType="Self.CEstacionCarburacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CEstadosRep" EntityType="Self.CEstadosRep" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CFormaPago" EntityType="Self.CFormaPago" Schema="dbo" store:Type="Tables" />
@@ -2292,6 +2432,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySet Name="CProveedorDireccion" EntityType="Self.CProveedorDireccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CProveedorFiscal" EntityType="Self.CProveedorFiscal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CProveedorTipoProveedor" EntityType="Self.CProveedorTipoProveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CRegimenFiscal" EntityType="Self.CRegimenFiscal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CTipoPersona" EntityType="Self.CTipoPersona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpresaConfiguracion" EntityType="Self.EmpresaConfiguracion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpresaContacto" EntityType="Self.EmpresaContacto" Schema="dbo" store:Type="Tables" />
@@ -2571,6 +2713,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CCentroCosto" EntitySet="CCentroCosto" />
           </AssociationSet>
+          <AssociationSet Name="FK_CCuentaContable_Empresa" Association="Self.FK_CCuentaContable_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CCuentaContable" EntitySet="CCuentaContable" />
+          </AssociationSet>
           <AssociationSet Name="FK_CEstacionCarburacion_Empresa" Association="Self.FK_CEstacionCarburacion_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CEstacionCarburacion" EntitySet="CEstacionCarburacion" />
@@ -2627,8 +2773,36 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CProductoUnidadMedida" EntitySet="CProductoUnidadMedida" />
           </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CBanco" Association="Self.FK_CProveedor_CBanco">
+            <End Role="CBanco" EntitySet="CBanco" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CCuentaContable" Association="Self.FK_CProveedor_CCuentaContable">
+            <End Role="CCuentaContable" EntitySet="CCuentaContable" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CEstadosRep" Association="Self.FK_CProveedor_CEstadosRep">
+            <End Role="CEstadosRep" EntitySet="CEstadosRep" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CFormaPago" Association="Self.FK_CProveedor_CFormaPago">
+            <End Role="CFormaPago" EntitySet="CFormaPago" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CPais" Association="Self.FK_CProveedor_CPais">
+            <End Role="CPais" EntitySet="CPais" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
           <AssociationSet Name="FK_CProveedor_CProveedorTipoProveedor" Association="Self.FK_CProveedor_CProveedorTipoProveedor">
             <End Role="CProveedorTipoProveedor" EntitySet="CProveedorTipoProveedor" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CRegimenFiscal" Association="Self.FK_CProveedor_CRegimenFiscal">
+            <End Role="CRegimenFiscal" EntitySet="CRegimenFiscal" />
+            <End Role="CProveedor" EntitySet="CProveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CTipoPersona" Association="Self.FK_CProveedor_CTipoPersona">
+            <End Role="CTipoPersona" EntitySet="CTipoPersona" />
             <End Role="CProveedor" EntitySet="CProveedor" />
           </AssociationSet>
           <AssociationSet Name="FK_CProveedor_Empresa" Association="Self.FK_CProveedor_Empresa">
@@ -2897,7 +3071,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <NavigationProperty Name="AdministracionCentral" Relationship="Self.FK_AdministracionCentral_EstadosRepublica" FromRole="EstadosRepublica" ToRole="AdministracionCentral" />
           <NavigationProperty Name="Empresa" Relationship="Self.FK_Empresa_EstadosRepublica" FromRole="EstadosRepublica" ToRole="Empresa" />
           <NavigationProperty Name="UsuarioAC" Relationship="Sagas.MainModuleModel.FK_UsuarioAC_EstadosRepublica" FromRole="EstadosRepublica" ToRole="UsuarioAC" />
-          <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_Usuario_EstadosRepublica" FromRole="EstadosRepublica" ToRole="Usuario" />
+          <NavigationProperty Name="Usuarios" Relationship="Sagas.MainModuleModel.FK_Usuario_EstadosRepublica" FromRole="EstadosRepublica" ToRole="Usuario" />
+          <NavigationProperty Name="Proveedores" Relationship="Sagas.MainModuleModel.FK_CProveedor_CEstadosRep" FromRole="EstadosRepublica" ToRole="Proveedor" />
         </EntityType>
         <EntityType Name="Pais">
           <Key>
@@ -2909,7 +3084,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <NavigationProperty Name="AdministracionCentral" Relationship="Self.FK_AdministracionCentral_Pais" FromRole="Pais" ToRole="AdministracionCentral" />
           <NavigationProperty Name="Empresa" Relationship="Self.FK_Empresa_Pais" FromRole="Pais" ToRole="Empresa" />
           <NavigationProperty Name="UsuarioAC" Relationship="Sagas.MainModuleModel.FK_UsuarioAC_Pais" FromRole="Pais" ToRole="UsuarioAC" />
-          <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_Usuario_Pais" FromRole="Pais" ToRole="Usuario" />
+          <NavigationProperty Name="Usuarios" Relationship="Sagas.MainModuleModel.FK_Usuario_Pais" FromRole="Pais" ToRole="Usuario" />
+          <NavigationProperty Name="Proveedores" Relationship="Sagas.MainModuleModel.FK_CProveedor_CPais" FromRole="Pais" ToRole="Proveedor" />
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -2980,14 +3156,15 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <NavigationProperty Name="OrdenesCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_Empresa" FromRole="Empresa" ToRole="OrdenCompra" />
           <NavigationProperty Name="Requisiciones" Relationship="Sagas.MainModuleModel.FK_Requisicion_Empresa" FromRole="Empresa" ToRole="Requisicion" />
           <NavigationProperty Name="Almacen" Relationship="Sagas.MainModuleModel.FK_Almacen_Empresa" FromRole="Empresa" ToRole="Almacen" />
-          <NavigationProperty Name="AlmacenGas" Relationship="Sagas.MainModuleModel.FK_AlmacenGas_Empresa" FromRole="Empresa" ToRole="AlmacenGas" />
-          <NavigationProperty Name="UnidadAlmacenGas" Relationship="Sagas.MainModuleModel.FK_UnidadAlmacenGas_Empresa" FromRole="Empresa" ToRole="UnidadAlmacenGas" />
-          <NavigationProperty Name="Camioneta" Relationship="Sagas.MainModuleModel.FK_Camioneta_Empresa" FromRole="Empresa" ToRole="Camioneta" />
-          <NavigationProperty Name="EstacionCarburacion" Relationship="Sagas.MainModuleModel.FK_EstacionCarburacion_Empresa" FromRole="Empresa" ToRole="EstacionCarburacion" />
-          <NavigationProperty Name="Pipa" Relationship="Sagas.MainModuleModel.FK_Pipa_Empresa" FromRole="Empresa" ToRole="Pipa" />
-          <NavigationProperty Name="CamionetaCilindro" Relationship="Sagas.MainModuleModel.FK_CamionetaCilindro_Empresa" FromRole="Empresa" ToRole="CamionetaCilindro" />
-          <NavigationProperty Name="Rol" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Empresa" ToRole="Rol" />
-          <NavigationProperty Name="CentrosCosto" Relationship="Sagas.MainModuleModel.FK_CentroCosto_Empresa" FromRole="Empresa" ToRole="CentroCosto" />          
+          <NavigationProperty Name="AlmacenesGas" Relationship="Sagas.MainModuleModel.FK_AlmacenGas_Empresa" FromRole="Empresa" ToRole="AlmacenGas" />
+          <NavigationProperty Name="UnidadesAlmacenGas" Relationship="Sagas.MainModuleModel.FK_UnidadAlmacenGas_Empresa" FromRole="Empresa" ToRole="UnidadAlmacenGas" />
+          <NavigationProperty Name="Camionetas" Relationship="Sagas.MainModuleModel.FK_Camioneta_Empresa" FromRole="Empresa" ToRole="Camioneta" />
+          <NavigationProperty Name="EstacionesCarburacion" Relationship="Sagas.MainModuleModel.FK_EstacionCarburacion_Empresa" FromRole="Empresa" ToRole="EstacionCarburacion" />
+          <NavigationProperty Name="Pipas" Relationship="Sagas.MainModuleModel.FK_Pipa_Empresa" FromRole="Empresa" ToRole="Pipa" />
+          <NavigationProperty Name="CamionetasCilindros" Relationship="Sagas.MainModuleModel.FK_CamionetaCilindro_Empresa" FromRole="Empresa" ToRole="CamionetaCilindro" />
+          <NavigationProperty Name="Roles" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Empresa" ToRole="Rol" />
+          <NavigationProperty Name="CentrosCosto" Relationship="Sagas.MainModuleModel.FK_CentroCosto_Empresa" FromRole="Empresa" ToRole="CentroCosto" />
+          <NavigationProperty Name="CuentasContables" Relationship="Sagas.MainModuleModel.FK_CuentaContable_Empresa" FromRole="Empresa" ToRole="CuentaContable" />          
           <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaFiscal_Empresa" FromRole="EmpresaFiscal" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaImagen_Empresa" FromRole="EmpresaImagen" ToRole="Empresa" />-->
@@ -4001,6 +4178,42 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="AlmacenGasDescarga" EntitySet="AlmacenGasDescarga" />
           </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CEstadosRep" Association="Sagas.MainModuleModel.FK_CProveedor_CEstadosRep">
+            <End Role="EstadosRepublica" EntitySet="EstadosRepublica" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CFormaPago" Association="Sagas.MainModuleModel.FK_CProveedor_CFormaPago">
+            <End Role="FormaPago" EntitySet="FormaPago" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CPais" Association="Sagas.MainModuleModel.FK_CProveedor_CPais">
+            <End Role="Pais" EntitySet="Pais" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <EntitySet Name="Banco" EntityType="Sagas.MainModuleModel.Banco" />
+          <EntitySet Name="CuentaContable" EntityType="Sagas.MainModuleModel.CuentaContable" />
+          <EntitySet Name="RegimenFiscal" EntityType="Sagas.MainModuleModel.RegimenFiscal" />
+          <EntitySet Name="TipoPersona" EntityType="Sagas.MainModuleModel.TipoPersona" />
+          <AssociationSet Name="FK_CProveedor_Banco" Association="Sagas.MainModuleModel.FK_CProveedor_Banco">
+            <End Role="Banco" EntitySet="Banco" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_CuentaContable" Association="Sagas.MainModuleModel.FK_CProveedor_CuentaContable">
+            <End Role="CuentaContable" EntitySet="CuentaContable" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_RegimenFiscal" Association="Sagas.MainModuleModel.FK_CProveedor_RegimenFiscal">
+            <End Role="RegimenFiscal" EntitySet="RegimenFiscal" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CProveedor_TipoPersona" Association="Sagas.MainModuleModel.FK_CProveedor_TipoPersona">
+            <End Role="TipoPersona" EntitySet="TipoPersona" />
+            <End Role="Proveedor" EntitySet="Proveedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CuentaContable_Empresa" Association="Sagas.MainModuleModel.FK_CuentaContable_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CuentaContable" EntitySet="CuentaContable" />
+          </AssociationSet>
           <!--<AssociationSet Name="FK_UsuarioContacto_Usuario" Association="Self.FK_UsuarioContacto_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioContacto" EntitySet="UsuarioContacto" />
@@ -4326,6 +4539,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
           <Property Name="IdTipoProveedor" Type="Byte" Nullable="false" />
           <Property Name="IdCuentaContable" Type="Int32" />
+          <Property Name="IdFormaDePago" Type="Byte" Nullable="false" />
+          <Property Name="IdBanco" Type="Int16" Nullable="false" />
+          <Property Name="IdPais" Type="Byte" Nullable="false" />
+          <Property Name="IdEstadoRep" Type="Byte" />
+          <Property Name="IdTipoPersona" Type="Byte" Nullable="false" />
+          <Property Name="IdRegimenFiscal" Type="Int16" Nullable="false" />
           <Property Name="NombreComercial" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ProdutoPrinicpal" Type="Boolean" Nullable="false" />
           <Property Name="TransportistaProdutoPrinicpal" Type="Boolean" Nullable="false" />
@@ -4335,8 +4554,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           
           <!--"CProveedorBancario"
           <Property Name="IdProveedor" Type="Int32" Nullable="false" />-->
-          <Property Name="IdFormaDePago" Type="Byte" Nullable="false" />
-          <Property Name="IdBanco" Type="Byte" Nullable="false" />
           <Property Name="Cuenta" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="DiasCredito" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
 
@@ -4360,8 +4577,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
 
           <!--"CProveedorDireccion"
           <Property Name="IdProveedor" Type="Int32" Nullable="false" />-->
-          <Property Name="IdPais" Type="Byte" Nullable="false" />
-          <Property Name="IdEstadoRep" Type="Byte" />
           <Property Name="EstadoProvincia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Municipio" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CodigoPostal" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -4372,16 +4587,21 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
 
           <!--"CProveedorFiscal"
           <Property Name="IdProveedor" Type="Int32" Nullable="false" />-->
-          <Property Name="IdTipoPersona" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="IdRegimenFiscal" Type="Int32" Nullable="false" />
           <Property Name="Rfc" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
           <Property Name="RazonSocial" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
 
           <NavigationProperty Name="TipoProveedor" Relationship="Sagas.MainModuleModel.FK_Proveedor_TipoProveedor" FromRole="Proveedor" ToRole="TipoProveedor" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Proveedor_Empresa" FromRole="Proveedor" ToRole="Empresa" />
           <NavigationProperty Name="OrdenesCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_Proveedor" FromRole="Proveedor" ToRole="OrdenCompra" />
-          <NavigationProperty Name="AlmacenEntradaGasDescarga" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_CProveedor" FromRole="Proveedor" ToRole="AlmacenGasDescarga" />
-          <NavigationProperty Name="AlmacenEntradaGasDescarga1" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_CProveedor1" FromRole="Proveedor" ToRole="AlmacenGasDescarga" />
+          <NavigationProperty Name="EntregasGas" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_CProveedor" FromRole="Proveedor" ToRole="AlmacenGasDescarga" />
+          <NavigationProperty Name="TransportesDeGas" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_CProveedor1" FromRole="Proveedor" ToRole="AlmacenGasDescarga" />          
+          <NavigationProperty Name="EstadoDeRepublica" Relationship="Sagas.MainModuleModel.FK_CProveedor_CEstadosRep" FromRole="Proveedor" ToRole="EstadosRepublica" />
+          <NavigationProperty Name="FormaDePago" Relationship="Sagas.MainModuleModel.FK_CProveedor_CFormaPago" FromRole="Proveedor" ToRole="FormaPago" />
+          <NavigationProperty Name="Pais" Relationship="Sagas.MainModuleModel.FK_CProveedor_CPais" FromRole="Proveedor" ToRole="Pais" />
+          <NavigationProperty Name="Banco" Relationship="Sagas.MainModuleModel.FK_CProveedor_Banco" FromRole="Proveedor" ToRole="Banco" />
+          <NavigationProperty Name="CuentaContable" Relationship="Sagas.MainModuleModel.FK_CProveedor_CuentaContable" FromRole="Proveedor" ToRole="CuentaContable" />
+          <NavigationProperty Name="RegimenFiscal" Relationship="Sagas.MainModuleModel.FK_CProveedor_RegimenFiscal" FromRole="Proveedor" ToRole="RegimenFiscal" />
+          <NavigationProperty Name="TipoPersonaFiscal" Relationship="Sagas.MainModuleModel.FK_CProveedor_TipoPersona" FromRole="Proveedor" ToRole="TipoPersona" />
           <!--<NavigationProperty Name="CProveedorBancario" Relationship="Sagas.MainModuleModel.FK_CProveedorBancario_CProveedor" FromRole="CProveedor" ToRole="CProveedorBancario" />
           <NavigationProperty Name="CProveedorContacto" Relationship="Sagas.MainModuleModel.FK_CProveedorContacto_CProveedor" FromRole="CProveedor" ToRole="CProveedorContacto" />
           <NavigationProperty Name="CProveedorDireccion" Relationship="Sagas.MainModuleModel.FK_CProveedorDireccion_CProveedor" FromRole="CProveedor" ToRole="CProveedorDireccion" />
@@ -5016,6 +5236,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_CFormaPago" FromRole="FormaPago" ToRole="Proveedor" />
         </EntityType>
         <EntityType Name="Pipa">
           <Key>
@@ -5693,6 +5914,149 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
               <PropertyRef Name="IdProveedorPorteador" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CEstadosRep">
+          <End Type="Sagas.MainModuleModel.EstadosRepublica" Role="EstadosRepublica" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.Proveedor" Role="Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadosRepublica">
+              <PropertyRef Name="IdEstadoRep" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="IdEstadoRep" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CFormaPago">
+          <End Type="Sagas.MainModuleModel.FormaPago" Role="FormaPago" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.Proveedor" Role="Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormaPago">
+              <PropertyRef Name="IdFormaPago" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="IdFormaDePago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CPais">
+          <End Type="Sagas.MainModuleModel.Pais" Role="Pais" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.Proveedor" Role="Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pais">
+              <PropertyRef Name="IdPais" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="IdPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Banco">
+          <Key>
+            <PropertyRef Name="IdBanco" />
+          </Key>
+          <Property Name="IdBanco" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Clave" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NombreCorto" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NombreRazónSocial" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_Banco" FromRole="Banco" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="CuentaContable">
+          <Key>
+            <PropertyRef Name="IdCuentaContable" />
+          </Key>
+          <Property Name="IdCuentaContable" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="Numero" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_CuentaContable" FromRole="CuentaContable" ToRole="Proveedor" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CuentaContable_Empresa" FromRole="CuentaContable" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="RegimenFiscal">
+          <Key>
+            <PropertyRef Name="IdRegimenFiscal" />
+          </Key>
+          <Property Name="IdRegimenFiscal" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_RegimenFiscal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="AplicaPersonaFisica" Type="Boolean" Nullable="false" />
+          <Property Name="AplicaPersonaMoral" Type="Boolean" Nullable="false" />
+          <Property Name="FechaInicioVigencia" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFinVigencia" Type="DateTime" Precision="0" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_RegimenFiscal" FromRole="RegimenFiscal" ToRole="Proveedor" />
+        </EntityType>
+        <EntityType Name="TipoPersona">
+          <Key>
+            <PropertyRef Name="IdTipoPersona" />
+          </Key>
+          <Property Name="IdTipoPersona" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_TipoPersona" FromRole="TipoPersona" ToRole="Proveedor" />
+        </EntityType>
+        <Association Name="FK_CProveedor_Banco">
+          <End Type="Sagas.MainModuleModel.Banco" Role="Banco" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.Proveedor" Role="Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Banco">
+              <PropertyRef Name="IdBanco" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="IdBanco" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_CuentaContable">
+          <End Type="Sagas.MainModuleModel.CuentaContable" Role="CuentaContable" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.Proveedor" Role="Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuentaContable">
+              <PropertyRef Name="IdCuentaContable" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="IdCuentaContable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_RegimenFiscal">
+          <End Type="Sagas.MainModuleModel.RegimenFiscal" Role="RegimenFiscal" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.Proveedor" Role="Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegimenFiscal">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CProveedor_TipoPersona">
+          <End Type="Sagas.MainModuleModel.TipoPersona" Role="TipoPersona" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.Proveedor" Role="Proveedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPersona">
+              <PropertyRef Name="IdTipoPersona" />
+            </Principal>
+            <Dependent Role="Proveedor">
+              <PropertyRef Name="IdTipoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CuentaContable_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CuentaContable" Role="CuentaContable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CuentaContable">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>        
       </Schema>
     </edmx:ConceptualModels>
@@ -6120,6 +6484,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySetMapping Name="Proveedor">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Proveedor">
               <MappingFragment StoreEntitySet="CProveedor">
+                <ScalarProperty Name="IdRegimenFiscal" ColumnName="IdRegimenFiscal" />
+                <ScalarProperty Name="IdTipoPersona" ColumnName="IdTipoPersona" />
+                <ScalarProperty Name="IdEstadoRep" ColumnName="IdEstadoRep" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="IdFormaDePago" ColumnName="IdFormaDePago" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Vende" ColumnName="Vende" />
@@ -6135,8 +6505,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
               <MappingFragment StoreEntitySet="CProveedorBancario">
                 <ScalarProperty Name="DiasCredito" ColumnName="DiasCredito" />
                 <ScalarProperty Name="Cuenta" ColumnName="Cuenta" />
-                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
-                <ScalarProperty Name="IdFormaDePago" ColumnName="IdFormaDePago" />
                 <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
               </MappingFragment>
               
@@ -6167,16 +6535,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
                 <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
                 <ScalarProperty Name="Municipio" ColumnName="Municipio" />
                 <ScalarProperty Name="EstadoProvincia" ColumnName="EstadoProvincia" />
-                <ScalarProperty Name="IdEstadoRep" ColumnName="IdEstadoRep" />
-                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
                 <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
               </MappingFragment>
             
               <MappingFragment StoreEntitySet="CProveedorFiscal">
                 <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
                 <ScalarProperty Name="Rfc" ColumnName="Rfc" />
-                <ScalarProperty Name="IdRegimenFiscal" ColumnName="IdRegimenFiscal" />
-                <ScalarProperty Name="IdTipoPersona" ColumnName="IdTipoPersona" />
                 <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -6532,7 +6896,53 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             <EndProperty Name="Rol">
               <ScalarProperty Name="IdRol" ColumnName="IdRol" />
             </EndProperty>
-          </AssociationSetMapping>         
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Banco">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.Banco">
+              <MappingFragment StoreEntitySet="CBanco">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="NombreRazónSocial" ColumnName="NombreRazónSocial" />
+                <ScalarProperty Name="NombreCorto" ColumnName="NombreCorto" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CuentaContable">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CuentaContable">
+              <MappingFragment StoreEntitySet="CCuentaContable">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdCuentaContable" ColumnName="IdCuentaContable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegimenFiscal">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.RegimenFiscal">
+              <MappingFragment StoreEntitySet="CRegimenFiscal">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="FechaFinVigencia" ColumnName="FechaFinVigencia" />
+                <ScalarProperty Name="FechaInicioVigencia" ColumnName="FechaInicioVigencia" />
+                <ScalarProperty Name="AplicaPersonaMoral" ColumnName="AplicaPersonaMoral" />
+                <ScalarProperty Name="AplicaPersonaFisica" ColumnName="AplicaPersonaFisica" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="c_RegimenFiscal" ColumnName="c_RegimenFiscal" />
+                <ScalarProperty Name="IdRegimenFiscal" ColumnName="IdRegimenFiscal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoPersona">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.TipoPersona">
+              <MappingFragment StoreEntitySet="CTipoPersona">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdTipoPersona" ColumnName="IdTipoPersona" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>         
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

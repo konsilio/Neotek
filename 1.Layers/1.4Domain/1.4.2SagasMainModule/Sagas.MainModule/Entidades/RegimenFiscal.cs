@@ -12,17 +12,21 @@ namespace Sagas.MainModule.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class FormaPago
+    public partial class RegimenFiscal
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FormaPago()
+        public RegimenFiscal()
         {
             this.CProveedor = new HashSet<Proveedor>();
         }
     
-        public byte IdFormaPago { get; set; }
+        public short IdRegimenFiscal { get; set; }
+        public string c_RegimenFiscal { get; set; }
         public string Descripcion { get; set; }
-        public bool Activo { get; set; }
+        public bool AplicaPersonaFisica { get; set; }
+        public bool AplicaPersonaMoral { get; set; }
+        public System.DateTime FechaInicioVigencia { get; set; }
+        public Nullable<System.DateTime> FechaFinVigencia { get; set; }
         public System.DateTime FechaRegistro { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
