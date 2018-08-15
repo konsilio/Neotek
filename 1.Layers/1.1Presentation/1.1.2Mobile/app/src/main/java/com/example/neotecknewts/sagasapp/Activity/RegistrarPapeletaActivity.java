@@ -26,6 +26,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.OrdenCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
@@ -79,6 +81,9 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     ProgressDialog progressDialog;
     Session session;
     RegistrarPapeletaPresenter presenter;
+
+    List<MedidorDTO> medidorDTOs;
+    List<AlmacenDTO> almacenDTOs;
 
 
     @Override
@@ -358,6 +363,10 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         papeletaDTO.setSello(editTextSello.toString());
         papeletaDTO.setValorCarga(Double.parseDouble(editTextValorCarga.getText().toString()));
         papeletaDTO.setNombreResponsable(editTextNombreResponsable.toString());
+
+        papeletaDTO.setCantidadFotosTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getCantidadFotografias());
+        papeletaDTO.setIdTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getIdTipoMedidor());
+        papeletaDTO.setNombreTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getNombreTipoMedidor());
         startActivity();
     }
 
@@ -381,7 +390,6 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CameraPapeletaActivity.class);
         intent.putExtra("Papeleta",papeletaDTO);
-        intent.putExtra("TipoMedidor",tipoMedidor);
         startActivity(intent);
     }
 
@@ -440,11 +448,23 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public void onSuccessGetOrdenesCompraPorteador(RespuestaOrdenesCompraDTO respuesta) {
         Log.w("VIEW", respuesta.getOrdenesCompra().size()+"");
         this.ordenesCompraDTOPorteador = respuesta.getOrdenesCompra();
-        String[] ordenes = new String[ordenesCompraDTOPorteador.size()];
+        String[]ordenes = new String[ordenesCompraDTOPorteador.size()];
         for (int i =0; i<ordenes.length; i++){
             ordenes[i]=ordenesCompraDTOPorteador.get(i).getNumOrdenCompra();
         }
 
         spinnerOrdenCompraPorteador.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
+        presenter.getMedidores(session.getTokenWithBearer());
+    }
+
+    @Override
+    public void onSuccessGetMedidores(List<MedidorDTO> medidorDTOs) {
+        this.medidorDTOs = medidorDTOs;
+        String[]medidores = new String[medidorDTOs.size()];
+        for (int i =0; i<medidores.length; i++){
+            medidores[i]=medidorDTOs.get(i).getNombreTipoMedidor();
+        }
+
+        spinnerMedidorTractor.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, medidores));
     }
 }

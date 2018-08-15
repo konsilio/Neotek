@@ -1,12 +1,15 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -21,6 +24,7 @@ import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 /**
  * Created by neotecknewts on 14/08/18.
@@ -125,6 +129,29 @@ public class SubirImagenesActivity extends AppCompatActivity {
 
     }
 
+    private void showDialogAceptar(String titulo, String mensaje){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setTitle(titulo);
+        builder1.setMessage(mensaje);
+        builder1.setCancelable(false);
+
+        builder1.setNegativeButton(
+                R.string.message_acept,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        startActivity();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
+    public void startActivity(){
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        startActivity(intent);
+    }
+
     private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -137,6 +164,7 @@ public class SubirImagenesActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             textView.setText(R.string.cargando_imagenes_fin);
+            showDialogAceptar("Operación Exitosa","Los datos se han guardado exitosamente");
         }
 
 

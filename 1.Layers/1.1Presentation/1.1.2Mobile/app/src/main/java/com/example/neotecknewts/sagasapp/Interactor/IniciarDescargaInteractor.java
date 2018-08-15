@@ -6,4 +6,6 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 public interface IniciarDescargaInteractor {
     void getOrdenesCompra(int IdEmpresa, String token);
+    void getMedidores(String token);
+    void getAlmacenes(String token);
 }

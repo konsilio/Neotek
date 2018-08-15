@@ -3,8 +3,12 @@ package com.example.neotecknewts.sagasapp.Presenter;
 import com.example.neotecknewts.sagasapp.Activity.IniciarDescargaView;
 import com.example.neotecknewts.sagasapp.Interactor.IniciarDescargaInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.IniciarDescargaInteractorImpl;
+import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.R;
+
+import java.util.List;
 
 /**
  * Created by neotecknewts on 13/08/18.
@@ -29,6 +33,30 @@ public class IniciarDescargaPresenterImpl implements IniciarDescargaPresenter {
         iniciarDescargaView.hideProgress();
         iniciarDescargaView.onSuccessGetOrdenesCompra(respuestaOrdenesCompraDTO);
 
+    }
+
+    @Override
+    public void getMedidores(String token) {
+        iniciarDescargaView.showProgress(R.string.message_cargando);
+        interactor.getMedidores(token);
+    }
+
+    @Override
+    public void onSuccessGetMedidores(List<MedidorDTO> medidorDTOList) {
+        iniciarDescargaView.hideProgress();
+        iniciarDescargaView.onSuccessGetMedidores(medidorDTOList);
+    }
+
+    @Override
+    public void getAlmacenes(String token) {
+        iniciarDescargaView.showProgress(R.string.message_cargando);
+        interactor.getAlmacenes(token);
+    }
+
+    @Override
+    public void onSuccessGetAlmacenes(List<AlmacenDTO> almacenDTOs) {
+        iniciarDescargaView.hideProgress();
+        iniciarDescargaView.onSuccessGetAlmacen(almacenDTOs);
     }
 
     @Override

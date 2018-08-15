@@ -14,19 +14,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Switch;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Switch;
-
+import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.OrdenCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Presenter.IniciarDescargaPresenter;
@@ -46,6 +36,7 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
     public Switch switchTanquePrestado;
     public Spinner spinnerMedidorAlmacen;
     public Spinner spinnerMedidorTractor;
+    public Spinner spinnerAlmacenes;
     ProgressDialog progressDialog;
     public Session session;
 
@@ -55,6 +46,9 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
     public IniciarDescargaPresenter presenter;
 
     public IniciarDescargaDTO iniciarDescargaDTO;
+
+    List<MedidorDTO> medidorDTOs;
+    List<AlmacenDTO> almacenDTOs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +61,7 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
         switchTanquePrestado = (Switch)findViewById(R.id.switch_tanque);
         spinnerMedidorAlmacen = (Spinner) findViewById(R.id.spinner_medidor_almacen);
         spinnerMedidorTractor = (Spinner) findViewById(R.id.spinner_medidor_tractor);
+        spinnerAlmacenes = (Spinner)findViewById(R.id.spinner_almacen);
 
         session = new Session(getApplicationContext());
 
@@ -79,6 +74,7 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
         spinnerOrdenCompra.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
         spinnerMedidorAlmacen.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
         spinnerMedidorTractor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
+        spinnerAlmacenes.setAdapter(new ArrayAdapter<String>(this,R.layout.custom_spinner,ordenes));
 
         final Button buttonRegistrar = (Button) findViewById(R.id.registrar_button);
         buttonRegistrar.setOnClickListener(new View.OnClickListener() {
@@ -93,8 +89,17 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
 
     public void onClickRegistrar(){
         iniciarDescargaDTO.setIdOrdenCompra(ordenesCompraDTO.get(spinnerOrdenCompra.getSelectedItemPosition()).getIdOrdenCompra());
-        iniciarDescargaDTO.setIdTipoMedidorAlmacen(spinnerMedidorAlmacen.getSelectedItemPosition());
-        iniciarDescargaDTO.setIdTipoMedidorTractor(spinnerMedidorTractor.getSelectedItemPosition());
+
+        iniciarDescargaDTO.setIdTipoMedidorAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getIdTipoMedidor());
+        iniciarDescargaDTO.setCantidadFotosAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getCantidadFotografias());
+        iniciarDescargaDTO.setNombreTipoMedidorAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getNombreTipoMedidor());
+
+        iniciarDescargaDTO.setIdTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getIdTipoMedidor());
+        iniciarDescargaDTO.setCantidadFotosTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getCantidadFotografias());
+        iniciarDescargaDTO.setNombreTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getNombreTipoMedidor());
+
+        iniciarDescargaDTO.setIdAlmacen(almacenDTOs.get(spinnerAlmacenes.getSelectedItemPosition()).getIdAlmacen());
+
         iniciarDescargaDTO.setTanquePrestado(switchTanquePrestado.isChecked());
         showDialog(getResources().getString(R.string.message_continuar));
 
@@ -179,6 +184,31 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
         }
 
         spinnerOrdenCompra.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
+        presenter.getMedidores(session.getTokenWithBearer());
+    }
+
+    @Override
+    public void onSuccessGetMedidores(List<MedidorDTO> medidorDTOs) {
+        this.medidorDTOs = medidorDTOs;
+        String[] medidores = new String[medidorDTOs.size()];
+        for (int i =0; i<medidores.length; i++){
+            medidores[i]=medidorDTOs.get(i).getNombreTipoMedidor();
+        }
+
+        spinnerMedidorAlmacen.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, medidores));
+        spinnerMedidorTractor.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, medidores));
+        presenter.getAlmacenes(session.getTokenWithBearer());
+    }
+
+    @Override
+    public void onSuccessGetAlmacen(List<AlmacenDTO> almacenDTOs) {
+        this.almacenDTOs = almacenDTOs;
+        String[] almacenes = new String[almacenDTOs.size()];
+        for (int i =0; i<almacenes.length; i++){
+            almacenes[i]=almacenDTOs.get(i).getNombreAlmacen();
+        }
+
+        spinnerAlmacenes.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, almacenes));
     }
 }
 

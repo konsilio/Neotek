@@ -1,8 +1,12 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -18,24 +22,37 @@ import android.view.MenuItem;
 
 import com.example.neotecknewts.sagasapp.Adapter.MenuAdapter;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
+import com.example.neotecknewts.sagasapp.Presenter.MenuPresenter;
+import com.example.neotecknewts.sagasapp.Presenter.MenuPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by neotecknewts on 02/08/18.
  */
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity implements MenuView {
 
     ArrayList<MenuDTO> menu;
+    Session session;
 
+    RecyclerView recyclerView;
+    MenuAdapter adapter;
+    MenuPresenter presenter;
+    ProgressDialog progressDialog;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        session = new Session(getApplicationContext());
+        presenter = new MenuPresenterImpl(this);
+
+        recyclerView = findViewById(R.id.recyclerView);
 
         menu = new ArrayList<>();
 /*        menu.add("Iniciar Descarga");
@@ -50,10 +67,12 @@ public class MenuActivity extends AppCompatActivity {
             menu =  (ArrayList<MenuDTO>) extras.getSerializable("lista");
             menu.get(0).getName();
             // and get whatever type user account id is
+        }else{
+            presenter.getMenu(session.getTokenWithBearer());
         }
 
 
-        MenuAdapter adapter = new MenuAdapter(menu);
+        adapter = new MenuAdapter(menu);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.HORIZONTAL);
@@ -74,5 +93,51 @@ public class MenuActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+
+    private void showDialog(String mensaje){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage(mensaje);
+        builder1.setCancelable(true);
+
+        builder1.setNegativeButton(
+                R.string.message_acept,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
+    @Override
+    public void showProgress(int mensaje) {
+        progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
+                getResources().getString(mensaje), true);
+    }
+
+    @Override
+    public void hideProgress() {
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void messageError(int mensaje) {
+        showDialog(getResources().getString(mensaje));
+    }
+
+    @Override
+    public void onSuccessGetMenu(List<MenuDTO> menuDTOs) {
+        Log.w("OnSuccesView",""+menuDTOs.size());
+        ArrayList<MenuDTO> menus = new ArrayList<>(menuDTOs.size());
+        menus.addAll(menuDTOs);
+       menu.clear();
+        menu.addAll(menuDTOs);
+        adapter.notifyDataSetChanged();
     }
 }

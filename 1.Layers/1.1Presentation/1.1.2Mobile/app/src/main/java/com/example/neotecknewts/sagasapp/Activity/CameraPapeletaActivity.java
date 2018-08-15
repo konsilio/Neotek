@@ -45,7 +45,6 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     public TextView textViewMensaje;
 
     PrecargaPapeletaDTO papeletaDTO;
-    public String tipoMedidor;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +54,6 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
         if (extras !=null){
             papeletaDTO = (PrecargaPapeletaDTO) extras.getSerializable("Papeleta");
-            tipoMedidor = extras.getString("TipoMedidor");
         }
         layoutCameraButton = (LinearLayout) findViewById(R.id.layout_photo_button);
         layoutNitidez = (LinearLayout) findViewById(R.id.layout_photo_nitida);
@@ -126,7 +124,6 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CapturaPorcentajeActivity.class);
         intent.putExtra("Papeleta",papeletaDTO);
-        intent.putExtra("TipoMedidor",tipoMedidor);
         intent.putExtra("EsPapeleta",true);
         intent.putExtra("EsDescargaIniciar",false);
         intent.putExtra("EsDescargaFinalizar",false);

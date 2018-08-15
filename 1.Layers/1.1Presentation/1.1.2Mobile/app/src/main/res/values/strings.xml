@@ -55,6 +55,7 @@
     <string name="label_no">No</string>
     <string name="tipo_medidor_tractor">Tipo de medidor del tractor</string>
     <string name="tipo_medidor_almacen">Tipo de medidor del almacen</string>
+    <string name="nombre_almacen">Numero de almacen</string>
     <string name="fecha">Fecha</string>
     <string name="fecha_embarque">Fecha de embarque</string>
     <string name="seleccionar_fecha">Seleccione fecha...</string>

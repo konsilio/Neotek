@@ -50,7 +50,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public boolean papeleta;
     public boolean iniciar;
     public boolean finalizar;
-    public String tipoMedidor;
+    //public String tipoMedidor;
     public int cantidadFotos;
     public boolean almacen;
     public TextView textViewTitulo;
@@ -72,15 +72,16 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         if(extras != null) {
             if (extras.getBoolean("EsPapeleta")) {
                 papeletaDTO = (PrecargaPapeletaDTO) extras.getSerializable("Papeleta");
-                tipoMedidor = extras.getString("TipoMedidor");
-                if(tipoMedidor.equals("Magnatel")){
+                cantidadFotos=papeletaDTO.getCantidadFotosTractor();
+                textViewTitulo.setText("Fotografia "+papeletaDTO.getNombreTipoMedidorTractor()+" - Tractor");
+               /* if(tipoMedidor.equals("Magnatel")){
                     cantidadFotos =1;
                     textViewTitulo.setText("Fotografia Magnatel - Tractor");
                 }
                 else if (tipoMedidor.equals("Rotogate")){
                     cantidadFotos=2;
                     textViewTitulo.setText("Fotografia Rotogate - Tractor");
-                }
+                }*/
                 papeleta=true;
                 iniciar=false;
                 finalizar=false;
@@ -90,7 +91,9 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 Log.w("CAMARA","DescargaIniciar");
                 iniciarDescarga = (IniciarDescargaDTO) extras.getSerializable("IniciarDescarga");
                 if(extras.getBoolean("Almacen")){
-                    if(iniciarDescarga.getIdTipoMedidorAlmacen()==0){
+                    cantidadFotos = iniciarDescarga.getCantidadFotosAlmacen();
+                    textViewTitulo.setText("Fotografia "+iniciarDescarga.getNombreTipoMedidorAlmacen()+" - Almacen");
+                    /*if(iniciarDescarga.getIdTipoMedidorAlmacen()==0){
                         cantidadFotos =1;
                         Log.w("CAMARA","Almacen"+cantidadFotos);
                         textViewTitulo.setText("Fotografia Magnatel - Almacen");
@@ -98,9 +101,11 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                         Log.w("CAMARA","Almacen"+cantidadFotos);
                         textViewTitulo.setText("Fotografia Rotogate - Almacen");
                         cantidadFotos =2;
-                    }
+                    }*/
                 }else if(!extras.getBoolean("Almacen")){
-                    if(iniciarDescarga.getIdTipoMedidorTractor()==0){
+                    cantidadFotos = iniciarDescarga.getCantidadFotosTractor();
+                    textViewTitulo.setText("Fotografia "+iniciarDescarga.getIdTipoMedidorTractor()+" - Tractor");
+                   /* if(iniciarDescarga.getIdTipoMedidorTractor()==0){
                         Log.w("CAMARA","Tractor"+cantidadFotos);
                         textViewTitulo.setText("Fotografia Magnatel - Tractor");
                         cantidadFotos =1;
@@ -108,7 +113,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                         Log.w("CAMARA","Tractor"+cantidadFotos);
                         textViewTitulo.setText("Fotografia Rotogate - Tractor");
                         cantidadFotos =2;
-                    }
+                    }*/
                 }
                 iniciar=extras.getBoolean("EsDescargaIniciar");
                 almacen = extras.getBoolean("Almacen");
@@ -117,21 +122,25 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             else if(extras.getBoolean("EsDescargaFinalizar")){
                 finalizarDescarga = (FinalizarDescargaDTO) extras.getSerializable("FinalizarDescarga");
                 if(extras.getBoolean("Almacen")){
-                    if(finalizarDescarga.getIdTipoMedidorAlmacen()==0){
+                    cantidadFotos = finalizarDescarga.getCantidadFotosAlmacen();
+                    textViewTitulo.setText("Fotografia "+finalizarDescarga.getNombreTipoMedidorAlmacen()+" - Almacen");
+                    /*if(finalizarDescarga.getIdTipoMedidorAlmacen()==0){
                         cantidadFotos =1;
                         Log.w("CAMARA","Almacen"+cantidadFotos);
                     } else if (finalizarDescarga.getIdTipoMedidorAlmacen()==1){
                         cantidadFotos =2;
                         Log.w("CAMARA","Almacen"+cantidadFotos);
-                    }
+                    }*/
                 }else if(!extras.getBoolean("Almacen")){
-                    if(finalizarDescarga.getIdTipoMedidorTractor()==0){
+                    cantidadFotos = finalizarDescarga.getCantidadFotosTractor();
+                    textViewTitulo.setText("Fotografia "+finalizarDescarga.getIdTipoMedidorTractor()+" - Tractor");
+                   /* if(finalizarDescarga.getIdTipoMedidorTractor()==0){
                         cantidadFotos =1;
                         Log.w("CAMARA","Tractor"+cantidadFotos);
                     } else if (finalizarDescarga.getIdTipoMedidorTractor()==1){
                         cantidadFotos =2;
                         Log.w("CAMARA","Tractor"+cantidadFotos);
-                    }
+                    }*/
                 }
                 finalizar= extras.getBoolean("EsDescargaFinalizar");
                 almacen = extras.getBoolean("Almacen");
@@ -373,7 +382,6 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), SubirImagenesActivity.class);
         if(iniciar){
-
             intent.putExtra("IniciarDescarga", iniciarDescarga);
         }else if(finalizar){
             Log.w("START","objeto");

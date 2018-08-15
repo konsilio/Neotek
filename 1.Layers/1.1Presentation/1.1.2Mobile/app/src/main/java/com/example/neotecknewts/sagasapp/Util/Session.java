@@ -3,8 +3,15 @@ package com.example.neotecknewts.sagasapp.Util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.MenuDTO;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by neotecknewts on 08/08/18.
@@ -38,6 +45,7 @@ public class Session {
     public static final String KEY_TOKEN = "token";
 
     public static final String KEY_ID_EMPRESA = "idEmpresa";
+
 
     // Constructor
     public Session(Context context){

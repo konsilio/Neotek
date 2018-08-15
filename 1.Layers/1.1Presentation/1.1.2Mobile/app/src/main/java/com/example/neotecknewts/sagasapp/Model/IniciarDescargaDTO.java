@@ -13,11 +13,17 @@ import java.util.List;
 
 public class IniciarDescargaDTO implements Serializable {
     private int IdOrdenCompra;
+    private String NombreTipoMedidorTractor;
+    private String NombreTipoMedidorAlmacen;
     private int IdTipoMedidorTractor;
     private int IdTipoMedidorAlmacen;
+    private int CantidadFotosAlmacen;
+    private int CantidadFotosTractor;
     private boolean TanquePrestado;
     private Double PorcentajeMedidorAlmacen;
     private Double PorcentajeMedidorTractor;
+    private int IdAlmacen;
+
     @SerializedName("Imagenes")
     private List<byte[]> Imagenes;
 
@@ -91,5 +97,45 @@ public class IniciarDescargaDTO implements Serializable {
 
     public void setPorcentajeMedidorTractor(Double porcentajeMedidorTractor) {
         PorcentajeMedidorTractor = porcentajeMedidorTractor;
+    }
+
+    public String getNombreTipoMedidorTractor() {
+        return NombreTipoMedidorTractor;
+    }
+
+    public void setNombreTipoMedidorTractor(String nombreTipoMedidorTractor) {
+        NombreTipoMedidorTractor = nombreTipoMedidorTractor;
+    }
+
+    public String getNombreTipoMedidorAlmacen() {
+        return NombreTipoMedidorAlmacen;
+    }
+
+    public void setNombreTipoMedidorAlmacen(String nombreTipoMedidorAlmacen) {
+        NombreTipoMedidorAlmacen = nombreTipoMedidorAlmacen;
+    }
+
+    public int getCantidadFotosAlmacen() {
+        return CantidadFotosAlmacen;
+    }
+
+    public void setCantidadFotosAlmacen(int cantidadFotosAlmacen) {
+        CantidadFotosAlmacen = cantidadFotosAlmacen;
+    }
+
+    public int getCantidadFotosTractor() {
+        return CantidadFotosTractor;
+    }
+
+    public void setCantidadFotosTractor(int cantidadFotosTractor) {
+        CantidadFotosTractor = cantidadFotosTractor;
+    }
+
+    public int getIdAlmacen() {
+        return IdAlmacen;
+    }
+
+    public void setIdAlmacen(int idAlmacen) {
+        IdAlmacen = idAlmacen;
     }
 }

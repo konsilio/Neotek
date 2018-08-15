@@ -1,6 +1,9 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
+import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
+import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
+import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
@@ -36,6 +39,14 @@ public interface RestClient {
                                                      @Query("EsTransporteGas") boolean EsTransporteGas,
                                                      @Header("Authorization")String token);
 
+    @GET(Constantes.LISTA_MENU)
+    Call<List<MenuDTO>> getMenu(@Header("Authorization")String token);
+
+    @GET(Constantes.LISTA_ALMACEN)
+    Call<List<AlmacenDTO>> getAlmacenes(@Header("Authorization")String token);
+
+    @GET(Constantes.LISTA_MEDIDORES)
+    Call<List<MedidorDTO>> getMedidores(@Header("Authorization")String token);
 
 
 }

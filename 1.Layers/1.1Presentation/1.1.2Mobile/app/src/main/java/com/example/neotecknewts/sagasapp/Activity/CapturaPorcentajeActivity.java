@@ -28,7 +28,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     PrecargaPapeletaDTO papeletaDTO;
     IniciarDescargaDTO iniciarDescargaDTO;
     FinalizarDescargaDTO finalizarDescargaDTO;
-    public String tipoMedidor;
+    //public String tipoMedidor;
     public boolean papeleta;
     public boolean iniciar;
     public boolean finalizar;
@@ -50,12 +50,14 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             if(extras.getBoolean("EsPapeleta")) {
                 papeletaDTO = (PrecargaPapeletaDTO) extras.getSerializable("Papeleta");
                 Log.w("Image", Uri.parse(papeletaDTO.getImagenesURI().get(0).toString()) + "");
-                tipoMedidor = extras.getString("TipoMedidor");
-                Log.w("Medidor", tipoMedidor + "");
+                //tipoMedidor = extras.getString("TipoMedidor");
+                //tipoMedidor=papeletaDTO.getNombreTipoMedidorTractor();
+                //Log.w("Medidor", tipoMedidor + "");
                 papeleta=true;
                 iniciar=false;
                 finalizar=false;
-                textViewTitulo.setText(tipoMedidor+" - Tractor");
+                almacen=false;
+                textViewTitulo.setText(papeletaDTO.getNombreTipoMedidorTractor()+" - Tractor");
                 textView.setText(R.string.porcentaje_medidor_tractor_message);
             }else if(extras.getBoolean("EsDescargaIniciar")){
                     iniciarDescargaDTO = (IniciarDescargaDTO) extras.getSerializable("IniciarDescarga");
@@ -64,10 +66,10 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                     finalizar = false;
                     almacen = extras.getBoolean("Almacen");
                 if (almacen) {
-                    textViewTitulo.setText("Medidor - Almacen");
+                    textViewTitulo.setText(iniciarDescargaDTO.getNombreTipoMedidorTractor()+" - Almacen");
                     textView.setText(R.string.porcentaje_medidor_almacen_message);
                 }else{
-                    textViewTitulo.setText("Medidor - Tractor");
+                    textViewTitulo.setText(iniciarDescargaDTO.getNombreTipoMedidorTractor()+" - Tractor");
                     textView.setText(R.string.porcentaje_medidor_tractor_message);
                 }
             }
@@ -78,10 +80,10 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 finalizar=true;
                 almacen = extras.getBoolean("Almacen");
                 if (almacen) {
-                    textViewTitulo.setText("Medidor - Almacen");
+                    textViewTitulo.setText(finalizarDescargaDTO.getNombreTipoMedidorTractor()+" - Almacen");
                     textView.setText(R.string.porcentaje_medidor_almacen_message);
                 }else{
-                    textViewTitulo.setText("Medidor - Tractor");
+                    textViewTitulo.setText(finalizarDescargaDTO.getNombreTipoMedidorTractor()+" - Tractor");
                     textView.setText(R.string.porcentaje_medidor_tractor_message);
                 }
             }
@@ -137,7 +139,6 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), CameraDescargaActivity.class);
         CameraPapeletaActivity.fotoTomada = false;
         if(papeleta){
-            intent.putExtra("TipoMedidor",tipoMedidor);
             intent.putExtra("Papeleta",papeletaDTO);
         }else if(iniciar) {
             intent.putExtra("IniciarDescarga",iniciarDescargaDTO);

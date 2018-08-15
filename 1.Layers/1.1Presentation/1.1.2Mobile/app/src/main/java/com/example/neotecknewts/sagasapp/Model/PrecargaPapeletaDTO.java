@@ -78,6 +78,10 @@ public class PrecargaPapeletaDTO implements Serializable {
     @SerializedName("PorcentajeMedidor")
     private Double PorcentajeMedidor;
 
+    private String NombreTipoMedidorTractor;
+    private int IdTipoMedidorTractor;
+    private int CantidadFotosTractor;
+
 
     public PrecargaPapeletaDTO(){
         Imagenes = new ArrayList<>();
@@ -249,5 +253,29 @@ public class PrecargaPapeletaDTO implements Serializable {
 
     public void setPorcentajeMedidor(Double porcentajeMedidor) {
         PorcentajeMedidor = porcentajeMedidor;
+    }
+
+    public String getNombreTipoMedidorTractor() {
+        return NombreTipoMedidorTractor;
+    }
+
+    public void setNombreTipoMedidorTractor(String nombreTipoMedidorTractor) {
+        NombreTipoMedidorTractor = nombreTipoMedidorTractor;
+    }
+
+    public int getIdTipoMedidorTractor() {
+        return IdTipoMedidorTractor;
+    }
+
+    public void setIdTipoMedidorTractor(int idTipoMedidorTractor) {
+        IdTipoMedidorTractor = idTipoMedidorTractor;
+    }
+
+    public int getCantidadFotosTractor() {
+        return CantidadFotosTractor;
+    }
+
+    public void setCantidadFotosTractor(int cantidadFotosTractor) {
+        CantidadFotosTractor = cantidadFotosTractor;
     }
 }

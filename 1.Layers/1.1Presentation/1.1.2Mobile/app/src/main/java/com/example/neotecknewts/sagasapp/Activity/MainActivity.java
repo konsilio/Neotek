@@ -29,6 +29,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Created by neotecknewts on 07/08/18.
@@ -68,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
         //linearLayoutReintentar = (LinearLayout) findViewById(R.id.layout_reintentar);
 
         empresaDTOs = new ArrayList<>();
-
 
 
         editTextContraseña.setText("saadmin");
@@ -200,4 +201,5 @@ public class MainActivity extends AppCompatActivity implements MainView{
         }
 
     }
+
 }
