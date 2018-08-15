@@ -15,17 +15,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
+import java.io.ByteArrayOutputStream;
+import java.net.URI;
 import java.util.List;
 
 /**
  * Created by neotecknewts on 07/08/18.
  */
 
-public class CameraActivity extends AppCompatActivity{
+public class CameraPapeletaActivity extends AppCompatActivity {
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     private static final int CAMERA_REQUEST = 2;
 
@@ -37,22 +41,38 @@ public class CameraActivity extends AppCompatActivity{
     public ImageView imageViewFoto;
     public Uri imageUri;
     public String imageurl;
+    public TextView textViewTitulo;
+    public TextView textViewMensaje;
 
+    PrecargaPapeletaDTO papeletaDTO;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
+        Bundle extras = getIntent().getExtras();
+
+        if (extras !=null){
+            papeletaDTO = (PrecargaPapeletaDTO) extras.getSerializable("Papeleta");
+        }
         layoutCameraButton = (LinearLayout) findViewById(R.id.layout_photo_button);
         layoutNitidez = (LinearLayout) findViewById(R.id.layout_photo_nitida);
         layoutTitle = (LinearLayout) findViewById(R.id.layout_title);
         imageViewFoto = (ImageView) findViewById(R.id.image_view_foto);
+        textViewTitulo = (TextView) findViewById(R.id.textTitulo);
+        textViewMensaje = (TextView) findViewById(R.id.textIndicaciones);
 
+        textViewTitulo.setText(R.string.title_foto_papeleta);
+
+        fotoTomada = false;
         if(fotoTomada==true){
             layoutTitle.setVisibility(View.GONE);
             layoutCameraButton.setVisibility(View.GONE);
             layoutNitidez.setVisibility(View.VISIBLE);
+            textViewMensaje.setVisibility(View.GONE);
+
         }else{
+            textViewMensaje.setVisibility(View.VISIBLE);
             layoutTitle.setVisibility(View.VISIBLE);
             layoutCameraButton.setVisibility(View.VISIBLE);
             layoutNitidez.setVisibility(View.GONE);
@@ -89,11 +109,25 @@ public class CameraActivity extends AppCompatActivity{
         final Button buttonFotoCorrecta =(Button) findViewById(R.id.button_foto_correcta);
         buttonFotoCorrecta.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //startActivity();
+                try {
+                    papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                }catch(Exception e){
+
+                }
+                startActivity();
             }
         });
 
 
+    }
+
+    public void startActivity(){
+        Intent intent = new Intent(getApplicationContext(), CapturaPorcentajeActivity.class);
+        intent.putExtra("Papeleta",papeletaDTO);
+        intent.putExtra("EsPapeleta",true);
+        intent.putExtra("EsDescargaIniciar",false);
+        intent.putExtra("EsDescargaFinalizar",false);
+        startActivity(intent);
     }
 
 
@@ -121,10 +155,13 @@ public class CameraActivity extends AppCompatActivity{
                         getContentResolver(), imageUri);
                 imageViewFoto.setImageBitmap(bitmap);
                 imageurl = getRealPathFromURI(imageUri);
+                //papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 fotoTomada=true;
                 layoutTitle.setVisibility(View.GONE);
                 layoutCameraButton.setVisibility(View.GONE);
                 layoutNitidez.setVisibility(View.VISIBLE);
+                textViewMensaje.setVisibility(View.GONE);
+                Log.w("MASA", papeletaDTO.getMasa()+"");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -150,3 +187,4 @@ public class CameraActivity extends AppCompatActivity{
         return cursor.getString(column_index);
     }
 }
+

@@ -12,9 +12,6 @@ namespace Application.MainModule.Servicios.Seguridad
     {
         public static string Obtener()
         {
-            var token = HttpContext.Current.Request.Headers.GetValues("Authorization");
-            var claims = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(token[0]);
-
             return string.Empty;
         }
     }

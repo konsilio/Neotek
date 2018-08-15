@@ -2,6 +2,8 @@ package com.example.neotecknewts.sagasapp.Model;
 
 import android.support.annotation.Nullable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 /**
@@ -9,39 +11,106 @@ import java.util.Date;
  */
 
 public class EmpresaDTO {
+    @SerializedName("IdEmpresa")
     private short IdEmpresa;
-    private byte IdAdministracionCentral;
+
+    @SerializedName("EsAdministracionCentral")
+    private boolean EsAdministracionCentral;
+
+    @SerializedName("NombreComercial")
     private String NombreComercial;
+
+    @SerializedName("FechaRegistro")
     private Date FechaRegistro;
+
+    @SerializedName("IdPais")
     private byte IdPais;
-    private Nullable IdEstadoRep;
+
+    @SerializedName("IdEstadoRep")
+    private Byte IdEstadoRep;
+
+    @SerializedName("EstadoProvincia")
     private String EstadoProvincia;
+
+    @SerializedName("Municipio")
     private String Municipio;
+
+    @SerializedName("CodigoPostal")
     private String CodigoPostal;
+
+    @SerializedName("Colonia")
     private String Colonia;
+
+    @SerializedName("Calle")
     private String Calle;
+
+    @SerializedName("NumExt")
     private String NumExt;
+
+    @SerializedName("NumInt")
     private String NumInt;
+
+    @SerializedName("Telefono1")
     private String Telefono1;
+
+    @SerializedName("Telefono2")
     private String Telefono2;
+
+    @SerializedName("Telefono3")
     private String Telefono3;
+
+    @SerializedName("Celular1")
     private String Celular1;
+
+    @SerializedName("Celular2")
     private String Celular2;
+
+    @SerializedName("Celular3")
     private String Celular3;
+
+    @SerializedName("Email1")
     private String Email1;
+
+    @SerializedName("Email2")
     private String Email2;
+
+    @SerializedName("Email3")
     private String Email3;
+
+    @SerializedName("SitioWeb1")
     private String SitioWeb1;
+
+    @SerializedName("SitioWeb2")
     private String SitioWeb2;
+
+    @SerializedName("SitioWeb3")
     private String SitioWeb3;
+
+    @SerializedName("Rfc")
     private String Rfc;
+
+    @SerializedName("RazonSocial")
     private String RazonSocial;
+
+    @SerializedName("FactorLitrosAKilos")
     private Double FactorLitrosAKilos;
+
+    @SerializedName("CierreInventario")
     private Date CierreInventario;
+
+    @SerializedName("InventarioSano")
     private byte InventarioSano;
+
+    @SerializedName("InventarioCrítico")
     private byte InventarioCrítico;
+
+    @SerializedName("MaxRemaGaseraMensual")
     private Double MaxRemaGaseraMensual;
+
+    @SerializedName("UrlLogotipoMenu")
     private String UrlLogotipoMenu;
+
+    @SerializedName("UrlLogotipoLogin")
     private String UrlLogotipoLogin;
 
     public short getIdEmpresa() {
@@ -52,12 +121,12 @@ public class EmpresaDTO {
         IdEmpresa = idEmpresa;
     }
 
-    public byte getIdAdministracionCentral() {
-        return IdAdministracionCentral;
+    public boolean getIdAdministracionCentral() {
+        return EsAdministracionCentral;
     }
 
-    public void setIdAdministracionCentral(byte idAdministracionCentral) {
-        IdAdministracionCentral = idAdministracionCentral;
+    public void setIdAdministracionCentral(boolean esAdministracionCentral) {
+        EsAdministracionCentral = esAdministracionCentral;
     }
 
     public String getNombreComercial() {
@@ -84,11 +153,11 @@ public class EmpresaDTO {
         IdPais = idPais;
     }
 
-    public Nullable getIdEstadoRep() {
+    public byte getIdEstadoRep() {
         return IdEstadoRep;
     }
 
-    public void setIdEstadoRep(Nullable idEstadoRep) {
+    public void setIdEstadoRep(byte idEstadoRep) {
         IdEstadoRep = idEstadoRep;
     }
 

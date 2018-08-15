@@ -1,11 +1,13 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -13,41 +15,70 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
+import com.example.neotecknewts.sagasapp.Model.OrdenCompraDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
+import com.example.neotecknewts.sagasapp.Presenter.FinalizarDescargaPresenter;
+import com.example.neotecknewts.sagasapp.Presenter.FinalizarDescargaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Session;
+
+import java.util.List;
 
 
 /**
  * Created by neotecknewts on 06/08/18.
  */
 
-public class FinalizarDescargaActivity extends AppCompatActivity {
+public class FinalizarDescargaActivity extends AppCompatActivity implements FinalizarDescargaView{
     public Spinner spinnerOrdenCompra;
     public LinearLayout linearLayoutTanque;
     public Spinner spinnerMedidorAlmacen;
     public Spinner spinnerMedidorTractor;
+    public Spinner spinnerAlmacenes;
     public TextView textViewTitulo;
+    ProgressDialog progressDialog;
+    public Session session;
+
+    public OrdenCompraDTO ordenCompraDTO;
+    List<OrdenCompraDTO> ordenesCompraDTO;
+
+    List<MedidorDTO> medidorDTOs;
+    List<AlmacenDTO> almacenDTOs;
+
+
+    public FinalizarDescargaDTO finalizarDescargaDTO;
+    public FinalizarDescargaPresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iniciar_descarga);
 
+        finalizarDescargaDTO = new FinalizarDescargaDTO();
+
         spinnerOrdenCompra = (Spinner)findViewById(R.id.spinner_orden_compra);
         linearLayoutTanque = (LinearLayout) findViewById(R.id.layout_tanque);
         spinnerMedidorAlmacen = (Spinner) findViewById(R.id.spinner_medidor_almacen);
         spinnerMedidorTractor = (Spinner) findViewById(R.id.spinner_medidor_tractor);
+        spinnerAlmacenes = (Spinner)findViewById(R.id.spinner_almacen);
         textViewTitulo = (TextView) findViewById(R.id.textTitulo);
+        session = new Session(getApplicationContext());
 
         linearLayoutTanque.setVisibility(View.GONE);
         textViewTitulo.setText(R.string.title_finalizar_descarga);
+        presenter = new FinalizarDescargaPresenterImpl(this);
 
-        String[] ordenes = {"OC1", "OC2"};
+        String[] ordenes = {"prueba1", "prueba2"};
         String[] medidores = {"Rotogate", "Magnatel"};
 
 
         spinnerOrdenCompra.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
         spinnerMedidorAlmacen.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
         spinnerMedidorTractor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
+        spinnerAlmacenes.setAdapter(new ArrayAdapter<String>(this,R.layout.custom_spinner,ordenes));
 
 
         final Button buttonRegistrar = (Button) findViewById(R.id.registrar_button);
@@ -56,13 +87,21 @@ public class FinalizarDescargaActivity extends AppCompatActivity {
                 onClickRegistrar();
             }
         });
+
+        presenter.getOrdenesCompra(session.getIdEmpresa(),session.getTokenWithBearer());
     }
 
     public void onClickRegistrar(){
-        spinnerOrdenCompra.getSelectedItem();
-        spinnerMedidorTractor.getSelectedItem();
-        spinnerMedidorAlmacen.getSelectedItem();
+        finalizarDescargaDTO.setIdOrdenCompra(ordenesCompraDTO.get(spinnerOrdenCompra.getSelectedItemPosition()).getIdOrdenCompra());
+        finalizarDescargaDTO.setIdTipoMedidorAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getIdTipoMedidor());
+        finalizarDescargaDTO.setCantidadFotosAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getCantidadFotografias());
+        finalizarDescargaDTO.setNombreTipoMedidorAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getNombreTipoMedidor());
 
+        finalizarDescargaDTO.setIdTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getIdTipoMedidor());
+        finalizarDescargaDTO.setCantidadFotosTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getCantidadFotografias());
+        finalizarDescargaDTO.setNombreTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getNombreTipoMedidor());
+
+        finalizarDescargaDTO.setIdAlmacen(almacenDTOs.get(spinnerAlmacenes.getSelectedItemPosition()).getIdAlmacen());
         showDialog(getResources().getString(R.string.message_continuar));
     }
 
@@ -91,9 +130,85 @@ public class FinalizarDescargaActivity extends AppCompatActivity {
         alert11.show();
     }
 
+    private void showDialogAceptar(String mensaje){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        builder1.setMessage(mensaje);
+        builder1.setCancelable(true);
+
+        builder1.setNegativeButton(
+                R.string.message_acept,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CapturaPorcentajeActivity.class);
+        intent.putExtra("FinalizarDescarga", finalizarDescargaDTO);
+        intent.putExtra("EsPapeleta",false);
+        intent.putExtra("EsDescargaFinalizar",true);
+        intent.putExtra("EsDescargaIniciar",false);
+        intent.putExtra("Almacen",false);
         startActivity(intent);
     }
 
+    @Override
+    public void showProgress(int mensaje) {
+        progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
+                getResources().getString(mensaje), true);
+    }
+
+    @Override
+    public void hideProgress() {
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void messageError(int mensaje) {
+        showDialogAceptar(getResources().getString(mensaje));
+    }
+
+    @Override
+    public void onSuccessGetOrdenesCompra(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO) {
+        Log.w("VIEW", respuestaOrdenesCompraDTO.getOrdenesCompra().size()+"");
+        this.ordenesCompraDTO = respuestaOrdenesCompraDTO.getOrdenesCompra();
+        String[] ordenes = new String[ordenesCompraDTO.size()];
+        for (int i =0; i<ordenes.length; i++){
+            ordenes[i]=ordenesCompraDTO.get(i).getNumOrdenCompra();
+        }
+
+        spinnerOrdenCompra.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
+        presenter.getMedidores(session.getTokenWithBearer());
+    }
+
+    @Override
+    public void onSuccessGetMedidores(List<MedidorDTO> medidorDTOs) {
+        this.medidorDTOs = medidorDTOs;
+        String[] medidores = new String[medidorDTOs.size()];
+        for (int i =0; i<medidores.length; i++){
+            medidores[i]=medidorDTOs.get(i).getNombreTipoMedidor();
+        }
+
+        spinnerMedidorAlmacen.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, medidores));
+        spinnerMedidorTractor.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, medidores));
+        presenter.getAlmacenes(session.getTokenWithBearer());
+    }
+
+    @Override
+    public void onSuccessGetAlmacen(List<AlmacenDTO> almacenDTOs) {
+        this.almacenDTOs = almacenDTOs;
+        String[] almacenes = new String[almacenDTOs.size()];
+        for (int i =0; i<almacenes.length; i++){
+            almacenes[i]=almacenDTOs.get(i).getNombreAlmacen();
+        }
+
+        spinnerAlmacenes.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, almacenes));
+    }
 }

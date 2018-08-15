@@ -15,46 +15,12 @@ namespace Application.MainModule.Servicios.Requisicion
     {
         public static RespuestaRequisicionDto GuardarRequisicionNueva(Sagas.MainModule.Entidades.Requisicion _req)
         {
-            var requisicionResp = new RequisicionDataAccess().InsertarNueva(_req);
-            if (requisicionResp != null)
-                return new RespuestaRequisicionDto()
-                {
-                    IdRequisicion = requisicionResp.IdRequisicion,
-                    NumRequisicion = requisicionResp.NumRequisicion,
-                    Exito = requisicionResp.Exito,
-                    Mensaje = requisicionResp.Mensaje
-                };
-            else
-                return new RespuestaRequisicionDto()
-                {
-                    IdRequisicion = 0,
-                    NumRequisicion = string.Empty,
-                    Exito = false,
-                    Mensaje = "Error" //Agregar mensaje espesifico en Exceptions
-                };
+            return new RequisicionDataAccess().InsertarNueva(_req);
         }
         public static RespuestaRequisicionDto UpdateRequisicionRevision(RequisicionRevPutDTO _req)
         {
             var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
-            var requisicionResp = new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad), RequisicionProductoAdapter.FromDTO(_req.ListaProductos, entidad.Productos.ToList()));
-            if (requisicionResp != null && requisicionResp.Exito)
-            {
-                return new RespuestaRequisicionDto()
-                {
-                    IdRequisicion = requisicionResp.IdRequisicion,
-                    NumRequisicion = requisicionResp.NumRequisicion,
-                    Exito = requisicionResp.Exito,
-                    Mensaje = requisicionResp.Mensaje
-                };
-            }
-            else
-                return new RespuestaRequisicionDto()
-                {
-                    IdRequisicion = 0,
-                    NumRequisicion = string.Empty,
-                    Exito = false,
-                    Mensaje = Error.R0009
-                };
+            return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad), RequisicionProductoAdapter.FromDTO(_req.ListaProductos, entidad.Productos.ToList()));            
         }
         public static RespuestaRequisicionDto UpDateRequisicionAutoriza(RequisicionAutPutDTO _req)
         {

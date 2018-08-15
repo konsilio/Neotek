@@ -45,11 +45,22 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRepuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa,EsGas,EsActivoVenta,EsTransporteGas), Request);
         }
 
-        //[Route("lista/ordenes/compra/transportador")]
-        //public HttpResponseMessage GetListaOrdenesCompraTransportador(short IdEmpresa)
-        //{
-        //    return RespuestaHttp.crearRepuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa), Request);
-        //}
+        [Route("obtener/menu")]
+        public HttpResponseMessage GetObtenerMenu()
+        {
+            return RespuestaHttp.crearRepuesta(_mobile.ObtenerMenu(), Request);
+        }
 
+        [Route("obtener/medidores")]
+        public HttpResponseMessage GetObtenerMedidores()
+        {
+            return RespuestaHttp.crearRepuesta(_mobile.ObtenerMedidores(), Request);
+        }
+
+        [Route("obtener/almacenes")]
+        public HttpResponseMessage GetObtenerAlmacenesGas()
+        {
+            return RespuestaHttp.crearRepuesta(_mobile.ObtenerAlmacenesGas(), Request);
+        }
     }
 }
