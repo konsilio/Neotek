@@ -42,16 +42,14 @@ namespace Application.MainModule.Flujos
             return EntradaGasServicio.RegistrarPapeleta();
         }
 
-        public RespuestaDto InicializarDescarga()
+        public RespuestaDto InicializarDescarga(DescargaDto desDto)
         {
-
-
-            return EntradaGasServicio.;
+            return EntradaGasServicio.Descargar(desDto);
         }
 
-        public RespuestaDto FinalizarDescarga()
-        {
-            return EntradaGasServicio.RegistrarPapeleta();
+        public RespuestaDto FinalizarDescarga(DescargaDto desDto)
+        {            
+            return EntradaGasServicio.Descargar(desDto, true);
         }
     }
 }

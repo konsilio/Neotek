@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios.Almacen
 {
-    public class AlmacenGasServicio
+    public static class AlmacenGasServicio
     {
         public static List<AlmacenGas> ObtenerTodos(short idEmpresa)
         {
@@ -18,6 +18,11 @@ namespace Application.MainModule.Servicios.Almacen
         public static AlmacenGas Obtener(short idAlmacenGas)
         {
             return new AlmacenGasDataAccess().Buscar(idAlmacenGas);
+        }
+
+        public static AlmacenGasDescarga ObtenerPorOCompraExpedidor(int idOCompra)
+        {
+            return new AlmacenGasDescargaDataAccess().BuscarOCompraExpedidor(idOCompra);
         }
     }
 }

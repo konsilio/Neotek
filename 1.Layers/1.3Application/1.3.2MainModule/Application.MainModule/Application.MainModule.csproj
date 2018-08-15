@@ -70,6 +70,7 @@
     <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
     <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\Mobile\AlmacenDto.cs" />
+    <Compile Include="DTOs\Mobile\DescargaDto.cs" />
     <Compile Include="DTOs\Mobile\MedidorDto.cs" />
     <Compile Include="DTOs\Mobile\OrdenCompraDTO.cs" />
     <Compile Include="DTOs\Mobile\PapeletaDTO.cs" />

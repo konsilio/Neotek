@@ -1,5 +1,8 @@
-﻿using Application.MainModule.DTOs.Respuesta;
+﻿using Application.MainModule.AdaptadoresDTO.Mobile;
+using Application.MainModule.DTOs.Mobile;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Almacen;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -18,8 +21,14 @@ namespace Application.MainModule.Servicios.Mobile
             return new AlmacenGasDescargaDataAccess().Insertar(alm);
         }
 
-        public static RespuestaDto Descargar(AlmacenGasDescarga alm)
+        public static RespuestaDto Descargar(DescargaDto desDto, bool finDescarga = false)
         {
+            var des = AlmacenGasServicio.ObtenerPorOCompraExpedidor(desDto.IdOrdenCompra);
+            desDto.FechaDescarga = DateTime.Now;
+
+            var descarga = AlmacenAdapter.FromEntity(des);
+            descarga = AlmacenAdapter.FromDto(desDto, finDescarga);
+
             return new AlmacenGasDescargaDataAccess().Actualizar(alm);
         }
     }

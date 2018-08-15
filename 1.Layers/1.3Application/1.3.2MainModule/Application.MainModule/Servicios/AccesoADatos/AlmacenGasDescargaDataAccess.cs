@@ -69,5 +69,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
+        public AlmacenGasDescarga Buscar(int idAlmacenEntradaGasDescarga)
+        {
+            return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.IdAlmacenEntradaGasDescarga.Equals(idAlmacenEntradaGasDescarga));
+        }
+
+        public AlmacenGasDescarga BuscarOCompraExpedidor(int idOCompra)
+        {
+            return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.IdOrdenCompraExpedidor.Equals(idOCompra));
+        }
     }
 }
