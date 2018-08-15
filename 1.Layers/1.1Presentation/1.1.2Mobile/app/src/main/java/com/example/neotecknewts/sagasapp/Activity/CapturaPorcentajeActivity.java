@@ -22,19 +22,26 @@ import com.example.neotecknewts.sagasapp.R;
 
 public class CapturaPorcentajeActivity extends AppCompatActivity {
 
+    //variable que guarda el porcentaje capturado
     public Double porcentaje;
+
+    //variables relacionadas con la vista
     public NumberPicker numberPickerProcentaje;
     public NumberPicker numberPickerDecimal;
+    public TextView textViewTitulo;
+    public TextView textView;
+
+    //objetos a completar con el porcentaje obtenido
     PrecargaPapeletaDTO papeletaDTO;
     IniciarDescargaDTO iniciarDescargaDTO;
     FinalizarDescargaDTO finalizarDescargaDTO;
-    //public String tipoMedidor;
+
+    //banderas para saber que objeto utilizar
     public boolean papeleta;
     public boolean iniciar;
     public boolean finalizar;
     public boolean almacen;
-    public TextView textViewTitulo;
-    public TextView textView;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,23 +49,27 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_captura_porcentaje);
 
 
+        //Se inicializan las variables que vienen del layout
         textViewTitulo = (TextView) findViewById(R.id.textViewTituloPorcentaje) ;
         textView = (TextView) findViewById(R.id.textViewCapturaText) ;
+        numberPickerDecimal = (NumberPicker) findViewById(R.id.number_picker_decimal);
+        numberPickerProcentaje = (NumberPicker) findViewById(R.id.number_picker_porcentaje);
+
+        //se declaran los extras de donde se obtendran los valores que vienen de otro activity
         Bundle extras = getIntent().getExtras();
 
         if (extras !=null){
+            //si es papeleta se cambian los textos y se obtiene el objeto del activity anterior
             if(extras.getBoolean("EsPapeleta")) {
                 papeletaDTO = (PrecargaPapeletaDTO) extras.getSerializable("Papeleta");
                 Log.w("Image", Uri.parse(papeletaDTO.getImagenesURI().get(0).toString()) + "");
-                //tipoMedidor = extras.getString("TipoMedidor");
-                //tipoMedidor=papeletaDTO.getNombreTipoMedidorTractor();
-                //Log.w("Medidor", tipoMedidor + "");
                 papeleta=true;
                 iniciar=false;
                 finalizar=false;
                 almacen=false;
                 textViewTitulo.setText(papeletaDTO.getNombreTipoMedidorTractor()+" - Tractor");
                 textView.setText(R.string.porcentaje_medidor_tractor_message);
+                //si es Iniciar descarga se cambian los textos y se obtiene el objeto del activity anterior
             }else if(extras.getBoolean("EsDescargaIniciar")){
                     iniciarDescargaDTO = (IniciarDescargaDTO) extras.getSerializable("IniciarDescarga");
                     papeleta = false;
@@ -73,6 +84,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                     textView.setText(R.string.porcentaje_medidor_tractor_message);
                 }
             }
+            //si es finalizar descarga se cambian los textos y se obtiene el objeto del activity anterior
             else if(extras.getBoolean("EsDescargaFinalizar")){
                 finalizarDescargaDTO = (FinalizarDescargaDTO) extras.getSerializable("FinalizarDescarga");
                 papeleta=false;
@@ -89,19 +101,21 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             }
         }
 
-        numberPickerDecimal = (NumberPicker) findViewById(R.id.number_picker_decimal);
-        numberPickerProcentaje = (NumberPicker) findViewById(R.id.number_picker_porcentaje);
 
+        //se pone un valor minimo y maximo para cada number picker
         numberPickerProcentaje.setMaxValue(100);
         numberPickerProcentaje.setMinValue(0);
 
         numberPickerDecimal.setMinValue(0);
         numberPickerDecimal.setMaxValue(9);
 
+
+        //se agrega el listener para revisar que se cambio el valor
         numberPickerProcentaje.setOnValueChangedListener(onValueChangeListener);
         numberPickerDecimal.setOnValueChangedListener(onValueChangeListener);
 
 
+        //onclick del boton
         final Button buttonAceptar = (Button) findViewById(R.id.aceptar_button);
         buttonAceptar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -110,6 +124,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         });
     }
 
+    //no se le premite al usuario tener decimales si el valor es 100
     NumberPicker.OnValueChangeListener onValueChangeListener =
             new 	NumberPicker.OnValueChangeListener(){
                 @Override
@@ -119,6 +134,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                     }
                 }
             };
+
+    //se obtiene el valor y se asinga al objeto correspondiente
     public void onClickAceptar(){
         porcentaje = (numberPickerProcentaje.getValue())+(numberPickerDecimal.getValue()*.10);
         if(papeleta){
@@ -135,6 +152,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         startActivity();
     }
 
+    //se inicia el siguiente activity y se le envian parametros
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CameraDescargaActivity.class);
         CameraPapeletaActivity.fotoTomada = false;

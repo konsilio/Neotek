@@ -26,13 +26,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class LoginInteractorImpl implements LoginInteractor {
+    //se declara el tag de la clase y el presenter correspondiente
     public static final String TAG = "LoginInteractor";
     LoginPresenter loginPresenter;
 
+    //constructor de la clase y se inicializa el presenter
     public LoginInteractorImpl(LoginPresenter loginPresenter){
         this.loginPresenter = loginPresenter;
     }
 
+    //funcion que hace el llamado al web service por el metodo indicado en la interfaz de restclient y con los parametros indicados
+    //obtiene todas las empresas para login
     @Override
     public void getEmpresasLogin(){
         String url = Constantes.BASE_URL;
@@ -86,6 +90,8 @@ public class LoginInteractorImpl implements LoginInteractor {
         });
     }
 
+    //funcion que hace el llamado al web service por el metodo indicado en la interfaz de restclient y con los parametros indicados
+    //hace el login
     @Override
     public void postLogin(UsuarioLoginDTO usuarioLoginDTO) {
         String url = Constantes.BASE_URL;

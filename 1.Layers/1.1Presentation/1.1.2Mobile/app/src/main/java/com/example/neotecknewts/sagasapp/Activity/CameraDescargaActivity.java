@@ -36,111 +36,91 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     private static final int CAMERA_REQUEST = 2;
 
+    //Bandera que indica si la foto ya fue tomada y ense caso hay que mostrar el layout de nitidez
     public static boolean fotoTomada;
 
+    //variables relacionadas con la vista
     public LinearLayout layoutTitle;
     public LinearLayout layoutCameraButton;
     public LinearLayout layoutNitidez;
     public ImageView imageViewFoto;
-    public Uri imageUri;
-    public String imageurl;
-    public PrecargaPapeletaDTO papeletaDTO;
-    public IniciarDescargaDTO iniciarDescarga;
-    public FinalizarDescargaDTO finalizarDescarga;
-    public boolean papeleta;
-    public boolean iniciar;
-    public boolean finalizar;
-    //public String tipoMedidor;
-    public int cantidadFotos;
-    public boolean almacen;
     public TextView textViewTitulo;
     public TextView textViewMensaje;
 
-    ProgressDialog progressDialog;
+    //variables para la imagen
+    public Uri imageUri;
+    public String imageurl;
+
+    //DTOS
+    public PrecargaPapeletaDTO papeletaDTO;
+    public IniciarDescargaDTO iniciarDescarga;
+    public FinalizarDescargaDTO finalizarDescarga;
+
+    //Banderas para indicar que objeto trabajar
+    public boolean papeleta;
+    public boolean iniciar;
+    public boolean finalizar;
+    public int cantidadFotos;
+    public boolean almacen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Se indica que layout se carga
         setContentView(R.layout.activity_camera);
 
+        //Se inicia obtienen las variables desde la vista
         textViewTitulo = (TextView) findViewById(R.id.textTitulo);
         textViewMensaje = (TextView) findViewById(R.id.textIndicaciones);
+        layoutCameraButton = (LinearLayout) findViewById(R.id.layout_photo_button);
+        layoutNitidez = (LinearLayout) findViewById(R.id.layout_photo_nitida);
+        layoutTitle = (LinearLayout) findViewById(R.id.layout_title);
+        imageViewFoto = (ImageView) findViewById(R.id.image_view_foto);
 
+        //se obtienen los datos que provienen del activity anterior
         Bundle extras = getIntent().getExtras();
 
         fotoTomada=false;
         if(extras != null) {
+            //se acomoda la vista en modo Papeleta y se les da valor a las variables realcionadas con papeleta
             if (extras.getBoolean("EsPapeleta")) {
                 papeletaDTO = (PrecargaPapeletaDTO) extras.getSerializable("Papeleta");
                 cantidadFotos=papeletaDTO.getCantidadFotosTractor();
                 textViewTitulo.setText("Fotografia "+papeletaDTO.getNombreTipoMedidorTractor()+" - Tractor");
-               /* if(tipoMedidor.equals("Magnatel")){
-                    cantidadFotos =1;
-                    textViewTitulo.setText("Fotografia Magnatel - Tractor");
-                }
-                else if (tipoMedidor.equals("Rotogate")){
-                    cantidadFotos=2;
-                    textViewTitulo.setText("Fotografia Rotogate - Tractor");
-                }*/
                 papeleta=true;
                 iniciar=false;
                 finalizar=false;
                 textViewMensaje.setText(R.string.mensaje_primera_foto);
             }
+            //se acomoda la vista en modo Iniciar descarga y se les da valor a las variables realcionadas con Iniciar descarga
             else if(extras.getBoolean("EsDescargaIniciar")){
                 Log.w("CAMARA","DescargaIniciar");
                 iniciarDescarga = (IniciarDescargaDTO) extras.getSerializable("IniciarDescarga");
                 if(extras.getBoolean("Almacen")){
                     cantidadFotos = iniciarDescarga.getCantidadFotosAlmacen();
                     textViewTitulo.setText("Fotografia "+iniciarDescarga.getNombreTipoMedidorAlmacen()+" - Almacen");
-                    /*if(iniciarDescarga.getIdTipoMedidorAlmacen()==0){
-                        cantidadFotos =1;
-                        Log.w("CAMARA","Almacen"+cantidadFotos);
-                        textViewTitulo.setText("Fotografia Magnatel - Almacen");
-                    } else if (iniciarDescarga.getIdTipoMedidorAlmacen()==1){
-                        Log.w("CAMARA","Almacen"+cantidadFotos);
-                        textViewTitulo.setText("Fotografia Rotogate - Almacen");
-                        cantidadFotos =2;
-                    }*/
+
                 }else if(!extras.getBoolean("Almacen")){
                     cantidadFotos = iniciarDescarga.getCantidadFotosTractor();
-                    textViewTitulo.setText("Fotografia "+iniciarDescarga.getIdTipoMedidorTractor()+" - Tractor");
-                   /* if(iniciarDescarga.getIdTipoMedidorTractor()==0){
-                        Log.w("CAMARA","Tractor"+cantidadFotos);
-                        textViewTitulo.setText("Fotografia Magnatel - Tractor");
-                        cantidadFotos =1;
-                    } else if (iniciarDescarga.getIdTipoMedidorTractor()==1){
-                        Log.w("CAMARA","Tractor"+cantidadFotos);
-                        textViewTitulo.setText("Fotografia Rotogate - Tractor");
-                        cantidadFotos =2;
-                    }*/
+                    textViewTitulo.setText("Fotografia "+iniciarDescarga.getNombreTipoMedidorTractor()+" - Tractor");
+
                 }
                 iniciar=extras.getBoolean("EsDescargaIniciar");
                 almacen = extras.getBoolean("Almacen");
                 textViewMensaje.setText(R.string.mensaje_primera_foto);
             }
+            //se acomoda la vista en modo Finalizar descarga y se les da valor a las variables realcionadas con finalizar descarga
             else if(extras.getBoolean("EsDescargaFinalizar")){
                 finalizarDescarga = (FinalizarDescargaDTO) extras.getSerializable("FinalizarDescarga");
                 if(extras.getBoolean("Almacen")){
                     cantidadFotos = finalizarDescarga.getCantidadFotosAlmacen();
                     textViewTitulo.setText("Fotografia "+finalizarDescarga.getNombreTipoMedidorAlmacen()+" - Almacen");
-                    /*if(finalizarDescarga.getIdTipoMedidorAlmacen()==0){
-                        cantidadFotos =1;
-                        Log.w("CAMARA","Almacen"+cantidadFotos);
-                    } else if (finalizarDescarga.getIdTipoMedidorAlmacen()==1){
-                        cantidadFotos =2;
-                        Log.w("CAMARA","Almacen"+cantidadFotos);
-                    }*/
+
                 }else if(!extras.getBoolean("Almacen")){
                     cantidadFotos = finalizarDescarga.getCantidadFotosTractor();
-                    textViewTitulo.setText("Fotografia "+finalizarDescarga.getIdTipoMedidorTractor()+" - Tractor");
-                   /* if(finalizarDescarga.getIdTipoMedidorTractor()==0){
-                        cantidadFotos =1;
-                        Log.w("CAMARA","Tractor"+cantidadFotos);
-                    } else if (finalizarDescarga.getIdTipoMedidorTractor()==1){
-                        cantidadFotos =2;
-                        Log.w("CAMARA","Tractor"+cantidadFotos);
-                    }*/
+                    textViewTitulo.setText("Fotografia "+finalizarDescarga.getNombreTipoMedidorTractor()+" - Tractor");
+
                 }
                 finalizar= extras.getBoolean("EsDescargaFinalizar");
                 almacen = extras.getBoolean("Almacen");
@@ -148,11 +128,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             }
 
         }
-        layoutCameraButton = (LinearLayout) findViewById(R.id.layout_photo_button);
-        layoutNitidez = (LinearLayout) findViewById(R.id.layout_photo_nitida);
-        layoutTitle = (LinearLayout) findViewById(R.id.layout_title);
-        imageViewFoto = (ImageView) findViewById(R.id.image_view_foto);
 
+        //deacuerdo a si la foto ya fue tomada se muestra o no el layout de la nitidez
         if(fotoTomada==true){
             layoutTitle.setVisibility(View.GONE);
             layoutCameraButton.setVisibility(View.GONE);
@@ -165,6 +142,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             textViewMensaje.setVisibility(View.VISIBLE);
         }
 
+        //se decalran los onClick de cada boton
         final Button buttonFoto = (Button) findViewById(R.id.button_foto);
         buttonFoto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -203,10 +181,13 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
 
     }
+    //En caso de que la foto sea correcta
     public void checarboton(){
         Log.w("Boton","finalizar"+cantidadFotos+finalizar+almacen);
+        //si aun faltan fotos por tomar
         if(cantidadFotos!=1){
             try {
+                //se cehca que objeto se esta usando y se agrega la uri de la imagen a su lista
                 if(papeleta) {
                     papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 }else if(iniciar){
@@ -219,6 +200,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             }catch(Exception ex){
 
             }
+            //se pone visible el layout para tomar la siguiente fotografia
             layoutTitle.setVisibility(View.VISIBLE);
             layoutCameraButton.setVisibility(View.VISIBLE);
             layoutNitidez.setVisibility(View.GONE);
@@ -226,15 +208,19 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             textViewMensaje.setText(R.string.mensaje_segunda_foto);
             cantidadFotos--;
             Log.w("Boton","finalizar"+cantidadFotos);
+            //si ya se termino de tomar las fotos
         }else {
             try {
                 if(papeleta) {
+                    //se agrega la ultima foto tomada
                     papeletaDTO.getImagenesURI().add(new URI(imageUri.toString()));
-                    //processImages();
+                    //se inicia el activity que se encargara de procesaar las imagenes
                     startActivity();
                 }else if(iniciar&&!almacen){
                     Log.w("Boton","TractorIniciar"+cantidadFotos);
                     iniciarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
+                    //si es el medidor del tractor (la variable almacen es falsa por lo que estamos en la fotos del medidor del tractor
+                    //se inicia el captivity para capturar el porcentaje del siguiente medidor
                     startActivityPorcentaje();
                 }else if(finalizar&&!almacen){
                     Log.w("Boton","TractorFinalizar"+cantidadFotos);
@@ -258,59 +244,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         }
     }
 
-    public void processImages(){
-        startActivity();
-      /*  if(papeleta && papeletaDTO!=null){
-            for(int i =0; i<papeletaDTO.getImagenesURI().size();i++){
-                try{
-                    Uri uri = Uri.parse(papeletaDTO.getImagenesURI().get(i).toString());
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
-                            getContentResolver(), uri);
-                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
-                    papeletaDTO.getImagenes().add(bs.toByteArray());
-                    Log.w("Imagenes"+i,""+uri.toString());
-                    hideProgress();
-                }catch (Exception e){
-
-                }
-            }
-        }
-        else if(iniciar && iniciarDescarga!=null){
-            for(int i =0; i<iniciarDescarga.getImagenesURI().size();i++){
-                try{
-                    Uri uri = Uri.parse(iniciarDescarga.getImagenesURI().get(i).toString());
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
-                            getContentResolver(), uri);
-                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
-                    iniciarDescarga.getImagenes().add(bs.toByteArray());
-                    Log.w("Imagenes"+i,""+uri.toString());
-                    hideProgress();
-                }catch (Exception e){
-
-                }
-            }
-        }
-        else if(finalizar && finalizarDescarga!=null){
-            for(int i =0; i<finalizarDescarga.getImagenesURI().size();i++){
-                try{
-                    Uri uri = Uri.parse(finalizarDescarga.getImagenesURI().get(i).toString());
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
-                            getContentResolver(), uri);
-                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
-                    finalizarDescarga.getImagenes().add(bs.toByteArray());
-                    Log.w("Imagenes"+i,""+uri.toString());
-                    hideProgress();
-                }catch (Exception e){
-
-                }
-            }
-        }*/
-    }
-
-
+//metodo que abre la camara
     private void openCameraIntent() {
 
         ContentValues values = new ContentValues();
@@ -322,19 +256,20 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, CAMERA_REQUEST);
 
-        /*Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(pictureIntent, CAMERA_REQUEST);*/
-
     }
 
+    //metodo que se ejecuta al momento de obtener un resultado que proviene de la camara
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             try {
+                //se crea un bitmap a partir de la uri de la imagen
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                         getContentResolver(), imageUri);
+                //se muestra la foto
                 imageViewFoto.setImageBitmap(bitmap);
                 imageurl = getRealPathFromURI(imageUri);
+                //como la foto ya fue tomada se muestra el layout de nitidez
                 fotoTomada=true;
                 layoutTitle.setVisibility(View.GONE);
                 layoutCameraButton.setVisibility(View.GONE);
@@ -346,6 +281,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         }
     }
 
+    //se toman los permisos de la camara
     private boolean permissions(List<String> listPermissionsNeeded) {
 
         if (!listPermissionsNeeded.isEmpty()) {
@@ -356,6 +292,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         return false;
     }
 
+    //metodo que pasa de de uri a url
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = { MediaStore.Images.Media.DATA };
         Cursor cursor = managedQuery(contentUri, proj, null, null, null);
@@ -365,6 +302,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         return cursor.getString(column_index);
     }
 
+    //metodo que inicia y pasa los parametros a capturar porcentaje
     public void startActivityPorcentaje(){
         Intent intent = new Intent(getApplicationContext(), CapturaPorcentajeActivity.class);
         if(iniciar){
@@ -379,22 +317,21 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         startActivity(intent);
     }
 
+    //metodo que inicia el activity que proocesa las imagenes y pasa los parametros
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), SubirImagenesActivity.class);
         if(iniciar){
             intent.putExtra("IniciarDescarga", iniciarDescarga);
         }else if(finalizar){
-            Log.w("START","objeto");
+
             intent.putExtra("FinalizarDescarga",finalizarDescarga);
         }else if(papeleta){
             intent.putExtra("Papeleta",papeletaDTO);
         }
-        Log.w("START","bool");
         intent.putExtra("EsPapeleta",papeleta);
         intent.putExtra("EsDescargaFinalizar",finalizar);
         intent.putExtra("EsDescargaIniciar",iniciar);
         intent.putExtra("Almacen",true);
-        Log.w("START","fin");
         startActivity(intent);
     }
 }

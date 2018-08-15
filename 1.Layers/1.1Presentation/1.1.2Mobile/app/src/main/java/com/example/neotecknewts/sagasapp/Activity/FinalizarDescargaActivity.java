@@ -33,23 +33,31 @@ import java.util.List;
  */
 
 public class FinalizarDescargaActivity extends AppCompatActivity implements FinalizarDescargaView{
+
+    //Variables relacionadas con la vista
     public Spinner spinnerOrdenCompra;
     public LinearLayout linearLayoutTanque;
     public Spinner spinnerMedidorAlmacen;
     public Spinner spinnerMedidorTractor;
     public Spinner spinnerAlmacenes;
     public TextView textViewTitulo;
+
+    //cuadro de dialogo con el progreso de la obtencion de datos
     ProgressDialog progressDialog;
+
+    //clase de la session
     public Session session;
 
-    public OrdenCompraDTO ordenCompraDTO;
+    //lista de objetos a mostrar en los spinners
     List<OrdenCompraDTO> ordenesCompraDTO;
 
     List<MedidorDTO> medidorDTOs;
     List<AlmacenDTO> almacenDTOs;
 
-
+//objeto que se llenara con los datos del activity
     public FinalizarDescargaDTO finalizarDescargaDTO;
+
+    //presentador(interactua entre la vista y el interactor (clase que hace los llamados a web Api / web service)
     public FinalizarDescargaPresenter presenter;
 
     @Override
@@ -59,18 +67,25 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
 
         finalizarDescargaDTO = new FinalizarDescargaDTO();
 
+        //se incializan las variables de la vista
         spinnerOrdenCompra = (Spinner)findViewById(R.id.spinner_orden_compra);
         linearLayoutTanque = (LinearLayout) findViewById(R.id.layout_tanque);
         spinnerMedidorAlmacen = (Spinner) findViewById(R.id.spinner_medidor_almacen);
         spinnerMedidorTractor = (Spinner) findViewById(R.id.spinner_medidor_tractor);
         spinnerAlmacenes = (Spinner)findViewById(R.id.spinner_almacen);
         textViewTitulo = (TextView) findViewById(R.id.textTitulo);
+
+        //se incializa la clase de la session
         session = new Session(getApplicationContext());
 
+        //ya que se usa el mismo layout que en iniciar descarga se oculta si el tanque es prestado y se cambia el titulo
         linearLayoutTanque.setVisibility(View.GONE);
         textViewTitulo.setText(R.string.title_finalizar_descarga);
+
+        //se inicializa el presenter
         presenter = new FinalizarDescargaPresenterImpl(this);
 
+        //se asinga el adapter para los spinners
         String[] ordenes = {"prueba1", "prueba2"};
         String[] medidores = {"Rotogate", "Magnatel"};
 
@@ -81,6 +96,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
         spinnerAlmacenes.setAdapter(new ArrayAdapter<String>(this,R.layout.custom_spinner,ordenes));
 
 
+        //onclick del boton
         final Button buttonRegistrar = (Button) findViewById(R.id.registrar_button);
         buttonRegistrar.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -88,9 +104,12 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
             }
         });
 
+        //se obtienen las ordenes de compra, con el token guardado en la session
         presenter.getOrdenesCompra(session.getIdEmpresa(),session.getTokenWithBearer());
+
     }
 
+    //este metodo recopila los datos de la vista y los asigna al objeto
     public void onClickRegistrar(){
         finalizarDescargaDTO.setIdOrdenCompra(ordenesCompraDTO.get(spinnerOrdenCompra.getSelectedItemPosition()).getIdOrdenCompra());
         finalizarDescargaDTO.setIdTipoMedidorAlmacen(medidorDTOs.get(spinnerMedidorAlmacen.getSelectedItemPosition()).getIdTipoMedidor());
@@ -101,10 +120,11 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
         finalizarDescargaDTO.setCantidadFotosTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getCantidadFotografias());
         finalizarDescargaDTO.setNombreTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getNombreTipoMedidor());
 
-        finalizarDescargaDTO.setIdAlmacen(almacenDTOs.get(spinnerAlmacenes.getSelectedItemPosition()).getIdAlmacen());
+        finalizarDescargaDTO.setIdAlmacen(almacenDTOs.get(spinnerAlmacenes.getSelectedItemPosition()).getIdAlmacenGas());
         showDialog(getResources().getString(R.string.message_continuar));
     }
 
+    //funcion que muestra un aviso o un dialogo que se puede cancelar o aceptar
     private void showDialog(String mensaje){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage(mensaje);
@@ -129,7 +149,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
-
+    //funcion que muestra un aviso o un dialogo que solo se puede aceptar
     private void showDialogAceptar(String mensaje){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage(mensaje);
@@ -147,6 +167,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
         alert11.show();
     }
 
+    //se inicia el nuevo activity
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CapturaPorcentajeActivity.class);
         intent.putExtra("FinalizarDescarga", finalizarDescargaDTO);
@@ -157,12 +178,14 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
         startActivity(intent);
     }
 
+    //se muestra el cuadro de progreso
     @Override
     public void showProgress(int mensaje) {
         progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
                 getResources().getString(mensaje), true);
     }
 
+    // se oculta el cuadro de progreso
     @Override
     public void hideProgress() {
         if(progressDialog != null){
@@ -170,24 +193,29 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
         }
     }
 
+    //muestra un mensaje de error
     @Override
     public void messageError(int mensaje) {
         showDialogAceptar(getResources().getString(mensaje));
     }
 
+    //metodo que se ejectuta cuando se terminan de obtener las ordenes de comra
     @Override
     public void onSuccessGetOrdenesCompra(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO) {
         Log.w("VIEW", respuestaOrdenesCompraDTO.getOrdenesCompra().size()+"");
         this.ordenesCompraDTO = respuestaOrdenesCompraDTO.getOrdenesCompra();
         String[] ordenes = new String[ordenesCompraDTO.size()];
         for (int i =0; i<ordenes.length; i++){
+            //se asignan al arreglo que se pone en el spinner los nombres de las ordenes de compra
             ordenes[i]=ordenesCompraDTO.get(i).getNumOrdenCompra();
         }
 
         spinnerOrdenCompra.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
+        //se hace el lamado al web service para obtener medidores
         presenter.getMedidores(session.getTokenWithBearer());
     }
 
+    //metodo que se ejectuta cuando se terminan de obtener las ordenes de comra
     @Override
     public void onSuccessGetMedidores(List<MedidorDTO> medidorDTOs) {
         this.medidorDTOs = medidorDTOs;
@@ -198,9 +226,11 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
 
         spinnerMedidorAlmacen.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, medidores));
         spinnerMedidorTractor.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, medidores));
+        //se hace el llamado a web service para obtener almacenes
         presenter.getAlmacenes(session.getTokenWithBearer());
     }
 
+    //metodo que se ejectuta cuando se terminan de obtener las ordenes de comra
     @Override
     public void onSuccessGetAlmacen(List<AlmacenDTO> almacenDTOs) {
         this.almacenDTOs = almacenDTOs;

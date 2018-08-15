@@ -42,6 +42,7 @@ import com.example.neotecknewts.sagasapp.Util.Session;
 
 public class RegistrarPapeletaActivity extends AppCompatActivity implements RegistrarPapeletaView{
 
+    //variables de la vista
     public Spinner spinnerOrdenCompraExpedidor;
     public Spinner spinnerOrdenCompraPorteador;
     public Spinner spinnerMedidorTractor;
@@ -62,6 +63,8 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public EditText editTextValorCarga;
     public EditText editTextNombreResponsable;
     public String tipoMedidor;
+
+    //variables para la fecha
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -71,19 +74,22 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public int fechaSeleccionada =0;
     static final int DATE_DIALOG_ID = 0;
 
+    //variables para la lista de ordenes de compra y la orden de compra seleccionada
     public OrdenCompraDTO ordenCompraDTOExpedidor;
     List<OrdenCompraDTO> ordenesCompraDTOExpedidor;
     public OrdenCompraDTO ordenCompraDTOPorteador;
     List<OrdenCompraDTO> ordenesCompraDTOPorteador;
 
+    //objeto a completar con esta vista
     PrecargaPapeletaDTO papeletaDTO;
 
+    //objetos de dialogo de progresso, sesion y presenter
     ProgressDialog progressDialog;
     Session session;
     RegistrarPapeletaPresenter presenter;
 
+    //lista de medidores para el spinner
     List<MedidorDTO> medidorDTOs;
-    List<AlmacenDTO> almacenDTOs;
 
 
     @Override
@@ -91,6 +97,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_papeleta);
 
+        //se inicializan session y presenter
         session = new Session(getApplicationContext());
         presenter = new RegistrarPapeletaPresenterImpl(this);
 
@@ -99,6 +106,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
         papeletaDTO = new PrecargaPapeletaDTO();
 
+        //se obtienen las variables de la vista
         spinnerOrdenCompraExpedidor = (Spinner) findViewById(R.id.spinner_orden_compra_expedidor);
         spinnerOrdenCompraPorteador = (Spinner) findViewById(R.id.spinner_orden_compra_porteador);
         spinnerMedidorTractor = (Spinner) findViewById(R.id.spinner_medidor_tractor);
@@ -122,12 +130,14 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         ordenesCompraDTOExpedidor = new ArrayList<>();
         ordenesCompraDTOPorteador = new ArrayList<>();
 
+        //se completan los spinners con los adapters
         String[] ordenes = {"prueba", "prueba"};
         final String [] medidores = {"Magnatel", "Rotogate"};
         spinnerOrdenCompraPorteador.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
         spinnerOrdenCompraExpedidor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
         spinnerMedidorTractor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
 
+        //onclick para la fecha
 
         final ImageButton buttonFecha = (ImageButton) findViewById(R.id.imageBtnFecha);
         buttonFecha.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +155,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
+        //onclick para la fecha de embarque
         final ImageButton buttonFechaEmbarque = (ImageButton) findViewById(R.id.imageBtnFechaEmbarque);
         buttonFechaEmbarque.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -153,6 +164,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
             }
         });
 
+        //onclick para registrar
         final Button buttonRegistrar = (Button) findViewById(R.id.registrar_button);
         buttonRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +173,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
             }
         });
 
+        //onclcik para limpiar campos
         final Button buttonLimpiar = (Button) findViewById(R.id.limpiar_button);
         buttonLimpiar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,6 +182,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
             }
         });
 
+        //listener que obtiene la orden de compra del expedidor y llena ese campo
         spinnerOrdenCompraExpedidor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -187,7 +201,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
             }
 
         });
-
+        //listener que obtiene la orden de compra del porteador y llena ese campo
         spinnerOrdenCompraPorteador.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -207,6 +221,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
         });
 
+        //listener que obtiene el tipo de medidor
         spinnerMedidorTractor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -226,6 +241,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         presenter.getOrdenesCompraExpedidor(session.getIdEmpresa(),session.getTokenWithBearer());
     }
 
+    //metodo que pone el texto de la fecha seleccionada
     private void updateDisplay() {
         if(fechaSeleccionada==0) {
             if(fecha==null){
@@ -279,6 +295,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     }
 
 
+    //metodo que verifica que los campos esten completos y si no muestra mensjae
     public void onClickRegistrar(){
         boolean empty = false;
 
@@ -343,6 +360,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         }
     }
 
+    //metodo que construye el objeto papeleta
     public void buildPapeleta(){
 
         papeletaDTO.setCapacidadTanque(Double.parseDouble(editTextCapTanque.getText().toString()));
@@ -370,6 +388,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         startActivity();
     }
 
+    //metodo que muestra un mensaje
     private void showDialog(String mensaje){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage(mensaje);
@@ -387,13 +406,14 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         alert11.show();
     }
 
+    //se inicia el siguiente activity con el objeto
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), CameraPapeletaActivity.class);
         intent.putExtra("Papeleta",papeletaDTO);
         startActivity(intent);
     }
 
-
+//metodo que vacia los campos
     public void onClickLimpiar(){
         spinnerOrdenCompraPorteador.setSelection(0);
         spinnerOrdenCompraExpedidor.setSelection(0);
@@ -413,12 +433,14 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         editTextNombreResponsable.setText("");
     }
 
+    //metodo que muestra un progress al estar obteniendo los datos
     @Override
     public void showProgress(int mensaje) {
         progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
                 getResources().getString(mensaje), true);
     }
 
+    //metodo que oculta el progresso
     @Override
     public void hideProgress() {
         if(progressDialog != null){
@@ -426,11 +448,13 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         }
     }
 
+    //metodo que muestra mensaje de error
     @Override
     public void messageError(int mensaje) {
         showDialog(getResources().getString(mensaje));
     }
 
+    //metodo que se ejecuta al obtener las ordenes de compra del expedidor y llena el sppiner con los numeros de orden de compra
     @Override
     public void onSuccessGetOrdenesCompraExpedidor(RespuestaOrdenesCompraDTO respuesta) {
         Log.w("VIEW", respuesta.getOrdenesCompra().size()+"");
@@ -441,9 +465,11 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         }
 
         spinnerOrdenCompraExpedidor.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
+        //por medio del presenter se obtiene la siguiente lista
         presenter.getOrdenesCompraPorteador(session.getIdEmpresa(),session.getTokenWithBearer());
     }
 
+    //metodo que se ejecuta al obtener las ordenes de compra del expedidor y llena el sppiner con los numeros de orden de compra
     @Override
     public void onSuccessGetOrdenesCompraPorteador(RespuestaOrdenesCompraDTO respuesta) {
         Log.w("VIEW", respuesta.getOrdenesCompra().size()+"");
@@ -454,9 +480,11 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         }
 
         spinnerOrdenCompraPorteador.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
+        //por medio del presenter se obtiene la siguiente lista
         presenter.getMedidores(session.getTokenWithBearer());
     }
 
+    //metodo que se ejecuta al obtener los medidores y llena el sppiner con los nombres
     @Override
     public void onSuccessGetMedidores(List<MedidorDTO> medidorDTOs) {
         this.medidorDTOs = medidorDTOs;

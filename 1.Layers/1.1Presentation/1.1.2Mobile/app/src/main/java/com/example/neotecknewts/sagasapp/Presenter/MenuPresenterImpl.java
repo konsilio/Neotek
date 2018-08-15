@@ -13,26 +13,31 @@ import java.util.List;
  */
 
 public class MenuPresenterImpl implements MenuPresenter {
+    //se delcaran la vista y el interactor
     MenuInteractor interactor;
     MenuView menuView;
 
+    //se obtiene la vista al ser contruido y se inicializa el interactor
     public MenuPresenterImpl(MenuView view){
         this.menuView = view;
         this.interactor = new MenuInteractorImpl(this);
     }
 
+    //metodo que se llama para obtener el menu
     @Override
     public void getMenu(String token) {
         menuView.showProgress(R.string.message_cargando);
         interactor.getMenu(token);
     }
 
+    //metodo que se llama al obtener el menu
     @Override
     public void onSuccessGetMenu(List<MenuDTO> menuDTOList) {
         menuView.hideProgress();
         menuView.onSuccessGetMenu(menuDTOList);
     }
 
+    //metodo de error
     @Override
     public void onError() {
         menuView.hideProgress();

@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,10 +33,14 @@ import java.util.ArrayList;
 
 public class SubirImagenesActivity extends AppCompatActivity {
 
+    //variables de la vista
     public TextView textView;
+
+    //objetos
     public PrecargaPapeletaDTO papeletaDTO;
     public IniciarDescargaDTO iniciarDescarga;
     public FinalizarDescargaDTO finalizarDescarga;
+    //banderas para indicar el objeto a utlizar
     public boolean papeleta;
     public boolean iniciar;
     public boolean finalizar;
@@ -45,10 +50,12 @@ public class SubirImagenesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subir_imagenes);
 
+        //se obtiene el objeto de la vista
         textView = (TextView) findViewById(R.id.textTitulo);
 
         textView.setText(R.string.cargando_imagenes_inicio);
         Bundle extras = getIntent().getExtras();
+        //se obtienen los objetos del activity anterior
         if(extras!=null){
             if(extras.getBoolean("EsPapeleta")){
                 Log.w("SUBIR","EsPapeleta");
@@ -74,10 +81,12 @@ public class SubirImagenesActivity extends AppCompatActivity {
 
         }
 
+        //se ejecuta la tarea asincrona para procesar las imagenes
         new AsyncTaskRunner().execute();
 
     }
 
+    //este metodo toma todas las imagenes de la lista dependiendo de cual objeto se esta usando, las transofrma a byte array y posteriormente las pasa a base 64
     private void processImage(){
         if(papeleta && papeletaDTO!=null){
             for(int i =0; i<papeletaDTO.getImagenesURI().size();i++){
@@ -87,7 +96,9 @@ public class SubirImagenesActivity extends AppCompatActivity {
                             getContentResolver(), uri);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
-                    papeletaDTO.getImagenes().add(bs.toByteArray());
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    papeletaDTO.getImagenes().add(image);
                     Log.w("Imagenes"+i,""+uri.toString());
                 }catch (Exception e){
 
@@ -103,8 +114,11 @@ public class SubirImagenesActivity extends AppCompatActivity {
                             getContentResolver(), uri);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
-                    iniciarDescarga.getImagenes().add(bs.toByteArray());
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    iniciarDescarga.getImagenes().add(image);
                     Log.w("Imagenes"+i,""+uri.toString());
+                    Log.w("Imagenes"+i,"Base64: "+image);
                 }catch (Exception e){
 
                 }
@@ -119,7 +133,9 @@ public class SubirImagenesActivity extends AppCompatActivity {
                             getContentResolver(), uri);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
-                    finalizarDescarga.getImagenes().add(bs.toByteArray());
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    finalizarDescarga.getImagenes().add(image);
                     Log.w("Imagenes"+i,""+uri.toString());
                 }catch (Exception e){
 
@@ -129,6 +145,7 @@ public class SubirImagenesActivity extends AppCompatActivity {
 
     }
 
+    //se muestra un cuadro de dialogo con un mensaje
     private void showDialogAceptar(String titulo, String mensaje){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setTitle(titulo);
@@ -147,11 +164,13 @@ public class SubirImagenesActivity extends AppCompatActivity {
         alert11.show();
     }
 
+    //se inicia el activity del menu para poder hacer alguna otra accion
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
         startActivity(intent);
     }
 
+    //tarea asincrona que ejecuta el procesado de las imagenes
     private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
 
         @Override
