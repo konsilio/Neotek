@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
+import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.io.ByteArrayOutputStream;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
  * Created by neotecknewts on 14/08/18.
  */
 
-public class SubirImagenesActivity extends AppCompatActivity {
+public class SubirImagenesActivity extends AppCompatActivity implements SubirImagenesView {
 
     //variables de la vista
     public TextView textView;
@@ -45,6 +47,8 @@ public class SubirImagenesActivity extends AppCompatActivity {
     public boolean iniciar;
     public boolean finalizar;
 
+    public SubirImagenesPresenter presenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,8 @@ public class SubirImagenesActivity extends AppCompatActivity {
 
         //se obtiene el objeto de la vista
         textView = (TextView) findViewById(R.id.textTitulo);
+
+        presenter = new SubirImagenesPresenterImpl(this);
 
         textView.setText(R.string.cargando_imagenes_inicio);
         Bundle extras = getIntent().getExtras();
