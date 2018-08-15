@@ -67,6 +67,7 @@
     <Compile Include="NotValidInvoiceMonthException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validaciones\Error.cs" />
+    <Compile Include="Validaciones\Exito.cs" />
     <Compile Include="Validaciones\ExpresionRegular.cs" />
   </ItemGroup>
   <ItemGroup>

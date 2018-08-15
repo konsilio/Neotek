@@ -62,6 +62,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="DTOs\Catalogo\AdministracionCentralDto.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
+    <Compile Include="DTOs\Catalogo\ProveedorCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoDTO.cs" />
     <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
