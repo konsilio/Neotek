@@ -90,7 +90,7 @@
           <Property Name="IdTipoMedidorAlmacen" Type="smallint" />
           <Property Name="DatosProcesados" Type="bit" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
-          <Property Name="fgh" Type="nchar" MaxLength="10" />
+          <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="AlmacenEntradaGasDescargaFinalizar">
           <Key>
@@ -101,19 +101,17 @@
           <Property Name="PorcenMagnatelOcularAlmacenFIN" Type="decimal" Precision="10" Scale="2" />
           <Property Name="FechaFinDescarga" Type="datetime" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaGasDescargaFoto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AlmacenEntradaGasDescargaFoto">
           <Key>
             <PropertyRef Name="IdAlmacenEntradaGasDescarga" />
-            <PropertyRef Name="UrlImagen" />
-            <PropertyRef Name="PathImagen" />
-            <PropertyRef Name="IdImagenDe" />
+            <PropertyRef Name="Orden" />
           </Key>
           <Property Name="IdAlmacenEntradaGasDescarga" Type="int" Nullable="false" />
-          <Property Name="UrlImagen" Type="varchar" MaxLength="350" Nullable="false" />
-          <Property Name="PathImagen" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="UrlImagen" Type="varchar" MaxLength="350" />
+          <Property Name="PathImagen" Type="varchar" MaxLength="250" />
           <Property Name="IdImagenDe" Type="smallint" Nullable="false" />
+          <Property Name="CadenaBase64" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="AlmacenEntradaGasDescargaIniciar">
           <Key>
@@ -2404,6 +2402,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySet Name="Almacen" EntityType="Self.Almacen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenEntradaGasDescarga" EntityType="Self.AlmacenEntradaGasDescarga" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenEntradaGasDescargaFinalizar" EntityType="Self.AlmacenEntradaGasDescargaFinalizar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenEntradaGasDescargaFoto" EntityType="Self.AlmacenEntradaGasDescargaFoto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenEntradaGasDescargaIniciar" EntityType="Self.AlmacenEntradaGasDescargaIniciar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenEntradaGasDescargaPuerta" EntityType="Self.AlmacenEntradaGasDescargaPuerta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenGas" EntityType="Self.AlmacenGas" Schema="dbo" store:Type="Tables" />
@@ -2463,14 +2462,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySet Name="UsuarioCredencial" EntityType="Self.UsuarioCredencial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioDireccion" EntityType="Self.UsuarioDireccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioRol" EntityType="Self.UsuarioRol" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AlmacenEntradaGasDescargaFoto" EntityType="Self.AlmacenEntradaGasDescargaFoto" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [AlmacenEntradaGasDescargaFoto].[IdAlmacenEntradaGasDescarga] AS [IdAlmacenEntradaGasDescarga], 
-    [AlmacenEntradaGasDescargaFoto].[UrlImagen] AS [UrlImagen], 
-    [AlmacenEntradaGasDescargaFoto].[PathImagen] AS [PathImagen], 
-    [AlmacenEntradaGasDescargaFoto].[IdImagenDe] AS [IdImagenDe]
-    FROM [dbo].[AlmacenEntradaGasDescargaFoto] AS [AlmacenEntradaGasDescargaFoto]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="AlmacenEntradaProducto" EntityType="Self.AlmacenEntradaProducto" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [AlmacenEntradaProducto].[IdRequisicion] AS [IdRequisicion], 
@@ -5065,8 +5056,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="IdTipoMedidorTractor" Type="Int16" />
           <Property Name="IdTipoMedidorAlmacen" Type="Int16" />
           <Property Name="DatosProcesados" Type="Boolean" />
+          <Property Name="ClaveOperacion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="fgh" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           
           <!--"AlmacenEntradaGasDescargaFinalizar"
           <Property Name="IdAlmacenEntradaGasDescarga" Type="Int32" Nullable="false" />-->
@@ -5108,7 +5099,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <NavigationProperty Name="Requisicion" Relationship="Sagas.MainModuleModel.FK_AlmacenGasDescarga_Requisicion" FromRole="AlmacenGasDescarga" ToRole="Requisicion" />          
           <NavigationProperty Name="Fotos" Relationship="Sagas.MainModuleModel.FK_AlmacenGasDescargaFoto_AlmacenGasDescarga" FromRole="AlmacenGasDescarga" ToRole="AlmacenGasDescargaFoto" />          
           <NavigationProperty Name="Expedidor" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_CProveedor" FromRole="AlmacenGasDescarga" ToRole="Proveedor" />
-          <NavigationProperty Name="Porteador" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_CProveedor1" FromRole="AlmacenGasDescarga" ToRole="Proveedor" />
+          <NavigationProperty Name="Porteador" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescarga_CProveedor1" FromRole="AlmacenGasDescarga" ToRole="Proveedor" />          
           <!--<NavigationProperty Name="AlmacenEntradaGasDescargaFinalizar" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescargaFinalizar_AlmacenEntradaGasDescarga" FromRole="AlmacenEntradaGasDescarga" ToRole="AlmacenEntradaGasDescargaFinalizar" />
           <NavigationProperty Name="AlmacenEntradaGasDescargaIniciar" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescargaIniciar_AlmacenEntradaGasDescarga" FromRole="AlmacenEntradaGasDescarga" ToRole="AlmacenEntradaGasDescargaIniciar" />
           <NavigationProperty Name="AlmacenEntradaGasDescargaPuerta" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaGasDescargaPuerta_AlmacenEntradaGasDescarga" FromRole="AlmacenEntradaGasDescarga" ToRole="AlmacenEntradaGasDescargaPuerta" />          
@@ -5264,14 +5255,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
         <EntityType Name="AlmacenGasDescargaFoto">
           <Key>
             <PropertyRef Name="IdAlmacenEntradaGasDescarga" />
-            <PropertyRef Name="UrlImagen" />
-            <PropertyRef Name="PathImagen" />
-            <PropertyRef Name="IdImagenDe" />
+            <PropertyRef Name="Orden" />
           </Key>
           <Property Name="IdAlmacenEntradaGasDescarga" Type="Int32" Nullable="false" />
-          <Property Name="UrlImagen" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="PathImagen" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Orden" Type="Int16" Nullable="false" />
+          <Property Name="UrlImagen" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="PathImagen" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="IdImagenDe" Type="Int16" Nullable="false" />
+          <Property Name="CadenaBase64" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EntradaGas" Relationship="Sagas.MainModuleModel.FK_AlmacenGasDescargaFoto_AlmacenGasDescarga" FromRole="AlmacenGasDescargaFoto" ToRole="AlmacenGasDescarga" />
           <NavigationProperty Name="Tipo" Relationship="Sagas.MainModuleModel.FK_AlmacenGasDescargaFoto_ImagenDe" FromRole="AlmacenGasDescargaFoto" ToRole="ImagenDe" />
         </EntityType>
@@ -6643,9 +6634,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySetMapping Name="AlmacenGasDescarga">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasDescarga">
               <MappingFragment StoreEntitySet="AlmacenEntradaGasDescarga">
+                <ScalarProperty Name="ClaveOperacion" ColumnName="ClaveOperacion" />
                 <ScalarProperty Name="IdProveedorPorteador" ColumnName="IdProveedorPorteador" />
                 <ScalarProperty Name="IdProveedorExpedidor" ColumnName="IdProveedorExpedidor" />
-                <ScalarProperty Name="fgh" ColumnName="fgh" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="DatosProcesados" ColumnName="DatosProcesados" />
                 <ScalarProperty Name="IdTipoMedidorAlmacen" ColumnName="IdTipoMedidorAlmacen" />
@@ -6826,6 +6817,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySetMapping Name="AlmacenGasDescargaFoto">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasDescargaFoto">
               <MappingFragment StoreEntitySet="AlmacenEntradaGasDescargaFoto">
+                <ScalarProperty Name="CadenaBase64" ColumnName="CadenaBase64" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
                 <ScalarProperty Name="IdImagenDe" ColumnName="IdImagenDe" />
                 <ScalarProperty Name="PathImagen" ColumnName="PathImagen" />
                 <ScalarProperty Name="UrlImagen" ColumnName="UrlImagen" />

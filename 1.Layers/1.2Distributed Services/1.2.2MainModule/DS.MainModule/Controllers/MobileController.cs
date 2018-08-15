@@ -38,37 +38,49 @@ namespace DS.MainModule.Controllers
         [Route("login")]
         public HttpResponseMessage PostLogin(AutenticacionDto autenticacionDto)
         {
-            return RespuestaHttp.crearRepuesta(_seguridad.AutenticacionMobile(autenticacionDto), Request);
+            return RespuestaHttp.crearRespuesta(_seguridad.AutenticacionMobile(autenticacionDto), Request);
         }
 
         [Route("lista/ordenes/compra")]
         public HttpResponseMessage GetListaOrdenesCompra(short IdEmpresa, bool EsGas, bool EsActivoVenta, bool EsTransporteGas)
         {
-            return RespuestaHttp.crearRepuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa,EsGas,EsActivoVenta,EsTransporteGas), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa,EsGas,EsActivoVenta,EsTransporteGas), Request);
         }
 
         [Route("obtener/menu")]
         public HttpResponseMessage GetObtenerMenu()
         {
-            return RespuestaHttp.crearRepuesta(_mobile.ObtenerMenu(), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.ObtenerMenu(), Request);
         }
 
         [Route("obtener/medidores")]
         public HttpResponseMessage GetObtenerMedidores()
         {
-            return RespuestaHttp.crearRepuesta(_mobile.ObtenerMedidores(), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.ObtenerMedidores(), Request);
         }
 
         [Route("obtener/almacenes")]
         public HttpResponseMessage GetObtenerAlmacenesGas()
         {
-            return RespuestaHttp.crearRepuesta(_mobile.ObtenerAlmacenesGas(), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.ObtenerAlmacenesGas(), Request);
         }
 
         [Route("registrar/papeleta")]
         public HttpResponseMessage PostRegistrarPapeleta(PapeletaDTO papeletaDTO)
         {
-            return RespuestaHttp.crearRepuesta(_mobile.RegistrarPapeleta(papeletaDTO), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.RegistrarPapeleta(papeletaDTO), Request);
+        }
+
+        [Route("iniciar/descarga")]
+        public HttpResponseMessage PostInicializarDescarga(DescargaDto desDto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.InicializarDescarga(desDto), Request);
+        }
+
+        [Route("finalizar/descarga")]
+        public HttpResponseMessage PostFinalizarDescarga(DescargaDto desDto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.FinalizarDescarga(desDto), Request);
         }
     }
 }

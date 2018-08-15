@@ -20,5 +20,6 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal PorcentajeMedidorTractor {get; set;}
         public short IdAlmacen {get; set;}
         public DateTime FechaDescarga { get; set; }
+        public List<String> Imagenes { get; set; }
     }
 }

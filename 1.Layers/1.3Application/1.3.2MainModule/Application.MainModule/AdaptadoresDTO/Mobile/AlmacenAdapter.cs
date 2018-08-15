@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Mobile;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new AlmacenGasDescarga()
             {
+                ClaveOperacion = "Pendiente",
                 //IdAlmacenEntradaGasDescarga = papeletaDto,
                 //IdAlmacenGas = papeletaDto,
                 //IdRequisicion = papeletaDto,
@@ -47,6 +49,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 PorcenMagnatelOcular = papeletaDto.PorcentajeMedidor,
                 //FechaEntraGas = papeletaDto,
                 //DatosProcesados = false,
+                FechaRegistro = DateTime.Now,
+                Fotos = FromDto(papeletaDto.Imagenes, 1)
             };
         }
 
@@ -55,6 +59,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             if(!finDescarga)
                 return new AlmacenGasDescarga()
                 {
+                    ClaveOperacion = "Pendiente",
                     //IdAlmacenEntradaGasDescarga = inicioDescargaDto,
                     IdAlmacenGas = DescargaDto.IdAlmacen,
                     //IdRequisicion = papeletaDto,
@@ -92,6 +97,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             else
                 return new AlmacenGasDescarga()
                 {
+                    ClaveOperacion = "Pendiente",
                     //IdAlmacenEntradaGasDescarga = DescargaDto,
                     //IdAlmacenGas = inicioDescargaDto,
                     //IdRequisicion = papeletaDto,
@@ -165,7 +171,30 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 PorcenMagnatelOcular = descarga.PorcenMagnatelOcular,
                 FechaEntraGas = descarga.FechaEntraGas,
                 DatosProcesados = descarga.DatosProcesados,
+                FechaRegistro = descarga.FechaRegistro,
             };
+        }
+
+        public static AlmacenGasDescargaFoto FromDto(string cadenaBase64, short numOrden)
+        {
+            return new AlmacenGasDescargaFoto()
+            {
+                CadenaBase64 = cadenaBase64,
+                Orden = numOrden,
+                IdImagenDe = 1
+            };
+        }
+
+        public static List<AlmacenGasDescargaFoto> FromDto(List<string> lista, short numOrden)
+        {
+            var fotos = new List<AlmacenGasDescargaFoto>();
+            foreach (var cadena in lista)
+            {
+                fotos.Add(FromDto(cadena, numOrden));
+                numOrden++;
+            }
+
+            return fotos;
         }
 
         public static AlmacenDto ToDto(AlmacenGas alm)

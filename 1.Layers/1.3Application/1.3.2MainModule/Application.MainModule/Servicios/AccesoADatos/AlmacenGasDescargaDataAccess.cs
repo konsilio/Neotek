@@ -45,7 +45,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
-        public RespuestaDto Actualizar(AlmacenGasDescarga _almDes)
+        public RespuestaDto Actualizar(AlmacenGasDescarga _almDes, List<AlmacenGasDescargaFoto> _fotos)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
@@ -53,6 +53,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 try
                 {
                     uow.Repository<AlmacenGasDescarga>().Update(_almDes);
+                    foreach (var foto in _fotos)
+                        uow.Repository<AlmacenGasDescargaFoto>().Insert(foto);
                     uow.SaveChanges();
                     _respuesta.Id = _almDes.IdAlmacenEntradaGasDescarga;
                     _respuesta.Exito = true;

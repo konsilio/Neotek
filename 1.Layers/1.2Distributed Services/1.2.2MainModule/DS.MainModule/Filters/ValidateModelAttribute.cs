@@ -24,7 +24,7 @@ namespace DS.MainModule.Filters
                     foreach (var error in values.Errors)
                         respuesta.MensajesError.Add(error.ErrorMessage);
 
-                actionContext.Response = RespuestaHttp.crearRepuesta(respuesta, actionContext.Request);
+                actionContext.Response = RespuestaHttp.crearRespuesta(respuesta, actionContext.Request);
             }
         }
 
@@ -39,7 +39,7 @@ namespace DS.MainModule.Filters
                     foreach (var error in values.Errors)
                         respuesta.MensajesError.Add(error.ErrorMessage);
 
-                actionExecutedContext.ActionContext.Response = RespuestaHttp.crearRepuesta(respuesta, actionExecutedContext.ActionContext.Request);
+                actionExecutedContext.ActionContext.Response = RespuestaHttp.crearRespuesta(respuesta, actionExecutedContext.ActionContext.Request);
             }
         }
 
