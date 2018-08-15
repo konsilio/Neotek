@@ -35,6 +35,7 @@ namespace Security.MainModule.Token_Service
             // determine whether a jwt exists or not
             if (!TryRetrieveToken(request, out token))
             {
+                // No se envió Token
                 statusCode = HttpStatusCode.Unauthorized;
                 return base.SendAsync(request, cancellationToken);
             }
@@ -65,6 +66,7 @@ namespace Security.MainModule.Token_Service
             }
             catch (SecurityTokenValidationException)
             {
+                //Token es inválido
                 statusCode = HttpStatusCode.Unauthorized;
             }
             catch (Exception)

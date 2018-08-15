@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Respuesta;
+﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Seguridad;
 using Application.MainModule.Flujos;
 using DS.MainModule.Results;
@@ -59,6 +60,12 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Proveedor
+        [Route("registra/proveedor")]
+        public HttpResponseMessage PostRegistraProveedores(ProveedorCrearDto provDto)
+        {
+            return RespuestaHttp.crearRepuesta(_catalogos.RegistraProveedor(provDto), Request);
+        }
+
         [Route("consulta/proveedores/{idEmpresa}")]
         public HttpResponseMessage GetListaProveedores(short idEmpresa)
         {

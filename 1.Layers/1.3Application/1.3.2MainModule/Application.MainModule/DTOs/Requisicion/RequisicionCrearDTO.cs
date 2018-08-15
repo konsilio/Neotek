@@ -9,10 +9,12 @@ namespace Application.MainModule.DTOs.Requisicion
     public class RequisicionCrearDTO
     {
         [Required(ErrorMessage = Error.R0002)]
+        [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = Error.R0002)]
         [Display(Name = "IdUsuarioSolicitante")]
         public int IdUsuarioSolicitante { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
+        [Range(minimum: 1, maximum: short.MaxValue, ErrorMessage = Error.R0002)]
         [Display(Name = "IdEmpresa")]
         public short IdEmpresa { get; set; }
 
@@ -27,6 +29,7 @@ namespace Application.MainModule.DTOs.Requisicion
         public string RequeridoEn { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
+        [Range(minimum: 1, maximum: byte.MaxValue, ErrorMessage = Error.R0002)]
         [Display(Name = "IdRequisicionEstatus")]
         public byte IdRequisicionEstatus { get; set; }
 
