@@ -58,7 +58,12 @@ namespace DS.MainModule.Results
                 respuestaHttp = request.CreateResponse(HttpStatusCode.OK, respuesta);
 
             return respuestaHttp;
-        }        
+        }
+
+        public static HttpResponseMessage crearRepuesta(List<MenuDto> respuesta, HttpRequestMessage request)
+        {
+            return request.CreateResponse(HttpStatusCode.OK, respuesta);
+        }
 
         //public HttpResponseMessage crearRepuesta(RespuestaDto respuesta, HttpRequestMessage request)
         //{

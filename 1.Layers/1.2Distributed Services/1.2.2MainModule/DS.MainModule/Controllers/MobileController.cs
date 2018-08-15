@@ -45,6 +45,12 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRepuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa,EsGas,EsActivoVenta,EsTransporteGas), Request);
         }
 
+        [Route("obtener/menu")]
+        public HttpResponseMessage PostObtenerMenu()
+        {
+            return RespuestaHttp.crearRepuesta(_mobile.ObtenerMenu(), Request);
+        }
+
         //[Route("lista/ordenes/compra/transportador")]
         //public HttpResponseMessage GetListaOrdenesCompraTransportador(short IdEmpresa)
         //{
