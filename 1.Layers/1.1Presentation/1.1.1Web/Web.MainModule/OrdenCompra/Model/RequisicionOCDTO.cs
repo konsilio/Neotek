@@ -11,6 +11,6 @@ namespace Web.MainModule.OrdenCompra.Model
     [Serializable]
     public class RequisicionOCDTO : RequisicionDTO
     {
-        List<ProdcutoOC> Productos { get; set; }
+        public List<ProdcutoOC> Productos { get; set; }
     }
 }

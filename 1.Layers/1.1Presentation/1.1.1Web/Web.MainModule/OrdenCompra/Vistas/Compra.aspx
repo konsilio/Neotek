@@ -82,7 +82,7 @@
                                         <ItemTemplate>
                                             <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
                                                 <div class="demo-google-material-icon">
-                                                    <asp:LinkButton runat="server" ID="lblGenerarOrden" Text=" " CommnadnName="OrdenCompra" CommandArgument='<%# Bind("IdRequisicion") %>'>
+                                                    <asp:LinkButton runat="server" ID="lbGenerarOrden" Text=" " CommandName="Requisicion" CommandArgument='<%# Bind("IdRequisicion") %>'>
                                                                     <i class="material-icons">launch</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                     </asp:LinkButton>
@@ -121,7 +121,7 @@
                         </div>
                         <div class="col-sm-4">
                             <label>Estatus</label>
-                            <asp:DropDownList CssClass="form-control show-tick" runat="server" ID="ddlFiltroEstatus" AutoPostBack="true" >
+                            <asp:DropDownList CssClass="form-control show-tick" runat="server" ID="ddlFiltroEstatus" AutoPostBack="true" OnSelectedIndexChanged="ddlFiltroEstatus_SelectedIndexChanged" >
                             </asp:DropDownList>
                         </div>
                     </div>                    

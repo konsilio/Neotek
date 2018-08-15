@@ -22,6 +22,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
                     {
                         CargarEmpresas();                       
                         CargarEstatus();
+                        CargarProveedores();
                     }
                     else
                         Salir();
@@ -64,9 +65,9 @@ namespace Web.MainModule.OrdenCompra.Vistas
             }
             CargarRequisiciones(short.Parse(ddlEmpresas.SelectedValue));
         }
-        private void CargarProveedores(short idEmp)
+        private void CargarProveedores()
         {
-            ddlFiltroProveedores.DataSource = new Servisio.OrdenCompraServicio().Proveedores(idEmp, Session["StringToken"].ToString());
+            ddlFiltroProveedores.DataSource = new Servisio.OrdenCompraServicio().Proveedores(Session["StringToken"].ToString());
             ddlFiltroProveedores.DataTextField = "NombreComercial";
             ddlFiltroProveedores.DataValueField = "IdProveedor";
             ddlFiltroProveedores.DataBind();
@@ -76,8 +77,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
             Response.Redirect("~/Login.aspx");
         }
         protected void ddlEmpresas_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CargarProveedores(short.Parse(ddlEmpresas.SelectedValue));
+        {            
             CargarRequisiciones(short.Parse(ddlEmpresas.SelectedValue));
         }
         protected void txtNoRequisicion_TextChanged(object sender, EventArgs e)
@@ -113,7 +113,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
         }
         protected void dgRequisisiones_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName.Equals("OrdenCompra"))            
+            if (e.CommandName.Equals("Requisicion"))            
                 Response.Redirect("~/OrdenCompra/Vistas/OrdenCompra.aspx?nr=" + e.CommandArgument.ToString());            
         }        
         protected void gvOrdenCompra_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -127,6 +127,20 @@ namespace Web.MainModule.OrdenCompra.Vistas
         protected void gvOrdenCompra_RowDataBound(object sender, GridViewRowEventArgs e)
         {
 
+        }
+
+        protected void ddlFiltroEstatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<Requisicion.Model.RequisicionDTO> newList = new List<Requisicion.Model.RequisicionDTO>();
+            foreach (var item in (List<Requisicion.Model.RequisicionDTO>)ViewState["ListaOrdenesCompra"])
+            {
+                if (item.IdRequisicionEstatus.ToString().Equals(ddlFiltroEstatus.SelectedValue))
+                {
+                    newList.Add(item);
+                }
+            }
+            gvOrdenCompra.DataSource = newList.ToList().OrderByDescending(x => x.IdRequisicion).ToList();
+            gvOrdenCompra.DataBind();
         }
     }
 }

@@ -44,9 +44,9 @@ namespace Application.MainModule.Flujos
             return ProveedorServicio.RegistrarProveedor(provDto);
         }
 
-        public List<ProveedorDto> ConsultaProveedores(short idEmpresa)
+        public List<ProveedorDto> ConsultaProveedores()
         {
-            return ProveedorServicio.Obtener(idEmpresa);
+            return ProveedorServicio.Obtener();
         }
 
         public ProveedorDto ConsultaProveedor(int idProveedor)

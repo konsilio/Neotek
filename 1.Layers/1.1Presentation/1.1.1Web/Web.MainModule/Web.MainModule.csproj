@@ -3884,6 +3884,8 @@
     <Compile Include="Controles\DateTimePicker.ascx.designer.cs">
       <DependentUpon>DateTimePicker.ascx</DependentUpon>
     </Compile>
+    <Compile Include="OrdenCompra\Model\enumIEPS.cs" />
+    <Compile Include="OrdenCompra\Model\enumIVA.cs" />
     <Compile Include="OrdenCompra\Model\ProdcutoOC.cs" />
     <Compile Include="OrdenCompra\Model\ProveedorDTO.cs" />
     <Compile Include="OrdenCompra\Model\RequisicionOCDTO.cs" />

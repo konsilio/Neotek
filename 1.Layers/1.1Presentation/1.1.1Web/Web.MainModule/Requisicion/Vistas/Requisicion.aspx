@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" EnableViewState="true" EnableViewStateMac="true" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Requisicion.aspx.cs" Inherits="Web.MainModule.Requisicion.Vista.Requisicion" %>
 
 <%@ Register Src="~/Controles/DateTimePicker.ascx" TagName="DateTimePicker" TagPrefix="dtp" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="ContentRequisicion" ContentPlaceHolderID="ctRequisicion" runat="server">
     <section class="content home">
         <div class="container-fluid">

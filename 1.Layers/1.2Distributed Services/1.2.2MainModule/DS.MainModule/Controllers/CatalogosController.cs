@@ -65,10 +65,10 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRepuesta(_catalogos.RegistraProveedor(provDto), Request);
         }
 
-        [Route("consulta/proveedores/{idEmpresa}")]
-        public HttpResponseMessage GetListaProveedores(short idEmpresa)
+        [Route("consulta/proveedores")]
+        public HttpResponseMessage GetListaProveedores()
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedores(idEmpresa));
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedores());
         }
 
         [Route("consulta/proveedor/{idProveedor}")]

@@ -18,9 +18,9 @@ namespace Application.MainModule.Servicios.Catalogos
             return new ProveedorDataAccess().Insertar(ProveedorAdapter.FromDto(proDto));
         }
 
-        public static List<ProveedorDto> Obtener(short IdEmpresa)
+        public static List<ProveedorDto> Obtener()
         {
-            var empresa = new EmpresaDataAccess().Buscar(IdEmpresa);
+            var empresa = new EmpresaDataAccess().Buscar(Seguridad.TokenServicio.ObtenerIdEmpresa());
 
             if (empresa.EsAdministracionCentral)
                 return ProveedorAdapter.ToDto(new ProveedorDataAccess().BuscarTodos());

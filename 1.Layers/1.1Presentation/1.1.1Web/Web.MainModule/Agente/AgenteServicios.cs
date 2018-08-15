@@ -43,12 +43,12 @@ namespace Web.MainModule.Agente
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
         }
         #region Catalogos
-        public void BuscarProveedoresOC(short idEmpresa, string tkn)
+        public void BuscarProveedoresOC(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaProveedores"];
-            ListaProveedores(idEmpresa, tkn).Wait();
+            ListaProveedores(tkn).Wait();
         }
-        private async Task ListaProveedores(short idEmpresa, string token)
+        private async Task ListaProveedores(string token)
         {
             using (var client = new HttpClient())
             {
@@ -58,7 +58,7 @@ namespace Web.MainModule.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + idEmpresa).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<ProveedorDTO>>();
                     else
@@ -113,7 +113,7 @@ namespace Web.MainModule.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     emp = new List<EmpresaDTO>();
                     client.CancelPendingRequests();
