@@ -10,12 +10,52 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
     public class AlmacenAdapter
     {
+        public static AlmacenGasDescarga FromDto(Dto papeletaDto)
+        {
+            return new AlmacenGasDescarga()
+            {
+                //IdAlmacenEntradaGasDescarga = papeletaDto,
+                IdAlmacenGas = papeletaDto,
+                //IdRequisicion = papeletaDto,
+                IdOrdenCompraExpedidor = papeletaDto,
+                IdOrdenCompraPorteador = papeletaDto,
+                IdProveedorExpedidor = papeletaDto,
+                IdProveedorPorteador = papeletaDto,
+                //IdCAlmacenGas = papeletaDto,
+                IdTipoMedidorTractor = papeletaDto,
+                IdTipoMedidorAlmacen = papeletaDto,
+                //PorcenMagnatelOcularTractorFIN = papeletaDto,
+                //PorcenMagnatelOcularAlmacenFIN = papeletaDto,
+                //FechaFinDescarga = papeletaDto,
+                //TanquePrestado = papeletaDto,
+                //PorcenMagnatelOcularTractorINI = papeletaDto,
+                //PorcenMagnatelOcularAlmacenINI = papeletaDto,
+                //FechaInicioDescarga = papeletaDto,
+                FechaPapeleta = papeletaDto,
+                FechaEmbarque = papeletaDto,
+                NumeroEmbarque = papeletaDto,
+                NombreOperador = papeletaDto,
+                PlacasTractor = papeletaDto,
+                NumTanquePG = papeletaDto,
+                CapacidadTanqueLt = papeletaDto,
+                CapacidadTanqueKg = papeletaDto,
+                PorcenMagnatelPapeleta = papeletaDto,
+                PresionTanque = papeletaDto,
+                Sello = papeletaDto,
+                ValorCarga = papeletaDto,
+                NombreResponsable = papeletaDto,
+                PorcenMagnatelOcular = papeletaDto,
+                //FechaEntraGas = papeletaDto,
+                //DatosProcesados = false,
+            };
+        }
+
         public static AlmacenDto ToDto(AlmacenGas alm)
         {
             return new AlmacenDto()
             {
                 IdAlmacenGas = alm.IdAlmacenGas,
-                NombreAlamcen= "Núm. 1",
+                NombreAlmacen= "Núm. 1",
             };
         }
 
