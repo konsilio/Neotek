@@ -8,51 +8,51 @@ namespace Application.MainModule.DTOs.Mobile
 {
    public class PapeletaDTO
     {
-        private int IdOrdenCompraExpedidor { get; set; }
+        public int IdOrdenCompraExpedidor { get; set; }
 
-        private int IdOrdenCompraPorteador { get; set; }
+        public int IdOrdenCompraPorteador { get; set; }
 
-        private int IdProveedorPorteador { get; set; }
+        public int IdProveedorPorteador { get; set; }
 
-        private int IdProveedorExpedidor { get; set; }
+        public int IdProveedorExpedidor { get; set; }
 
-        private DateTime Fecha { get; set; }
+        public DateTime Fecha { get; set; }
 
-        private DateTime FechaEmbarque { get; set; }
+        public DateTime FechaEmbarque { get; set; }
 
-        private String NumeroEmbarque { get; set; }
+        public String NumeroEmbarque { get; set; }
 
-        private String PlacasTractor { get; set; }
+        public String PlacasTractor { get; set; }
 
-        private String NombreOperador { get; set; }
+        public String NombreOperador { get; set; }
 
-        private String Producto { get; set; }
+        public String Producto { get; set; }
 
-        private String NumeroTanque { get; set; }
+        public String NumeroTanque { get; set; }
 
-        private Double PresionTanque { get; set; }
+        public decimal PresionTanque { get; set; }
 
-        private Double CapacidadTanque { get; set; }
+        public decimal CapacidadTanque { get; set; }
 
-        private Double PorcentajeTanque { get; set; }
+        public decimal PorcentajeTanque { get; set; }
 
-        private Double Masa { get; set; }
+        public Double Masa { get; set; }
 
-        private String Sello { get; set; }
+        public String Sello { get; set; }
 
-        private Double ValorCarga { get; set; }
+        public decimal ValorCarga { get; set; }
 
-        private String NombreResponsable { get; set; }
+        public String NombreResponsable { get; set; }
 
-        private List<byte[]> Imagenes { get; set; }
+        public List<String> Imagenes { get; set; }
 
-        private Double PorcentajeMedidor { get; set; }
+        public decimal PorcentajeMedidor { get; set; }
 
-        private String NombreTipoMedidorTractor { get; set; }
+        public String NombreTipoMedidorTractor { get; set; }
 
-        private int IdTipoMedidorTractor { get; set; }
+        public short IdTipoMedidorTractor { get; set; }
 
-        private int CantidadFotosTractor { get; set; }
+        public short CantidadFotosTractor { get; set; }
 
     }
 }

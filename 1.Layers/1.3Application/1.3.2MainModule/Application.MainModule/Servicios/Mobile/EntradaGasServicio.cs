@@ -14,7 +14,7 @@ namespace Application.MainModule.Servicios.Mobile
         public static RespuestaDto RegistrarPapeleta(AlmacenGasDescarga alm)
         {
             alm.FechaEntraGas = DateTime.Now;
-
+            alm.DatosProcesados = false;
             return new AlmacenGasDescargaDataAccess().Insertar(alm);
         }
 

@@ -37,9 +37,9 @@ namespace Application.MainModule.Flujos
             return AlmacenAdapter.ToDto(AlmacenGasServicio.ObtenerTodos(TokenServicio.ObtenerIdEmpresa()));
         }
 
-        public RespuestaDto RegistrarPapelate()
+        public RespuestaDto RegistrarPapeleta(PapeletaDTO papeletaDto)
         {
-            return EntradaGasServicio.RegistrarPapeleta();
+            return EntradaGasServicio.RegistrarPapeleta(AlmacenAdapter.FromDto(papeletaDto));
         }
 
         public RespuestaDto InicializarDescarga()
