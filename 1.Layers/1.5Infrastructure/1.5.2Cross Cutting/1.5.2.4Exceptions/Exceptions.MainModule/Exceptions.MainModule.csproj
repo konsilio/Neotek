@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CatchInnerException.cs" />
     <Compile Include="NotFoundException.cs" />
     <Compile Include="NotValidCodeException.cs" />
     <Compile Include="NotValidInvoiceMonthException.cs" />

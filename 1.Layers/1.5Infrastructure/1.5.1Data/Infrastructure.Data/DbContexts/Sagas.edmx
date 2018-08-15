@@ -454,7 +454,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Key>
             <PropertyRef Name="IdProveedor" />
           </Key>
-          <Property Name="IdProveedor" Type="int" Nullable="false" />
+          <Property Name="IdProveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="IdTipoProveedor" Type="tinyint" Nullable="false" />
           <Property Name="IdCuentaContable" Type="int" />
@@ -469,7 +469,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="TransportistaProdutoPrinicpal" Type="bit" Nullable="false" />
           <Property Name="Vende" Type="varchar" MaxLength="250" />
           <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <EntityType Name="CProveedorBancario">
           <Key>
@@ -4550,7 +4550,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="TransportistaProdutoPrinicpal" Type="Boolean" Nullable="false" />
           <Property Name="Vende" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
           
           <!--"CProveedorBancario"
           <Property Name="IdProveedor" Type="Int32" Nullable="false" />-->

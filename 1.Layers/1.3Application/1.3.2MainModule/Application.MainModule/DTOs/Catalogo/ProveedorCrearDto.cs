@@ -174,8 +174,8 @@ namespace Application.MainModule.DTOs.Catalogo
         public string NumInt { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
-        [StringLength(13, MinimumLength = 12, ErrorMessage = Error.P0001)]
-        [RegularExpression(ExpresionRegular.Rfc, ErrorMessage = Error.P0001)]
+        [StringLength(13, MinimumLength = 12, ErrorMessage = Error.C0001)]
+        [RegularExpression(ExpresionRegular.Rfc, ErrorMessage = Error.C0001)]
         [Display(Name = "RFC")]
         public string Rfc { get; set; }
 

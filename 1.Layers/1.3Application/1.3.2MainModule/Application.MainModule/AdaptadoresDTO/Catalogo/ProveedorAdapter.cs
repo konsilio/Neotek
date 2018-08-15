@@ -53,6 +53,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 NumInt = proveedorDto.NumInt,
                 Rfc = proveedorDto.Rfc,
                 RazonSocial = proveedorDto.RazonSocial,
+                FechaRegistro = DateTime.Now,
             };
         }
 
