@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Compras;
+using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Seguridad;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,9 @@ namespace Application.MainModule.Flujos
                 Exito = true
             };
         }
-
+        public RequisicionOCDTO BuscarRequisicion(int idRequisicion)
+        {
+            return OrdenCompraServicio.BuscarRequisicion(idRequisicion);
+        }
     }
 }

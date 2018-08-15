@@ -479,7 +479,7 @@
                     <li class="menu_dark"><a href="../../Compras/Vistas/Compras.aspx"><i class="material-icons">feedback </i><span class="icon-name">Requisicion</span> </a></li>
                     <li><a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
                         <ul class="ml-menu">
-                            <li><a href="../../OrdenCompra/Vistas/OrdenCompra.aspx">Oden de Compra</a></li>
+                            <li><a href="../../OrdenCompra/Vistas/Compra.aspx">Oden de Compra</a></li>
                             <%--   <li><a href="events.html">Calendar</a></li>
                             <li><a href="file-dashboard.html">File Manager</a></li>
                             <li><a href="contact.html">Contact list</a></li>

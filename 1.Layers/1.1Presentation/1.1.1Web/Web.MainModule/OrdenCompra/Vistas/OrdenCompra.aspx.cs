@@ -7,22 +7,24 @@ using System.Web.UI.WebControls;
 using System.Security.Claims;
 using Security.MainModule.Token_Service;
 
-namespace Web.MainModule
+namespace Web.MainModule.OrdenCompra.Vistas
 {
     public partial class OrdenCompra : System.Web.UI.Page
     {
-        string _tok = string.Empty;
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 if (Session["StringToken"] != null)
-                {
-                    _tok = Session["StringToken"].ToString();
-                    Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
+                {                   
+                    Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "Autenticado");
                     if (Convert.ToBoolean(_autenticado.Value))
                     {
-                        //Habilitar opciones segun el rol
+                        if (Request.QueryString["nr"] != null)
+                            CargarDatosRequisicon(int.Parse(Request.QueryString["nr"].ToString()));
+                        else
+                            Salir();
                     }
                     else
                         Salir();
@@ -34,6 +36,22 @@ namespace Web.MainModule
         private void Salir()
         {
             Response.Redirect("~/Login.aspx");
+        }
+        private void CargarDatosRequisicon(int id)
+        {
+
+        }
+        protected void btnRegresar_Click(object sender, EventArgs e)
+        {
+
+        }
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+
+        }
+        protected void BtnCrear_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

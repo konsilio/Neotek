@@ -76,6 +76,8 @@ namespace Web.MainModule
         {
             dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString()).ToList().OrderByDescending(x => x.IdRequisicion).ToList();
             dgRequisisiones.DataBind();
+            if (!Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
+                dgRequisisiones.Columns[0].Visible = false;
             // ModificargvRequisiciones();
         }
         protected void dgRequisisiones_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -96,7 +98,6 @@ namespace Web.MainModule
             dgRequisisiones.PageIndex = e.NewPageIndex;
             dgRequisisiones.DataBind();
         }
-
         protected void ddlEmpresas_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!ddlEmpresas.SelectedValue.Equals("0"))
@@ -153,6 +154,6 @@ namespace Web.MainModule
             }
             dgRequisisiones.DataSource = newList.ToList().OrderByDescending(x => x.IdRequisicion).ToList();
             dgRequisisiones.DataBind();
-        }
+        }       
     }
 }

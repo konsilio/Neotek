@@ -55,6 +55,8 @@
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Compras\OrdenComprasAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Compras\ProductosOCAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Requisicion\RequisicionAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\UsuarioAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Requisicion\RequisicionProductoAdapter.cs" />
@@ -65,6 +67,8 @@
     <Compile Include="DTOs\Catalogo\ProveedorDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoDTO.cs" />
     <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
+    <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />
+    <Compile Include="DTOs\Compras\RequisicionOCDTO.cs" />
     <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\Mobile\OrdenCompraDTO.cs" />
     <Compile Include="DTOs\Mobile\ProductoDTO.cs" />
@@ -112,6 +116,7 @@
     <Compile Include="Servicios\Catalogos\ProductoServicios.cs" />
     <Compile Include="Servicios\Catalogos\ProveedorServicio.cs" />
     <Compile Include="Servicios\Catalogos\UsuarioServicio.cs" />
+    <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
     <Compile Include="Servicios\Notificacion\EnviarCorreosServicio.cs" />
     <Compile Include="Servicios\Requisicion\RequisicionServicio.cs" />

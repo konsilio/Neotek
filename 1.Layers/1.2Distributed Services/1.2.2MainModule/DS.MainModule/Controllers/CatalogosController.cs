@@ -57,7 +57,6 @@ namespace DS.MainModule.Controllers
         #region Administracion Central
 
         #endregion
-
         #region Proveedor
         [Route("consulta/proveedores/{idEmpresa}")]
         public HttpResponseMessage GetListaProveedores(short idEmpresa)

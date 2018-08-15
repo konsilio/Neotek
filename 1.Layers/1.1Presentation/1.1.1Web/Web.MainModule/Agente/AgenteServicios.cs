@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Web.MainModule.Seguridad.Model;
 using Web.MainModule.Requisicion.Model;
+using Web.MainModule.OrdenCompra.Model;
 using System.Configuration;
 
 namespace Web.MainModule.Agente
@@ -21,6 +22,7 @@ namespace Web.MainModule.Agente
         private string ApiRequisicion;
         private string ApiUsuarios;
         private string ApiProducto;
+        private string ApiCatalgos;
 
         public RespuestaAutenticacionDto _respuestaAutenticacion;
         public RespuestaRequisicionDto _respuestaRequisicion;
@@ -33,11 +35,48 @@ namespace Web.MainModule.Agente
         public List<ProductoDTO> _listProductos;
         public RequisicionRevisionDTO _requisicionRevisionDTO;
         public RequisicionAutorizacion _requsicionAutorizacion;
+        public RequisicionOCDTO _requisicionOrdenCompra;
+        public List<ProveedorDTO> _listaProveedores;
 
-        public AgenteServicios()
+        public  AgenteServicios()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
         }
+        #region Catalogos
+        public void BuscarProveedoresOC(short idEmpresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaProveedores"];
+            ListaProveedores(idEmpresa, tkn).Wait();
+        }
+        private async Task ListaProveedores(short idEmpresa, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ProveedorDTO> emp = new List<ProveedorDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + idEmpresa).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<ProveedorDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<ProveedorDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaProveedores = emp;
+            }
+        }
+        #endregion
         #region Login
         public void ListaEmpresasLogin()
         {
@@ -334,8 +373,7 @@ namespace Web.MainModule.Agente
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionByNumRequisicion"];
             RequisicionesPorNumRequisicion(NumRequisicion, tkn).Wait();
-        }
-       
+        }       
         private async Task RequisicionesPorNumRequisicion(int numReq, string token)
         {
             using (var client = new HttpClient())
@@ -428,6 +466,41 @@ namespace Web.MainModule.Agente
                     client.Dispose(); ;
                 }
                 _listProductos = emp;
+            }
+        }
+        #endregion
+        #region Orden de Compra
+        public void BuscarRequisicioOC(int idReq, string tkn)
+        {
+            this.ApiCompras = ConfigurationManager.AppSettings["GetBuscarReq"];
+            RequisicionPorIdReqOC(idReq, tkn).Wait();
+        }
+        private async Task RequisicionPorIdReqOC(int numReq, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RequisicionOCDTO emp = new RequisicionOCDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCompras + numReq).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<RequisicionOCDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new RequisicionOCDTO() { NumeroRequisicion = "0" };
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _requisicionOrdenCompra = emp;
             }
         }
         #endregion

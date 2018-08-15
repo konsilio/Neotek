@@ -10,7 +10,7 @@
 namespace Web.MainModule.OrdenCompra.Vistas {
     
     
-    public partial class OrdenCompra {
+    public partial class Compra {
         
         /// <summary>
         /// Control lblRuta.
@@ -22,174 +22,111 @@ namespace Web.MainModule.OrdenCompra.Vistas {
         protected global::System.Web.UI.WebControls.Label lblRuta;
         
         /// <summary>
-        /// Control lblNombreEmpresa.
+        /// Control ddlEmpresas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombreEmpresa;
+        protected global::System.Web.UI.WebControls.DropDownList ddlEmpresas;
         
         /// <summary>
-        /// Control lblNumRequisicion.
+        /// Control txtNoRequisicion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNumRequisicion;
+        protected global::System.Web.UI.WebControls.TextBox txtNoRequisicion;
         
         /// <summary>
-        /// Control lblNunOrdenCompra.
+        /// Control dgRequisisiones.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNunOrdenCompra;
+        protected global::System.Web.UI.WebControls.GridView dgRequisisiones;
         
         /// <summary>
-        /// Control txtFechaRequerida.
+        /// Control txtNoOrdenRequisicionOC.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::UserControls.DateTimePicker txtFechaRequerida;
+        protected global::System.Web.UI.WebControls.TextBox txtNoOrdenRequisicionOC;
         
         /// <summary>
-        /// Control ddlSolicitante.
+        /// Control txtNoOrdenCompra.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSolicitante;
+        protected global::System.Web.UI.WebControls.TextBox txtNoOrdenCompra;
         
         /// <summary>
-        /// Control txtMotivoCompra.
+        /// Control ddlFiltroProveedores.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMotivoCompra;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroProveedores;
         
         /// <summary>
-        /// Control txtRequeridoEn.
+        /// Control ddlFiltroEstatus.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRequeridoEn;
+        protected global::System.Web.UI.WebControls.DropDownList ddlFiltroEstatus;
         
         /// <summary>
-        /// Control divProveedor.
+        /// Control dtpFechaRegiistrDe.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divProveedor;
+        protected global::UserControls.DateTimePicker dtpFechaRegiistrDe;
         
         /// <summary>
-        /// Control lblProveedor.
+        /// Control dtpFechaRegiistrA.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblProveedor;
+        protected global::UserControls.DateTimePicker dtpFechaRegiistrA;
         
         /// <summary>
-        /// Control dtpFechaEntrada.
+        /// Control dtpFechaRequisicionDe.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::UserControls.DateTimePicker dtpFechaEntrada;
+        protected global::UserControls.DateTimePicker dtpFechaRequisicionDe;
         
         /// <summary>
-        /// Control divCrearOC.
+        /// Control dtpFechaRequisicionA.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCrearOC;
+        protected global::UserControls.DateTimePicker dtpFechaRequisicionA;
         
         /// <summary>
-        /// Control dgListaproductos.
+        /// Control gvOrdenCompra.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgListaproductos;
-        
-        /// <summary>
-        /// Control divAutorizarOC.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAutorizarOC;
-        
-        /// <summary>
-        /// Control gvProdcutosOrdenCompra.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvProdcutosOrdenCompra;
-        
-        /// <summary>
-        /// Control divEntrada.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEntrada;
-        
-        /// <summary>
-        /// Control gvEntrada.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvEntrada;
-        
-        /// <summary>
-        /// Control btnRegresar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRegresar;
-        
-        /// <summary>
-        /// Control btnCancelar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelar;
-        
-        /// <summary>
-        /// Control BtnCrear.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnCrear;
+        protected global::System.Web.UI.WebControls.GridView gvOrdenCompra;
     }
 }

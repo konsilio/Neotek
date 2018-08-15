@@ -86,7 +86,7 @@ namespace Web.MainModule.Requisicion.Vista
             reqCrearDTO.MotivoRequisicion = txtMotivoCompra.Text;
             reqCrearDTO.RequeridoEn = txtRequeridoEn.Text;
             reqCrearDTO.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Creada;
-            reqCrearDTO.FechaRequerida = DateTime.Today.AddDays(5); //DateTime.Parse(txtFechaRequerida.Value, new CultureInfo("en-US")), //(es-MX) 
+            reqCrearDTO.FechaRequerida = txtFechaRequerida.GetDate;
             reqCrearDTO.FechaRegistro = DateTime.Today;
             reqCrearDTO.ListaProductos = (List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"];
             return reqCrearDTO;

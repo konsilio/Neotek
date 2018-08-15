@@ -1,4 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Compras.aspx.cs" Inherits="Web.MainModule.Compras" %>
+
+
 <asp:Content ID="ctCompras" ContentPlaceHolderID="ctCompras" runat="server">
     <section class="content home">
         <div class="container-fluid">
@@ -28,7 +30,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <asp:TextBox runat="server" ID="txtNoRequisicion" class="form-control" placeholder="N° de Requisición" AutoPostBack="true" OnTextChanged="txtNoRequisicion_TextChanged" />
+                                            <asp:TextBox runat="server" ID="txtNoRequisicion" CssClass="form-control" placeholder="N° de Requisición" AutoPostBack="true" OnTextChanged="txtNoRequisicion_TextChanged" />
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -43,38 +45,26 @@
                                     </div>
                                     <div class="col-lg-2 col-md-6">
                                         <label>Fecha de registro</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="zmdi zmdi-calendar"></i>
-                                            </span>
-                                            <input type="text" class="form-control datetimepicker" placeholder="De:">
+                                        <div class="input-group">                                           
+                                           <dtp:DateTimePicker ID="dtpFechaRegiistrDe" CssClass="dataTxt" runat="server" />
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-md-6">
                                         <label>&nbsp; </label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="zmdi zmdi-calendar-note"></i>
-                                            </span>
-                                            <input type="text" class="form-control datetimepicker" placeholder="A:">
+                                        <div class="input-group">                                           
+                                           <dtp:DateTimePicker ID="dtpFechaRegiistrA" CssClass="dataTxt" runat="server" />
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-md-6">
                                         <label>Fecha de requisición</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="zmdi zmdi-calendar"></i>
-                                            </span>
-                                            <input type="text" class="form-control datetimepicker" placeholder="De:">
+                                        <div class="input-group">                                           
+                                           <dtp:DateTimePicker ID="dtpFechaRequisicionDe" CssClass="dataTxt" runat="server" />
                                         </div>
                                     </div>
                                     <div class="col-lg-2 col-md-6">
                                         <label>&nbsp;</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
-                                                <i class="zmdi zmdi-calendar"></i>
-                                            </span>
-                                            <input type="text" class="form-control datetimepicker" placeholder="A:">
+                                        <div class="input-group">                                           
+                                           <dtp:DateTimePicker ID="dtpFechaRequisicionA" CssClass="dataTxt" runat="server" />
                                         </div>
                                     </div>
                                 </div>

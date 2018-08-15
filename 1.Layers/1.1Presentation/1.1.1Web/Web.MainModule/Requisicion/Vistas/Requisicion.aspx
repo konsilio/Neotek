@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" EnableViewState="true" EnableViewStateMac="true" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Requisicion.aspx.cs" Inherits="Web.MainModule.Requisicion.Vista.Requisicion" %>
 
+<%@ Register Src="~/Controles/DateTimePicker.ascx" TagName="DateTimePicker" TagPrefix="dtp" %>
 <asp:Content ID="ContentRequisicion" ContentPlaceHolderID="ctRequisicion" runat="server">
     <section class="content home">
         <div class="container-fluid">
@@ -47,7 +48,8 @@
                                         <div class="form-group form-float">
                                             <%--Fecha requerida--%>
                                             <label class="card-inside-title">Fecha requerida:</label>
-                                            <asp:TextBox runat="server" ID="txtFechaRequerida" CssClass="form-control datetimepicker" placeholder="Fecha requerida..." name="date" />
+                                            <dtp:DateTimePicker ID="txtFechaRequerida" CssClass="dataTxt" runat="server" />
+                                            <%--<asp:TextBox runat="server" ID="txtFechaRequerida" CssClass="form-control datetimepicker" placeholder="Fecha requerida..." name="date" />--%>
                                             <asp:Label runat="server" ID="reqFecha" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                         </div>
                                     </div>
