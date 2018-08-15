@@ -60,7 +60,7 @@ namespace DS.MainModule.Results
             return respuestaHttp;
         }
 
-        public static HttpResponseMessage crearRepuesta(List<MenuDto> respuesta, HttpRequestMessage request)
+        public static HttpResponseMessage crearRepuesta<T>(List<T> respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }

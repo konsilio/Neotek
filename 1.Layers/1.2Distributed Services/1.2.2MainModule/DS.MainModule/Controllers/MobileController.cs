@@ -46,16 +46,21 @@ namespace DS.MainModule.Controllers
         }
 
         [Route("obtener/menu")]
-        public HttpResponseMessage PostObtenerMenu()
+        public HttpResponseMessage GetObtenerMenu()
         {
             return RespuestaHttp.crearRepuesta(_mobile.ObtenerMenu(), Request);
         }
 
-        //[Route("lista/ordenes/compra/transportador")]
-        //public HttpResponseMessage GetListaOrdenesCompraTransportador(short IdEmpresa)
-        //{
-        //    return RespuestaHttp.crearRepuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa), Request);
-        //}
+        [Route("obtener/medidores")]
+        public HttpResponseMessage GetObtenerMedidores()
+        {
+            return RespuestaHttp.crearRepuesta(_mobile.ObtenerMedidores(), Request);
+        }
 
+        [Route("obtener/almacenes")]
+        public HttpResponseMessage GetObtenerAlmacenesGas()
+        {
+            return RespuestaHttp.crearRepuesta(_mobile.ObtenerAlmacenesGas(), Request);
+        }
     }
 }
