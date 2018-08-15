@@ -9,6 +9,6 @@ namespace Application.MainModule.DTOs.Mobile
     public class AlmacenDto
     {
         public short IdAlmacenGas { get; set; }
-        public string NombreAlamcen { get; set; }
+        public string NombreAlmacen { get; set; }
     }
 }
