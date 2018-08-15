@@ -7,7 +7,9 @@ using System.Net.Http;
 using System.Web.Http;
 using Application.MainModule.Flujos;
 using Application.MainModule.DTOs.Respuesta;
+
 using DS.MainModule.Results;
+using Application.MainModule.DTOs.Mobile;
 
 namespace DS.MainModule.Controllers
 {
@@ -61,6 +63,12 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetObtenerAlmacenesGas()
         {
             return RespuestaHttp.crearRepuesta(_mobile.ObtenerAlmacenesGas(), Request);
+        }
+
+        [Route("registrar/papeleta")]
+        public HttpResponseMessage PostRegistrarPapeleta(PapeletaDTO papeletaDTO)
+        {
+            return RespuestaHttp.crearRepuesta(_mobile.RegistrarPapeleta(papeletaDTO), Request);
         }
     }
 }

@@ -72,6 +72,7 @@
     <Compile Include="DTOs\Mobile\AlmacenDto.cs" />
     <Compile Include="DTOs\Mobile\MedidorDto.cs" />
     <Compile Include="DTOs\Mobile\OrdenCompraDTO.cs" />
+    <Compile Include="DTOs\Mobile\PapeletaDTO.cs" />
     <Compile Include="DTOs\Mobile\ProductoDTO.cs" />
     <Compile Include="DTOs\Mobile\RespuestaOrdenesCompraDTO.cs" />
     <Compile Include="DTOs\Mobile\MenuDto.cs" />

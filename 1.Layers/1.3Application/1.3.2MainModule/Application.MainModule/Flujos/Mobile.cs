@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.DTOs.Mobile;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Almacen;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Mobile;
@@ -34,6 +35,11 @@ namespace Application.MainModule.Flujos
         public List<AlmacenDto> ObtenerAlmacenesGas()
         {
             return AlmacenAdapter.ToDto(AlmacenGasServicio.ObtenerTodos(TokenServicio.ObtenerIdEmpresa()));
+        }
+
+        public RespuestaDto RegistrarPapeleta(PapeletaDTO papeletaDTO)
+        {
+
         }
     }
 }
