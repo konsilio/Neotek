@@ -26,12 +26,12 @@ namespace Application.MainModule.Servicios.Seguridad
             {
                 var claims = new[]
                 {
-                    new Claim("Autenticado", usuario.autenticado.ToString()),
-                    new Claim("NombreUsuario", autDto.Usuario),
-                    new Claim("IdUsuario", usuario.IdUsuario.ToString()),
-                    new Claim("IdEmpresa", usuario.IdEmpresa.ToString()),
-                    new Claim("EsAdminCentral", usuario.AdminCentral ? "true": "false"),
-                    new Claim("EsSuperUsuario", usuario.SuperUsuario ? "true": "false"),
+                    new Claim(TokenEtiquetasEnum.Autenticado, usuario.autenticado.ToString()),
+                    new Claim(TokenEtiquetasEnum.NombreUsuario, autDto.Usuario),
+                    new Claim(TokenEtiquetasEnum.IdUsuario, usuario.IdUsuario.ToString()),
+                    new Claim(TokenEtiquetasEnum.IdEmpresa, usuario.IdEmpresa.ToString()),
+                    new Claim(TokenEtiquetasEnum.EsAdminCentral, usuario.AdminCentral ? "true": "false"),
+                    new Claim(TokenEtiquetasEnum.EsSuperUsuario, usuario.SuperUsuario ? "true": "false"),
                 };
 
                 var min = Math.Truncate(FechasFunciones.ObtenerMinutosEntreDosFechas(DateTime.Now, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59)));
@@ -40,7 +40,7 @@ namespace Application.MainModule.Servicios.Seguridad
                 {
                     IdUsuario = usuario.IdUsuario,
                     Exito = true,
-                    Mensaje = "OK",
+                    Mensaje = Exito.OK,
                     token = TokenGenerator.GenerateTokenJwt(claims, autDto.Password, Convert.ToInt32(min).ToString())
                 };
             }
