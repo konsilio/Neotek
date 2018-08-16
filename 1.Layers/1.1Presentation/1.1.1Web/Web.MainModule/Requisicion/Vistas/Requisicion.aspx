@@ -93,7 +93,6 @@
                                         <%--Tipo de compra--%>
                                         <label class="card-inside-title">Tipo de compra:</label>
                                         <asp:DropDownList ID="ddlTipoCompra" runat="server" CssClass="form-control z-index show-tick">
-                                            <asp:ListItem Value="0" Text="Seleccione tipo de producto"></asp:ListItem>
                                             <asp:ListItem Value="1" Text="Producto"></asp:ListItem>
                                             <asp:ListItem Value="2" Text="Servicio"></asp:ListItem>
                                         </asp:DropDownList>

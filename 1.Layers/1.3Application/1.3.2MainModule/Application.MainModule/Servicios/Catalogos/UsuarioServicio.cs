@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
+using Sagas.MainModule.Entidades;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -14,6 +15,11 @@ namespace Application.MainModule.Servicios.Catalogos
         {//Se descartaran los usuarios de administracion central.
             List<UsuarioDTO> lUsuarios = AdaptadoresDTO.Catalogo.UsuarioAdapter.ToDTO(new UsuarioDataAccess().Buscar(idEmpresa));
             return lUsuarios;
+        }
+
+        public static string ObtenerNombreCompleto(Usuario usuario)
+        {
+            return string.Concat(usuario.Nombre, " ", usuario.Apellido1, " ", usuario.Apellido2);
         }
     }
 }
