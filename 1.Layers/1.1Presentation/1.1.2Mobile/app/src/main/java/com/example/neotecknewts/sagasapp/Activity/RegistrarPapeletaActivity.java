@@ -495,4 +495,31 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
         spinnerMedidorTractor.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, medidores));
     }
+
+    /**
+     * Muestra el mensaje de exito para la papeleta registrada
+     */
+    @Override
+    public void onSuccessRegistrarPapeleta() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setTitle("Listo");
+        builder.setMessage("Papeleta registrada");
+        builder.show();
+    }
+
+    /**
+     * Muesta el mensaje de exito en iniciar la descarga
+     */
+    @Override
+    public void onSuccessRegistrarIniciarDescarga() {
+
+    }
+
+    /**
+     * Muestra el mensaje de error
+     */
+    @Override
+    public void showMessageError() {
+
+    }
 }

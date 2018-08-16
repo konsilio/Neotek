@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
+import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaView;
 import com.example.neotecknewts.sagasapp.Activity.SubirImagenesView;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractorImpl;
@@ -16,6 +17,8 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     //se delcaran la vista y el interactor
     SubirImagenesInteractor interactor;
     SubirImagenesView subirImagenesView;
+    RegistrarPapeletaView registrarPapeletaView;
+
 
     //se obtiene la vista al ser contruido y se inicializa el interactor
     public SubirImagenesPresenterImpl(SubirImagenesView view){

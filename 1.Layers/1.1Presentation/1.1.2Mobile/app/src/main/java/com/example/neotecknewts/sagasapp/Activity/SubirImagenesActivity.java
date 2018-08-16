@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,6 +49,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public boolean finalizar;
 
     public SubirImagenesPresenter presenter;
+    public ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -174,6 +176,26 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public void startActivity(){
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * Permite mostrar el dialogo de progreso en la interfaz
+     * @param mensaje Id del mensaje en string a mostrar
+     */
+    @Override
+    public void showProgress(int mensaje) {
+        progressDialog = new ProgressDialog(getApplicationContext());
+        progressDialog.setTitle(mensaje);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+    }
+
+    /**
+     * Oculta el mensaje de progressdialog
+     */
+    @Override
+    public void hideProgress() {
+        progressDialog.hide();
     }
 
     //tarea asincrona que ejecuta el procesado de las imagenes

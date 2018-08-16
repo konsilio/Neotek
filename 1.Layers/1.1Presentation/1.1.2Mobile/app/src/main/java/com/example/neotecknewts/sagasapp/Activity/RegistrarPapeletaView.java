@@ -16,4 +16,7 @@ public interface RegistrarPapeletaView {
     void onSuccessGetOrdenesCompraExpedidor(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO);
     void onSuccessGetOrdenesCompraPorteador(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO);
     void onSuccessGetMedidores(List<MedidorDTO> medidorDTOs);
+    void onSuccessRegistrarPapeleta();
+    void onSuccessRegistrarIniciarDescarga();
+    void showMessageError();
 }
