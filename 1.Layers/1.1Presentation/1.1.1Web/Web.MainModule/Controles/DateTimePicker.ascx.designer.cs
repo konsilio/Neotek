@@ -13,15 +13,6 @@ namespace UserControls {
     public partial class DateTimePicker {
         
         /// <summary>
-        /// Control tbDatePicker.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbDatePicker;
-        
-        /// <summary>
         /// Control imgDatePicker.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,15 @@ namespace UserControls {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgDatePicker;
+        
+        /// <summary>
+        /// Control tbDatePicker.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbDatePicker;
         
         /// <summary>
         /// Control rfvDatePicker.

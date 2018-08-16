@@ -67,14 +67,21 @@ namespace DS.MainModule.Controllers
 
         [Route("consulta/proveedores")]
         public HttpResponseMessage GetListaProveedores()
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedores());
+        {          
+            return RespuestaHttp.crearRepuesta(_catalogos.ConsultaProveedores(), Request);
         }
 
         [Route("consulta/proveedor/{idProveedor}")]
         public HttpResponseMessage GetListaProveedores(int idProveedor)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedor(idProveedor));
+        }
+        #endregion
+        #region Centro de Costo
+        [Route("consulta/centrosdecosto")]
+        public HttpResponseMessage GetCentrosCostos()
+        {
+            return RespuestaHttp.crearRepuesta(_catalogos.ListaCentrosCostos(), Request);
         }
         #endregion
     }

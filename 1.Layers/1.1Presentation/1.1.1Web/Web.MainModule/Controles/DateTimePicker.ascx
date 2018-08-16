@@ -2,7 +2,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
 <header runat ="server">
     <title></title>
-    <style type="text/css">.MyCalendar .ajax__calendar_header{background-color: Silver;}.MyCalendar .ajax__calendar_container{background-color: Gray;}</style>
+    <style type="text/css">.MyCalendar .ajax__calendar_header{background-color: Silver;}.MyCalendar .ajax__calendar_container{background-color: white;}</style>
 </header>
 <table cellpadding="0" cellspacing="0" ><tr><td style="vertical-align: middle"> 
     <div class="input-group">    

@@ -10,7 +10,7 @@ namespace Web.MainModule.OrdenCompra.Model
 {
     [Serializable]
     public class ProdcutoOC : RequisicionProductoAutorizacionDTO
-    {      
+    {
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdCentroCosto")]
         public int IdCentroCosto { get; set; }

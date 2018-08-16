@@ -41,10 +41,11 @@ namespace Web.MainModule.OrdenCompra.Vistas
         {
             Model.RequisicionOCDTO reqDto = new Servisio.OrdenCompraServicio().DatosRequisicion(id, Session["StringToken"].ToString());
             txtFechaRequerida.Text = reqDto.FechaRequerida.Date.ToString();
-            ddlSolicitante.Text = reqDto.UsuarioSolicitante;
+            TxtSolicitante.Text = reqDto.UsuarioSolicitante;
             txtMotivoCompra.Text = reqDto.MotivoRequisicion;
             txtRequeridoEn.Text = reqDto.RequeridoEn;
             lblNumRequisicion.Text = reqDto.NumeroRequisicion;
+            lblNombreEmpresa.Text = reqDto.NombreComercial;
             dgListaproductos.DataSource = ViewState["ListaProdcutoOC"] = reqDto.Productos;
             dgListaproductos.Visible = true;
             dgListaproductos.DataBind();
@@ -69,6 +70,23 @@ namespace Web.MainModule.OrdenCompra.Vistas
             }
             return listaIVAs;
         }
+        private List<Model.OrdenCompraDTO> GenerarOCPorProveedor()
+        {
+            List<Model.OrdenCompraDTO> lOrdenCompra = new List<Model.OrdenCompraDTO>();
+            foreach (GridViewRow _row in dgListaproductos.Rows)
+            {
+                if (!lOrdenCompra.Exists(x => x.IdProveedor.Equals(int.Parse((_row.Cells[0].FindControl("ddlProveedores") as DropDownList).SelectedValue))))
+                {
+                    lOrdenCompra.Add(new Model.OrdenCompraDTO
+                    {
+                        IdProveedor = int.Parse((_row.Cells[0].FindControl("ddlProveedores") as DropDownList).SelectedValue),
+                        IdCentroCosto = int.Parse((_row.Cells[0].FindControl("lblIdCentroCosto") as Label).Text),
+                        IdRequisicion = int.Parse(Request.QueryString["nr"])
+                    });
+                }
+            }
+            return lOrdenCompra;
+        }
         protected void btnRegresar_Click(object sender, EventArgs e)
         {
 
@@ -79,16 +97,37 @@ namespace Web.MainModule.OrdenCompra.Vistas
         }
         protected void BtnCrear_Click(object sender, EventArgs e)
         {
+            List<Model.OrdenCompraDTO> lOrdenCompra = GenerarOCPorProveedor();
+            foreach (Model.OrdenCompraDTO oc in lOrdenCompra)
+            {
+                foreach (GridViewRow _row in dgListaproductos.Rows)
+                {
+                    if ((_row.Cells[0].FindControl("ddlProveedores") as DropDownList).SelectedValue.Equals(oc.IdProveedor))
+                    {
+                        oc.Productos.Add(new Model.ProdcutoOC
+                        {
+
+                        });
+                    }
+                }
+            }
+        }
+        protected void dgListaproductos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            DropDownList ddlIVA = e.Row.Cells[0].FindControl("ddlGvIVA") as DropDownList;
+            ddlIVA.DataSource = IVAs();
+            ddlIVA.DataBind();
+            DropDownList ddlIIEPS = e.Row.Cells[0].FindControl("ddlGvIEPS") as DropDownList;
+            ddlIIEPS.DataSource = IEPSs();
+            ddlIIEPS.DataBind();
+        }
+        protected void dgListaproductos_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
 
         }
+        protected void dgListaproductos_RowEditing(object sender, GridViewEditEventArgs e)
+        {
 
-        protected void dgListaproductos_RowDataBound(object sender, GridViewRowEventArgs e)
-        {            
-            (e.Row.Cells[0].FindControl("ddlGvIVA") as DropDownList).DataSource = IVAs();
-            (e.Row.Cells[0].FindControl("ddlGvIVA") as DropDownList).DataBind();
-            
-            (e.Row.Cells[0].FindControl("ddlGvIEPS") as DropDownList).DataSource = IEPSs();
-            (e.Row.Cells[0].FindControl("ddlGvIEPS") as DropDownList).DataBind();
         }
     }
 }

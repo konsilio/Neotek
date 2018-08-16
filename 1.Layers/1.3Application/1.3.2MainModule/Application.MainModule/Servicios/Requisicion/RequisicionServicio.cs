@@ -25,23 +25,8 @@ namespace Application.MainModule.Servicios.Requisicion
         public static RespuestaRequisicionDto UpDateRequisicionAutoriza(RequisicionAutPutDTO _req)
         {
             var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
-            var requisicionResp = new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
-            if (requisicionResp != null)
-                return new RespuestaRequisicionDto()
-                {
-                    IdRequisicion = requisicionResp.IdRequisicion,
-                    NumRequisicion = requisicionResp.NumRequisicion,
-                    Exito = requisicionResp.Exito,
-                    Mensaje = requisicionResp.Mensaje
-                };
-            else
-                return new RespuestaRequisicionDto()
-                {
-                    IdRequisicion = 0,
-                    NumRequisicion = string.Empty,
-                    Exito = false,
-                    Mensaje = "Error" //Agregar mensaje espesifico en Exceptions
-                };
+            return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
+
         }
         public static List<RequisicionDTO> BuscarRequisicionPorIdEmpresa(Int16 _IdEmpresa)
         {
@@ -54,6 +39,12 @@ namespace Application.MainModule.Servicios.Requisicion
         public static RequisicionAutorizacionDTO BuscarRequisicionAuto(int _idequi)
         {
             return RequisicionAdapter.ToAutDTO(new RequisicionDataAccess().BuscarPorIdRequisicion(_idequi));
+        }
+        public static RespuestaRequisicionDto CancelarRequisicion(RequisicionCancelaDTO _req)
+        {
+            var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
+            return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
+
         }
     }
 }

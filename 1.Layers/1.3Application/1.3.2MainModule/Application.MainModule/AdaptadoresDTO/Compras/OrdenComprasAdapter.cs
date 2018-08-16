@@ -17,6 +17,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             Req.NombreComercial = _req.Empresa.NombreComercial;
             Req.MotivoRequisicion = _req.MotivoRequisicion;
             Req.RequeridoEn = _req.RequeridoEn;
+            Req.FechaRequerida = _req.FechaRequerida;
             Req.Productos = ProductosOCAdapter.ToDTO(_req.Productos.ToList());
             return Req;
         }

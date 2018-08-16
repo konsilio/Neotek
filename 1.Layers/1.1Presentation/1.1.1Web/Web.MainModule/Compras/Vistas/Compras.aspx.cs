@@ -22,10 +22,10 @@ namespace Web.MainModule
                     _tok = Session["StringToken"].ToString();
                     Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
                     if (Convert.ToBoolean(_autenticado.Value))
-                    {                       
-                            CargarEmpresas();
-                            CargarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
-                            CargarEstatus();      
+                    {
+                        CargarEmpresas();
+                        CargarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
+                        CargarEstatus();
                     }
                     else
                         Salir();
@@ -74,7 +74,7 @@ namespace Web.MainModule
         }
         private void CargarRequisiciones(short idEmpresa)
         {
-            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequsicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString()).ToList().OrderByDescending(x => x.IdRequisicion).ToList();
+            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequisicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString()).ToList().OrderByDescending(x => x.IdRequisicion).ToList();
             dgRequisisiones.DataBind();
             if (!Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
                 dgRequisisiones.Columns[0].Visible = false;
@@ -84,11 +84,11 @@ namespace Web.MainModule
         {
             if (e.CommandName.Equals("VerRequi"))
             {
-                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0]);
+                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString() + "&Sts=1");
             }
             if (e.CommandName.Equals("VerAut"))
             {
-                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString().Split('|')[0]);
+                Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString() + "&Sts=2");
             }
         }
 

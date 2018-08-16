@@ -58,13 +58,13 @@ namespace Web.MainModule.OrdenCompra.Vistas {
         protected global::UserControls.DateTimePicker txtFechaRequerida;
         
         /// <summary>
-        /// Control ddlSolicitante.
+        /// Control TxtSolicitante.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlSolicitante;
+        protected global::System.Web.UI.WebControls.TextBox TxtSolicitante;
         
         /// <summary>
         /// Control txtMotivoCompra.

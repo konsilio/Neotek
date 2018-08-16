@@ -49,8 +49,8 @@
                             <div class="form-group form-float">
                                 <%--Solicitante--%>
                                 <label class="card-inside-title">Solicitante:</label>
-                                <asp:DropDownList runat="server" ID="ddlSolicitante" CssClass="form-control z-index show-tick" data-live-search="true" Enabled="false">
-                                </asp:DropDownList>
+                                <asp:TextBox runat="server" ID="TxtSolicitante" CssClass="form-control" data-live-search="true" Enabled="false" />
+                               
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-12 form-float">
@@ -83,7 +83,7 @@
                     </div>
                     <div class="row clearfix" runat="server" id="divCrearOC">
                         <div class="body table-responsive">
-                            <asp:GridView CssClass="table table-hover" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" OnRowDataBound="dgListaproductos_RowDataBound">
+                            <asp:GridView CssClass="table table-hover" runat="server" OnRowEditing="dgListaproductos_RowEditing" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" OnRowDataBound="dgListaproductos_RowDataBound" OnRowCommand="dgListaproductos_RowCommand">
                                 <Columns>
                                     <asp:TemplateField>
                                         <%--0 Tipo de compra--%>
@@ -136,7 +136,7 @@
                                             <b>Centro de costo</b>
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("CentroCosto") %>' />
+                                            <asp:Label ID="lbldgCentroCosto" runat="server" Text='<%# Bind("CentroCosto") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
@@ -173,7 +173,7 @@
                                             %Desc
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:TextBox ID="txtPrecio" runat="server" Width="100px" placeholder="%" type="number" CssClass="form-control" />
+                                            <asp:TextBox ID="txtgvDescuento" runat="server" Width="100px" placeholder="%" type="number" CssClass="form-control" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
@@ -182,7 +182,7 @@
                                             %IVA
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:DropDownList ID="ddlGvIVA" runat="server" Width="100px" placeholder="%" CssClass="form-control" />
+                                            <asp:DropDownList ID="ddlGvIVA" runat="server" Width="100px" placeholder="%" CssClass="form-control" CommandName="ddl_IVA" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
@@ -200,7 +200,7 @@
                                             <b>Importe</b>
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:Label ID="lbldgAplicacion" runat="server" Text="$ 0" />
+                                            <asp:Label ID="lbldgImporte" runat="server" Text="$ 0" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
@@ -263,7 +263,7 @@
                                         <b>Centro de costo</b>
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("CentroCosto") %>' />
+                                        <asp:Label ID="lbldgCentroCosto" runat="server" Text='<%# Bind("CentroCosto") %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField>
@@ -317,7 +317,7 @@
                                         %IEPS
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <asp:TextBox ID="txtPrecio" runat="server" placeholder="%" type="number" CssClass="form-control" />
+                                        <asp:TextBox ID="txtgvDescuento" runat="server" placeholder="%" type="number" CssClass="form-control" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:TemplateField>
@@ -326,7 +326,7 @@
                                         <b>Importe</b>
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
+                                        <asp:Label ID="lbldgImporte" runat="server" Text='<%# Bind("Aplicacion") %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

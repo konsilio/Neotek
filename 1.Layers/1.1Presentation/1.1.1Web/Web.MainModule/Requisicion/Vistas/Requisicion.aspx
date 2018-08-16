@@ -32,7 +32,7 @@
                                         <div class="form-group">
                                             <asp:DropDownList ID="ddlEmpresas" runat="server" Visible="false" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged" AutoPostBack="true">
                                             </asp:DropDownList>
-                                            <asp:Label ID="lblNombreEmpresa" runat="server" Text="Nombre de la empresa"></asp:Label>
+                                            <asp:Label ID="lblNombreEmpresa" runat="server" Text=""></asp:Label>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -80,10 +80,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="body" id="divCampos" runat="server" visible="false">
-                                    <div class="alert alert-danger">
-                                        <strong>
-                                            <asp:Label ID="lblErrorCampos" runat="server" Text="" /></strong>
+                                <div class="row clearfix">
+                                    <div class="body" id="divCampos" runat="server" visible="false">
+                                        <div class="alert alert-danger">
+                                            <strong>
+                                                <asp:Label ID="lblErrorCampos" runat="server" Text="" /></strong>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row clearfix" runat="server" id="divDatos1">
@@ -115,10 +117,7 @@
                                     <div class="col-lg-3 col-md-12">
                                         <%--Centro de costo--%>
                                         <label class="card-inside-title">Centro de costo:</label>
-                                        <asp:DropDownList runat="server" ID="ddlCentroCostos" CssClass="form-control z-index show-tick" data-live-search="true">
-                                            <asp:ListItem Value="0" Text="Nombre del Centro"></asp:ListItem>
-                                            <asp:ListItem Value="1" Text="Esto es un centro de costos"></asp:ListItem>
-                                        </asp:DropDownList>
+                                        <asp:DropDownList runat="server" ID="ddlCentroCostos" CssClass="form-control z-index show-tick" data-live-search="true"></asp:DropDownList>
                                         <asp:Label runat="server" ID="reqCC" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                     </div>
                                 </div>
@@ -131,33 +130,10 @@
                                             <asp:Label runat="server" ID="reqApli" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-12" align="right">
+                                    <div class="col-lg-6 col-md-12 text-center">
                                         <div class="form-group">
                                             <label class="card-inside-title">&nbsp;</label>
                                             <asp:Button ID="btnAgregar" CssClass="btn btn-raised btn-primary waves-effect btn-round" runat="server" data-type="ajax-loader" OnClick="btnAgregar_Click" Text="Agregar" />
-                                            <%--<button class="btn btn-raised btn-primary waves-effect btn-round" data-type="ajax-loader">Agregar &nbsp;<span class="zmdi zmdi-plus"></span></button>--%>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row clearfix" runat="server" id="divOpinion" visible="false">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="header">
-                                                <h2><strong></strong></h2>
-                                            </div>
-                                            <div class="body">
-                                                <h2 class="card-inside-title">Opinión de Almacen</h2>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group">
-                                                            <div class="form-line">
-                                                                <asp:TextBox runat="server" TextMode="MultiLine" ID="txtOpinion" Rows="4" CssClass="form-control no-resize" placeholder="Porfavor escriba su opinion"></asp:TextBox>
-                                                                <asp:Label runat="server" ID="reqOpinion" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -396,14 +372,38 @@
                                         <asp:Label runat="server" ID="reqGrid" CssClass="alert-danger" Visible="false" Text="Debes agregar al menos un producto" />
                                     </div>
                                 </div>
+                                <div class="row clearfix" runat="server" id="divOpinion" visible="false">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="header">
+                                                <h2><strong></strong></h2>
+                                            </div>
+                                            <div class="body">
+                                                <h2 class="card-inside-title">Opinión de Almacen</h2>
+                                                <div class="row clearfix">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <div class="form-line">
+                                                                <asp:TextBox runat="server" TextMode="MultiLine" ID="txtOpinion" Rows="4" CssClass="form-control no-resize" placeholder="Porfavor escriba su opinion"></asp:TextBox>
+                                                                <asp:Label runat="server" ID="reqOpinion" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row clearfix">
-                                    <div class="col-lg-4 col-md-8" align="center">
+                                    <div class="col-lg-4 col-md-8 text-center">
                                         <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Regresar" OnClick="btnRegresar_Click" />
                                     </div>
-                                    <div class="col-lg-4 col-md-8" align="center">
-                                        <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" Enabled="false" />
+                                    <div class="col-lg-4 col-md-8 text-center">
+                                        <a href="#ModalCancelar"  data-toggle="modal" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round">Cancelar
+                                        </a>
                                     </div>
-                                    <div class="col-lg-4 col-md-8" align="center">
+
+                                    <div class="col-lg-4 col-md-8 text-center">
                                         <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" OnClientClick="return confirm('¿Esta Seguro?');" Text="Crear" OnClick="BtnCrear_Click" />
                                     </div>
                                 </div>
@@ -413,41 +413,39 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <asp:UpdatePanel ID="upModalCancelar" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
-                    <ContentTemplate>
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <asp:TextBox ID="txtMotivoCancela" runat="server" placeholder="Por cual motivo decea cancelar..."></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary btn-round waves-effect">Cancelar</button>
-                                <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
-                            </div>
+    </section>
+    <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="body">
+                        <div class="col-sm-12">
+                            <asp:TextBox ID="txtMotivoCancela" TextMode="MultiLine" CssClass="form-control tex" runat="server" placeholder="Cual es el motivo de la cancelacion..."></asp:TextBox>
                         </div>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
-            </div>
-        </div>
-        <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-round waves-effect">SI</button>
-                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
+                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-round waves-effec">SI</button>
+                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>
 

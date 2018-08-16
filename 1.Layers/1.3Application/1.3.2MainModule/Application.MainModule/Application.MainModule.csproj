@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdaptadoresDTO\Catalogo\AdministracionCentralAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\CentroCostoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="AdaptadoresDTO\Mobile\OrdenesCompraAdapter.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DTOs\Catalogo\AdministracionCentralDto.cs" />
+    <Compile Include="DTOs\Catalogo\CentroCostoDTO.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorDto.cs" />
@@ -81,7 +83,7 @@
     <Compile Include="DTOs\Mobile\MenuDto.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionAutorizacionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionAutPutDTO.cs" />
-    <Compile Include="DTOs\Requisicion\RequisicionCancelarDTO.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionCancelaDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionCrearDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEDTO.cs" />
@@ -110,6 +112,7 @@
     <Compile Include="Servicios\AccesoADatos\AdministracionCentralDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenGasDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\CentroCostoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EmpresaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\RequisicionDataAccess.cs" />
@@ -120,6 +123,7 @@
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
     <Compile Include="Servicios\Almacen\ProductoAlmacenServicio.cs" />
     <Compile Include="Servicios\Almacen\AlmacenGasServicio.cs" />
+    <Compile Include="Servicios\Catalogos\CentroCostoServicio.cs" />
     <Compile Include="Servicios\Catalogos\EmpresaServicio.cs" />
     <Compile Include="Servicios\Catalogos\ProductoServicios.cs" />
     <Compile Include="Servicios\Catalogos\ProveedorServicio.cs" />

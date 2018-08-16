@@ -5,10 +5,11 @@ using System.Web;
 using System.Web.UI.WebControls;
 using Web.MainModule.Agente;
 using Web.MainModule.Seguridad.Model;
+using Web.MainModule.Catalogos.Model;
 
 namespace Web.MainModule.Requisicion.Servicio
 {
-    public class RequsicionServicio
+    public class RequisicionServicio
     {
         #region Operadores
         public Model.RespuestaRequisicionDto GuardarRequisicion(Model.RequisicionEDTO Req, string tkn)
@@ -27,6 +28,12 @@ namespace Web.MainModule.Requisicion.Servicio
         {
             var respuestaReq = new AgenteServicios();
             respuestaReq.ActualizarRequisicionAutorizacion(Req, tkn);
+            return respuestaReq._respuestaRequisicion;
+        }
+        public Model.RespuestaRequisicionDto CancalarRequisicion(Model.RequisicionCancelaDTO Req, string tkn)
+        {
+            var respuestaReq = new AgenteServicios();
+            respuestaReq.ActualizarRequisicionCancelar(Req, tkn);
             return respuestaReq._respuestaRequisicion;
         }
         public List<Model.RequisicionProductoDTO> GenerarLista(List<Model.RequisicionProductoDTO> lP, Model.RequisicionProductoDTO p)
@@ -93,14 +100,20 @@ namespace Web.MainModule.Requisicion.Servicio
         public List<EmpresaDTO> Empresas(string tkn)
         {
             var agente = new AgenteServicios();
-            agente.ListaEmpresasConAC(false, tkn);
+            agente.ListaEmpresas(tkn);
             return agente._listaEmpresas;
         }
-        public List<Model.ProductoDTO> ListaPriductos(short idEmpresa, string Token)
+        public List<Model.ProductoDTO> ListaProductos(short idEmpresa, string Token)
         {
             var agente = new AgenteServicios();
             agente.BuscarProductos(idEmpresa, Token);
             return agente._listProductos;
+        }
+        public List<CentroCostoDTO> ListaCentroCostos(string Token)
+        {
+            var agente = new AgenteServicios();
+            agente.BuscarCentrosCostos(Token);
+            return agente._listaCentrosCostos;
         }
         #endregion
         #region Adaptadores
