@@ -3883,6 +3883,7 @@
     <Compile Include="Agente\AgenteServicios.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Catalogos\Model\CentroCostoDTO.cs" />
     <Compile Include="Controles\DateTimePicker.ascx.cs">
       <DependentUpon>DateTimePicker.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3892,6 +3893,7 @@
     </Compile>
     <Compile Include="OrdenCompra\Model\enumIEPS.cs" />
     <Compile Include="OrdenCompra\Model\enumIVA.cs" />
+    <Compile Include="OrdenCompra\Model\OrdenCompraDTO.cs" />
     <Compile Include="OrdenCompra\Model\ProdcutoOC.cs" />
     <Compile Include="OrdenCompra\Model\ProveedorDTO.cs" />
     <Compile Include="OrdenCompra\Model\RequisicionOCDTO.cs" />
@@ -3906,6 +3908,7 @@
     <Compile Include="Requisicion\Model\ProductoDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionAutorizacion.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionAutPutDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionCancelaDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionCrearDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionRevisionDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionRevPutDTO.cs" />
@@ -3960,7 +3963,7 @@
     <Compile Include="Requisicion\Model\RequisicionProductoEDTO.cs" />
     <Compile Include="Requisicion\Model\RequisiconEstatus.cs" />
     <Compile Include="Requisicion\Model\RespuestaRequisicionDto.cs" />
-    <Compile Include="Requisicion\Servicio\RequsicionServicio.cs" />
+    <Compile Include="Requisicion\Servicio\RequisicionServicio.cs" />
     <Compile Include="Requisicion\Vistas\Requisicion.aspx.cs">
       <DependentUpon>Requisicion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

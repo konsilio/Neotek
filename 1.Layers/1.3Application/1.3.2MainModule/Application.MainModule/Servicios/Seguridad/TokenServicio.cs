@@ -33,5 +33,12 @@ namespace Application.MainModule.Servicios.Seguridad
 
             return Usuario != null ? Convert.ToInt32(Usuario.Value) : 0;
         }
+        public static bool ObtenerEsAdministracionCentral()
+        {
+            var claims = ObtenerClaims();
+            var EsAdminCentral = claims.FirstOrDefault(x => x.Type.Equals(TokenEtiquetasEnum.EsAdminCentral));
+
+            return EsAdminCentral != null ? Convert.ToBoolean(EsAdminCentral.Value) : false;
+        }
     }
 }

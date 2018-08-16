@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Seguridad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,10 @@ namespace Application.MainModule.Flujos
         }
         public List<EmpresaDTO> ListaEmpresas()
         {
-            return EmpresaServicio.BuscarEmpresas();
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return EmpresaServicio.BuscarEmpresas();
+            else
+                return EmpresaServicio.BuscarEmpresas().ToList().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
         public List<EmpresaDTO> ListaEmpresas(bool conAC)
         {
@@ -28,7 +32,7 @@ namespace Application.MainModule.Flujos
         #region Usuarios
         public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
         {
-            return UsuarioServicio.ListaUsuarios(idEmpresa);
+            return UsuarioServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa());
         }
         #endregion
         #region Productos
@@ -37,7 +41,12 @@ namespace Application.MainModule.Flujos
             return ProductoServicios.ListaProductos(idEmpresa);
         }
         #endregion
-
+        #region CentroCosto
+        public List<CentroCostoDTO> ListaCentrosCostos()
+        {
+            return CentroCostoServicio.ObtenerCentrosCostos();
+        }
+        #endregion
         #region Proveedor
         public RespuestaDto RegistraProveedor(ProveedorCrearDto provDto)
         {

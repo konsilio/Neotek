@@ -128,11 +128,11 @@
                                                                     <i class="material-icons">picture_as_pdf</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                                 </asp:LinkButton>
-                                                                <asp:LinkButton runat="server" ID="lbDgOjo" Text=" " CommandName="VerRequi" CommandArgument='<%# Eval("IdRequisicion") + "|" + Eval("IdRequisicionEstatus") %>'>
+                                                                <asp:LinkButton runat="server" ID="lbDgOjo" Text=" " CommandName="VerRequi" CommandArgument='<%# Eval("IdRequisicion") %>'>
                                                                     <i class="material-icons">content_paste</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                                 </asp:LinkButton>
-                                                                <asp:LinkButton runat="server" ID="lbAutoriza" Text=" " CommandName="VerAut" CommandArgument='<%# Eval("IdRequisicion") + "|" + Eval("IdRequisicionEstatus") %>'>
+                                                                <asp:LinkButton runat="server" ID="lbAutoriza" Text=" " CommandName="VerAut" CommandArgument='<%# Eval("IdRequisicion") %>'>
                                                                     <i class="material-icons">spellcheck</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                                 </asp:LinkButton>

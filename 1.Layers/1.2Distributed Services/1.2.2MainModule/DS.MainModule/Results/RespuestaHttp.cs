@@ -23,7 +23,6 @@ namespace DS.MainModule.Results
 
             return respuestaHttp;
         }
-
         public static HttpResponseMessage crearRepuesta(DS.MainModule.Filters.ValidateModelAttribute.RespuestaDto respuesta, HttpRequestMessage request)
         {
             HttpResponseMessage respuestaHttp;
