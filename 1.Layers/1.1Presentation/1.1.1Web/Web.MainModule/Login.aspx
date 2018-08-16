@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Login</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <!-- Favicon-->
+
     <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
     <!-- Morris Chart Css-->
     <link rel="stylesheet" href="assets/plugins/morrisjs/morris.css" />

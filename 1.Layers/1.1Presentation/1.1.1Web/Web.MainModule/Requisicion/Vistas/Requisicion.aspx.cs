@@ -10,6 +10,7 @@ using Utilities.MainModule;
 using System.Globalization;
 using System.ComponentModel.DataAnnotations;
 using Web.MainModule.Requisicion.Servicio;
+using Web.MainModule.Seguridad.Servicio;
 
 namespace Web.MainModule.Requisicion.Vista
 {
@@ -18,58 +19,54 @@ namespace Web.MainModule.Requisicion.Vista
         string _tok = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["StringToken"] != null)
+                _tok = Session["StringToken"].ToString();
+            else            
+                Salir();
+                        
             if (!IsPostBack)
             {
-                if (Session["StringToken"] != null)
+                Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
+                if (Convert.ToBoolean(_autenticado.Value))
                 {
-                    _tok = Session["StringToken"].ToString();
-                    Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
-                    if (Convert.ToBoolean(_autenticado.Value))
+                    if (Request.QueryString["nr"] != null)
                     {
-                        if (Request.QueryString["nr"] != null)
+                        if (Request.QueryString["Sts"] != null)
                         {
-                            if (Request.QueryString["Sts"] != null)
-                            {
-                                RquisicionAlternativa(Request.QueryString["nr"].ToString(), Convert.ToInt32(Request.QueryString["Sts"]));
-                            }
-                            dgListaproductos.DataBind();
+                            RquisicionAlternativa(Request.QueryString["nr"].ToString(), Convert.ToInt32(Request.QueryString["Sts"]));
+                        }
+                        dgListaproductos.DataBind();
+                    }
+                    else
+                    {
+                        if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "EsAdminCentral").Value))
+                        {
+                            ddlEmpresas.DataSource = new RequisicionServicio().Empresas(_tok);
+                            ddlEmpresas.DataTextField = "NombreComercial";
+                            ddlEmpresas.DataValueField = "IdEmpresa";
+                            ddlEmpresas.DataBind();
+                            ddlEmpresas.Visible = true;
+                            lblNombreEmpresa.Visible = false;
+                            CargarUsuariosSolicitante(Int16.Parse(ddlEmpresas.SelectedValue));
+                            //CargarProductos(Int16.Parse(ddlEmpresas.SelectedValue));
+                            CargarCentrosCosto();
                         }
                         else
                         {
-                            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
-                            {
-                                ddlEmpresas.DataSource = new RequisicionServicio().Empresas(Session["StringToken"].ToString());
-                                ddlEmpresas.DataTextField = "NombreComercial";
-                                ddlEmpresas.DataValueField = "IdEmpresa";
-                                ddlEmpresas.DataBind();
-                                ddlEmpresas.Visible = true;
-                                lblNombreEmpresa.Visible = false;
-                                CargarUsuariosSolicitante(Int16.Parse(ddlEmpresas.SelectedValue));
-                                CargarProductos(Int16.Parse(ddlEmpresas.SelectedValue));
-                                CargarCentrosCosto();
-                            }
-                            else
-                            {
-                                CargarUsuariosSolicitante(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdEmpresa").Value));
-                                CargarProductos(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdEmpresa").Value));
-                            }
-                            dgListaproductos.DataBind();
+                            CargarUsuariosSolicitante(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
+                            //CargarProductos(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
+                            CargarCentrosCosto();
                         }
+                        dgListaproductos.DataBind();
                     }
-                    else
-                        Salir();
                 }
                 else
                     Salir();
             }
-            else
-            {
-
-            }
         }
         private void CargarCentrosCosto()
         {
-            ddlCentroCostos.DataSource = new RequisicionServicio().ListaCentroCostos(Session["StringToken"].ToString());
+            ddlCentroCostos.DataSource = new RequisicionServicio().ListaCentroCostos(_tok);
             ddlCentroCostos.DataTextField = "Descripcion";
             ddlCentroCostos.DataValueField = "IdCentroCosto";
             ddlCentroCostos.DataBind();
@@ -81,15 +78,15 @@ namespace Web.MainModule.Requisicion.Vista
         private Model.RequisicionCrearDTO CrearReq()
         {
             Model.RequisicionCrearDTO reqCrearDTO = new Model.RequisicionCrearDTO();
-            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
+            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "EsAdminCentral").Value))
             {
                 reqCrearDTO.IdEmpresa = short.Parse(ddlEmpresas.SelectedValue);
                 reqCrearDTO.IdUsuarioSolicitante = int.Parse(ddlSolicitante.SelectedValue);
             }
             else
             {
-                reqCrearDTO.IdUsuarioSolicitante = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdUsuario").Value);
-                reqCrearDTO.IdEmpresa = Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdEmpresa").Value);
+                reqCrearDTO.IdUsuarioSolicitante = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdUsuario").Value);
+                reqCrearDTO.IdEmpresa = Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value);
             }
             reqCrearDTO.MotivoRequisicion = txtMotivoCompra.Text;
             reqCrearDTO.RequeridoEn = txtRequeridoEn.Text;
@@ -129,10 +126,10 @@ namespace Web.MainModule.Requisicion.Vista
             _aut.IdRequisicion = (int)ViewState["idRequisicion"];
             _aut.NumeroRequisicion = lblIdRequisicion.Text;
             _aut.FechaAutorizacion = DateTime.Today;
-            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
+            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "EsAdminCentral").Value))
                 _aut.IdUsuarioAutorizacion = int.Parse(ddlSolicitante.SelectedValue);
             else
-                _aut.IdUsuarioAutorizacion = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdUsuario").Value);
+                _aut.IdUsuarioAutorizacion = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdUsuario").Value);
             _aut.ListaProductos = (List<Model.RequisicionProdAutPutDTO>)ViewState["ListaRequisicionProdAutPutDTO"];
             _aut.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Autorizacion_finalizada;
             return _aut;
@@ -148,13 +145,12 @@ namespace Web.MainModule.Requisicion.Vista
                 CancelaDTO.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Cerrada;
                 CancelaDTO.FechaAutorizacion = DateTime.Today;
                 if (Request.QueryString["Sts"].Equals("1"))
-                    CancelaDTO.IdUsuarioRevision = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdUsuario").Value);
-                else         
-                    CancelaDTO.IdUsuarioAutorizacion = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdUsuario").Value);               
+                    CancelaDTO.IdUsuarioRevision = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdUsuario").Value);
+                else
+                    CancelaDTO.IdUsuarioAutorizacion = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdUsuario").Value);
             }
             return CancelaDTO;
         }
-
         private bool ValidarRevisionAlmacen()
         {
             bool resp = true;
@@ -243,7 +239,7 @@ namespace Web.MainModule.Requisicion.Vista
         private void ActivarRevisarExistencias()
         {
             Model.RequisicionRevisionDTO _reqEDTO = new Model.RequisicionRevisionDTO();
-            _reqEDTO = new Servicio.RequisicionServicio().BuscarRequisicionByNumRequiRevi(int.Parse(Request.QueryString["nr"].ToString()), Session["StringToken"].ToString());
+            _reqEDTO = new Servicio.RequisicionServicio().BuscarRequisicionByNumRequiRevi(int.Parse(Request.QueryString["nr"].ToString()), _tok);
             ViewState["idRequisicion"] = _reqEDTO.IdRequisicion;
             CargarUsuariosSolicitante(_reqEDTO.IdEmpresa);
             divDatos1.Visible = false;
@@ -270,7 +266,7 @@ namespace Web.MainModule.Requisicion.Vista
         private void ActivarRevisarAutorizacion()
         {
             Model.RequisicionAutorizacion _reqEDTO = new Model.RequisicionAutorizacion();
-            _reqEDTO = new Servicio.RequisicionServicio().BuscarRequisicionByNumRequiAuto(int.Parse(Request.QueryString["nr"].ToString()), Session["StringToken"].ToString());
+            _reqEDTO = new Servicio.RequisicionServicio().BuscarRequisicionByNumRequiAuto(int.Parse(Request.QueryString["nr"].ToString()), _tok);
             ViewState["idRequisicion"] = _reqEDTO.IdRequisicion;
             CargarUsuariosSolicitante(_reqEDTO.IdEmpresa);
             txtOpinion.Text = _reqEDTO.OpinionAlmacen;
@@ -329,16 +325,18 @@ namespace Web.MainModule.Requisicion.Vista
         }
         private void CargarUsuariosSolicitante(short idEmpresa)
         {
-            ddlSolicitante.DataSource = new Servicio.RequisicionServicio().ListaUsuarios(idEmpresa, Session["StringToken"].ToString());
+            ddlSolicitante.DataSource = new Servicio.RequisicionServicio().ListaUsuarios(idEmpresa, _tok);
             ddlSolicitante.Items.Insert(0, new ListItem { Text = "Solicitante...", Value = "0" });
             ddlSolicitante.DataTextField = "Nombre";
             ddlSolicitante.DataValueField = "IdUsuario";
             ddlSolicitante.DataBind();
         }
-        private void CargarProductos(short idEmpresa)
+        private void CargarProductos(short idTipoServicio)
         {
-            ddlProdcutos.DataSource = new Servicio.RequisicionServicio().ListaProductos(idEmpresa, Session["StringToken"].ToString());
-            ddlProdcutos.Items.Insert(0, new ListItem { Text = "Producto...", Value = "0" });
+            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "EsAdminCentral").Value))
+                ddlProdcutos.DataSource = new RequisicionServicio().ListaProductos(Int16.Parse(ddlEmpresas.SelectedValue), _tok).Select(x => x.IdProductoServicioTipo.Equals(idTipoServicio));
+            else
+                ddlProdcutos.DataSource = new RequisicionServicio().ListaProductos(TokenServicio.ObtenerIdEmpresa(_tok), _tok).Select(x => x.IdProductoServicioTipo.Equals(idTipoServicio));
             ddlProdcutos.DataTextField = "Descripcion";
             ddlProdcutos.DataValueField = "IdProducto";
             ddlProdcutos.DataBind();
@@ -353,7 +351,7 @@ namespace Web.MainModule.Requisicion.Vista
                 if (validacion.ModeloValido)
                 {
                     ValidarCampos(new List<Result>());//Se manda lista vacia para limpiar campos
-                    var respuesta = serv.GuardarRequisicion(new Servicio.RequisicionServicio().UnirDtos(Edto), Session["StringToken"].ToString());
+                    var respuesta = serv.GuardarRequisicion(new Servicio.RequisicionServicio().UnirDtos(Edto), _tok);
                     if (respuesta != null)
                     {
                         if (respuesta.Exito)
@@ -394,7 +392,7 @@ namespace Web.MainModule.Requisicion.Vista
                 {
                     LimpiarMensajesProd();
                     Model.RespuestaRequisicionDto resp = new Model.RespuestaRequisicionDto();
-                    resp = serv.ActualizarRequisicionRevision(dto, Session["StringToken"].ToString());
+                    resp = serv.ActualizarRequisicionRevision(dto, _tok);
                     if (resp.Exito)
                     {
                         lblNoRequisicion.Text = resp.Mensaje.Equals(string.Empty) ? "Correcto" : resp.Mensaje;
@@ -424,7 +422,7 @@ namespace Web.MainModule.Requisicion.Vista
         private void FinalizarAutorizacion()
         {
             GenerarAutorizados();
-            Model.RespuestaRequisicionDto _resp = new Servicio.RequisicionServicio().ActualizarRequisicionAutorizacion(CrearAut(), Session["StringToken"].ToString());
+            Model.RespuestaRequisicionDto _resp = new Servicio.RequisicionServicio().ActualizarRequisicionAutorizacion(CrearAut(), _tok);
             if (_resp.Exito)
             {
                 lblNoRequisicion.Text = _resp.Mensaje.Equals(string.Empty) ? "Correcto" : _resp.Mensaje;
@@ -460,10 +458,10 @@ namespace Web.MainModule.Requisicion.Vista
             Model.RequisicionRevPutDTO requRevision = new Model.RequisicionRevPutDTO();
             requRevision.IdRequisicion = (int)ViewState["idRequisicion"];
             requRevision.NumeroRequisicion = lblIdRequisicion.Text;
-            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
+            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "EsAdminCentral").Value))
                 requRevision.IdUsuarioRevision = int.Parse(ddlSolicitante.SelectedValue);
             else
-                requRevision.IdUsuarioRevision = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "IdUsuario").Value);
+                requRevision.IdUsuarioRevision = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdUsuario").Value);
             requRevision.OpinionAlmacen = txtOpinion.Text;
             requRevision.FechaRevision = DateTime.Today;
             requRevision.ListaProductos = (List<Model.RequisicionProdReviPutDTO>)ViewState["LIstaReqProdRevPutDTO"];
@@ -516,7 +514,7 @@ namespace Web.MainModule.Requisicion.Vista
             if (!ddlEmpresas.SelectedValue.Equals(-1))
             {
                 CargarUsuariosSolicitante(Convert.ToInt16(ddlEmpresas.SelectedValue));
-                CargarProductos(Convert.ToInt16(ddlEmpresas.SelectedValue));
+                //CargarProductos(Convert.ToInt16(ddlEmpresas.SelectedValue));
             }
         }
         protected void dgListaproductos_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -536,7 +534,7 @@ namespace Web.MainModule.Requisicion.Vista
             var error = ValidadorClases.EnlistaErrores(_canDTO);
             if (error.ModeloValido)
             {
-                Model.RespuestaRequisicionDto _resp = new Servicio.RequisicionServicio().CancalarRequisicion(_canDTO, Session["StringToken"].ToString());
+                Model.RespuestaRequisicionDto _resp = new Servicio.RequisicionServicio().CancalarRequisicion(_canDTO, _tok);
             }
         }
         protected void btnRegresar_Click(object sender, EventArgs e)
@@ -576,6 +574,14 @@ namespace Web.MainModule.Requisicion.Vista
                 if (decimal.Parse((e.Row.Cells[0].FindControl("lblRequiereComp") as Label).Text).Equals(0))
                     (e.Row.Cells[0].FindControl("chbAutCompra") as CheckBox).Enabled = false;
             }
+        }
+        protected void ddlProdcutos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        protected void ddlTipoCompra_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarProductos(short.Parse(ddlTipoCompra.SelectedValue));
         }
     }
 }

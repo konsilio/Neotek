@@ -30,7 +30,7 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <asp:DropDownList ID="ddlEmpresas" runat="server" Visible="false" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged" AutoPostBack="true">
+                                            <asp:DropDownList ID="ddlEmpresas" CssClass="form-control z-index show-tick" runat="server" Visible="false" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged" AutoPostBack="true">
                                             </asp:DropDownList>
                                             <asp:Label ID="lblNombreEmpresa" runat="server" Text=""></asp:Label>
                                         </div>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-lg-3 col-md-12">
-                                        <div class="form-group form-float">
+                                        <div class="form-group">
                                             <%--Fecha requerida--%>
                                             <label class="card-inside-title">Fecha requerida:</label>
                                             <dtp:DateTimePicker ID="txtFechaRequerida" CssClass="dataTxt" runat="server" />
@@ -55,9 +55,10 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-md-12">
-                                        <div class="form-group form-float">
+                                        <div class="form-group">
                                             <%--Solicitante--%>
                                             <label class="card-inside-title">Solicitante:</label>
+                                           
                                             <asp:DropDownList runat="server" ID="ddlSolicitante" CssClass="form-control z-index show-tick" data-live-search="true" OnSelectedIndexChanged="ddlSolicitante_SelectedIndexChanged">
                                             </asp:DropDownList>
                                             <asp:Label runat="server" ID="reqSol" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
@@ -92,7 +93,7 @@
                                     <div class="col-lg-2 col-md-12">
                                         <%--Tipo de compra--%>
                                         <label class="card-inside-title">Tipo de compra:</label>
-                                        <asp:DropDownList ID="ddlTipoCompra" runat="server" CssClass="form-control z-index show-tick">
+                                        <asp:DropDownList ID="ddlTipoCompra" runat="server" CssClass="form-control z-index show-tick" AutoPostBack="false" OnSelectedIndexChanged="ddlTipoCompra_SelectedIndexChanged">
                                             <asp:ListItem Value="1" Text="Producto"></asp:ListItem>
                                             <asp:ListItem Value="2" Text="Servicio"></asp:ListItem>
                                         </asp:DropDownList>
@@ -101,7 +102,7 @@
                                     <div class="col-lg-4 col-md-12">
                                         <%--Producto--%>
                                         <label class="card-inside-title">Producto:</label>
-                                        <asp:DropDownList runat="server" ID="ddlProdcutos" CssClass="form-control z-index show-tick" data-live-search="true">
+                                        <asp:DropDownList runat="server" ID="ddlProdcutos" CssClass="form-control z-index show-tick" data-live-search="true" OnSelectedIndexChanged="ddlProdcutos_SelectedIndexChanged">
                                         </asp:DropDownList>
                                         <asp:Label runat="server" ID="reqProd" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                     </div>

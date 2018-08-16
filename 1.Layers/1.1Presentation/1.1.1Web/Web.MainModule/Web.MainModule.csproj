@@ -3976,6 +3976,7 @@
     <Compile Include="Seguridad\Model\RespuestaAutenticacionDto.cs" />
     <Compile Include="Seguridad\Servicio\AutenticacionServicio.cs" />
     <Compile Include="Compras\Servicio\ComprasServicio.cs" />
+    <Compile Include="Seguridad\Servicio\TokenServicio.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
