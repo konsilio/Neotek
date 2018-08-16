@@ -105,7 +105,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <%--<asp:Label runat="server" ID="lblDgSolicitante" Text='<%# Bind("IdUsuarioSolicitante") %>'></asp:Label>--%>
-                                                        <asp:Label runat="server" ID="lblSolictante" Text='<%# Bind("NombreCompleto") %>' ></asp:Label>
+                                                        <asp:Label runat="server" ID="lblSolictante" Text='<%# Bind("UsuarioSolicitante") %>' ></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>

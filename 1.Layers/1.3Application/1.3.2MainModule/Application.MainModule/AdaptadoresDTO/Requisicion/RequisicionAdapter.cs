@@ -3,6 +3,7 @@ using System.Linq;
 using Application.MainModule.DTOs.Requisicion;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Catalogos;
 
 namespace Application.MainModule.AdaptadoresDTO.Requisicion
 {
@@ -15,7 +16,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             {
                 IdRequisicion = _requisicion.IdRequisicion,
                 IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
-                UsuarioSolicitante = _requisicion.Solicitante.NombreUsuario,
+                UsuarioSolicitante = UsuarioServicio.ObtenerNombreCompleto(_requisicion.Solicitante),
                 IdEmpresa = _requisicion.IdEmpresa,
                 NombreComercial = _requisicion.Empresa.NombreComercial,
                 NumeroRequisicion = _requisicion.NumeroRequisicion,

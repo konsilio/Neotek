@@ -20,9 +20,6 @@ namespace Web.MainModule.Requisicion.Model
         [Display(Name = "UsuarioSolicitante")]
         public string UsuarioSolicitante { get; set; }
         [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "NombreCompleto")]
-        public string NombreCompleto { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
         [Display(Name = "IdEmpresa")]
         public short IdEmpresa { get; set; }
         [Required(ErrorMessage = Error.S0001)]
