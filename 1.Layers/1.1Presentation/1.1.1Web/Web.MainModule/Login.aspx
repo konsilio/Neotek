@@ -36,9 +36,9 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="company_detail">
                                 <h4 class="logo">
-                                    <img src="assets/images/logo.svg" alt="" />
-                                    SAGAS</h4>
-                                <h3>Sistema de Administracion de Gas <strong>Ver. 1.0</strong></h3>
+                                    <img src="assets/images/LogoCorpKonsilio183x183.png" alt="" />
+                                    Corporativo Konsilio</h4>
+                                <h3>SAGAS. Sistema de Administracion de Gas <strong>Ver. 1.0</strong></h3>
                                 <p>
                                 </p>
                                 <div class="footer">
