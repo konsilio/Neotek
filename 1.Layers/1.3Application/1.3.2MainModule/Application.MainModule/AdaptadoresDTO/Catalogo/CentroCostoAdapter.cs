@@ -16,7 +16,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             ccDTO.IdCentroCosto = cc.IdCentroCosto;
             ccDTO.IdEmpresa = cc.IdEmpresa;
             ccDTO.IdTipoCentroCosto = cc.IdTipoCentroCosto;
-            ccDTO.IdEquipoTransporte = cc.IdEquipoTransporte.Value;
+            ccDTO.IdEquipoTransporte = cc.IdEquipoTransporte != null ? cc.IdEquipoTransporte.Value : 0;
             ccDTO.Numero = cc.Numero;
             ccDTO.Descripcion = cc.Descripcion;
             ccDTO.Activo = cc.Activo;

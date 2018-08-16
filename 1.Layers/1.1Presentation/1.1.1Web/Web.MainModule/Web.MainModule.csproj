@@ -227,6 +227,8 @@
     <Content Include="assets\images\lg\avatar5.jpg" />
     <Content Include="assets\images\lg\avatar6.jpg" />
     <Content Include="assets\images\logo.svg" />
+    <Content Include="assets\images\LogoCorpKonsilio183x183.png" />
+    <Content Include="assets\images\LogoCorpKonsilio500x500.png" />
     <Content Include="assets\images\model1.jpg" />
     <Content Include="assets\images\model2.jpg" />
     <Content Include="assets\images\model3.jpg" />

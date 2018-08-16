@@ -46,6 +46,7 @@ namespace Web.MainModule.Requisicion.Vista
                                 lblNombreEmpresa.Visible = false;
                                 CargarUsuariosSolicitante(Int16.Parse(ddlEmpresas.SelectedValue));
                                 CargarProductos(Int16.Parse(ddlEmpresas.SelectedValue));
+                                CargarCentrosCosto();
                             }
                             else
                             {
