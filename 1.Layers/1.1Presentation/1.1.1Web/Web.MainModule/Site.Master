@@ -525,19 +525,17 @@
     <script src="../../assets/bundles/libscripts.bundle.js"></script>
     <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
     <script src="../../assets/bundles/vendorscripts.bundle.js"></script>
-
     <script src="../../assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-    <script src="assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+    <script src="../../assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
     <!-- Input Mask Plugin Js -->
     <script src="../../assets/plugins/multi-select/js/jquery.multi-select.js"></script>
-    <script src="assets/plugins/jquery-spinner/js/jquery.spinner.js"></script>
+    <script src="../../assets/plugins/jquery-spinner/js/jquery.spinner.js"></script>
     <!-- Jquery Spinner Plugin Js -->
-    <script src="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    <script src="../../assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
     <!-- Bootstrap Tags Input Plugin Js -->
-    <script src="assets/plugins/nouislider/nouislider.js"></script>
+    <script src="../../assets/plugins/nouislider/nouislider.js"></script>
     <!-- noUISlider Plugin Js -->
     <script src="../../assets/plugins/bootstrap-select/css/bootstrap-select.css"></script>
-
     <!-- slimscroll, waves Scripts Plugin Js -->
     <script src="../../assets/plugins/momentjs/moment.js"></script>
     <!-- Moment Plugin Js -->
@@ -551,16 +549,12 @@
     <!-- sparkline Plugin Js -->
     <script src="../../assets/bundles/doughnut.bundle.js"></script>
     <script src="../../assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-
-
-
     <script src="../../assets/plugins/sweetalert/sweetalert.min.js"></script>
-
     <script src="../../assets/bundles/mainscripts.bundle.js"></script>
     <script src="../../assets/js/pages/ui/dialogs.js"></script>
     <script src="../../assets/js/pages/index.js"></script>
     <script src="../../assets/js/pages/forms/basic-form-elements.js"></script>
-    <script src="assets/js/pages/forms/advanced-form-elements.js"></script>
+    <script src="../../assets/js/pages/forms/advanced-form-elements.js"></script>
 
 
 </body>

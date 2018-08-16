@@ -115,11 +115,18 @@ namespace Web.MainModule.OrdenCompra.Vistas
         protected void dgListaproductos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             DropDownList ddlIVA = e.Row.Cells[0].FindControl("ddlGvIVA") as DropDownList;
-            ddlIVA.DataSource = IVAs();
-            ddlIVA.DataBind();
-            DropDownList ddlIIEPS = e.Row.Cells[0].FindControl("ddlGvIEPS") as DropDownList;
-            ddlIIEPS.DataSource = IEPSs();
-            ddlIIEPS.DataBind();
+            if (ddlIVA != null)
+            {
+                ddlIVA.DataSource = IVAs();
+                ddlIVA.DataBind();
+            }
+            DropDownList ddlIEPS = e.Row.Cells[0].FindControl("ddlGvIEPS") as DropDownList;
+            if (ddlIEPS != null)
+            {
+            
+                ddlIEPS.DataSource = IEPSs();
+                ddlIEPS.DataBind();
+            }
         }
         protected void dgListaproductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {

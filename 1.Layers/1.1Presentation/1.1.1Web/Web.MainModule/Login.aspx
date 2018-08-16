@@ -76,7 +76,7 @@
                                
                                 <div class="from">
                                     <div >
-                                     <asp:DropDownList CssClass="selectpicker" data-live-search="true" runat="server" ID="ddlRazon"></asp:DropDownList>
+                                     <asp:DropDownList CssClass="form-control selectpicker z-index show-tick" data-live-search="true" data-show-subtext="true" runat="server" ID="ddlRazon"></asp:DropDownList>
                                     <%-- <select runat="server" id="ddlRazon" class="form-control z-index show-tick" data-show-subtext="true" data-live-search="true" title="Razon social">
                                         </select>--%>
                                         </div>
