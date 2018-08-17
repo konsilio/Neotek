@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Catalogo;
+﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Catalogos;
 using System;
@@ -25,12 +26,14 @@ namespace Application.MainModule.Flujos
             return EmpresaServicio.BuscarEmpresas(conAC);
         }
         #endregion
+
         #region Usuarios
         public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
         {
             return UsuarioServicio.ListaUsuarios(idEmpresa);
         }
         #endregion
+
         #region Productos
         public List<ProductoDTO> ListaProductos(short idEmpresa)
         {
@@ -40,18 +43,34 @@ namespace Application.MainModule.Flujos
 
         #region Proveedor
         public RespuestaDto RegistraProveedor(ProveedorCrearDto provDto)
+        {            
+            return ProveedorServicio.RegistrarProveedor(ProveedorAdapter.FromDto(provDto));
+        }
+        
+        public RespuestaDto ModificaProveedor(ProveedorModificarDto provDto)
         {
-            return ProveedorServicio.RegistrarProveedor(provDto);
+            var provee = ProveedorServicio.Obtener(provDto.IdProveedor);
+            var proveedor = ProveedorAdapter.FromDto(provDto);
+            proveedor.FechaRegistro = provee.FechaRegistro;
+            return ProveedorServicio.ModificarProveedor(proveedor);
+        }
+
+        public RespuestaDto EliminaProveedor(ProveedorEliminarDto provDto)
+        {
+            var provee = ProveedorServicio.Obtener(provDto.IdProveedor);
+            provee = ProveedorAdapter.FromEntity(provee);
+            provee.Activo = false;
+            return ProveedorServicio.ModificarProveedor(provee);
         }
 
         public List<ProveedorDto> ConsultaProveedores(short idEmpresa)
         {
-            return ProveedorServicio.Obtener(idEmpresa);
+            return ProveedorAdapter.ToDto(ProveedorServicio.Obtener(idEmpresa));
         }
 
         public ProveedorDto ConsultaProveedor(int idProveedor)
         {
-            return ProveedorServicio.Obtener(idProveedor);
+            return ProveedorAdapter.ToDto(ProveedorServicio.Obtener(idProveedor));
         }
         #endregion
     }

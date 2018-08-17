@@ -41,6 +41,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresas(conAdminCent));
         }
         #endregion
+
         #region Usuarios
         [Route("usuarios/listausuarios/{idEmpresa}")]
         public HttpResponseMessage GetListaUsuarios(short idEmpresa)
@@ -48,6 +49,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaUsuarios(idEmpresa));
         }
         #endregion
+
         #region Productos
         [Route("prodcutos/listaprodcutos/{idEmpresa}")]
         public HttpResponseMessage GetListaProductos(short idEmpresa)
@@ -55,15 +57,28 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaProductos(idEmpresa));
         }
         #endregion
+
         #region Administracion Central
 
         #endregion
 
         #region Proveedor
         [Route("registra/proveedor")]
-        public HttpResponseMessage PostRegistraProveedores(ProveedorCrearDto provDto)
+        public HttpResponseMessage PostRegistraProveedor(ProveedorCrearDto provDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.RegistraProveedor(provDto), Request);
+        }
+
+        [Route("modifica/proveedor")]
+        public HttpResponseMessage PutModificaProveedor(ProveedorModificarDto provDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaProveedor(provDto), Request);
+        }
+
+        [Route("elimina/proveedor")]
+        public HttpResponseMessage PutEliminaProveedor(ProveedorEliminarDto provDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaProveedor(provDto), Request);
         }
 
         [Route("consulta/proveedores/{idEmpresa}")]
