@@ -63,7 +63,7 @@ namespace DS.MainModule.Controllers
         [Route("registra/proveedor")]
         public HttpResponseMessage PostRegistraProveedores(ProveedorCrearDto provDto)
         {
-            return RespuestaHttp.crearRepuesta(_catalogos.RegistraProveedor(provDto), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraProveedor(provDto), Request);
         }
 
         [Route("consulta/proveedores/{idEmpresa}")]

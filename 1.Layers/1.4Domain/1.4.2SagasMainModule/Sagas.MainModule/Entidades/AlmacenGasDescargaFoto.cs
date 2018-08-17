@@ -15,9 +15,11 @@ namespace Sagas.MainModule.Entidades
     public partial class AlmacenGasDescargaFoto
     {
         public int IdAlmacenEntradaGasDescarga { get; set; }
+        public short Orden { get; set; }
         public string UrlImagen { get; set; }
         public string PathImagen { get; set; }
         public short IdImagenDe { get; set; }
+        public string CadenaBase64 { get; set; }
     
         public virtual AlmacenGasDescarga EntradaGas { get; set; }
         public virtual ImagenDe Tipo { get; set; }

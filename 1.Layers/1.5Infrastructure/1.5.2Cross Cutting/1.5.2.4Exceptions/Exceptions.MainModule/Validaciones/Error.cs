@@ -27,5 +27,6 @@ namespace Exceptions.MainModule.Validaciones
         public const string C0003 = "No se logró hacer la modificación {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
 
         public const string M0001 = "No se encontraron {0} para mostrar.";
+        public const string M0002 = "No se encontró {0} en el servidor.";
     }
 }

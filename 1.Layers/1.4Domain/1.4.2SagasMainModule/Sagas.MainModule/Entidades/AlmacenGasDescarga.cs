@@ -31,8 +31,8 @@ namespace Sagas.MainModule.Entidades
         public Nullable<short> IdTipoMedidorTractor { get; set; }
         public Nullable<short> IdTipoMedidorAlmacen { get; set; }
         public Nullable<bool> DatosProcesados { get; set; }
+        public string ClaveOperacion { get; set; }
         public System.DateTime FechaRegistro { get; set; }
-        public string fgh { get; set; }
         public Nullable<decimal> PorcenMagnatelOcularTractorFIN { get; set; }
         public Nullable<decimal> PorcenMagnatelOcularAlmacenFIN { get; set; }
         public Nullable<System.DateTime> FechaFinDescarga { get; set; }
