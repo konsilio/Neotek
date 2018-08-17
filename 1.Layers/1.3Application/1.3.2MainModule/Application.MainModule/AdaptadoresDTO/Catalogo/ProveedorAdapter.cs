@@ -54,6 +54,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Rfc = proveedorDto.Rfc,
                 RazonSocial = proveedorDto.RazonSocial,
                 FechaRegistro = DateTime.Now,
+                Activo = true,
             };
         }
 

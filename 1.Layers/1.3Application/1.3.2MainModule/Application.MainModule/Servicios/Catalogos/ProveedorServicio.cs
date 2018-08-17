@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -33,11 +34,19 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static Proveedor Obtener(int IdProveedor)
         {
-            var proveedor = new ProveedorDataAccess().Buscar(IdProveedor);
-            if (proveedor == null)
-                return new Proveedor();
+            return new ProveedorDataAccess().Buscar(IdProveedor);
+        }
 
-            return proveedor;
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "El proveedor");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }

@@ -50,6 +50,8 @@ namespace Application.MainModule.Flujos
         public RespuestaDto ModificaProveedor(ProveedorModificarDto provDto)
         {
             var provee = ProveedorServicio.Obtener(provDto.IdProveedor);
+            if (provee == null) return ProveedorServicio.NoExiste();
+
             var proveedor = ProveedorAdapter.FromDto(provDto);
             proveedor.FechaRegistro = provee.FechaRegistro;
             return ProveedorServicio.ModificarProveedor(proveedor);
@@ -58,6 +60,8 @@ namespace Application.MainModule.Flujos
         public RespuestaDto EliminaProveedor(ProveedorEliminarDto provDto)
         {
             var provee = ProveedorServicio.Obtener(provDto.IdProveedor);
+            if (provee == null) return ProveedorServicio.NoExiste();
+
             provee = ProveedorAdapter.FromEntity(provee);
             provee.Activo = false;
             return ProveedorServicio.ModificarProveedor(provee);
