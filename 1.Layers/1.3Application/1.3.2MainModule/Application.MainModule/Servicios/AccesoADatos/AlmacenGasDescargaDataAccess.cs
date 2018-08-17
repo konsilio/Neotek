@@ -51,7 +51,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             using (uow)
             {
                 try
-                {
+                {                    
                     uow.Repository<AlmacenGasDescarga>().Update(_almDes);
                     foreach (var foto in _fotos)
                         uow.Repository<AlmacenGasDescargaFoto>().Insert(foto);
@@ -80,6 +80,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public AlmacenGasDescarga BuscarOCompraExpedidor(int idOCompra)
         {
             return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.IdOrdenCompraExpedidor.Equals(idOCompra));
+        }
+
+        public AlmacenGasDescarga BuscarClaveOperacion(string claveOperacion)
+        {
+            return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
         }
     }
 }

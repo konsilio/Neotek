@@ -39,16 +39,28 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto RegistrarPapeleta(PapeletaDTO papeletaDto)
         {
+            var resp = EntradaGasServicio.EvaluarClaveOperacion(papeletaDto);
+            if (resp.Exito) return resp;
+
+            resp = EntradaGasServicio.EvaluarExistenciaRegistro(papeletaDto);
+            if (resp.Exito) return resp;
+
             return EntradaGasServicio.RegistrarPapeleta(AlmacenAdapter.FromDto(papeletaDto));
         }
 
         public RespuestaDto InicializarDescarga(DescargaDto desDto)
         {
+            var resp = EntradaGasServicio.EvaluarClaveOperacion(desDto);
+            if (resp.Exito) return resp;
+
             return EntradaGasServicio.Descargar(desDto);
         }
 
         public RespuestaDto FinalizarDescarga(DescargaDto desDto)
-        {            
+        {
+            var resp = EntradaGasServicio.EvaluarClaveOperacion(desDto);
+            if (resp.Exito) return resp;
+
             return EntradaGasServicio.Descargar(desDto, true);
         }
     }

@@ -15,7 +15,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new AlmacenGasDescarga()
             {
-                ClaveOperacion = "Pendiente",
+                ClaveOperacion = papeletaDto.ClaveOperacion,
                 //IdAlmacenEntradaGasDescarga = papeletaDto,
                 //IdAlmacenGas = papeletaDto,
                 //IdRequisicion = papeletaDto,
@@ -50,94 +50,95 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 //FechaEntraGas = papeletaDto,
                 //DatosProcesados = false,
                 FechaRegistro = DateTime.Now,
-                Fotos = FromDto(papeletaDto.Imagenes, 1)
+                Fotos = FromDto(papeletaDto.Imagenes, 0, 1)
             };
         }
 
-        public static AlmacenGasDescarga FromDto(DescargaDto DescargaDto, bool finDescarga)
+        public static AlmacenGasDescarga FromDto(DescargaDto DescargaDto, AlmacenGasDescarga descarga, bool finDescarga)
         {
             if(!finDescarga)
-                return new AlmacenGasDescarga()
-                {
-                    ClaveOperacion = "Pendiente",
-                    //IdAlmacenEntradaGasDescarga = inicioDescargaDto,
-                    IdAlmacenGas = DescargaDto.IdAlmacen,
-                    //IdRequisicion = papeletaDto,
-                    //IdOrdenCompraExpedidor = papeletaDto,
-                    //IdOrdenCompraPorteador = papeletaDto,
-                    //IdProveedorExpedidor = papeletaDto,
-                    //IdProveedorPorteador = papeletaDto,
-                    //IdCAlmacenGas = papeletaDto,
-                    //IdTipoMedidorTractor = papeletaDto,
-                    IdTipoMedidorAlmacen = DescargaDto.IdTipoMedidorAlmacen,
-                    //PorcenMagnatelOcularTractorFIN = papeletaDto,
-                    //PorcenMagnatelOcularAlmacenFIN = papeletaDto,
-                    //FechaFinDescarga = papeletaDto,
-                    TanquePrestado = DescargaDto.TanquePrestado,
-                    PorcenMagnatelOcularTractorINI = DescargaDto.PorcentajeMedidorTractor,
-                    PorcenMagnatelOcularAlmacenINI = DescargaDto.PorcentajeMedidorAlmacen,
-                    FechaInicioDescarga = DescargaDto.FechaDescarga,
-                    //FechaPapeleta = papeletaDto,
-                    //FechaEmbarque = papeletaDto,
-                    //NumeroEmbarque = papeletaDto,
-                    //NombreOperador = papeletaDto,
-                    //PlacasTractor = papeletaDto,
-                    //NumTanquePG = papeletaDto,
-                    //CapacidadTanqueLt = papeletaDto,
-                    //CapacidadTanqueKg = papeletaDto,
-                    //PorcenMagnatelPapeleta = papeletaDto,
-                    //PresionTanque = papeletaDto,
-                    //Sello = papeletaDto,
-                    //ValorCarga = papeletaDto,
-                    //NombreResponsable = papeletaDto,
-                    //PorcenMagnatelOcular = papeletaDto,
-                    //FechaEntraGas = papeletaDto,
-                    //DatosProcesados = false,
-                };
+            {
+                descarga.ClaveOperacion = DescargaDto.ClaveOperacion;
+                //descarga.IdAlmacenEntradaGasDescarga = inicioDescargaDto;
+                descarga.IdAlmacenGas = DescargaDto.IdAlmacen;
+                //descarga.IdRequisicion = papeletaDto;
+                //descarga.IdOrdenCompraExpedidor = papeletaDto;
+                //descarga.IdOrdenCompraPorteador = papeletaDto;
+                //descarga.IdProveedorExpedidor = papeletaDto;
+                //descarga.IdProveedorPorteador = papeletaDto;
+                //descarga.IdCAlmacenGas = papeletaDto;
+                //descarga.IdTipoMedidorTractor = papeletaDto;
+                descarga.IdTipoMedidorAlmacen = DescargaDto.IdTipoMedidorAlmacen;
+                //descarga.PorcenMagnatelOcularTractorFIN = papeletaDto;
+                //descarga.PorcenMagnatelOcularAlmacenFIN = papeletaDto;
+                //descarga.FechaFinDescarga = papeletaDto;
+                descarga.TanquePrestado = DescargaDto.TanquePrestado;
+                descarga.PorcenMagnatelOcularTractorINI = DescargaDto.PorcentajeMedidorTractor;
+                descarga.PorcenMagnatelOcularAlmacenINI = DescargaDto.PorcentajeMedidorAlmacen;
+                descarga.FechaInicioDescarga = DescargaDto.FechaDescarga;
+                //descarga.FechaPapeleta = papeletaDto;
+                //descarga.FechaEmbarque = papeletaDto;
+                //descarga.NumeroEmbarque = papeletaDto;
+                //descarga.NombreOperador = papeletaDto;
+                //descarga.PlacasTractor = papeletaDto;
+                //descarga.NumTanquePG = papeletaDto;
+                //descarga.CapacidadTanqueLt = papeletaDto;
+                //descarga.CapacidadTanqueKg = papeletaDto;
+                //descarga.PorcenMagnatelPapeleta = papeletaDto;
+                //descarga.PresionTanque = papeletaDto;
+                //descarga.Sello = papeletaDto;
+                //descarga.ValorCarga = papeletaDto;
+                //descarga.NombreResponsable = papeletaDto;
+                //descarga.PorcenMagnatelOcular = papeletaDto;
+                //descarga.FechaEntraGas = papeletaDto;
+                //descarga.DatosProcesados = false;
+            }
             else
-                return new AlmacenGasDescarga()
-                {
-                    ClaveOperacion = "Pendiente",
-                    //IdAlmacenEntradaGasDescarga = DescargaDto,
-                    //IdAlmacenGas = inicioDescargaDto,
-                    //IdRequisicion = papeletaDto,
-                    //IdOrdenCompraExpedidor = papeletaDto,
-                    //IdOrdenCompraPorteador = papeletaDto,
-                    //IdProveedorExpedidor = papeletaDto,
-                    //IdProveedorPorteador = papeletaDto,
-                    //IdCAlmacenGas = papeletaDto,
-                    //IdTipoMedidorTractor = papeletaDto,
-                    //IdTipoMedidorAlmacen = papeletaDto,
-                    PorcenMagnatelOcularTractorFIN = DescargaDto.PorcentajeMedidorTractor,
-                    PorcenMagnatelOcularAlmacenFIN = DescargaDto.PorcentajeMedidorAlmacen,
-                    FechaFinDescarga = DescargaDto.FechaDescarga,
-                    //TanquePrestado = inicioDescargaDto,
-                    //PorcenMagnatelOcularTractorINI = inicioDescargaDto,
-                    //PorcenMagnatelOcularAlmacenINI = inicioDescargaDto,
-                    //FechaInicioDescarga = inicioDescargaDto,
-                    //FechaPapeleta = papeletaDto,
-                    //FechaEmbarque = papeletaDto,
-                    //NumeroEmbarque = papeletaDto,
-                    //NombreOperador = papeletaDto,
-                    //PlacasTractor = papeletaDto,
-                    //NumTanquePG = papeletaDto,
-                    //CapacidadTanqueLt = papeletaDto,
-                    //CapacidadTanqueKg = papeletaDto,
-                    //PorcenMagnatelPapeleta = papeletaDto,
-                    //PresionTanque = papeletaDto,
-                    //Sello = papeletaDto,
-                    //ValorCarga = papeletaDto,
-                    //NombreResponsable = papeletaDto,
-                    //PorcenMagnatelOcular = papeletaDto,
-                    //FechaEntraGas = papeletaDto,
-                    //DatosProcesados = false,
-                };
+            {
+                descarga.ClaveOperacion = DescargaDto.ClaveOperacion;
+                //descarga.IdAlmacenEntradaGasDescarga = DescargaDto;
+                //descarga.IdAlmacenGas = inicioDescargaDto;
+                //descarga.IdRequisicion = papeletaDto;
+                //descarga.IdOrdenCompraExpedidor = papeletaDto;
+                //descarga.IdOrdenCompraPorteador = papeletaDto;
+                //descarga.IdProveedorExpedidor = papeletaDto;
+                //descarga.IdProveedorPorteador = papeletaDto;
+                //descarga.IdCAlmacenGas = papeletaDto;
+                //descarga.IdTipoMedidorTractor = papeletaDto;
+                //descarga.IdTipoMedidorAlmacen = papeletaDto;
+                descarga.PorcenMagnatelOcularTractorFIN = DescargaDto.PorcentajeMedidorTractor;
+                descarga.PorcenMagnatelOcularAlmacenFIN = DescargaDto.PorcentajeMedidorAlmacen;
+                descarga.FechaFinDescarga = DescargaDto.FechaDescarga;
+                //descarga.TanquePrestado = inicioDescargaDto;
+                //descarga.PorcenMagnatelOcularTractorINI = inicioDescargaDto;
+                //descarga.PorcenMagnatelOcularAlmacenINI = inicioDescargaDto;
+                //descarga.FechaInicioDescarga = inicioDescargaDto;
+                //descarga.FechaPapeleta = papeletaDto;
+                //descarga.FechaEmbarque = papeletaDto;
+                //descarga.NumeroEmbarque = papeletaDto;
+                //descarga.NombreOperador = papeletaDto;
+                //descarga.PlacasTractor = papeletaDto;
+                //descarga.NumTanquePG = papeletaDto;
+                //descarga.CapacidadTanqueLt = papeletaDto;
+                //descarga.CapacidadTanqueKg = papeletaDto;
+                //descarga.PorcenMagnatelPapeleta = papeletaDto;
+                //descarga.PresionTanque = papeletaDto;
+                //descarga.Sello = papeletaDto;
+                //descarga.ValorCarga = papeletaDto;
+                //descarga.NombreResponsable = papeletaDto;
+                //descarga.PorcenMagnatelOcular = papeletaDto;
+                //descarga.FechaEntraGas = papeletaDto;
+                //descarga.DatosProcesados = false;
+            }
+
+            return descarga;
         }
 
         public static AlmacenGasDescarga FromEntity(AlmacenGasDescarga descarga)
         {
             return new AlmacenGasDescarga()
             {
+                ClaveOperacion = descarga.ClaveOperacion,
                 IdAlmacenEntradaGasDescarga = descarga.IdAlmacenEntradaGasDescarga,
                 IdAlmacenGas = descarga.IdAlmacenGas,
                 IdRequisicion = descarga.IdRequisicion,
@@ -175,22 +176,27 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static AlmacenGasDescargaFoto FromDto(string cadenaBase64, short numOrden)
+        public static AlmacenGasDescargaFoto FromDto(string cadenaBase64, int idAlmEntrGasDes, short numOrden)
         {
-            return new AlmacenGasDescargaFoto()
-            {
+            var resp = new AlmacenGasDescargaFoto()
+            {                
                 CadenaBase64 = cadenaBase64,
                 Orden = numOrden,
                 IdImagenDe = 1
             };
+
+            if (idAlmEntrGasDes > 0)
+                resp.IdAlmacenEntradaGasDescarga = idAlmEntrGasDes;
+
+            return resp;
         }
 
-        public static List<AlmacenGasDescargaFoto> FromDto(List<string> lista, short numOrden)
+        public static List<AlmacenGasDescargaFoto> FromDto(List<string> lista, int idAlmEntrGasDes, short numOrden)
         {
             var fotos = new List<AlmacenGasDescargaFoto>();
             foreach (var cadena in lista)
             {
-                fotos.Add(FromDto(cadena, numOrden));
+                fotos.Add(FromDto(cadena, idAlmEntrGasDes, numOrden));
                 numOrden++;
             }
 

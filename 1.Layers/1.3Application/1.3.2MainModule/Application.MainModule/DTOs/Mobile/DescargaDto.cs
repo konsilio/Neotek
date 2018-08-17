@@ -8,6 +8,7 @@ namespace Application.MainModule.DTOs.Mobile
 {
     public class DescargaDto
     {
+        public string ClaveOperacion { get; set; }
         public int IdOrdenCompra {get; set;}
         //public string NombreTipoMedidorTractor {get; set;}
         //public string NombreTipoMedidorAlmacen {get; set;}

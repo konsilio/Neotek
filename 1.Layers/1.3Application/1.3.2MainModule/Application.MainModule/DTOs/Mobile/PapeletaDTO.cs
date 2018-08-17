@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace Application.MainModule.DTOs.Mobile
 {
    public class PapeletaDTO
-    {
+    {   
+        public string ClaveOperacion { get; set; }
+
         public int IdOrdenCompraExpedidor { get; set; }
 
         public int IdOrdenCompraPorteador { get; set; }

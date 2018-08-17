@@ -1,4 +1,5 @@
-﻿using Application.MainModule.Servicios.AccesoADatos;
+﻿using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.Servicios.AccesoADatos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,16 @@ namespace Application.MainModule.Servicios.Almacen
 {
     public static class AlmacenGasServicio
     {
+        public static RespuestaDto Insertar(AlmacenGasDescarga alm)
+        {
+            return new AlmacenGasDescargaDataAccess().Insertar(alm);
+        }
+
+        public static RespuestaDto Actualizar(AlmacenGasDescarga alm, List<AlmacenGasDescargaFoto> fotos)
+        {
+            return new AlmacenGasDescargaDataAccess().Actualizar(alm, fotos);
+        }
+
         public static List<AlmacenGas> ObtenerTodos(short idEmpresa)
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa);
@@ -20,9 +31,14 @@ namespace Application.MainModule.Servicios.Almacen
             return new AlmacenGasDataAccess().Buscar(idAlmacenGas);
         }
 
-        public static AlmacenGasDescarga ObtenerPorOCompraExpedidor(int idOCompra)
+        public static AlmacenGasDescarga ObtenerDescargaPorOCompraExpedidor(int idOCompra)
         {
             return new AlmacenGasDescargaDataAccess().BuscarOCompraExpedidor(idOCompra);
+        }
+
+        public static AlmacenGasDescarga ObtenerDescargaPorClaveOperacion(string claveOperacion)
+        {
+            return new AlmacenGasDescargaDataAccess().BuscarClaveOperacion(claveOperacion);
         }
     }
 }
