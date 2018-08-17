@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Security.Claims;
 using Security.MainModule.Token_Service;
-
+using Web.MainModule.Seguridad.Servicio;
 
 namespace Web.MainModule
 {
@@ -15,24 +15,23 @@ namespace Web.MainModule
         string _tok = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (Session["StringToken"] != null)
             {
-                if (Session["StringToken"] != null)
-                {
-                    _tok = Session["StringToken"].ToString();
-                    Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
-                    if (Convert.ToBoolean(_autenticado.Value))
+                _tok = Session["StringToken"].ToString();
+                if (!IsPostBack)
+                {                  
+                    if (TokenServicio.ObtenerAutenticado(_tok))
                     {
                         CargarEmpresas();
-                        CargarRequisiciones(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
+                        CargarRequisiciones();
                         CargarEstatus();
                     }
                     else
                         Salir();
                 }
-                else
-                    Salir();
             }
+            else
+                Salir();
         }
         private void Salir()
         {
@@ -43,27 +42,26 @@ namespace Web.MainModule
             var respuesta = new Seguridad.Servicio.ComprasServicio().Compra(_tok);
             //lblMensaje.Text = respuesta.Mensaje;
         }
-
         protected void btnNuevaReq_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx");
         }
         private void CargarEmpresas()
         {
-            ddlEmpresas.DataSource = new Seguridad.Servicio.ComprasServicio().Empresas(_tok);
+            ddlEmpresas.DataSource = new ComprasServicio().Empresas(_tok).Where(x => x.EsAdministracionCentral.Equals(false)).ToList();
             ddlEmpresas.DataValueField = "IdEmpresa";
             ddlEmpresas.DataTextField = "NombreComercial";
             ddlEmpresas.DataBind();
-            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
+            if (TokenServicio.ObtenerEsAdministracionCentral(_tok))
             {
                 ddlEmpresas.SelectedValue = "-1";
             }
             else
             {
-                ddlEmpresas.SelectedValue = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value;
+                ddlEmpresas.SelectedValue = TokenServicio.ObtenerIdEmpresa(_tok).ToString();
                 ddlEmpresas.Enabled = false;
             }
-        }      
+        }
         private void CargarEstatus()
         {
             foreach (Requisicion.Model.RequisiconEstatus r in Enum.GetValues(typeof(Requisicion.Model.RequisiconEstatus)))
@@ -72,9 +70,9 @@ namespace Web.MainModule
                 ddlFiltroEstatus.Items.Add(item);
             }
         }
-        private void CargarRequisiciones(short idEmpresa)
+        private void CargarRequisiciones()
         {
-            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequisicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString()).ToList().OrderByDescending(x => x.IdRequisicion).ToList();
+            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequisicionServicio().BuscarRequisiciones(short.Parse(ddlEmpresas.SelectedValue), Session["StringToken"].ToString()).ToList().OrderByDescending(x => x.IdRequisicion).ToList();
             dgRequisisiones.DataBind();
             if (!Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
                 dgRequisisiones.Columns[0].Visible = false;
@@ -91,7 +89,6 @@ namespace Web.MainModule
                 Response.Redirect("~/Requisicion/Vistas/Requisicion.aspx?nr=" + e.CommandArgument.ToString() + "&Sts=2");
             }
         }
-
         protected void dgRequisisiones_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"];
@@ -102,10 +99,9 @@ namespace Web.MainModule
         {
             if (!ddlEmpresas.SelectedValue.Equals("0"))
             {
-                CargarRequisiciones(Int16.Parse(ddlEmpresas.SelectedValue));
+                CargarRequisiciones();
             }
         }
-
         protected void txtNoRequisicion_TextChanged(object sender, EventArgs e)
         {
             List<Requisicion.Model.RequisicionDTO> newList = new List<Requisicion.Model.RequisicionDTO>();
@@ -125,20 +121,15 @@ namespace Web.MainModule
             if (e.Row.RowType.Equals(DataControlRowType.DataRow))
             {
                 Label lblEstatus = (e.Row.Cells[0].FindControl("lblIdRequisicionEstatus") as Label);
-                if (int.Parse(lblEstatus.Text).Equals(1))
-                {
-                    (e.Row.Cells[0].FindControl("lbAutoriza") as LinkButton).Visible = false;
-                    (e.Row.Cells[0].FindControl("lbDgOjo") as LinkButton).Visible = true;
-                }
-                if (int.Parse(lblEstatus.Text).Equals(3) || int.Parse(lblEstatus.Text).Equals(4))
-                {
-                    (e.Row.Cells[0].FindControl("lbAutoriza") as LinkButton).Visible = true;
-                    (e.Row.Cells[0].FindControl("lbDgOjo") as LinkButton).Visible = false;
-                }
-                if (int.Parse(lblEstatus.Text).Equals(10))
+                if (int.Parse(lblEstatus.Text).Equals(1))                
+                    (e.Row.Cells[0].FindControl("lbDgOjo") as LinkButton).Visible = true;                
+                if (int.Parse(lblEstatus.Text).Equals(3) || int.Parse(lblEstatus.Text).Equals(4))                
+                    (e.Row.Cells[0].FindControl("lbAutoriza") as LinkButton).Visible = true;                
+                if (int.Parse(lblEstatus.Text).Equals(7))
                 {
                     (e.Row.Cells[0].FindControl("lbAutoriza") as LinkButton).Visible = false;
                     (e.Row.Cells[0].FindControl("lbDgOjo") as LinkButton).Visible = false;
+                    (e.Row.Cells[0].FindControl("lbDgPDF") as LinkButton).Visible = false;
                 }
             }
         }
@@ -154,6 +145,6 @@ namespace Web.MainModule
             }
             dgRequisisiones.DataSource = newList.ToList().OrderByDescending(x => x.IdRequisicion).ToList();
             dgRequisisiones.DataBind();
-        }       
+        }              
     }
 }

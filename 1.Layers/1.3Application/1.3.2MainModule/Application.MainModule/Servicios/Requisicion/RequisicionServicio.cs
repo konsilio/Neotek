@@ -17,17 +17,7 @@ namespace Application.MainModule.Servicios.Requisicion
         {
             return new RequisicionDataAccess().InsertarNueva(_req);
         }
-        public static RespuestaRequisicionDto UpdateRequisicionRevision(RequisicionRevPutDTO _req)
-        {
-            var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
-            return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad), RequisicionProductoAdapter.FromDTO(_req.ListaProductos, entidad.Productos.ToList()));            
-        }
-        public static RespuestaRequisicionDto UpDateRequisicionAutoriza(RequisicionAutPutDTO _req)
-        {
-            var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
-            return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
-
-        }
+       
         public static List<RequisicionDTO> BuscarRequisicionPorIdEmpresa(Int16 _IdEmpresa)
         {
             return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas().Where(x => x.IdEmpresa.Equals(_IdEmpresa)).ToList());
@@ -39,6 +29,16 @@ namespace Application.MainModule.Servicios.Requisicion
         public static RequisicionAutorizacionDTO BuscarRequisicionAuto(int _idequi)
         {
             return RequisicionAdapter.ToAutDTO(new RequisicionDataAccess().BuscarPorIdRequisicion(_idequi));
+        }
+        public static RespuestaRequisicionDto UpdateRequisicionRevision(RequisicionRevPutDTO _req)
+        {
+            var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
+            return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad), RequisicionProductoAdapter.FromDTO(_req.ListaProductos, entidad.Productos.ToList()));
+        }
+        public static RespuestaRequisicionDto UpDateRequisicionAutoriza(RequisicionAutPutDTO _req)
+        {
+            var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
+            return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
         }
         public static RespuestaRequisicionDto CancelarRequisicion(RequisicionCancelaDTO _req)
         {

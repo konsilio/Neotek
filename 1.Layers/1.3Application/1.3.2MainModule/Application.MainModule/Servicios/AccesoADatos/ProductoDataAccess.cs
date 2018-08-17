@@ -16,10 +16,19 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-
         public List<Producto> ListaProductos(short idEmpresa)
         {
-            return uow.Repository<Producto>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+            return uow.Repository<Producto>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                    && x.Activo.Equals(true)).ToList();
+        }
+        public Producto BuscarPorducto(int idProducto)
+        {
+            return uow.Repository<Producto>().GetSingle(x => x.IdProducto.Equals(idProducto)
+                                                       );
+        }
+        public List<ProductoAsociado> ListaProductosAsociados(int idProdcuto)
+        {
+            return uow.Repository<ProductoAsociado>().Get(x => x.IdProducto.Equals(idProdcuto)).ToList();
         }
     }
 }

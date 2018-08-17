@@ -9,6 +9,7 @@ using System.Security.Claims;
 using Utilities.MainModule;
 using System.Globalization;
 using System.ComponentModel.DataAnnotations;
+using Exceptions.MainModule.Validaciones;
 using Web.MainModule.Requisicion.Servicio;
 using Web.MainModule.Seguridad.Servicio;
 
@@ -20,49 +21,55 @@ namespace Web.MainModule.Requisicion.Vista
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["StringToken"] != null)
-                _tok = Session["StringToken"].ToString();
-            else            
-                Salir();
-                        
-            if (!IsPostBack)
             {
-                Claim _autenticado = TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "Autenticado");
-                if (Convert.ToBoolean(_autenticado.Value))
+                _tok = Session["StringToken"].ToString();
+                if (!IsPostBack)
                 {
-                    if (Request.QueryString["nr"] != null)
+                    if (TokenServicio.ObtenerAutenticado(_tok))
                     {
-                        if (Request.QueryString["Sts"] != null)
+                        if (Request.QueryString["nr"] != null)
                         {
-                            RquisicionAlternativa(Request.QueryString["nr"].ToString(), Convert.ToInt32(Request.QueryString["Sts"]));
-                        }
-                        dgListaproductos.DataBind();
-                    }
-                    else
-                    {
-                        if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "EsAdminCentral").Value))
-                        {
-                            ddlEmpresas.DataSource = new RequisicionServicio().Empresas(_tok);
-                            ddlEmpresas.DataTextField = "NombreComercial";
-                            ddlEmpresas.DataValueField = "IdEmpresa";
-                            ddlEmpresas.DataBind();
-                            ddlEmpresas.Visible = true;
-                            lblNombreEmpresa.Visible = false;
-                            CargarUsuariosSolicitante(Int16.Parse(ddlEmpresas.SelectedValue));
-                            //CargarProductos(Int16.Parse(ddlEmpresas.SelectedValue));
-                            CargarCentrosCosto();
+                            if (Request.QueryString["Sts"] != null)
+                                RquisicionAlternativa(Request.QueryString["nr"].ToString(), Convert.ToInt32(Request.QueryString["Sts"]));
+                            else
+                                Salir();
                         }
                         else
                         {
-                            CargarUsuariosSolicitante(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
-                            //CargarProductos(Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value));
-                            CargarCentrosCosto();
+                            CargarEmpresas();
+                            if (Convert.ToBoolean(TokenServicio.ObtenerEsAdministracionCentral(_tok)))
+                            {
+                                CargarUsuariosSolicitante(Int16.Parse(ddlEmpresas.SelectedValue));
+                                CargarCentrosCosto();
+                            }
+                            else
+                            {
+                                ddlEmpresas.Enabled = false;
+                                CargarUsuariosSolicitante(TokenServicio.ObtenerIdEmpresa(_tok));
+                                CargarCentrosCosto();
+                            }
                         }
-                        dgListaproductos.DataBind();
                     }
+                    else
+                        Salir();
                 }
-                else
-                    Salir();
             }
+            else
+                Salir();
+        }
+        private void CargarEmpresas()
+        {
+            ddlEmpresas.DataSource = new RequisicionServicio().Empresas(_tok).Where(x => x.EsAdministracionCentral.Equals(false)).ToList();
+            ddlEmpresas.DataTextField = "NombreComercial";
+            ddlEmpresas.DataValueField = "IdEmpresa";
+            ddlEmpresas.DataBind();
+            CargarServicios();
+        }
+        private void CargarServicios()
+        {
+            //Llenar servicios desde BD
+
+            CargarProductos(short.Parse(ddlTipoCompra.SelectedValue));
         }
         private void CargarCentrosCosto()
         {
@@ -222,15 +229,32 @@ namespace Web.MainModule.Requisicion.Vista
             ddlCentroCostos.SelectedIndex = 0;
             txtDetalle.Text = string.Empty;
         }
-        private bool ValidarProductoRepetido(int idProducto)
+        private bool ValidarProductoRepetido(int idProducto, int idCentroCosto)
         {
             bool resp = false;
             if (ViewState["ListaRequisicionProductoGridDTO"] != null)
-                resp = ((List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"]).Exists(x => x.IdProducto.Equals(idProducto));
+                resp = ((List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"]).Exists(x => x.IdProducto.Equals(idProducto) && x.IdCentroCosto.Equals(idCentroCosto));
             return resp;
+        }
+        private bool ValidarAutorizacion()
+        {
+            bool correcto = true;
+            foreach (GridViewRow _row in gvProductoAut.Rows)
+            {
+                if ((_row.FindControl("chbAutCompra") as CheckBox).Checked)
+                {
+                    if (decimal.Parse((_row.Cells[0].FindControl("txtRequiereComp") as TextBox).Text) > decimal.Parse((_row.FindControl("lbldgCantidad") as Label).Text))
+                    {
+                        correcto = false;
+                    }
+                }
+            }
+            return correcto;
         }
         private void RquisicionAlternativa(string NumRueq, int Estatus)
         {
+            CargarEmpresas();
+            ddlEmpresas.Enabled = false;
             if (Estatus.Equals(1))
                 ActivarRevisarExistencias();
             else
@@ -257,6 +281,8 @@ namespace Web.MainModule.Requisicion.Vista
             txtRequeridoEn.Text = _reqEDTO.RequeridoEn;
             ddlSolicitante.Enabled = false;
             ddlSolicitante.SelectedValue = _reqEDTO.IdUsuarioSolicitante.ToString();
+            btnCancel.Attributes.Remove("class");
+            btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round");
 
             dgListaproductos.Visible = false;
             gvProductosRevision.Visible = true;
@@ -285,16 +311,18 @@ namespace Web.MainModule.Requisicion.Vista
             lblIdRequisicion.Text = _reqEDTO.NumeroRequisicion;
             BtnCrear.Text = "Autorizar";
             btnCancelar.Enabled = true;
+            btnCancel.Attributes.Remove("class");
+            btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round");
             ddlSolicitante.Enabled = false;
             ddlSolicitante.SelectedValue = _reqEDTO.IdUsuarioSolicitante.ToString();
             dgListaproductos.Visible = false;
             gvProductoAut.DataSource = ViewState["ListaRequisicionProductoGridDTO"] = _reqEDTO.ListaProductos;
             gvProductoAut.DataBind();
         }
-        private void BorrarProductoLista(int id)
+        private void BorrarProductoLista(int id, int cc)
         {
             List<Model.RequisicionProductoGridDTO> lprod = (List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"];
-            Model.RequisicionProductoGridDTO prod = lprod.SingleOrDefault(x => x.IdProducto.Equals(id));
+            Model.RequisicionProductoGridDTO prod = lprod.SingleOrDefault(x => x.IdProducto.Equals(id) && x.IdCentroCosto.Equals(cc));
             lprod.Remove(prod);
             if (lprod.Count.Equals(0))
             {
@@ -306,12 +334,13 @@ namespace Web.MainModule.Requisicion.Vista
 
             dgListaproductos.DataBind();
         }
-        private void EditarProductoLista(int id)
+        private void EditarProductoLista(int id, int cc)
         {
             List<Model.RequisicionProductoGridDTO> lprod = (List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"];
-            Model.RequisicionProductoGridDTO prod = lprod.SingleOrDefault(x => x.IdProducto.Equals(id));
+            Model.RequisicionProductoGridDTO prod = lprod.SingleOrDefault(x => x.IdProducto.Equals(id) && x.IdCentroCosto.Equals(cc));
             lprod.Remove(prod);
             ddlTipoCompra.SelectedValue = prod.IdTipoProducto.ToString();
+            CargarProductos(short.Parse(prod.IdTipoProducto.ToString()));
             ddlProdcutos.SelectedValue = prod.IdProducto.ToString();
             txtCantidad.Text = prod.Cantidad.ToString();
             ddlCentroCostos.SelectedValue = prod.IdCentroCosto.ToString();
@@ -333,13 +362,14 @@ namespace Web.MainModule.Requisicion.Vista
         }
         private void CargarProductos(short idTipoServicio)
         {
-            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "EsAdminCentral").Value))
-                ddlProdcutos.DataSource = new RequisicionServicio().ListaProductos(Int16.Parse(ddlEmpresas.SelectedValue), _tok).Select(x => x.IdProductoServicioTipo.Equals(idTipoServicio));
+            if (Convert.ToBoolean(TokenServicio.ObtenerEsAdministracionCentral(_tok)))
+                ddlProdcutos.DataSource = ViewState["ProductosDTO"] = new RequisicionServicio().ListaProductos(short.Parse(ddlEmpresas.SelectedValue), _tok).Where(x => x.IdProductoServicioTipo.Equals(idTipoServicio)).ToList();
             else
-                ddlProdcutos.DataSource = new RequisicionServicio().ListaProductos(TokenServicio.ObtenerIdEmpresa(_tok), _tok).Select(x => x.IdProductoServicioTipo.Equals(idTipoServicio));
+                ddlProdcutos.DataSource = ViewState["ProductosDTO"] = new RequisicionServicio().ListaProductos(TokenServicio.ObtenerIdEmpresa(_tok), _tok).Where(x => x.IdProductoServicioTipo.Equals(idTipoServicio)).ToList();
             ddlProdcutos.DataTextField = "Descripcion";
             ddlProdcutos.DataValueField = "IdProducto";
             ddlProdcutos.DataBind();
+            MostrarUnidad();
         }
         private void GuardarRequisicion()
         {
@@ -365,10 +395,12 @@ namespace Web.MainModule.Requisicion.Vista
                             BtnCrear.Enabled = false;
                             btnAgregar.Enabled = false;
                             dgListaproductos.Enabled = false;
+                            btnCancel.Attributes.Remove("class");
+                            btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
                         }
                         else
                         {
-                            lblErrorCampos.Text = "Ocurrio un error";
+                            lblErrorCampos.Text = "Ocurrio un erro";//Error.R0009;
                             divCampos.Visible = true;
                         }
                     }
@@ -403,6 +435,9 @@ namespace Web.MainModule.Requisicion.Vista
                         divCampos.Visible = false;
                         btnCancelar.Enabled = false;
                         BtnCrear.Enabled = false;
+                        gvProductosRevision.Enabled = false;
+                        btnCancel.Attributes.Remove("class");
+                        btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
                     }
                     else
                     {
@@ -422,19 +457,30 @@ namespace Web.MainModule.Requisicion.Vista
         private void FinalizarAutorizacion()
         {
             GenerarAutorizados();
-            Model.RespuestaRequisicionDto _resp = new Servicio.RequisicionServicio().ActualizarRequisicionAutorizacion(CrearAut(), _tok);
-            if (_resp.Exito)
+            if (ValidarAutorizacion())
             {
-                lblNoRequisicion.Text = _resp.Mensaje.Equals(string.Empty) ? "Correcto" : _resp.Mensaje;
-                lblIdRequisicion.Text = _resp.NumRequisicion;
-                btnCancelar.Enabled = false;
-                BtnCrear.Enabled = false;
-                divNoRequi.Visible = true;
-                divCampos.Visible = false;
+                Model.RespuestaRequisicionDto _resp = new RequisicionServicio().ActualizarRequisicionAutorizacion(CrearAut(), _tok);
+                if (_resp.Exito)
+                {
+                    lblNoRequisicion.Text = _resp.Mensaje.Equals(string.Empty) ? "Autorizacion finalizada" : _resp.Mensaje;
+                    lblIdRequisicion.Text = _resp.NumRequisicion;
+                    btnCancelar.Enabled = false;
+                    BtnCrear.Enabled = false;
+                    divNoRequi.Visible = true;
+                    divCampos.Visible = false;
+                    gvProductoAut.Enabled = false;
+                    btnCancel.Attributes.Remove("class");
+                    btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
+                }
+                else
+                {
+                    lblErrorCampos.Text = _resp.Mensaje;
+                    divCampos.Visible = true;
+                }
             }
             else
             {
-                lblErrorCampos.Text = "Ocurrio un error";
+                lblErrorCampos.Text = "No puede autorizar mas cantidad de la requerida. \n\rDeberá generar una nueva requisición si así lo desea";
                 divCampos.Visible = true;
             }
         }
@@ -468,23 +514,39 @@ namespace Web.MainModule.Requisicion.Vista
             requRevision.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Revision_exitosa;
             return requRevision;
         }
+        private void MostrarUnidad()
+        {
+            Model.ProductoDTO prod = ((List<Model.ProductoDTO>)ViewState["ProductosDTO"]).SingleOrDefault(x => x.IdProducto.Equals(int.Parse(ddlProdcutos.SelectedValue)));
+            lblCantidadUnidad.Text = "Cantidad: " + prod.UnidadMedida;
+        }
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            Model.RequisicionProductoGridDTO prod = new Servicio.RequisicionServicio().GenerarProductoGrid(ddlTipoCompra, ddlProdcutos, ddlCentroCostos, txtDetalle.Text, Convert.ToDecimal(txtCantidad.Text != string.Empty ? txtCantidad.Text : "0"));
+            Model.RequisicionProductoGridDTO prod = new RequisicionServicio().GenerarProductoGrid(
+                ddlTipoCompra,
+                ddlProdcutos,
+                ddlCentroCostos,
+                txtDetalle.Text,
+                Convert.ToDecimal(txtCantidad.Text != string.Empty ? txtCantidad.Text : "0"),
+                ((List<Model.ProductoDTO>)ViewState["ProductosDTO"]));
             var validacion = ValidadorClases.EnlistaErrores<Model.RequisicionProductoGridDTO>(prod);
             if (validacion.ModeloValido)
             {
                 ValidarCampos(new List<Result>());//Limpia los campos de error 
                 List<Model.RequisicionProductoGridDTO> LProductos = new List<Model.RequisicionProductoGridDTO>();
-                if (ValidarProductoRepetido(int.Parse(ddlProdcutos.SelectedValue.ToString())))
+                if (ValidarProductoRepetido(int.Parse(ddlProdcutos.SelectedValue.ToString()), int.Parse(ddlCentroCostos.SelectedValue)))
                 {
-                    LProductos = ((List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"]).Where(x => x.IdProducto.Equals(int.Parse(ddlProdcutos.SelectedValue.ToString())))
-                         .Select(x => { x.Cantidad = x.Cantidad + decimal.Parse(txtCantidad.Text); x.Aplicacion = x.Aplicacion + "|" + txtDetalle.Text; return x; }).ToList();
+                    LProductos = ((List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"]);
+                    foreach (var item in LProductos.Where((x => x.IdProducto.Equals(int.Parse(ddlProdcutos.SelectedValue.ToString()))
+                        && x.IdCentroCosto.Equals(int.Parse(ddlCentroCostos.SelectedValue)))))
+                    {
+                        item.Cantidad = item.Cantidad + decimal.Parse(txtCantidad.Text == string.Empty ? "0" : txtCantidad.Text);
+                        item.Aplicacion = item.Aplicacion + "|" + txtDetalle.Text;
+                    }
                 }
                 else
                 {
                     LProductos = (List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"] == null ? new List<Model.RequisicionProductoGridDTO>() : (List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"];
-                    LProductos = new Servicio.RequisicionServicio().GenerarListaGrid(LProductos, prod);
+                    LProductos = new RequisicionServicio().GenerarListaGrid(LProductos, prod, _tok);
                 }
                 dgListaproductos.DataSource = ViewState["ListaRequisicionProductoGridDTO"] = LProductos;
                 dgListaproductos.DataBind();
@@ -514,18 +576,17 @@ namespace Web.MainModule.Requisicion.Vista
             if (!ddlEmpresas.SelectedValue.Equals(-1))
             {
                 CargarUsuariosSolicitante(Convert.ToInt16(ddlEmpresas.SelectedValue));
-                //CargarProductos(Convert.ToInt16(ddlEmpresas.SelectedValue));
             }
         }
         protected void dgListaproductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("Borrar"))
             {
-                BorrarProductoLista(int.Parse(e.CommandArgument.ToString()));
+                BorrarProductoLista(int.Parse(e.CommandArgument.ToString().Split('|')[0]), int.Parse(e.CommandArgument.ToString().Split('|')[1]));
             }
             if (e.CommandName.Equals("Editar"))
             {
-                EditarProductoLista(int.Parse(e.CommandArgument.ToString()));
+                EditarProductoLista(int.Parse(e.CommandArgument.ToString().Split('|')[0]), int.Parse(e.CommandArgument.ToString().Split('|')[1]));
             }
         }
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -534,7 +595,22 @@ namespace Web.MainModule.Requisicion.Vista
             var error = ValidadorClases.EnlistaErrores(_canDTO);
             if (error.ModeloValido)
             {
-                Model.RespuestaRequisicionDto _resp = new Servicio.RequisicionServicio().CancalarRequisicion(_canDTO, _tok);
+                var respCancelar = new Servicio.RequisicionServicio().CancalarRequisicion(_canDTO, _tok);
+                if (respCancelar.Exito)
+                {
+                    btnCancelar.Enabled = false;
+                    BtnCrear.Enabled = false;
+                    txtOpinion.Enabled = false;
+                    divNoRequi.Visible = true;
+                    lblNoRequisicion.Text = "Cancelada correctamente";
+                    btnCancel.Attributes.Remove("class");
+                    btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
+                }
+                else
+                {
+                    lblErrorCampos.Text = "Ocurrio un error";
+                    divCampos.Visible = true;
+                }
             }
         }
         protected void btnRegresar_Click(object sender, EventArgs e)
@@ -571,17 +647,21 @@ namespace Web.MainModule.Requisicion.Vista
             {
                 if (decimal.Parse((e.Row.Cells[0].FindControl("lblAlmacen") as Label).Text).Equals(0))
                     (e.Row.Cells[0].FindControl("chbAutEntrega") as CheckBox).Enabled = false;
-                if (decimal.Parse((e.Row.Cells[0].FindControl("lblRequiereComp") as Label).Text).Equals(0))
-                    (e.Row.Cells[0].FindControl("chbAutCompra") as CheckBox).Enabled = false;
+                //if (decimal.Parse((e.Row.Cells[0].FindControl("txtRequiereComp") as TextBox).Text).Equals(0))
+                //    (e.Row.Cells[0].FindControl("chbAutCompra") as CheckBox).Enabled = false;
             }
         }
         protected void ddlProdcutos_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            MostrarUnidad();
         }
         protected void ddlTipoCompra_SelectedIndexChanged(object sender, EventArgs e)
         {
             CargarProductos(short.Parse(ddlTipoCompra.SelectedValue));
+        }
+        protected void gvProductoAut_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

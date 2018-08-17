@@ -111,8 +111,6 @@ namespace Web.MainModule.Agente
                 _listaCentrosCostos = emp;
             }
         }
-
-
         #endregion
         #region Login
         public void ListaEmpresasLogin()
@@ -308,8 +306,6 @@ namespace Web.MainModule.Agente
             this.ApiRequisicion = ConfigurationManager.AppSettings["PutActulizarAutorizacion"];
             UpdateRequisicon(_requi, token).Wait();
         }
-
-
         public void ActualizarRequisicionCancelar(RequisicionCancelaDTO _requi, string token)
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["PutCancelarRequisicion"];
@@ -345,12 +341,6 @@ namespace Web.MainModule.Agente
                 _respuestaRequisicion = resp;
             }
         }
-
-
-
-
-
-
         private async Task UpdateRequisicon(RequisicionAutPutDTO _requi, string token)
         {
             using (var client = new HttpClient())
@@ -526,6 +516,39 @@ namespace Web.MainModule.Agente
                 try
                 {
                     HttpResponseMessage response = await client.GetAsync(ApiProducto + idEmpresa.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<ProductoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<ProductoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listProductos = emp;
+            }
+        }
+        public void BuscarProductosAsociados(int idProducto, string tkn)
+        {
+            this.ApiProducto = ConfigurationManager.AppSettings["GetListaProductosAsociados"];
+            ListaProductosAsociados(idProducto, tkn).Wait();
+        }
+        private async Task ListaProductosAsociados(int idProducto, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ProductoDTO> emp = new List<ProductoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiProducto + idProducto.ToString()).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<ProductoDTO>>();
                     else

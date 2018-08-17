@@ -52,8 +52,9 @@ namespace Web.MainModule.Requisicion.Servicio
                 Aplicacion = _aplicacion
             };
         }
-        public Model.RequisicionProductoGridDTO GenerarProductoGrid(DropDownList _tipoProducto, DropDownList _producto, DropDownList _centroCosto, string _aplicacion, decimal _cantidad)
+        public Model.RequisicionProductoGridDTO GenerarProductoGrid(DropDownList _tipoProducto, DropDownList _producto, DropDownList _centroCosto, string _aplicacion, decimal _cantidad, List<Model.ProductoDTO> _prods)
         {
+            Model.ProductoDTO _prod = _prods.SingleOrDefault(x => x.IdProducto.Equals(int.Parse(_producto.SelectedItem.Value)));
             return new Model.RequisicionProductoGridDTO
             {
                 IdTipoProducto = int.Parse(_tipoProducto.SelectedItem.Value),
@@ -64,13 +65,33 @@ namespace Web.MainModule.Requisicion.Servicio
                 CentroCosto = _centroCosto.SelectedItem.Text,
                 Cantidad = _cantidad,
                 Aplicacion = _aplicacion,
-                IdUnidad = 1, //Falta servicio para buscar la unidad con el ID del prodcuto
-                Unidad = "PZA", //Falta servicio para buscar la unidad con el ID del prodcuto
+                IdUnidad = _prod.IdUnidadMedida,
+                Unidad = _prod.UnidadMedida,
             };
         }
-        public List<Model.RequisicionProductoGridDTO> GenerarListaGrid(List<Model.RequisicionProductoGridDTO> LProductos, Model.RequisicionProductoGridDTO Producto)
+        public List<Model.RequisicionProductoGridDTO> GenerarListaGrid(List<Model.RequisicionProductoGridDTO> LProductos, Model.RequisicionProductoGridDTO Producto, string Token)
         {
             LProductos.Add(Producto);
+            //var lprodAso = ListaProductosAsociados(Producto.IdProducto, Token);
+            //if (!lprodAso.Count.Equals(0))           
+            //{
+            //    foreach (var prod in lprodAso)
+            //    {
+            //        LProductos.Add(new Model.RequisicionProductoGridDTO
+            //        {
+            //            IdProducto = prod.IdProducto,
+            //            IdTipoProducto = prod.IdProductoServicioTipo,
+            //            TipoProducto = prod.TipoProducto,
+            //            Producto = prod.Descripcion,
+            //            IdCentroCosto = Producto.IdCentroCosto,
+            //            CentroCosto = Producto.CentroCosto, //Falta Campo para definir Centro de costos en productos asociados
+            //            Cantidad = 1, // Falta campo para definir el valror en productos asociados
+            //            Aplicacion = Producto.Aplicacion,
+            //            IdUnidad = prod.IdUnidadMedida,
+            //            Unidad = prod.UnidadMedida
+            //        });
+            //    }               
+            //}
             return LProductos;
         }
         public List<Model.RequisicionDTO> BuscarRequisiciones(short idEmpresa, string token)
@@ -109,12 +130,18 @@ namespace Web.MainModule.Requisicion.Servicio
             agente.BuscarProductos(idEmpresa, Token);
             return agente._listProductos;
         }
+        public List<Model.ProductoDTO> ListaProductosAsociados(int idProdcuto, string Token)
+        {
+            var agente = new AgenteServicios();
+            agente.BuscarProductosAsociados(idProdcuto, Token);
+            return agente._listProductos;
+        }
         public List<CentroCostoDTO> ListaCentroCostos(string Token)
         {
             var agente = new AgenteServicios();
             agente.BuscarCentrosCostos(Token);
             return agente._listaCentrosCostos;
-        }
+        }      
         #endregion
         #region Adaptadores
         public Model.RequisicionProductoDTO ToDTO(Model.RequisicionProductoGridDTO _ReqGridDTO)

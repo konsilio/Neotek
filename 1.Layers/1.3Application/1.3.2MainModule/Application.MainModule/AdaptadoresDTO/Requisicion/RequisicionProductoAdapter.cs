@@ -32,6 +32,8 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             _reqProdDTO.Producto = _reqProducto.Producto.Descripcion;
             _reqProdDTO.TipoProducto = _reqProducto.Producto.TipoServicioOProducto.Nombre;
             _reqProdDTO.Unidad = _reqProducto.Producto.UnidadMedida.Nombre;
+            _reqProdDTO.IdCentroCosto = _reqProducto.IdCentroCosto;
+            _reqProdDTO.CentroCosto = _reqProducto.CentroCosto.Descripcion;
             _reqProdDTO.Cantidad = _reqProducto.Cantidad;
             _reqProdDTO.Aplicacion = _reqProducto.Aplicacion;
             _reqProdDTO.CantidadAlmacenActual = _reqProducto.CantidadAlmacenActual.Value;
@@ -65,6 +67,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 TipoProducto = _reqProducto.Producto.TipoServicioOProducto.Nombre,
                 IdUnidad = _reqProducto.Producto.IdUnidadMedida,
                 Unidad = _reqProducto.Producto.UnidadMedida.Nombre,
+                CentroCosto = _reqProducto.CentroCosto.Descripcion,
                 IdCentroCosto = _reqProducto.IdCentroCosto,
                 Cantidad = _reqProducto.Cantidad,
                 Aplicacion = _reqProducto.Aplicacion,

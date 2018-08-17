@@ -7,6 +7,8 @@ namespace UserControls
     public partial class DateTimePicker : System.Web.UI.UserControl
     {
         #region public
+        [System.ComponentModel.Browsable(true)]
+        public event EventHandler TextChanged;
 
         [Bindable(false), Browsable(true), Category("Bit-Options"), Description("The Date.")]
         public DateTime GetDate

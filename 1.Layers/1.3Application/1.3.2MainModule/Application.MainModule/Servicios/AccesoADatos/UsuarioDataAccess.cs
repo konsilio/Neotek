@@ -29,6 +29,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.EsAdministracionCentral.Equals(false)
                                                          && x.Activo).ToList();
         }
+        public List<Usuario> BuscarTodos()
+        {
+            return uow.Repository<Usuario>().GetAll().ToList();
+        }
 
         public Usuario Buscar(short idEmpresa, string NombreUsuario, string password)
         {

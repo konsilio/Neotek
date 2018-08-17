@@ -49,10 +49,15 @@ namespace DS.MainModule.Controllers
         }
         #endregion
         #region Productos
-        [Route("prodcutos/listaprodcutos/{idEmpresa}")]
+        [Route("productos/listaproductos/{idEmpresa}")]
         public HttpResponseMessage GetListaProductos(short idEmpresa)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaProductos(idEmpresa));
+        }
+        [Route("productos/listaproductosasociados/{idProducto}")]
+        public HttpResponseMessage GetListaProductosAsociados(int idProducto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPorductosAsociados(idProducto));
         }
         #endregion
         #region Administracion Central
@@ -75,7 +80,7 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaProveedores(int idProveedor)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedor(idProveedor));
-        }
+        }        
         #endregion
         #region Centro de Costo
         [Route("consulta/centrosdecosto")]

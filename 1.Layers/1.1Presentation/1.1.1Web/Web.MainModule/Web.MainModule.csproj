@@ -3961,7 +3961,7 @@
     <Compile Include="Requisicion\Model\RequisicionEDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionProductoEDTO.cs" />
     <Compile Include="Requisicion\Model\RequisiconEstatus.cs" />
-    <Compile Include="Requisicion\Model\RespuestaRequisicionDto.cs" />
+    <Compile Include="RespuestaRequisicionDto.cs" />
     <Compile Include="Requisicion\Servicio\RequisicionServicio.cs" />
     <Compile Include="Requisicion\Vistas\Requisicion.aspx.cs">
       <DependentUpon>Requisicion.aspx</DependentUpon>

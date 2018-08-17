@@ -40,5 +40,12 @@ namespace Application.MainModule.Servicios.Seguridad
 
             return EsAdminCentral != null ? Convert.ToBoolean(EsAdminCentral.Value) : false;
         }
+        public static bool ObtenerAutenticado()
+        {
+            var claims = ObtenerClaims();
+            var EsAutenticado = claims.FirstOrDefault(x => x.Type.Equals(TokenEtiquetasEnum.Autenticado));
+
+            return EsAutenticado != null ? Convert.ToBoolean(EsAutenticado.Value) : false;
+        }
     }
 }

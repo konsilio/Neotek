@@ -32,13 +32,20 @@ namespace Application.MainModule.Flujos
         #region Usuarios
         public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
         {
-            return UsuarioServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa());
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+            else
+                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();          
         }
         #endregion
         #region Productos
         public List<ProductoDTO> ListaProductos(short idEmpresa)
         {
             return ProductoServicios.ListaProductos(idEmpresa);
+        }
+        public List<ProductoDTO> ListaPorductosAsociados(int idProdcuto)
+        {
+            return ProductoServicios.ListaProductoAsociados(ProductoServicios.ListaProductoAsociados(idProdcuto));
         }
         #endregion
         #region CentroCosto

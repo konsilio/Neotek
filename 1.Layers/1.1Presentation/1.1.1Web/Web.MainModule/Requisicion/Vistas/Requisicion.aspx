@@ -19,8 +19,7 @@
                 </div>
                 <div class="body" id="divNoRequi" runat="server" visible="false">
                     <div class="alert alert-success">
-                        <strong>
-                            <asp:Label ID="lblNoRequisicion" runat="server" Text="" /></strong>
+                        <strong><asp:Label ID="lblNoRequisicion" runat="server" Text="" /></strong>
                     </div>
                 </div>
                 <div class="row clearfix">
@@ -30,9 +29,8 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <asp:DropDownList ID="ddlEmpresas" CssClass="form-control z-index show-tick" runat="server" Visible="false" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged" AutoPostBack="true">
+                                            <asp:DropDownList ID="ddlEmpresas" CssClass="form-control z-index show-tick" runat="server" Visible="true" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged" AutoPostBack="true">
                                             </asp:DropDownList>
-                                            <asp:Label ID="lblNombreEmpresa" runat="server" Text=""></asp:Label>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -58,7 +56,7 @@
                                         <div class="form-group">
                                             <%--Solicitante--%>
                                             <label class="card-inside-title">Solicitante:</label>
-                                           
+
                                             <asp:DropDownList runat="server" ID="ddlSolicitante" CssClass="form-control z-index show-tick" data-live-search="true" OnSelectedIndexChanged="ddlSolicitante_SelectedIndexChanged">
                                             </asp:DropDownList>
                                             <asp:Label runat="server" ID="reqSol" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
@@ -93,23 +91,23 @@
                                     <div class="col-lg-2 col-md-12">
                                         <%--Tipo de compra--%>
                                         <label class="card-inside-title">Tipo de compra:</label>
-                                        <asp:DropDownList ID="ddlTipoCompra" runat="server" CssClass="form-control z-index show-tick" AutoPostBack="false" OnSelectedIndexChanged="ddlTipoCompra_SelectedIndexChanged">
-                                            <asp:ListItem Value="1" Text="Producto"></asp:ListItem>
-                                            <asp:ListItem Value="2" Text="Servicio"></asp:ListItem>
+                                        <asp:DropDownList ID="ddlTipoCompra" runat="server" CssClass="form-control z-index show-tick" AutoPostBack="true" OnSelectedIndexChanged="ddlTipoCompra_SelectedIndexChanged">
+                                            <asp:ListItem Value="2" Text="Producto"></asp:ListItem>
+                                            <asp:ListItem Value="3" Text="Servicio"></asp:ListItem>
                                         </asp:DropDownList>
                                         <asp:Label runat="server" ID="reqTipo" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                     </div>
                                     <div class="col-lg-4 col-md-12">
                                         <%--Producto--%>
                                         <label class="card-inside-title">Producto:</label>
-                                        <asp:DropDownList runat="server" ID="ddlProdcutos" CssClass="form-control z-index show-tick" data-live-search="true" OnSelectedIndexChanged="ddlProdcutos_SelectedIndexChanged">
-                                        </asp:DropDownList>
+                                        <asp:DropDownList runat="server" ID="ddlProdcutos" AutoPostBack="true" CssClass="form-control z-index show-tick" data-live-search="true" OnSelectedIndexChanged="ddlProdcutos_SelectedIndexChanged">
+                                         </asp:DropDownList>
                                         <asp:Label runat="server" ID="reqProd" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                     </div>
                                     <div class="col-lg-2 col-md-12">
                                         <%--Cantidad--%>
                                         <div class="form-group">
-                                            <label class="card-inside-title">Cantidad:</label>
+                                            <asp:Label ID="lblCantidadUnidad" runat="server" CssClass="card-inside-title" Text="Cantidad: " />
                                             <asp:TextBox ID="txtCantidad" runat="server" placeholder="0" type="number" CssClass="form-control" />
                                         </div>
                                         <asp:Label runat="server" ID="reqCant" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
@@ -193,17 +191,26 @@
                                                         <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
+                                                 <asp:TemplateField>
+                                                    <%--5 Centro de costo--%>
+                                                    <HeaderTemplate>
+                                                        <b>Centro de Costo</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgCentroCosto" runat="server" Text='<%# Bind("CentroCosto") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
                                                 <asp:TemplateField>
                                                     <%--5 Accion--%>
                                                     <HeaderTemplate>
                                                         <b>Acción</b>
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:LinkButton runat="server" ID="lbEdit" CommandName="Editar" CommandArgument='<%# Eval("IdProducto") %>'>
+                                                        <asp:LinkButton runat="server" ID="lbEdit" CommandName="Editar" CommandArgument='<%# Eval("IdProducto")  + "|" + Eval("IdCentroCosto")  %>'>
                                                                     <i class="material-icons">edit</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                         </asp:LinkButton>
-                                                        <asp:LinkButton runat="server" ID="lbBorrar" CommandName="Borrar" CommandArgument='<%# Eval("IdProducto") %>'>
+                                                        <asp:LinkButton runat="server" ID="lbBorrar" CommandName="Borrar" CommandArgument='<%# Eval("IdProducto") + "|" + Eval("IdCentroCosto") %>'>
                                                                     <i class="material-icons">delete</i>                                                                    
                                                                     <span class="icon-name"></span>
                                                         </asp:LinkButton>
@@ -261,6 +268,15 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
+                                                    <%--5 Centro de costo--%>
+                                                    <HeaderTemplate>
+                                                        <b>Centro de Costo</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgCentroCosto" runat="server" Text='<%# Bind("CentroCosto") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
                                                     <%--6 Almacen--%>
                                                     <HeaderTemplate>
                                                         Almacen
@@ -281,7 +297,7 @@
                                             </Columns>
                                         </asp:GridView>
                                         <%--Grid productos autorizacion--%>
-                                        <asp:GridView ID="gvProductoAut" runat="server" AutoGenerateColumns="false" OnRowCommand="gvProductoAut_RowCommand" OnRowDataBound="gvProductoAut_RowDataBound" CssClass="table table-hover">
+                                        <asp:GridView ID="gvProductoAut" runat="server" AutoGenerateColumns="false" OnRowCommand="gvProductoAut_RowCommand" OnRowDataBound="gvProductoAut_RowDataBound" CssClass="table table-hover" OnSelectedIndexChanged="gvProductoAut_SelectedIndexChanged">
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <%--0 Tipo de compra--%>
@@ -330,6 +346,15 @@
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
+                                                    <%--5 Centro de costo--%>
+                                                    <HeaderTemplate>
+                                                        <b>Centro de Costo</b>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label ID="lbldgCentroCosto" runat="server" Text='<%# Bind("CentroCosto") %>' />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
                                                     <%--6 Almacen--%>
                                                     <HeaderTemplate>
                                                         Existencias
@@ -354,7 +379,7 @@
                                                         Requiere comprar
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:Label ID="lblRequiereComp" runat="server" Text='<%# Bind("CantidadAComprar") %>'></asp:Label>
+                                                        <asp:TextBox ID="txtRequiereComp" CssClass="form-control" BorderStyle="None" runat="server" Text='<%# Bind("CantidadAComprar") %>' TextMode="Number"></asp:TextBox>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -399,7 +424,7 @@
                                         <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Regresar" OnClick="btnRegresar_Click" />
                                     </div>
                                     <div class="col-lg-4 col-md-8 text-center">
-                                        <a href="#ModalCancelar"  data-toggle="modal" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round">Cancelar
+                                        <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" runat="server" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled" >Cancelar
                                         </a>
                                     </div>
 

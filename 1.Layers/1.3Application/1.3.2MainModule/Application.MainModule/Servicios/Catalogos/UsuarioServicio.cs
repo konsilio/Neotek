@@ -12,8 +12,13 @@ namespace Application.MainModule.Servicios.Catalogos
     public static class UsuarioServicio
     {
         public static List<UsuarioDTO> ListaUsuarios(short idEmpresa)
-        {//Se descartaran los usuarios de administracion central.
+        {
             List<UsuarioDTO> lUsuarios = AdaptadoresDTO.Catalogo.UsuarioAdapter.ToDTO(new UsuarioDataAccess().Buscar(idEmpresa));
+            return lUsuarios;
+        }
+        public static List<UsuarioDTO> ListaUsuarios()
+        {
+            List<UsuarioDTO> lUsuarios = AdaptadoresDTO.Catalogo.UsuarioAdapter.ToDTO(new UsuarioDataAccess().BuscarTodos());
             return lUsuarios;
         }
 
