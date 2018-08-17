@@ -18,7 +18,7 @@ namespace Application.MainModule.Servicios.Mobile
         {
             alm.FechaEntraGas = alm.FechaRegistro;
             alm.DatosProcesados = false;
-            return AlmacenGasServicio.Insertar(alm);
+            return AlmacenGasServicio.InsertarDescargaGas(alm);
         }
 
         public static RespuestaDto Descargar(DescargaDto desDto, bool finDescarga = false)
@@ -31,7 +31,7 @@ namespace Application.MainModule.Servicios.Mobile
             descarga = AlmacenAdapter.FromDto(desDto, descarga, finDescarga);
             var fotos = AlmacenAdapter.FromDto(desDto.Imagenes, descarga.IdAlmacenEntradaGasDescarga, numOrden);
 
-            return AlmacenGasServicio.Actualizar(descarga, fotos);
+            return AlmacenGasServicio.ActualizarDescargaGas(descarga, fotos);
         }
 
         public static RespuestaDto EvaluarClaveOperacion(DescargaDto dto)

@@ -11,12 +11,12 @@ namespace Application.MainModule.Servicios.Almacen
 {
     public static class AlmacenGasServicio
     {
-        public static RespuestaDto Insertar(AlmacenGasDescarga alm)
+        public static RespuestaDto InsertarDescargaGas(AlmacenGasDescarga alm)
         {
             return new AlmacenGasDescargaDataAccess().Insertar(alm);
         }
 
-        public static RespuestaDto Actualizar(AlmacenGasDescarga alm, List<AlmacenGasDescargaFoto> fotos)
+        public static RespuestaDto ActualizarDescargaGas(AlmacenGasDescarga alm, List<AlmacenGasDescargaFoto> fotos)
         {
             return new AlmacenGasDescargaDataAccess().Actualizar(alm, fotos);
         }
