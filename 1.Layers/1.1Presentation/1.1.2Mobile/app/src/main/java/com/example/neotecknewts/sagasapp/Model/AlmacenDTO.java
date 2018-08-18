@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class AlmacenDTO {
-    @SerializedName("NombreAlamcen")
+    @SerializedName("NombreAlmacen")
     private String NombreAlmacen;
 
     @SerializedName("IdAlmacenGas")
