@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
     public String contraseña;
     public String usuario;
 
-    //variable pra id de empresa y la lista de empresas a seleccionar
+    //variable para id de empresa y la lista de empresas a seleccionar
     public int IdEmpresa;
     List<EmpresaDTO> empresaDTOs;
 
@@ -219,7 +219,8 @@ public class MainActivity extends AppCompatActivity implements MainView{
             if(usuarioDTO.getListMenu().length==0){
                 showDialog(getResources().getString(R.string.usuario_sin_permisos));
             }else{
-                showDialog(getResources().getString(R.string.login_sucess));
+                //showDialog(getResources().getString(R.string.login_sucess));
+                Log.w("success",getResources().getString(R.string.login_sucess));
                 //se crea la sesion
                 session.createLoginSession(contraseña,usuario,usuarioDTO.getToken(),IdEmpresa);
                 ArrayList<MenuDTO> menuDTOs = new ArrayList<MenuDTO>(Arrays.asList(usuarioDTO.getListMenu()));
