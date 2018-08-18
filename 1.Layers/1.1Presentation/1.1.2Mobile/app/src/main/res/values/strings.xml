@@ -100,4 +100,6 @@
         <item>Magnatel</item>
         <item>Rotogate</item>
     </string-array>
+    <string name="message_goback_diabled">En caso de que hayas llenado datos estos se perderán, ¿Realmente deseas continuar?</string>
+    <string name="title_alert_message">Advertencia</string>
 </resources>

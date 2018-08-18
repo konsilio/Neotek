@@ -1,11 +1,14 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -170,7 +173,38 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Detecta el keyCode de la pantalla en el activity, esto con relaciòn
+     * @param keyCode Código correspondiente a la tecla que se detecta
+     * @param event Contiene los agrumentos o caracteristicas del evento cachado
+     * @return Boleano para ejecutar la acción
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
 
-
-
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,android.R.style.Theme_DeviceDefault_Light_Dialog);
+            builder.setTitle(R.string.title_alert_message);
+            builder.setMessage(R.string.message_goback_diabled);
+            builder.setNegativeButton(getString(R.string.label_no), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.setPositiveButton(getString(R.string.label_si), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    finish();
+                }
+            });
+            builder.setCancelable(false);
+            builder.show();
+            return  false;
+        }
+        else {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
 }
