@@ -56,6 +56,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\CorreoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\TipoMedidorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\OrdenComprasAdapter.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />
     <Compile Include="DTOs\Compras\RequisicionOCDTO.cs" />
     <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
+    <Compile Include="DTOs\CorreoDto.cs" />
     <Compile Include="DTOs\Mobile\AlmacenDto.cs" />
     <Compile Include="DTOs\Mobile\MedidorDto.cs" />
     <Compile Include="DTOs\Mobile\OrdenCompraDTO.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Servicios\AccesoADatos\RequisicionDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ProveedorDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\RolDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\TipoMedidorGasDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioACDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
@@ -131,11 +134,14 @@
     <Compile Include="Servicios\Catalogos\UsuarioServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
+    <Compile Include="Servicios\Notificacion\CorreoHtmlServicio.cs" />
     <Compile Include="Servicios\Notificacion\EnviarCorreosServicio.cs" />
+    <Compile Include="Servicios\Notificacion\NotificarServicio.cs" />
     <Compile Include="Servicios\Requisicion\RequisicionServicio.cs" />
     <Compile Include="Servicios\Mobile\MenuServicio.cs" />
     <Compile Include="Servicios\Mobile\OrdenesCompraServicio.cs" />
     <Compile Include="Servicios\Seguridad\AutenticarServicio.cs" />
+    <Compile Include="Servicios\Seguridad\RolServicio.cs" />
     <Compile Include="Servicios\Seguridad\TokenServicio.cs" />
     <Compile Include="Servicios\Seguridad\UsuarioAplicacionServicio.cs" />
     <Compile Include="UnitOfWork\GenericUnitOfWork.cs" />

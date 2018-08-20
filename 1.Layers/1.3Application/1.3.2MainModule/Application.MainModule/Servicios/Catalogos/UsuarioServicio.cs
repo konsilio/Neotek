@@ -22,6 +22,11 @@ namespace Application.MainModule.Servicios.Catalogos
             return lUsuarios;
         }
 
+        public static Usuario Obtener(int idUsuario)
+        {
+            return new UsuarioDataAccess().Buscar(idUsuario);
+        }
+
         public static string ObtenerNombreCompleto(Usuario usuario)
         {
             return string.Concat(usuario.Nombre, " ", usuario.Apellido1, " ", usuario.Apellido2);

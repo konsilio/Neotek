@@ -11,9 +11,9 @@ namespace Mail.MainModule
 {
     public class EnviarCorreos
     {
-        private string _Servidor = ConfigurationManager.AppSettings["Servidor"];
-        private int _Puerto = Convert.ToInt32(ConfigurationManager.AppSettings["Puerto"]);
-        private string _Contrasena = ConfigurationManager.AppSettings["Contrasena"];
+        private string _Servidor = ConfigurationManager.AppSettings["MailServidor"];
+        private int _Puerto = Convert.ToInt32(ConfigurationManager.AppSettings["MailPuerto"]);
+        private string _Contrasena = ConfigurationManager.AppSettings["MailContrasena"];
         private string _De;
         private string _Mensaje;
         private string _Asunto;
@@ -79,7 +79,7 @@ namespace Mail.MainModule
             set { _RutaArchivo = value; }
         }
 
-        public void EnviarCorreo()
+        public void EnviarCorreo(bool EsMensajeHtml = true)
         {
             //Creamos los objetos del emisor y receptor de los correos....
             MailMessage mensaje = new MailMessage();
@@ -130,7 +130,7 @@ namespace Mail.MainModule
 
                 //Y terminamos con el mensaje del correo.
                 mensaje.Body = _Mensaje;
-                mensaje.IsBodyHtml = true;
+                mensaje.IsBodyHtml = EsMensajeHtml;
                 mensaje.BodyEncoding = System.Text.Encoding.UTF8;
 
                 // Se crea el objeto para el envío de correos electrónicos indicándole

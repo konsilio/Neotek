@@ -8,6 +8,7 @@ using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.AdaptadoresDTO.Requisicion;
 using Exceptions.MainModule.Validaciones;
+using Application.MainModule.Servicios.Notificacion;
 
 namespace Application.MainModule.Servicios.Requisicion
 {
@@ -15,7 +16,11 @@ namespace Application.MainModule.Servicios.Requisicion
     {
         public static RespuestaRequisicionDto GuardarRequisicionNueva(Sagas.MainModule.Entidades.Requisicion _req)
         {
-            return new RequisicionDataAccess().InsertarNueva(_req);
+            var respuesta = new RequisicionDataAccess().InsertarNueva(_req);
+            if (respuesta.Exito)
+                NotificarServicio.RequisicionNueva(_req);
+
+            return respuesta;
         }
        
         public static List<RequisicionDTO> BuscarRequisicionPorIdEmpresa(Int16 _IdEmpresa)

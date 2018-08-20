@@ -10,6 +10,14 @@ namespace Utilities.MainModule
 {
     public static class Convertir
     {
+        public static string GetPhysicalPath(string path)
+        {
+            if (HttpContext.Current != null)
+                return HttpContext.Current.Server.MapPath(path);
+            else
+                return string.Concat(HttpRuntime.AppDomainAppPath, path.Replace("~/", string.Empty).Replace("/", "\\"));
+        }
+
         public static string PhysicalPathToVirtualPath(string physicalPath)
         {
             if (!physicalPath.StartsWith(HttpContext.Current.Request.PhysicalApplicationPath))
