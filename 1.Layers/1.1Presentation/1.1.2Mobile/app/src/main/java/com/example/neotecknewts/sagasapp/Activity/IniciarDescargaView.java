@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by neotecknewts on 13/08/18.
  */
-
+//interfaz que indica los metodos relacionados con la vista que el interactor usara
 public interface IniciarDescargaView {
     void showProgress(int mensaje);
     void hideProgress();

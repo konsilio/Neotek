@@ -24,13 +24,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class MenuInteractorImpl implements MenuInteractor {
+    //se declara el tag de la clase y el presenter correspondiente
     public static final String TAG = "MenuInteractor";
     MenuPresenter menuPresenter;
 
+    //constructor de la clase y se inicializa el presenter
     public MenuInteractorImpl(MenuPresenter menuPresenter){
         this.menuPresenter = menuPresenter;
     }
 
+    //funcion que hace el llamado al web service por el metodo indicado en la interfaz de restclient y con los parametros indicados
+    //obtiene la lista de menu
     @Override
     public void getMenu(String token) {
         String url = Constantes.BASE_URL;

@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using System.Web;
 using Security.MainModule.Token_Service;
 using Sagas.MainModule.Entidades;
+using Application.MainModule.Servicios.AccesoADatos;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
     public static class UsuarioAplicacionServicio
     {
-        public static string Obtener()
+        public static Usuario Obtener()
         {
-            return string.Empty;
+            return new UsuarioDataAccess().Buscar(TokenServicio.ObtenerIdUsuario());
         }
     }
 }

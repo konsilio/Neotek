@@ -40,10 +40,13 @@ import java.util.Locale;
 
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
+    //lista con la que se llenara la vista
     private ArrayList<MenuDTO> menuItems;
     private int[] colores;
+    //contexto de la aplicacipon
     Context context;
 
+    //constructor que recibe la lista y la asinga a la de esta clase
     public MenuAdapter(ArrayList<MenuDTO> menuItems) {
         this.menuItems = menuItems;
         colores = new int[3];
@@ -52,6 +55,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         colores[2] = R.color.colorBackgroundMenu3;
     }
 
+    //metodo que infla la vista, se seleciona que layout sera el que se repetira por cada elemento de la vista
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -63,23 +67,19 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         return viewHolder;
     }
 
+    //por cada elemento de la lista la vista se llenara de la siguiente manera
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final MenuDTO menuItem = menuItems.get(position);
 
-
-        // Set item views based on your views and data model
+//se cargan los datos del item de la lista a la vista
         TextView textView = holder.nameTextView;
         textView.setText(menuItem.getName());
         TextView textViewruta = holder.textViewRuta;
         textViewruta.setText(menuItem.getHeaderMenu());
         LinearLayout linearLayout = holder.linearLayout;
-        /*if (position <= 2) {
-            linearLayout.setBackgroundColor(context.getResources().getColor(colores[position]));
-        } else {
-            linearLayout.setBackgroundColor(context.getResources().getColor(colores[position - 3]));
-        }*/
 
+        //se declara el comportamiento al recibir el click y las vistas que se deben iniciar
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +111,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     }
 
 
+    //se declaran las vistas que se tienen en cada elemento a repetir y se obtienen de la vista
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView nameTextView;
         public ImageView imageView;

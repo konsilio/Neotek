@@ -25,12 +25,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class VistaOrdenesCompraInteractorImpl implements VistaOrdenesCompraInteractor {
+    //se declara el tag de la clase y el presenter correspondiente
     public static final String TAG = "VistaOrdenesInteractor";
     VistaOrdenesCompraPresenter vistaOrdenesCompraPresenter;
 
+    //constructor de la clase y se inicializa el presenter
     public VistaOrdenesCompraInteractorImpl(VistaOrdenesCompraPresenter vistaOrdenesCompraPresenter){
         this.vistaOrdenesCompraPresenter = vistaOrdenesCompraPresenter;
     }
+
+    //funcion que hace el llamado al web service por el metodo indicado en la interfaz de restclient y con los parametros indicados
+    //obtiene todas las ordenes de compra
     @Override
     public void getOrdenesCompra(int IdEmpresa, String token) {
         String url = Constantes.BASE_URL;

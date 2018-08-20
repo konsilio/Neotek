@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Text;
 using System.Web;
 using System.Xml.Serialization;
+using System.Drawing;
 
 namespace Utilities.MainModule
 {
@@ -146,5 +147,21 @@ namespace Utilities.MainModule
         }
 
         //******** ARCHIVOS XML
+
+        public static Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            Image image;
+            try
+            {
+                MemoryStream ms = new MemoryStream(byteArrayIn, 0, byteArrayIn.Length);
+                ms.Write(byteArrayIn, 0, byteArrayIn.Length);
+                image = Image.FromStream(ms, true);
+            }
+            catch
+            {
+                image = null;
+            }
+            return image;
+        }
     }
 }

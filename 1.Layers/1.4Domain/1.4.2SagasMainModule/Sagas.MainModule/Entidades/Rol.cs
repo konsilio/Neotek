@@ -39,6 +39,22 @@ namespace Sagas.MainModule.Entidades
         public bool AppCompraEntraGas { get; set; }
         public bool AppCompraGasIniciarDescarga { get; set; }
         public bool AppCompraGasFinalizarDescarga { get; set; }
+        public bool CatInsertarUsuario { get; set; }
+        public bool CatModificarUsuario { get; set; }
+        public bool CatEliminarUsuario { get; set; }
+        public bool CatConsultarUsuario { get; set; }
+        public bool CatInsertarProveedor { get; set; }
+        public bool CatModificarProveedor { get; set; }
+        public bool CatEliminarProveedor { get; set; }
+        public bool CatConsultarProveedor { get; set; }
+        public bool CatInsertarProducto { get; set; }
+        public bool CatModificarProducto { get; set; }
+        public bool CatEliminarProducto { get; set; }
+        public bool CatConsultarProducto { get; set; }
+        public bool CatInsertarCuentaContable { get; set; }
+        public bool CatModificarCuentaContable { get; set; }
+        public bool CatEliminarCuentaContable { get; set; }
+        public bool CatConsultarCuentaContable { get; set; }
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

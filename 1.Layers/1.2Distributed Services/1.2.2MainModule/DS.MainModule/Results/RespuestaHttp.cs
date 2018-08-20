@@ -12,18 +12,7 @@ namespace DS.MainModule.Results
 {
     public static class RespuestaHttp
     {
-        public static HttpResponseMessage crearRepuesta(RespuestaDto respuesta, HttpRequestMessage request)
-        {
-            HttpResponseMessage respuestaHttp;
-
-            if (respuesta.Exito)
-                respuestaHttp = request.CreateResponse(HttpStatusCode.OK, respuesta);
-            else
-                respuestaHttp = request.CreateResponse(HttpStatusCode.BadRequest, respuesta);
-
-            return respuestaHttp;
-        }
-        public static HttpResponseMessage crearRepuesta(DS.MainModule.Filters.ValidateModelAttribute.RespuestaDto respuesta, HttpRequestMessage request)
+        public static HttpResponseMessage crearRespuesta(RespuestaDto respuesta, HttpRequestMessage request)
         {
             HttpResponseMessage respuestaHttp;
 
@@ -35,7 +24,7 @@ namespace DS.MainModule.Results
             return respuestaHttp;
         }
 
-        public static HttpResponseMessage crearRepuesta(RespuestaAutenticacionMobileDto respuesta, HttpRequestMessage request)
+        public static HttpResponseMessage crearRespuesta(DS.MainModule.Filters.ValidateModelAttribute.RespuestaDto respuesta, HttpRequestMessage request)
         {
             HttpResponseMessage respuestaHttp;
 
@@ -47,7 +36,19 @@ namespace DS.MainModule.Results
             return respuestaHttp;
         }
 
-        public static HttpResponseMessage crearRepuesta(RespuestaOrdenesCompraDTO respuesta, HttpRequestMessage request)
+        public static HttpResponseMessage crearRespuesta(RespuestaAutenticacionMobileDto respuesta, HttpRequestMessage request)
+        {
+            HttpResponseMessage respuestaHttp;
+
+            if (respuesta.Exito)
+                respuestaHttp = request.CreateResponse(HttpStatusCode.OK, respuesta);
+            else
+                respuestaHttp = request.CreateResponse(HttpStatusCode.BadRequest, respuesta);
+
+            return respuestaHttp;
+        }
+
+        public static HttpResponseMessage crearRespuesta(RespuestaOrdenesCompraDTO respuesta, HttpRequestMessage request)
         {
             HttpResponseMessage respuestaHttp;
 
@@ -59,24 +60,9 @@ namespace DS.MainModule.Results
             return respuestaHttp;
         }
 
-        public static HttpResponseMessage crearRepuesta<T>(List<T> respuesta, HttpRequestMessage request)
+        public static HttpResponseMessage crearRespuesta<T>(List<T> respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
-
-        //public HttpResponseMessage crearRepuesta(RespuestaDto respuesta, HttpRequestMessage request)
-        //{
-        //    HttpResponseMessage respuestaHttp;
-
-        //    if (respuesta.Exito)
-        //        if (respuesta.EsInsercion)                
-        //        respuestaHttp = request.CreateResponse(HttpStatusCode.Created, respuesta);
-        //    else
-        //        respuestaHttp = request.CreateResponse(HttpStatusCode.OK, respuesta);
-        //    else
-        //        respuestaHttp = request.CreateResponse(HttpStatusCode.BadRequest, respuesta);
-
-        //    return respuestaHttp;
-        //}
     }
 }

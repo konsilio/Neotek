@@ -33,6 +33,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     private static final int CAMERA_REQUEST = 2;
 
+    //Como se sabe que de la papeleta solo se captura una imagen este activity es igual a cameraDescarga solo que solo toma una imagen
     public static boolean fotoTomada;
 
     public LinearLayout layoutTitle;
