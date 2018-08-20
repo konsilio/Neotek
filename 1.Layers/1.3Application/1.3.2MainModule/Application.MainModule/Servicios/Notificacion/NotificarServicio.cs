@@ -29,7 +29,7 @@ namespace Application.MainModule.Servicios.Notificacion
             //{
             //}
 
-            Enviar(correoDto);
+            //Enviar(correoDto);
             //MensajePushServicio.Enviar(dto);
         }
 

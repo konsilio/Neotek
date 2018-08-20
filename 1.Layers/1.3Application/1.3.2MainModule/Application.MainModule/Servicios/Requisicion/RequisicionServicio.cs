@@ -16,10 +16,7 @@ namespace Application.MainModule.Servicios.Requisicion
     {
         public static RespuestaRequisicionDto GuardarRequisicionNueva(Sagas.MainModule.Entidades.Requisicion _req)
         {
-            var respuesta = new RequisicionDataAccess().InsertarNueva(_req);
-            if (respuesta.Exito)
-                NotificarServicio.RequisicionNueva(_req);
-
+            var respuesta = new RequisicionDataAccess().InsertarNueva(_req);  
             return respuesta;
         }
        
@@ -30,6 +27,10 @@ namespace Application.MainModule.Servicios.Requisicion
         public static RequisicionRevisionDTO BuscarRequisicion(int _idrequi)
         {
             return RequisicionAdapter.ToRevDTO(new RequisicionDataAccess().BuscarPorIdRequisicion(_idrequi));
+        }
+        public static Sagas.MainModule.Entidades.Requisicion Buscar(int _idrequi)
+        {
+            return new RequisicionDataAccess().BuscarPorIdRequisicion(_idrequi);
         }
         public static RequisicionAutorizacionDTO BuscarRequisicionAuto(int _idequi)
         {

@@ -306,7 +306,7 @@
                                                     <HeaderTemplate>
                                                         Revision Fisica
                                                     </HeaderTemplate>
-                                                    <ItemTemplate>
+                                                    <ItemTemplate>                                                     
                                                         <asp:CheckBox ID="chbRevision" runat="server" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -389,7 +389,7 @@
                                                         Autoriza entrega
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:CheckBox ID="chbAutEntrega" runat="server" />
+                                                        <asp:CheckBox ID="chbAutEntrega" runat="server" CssClass="checkbox" />
                                                     </ItemTemplate>
                                                     <ItemStyle HorizontalAlign="Center" />
                                                 </asp:TemplateField>
@@ -408,7 +408,7 @@
                                                         Autoriza Compra
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:CheckBox ID="chbAutCompra" runat="server" />
+                                                        <asp:CheckBox ID="chbAutCompra" runat="server" CssClass="checkbox" />
                                                     </ItemTemplate>
                                                     <ItemStyle HorizontalAlign="Center" />
                                                 </asp:TemplateField>
@@ -475,7 +475,7 @@
                 <div class="modal-body">
                     <div class="body">
                         <div class="col-sm-12">
-                            <asp:TextBox ID="txtMotivoCancela" TextMode="MultiLine" CssClass="form-control tex" runat="server" rows="5" placeholder="Cual es el motivo de la cancelacion..."></asp:TextBox>
+                            <asp:TextBox ID="txtMotivoCancela" TextMode="MultiLine" CssClass="form-control tex" runat="server" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></asp:TextBox>
                         </div>
                     </div>
                 </div>
