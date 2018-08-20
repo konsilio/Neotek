@@ -17,9 +17,7 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Pais()
         {
-            this.AdministracionCentral = new HashSet<AdministracionCentral>();
             this.Empresa = new HashSet<Empresa>();
-            this.UsuarioAC = new HashSet<UsuarioAC>();
             this.Usuarios = new HashSet<Usuario>();
             this.Proveedores = new HashSet<Proveedor>();
         }
@@ -29,11 +27,7 @@ namespace Sagas.MainModule.Entidades
         public System.DateTime FechaRegistro { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AdministracionCentral> AdministracionCentral { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Empresa> Empresa { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioAC> UsuarioAC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuarios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

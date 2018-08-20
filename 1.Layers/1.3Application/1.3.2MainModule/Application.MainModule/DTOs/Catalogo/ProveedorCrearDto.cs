@@ -57,7 +57,7 @@ namespace Application.MainModule.DTOs.Catalogo
 
         [Required(ErrorMessage = Error.R0002)]
         [StringLength(100, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "NombreComercial")]
+        [Display(Name = "Nombre Comercial")]
         public string NombreComercial { get; set; }
         public bool ProdutoPrinicpal { get; set; }
         public bool TransportistaProdutoPrinicpal { get; set; }
@@ -73,71 +73,71 @@ namespace Application.MainModule.DTOs.Catalogo
         public string Cuenta { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "DiasCredito")]
+        [Display(Name = "Días Credito")]
         public decimal DiasCredito { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
         [StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Persona1")]
+        [Display(Name = "Persona 1")]
         public string Persona1 { get; set; }
 
         [StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Persona2")]
+        [Display(Name = "Persona 2")]
         public string Persona2 { get; set; }
 
         [StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Persona3")]
+        [Display(Name = "Persona 3")]
         public string Persona3 { get; set; }
 
         [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Telefono1")]
+        [Display(Name = "Telefono 1")]
         public string Telefono1 { get; set; }
 
         [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Telefono2")]
+        [Display(Name = "Telefono 2")]
         public string Telefono2 { get; set; }
 
         [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Telefono2")]
+        [Display(Name = "Telefono 3")]
         public string Telefono3 { get; set; }
 
         [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Celular1")]
+        [Display(Name = "Celular 1")]
         public string Celular1 { get; set; }
 
         [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Celular1")]
+        [Display(Name = "Celular 2")]
         public string Celular2 { get; set; }
 
         [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Celular1")]
+        [Display(Name = "Celular 3")]
         public string Celular3 { get; set; }
 
-        [EmailAddress(ErrorMessage = Error.R0004)]
+        [EmailAddress(ErrorMessage = Error.C0004)]
         [StringLength(200, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Email1")]
+        [Display(Name = "Email 1")]
         public string Email1 { get; set; }
 
-        [EmailAddress(ErrorMessage = Error.R0004)]
+        [EmailAddress(ErrorMessage = Error.C0004)]
         [StringLength(200, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Email1")]
+        [Display(Name = "Email 2")]
         public string Email2 { get; set; }
 
-        [EmailAddress(ErrorMessage = Error.R0004)]
+        [EmailAddress(ErrorMessage = Error.C0004)]
         [StringLength(200, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Email1")]
+        [Display(Name = "Email 3")]
         public string Email3 { get; set; }
 
         [StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "SitioWeb1")]
+        [Display(Name = "SitioWeb 1")]
         public string SitioWeb1 { get; set; }
 
         [StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "SitioWeb2")]
+        [Display(Name = "SitioWeb 2")]
         public string SitioWeb2 { get; set; }
 
         [StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "SitioWeb3")]
+        [Display(Name = "SitioWeb 3")]
         public string SitioWeb3 { get; set; }
 
         [StringLength(150, MinimumLength = 1, ErrorMessage = Error.R0004)]
@@ -166,11 +166,11 @@ namespace Application.MainModule.DTOs.Catalogo
 
         [Required(ErrorMessage = Error.R0002)]
         [StringLength(10, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "NumExt")]
+        [Display(Name = "Número exterior")]
         public string NumExt { get; set; }
 
         [StringLength(10, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "NumExt")]
+        [Display(Name = "Número Interior")]
         public string NumInt { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
