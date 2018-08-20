@@ -92,12 +92,12 @@ namespace Application.MainModule.Flujos
             return ProveedorServicio.ModificarProveedor(provee);
         }
 
-        public List<ProveedorDto> ConsultaProveedores(short idEmpresa)
+        public List<ProveedorDto> ConsultaProveedores()
         {
             var resp = PermisosServicio.PuedeConsultarProveedor();
             if (!resp.Exito) return new List<ProveedorDto>();
 
-            return ProveedorAdapter.ToDto(ProveedorServicio.Obtener(idEmpresa));
+            return ProveedorAdapter.ToDto(ProveedorServicio.Obtener());
         }
 
         public ProveedorDto ConsultaProveedor(int idProveedor)

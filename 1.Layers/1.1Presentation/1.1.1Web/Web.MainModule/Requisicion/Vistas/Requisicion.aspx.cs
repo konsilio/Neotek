@@ -86,15 +86,15 @@ namespace Web.MainModule.Requisicion.Vista
         private Model.RequisicionCrearDTO CrearReq()
         {
             Model.RequisicionCrearDTO reqCrearDTO = new Model.RequisicionCrearDTO();
-            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "EsAdminCentral").Value))
+            if (Convert.ToBoolean(TokenServicio.ObtenerEsAdministracionCentral(_tok)))
             {
                 reqCrearDTO.IdEmpresa = short.Parse(ddlEmpresas.SelectedValue);
                 reqCrearDTO.IdUsuarioSolicitante = int.Parse(ddlSolicitante.SelectedValue);
             }
             else
             {
-                reqCrearDTO.IdUsuarioSolicitante = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdUsuario").Value);
-                reqCrearDTO.IdEmpresa = Convert.ToInt16(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdEmpresa").Value);
+                reqCrearDTO.IdUsuarioSolicitante = TokenServicio.ObtenerIdUsuario(_tok);
+                reqCrearDTO.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tok);
             }
             reqCrearDTO.MotivoRequisicion = txtMotivoCompra.Text;
             reqCrearDTO.RequeridoEn = txtRequeridoEn.Text;
@@ -134,10 +134,10 @@ namespace Web.MainModule.Requisicion.Vista
             _aut.IdRequisicion = (int)ViewState["idRequisicion"];
             _aut.NumeroRequisicion = lblIdRequisicion.Text;
             _aut.FechaAutorizacion = DateTime.Today;
-            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "EsAdminCentral").Value))
+            if (TokenServicio.ObtenerEsAdministracionCentral(_tok))
                 _aut.IdUsuarioAutorizacion = int.Parse(ddlSolicitante.SelectedValue);
             else
-                _aut.IdUsuarioAutorizacion = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdUsuario").Value);
+                _aut.IdUsuarioAutorizacion = TokenServicio.ObtenerIdUsuario(_tok);
             _aut.ListaProductos = (List<Model.RequisicionProdAutPutDTO>)ViewState["ListaRequisicionProdAutPutDTO"];
             _aut.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Autorizacion_finalizada;
             return _aut;
@@ -153,9 +153,9 @@ namespace Web.MainModule.Requisicion.Vista
                 CancelaDTO.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Cerrada;
                 CancelaDTO.FechaAutorizacion = DateTime.Today;
                 if (Request.QueryString["Sts"].Equals("1"))
-                    CancelaDTO.IdUsuarioRevision = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdUsuario").Value);
+                    CancelaDTO.IdUsuarioRevision = TokenServicio.ObtenerIdUsuario(_tok);
                 else
-                    CancelaDTO.IdUsuarioAutorizacion = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdUsuario").Value);
+                    CancelaDTO.IdUsuarioAutorizacion = TokenServicio.ObtenerIdUsuario(_tok);
             }
             return CancelaDTO;
         }
@@ -232,6 +232,51 @@ namespace Web.MainModule.Requisicion.Vista
             txtCantidad.Text = string.Empty;
             ddlCentroCostos.SelectedIndex = 0;
             txtDetalle.Text = string.Empty;
+        }
+        private RespuestaOperacionDto ValidarProdNuevo()
+        {
+            Model.RequisicionProductoGridDTO prod = CrearProductoGrid();
+            var validacion = ValidadorClases.EnlistaErrores(prod);
+            if (validacion.ModeloValido)
+            {
+                if (!(prod.Cantidad > 0))
+                {
+                    validacion.MensajesError.Add(new Result { IdentidadError = "Cantidad", MensajeError = Exceptions.MainModule.Validaciones.Error.R0003 });
+                    validacion.ModeloValido = false;
+                }
+            }
+            if (validacion.ModeloValido)
+                ValidarCampos(new List<Result>());//Se manda lista vacia para limpiar campos
+            else
+                ValidarCampos(validacion.MensajesError);
+            return validacion;
+        }
+        private RespuestaOperacionDto ValidarReqNuevo()
+        {
+            Model.RequisicionCrearDTO Edto = CrearReq();
+            var validacion = ValidadorClases.EnlistaErrores<Model.RequisicionCrearDTO>(Edto);
+            if (ValidarListaprodcutos())
+            {            
+                if (validacion.ModeloValido)
+                {
+                    if (Edto.FechaRequerida <= DateTime.Today)
+                    {
+                        validacion.MensajesError.Add(new Result { IdentidadError = "FechaRequerida", MensajeError = Exceptions.MainModule.Validaciones.Error.R0011 });
+                        validacion.ModeloValido = false;
+                    }
+                    if (Edto.FechaRequerida == null)
+                    {
+                        validacion.MensajesError.Add(new Result { IdentidadError = "FechaRequerida", MensajeError = Exceptions.MainModule.Validaciones.Error.S0001 });
+                        validacion.ModeloValido = false;
+                    }
+                }
+            }
+            if (validacion.ModeloValido)
+                ValidarCampos(new List<Result>());//Se manda lista vacia para limpiar campos
+            else
+                ValidarCampos(validacion.MensajesError);
+
+            return validacion;
         }
         private bool ValidarProductoRepetido(int idProducto, int idCentroCosto)
         {
@@ -380,48 +425,41 @@ namespace Web.MainModule.Requisicion.Vista
         private void GuardarRequisicion()
         {
             Servicio.RequisicionServicio serv = new Servicio.RequisicionServicio();
-            if (ValidarListaprodcutos())
+            var validacionRequisicion = ValidarReqNuevo(); 
+            if (validacionRequisicion.ModeloValido)
             {
-                Model.RequisicionCrearDTO Edto = CrearReq();
-                var validacion = ValidadorClases.EnlistaErrores<Model.RequisicionCrearDTO>(Edto);
-                if (validacion.ModeloValido)
+                var respuesta = serv.GuardarRequisicion(new Servicio.RequisicionServicio().UnirDtos(CrearReq()), _tok);
+                if (respuesta != null)
                 {
-                    ValidarCampos(new List<Result>());//Se manda lista vacia para limpiar campos
-                    var respuesta = serv.GuardarRequisicion(new Servicio.RequisicionServicio().UnirDtos(Edto), _tok);
-                    if (respuesta != null)
+                    if (respuesta.Exito)
                     {
-                        if (respuesta.Exito)
-                        {
-                            lblNoRequisicion.Text = respuesta.NumRequisicion;
-                            lblIdRequisicion.Text = respuesta.NumRequisicion;
-                            divNoRequi.Visible = true;
-                            divCampos.Visible = false;
-                            LimpiarCamposProductos();
-                            LimpiarMensajesProd();
-                            EnviarCorreo(respuesta.IdRequisicion);
-                            BtnCrear.Enabled = false;
-                            btnAgregar.Enabled = false;
-                            dgListaproductos.Enabled = false;
-                            btnok.Attributes.Remove("class");
-                            btnok.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
-                            btnCancel.Attributes.Remove("class");
-                            btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
-                            btnAgregar.CssClass = "btn btn - danger btn - simple btn - round btn - sm disabled";
-                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "ShowPopup();", true);
-                        }
-                        else
-                        {
-                            lblErrorCampos.Text = "Ocurrio un erro";//Error.R0009;
-                            divCampos.Visible = true;
-                        }
+                        lblNoRequisicion.Text = respuesta.NumRequisicion;
+                        lblIdRequisicion.Text = respuesta.NumRequisicion;
+                        divNoRequi.Visible = true;
+                        divCampos.Visible = false;
+                        LimpiarCamposProductos();
+                        LimpiarMensajesProd();
+                        BtnCrear.Enabled = false;
+                        btnAgregar.Enabled = false;
+                        dgListaproductos.Enabled = false;
+                        btnok.Attributes.Remove("class");
+                        btnok.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
+                        btnCancel.Attributes.Remove("class");
+                        btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
+                        btnAgregar.CssClass = "btn btn danger btn simple btn round btn sm disabled";
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", "ShowPopup();", true);
+                    }
+                    else
+                    {
+                        lblErrorCampos.Text = Exceptions.MainModule.Validaciones.Error.R0001;
+                        divCampos.Visible = true;
                     }
                 }
-                else
-                {
-                    ValidarCampos(validacion.MensajesError);
-                    lblErrorCampos.Text = "Verifique que los datos esten completos";
-                    divCampos.Visible = true;
-                }
+            }
+            else
+            {                
+                lblErrorCampos.Text = Exceptions.MainModule.Validaciones.Error.R0012;
+                divCampos.Visible = true;
             }
         }
         private void FinalizarRevision()
@@ -515,10 +553,10 @@ namespace Web.MainModule.Requisicion.Vista
             Model.RequisicionRevPutDTO requRevision = new Model.RequisicionRevPutDTO();
             requRevision.IdRequisicion = (int)ViewState["idRequisicion"];
             requRevision.NumeroRequisicion = lblIdRequisicion.Text;
-            if (Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "EsAdminCentral").Value))
+            if (TokenServicio.ObtenerEsAdministracionCentral(_tok))
                 requRevision.IdUsuarioRevision = int.Parse(ddlSolicitante.SelectedValue);
             else
-                requRevision.IdUsuarioRevision = Convert.ToInt32(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(_tok, "IdUsuario").Value);
+                requRevision.IdUsuarioRevision = TokenServicio.ObtenerIdUsuario(_tok);
             requRevision.OpinionAlmacen = txtOpinion.Text;
             requRevision.FechaRevision = DateTime.Today;
             requRevision.ListaProductos = (List<Model.RequisicionProdReviPutDTO>)ViewState["LIstaReqProdRevPutDTO"];
@@ -541,20 +579,7 @@ namespace Web.MainModule.Requisicion.Vista
             ((List<Model.ProductoDTO>)ViewState["ProductosDTO"]));
             return prod;
         }
-        private RespuestaOperacionDto ValidarProdNuevo()
-        {
-            Model.RequisicionProductoGridDTO prod = CrearProductoGrid();
-            var validacion = ValidadorClases.EnlistaErrores(prod);
-            if (validacion.ModeloValido)
-            {
-                if (!(prod.Cantidad > 0))
-                {
-                    validacion.MensajesError.Add(new Result { IdentidadError = "Cantidad", MensajeError = "Cantidad incorrecta" });
-                    validacion.ModeloValido = false;
-                }            
-            }
-            return validacion;
-        }
+      
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             var validacion = ValidarProdNuevo();
@@ -585,9 +610,8 @@ namespace Web.MainModule.Requisicion.Vista
                 btnAgregar.Text = "Agregar";
             }
             else
-            {
-                ValidarCampos(validacion.MensajesError);
-                lblErrorPord.Text = "Verifique que los datos esten completos";
+            {               
+                lblErrorPord.Text = Exceptions.MainModule.Validaciones.Error.R0012;
                 DivCamposPord.Visible = true;
             }
         }

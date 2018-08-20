@@ -23,7 +23,9 @@ namespace Exceptions.MainModule.Validaciones
         public const string R0007 = "Debes agregar al menos un producto";
         public const string R0008 = "No se puede exceder la cantidad de {2}";
         public const string R0009 = "La requisición no se actualizo correctamente";
-        public const string R0010 = "La busqueda no arrojo resultados"; 
+        public const string R0010 = "La busqueda no arrojo resultados";
+        public const string R0011 = "La fecha de requisición no puede ser menor o igual a la fehca actual";
+        public const string R0012 = "Verifique que los datos esten completos";
 
         public const string C0001 = "El '{0}' no coincide con los lineamientos establecidos por el Servicio de Administración Tributaria. Corrígelo por favor.";
         public const string C0002 = "No se logró hacer el registro {0}. Si este mensaje persiste comuniquese con el administrador del sistema";

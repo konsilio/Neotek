@@ -389,7 +389,7 @@
                                                         Autoriza entrega
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:CheckBox ID="chbAutEntrega" runat="server" CssClass="checkbox" />
+                                                        <asp:CheckBox ID="chbAutEntrega" runat="server" />
                                                     </ItemTemplate>
                                                     <ItemStyle HorizontalAlign="Center" />
                                                 </asp:TemplateField>
@@ -408,7 +408,7 @@
                                                         Autoriza Compra
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:CheckBox ID="chbAutCompra" runat="server" CssClass="checkbox" />
+                                                        <asp:CheckBox ID="chbAutCompra" runat="server" />
                                                     </ItemTemplate>
                                                     <ItemStyle HorizontalAlign="Center" />
                                                 </asp:TemplateField>
