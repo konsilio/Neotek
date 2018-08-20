@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
@@ -38,6 +39,7 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
     public Spinner spinnerMedidorAlmacen;
     public Spinner spinnerMedidorTractor;
     public Spinner spinnerAlmacenes;
+    public TextView TvIniciarDescargaActivityNo,TvIniciarDescargaActivitySi;
     //cuadro de dialogo con el progreso de la obtencion de datos
     ProgressDialog progressDialog;
 
@@ -70,6 +72,9 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
         spinnerMedidorAlmacen = (Spinner) findViewById(R.id.spinner_medidor_almacen);
         spinnerMedidorTractor = (Spinner) findViewById(R.id.spinner_medidor_tractor);
         spinnerAlmacenes = (Spinner)findViewById(R.id.spinner_almacen);
+        /* Obtengo los text view del switch (si, no)*/
+        TvIniciarDescargaActivitySi = findViewById(R.id.TvIniciarDescargaActivitySi);
+        TvIniciarDescargaActivityNo = findViewById(R.id.TvIniciarDescargaActivityNo);
 
         //se incializa la clase de la session
         session = new Session(getApplicationContext());
@@ -97,6 +102,20 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
 
         //se obtienen las ordenes de compra, con el token guardado en la session
         presenter.getOrdenesCompra(session.getIdEmpresa(),session.getTokenWithBearer());
+        /* Detecto el evento clic en el label de 'No' para cambiar el switch a off*/
+        TvIniciarDescargaActivityNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchTanquePrestado.setChecked(false);
+            }
+        });
+        /*Detecto el evento clic en el label de 'Si' opara cambiar el switch a on*/
+        TvIniciarDescargaActivitySi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchTanquePrestado.setChecked(true);
+            }
+        });
     }
 
     //este metodo recopila los datos de la vista y los asigna al objeto
