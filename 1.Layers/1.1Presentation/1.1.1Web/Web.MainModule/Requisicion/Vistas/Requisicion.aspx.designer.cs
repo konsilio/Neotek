@@ -58,6 +58,15 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.Label lblIdRequisicion;
         
         /// <summary>
+        /// Control divCamposRequi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCamposRequi;
+        
+        /// <summary>
         /// Control txtFechaRequerida.
         /// </summary>
         /// <remarks>
@@ -271,7 +280,7 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregar;
+        protected global::System.Web.UI.WebControls.LinkButton btnAgregar;
         
         /// <summary>
         /// Control DivCamposPord.
@@ -373,13 +382,22 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor btnCancel;
         
         /// <summary>
-        /// Control BtnCrear.
+        /// Control btnok.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnCrear;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnok;
+        
+        /// <summary>
+        /// Control lblbtnCrear.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblbtnCrear;
         
         /// <summary>
         /// Control txtMotivoCancela.
@@ -398,5 +416,23 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancelar;
+        
+        /// <summary>
+        /// Control BtnCrear.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCrear;
+        
+        /// <summary>
+        /// Control btnFin.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFin;
     }
 }

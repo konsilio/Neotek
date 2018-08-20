@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Security.Claims;
 using Security.MainModule.Token_Service;
 using Web.MainModule.Seguridad.Servicio;
+using Exceptions.MainModule.Validaciones;
 
 namespace Web.MainModule
 {
@@ -69,6 +70,7 @@ namespace Web.MainModule
                 ListItem item = new ListItem(Enum.GetName(typeof(Requisicion.Model.RequisiconEstatus), r).Replace("_", " "), ((byte)r).ToString());
                 ddlFiltroEstatus.Items.Add(item);
             }
+            ddlFiltroEstatus.Items.Insert(0, new ListItem ("Estatus", "0"));
         }
         private void CargarRequisiciones()
         {
@@ -115,7 +117,6 @@ namespace Web.MainModule
             dgRequisisiones.DataSource = newList.ToList().OrderByDescending(x => x.IdRequisicion).ToList();
             dgRequisisiones.DataBind();
         }
-
         protected void dgRequisisiones_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType.Equals(DataControlRowType.DataRow))
@@ -133,18 +134,37 @@ namespace Web.MainModule
                 }
             }
         }
-        protected void ddlFiltroEstatus_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void FiltrarRequisiciones()
         {
-            List<Requisicion.Model.RequisicionDTO> newList = new List<Requisicion.Model.RequisicionDTO>();
-            foreach (var item in (List<Requisicion.Model.RequisicionDTO>)ViewState["ListRequisicionDTO"])
-            {
-                if (item.IdRequisicionEstatus.ToString().Equals(ddlFiltroEstatus.SelectedValue))
-                {
-                    newList.Add(item);
-                }
-            }
+            List<Requisicion.Model.RequisicionDTO> newList = (List<Requisicion.Model.RequisicionDTO>)ViewState["ListRequisicionDTO"];
+            #region Por estatus
+            if (ddlFiltroEstatus.SelectedValue != "0")            
+                newList = newList.Where(x => x.IdRequisicionEstatus.ToString().Equals(ddlFiltroEstatus.SelectedValue)).ToList();
+            #endregion
+
+            #region Por Fecha de registro           
+            if (dtpFechaRegiistrDe.HasValue)            
+                newList = newList.Where(x => x.FechaRegistro >= dtpFechaRegiistrDe.GetDate).ToList();
+            if (dtpFechaRegiistrA.HasValue)
+                newList = newList.Where(x => x.FechaRegistro <= dtpFechaRegiistrA.GetDate).ToList();
+            #endregion
+            
+            #region Por Fecha de sequisicion
+            if (dtpFechaRequisicionDe.HasValue)            
+                newList = newList.Where(x => x.FechaRequerida >= dtpFechaRequisicionDe.GetDate).ToList();
+            if (dtpFechaRequisicionA.HasValue)
+                newList = newList.Where(x => x.FechaRequerida <= dtpFechaRequisicionA.GetDate).ToList();
+            #endregion
+
+            if (newList.Count.Equals(0))            
+                dgRequisisiones.EmptyDataText= Exceptions.MainModule.Validaciones.Error.R0010;            
             dgRequisisiones.DataSource = newList.ToList().OrderByDescending(x => x.IdRequisicion).ToList();
             dgRequisisiones.DataBind();
-        }              
+        }        
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            FiltrarRequisiciones();
+        }
     }
 }

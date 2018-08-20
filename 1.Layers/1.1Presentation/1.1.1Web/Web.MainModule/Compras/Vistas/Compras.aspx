@@ -26,7 +26,7 @@
                             <div class="body">
                                 <div class="row clearfix">
                                     <div class="col-sm-4">
-                                        <asp:DropDownList runat="server" ID="ddlEmpresas" data-live-search="true" AutoPostBack="true" CssClass="form-control z-index show-tick" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged" >
+                                        <asp:DropDownList runat="server" ID="ddlEmpresas" data-live-search="true" AutoPostBack="true" CssClass="form-control z-index show-tick" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
                                     <div class="col-sm-4">
@@ -35,43 +35,44 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
-                                        <asp:Button runat="server" ID="btnNuevaReq" Text="Nueva Requisición" CssClass="btn btn-primary btn-round btn-block" OnClick="btnNuevaReq_Click" />
+                                        <asp:Button runat="server" ID="btnNuevaReq" Text="Nueva Requisición" CssClass="btn btn-primary btn-round btn-block btn-icon" OnClick="btnNuevaReq_Click" />
                                     </div>
                                 </div>
                                 <div class="row clearfix">
-                                    <div class="col-lg-3 col-md-6">
-                                        <label>Estatus</label>
-                                        <asp:DropDownList CssClass="form-control show-tick" runat="server" ID="ddlFiltroEstatus" AutoPostBack="true" OnSelectedIndexChanged="ddlFiltroEstatus_SelectedIndexChanged">                                           
+                                    <div class="col-lg-3">
+                                        <b>Estatus</b>
+                                        <asp:DropDownList CssClass="form-control show-tick" runat="server" ID="ddlFiltroEstatus" AutoPostBack="true">
                                         </asp:DropDownList>
                                     </div>
-                                    <div class="col-lg-2 col-md-6">
-                                        <label>Fecha de registro</label>
-                                        <div class="input-group">                                           
-                                           <dtp:DateTimePicker ID="dtpFechaRegiistrDe" CssClass="dataTxt" runat="server" />
-                                        </div>
+                                    <div class="col-lg-2">
+                                        <b>Fecha de registro</b>
+                                        <dtp:DateTimePicker ID="dtpFechaRegiistrDe" CssClass="dataTxt" runat="server" />
                                     </div>
-                                    <div class="col-lg-2 col-md-6">
-                                        <label>&nbsp; </label>
-                                        <div class="input-group">                                           
-                                           <dtp:DateTimePicker ID="dtpFechaRegiistrA" CssClass="dataTxt" runat="server" />
-                                        </div>
+                                    <div class="col-lg-2">
+                                        <b>&nbsp; </b>
+                                        <dtp:DateTimePicker ID="dtpFechaRegiistrA" CssClass="dataTxt" runat="server" />
                                     </div>
-                                    <div class="col-lg-2 col-md-6">
-                                        <label>Fecha de requisición</label>
-                                        <div class="input-group">                                           
-                                           <dtp:DateTimePicker ID="dtpFechaRequisicionDe" CssClass="dataTxt" runat="server" />
-                                        </div>
+                                    <div class="col-lg-2">
+                                        <b>Fecha de requisición</b>
+                                        <dtp:DateTimePicker ID="dtpFechaRequisicionDe" CssClass="dataTxt" runat="server" />
                                     </div>
-                                    <div class="col-lg-2 col-md-6">
-                                        <label>&nbsp;</label>
-                                        <div class="input-group">                                           
-                                           <dtp:DateTimePicker ID="dtpFechaRequisicionA" CssClass="dataTxt" runat="server" />
+                                    <div class="col-lg-2">
+                                        <b>&nbsp; </b>
+                                        <dtp:DateTimePicker ID="dtpFechaRequisicionA" CssClass="dataTxt" runat="server" />
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <b>&nbsp; </b>
+                                        <div class="input-group">
+                                            <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-danger btn-simple btn-round btn-sm" OnClick="btnBuscar_Click">
+                                            <i class="material-icons">search</i>
+                                            <span class="icon-name"></span> 
+                                            </asp:LinkButton>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row clearfix">
                                     <div class="body table-responsive">
-                                        <asp:GridView runat="server" AllowPaging="true" PageSize="6" OnPageIndexChanging="dgRequisisiones_PageIndexChanging" AutoGenerateColumns="false" ID="dgRequisisiones" CssClass="table m-b-0" OnRowCommand="dgRequisisiones_RowCommand" OnRowDataBound="dgRequisisiones_RowDataBound" >
+                                        <asp:GridView runat="server" AllowPaging="true" PageSize="6" OnPageIndexChanging="dgRequisisiones_PageIndexChanging" AutoGenerateColumns="false" ID="dgRequisisiones" CssClass="table m-b-0" OnRowCommand="dgRequisisiones_RowCommand" OnRowDataBound="dgRequisisiones_RowDataBound">
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <HeaderTemplate>
@@ -105,7 +106,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <%--<asp:Label runat="server" ID="lblDgSolicitante" Text='<%# Bind("IdUsuarioSolicitante") %>'></asp:Label>--%>
-                                                        <asp:Label runat="server" ID="lblSolictante" Text='<%# Bind("UsuarioSolicitante") %>' ></asp:Label>
+                                                        <asp:Label runat="server" ID="lblSolictante" Text='<%# Bind("UsuarioSolicitante") %>'></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -114,7 +115,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <%--<asp:Label runat="server" ID="IdEstatus" Text='<%# Bind("IdRequisicionEstatus") %>' Visible="false" ></asp:Label>--%>
-                                                        <asp:Label runat="server" ID="Estatus" Text='<%# Bind("RequisicionEstatus") %>' ></asp:Label>
+                                                        <asp:Label runat="server" ID="Estatus" Text='<%# Bind("RequisicionEstatus") %>'></asp:Label>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>

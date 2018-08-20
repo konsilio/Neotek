@@ -49,6 +49,7 @@ namespace Web.MainModule.Requisicion.Vista
                                 CargarCentrosCosto();
                             }
                         }
+                        dgListaproductos.DataBind();
                     }
                     else
                         Salir();
@@ -158,13 +159,16 @@ namespace Web.MainModule.Requisicion.Vista
             }
             return CancelaDTO;
         }
+        private void EnviarCorreo(int idReq)
+        {
+
+        }
         private bool ValidarRevisionAlmacen()
         {
             bool resp = true;
             if (!txtOpinion.Text.Equals(string.Empty))
             {
                 List<Model.RequisicionProdReviPutDTO> LProdPutDTO = new List<Model.RequisicionProdReviPutDTO>();
-
                 foreach (GridViewRow _row in gvProductosRevision.Rows)
                 {
                     if (_row.RowType.Equals(DataControlRowType.DataRow))
@@ -273,6 +277,7 @@ namespace Web.MainModule.Requisicion.Vista
             lblIdRequisicion.Text = _reqEDTO.NumeroRequisicion;
             btnCancelar.Enabled = true;
             BtnCrear.Text = "Finalizar";
+            lblbtnCrear.Text = "Finalizar";
             txtFechaRequerida.Enabled = false;
             txtMotivoCompra.Enabled = false;
             txtRequeridoEn.Enabled = false;
@@ -310,6 +315,7 @@ namespace Web.MainModule.Requisicion.Vista
             lblRuta.Text = "Requisición / Autorización";
             lblIdRequisicion.Text = _reqEDTO.NumeroRequisicion;
             BtnCrear.Text = "Autorizar";
+            lblbtnCrear.Text = "Finalizar";
             btnCancelar.Enabled = true;
             btnCancel.Attributes.Remove("class");
             btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round");
@@ -392,11 +398,16 @@ namespace Web.MainModule.Requisicion.Vista
                             divCampos.Visible = false;
                             LimpiarCamposProductos();
                             LimpiarMensajesProd();
+                            EnviarCorreo(respuesta.IdRequisicion);
                             BtnCrear.Enabled = false;
                             btnAgregar.Enabled = false;
                             dgListaproductos.Enabled = false;
+                            btnok.Attributes.Remove("class");
+                            btnok.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
                             btnCancel.Attributes.Remove("class");
                             btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
+                            btnAgregar.CssClass = "btn btn - danger btn - simple btn - round btn - sm disabled";
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "ShowPopup();", true);
                         }
                         else
                         {
@@ -519,16 +530,34 @@ namespace Web.MainModule.Requisicion.Vista
             Model.ProductoDTO prod = ((List<Model.ProductoDTO>)ViewState["ProductosDTO"]).SingleOrDefault(x => x.IdProducto.Equals(int.Parse(ddlProdcutos.SelectedValue)));
             lblCantidadUnidad.Text = "Cantidad: " + prod.UnidadMedida;
         }
-        protected void btnAgregar_Click(object sender, EventArgs e)
+        private Model.RequisicionProductoGridDTO CrearProductoGrid()
         {
             Model.RequisicionProductoGridDTO prod = new RequisicionServicio().GenerarProductoGrid(
-                ddlTipoCompra,
-                ddlProdcutos,
-                ddlCentroCostos,
-                txtDetalle.Text,
-                Convert.ToDecimal(txtCantidad.Text != string.Empty ? txtCantidad.Text : "0"),
-                ((List<Model.ProductoDTO>)ViewState["ProductosDTO"]));
-            var validacion = ValidadorClases.EnlistaErrores<Model.RequisicionProductoGridDTO>(prod);
+            ddlTipoCompra,
+            ddlProdcutos,
+            ddlCentroCostos,
+            txtDetalle.Text,
+            Convert.ToDecimal(txtCantidad.Text != string.Empty ? txtCantidad.Text : "0"),
+            ((List<Model.ProductoDTO>)ViewState["ProductosDTO"]));
+            return prod;
+        }
+        private RespuestaOperacionDto ValidarProdNuevo()
+        {
+            Model.RequisicionProductoGridDTO prod = CrearProductoGrid();
+            var validacion = ValidadorClases.EnlistaErrores(prod);
+            if (validacion.ModeloValido)
+            {
+                if (!(prod.Cantidad > 0))
+                {
+                    validacion.MensajesError.Add(new Result { IdentidadError = "Cantidad", MensajeError = "Cantidad incorrecta" });
+                    validacion.ModeloValido = false;
+                }            
+            }
+            return validacion;
+        }
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            var validacion = ValidarProdNuevo();
             if (validacion.ModeloValido)
             {
                 ValidarCampos(new List<Result>());//Limpia los campos de error 
@@ -546,7 +575,7 @@ namespace Web.MainModule.Requisicion.Vista
                 else
                 {
                     LProductos = (List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"] == null ? new List<Model.RequisicionProductoGridDTO>() : (List<Model.RequisicionProductoGridDTO>)ViewState["ListaRequisicionProductoGridDTO"];
-                    LProductos = new RequisicionServicio().GenerarListaGrid(LProductos, prod, _tok);
+                    LProductos = new RequisicionServicio().GenerarListaGrid(LProductos, CrearProductoGrid(), _tok);
                 }
                 dgListaproductos.DataSource = ViewState["ListaRequisicionProductoGridDTO"] = LProductos;
                 dgListaproductos.DataBind();
@@ -564,7 +593,7 @@ namespace Web.MainModule.Requisicion.Vista
         }
         protected void BtnCrear_Click(object sender, EventArgs e)
         {
-            if (BtnCrear.Text.Equals("Crear"))
+            if (BtnCrear.Text.Equals("Si"))
                 GuardarRequisicion();
             if (BtnCrear.Text.Equals("Finalizar"))
                 FinalizarRevision();
@@ -660,6 +689,11 @@ namespace Web.MainModule.Requisicion.Vista
             CargarProductos(short.Parse(ddlTipoCompra.SelectedValue));
         }
         protected void gvProductoAut_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnFin_Click(object sender, EventArgs e)
         {
 
         }

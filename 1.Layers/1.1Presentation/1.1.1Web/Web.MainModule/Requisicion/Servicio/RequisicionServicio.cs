@@ -106,6 +106,12 @@ namespace Web.MainModule.Requisicion.Servicio
             respuestaReq.BuscarRequisicioAuto(numreq, token);
             return respuestaReq._requsicionAutorizacion;
         }
+        public Model.RespuestaRequisicionDto EnviarNotificacion(int numreq, string token)
+        {
+            var respuestaReq = new AgenteServicios();
+            respuestaReq.EnviarNotificacion(numreq, token);
+            return respuestaReq._respuestaRequisicion;
+        }
         public Model.RequisicionRevisionDTO BuscarRequisicionByNumRequiRevi(int numreq, string token)
         {
             var respuestaReq = new AgenteServicios();

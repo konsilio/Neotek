@@ -472,6 +472,7 @@ namespace Web.MainModule.Agente
             this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionByNumRequisicionAut"];
             RequisicionesPorNumRequisicionAuto(NumRequisicion, tkn).Wait();
         }
+       
         private async Task RequisicionesPorNumRequisicionAuto(int numReq, string token)
         {
             using (var client = new HttpClient())
@@ -498,6 +499,39 @@ namespace Web.MainModule.Agente
                     client.Dispose(); ;
                 }
                 _requsicionAutorizacion = emp;
+            }
+        }
+        public void EnviarNotificacion(int NumRequisicion, string tkn)
+        {
+            this.ApiRequisicion = ConfigurationManager.AppSettings["PostEnviarNotificacion"];
+            NotificarRequisicion(NumRequisicion, tkn).Wait();
+        }
+        private async Task NotificarRequisicion(int numReq, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaRequisicionDto emp = new RespuestaRequisicionDto();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiRequisicion + numReq.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<RespuestaRequisicionDto>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new RespuestaRequisicionDto() { Exito = false};
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _respuestaRequisicion = emp;
             }
         }
         public void BuscarProductos(short idEmpresa, string tkn)

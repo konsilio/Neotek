@@ -7,9 +7,6 @@ namespace UserControls
     public partial class DateTimePicker : System.Web.UI.UserControl
     {
         #region public
-        [System.ComponentModel.Browsable(true)]
-        public event EventHandler TextChanged;
-
         [Bindable(false), Browsable(true), Category("Bit-Options"), Description("The Date.")]
         public DateTime GetDate
         {
@@ -20,10 +17,10 @@ namespace UserControls
                 {
                     if (!DateTime.TryParse(tbDatePicker.Text.Trim(), out oDate))
                     {
-                        //"MM/dd/yyyy"
+                        //"dd/MM/yyyy"
                         oDate = DateTime.Parse(string.Format("{0}/{1}/{2}",
-                                        tbDatePicker.Text.Trim().Split('/')[1],
                                         tbDatePicker.Text.Trim().Split('/')[0],
+                                        tbDatePicker.Text.Trim().Split('/')[1],
                                         tbDatePicker.Text.Trim().Split('/')[2])
                                         );
                     }
