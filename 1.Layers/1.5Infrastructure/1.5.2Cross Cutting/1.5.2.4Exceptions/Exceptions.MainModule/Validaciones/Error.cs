@@ -31,5 +31,10 @@ namespace Exceptions.MainModule.Validaciones
 
         public const string M0001 = "No se encontraron {0} para mostrar.";
         public const string M0002 = "No se encontró {0} en el servidor.";
+
+        public const string P0001 = "No cuentas con los permisos necesario para insertar {0}.";
+        public const string P0002 = "No cuentas con los permisos necesario para modificar {0}.";
+        public const string P0003 = "No cuentas con los permisos necesario para eliminar {0}.";
+        public const string P0004 = "No cuentas con los permisos necesario para consultar {0}.";
     }
 }

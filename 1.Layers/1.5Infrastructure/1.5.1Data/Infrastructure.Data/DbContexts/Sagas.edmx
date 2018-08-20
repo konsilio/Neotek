@@ -5,63 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Sagas.MainModuleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AdministracionCentral">
-          <Key>
-            <PropertyRef Name="IdAdministracionCentral" />
-          </Key>
-          <Property Name="IdAdministracionCentral" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NombreComercial" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AdministracionCentralDireccion">
-          <Key>
-            <PropertyRef Name="IdAdministracionCentral" />
-          </Key>
-          <Property Name="IdAdministracionCentral" Type="tinyint" Nullable="false" />
-          <Property Name="IdPais" Type="tinyint" Nullable="false" />
-          <Property Name="IdEstadoRep" Type="tinyint" />
-          <Property Name="EstadoProvincia" Type="varchar" MaxLength="150" />
-          <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="CodigoPostal" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Colonia" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Calle" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="NumExt" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="NumInt" Type="varchar" MaxLength="10" />
-        </EntityType>
-        <EntityType Name="AdministracionCentralFiscal">
-          <Key>
-            <PropertyRef Name="IdAdministracionCentral" />
-          </Key>
-          <Property Name="IdAdministracionCentral" Type="tinyint" Nullable="false" />
-          <Property Name="Rfc" Type="varchar" MaxLength="13" Nullable="false" />
-          <Property Name="RazonSocial" Type="varchar" MaxLength="350" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AdministracionCentralImagen">
-          <Key>
-            <PropertyRef Name="IdAdministracionCentral" />
-          </Key>
-          <Property Name="IdAdministracionCentral" Type="tinyint" Nullable="false" />
-          <Property Name="UrlLogotipoMenu" Type="varchar" MaxLength="350" />
-          <Property Name="UrlLogotipoLogin" Type="varchar" MaxLength="350" />
-        </EntityType>
-        <EntityType Name="AdministracionCetralContacto">
-          <Key>
-            <PropertyRef Name="IdAdministracionCentral" />
-          </Key>
-          <Property Name="IdAdministracionCentral" Type="tinyint" Nullable="false" />
-          <Property Name="Telefono1" Type="varchar" MaxLength="50" />
-          <Property Name="Telefono2" Type="varchar" MaxLength="50" />
-          <Property Name="Telefono3" Type="varchar" MaxLength="50" />
-          <Property Name="Celular1" Type="varchar" MaxLength="50" />
-          <Property Name="Celular2" Type="varchar" MaxLength="50" />
-          <Property Name="Celular3" Type="varchar" MaxLength="50" />
-          <Property Name="Email1" Type="varchar" MaxLength="200" />
-          <Property Name="Email2" Type="varchar" MaxLength="200" />
-          <Property Name="Email3" Type="varchar" MaxLength="200" />
-          <Property Name="SitioWeb1" Type="varchar" MaxLength="150" />
-          <Property Name="SitioWeb2" Type="varchar" MaxLength="150" />
-          <Property Name="SitioWeb3" Type="varchar" MaxLength="150" />
-        </EntityType>
         <EntityType Name="Almacen">
           <Key>
             <PropertyRef Name="IdAlmacen" />
@@ -805,6 +748,28 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="AppCompraGasIniciarDescarga" Type="bit" Nullable="false" />
           <Property Name="AppCompraGasFinalizarDescarga" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="RolAccionCatalogo">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="smallint" Nullable="false" />
+          <Property Name="CatInsertarUsuario" Type="bit" Nullable="false" />
+          <Property Name="CatModificarUsuario" Type="bit" Nullable="false" />
+          <Property Name="CatEliminarUsuario" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarUsuario" Type="bit" Nullable="false" />
+          <Property Name="CatInsertarProveedor" Type="bit" Nullable="false" />
+          <Property Name="CatModificarProveedor" Type="bit" Nullable="false" />
+          <Property Name="CatEliminarProveedor" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarProveedor" Type="bit" Nullable="false" />
+          <Property Name="CatInsertarProducto" Type="bit" Nullable="false" />
+          <Property Name="CatModificarProducto" Type="bit" Nullable="false" />
+          <Property Name="CatEliminarProducto" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarProducto" Type="bit" Nullable="false" />
+          <Property Name="CatInsertarCuentaContable" Type="bit" Nullable="false" />
+          <Property Name="CatModificarCuentaContable" Type="bit" Nullable="false" />
+          <Property Name="CatEliminarCuentaContable" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarCuentaContable" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -828,61 +793,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="Apellido2" Type="varchar" MaxLength="80" />
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UsuarioAC">
-          <Key>
-            <PropertyRef Name="IdUsuarioAC" />
-          </Key>
-          <Property Name="IdUsuarioAC" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdAdministracionCentral" Type="tinyint" Nullable="false" />
-          <Property Name="IdRol" Type="smallint" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Apellido1" Type="varchar" MaxLength="80" Nullable="false" />
-          <Property Name="Apellido2" Type="varchar" MaxLength="80" />
-          <Property Name="SuperAdmin" Type="bit" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UsuarioACContacto">
-          <Key>
-            <PropertyRef Name="IdUsuarioAC" />
-          </Key>
-          <Property Name="IdUsuarioAC" Type="int" Nullable="false" />
-          <Property Name="Telefono1" Type="varchar" MaxLength="50" />
-          <Property Name="Telefono2" Type="varchar" MaxLength="50" />
-          <Property Name="Telefono3" Type="varchar" MaxLength="50" />
-          <Property Name="Celular1" Type="varchar" MaxLength="50" />
-          <Property Name="Celular2" Type="varchar" MaxLength="50" />
-          <Property Name="Celular3" Type="varchar" MaxLength="50" />
-          <Property Name="Email1" Type="varchar" MaxLength="200" />
-          <Property Name="Email2" Type="varchar" MaxLength="200" />
-          <Property Name="Email3" Type="varchar" MaxLength="200" />
-          <Property Name="SitioWeb1" Type="varchar" MaxLength="150" />
-          <Property Name="SitioWeb2" Type="varchar" MaxLength="150" />
-          <Property Name="SitioWeb3" Type="varchar" MaxLength="150" />
-        </EntityType>
-        <EntityType Name="UsuarioACCredencial">
-          <Key>
-            <PropertyRef Name="IdUsuarioAC" />
-          </Key>
-          <Property Name="IdUsuarioAC" Type="int" Nullable="false" />
-          <Property Name="Usuario" Type="varchar" MaxLength="350" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="250" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UsuarioACDireccion">
-          <Key>
-            <PropertyRef Name="IdUsuarioAC" />
-          </Key>
-          <Property Name="IdUsuarioAC" Type="int" Nullable="false" />
-          <Property Name="IdPais" Type="tinyint" Nullable="false" />
-          <Property Name="IdEstadoRep" Type="tinyint" />
-          <Property Name="EstadoProvincia" Type="varchar" MaxLength="150" />
-          <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="CodigoPostal" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="Colonia" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Calle" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="NumExt" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="NumInt" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="UsuarioContacto">
           <Key>
@@ -933,86 +843,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="IdUsuario" Type="int" Nullable="false" />
           <Property Name="IdRol" Type="smallint" Nullable="false" />
         </EntityType>
-        <Association Name="FK_AdministracionCentralDireccion_AdministracionCentral">
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AdministracionCentralDireccion" Type="Self.AdministracionCentralDireccion" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AdministracionCentral">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Principal>
-            <Dependent Role="AdministracionCentralDireccion">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdministracionCentralDireccion_CEstadosRep">
-          <End Role="CEstadosRep" Type="Self.CEstadosRep" Multiplicity="0..1" />
-          <End Role="AdministracionCentralDireccion" Type="Self.AdministracionCentralDireccion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CEstadosRep">
-              <PropertyRef Name="IdEstadoRep" />
-            </Principal>
-            <Dependent Role="AdministracionCentralDireccion">
-              <PropertyRef Name="IdEstadoRep" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdministracionCentralDireccion_CPais">
-          <End Role="CPais" Type="Self.CPais" Multiplicity="1" />
-          <End Role="AdministracionCentralDireccion" Type="Self.AdministracionCentralDireccion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CPais">
-              <PropertyRef Name="IdPais" />
-            </Principal>
-            <Dependent Role="AdministracionCentralDireccion">
-              <PropertyRef Name="IdPais" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdministracionCentralFiscal_AdministracionCentral">
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AdministracionCentralFiscal" Type="Self.AdministracionCentralFiscal" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AdministracionCentral">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Principal>
-            <Dependent Role="AdministracionCentralFiscal">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdministracionCentralImagen_AdministracionCentral">
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AdministracionCentralImagen" Type="Self.AdministracionCentralImagen" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AdministracionCentral">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Principal>
-            <Dependent Role="AdministracionCentralImagen">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdministracionCetralContacto_AdministracionCentral">
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AdministracionCetralContacto" Type="Self.AdministracionCetralContacto" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AdministracionCentral">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Principal>
-            <Dependent Role="AdministracionCetralContacto">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Almacen_CProducto">
           <End Role="CProducto" Type="Self.CProducto" Multiplicity="1" />
           <End Role="Almacen" Type="Self.Almacen" Multiplicity="*" />
@@ -2209,6 +2039,20 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RolAccionCatalogo_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RolAccionCatalogo" Type="Self.RolAccionCatalogo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="RolAccionCatalogo">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Usuario_Empresa">
           <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2220,86 +2064,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             </Principal>
             <Dependent Role="Usuario">
               <PropertyRef Name="IdEmpresa" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UsuarioAC_AdministracionCentral">
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AdministracionCentral">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Principal>
-            <Dependent Role="UsuarioAC">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UsuarioACContacto_UsuarioAC">
-          <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UsuarioACContacto" Type="Self.UsuarioACContacto" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="UsuarioAC">
-              <PropertyRef Name="IdUsuarioAC" />
-            </Principal>
-            <Dependent Role="UsuarioACContacto">
-              <PropertyRef Name="IdUsuarioAC" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UsuarioACCredencial_UsuarioAC">
-          <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UsuarioACCredencial" Type="Self.UsuarioACCredencial" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="UsuarioAC">
-              <PropertyRef Name="IdUsuarioAC" />
-            </Principal>
-            <Dependent Role="UsuarioACCredencial">
-              <PropertyRef Name="IdUsuarioAC" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UsuarioACDireccion_CEstadosRep">
-          <End Role="CEstadosRep" Type="Self.CEstadosRep" Multiplicity="0..1" />
-          <End Role="UsuarioACDireccion" Type="Self.UsuarioACDireccion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CEstadosRep">
-              <PropertyRef Name="IdEstadoRep" />
-            </Principal>
-            <Dependent Role="UsuarioACDireccion">
-              <PropertyRef Name="IdEstadoRep" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UsuarioACDireccion_CPais">
-          <End Role="CPais" Type="Self.CPais" Multiplicity="1" />
-          <End Role="UsuarioACDireccion" Type="Self.UsuarioACDireccion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CPais">
-              <PropertyRef Name="IdPais" />
-            </Principal>
-            <Dependent Role="UsuarioACDireccion">
-              <PropertyRef Name="IdPais" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UsuarioACDireccion_UsuarioAC">
-          <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UsuarioACDireccion" Type="Self.UsuarioACDireccion" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="UsuarioAC">
-              <PropertyRef Name="IdUsuarioAC" />
-            </Principal>
-            <Dependent Role="UsuarioACDireccion">
-              <PropertyRef Name="IdUsuarioAC" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2394,11 +2158,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SagasMainModuleModelStoreContainer">
-          <EntitySet Name="AdministracionCentral" EntityType="Self.AdministracionCentral" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AdministracionCentralDireccion" EntityType="Self.AdministracionCentralDireccion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AdministracionCentralFiscal" EntityType="Self.AdministracionCentralFiscal" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AdministracionCentralImagen" EntityType="Self.AdministracionCentralImagen" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AdministracionCetralContacto" EntityType="Self.AdministracionCetralContacto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Almacen" EntityType="Self.Almacen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenEntradaGasDescarga" EntityType="Self.AlmacenEntradaGasDescarga" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenEntradaGasDescargaFinalizar" EntityType="Self.AlmacenEntradaGasDescargaFinalizar" Schema="dbo" store:Type="Tables" />
@@ -2452,12 +2211,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySet Name="RequisicionProducto" EntityType="Self.RequisicionProducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolAccion" EntityType="Self.RolAccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RolAccionCatalogo" EntityType="Self.RolAccionCatalogo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UsuarioAC" EntityType="Self.UsuarioAC" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UsuarioACContacto" EntityType="Self.UsuarioACContacto" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UsuarioACCredencial" EntityType="Self.UsuarioACCredencial" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UsuarioACDireccion" EntityType="Self.UsuarioACDireccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioContacto" EntityType="Self.UsuarioContacto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioCredencial" EntityType="Self.UsuarioCredencial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioDireccion" EntityType="Self.UsuarioDireccion" Schema="dbo" store:Type="Tables" />
@@ -2528,30 +2284,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
     [OrdenCompraProducto].[EsGas] AS [EsGas]
     FROM [dbo].[OrdenCompraProducto] AS [OrdenCompraProducto]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_AdministracionCentralDireccion_AdministracionCentral" Association="Self.FK_AdministracionCentralDireccion_AdministracionCentral">
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-            <End Role="AdministracionCentralDireccion" EntitySet="AdministracionCentralDireccion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdministracionCentralDireccion_CEstadosRep" Association="Self.FK_AdministracionCentralDireccion_CEstadosRep">
-            <End Role="CEstadosRep" EntitySet="CEstadosRep" />
-            <End Role="AdministracionCentralDireccion" EntitySet="AdministracionCentralDireccion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdministracionCentralDireccion_CPais" Association="Self.FK_AdministracionCentralDireccion_CPais">
-            <End Role="CPais" EntitySet="CPais" />
-            <End Role="AdministracionCentralDireccion" EntitySet="AdministracionCentralDireccion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdministracionCentralFiscal_AdministracionCentral" Association="Self.FK_AdministracionCentralFiscal_AdministracionCentral">
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-            <End Role="AdministracionCentralFiscal" EntitySet="AdministracionCentralFiscal" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdministracionCentralImagen_AdministracionCentral" Association="Self.FK_AdministracionCentralImagen_AdministracionCentral">
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-            <End Role="AdministracionCentralImagen" EntitySet="AdministracionCentralImagen" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdministracionCetralContacto_AdministracionCentral" Association="Self.FK_AdministracionCetralContacto_AdministracionCentral">
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-            <End Role="AdministracionCetralContacto" EntitySet="AdministracionCetralContacto" />
-          </AssociationSet>
           <AssociationSet Name="FK_Almacen_CProducto" Association="Self.FK_Almacen_CProducto">
             <End Role="CProducto" EntitySet="CProducto" />
             <End Role="Almacen" EntitySet="Almacen" />
@@ -2932,33 +2664,13 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             <End Role="Rol" EntitySet="Rol" />
             <End Role="RolAccion" EntitySet="RolAccion" />
           </AssociationSet>
+          <AssociationSet Name="FK_RolAccionCatalogo_Rol" Association="Self.FK_RolAccionCatalogo_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="RolAccionCatalogo" EntitySet="RolAccionCatalogo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Usuario_Empresa" Association="Self.FK_Usuario_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsuarioAC_AdministracionCentral" Association="Self.FK_UsuarioAC_AdministracionCentral">
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-            <End Role="UsuarioAC" EntitySet="UsuarioAC" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsuarioACContacto_UsuarioAC" Association="Self.FK_UsuarioACContacto_UsuarioAC">
-            <End Role="UsuarioAC" EntitySet="UsuarioAC" />
-            <End Role="UsuarioACContacto" EntitySet="UsuarioACContacto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsuarioACCredencial_UsuarioAC" Association="Self.FK_UsuarioACCredencial_UsuarioAC">
-            <End Role="UsuarioAC" EntitySet="UsuarioAC" />
-            <End Role="UsuarioACCredencial" EntitySet="UsuarioACCredencial" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsuarioACDireccion_CEstadosRep" Association="Self.FK_UsuarioACDireccion_CEstadosRep">
-            <End Role="CEstadosRep" EntitySet="CEstadosRep" />
-            <End Role="UsuarioACDireccion" EntitySet="UsuarioACDireccion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsuarioACDireccion_CPais" Association="Self.FK_UsuarioACDireccion_CPais">
-            <End Role="CPais" EntitySet="CPais" />
-            <End Role="UsuarioACDireccion" EntitySet="UsuarioACDireccion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsuarioACDireccion_UsuarioAC" Association="Self.FK_UsuarioACDireccion_UsuarioAC">
-            <End Role="UsuarioAC" EntitySet="UsuarioAC" />
-            <End Role="UsuarioACDireccion" EntitySet="UsuarioACDireccion" />
           </AssociationSet>
           <AssociationSet Name="FK_UsuarioContacto_Usuario" Association="Self.FK_UsuarioContacto_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -2992,65 +2704,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Sagas.MainModuleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AdministracionCentral">
-          <Key>
-            <PropertyRef Name="IdAdministracionCentral" />
-          </Key>
-          <Property Name="IdAdministracionCentral" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NombreComercial" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
-          <!--"AdministracionCentralDireccion"
-          <Property Name="IdAdministracionCentral" Type="Byte" Nullable="false" />>-->
-          <Property Name="IdPais" Type="Byte" Nullable="false" />
-          <Property Name="IdEstadoRep" Type="Byte" />
-          <Property Name="EstadoProvincia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Municipio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CodigoPostal" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Colonia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Calle" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NumExt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NumInt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <!--"AdministracionCentralFiscal"
-          <Property Name="IdAdministracionCentral" Type="Byte" Nullable="false" />>-->
-          <Property Name="Rfc" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RazonSocial" Type="String" MaxLength="350" FixedLength="false" Unicode="false" Nullable="false" />
-          <!--"AdministracionCentralImagen"
-          <Property Name="IdAdministracionCentral" Type="Byte" Nullable="false" />>-->
-          <Property Name="UrlLogotipoMenu" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="UrlLogotipoLogin" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <!--"AdministracionCetralContacto"
-          <Property Name="IdAdministracionCentral" Type="Byte" Nullable="false" />>-->
-          <Property Name="Telefono1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Telefono2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Telefono3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Celular1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Celular2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Celular3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Email2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Email3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="SitioWeb1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="SitioWeb2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="SitioWeb3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          
-          <!--<NavigationProperty Name="AdministracionCentralDireccion" Relationship="Self.FK_AdministracionCentralDireccion_AdministracionCentral" FromRole="AdministracionCentral" ToRole="AdministracionCentralDireccion" />
-          <NavigationProperty Name="AdministracionCentralFiscal" Relationship="Self.FK_AdministracionCentralFiscal_AdministracionCentral" FromRole="AdministracionCentral" ToRole="AdministracionCentralFiscal" />
-          <NavigationProperty Name="AdministracionCentralImagen" Relationship="Self.FK_AdministracionCentralImagen_AdministracionCentral" FromRole="AdministracionCentral" ToRole="AdministracionCentralImagen" />
-          <NavigationProperty Name="AdministracionCetralContacto" Relationship="Self.FK_AdministracionCetralContacto_AdministracionCentral" FromRole="AdministracionCentral" ToRole="AdministracionCetralContacto" />
-          -->          
-          <NavigationProperty Name="UsuarioAC" Relationship="Self.FK_UsuarioAC_AdministracionCentral" FromRole="AdministracionCentral" ToRole="UsuarioAC" />
-          <!--"AdministracionCentralDireccion">-->
-          <!--<NavigationProperty Name="AdministracionCentral" Relationship="Self.FK_AdministracionCentralDireccion_AdministracionCentral" FromRole="AdministracionCentralDireccion" ToRole="AdministracionCentral" />-->
-          <NavigationProperty Name="EstadosRepublica" Relationship="Self.FK_AdministracionCentral_EstadosRepublica" FromRole="AdministracionCentral" ToRole="EstadosRepublica" />
-          <NavigationProperty Name="Pais" Relationship="Self.FK_AdministracionCentral_Pais" FromRole="AdministracionCentral" ToRole="Pais" />          
-          <!--"AdministracionCentralFiscal">
-          <NavigationProperty Name="AdministracionCentral" Relationship="Self.FK_AdministracionCentralFiscal_AdministracionCentral" FromRole="AdministracionCentralFiscal" ToRole="AdministracionCentral" />          
-          <"AdministracionCentralImagen">
-          <NavigationProperty Name="AdministracionCentral" Relationship="Self.FK_AdministracionCentralImagen_AdministracionCentral" FromRole="AdministracionCentralImagen" ToRole="AdministracionCentral" />          
-          <"AdministracionCetralContacto">
-          <NavigationProperty Name="AdministracionCentral" Relationship="Self.FK_AdministracionCetralContacto_AdministracionCentral" FromRole="AdministracionCetralContacto" ToRole="AdministracionCentral" />-->
-        </EntityType>
+      <Schema Namespace="Sagas.MainModuleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">        
         <EntityType Name="EstadosRepublica">
           <Key>
             <PropertyRef Name="IdEstadoRep" />
@@ -3058,10 +2712,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="IdEstadoRep" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Abreviatura" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AdministracionCentral" Relationship="Self.FK_AdministracionCentral_EstadosRepublica" FromRole="EstadosRepublica" ToRole="AdministracionCentral" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_Empresa_EstadosRepublica" FromRole="EstadosRepublica" ToRole="Empresa" />
-          <NavigationProperty Name="UsuarioAC" Relationship="Sagas.MainModuleModel.FK_UsuarioAC_EstadosRepublica" FromRole="EstadosRepublica" ToRole="UsuarioAC" />
           <NavigationProperty Name="Usuarios" Relationship="Sagas.MainModuleModel.FK_Usuario_EstadosRepublica" FromRole="EstadosRepublica" ToRole="Usuario" />
           <NavigationProperty Name="Proveedores" Relationship="Sagas.MainModuleModel.FK_CProveedor_CEstadosRep" FromRole="EstadosRepublica" ToRole="Proveedor" />
         </EntityType>
@@ -3072,9 +2724,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="IdPais" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PaisNombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="AdministracionCentral" Relationship="Self.FK_AdministracionCentral_Pais" FromRole="Pais" ToRole="AdministracionCentral" />
           <NavigationProperty Name="Empresa" Relationship="Self.FK_Empresa_Pais" FromRole="Pais" ToRole="Empresa" />
-          <NavigationProperty Name="UsuarioAC" Relationship="Sagas.MainModuleModel.FK_UsuarioAC_Pais" FromRole="Pais" ToRole="UsuarioAC" />
           <NavigationProperty Name="Usuarios" Relationship="Sagas.MainModuleModel.FK_Usuario_Pais" FromRole="Pais" ToRole="Usuario" />
           <NavigationProperty Name="Proveedores" Relationship="Sagas.MainModuleModel.FK_CProveedor_CPais" FromRole="Pais" ToRole="Proveedor" />
         </EntityType>
@@ -3184,15 +2834,36 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="CompraAtiendeServicioOCompra" Type="Boolean" Nullable="false" />
           <Property Name="AppCompraEntraGas" Type="Boolean" Nullable="false" />
           <Property Name="AppCompraGasIniciarDescarga" Type="Boolean" Nullable="false" />
-          <Property Name="AppCompraGasFinalizarDescarga" Type="Boolean" Nullable="false" />
+          <Property Name="AppCompraGasFinalizarDescarga" Type="Boolean" Nullable="false" />          
+          <!--"RolAccionCatalogo">
+          <Property Name="IdRol" Type="Int16" Nullable="false" />-->
+          <Property Name="CatInsertarUsuario" Type="Boolean" Nullable="false" />
+          <Property Name="CatModificarUsuario" Type="Boolean" Nullable="false" />
+          <Property Name="CatEliminarUsuario" Type="Boolean" Nullable="false" />
+          <Property Name="CatConsultarUsuario" Type="Boolean" Nullable="false" />
+          <Property Name="CatInsertarProveedor" Type="Boolean" Nullable="false" />
+          <Property Name="CatModificarProveedor" Type="Boolean" Nullable="false" />
+          <Property Name="CatEliminarProveedor" Type="Boolean" Nullable="false" />
+          <Property Name="CatConsultarProveedor" Type="Boolean" Nullable="false" />
+          <Property Name="CatInsertarProducto" Type="Boolean" Nullable="false" />
+          <Property Name="CatModificarProducto" Type="Boolean" Nullable="false" />
+          <Property Name="CatEliminarProducto" Type="Boolean" Nullable="false" />
+          <Property Name="CatConsultarProducto" Type="Boolean" Nullable="false" />
+          <Property Name="CatInsertarCuentaContable" Type="Boolean" Nullable="false" />
+          <Property Name="CatModificarCuentaContable" Type="Boolean" Nullable="false" />
+          <Property Name="CatEliminarCuentaContable" Type="Boolean" Nullable="false" />
+          <Property Name="CatConsultarCuentaContable" Type="Boolean" Nullable="false" />
           
           <!--<NavigationProperty Name="RolAccion" Relationship="Self.FK_RolAccion_Rol" FromRole="Rol" ToRole="RolAccion" />-->
           <!--<NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />-->
           <!--<NavigationProperty Name="UsuarioAC" Relationship="Self.FK_UsuarioAC_Rol" FromRole="Rol" ToRole="UsuarioAC" />-->
           
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
-          <NavigationProperty Name="ListaUsuarios" Relationship="Sagas.MainModuleModel.UsuarioRol" FromRole="Rol" ToRole="Usuario" />          
-          <!--<NavigationProperty Name="Rol" Relationship="Self.FK_RolAccion_Rol" FromRole="RolAccion" ToRole="Rol" />-->
+          <NavigationProperty Name="ListaUsuarios" Relationship="Sagas.MainModuleModel.UsuarioRol" FromRole="Rol" ToRole="Usuario" />
+          <!--<NavigationProperty Name="RolAccionCatalogo" Relationship="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol" FromRole="Rol" ToRole="RolAccionCatalogo" />          
+          <NavigationProperty Name="Rol" Relationship="Self.FK_RolAccion_Rol" FromRole="RolAccion" ToRole="Rol" />
+          <NavigationProperty Name="Rol" Relationship="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol" FromRole="RolAccionCatalogo" ToRole="Rol" />
+          -->
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -3265,154 +2936,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <NavigationProperty Name="Usuario1" Relationship="Self.FK_UsuarioCredencial_Usuario" FromRole="UsuarioCredencial" ToRole="Usuario" />          
           <NavigationProperty Name="Usuario" Relationship="Self.FK_UsuarioDireccion_Usuario" FromRole="UsuarioDireccion" ToRole="Usuario" />-->
         </EntityType>
-        <EntityType Name="UsuarioAC">
-          <Key>
-            <PropertyRef Name="IdUsuarioAC" />
-          </Key>
-          <Property Name="IdUsuarioAC" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdAdministracionCentral" Type="Byte" Nullable="false" />
-          <Property Name="IdRol" Type="Int16" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Apellido1" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Apellido2" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Name="SuperAdmin" Type="Boolean" Nullable="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
-          <!--"UsuarioACCredencial">
-          <Property Name="IdUsuarioAC" Type="Int32" Nullable="false" />-->
-          <Property Name="NombreUsuario" Type="String" MaxLength="350" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <!--"UsuarioACContacto">
-          <Property Name="IdUsuarioAC" Type="Int32" Nullable="false" />-->
-          <Property Name="Telefono1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Telefono2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Telefono3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Celular1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Celular2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Celular3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Email2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Email3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="SitioWeb1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="SitioWeb2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="SitioWeb3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <!--"UsuarioACDireccion">
-          <Property Name="IdUsuarioAC" Type="Int32" Nullable="false" />-->
-          <Property Name="IdPais" Type="Byte" Nullable="false" />
-          <Property Name="IdEstadoRep" Type="Byte" />
-          <Property Name="EstadoProvincia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Municipio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CodigoPostal" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Colonia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Calle" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NumExt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NumInt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AdministracionCentral" Relationship="Self.FK_UsuarioAC_AdministracionCentral" FromRole="UsuarioAC" ToRole="AdministracionCentral" />
-          <!--<NavigationProperty Name="Rol" Relationship="Self.FK_UsuarioAC_Rol" FromRole="UsuarioAC" ToRole="Rol" />-->
-          <NavigationProperty Name="EstadosRepublica" Relationship="Sagas.MainModuleModel.FK_UsuarioAC_EstadosRepublica" FromRole="UsuarioAC" ToRole="EstadosRepublica" />
-          <NavigationProperty Name="Pais" Relationship="Sagas.MainModuleModel.FK_UsuarioAC_Pais" FromRole="UsuarioAC" ToRole="Pais" />
-          <!--<NavigationProperty Name="UsuarioACContacto" Relationship="Self.FK_UsuarioACContacto_UsuarioAC" FromRole="UsuarioAC" ToRole="UsuarioACContacto" />
-          <NavigationProperty Name="UsuarioACCredencial" Relationship="Self.FK_UsuarioACCredencial_UsuarioAC" FromRole="UsuarioAC" ToRole="UsuarioACCredencial" />
-          <NavigationProperty Name="UsuarioACDireccion" Relationship="Self.FK_UsuarioACDireccion_UsuarioAC" FromRole="UsuarioAC" ToRole="UsuarioACDireccion" />          
-          <NavigationProperty Name="UsuarioAC" Relationship="Self.FK_UsuarioACContacto_UsuarioAC" FromRole="UsuarioACContacto" ToRole="UsuarioAC" />          
-          <NavigationProperty Name="UsuarioAC" Relationship="Self.FK_UsuarioACCredencial_UsuarioAC" FromRole="UsuarioACCredencial" ToRole="UsuarioAC" />          
-          <NavigationProperty Name="UsuarioAC" Relationship="Self.FK_UsuarioACDireccion_UsuarioAC" FromRole="UsuarioACDireccion" ToRole="UsuarioAC" />-->
-        </EntityType>        
-        <!--<Association Name="FK_AdministracionCentralDireccion_AdministracionCentral">
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AdministracionCentralDireccion" Type="Self.AdministracionCentralDireccion" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AdministracionCentral">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Principal>
-            <Dependent Role="AdministracionCentralDireccion">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdministracionCentralFiscal_AdministracionCentral">
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AdministracionCentralFiscal" Type="Self.AdministracionCentralFiscal" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AdministracionCentral">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Principal>
-            <Dependent Role="AdministracionCentralFiscal">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdministracionCentralImagen_AdministracionCentral">
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AdministracionCentralImagen" Type="Self.AdministracionCentralImagen" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AdministracionCentral">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Principal>
-            <Dependent Role="AdministracionCentralImagen">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdministracionCetralContacto_AdministracionCentral">
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AdministracionCetralContacto" Type="Self.AdministracionCetralContacto" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="AdministracionCentral">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Principal>
-            <Dependent Role="AdministracionCetralContacto">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>-->
-        
-        <Association Name="FK_UsuarioAC_AdministracionCentral">
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AdministracionCentral">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Principal>
-            <Dependent Role="UsuarioAC">
-              <PropertyRef Name="IdAdministracionCentral" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdministracionCentral_EstadosRepublica">
-          <End Role="EstadosRepublica" Type="Self.EstadosRepublica" Multiplicity="0..1" />
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstadosRepublica">
-              <PropertyRef Name="IdEstadoRep" />
-            </Principal>
-            <Dependent Role="AdministracionCentral">
-              <PropertyRef Name="IdEstadoRep" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AdministracionCentral_Pais">
-          <End Role="Pais" Type="Self.Pais" Multiplicity="1" />
-          <End Role="AdministracionCentral" Type="Self.AdministracionCentral" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pais">
-              <PropertyRef Name="IdPais" />
-            </Principal>
-            <Dependent Role="AdministracionCentral">
-              <PropertyRef Name="IdPais" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Empresa_EstadosRepublica">
           <End Role="EstadosRepublica" Type="Self.EstadosRepublica" Multiplicity="0..1" />
           <End Role="Empresa" Type="Self.Empresa" Multiplicity="*" />
@@ -3570,32 +3093,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
               <PropertyRef Name="IdRol" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>-->
-        <Association Name="FK_UsuarioAC_EstadosRepublica">
-          <End Role="EstadosRepublica" Type="Self.EstadosRepublica" Multiplicity="0..1" />
-          <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstadosRepublica">
-              <PropertyRef Name="IdEstadoRep" />
-            </Principal>
-            <Dependent Role="UsuarioAC">
-              <PropertyRef Name="IdEstadoRep" />
-            </Dependent>
-          </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UsuarioAC_Pais">
-          <End Role="Pais" Type="Self.Pais" Multiplicity="1" />
-          <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pais">
-              <PropertyRef Name="IdPais" />
-            </Principal>
-            <Dependent Role="UsuarioAC">
-              <PropertyRef Name="IdPais" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <!--<Association Name="FK_UsuarioAC_Rol">
+        <Association Name="FK_UsuarioAC_Rol">
           <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="UsuarioAC" Type="Self.UsuarioAC" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3691,12 +3190,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             </Dependent>
           </ReferentialConstraint>
         </Association>-->
-        <EntityContainer Name="SagasMainModuleEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AdministracionCentral" EntityType="Self.AdministracionCentral" />
-          <!--<EntitySet Name="AdministracionCentralDireccion" EntityType="Self.AdministracionCentralDireccion" />
-          <EntitySet Name="AdministracionCentralFiscal" EntityType="Self.AdministracionCentralFiscal" />
-          <EntitySet Name="AdministracionCentralImagen" EntityType="Self.AdministracionCentralImagen" />
-          <EntitySet Name="AdministracionCetralContacto" EntityType="Self.AdministracionCetralContacto" />-->
+        <EntityContainer Name="SagasMainModuleEntities" annotation:LazyLoadingEnabled="true">          
           <EntitySet Name="EstadosRepublica" EntityType="Self.EstadosRepublica" />
           <EntitySet Name="Pais" EntityType="Self.Pais" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" />
@@ -3708,43 +3202,13 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySet Name="Rol" EntityType="Self.Rol" />
           <!--<EntitySet Name="RolAccion" EntityType="Self.RolAccion" />-->
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
-          <EntitySet Name="UsuarioAC" EntityType="Self.UsuarioAC" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />          
           <!--<EntitySet Name="UsuarioACContacto" EntityType="Self.UsuarioACContacto" />
           <EntitySet Name="UsuarioACCredencial" EntityType="Self.UsuarioACCredencial" />
           <EntitySet Name="UsuarioACDireccion" EntityType="Self.UsuarioACDireccion" />
           <EntitySet Name="UsuarioContacto" EntityType="Self.UsuarioContacto" />
           <EntitySet Name="UsuarioCredencial" EntityType="Self.UsuarioCredencial" />
-          <EntitySet Name="UsuarioDireccion" EntityType="Self.UsuarioDireccion" />-->
-          <!--<AssociationSet Name="FK_AdministracionCentralDireccion_AdministracionCentral" Association="Self.FK_AdministracionCentralDireccion_AdministracionCentral">
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-            <End Role="AdministracionCentralDireccion" EntitySet="AdministracionCentralDireccion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdministracionCentralFiscal_AdministracionCentral" Association="Self.FK_AdministracionCentralFiscal_AdministracionCentral">
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-            <End Role="AdministracionCentralFiscal" EntitySet="AdministracionCentralFiscal" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdministracionCentralImagen_AdministracionCentral" Association="Self.FK_AdministracionCentralImagen_AdministracionCentral">
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-            <End Role="AdministracionCentralImagen" EntitySet="AdministracionCentralImagen" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdministracionCetralContacto_AdministracionCentral" Association="Self.FK_AdministracionCetralContacto_AdministracionCentral">
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-            <End Role="AdministracionCetralContacto" EntitySet="AdministracionCetralContacto" />
-          </AssociationSet>-->
-          
-          <AssociationSet Name="FK_UsuarioAC_AdministracionCentral" Association="Self.FK_UsuarioAC_AdministracionCentral">
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-            <End Role="UsuarioAC" EntitySet="UsuarioAC" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdministracionCentral_EstadosRepublica" Association="Self.FK_AdministracionCentral_EstadosRepublica">
-            <End Role="EstadosRepublica" EntitySet="EstadosRepublica" />
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AdministracionCentral_Pais" Association="Self.FK_AdministracionCentral_Pais">
-            <End Role="Pais" EntitySet="Pais" />
-            <End Role="AdministracionCentral" EntitySet="AdministracionCentral" />
-          </AssociationSet>
+          <EntitySet Name="UsuarioDireccion" EntityType="Self.UsuarioDireccion" />-->          
           <AssociationSet Name="FK_Empresa_EstadosRepublica" Association="Self.FK_Empresa_EstadosRepublica">
             <End Role="EstadosRepublica" EntitySet="EstadosRepublica" />
             <End Role="Empresa" EntitySet="Empresa" />
@@ -3788,19 +3252,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <!--<AssociationSet Name="FK_UsuarioAC_Rol" Association="Self.FK_UsuarioAC_Rol">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="UsuarioAC" EntitySet="UsuarioAC" />
-          </AssociationSet>-->
-          <AssociationSet Name="FK_UsuarioAC_EstadosRepublica" Association="Sagas.MainModuleModel.FK_UsuarioAC_EstadosRepublica">
-            <End Role="EstadosRepublica" EntitySet="EstadosRepublica" />
-            <End Role="UsuarioAC" EntitySet="UsuarioAC" />
-          </AssociationSet>
+          </AssociationSet>-->          
           <AssociationSet Name="FK_Usuario_EstadosRepublica" Association="Sagas.MainModuleModel.FK_Usuario_EstadosRepublica">
             <End Role="EstadosRepublica" EntitySet="EstadosRepublica" />
             <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UsuarioAC_Pais" Association="Sagas.MainModuleModel.FK_UsuarioAC_Pais">
-            <End Role="Pais" EntitySet="Pais" />
-            <End Role="UsuarioAC" EntitySet="UsuarioAC" />
-          </AssociationSet>
+          </AssociationSet>          
           <AssociationSet Name="FK_Usuario_Pais" Association="Sagas.MainModuleModel.FK_Usuario_Pais">
             <End Role="Pais" EntitySet="Pais" />
             <End Role="Usuario" EntitySet="Usuario" />
@@ -4205,6 +3661,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CuentaContable" EntitySet="CuentaContable" />
           </AssociationSet>
+          <!--<EntitySet Name="RolAccionCatalogo" EntityType="Sagas.MainModuleModel.RolAccionCatalogo" />-->
+          <!--<AssociationSet Name="FK_RolAccionCatalogo_Rol" Association="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="RolAccionCatalogo" EntitySet="RolAccionCatalogo" />
+          </AssociationSet>-->
           <!--<AssociationSet Name="FK_UsuarioContacto_Usuario" Association="Self.FK_UsuarioContacto_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioContacto" EntitySet="UsuarioContacto" />
@@ -6049,62 +5510,26 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             </Dependent>
           </ReferentialConstraint>
         </Association>        
+        <!--<Association Name="FK_RolAccionCatalogo_Rol">
+          <End Type="Sagas.MainModuleModel.Rol" Role="Rol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.RolAccionCatalogo" Role="RolAccionCatalogo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="RolAccionCatalogo">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->        
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SagasMainModuleModelStoreContainer" CdmEntityContainer="SagasMainModuleEntities">
-          <EntitySetMapping Name="AdministracionCentral">
-            <EntityTypeMapping TypeName="Sagas.MainModuleModel.AdministracionCentral">
-              <MappingFragment StoreEntitySet="AdministracionCentral">
-                <ScalarProperty Name="IdAdministracionCentral" ColumnName="IdAdministracionCentral" />
-                <ScalarProperty Name="NombreComercial" ColumnName="NombreComercial" />
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-              </MappingFragment>
-            
-              <MappingFragment StoreEntitySet="AdministracionCentralDireccion">
-                <ScalarProperty Name="IdAdministracionCentral" ColumnName="IdAdministracionCentral" />
-                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
-                <ScalarProperty Name="IdEstadoRep" ColumnName="IdEstadoRep" />
-                <ScalarProperty Name="EstadoProvincia" ColumnName="EstadoProvincia" />
-                <ScalarProperty Name="Municipio" ColumnName="Municipio" />
-                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
-                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
-                <ScalarProperty Name="Calle" ColumnName="Calle" />
-                <ScalarProperty Name="NumExt" ColumnName="NumExt" />
-                <ScalarProperty Name="NumInt" ColumnName="NumInt" />
-              </MappingFragment>
-            
-              <MappingFragment StoreEntitySet="AdministracionCentralFiscal">
-                <ScalarProperty Name="IdAdministracionCentral" ColumnName="IdAdministracionCentral" />
-                <ScalarProperty Name="Rfc" ColumnName="Rfc" />
-                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
-              </MappingFragment>
-            
-              <MappingFragment StoreEntitySet="AdministracionCentralImagen">
-                <ScalarProperty Name="IdAdministracionCentral" ColumnName="IdAdministracionCentral" />
-                <ScalarProperty Name="UrlLogotipoMenu" ColumnName="UrlLogotipoMenu" />
-                <ScalarProperty Name="UrlLogotipoLogin" ColumnName="UrlLogotipoLogin" />
-              </MappingFragment>
-            
-              <MappingFragment StoreEntitySet="AdministracionCetralContacto">
-                <ScalarProperty Name="IdAdministracionCentral" ColumnName="IdAdministracionCentral" />
-                <ScalarProperty Name="Telefono1" ColumnName="Telefono1" />
-                <ScalarProperty Name="Telefono2" ColumnName="Telefono2" />
-                <ScalarProperty Name="Telefono3" ColumnName="Telefono3" />
-                <ScalarProperty Name="Celular1" ColumnName="Celular1" />
-                <ScalarProperty Name="Celular2" ColumnName="Celular2" />
-                <ScalarProperty Name="Celular3" ColumnName="Celular3" />
-                <ScalarProperty Name="Email1" ColumnName="Email1" />
-                <ScalarProperty Name="Email2" ColumnName="Email2" />
-                <ScalarProperty Name="Email3" ColumnName="Email3" />
-                <ScalarProperty Name="SitioWeb1" ColumnName="SitioWeb1" />
-                <ScalarProperty Name="SitioWeb2" ColumnName="SitioWeb2" />
-                <ScalarProperty Name="SitioWeb3" ColumnName="SitioWeb3" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="EstadosRepublica">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.EstadosRepublica">
               <MappingFragment StoreEntitySet="CEstadosRep">
@@ -6211,6 +5636,26 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
                 <ScalarProperty Name="RequisicionVerRequisiciones" ColumnName="RequisicionVerRequisiciones" />
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
                 </MappingFragment>
+              
+                <MappingFragment StoreEntitySet="RolAccionCatalogo">
+                  <ScalarProperty Name="CatConsultarCuentaContable" ColumnName="CatConsultarCuentaContable" />
+                  <ScalarProperty Name="CatEliminarCuentaContable" ColumnName="CatEliminarCuentaContable" />
+                  <ScalarProperty Name="CatModificarCuentaContable" ColumnName="CatModificarCuentaContable" />
+                  <ScalarProperty Name="CatInsertarCuentaContable" ColumnName="CatInsertarCuentaContable" />
+                  <ScalarProperty Name="CatConsultarProducto" ColumnName="CatConsultarProducto" />
+                  <ScalarProperty Name="CatEliminarProducto" ColumnName="CatEliminarProducto" />
+                  <ScalarProperty Name="CatModificarProducto" ColumnName="CatModificarProducto" />
+                  <ScalarProperty Name="CatInsertarProducto" ColumnName="CatInsertarProducto" />
+                  <ScalarProperty Name="CatConsultarProveedor" ColumnName="CatConsultarProveedor" />
+                  <ScalarProperty Name="CatEliminarProveedor" ColumnName="CatEliminarProveedor" />
+                  <ScalarProperty Name="CatModificarProveedor" ColumnName="CatModificarProveedor" />
+                  <ScalarProperty Name="CatInsertarProveedor" ColumnName="CatInsertarProveedor" />
+                  <ScalarProperty Name="CatConsultarUsuario" ColumnName="CatConsultarUsuario" />
+                  <ScalarProperty Name="CatEliminarUsuario" ColumnName="CatEliminarUsuario" />
+                  <ScalarProperty Name="CatModificarUsuario" ColumnName="CatModificarUsuario" />
+                  <ScalarProperty Name="CatInsertarUsuario" ColumnName="CatInsertarUsuario" />
+                  <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
@@ -6262,56 +5707,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
             
               <MappingFragment StoreEntitySet="UsuarioDireccion">
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
-                <ScalarProperty Name="IdEstadoRep" ColumnName="IdEstadoRep" />
-                <ScalarProperty Name="EstadoProvincia" ColumnName="EstadoProvincia" />
-                <ScalarProperty Name="Municipio" ColumnName="Municipio" />
-                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
-                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
-                <ScalarProperty Name="Calle" ColumnName="Calle" />
-                <ScalarProperty Name="NumExt" ColumnName="NumExt" />
-                <ScalarProperty Name="NumInt" ColumnName="NumInt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UsuarioAC">
-            <EntityTypeMapping TypeName="Sagas.MainModuleModel.UsuarioAC">
-              <MappingFragment StoreEntitySet="UsuarioAC">
-                <ScalarProperty Name="IdUsuarioAC" ColumnName="IdUsuarioAC" />
-                <ScalarProperty Name="IdAdministracionCentral" ColumnName="IdAdministracionCentral" />
-                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
-                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
-                <ScalarProperty Name="SuperAdmin" ColumnName="SuperAdmin" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-              </MappingFragment>
-            
-              <MappingFragment StoreEntitySet="UsuarioACContacto">
-                <ScalarProperty Name="IdUsuarioAC" ColumnName="IdUsuarioAC" />
-                <ScalarProperty Name="Telefono1" ColumnName="Telefono1" />
-                <ScalarProperty Name="Telefono2" ColumnName="Telefono2" />
-                <ScalarProperty Name="Telefono3" ColumnName="Telefono3" />
-                <ScalarProperty Name="Celular1" ColumnName="Celular1" />
-                <ScalarProperty Name="Celular2" ColumnName="Celular2" />
-                <ScalarProperty Name="Celular3" ColumnName="Celular3" />
-                <ScalarProperty Name="Email1" ColumnName="Email1" />
-                <ScalarProperty Name="Email2" ColumnName="Email2" />
-                <ScalarProperty Name="Email3" ColumnName="Email3" />
-                <ScalarProperty Name="SitioWeb1" ColumnName="SitioWeb1" />
-                <ScalarProperty Name="SitioWeb2" ColumnName="SitioWeb2" />
-                <ScalarProperty Name="SitioWeb3" ColumnName="SitioWeb3" />
-              </MappingFragment>
-            
-              <MappingFragment StoreEntitySet="UsuarioACCredencial">
-                <ScalarProperty Name="IdUsuarioAC" ColumnName="IdUsuarioAC" />
-                <ScalarProperty Name="NombreUsuario" ColumnName="Usuario" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            
-              <MappingFragment StoreEntitySet="UsuarioACDireccion">
-                <ScalarProperty Name="IdUsuarioAC" ColumnName="IdUsuarioAC" />
                 <ScalarProperty Name="IdPais" ColumnName="IdPais" />
                 <ScalarProperty Name="IdEstadoRep" ColumnName="IdEstadoRep" />
                 <ScalarProperty Name="EstadoProvincia" ColumnName="EstadoProvincia" />
@@ -6935,7 +6330,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
                 <ScalarProperty Name="IdTipoPersona" ColumnName="IdTipoPersona" />
               </MappingFragment>
             </EntityTypeMapping>
-          </EntitySetMapping>         
+          </EntitySetMapping>          
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
