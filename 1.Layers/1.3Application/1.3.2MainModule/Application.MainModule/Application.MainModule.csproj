@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdaptadoresDTO\Catalogo\AdministracionCentralAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CentroCostoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
@@ -65,8 +64,6 @@
     <Compile Include="AdaptadoresDTO\Catalogo\UsuarioAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Requisicion\RequisicionProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\OrdenesCompraAdapter.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="DTOs\Catalogo\AdministracionCentralDto.cs" />
     <Compile Include="DTOs\Catalogo\CentroCostoDTO.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorCrearDto.cs" />

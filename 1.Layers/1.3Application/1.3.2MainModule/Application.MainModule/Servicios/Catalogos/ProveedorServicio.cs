@@ -19,14 +19,12 @@ namespace Application.MainModule.Servicios.Catalogos
         }
 
         public static RespuestaDto ModificarProveedor(Proveedor provee)
-        public static List<ProveedorDto> Obtener()
         {
             return new ProveedorDataAccess().Actualizar(provee);
         }
-
-        public static List<Proveedor> Obtener(short IdEmpresa)
+        public static List<Proveedor> Obtener()
         {
-            var empresa = new EmpresaDataAccess().Buscar(IdEmpresa);
+
             var empresa = new EmpresaDataAccess().Buscar(Seguridad.TokenServicio.ObtenerIdEmpresa());
 
             if (empresa.EsAdministracionCentral)
