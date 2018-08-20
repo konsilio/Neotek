@@ -26,6 +26,7 @@ namespace Application.MainModule.Servicios.Notificacion
             html = html.Replace("[[FECHA_REQUISICION]]", req.FechaRequerida.ToShortDateString());
             html = html.Replace("[[SOLICITANTE]]", UsuarioServicio.ObtenerNombreCompleto(req.Solicitante));
             html = html.Replace("[[MOTIVO]]", req.MotivoRequisicion);
+            html = html.Replace("[[WebAppURL]]", ConfigurationManager.AppSettings["RutaPlantillasHtml"])
 
             return html;
         }

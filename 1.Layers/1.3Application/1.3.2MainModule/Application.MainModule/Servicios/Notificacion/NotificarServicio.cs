@@ -15,13 +15,13 @@ namespace Application.MainModule.Servicios.Notificacion
         public static void RequisicionNueva(Sagas.MainModule.Entidades.Requisicion req, bool incluirMensajePush = false)
         {
             var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
-            var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.RequisicionGenerarNueva).ToList();
+            var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.RequisicionRevisarExistencia).ToList();
             
             var correoDto = new CorreoDto()
             {
                 De = ObtenerCorreo(usuAplicacion),
                 ParaLista = ObtenerCorreo(ObtenerDestinatarios(roles)),
-                Asunto = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionGenerarNueva"], req.NumeroRequisicion),
+                Asunto = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], req.NumeroRequisicion),
                 Mensaje = CorreoHtmlServicio.RequisicionNueva(req),
             };
 

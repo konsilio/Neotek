@@ -18,7 +18,8 @@ namespace Application.MainModule.Servicios.Seguridad
         public static List<Rol> ObtenerRoles(Empresa empresa)
         {
             if (empresa != null)
-                return empresa.Roles.ToList();
+                if (empresa.Roles != null && empresa.Roles.Count > 0)
+                    return empresa.Roles.ToList();
 
             return ObtenerRoles(empresa.IdEmpresa);
         }
