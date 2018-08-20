@@ -1,5 +1,7 @@
 package com.example.neotecknewts.sagasapp.Interactor;
 
+import android.util.Log;
+
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
@@ -22,7 +24,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     //metodos para llamada web service
     @Override
     public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO) {
-
+        Log.v("Entra", String.valueOf(precargaPapeletaDTO.getImagenes().size()));
     }
 
     @Override

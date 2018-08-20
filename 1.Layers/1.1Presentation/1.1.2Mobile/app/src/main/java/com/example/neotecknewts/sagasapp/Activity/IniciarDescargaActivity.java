@@ -189,6 +189,7 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
         intent.putExtra("EsDescargaIniciar",true);
         intent.putExtra("EsDescargaFinalizar",false);
         intent.putExtra("Almacen",false);
+        intent.putExtra("TanquePrestado",switchTanquePrestado.isChecked());
         startActivity(intent);
     }
 

@@ -8,7 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  * InciarDescargaSQL
  * Clase que exitiende de android.database.SQLiteOpenHelper la cual,
  * permite la creación de la base de datos en el dispositivo
- * y la ejecucion de consultas SQLite en el dispositivo
+ * y la ejecucion de consultas SQLite en el dispositivo, este almacena
+ * los datos de la sección de iniciar descarga
  * @author  Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
  * @date 20/08/2018
  * @lastupdate 20/08/2018
@@ -38,8 +39,6 @@ public class InciarDescargaSQL extends SQLiteOpenHelper {
     //endregion
     //region Metodos sobrescritor
     /**
-     * Called when the database is created for the first time. This is where the
-     * creation of tables and the initial population of the tables should happen.
      * Se invoca cuando la base de datos es creada por primera vez. En este es donde las tablas
      * son creadas y la pobracion de estas sucede.
      *
@@ -53,12 +52,18 @@ public class InciarDescargaSQL extends SQLiteOpenHelper {
         /* Ejecuto la creación de la tabla para descargas */
         db.execSQL(
                 "CREATE TABLE "+TABLE_NAME+
-                        "Id INTEGER PRIMARY KEY"+
-                        "NoOrden INTEGER"+
-                        "EsTanque CHAR(1)"+
-                        "TipoMedidorTractor INTEGER"+
-                        "TipoMedidorAlmacen INTEGER"+
-                        "NoAlmacen INTEGER"
+                        "(IdOrdenCompra INTEGER PRIMARY KEY,"+
+                        "NombreTipoMedidorTractor TEXT,"+
+                        "NombreTipoMedidorAlmacen TEXT,"+
+                        "IdTipoMedidorTractor INTEGER,"+
+                        "IdTipoMedidorAlmacen INTEGER,"+
+                        "CantidadFotosAlmacen INTEGER,"+
+                        "CantidadFotosTractor INTEGER,"+
+                        "TanquePrestado BOOLEAN,"+
+                        "PorcentajeMedidorAlmacen DOUBLE,"+
+                        "PorcentajeMedidorTractor DOUBLE,"+
+                        "IdAlmacen INTEGER," +
+                        "UuidOrden TEXT)"
         );
     }
 
