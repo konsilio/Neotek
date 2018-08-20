@@ -23,6 +23,11 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostCompraGas(string empty)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _compras.ComprarGas());
-        }       
+        }
+        [Route("buscar/requisicion/{idReq}")]
+        public HttpResponseMessage GetBuscarReq(int idReq)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _compras.BuscarRequisicion(idReq));
+        }  
     }
 }

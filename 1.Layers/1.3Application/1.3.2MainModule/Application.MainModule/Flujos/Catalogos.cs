@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Seguridad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,10 @@ namespace Application.MainModule.Flujos
         }
         public List<EmpresaDTO> ListaEmpresas()
         {
-            return EmpresaServicio.BuscarEmpresas();
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return EmpresaServicio.BuscarEmpresas();
+            else
+                return EmpresaServicio.BuscarEmpresas().ToList().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
         public List<EmpresaDTO> ListaEmpresas(bool conAC)
         {
@@ -28,7 +32,10 @@ namespace Application.MainModule.Flujos
         #region Usuarios
         public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
         {
-            return UsuarioServicio.ListaUsuarios(idEmpresa);
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+            else
+                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();          
         }
         #endregion
         #region Productos
@@ -36,17 +43,26 @@ namespace Application.MainModule.Flujos
         {
             return ProductoServicios.ListaProductos(idEmpresa);
         }
+        public List<ProductoDTO> ListaPorductosAsociados(int idProdcuto)
+        {
+            return ProductoServicios.ListaProductoAsociados(ProductoServicios.ListaProductoAsociados(idProdcuto));
+        }
         #endregion
-
+        #region CentroCosto
+        public List<CentroCostoDTO> ListaCentrosCostos()
+        {
+            return CentroCostoServicio.ObtenerCentrosCostos();
+        }
+        #endregion
         #region Proveedor
         public RespuestaDto RegistraProveedor(ProveedorCrearDto provDto)
         {
             return ProveedorServicio.RegistrarProveedor(provDto);
         }
 
-        public List<ProveedorDto> ConsultaProveedores(short idEmpresa)
+        public List<ProveedorDto> ConsultaProveedores()
         {
-            return ProveedorServicio.Obtener(idEmpresa);
+            return ProveedorServicio.Obtener();
         }
 
         public ProveedorDto ConsultaProveedor(int idProveedor)

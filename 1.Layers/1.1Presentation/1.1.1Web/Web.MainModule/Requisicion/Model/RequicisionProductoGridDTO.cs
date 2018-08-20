@@ -40,7 +40,7 @@ namespace Web.MainModule.Requisicion.Model
         public string Unidad { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]        
-        [Range(typeof(decimal), "0.0001", "9999999", ErrorMessage = Error.R0005 )]
+        [Range(0.0001, 9999999, ErrorMessage = Error.R0005 )]
         [Display(Name = "Cantidad")]
         public decimal Cantidad { get; set; }
 

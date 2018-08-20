@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Security.MainModule.Token_Service;
+using Sagas.MainModule.Entidades;
+using Application.MainModule.Servicios.Catalogos;
 
 namespace Application.MainModule.Servicios.Seguridad
 {
@@ -32,6 +34,26 @@ namespace Application.MainModule.Servicios.Seguridad
             var Usuario = claims.FirstOrDefault(x => x.Type.Equals(TokenEtiquetasEnum.IdUsuario));
 
             return Usuario != null ? Convert.ToInt32(Usuario.Value) : 0;
+        }
+
+        public static bool ObtenerEsAdministracionCentral()
+        {
+            var claims = ObtenerClaims();
+            var EsAdminCentral = claims.FirstOrDefault(x => x.Type.Equals(TokenEtiquetasEnum.EsAdminCentral));
+
+            return EsAdminCentral != null ? Convert.ToBoolean(EsAdminCentral.Value) : false;
+        }
+        public static bool ObtenerAutenticado()
+        {
+            var claims = ObtenerClaims();
+            var EsAutenticado = claims.FirstOrDefault(x => x.Type.Equals(TokenEtiquetasEnum.Autenticado));
+
+            return EsAutenticado != null ? Convert.ToBoolean(EsAutenticado.Value) : false;
+        }
+
+        public static Usuario ObtenerUsuarioAplicacion()
+        {
+            return UsuarioServicio.Obtener(ObtenerIdUsuario());
         }
     }
 }

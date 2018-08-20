@@ -15,7 +15,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new AlmacenDto()
             {
                 IdAlmacenGas = alm.IdAlmacenGas,
-                NombreAlamcen= "Núm. 1",
+                NombreAlmacen= "Núm. 1",
             };
         }
 

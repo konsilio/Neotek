@@ -49,16 +49,20 @@ namespace DS.MainModule.Controllers
         }
         #endregion
         #region Productos
-        [Route("prodcutos/listaprodcutos/{idEmpresa}")]
+        [Route("productos/listaproductos/{idEmpresa}")]
         public HttpResponseMessage GetListaProductos(short idEmpresa)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaProductos(idEmpresa));
+        }
+        [Route("productos/listaproductosasociados/{idProducto}")]
+        public HttpResponseMessage GetListaProductosAsociados(int idProducto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPorductosAsociados(idProducto));
         }
         #endregion
         #region Administracion Central
 
         #endregion
-
         #region Proveedor
         [Route("registra/proveedor")]
         public HttpResponseMessage PostRegistraProveedores(ProveedorCrearDto provDto)
@@ -66,16 +70,23 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRepuesta(_catalogos.RegistraProveedor(provDto), Request);
         }
 
-        [Route("consulta/proveedores/{idEmpresa}")]
-        public HttpResponseMessage GetListaProveedores(short idEmpresa)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedores(idEmpresa));
+        [Route("consulta/proveedores")]
+        public HttpResponseMessage GetListaProveedores()
+        {          
+            return RespuestaHttp.crearRepuesta(_catalogos.ConsultaProveedores(), Request);
         }
 
         [Route("consulta/proveedor/{idProveedor}")]
         public HttpResponseMessage GetListaProveedores(int idProveedor)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedor(idProveedor));
+        }        
+        #endregion
+        #region Centro de Costo
+        [Route("consulta/centrosdecosto")]
+        public HttpResponseMessage GetCentrosCostos()
+        {
+            return RespuestaHttp.crearRepuesta(_catalogos.ListaCentrosCostos(), Request);
         }
         #endregion
     }

@@ -16,9 +16,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             prodDTO.IdProducto = _prod.IdProducto;
             prodDTO.IdEmpresa = _prod.IdEmpresa;
             prodDTO.IdProductoServicioTipo = _prod.IdProductoServicioTipo;
+            prodDTO.TipoProducto = _prod.TipoServicioOProducto.Descripcion;
             prodDTO.IdCategoria = _prod.IdCategoria;
             prodDTO.IdProductoLinea = _prod.IdProductoLinea;
             prodDTO.IdUnidadMedida = _prod.IdUnidadMedida;
+            prodDTO.UnidadMedida = _prod.UnidadMedida.Acronimo;
             prodDTO.IdUnidadMedida2 = _prod.IdUnidadMedida2;
             prodDTO.Descripcion = _prod.Descripcion;
             prodDTO.Minimos = _prod.Minimos;
@@ -40,9 +42,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             _prod.IdProducto = prodDTO.IdProducto;
             _prod.IdEmpresa = prodDTO.IdEmpresa;
             _prod.IdProductoServicioTipo = prodDTO.IdProductoServicioTipo;
+            _prod.TipoServicioOProducto.Descripcion = prodDTO.TipoProducto;
             _prod.IdCategoria = prodDTO.IdCategoria;
             _prod.IdProductoLinea = prodDTO.IdProductoLinea;
             _prod.IdUnidadMedida = prodDTO.IdUnidadMedida;
+            _prod.UnidadMedida.Descripcion = prodDTO.UnidadMedida;
             _prod.IdUnidadMedida2 = prodDTO.IdUnidadMedida2;
             _prod.Descripcion = prodDTO.Descripcion;
             _prod.Minimos = prodDTO.Minimos;

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Security.MainModule.Token_Service;
+using Sagas.MainModule.Entidades;
 
 namespace Application.MainModule.Servicios.Seguridad
 {

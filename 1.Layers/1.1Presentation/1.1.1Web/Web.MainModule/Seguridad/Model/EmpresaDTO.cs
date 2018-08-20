@@ -8,6 +8,7 @@ namespace Web.MainModule.Seguridad.Model
     public class EmpresaDTO
     {
         public short IdEmpresa { get; set; }
+        public bool EsAdministracionCentral { get; set; }
         public byte IdAdministracionCentral { get; set; }
         public string NombreComercial { get; set; }
         public System.DateTime FechaRegistro { get; set; }

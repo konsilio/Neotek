@@ -7,6 +7,7 @@ using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Seguridad;
 using Application.MainModule.Servicios.Requisicion;
+using Application.MainModule.Servicios.Notificacion;
 
 namespace Application.MainModule.Flujos
 {
@@ -16,7 +17,10 @@ namespace Application.MainModule.Flujos
         {
             var _requisicion = AdaptadoresDTO.Requisicion.RequisicionAdapter.FromEDTO(_req);
             _requisicion =  Servicios.Almacen.ProductoAlmacenServicio.CalcularAlmacenProcutos(_requisicion);
-            return RequisicionServicio.GuardarRequisicionNueva(_requisicion);
+            var respuesta = RequisicionServicio.GuardarRequisicionNueva(_requisicion);
+            if (respuesta.Exito)
+                NotificarServicio.RequisicionNueva(RequisicionServicio.Buscar(respuesta.IdRequisicion));
+            return respuesta;
         }
         public List<RequisicionDTO> BuscarRequisicionesPorEmpresa(Int16 idEmpresa)
         {
@@ -37,6 +41,10 @@ namespace Application.MainModule.Flujos
         public RespuestaRequisicionDto ActualizarRequisicionAutorizacion(RequisicionAutPutDTO _req)
         {
             return RequisicionServicio.UpDateRequisicionAutoriza(_req);
-        }        
+        }
+        public RespuestaRequisicionDto CancelarRequisicion(RequisicionCancelaDTO _req)
+        {
+            return RequisicionServicio.CancelarRequisicion(_req);
+        }       
     }
 }

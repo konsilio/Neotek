@@ -24,6 +24,8 @@ namespace Web.MainModule.Requisicion.Model
         [Required(ErrorMessage = Error.S0001)]
         [Display(Name = "IdRequisicionEstatus")]
         public byte IdRequisicionEstatus { get; set; }
+
+        public string MotivoCancelacion { get; set; }
         public List<RequisicionProdAutPutDTO> ListaProductos { get; set; }
 
     }

@@ -20,11 +20,11 @@ namespace DS.MainModule.Controllers
         {
             _requisicion = new Requisicion();
         }
-       
+
         [Route("guardar/requisicion")]
         public HttpResponseMessage PostRequisicion(RequisicionEDTO req)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _requisicion.InsertRequisicionNueva(req));   
+            return Request.CreateResponse(HttpStatusCode.OK, _requisicion.InsertRequisicionNueva(req));
         }
         [Route("buscar/requisiciones/{idEmpresa}")]
         public HttpResponseMessage GetRequisicionesByIdEmpresa(short idEmpresa)
@@ -51,10 +51,10 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.ActualizarRequisicionAutorizacion(req));
         }
-        //[Route("cancelar")]
-        //public HttpResponseMessage PutCancelarRequisicion(req)
-        //{
-
-        //}
+        [Route("cancela/requisicion")]
+        public HttpResponseMessage PutCancelarRequisicion(RequisicionCancelaDTO req)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _requisicion.CancelarRequisicion(req));
+        }
     }
 }

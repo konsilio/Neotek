@@ -40,15 +40,6 @@ namespace Web.MainModule {
         protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
-        /// Control ctCompras.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ctCompras;
-        
-        /// <summary>
         /// Control ctDashBoard.
         /// </summary>
         /// <remarks>
@@ -65,6 +56,15 @@ namespace Web.MainModule {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder ctRequisicion;
+        
+        /// <summary>
+        /// Control ctCompras.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ctCompras;
         
         /// <summary>
         /// Control ctOrdenCompra.

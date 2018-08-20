@@ -58,6 +58,51 @@ namespace Web.MainModule {
         protected global::System.Web.UI.WebControls.DropDownList ddlFiltroEstatus;
         
         /// <summary>
+        /// Control dtpFechaRegiistrDe.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::UserControls.DateTimePicker dtpFechaRegiistrDe;
+        
+        /// <summary>
+        /// Control dtpFechaRegiistrA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::UserControls.DateTimePicker dtpFechaRegiistrA;
+        
+        /// <summary>
+        /// Control dtpFechaRequisicionDe.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::UserControls.DateTimePicker dtpFechaRequisicionDe;
+        
+        /// <summary>
+        /// Control dtpFechaRequisicionA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::UserControls.DateTimePicker dtpFechaRequisicionA;
+        
+        /// <summary>
+        /// Control btnBuscar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnBuscar;
+        
+        /// <summary>
         /// Control dgRequisisiones.
         /// </summary>
         /// <remarks>

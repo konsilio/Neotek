@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Login</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <!-- Favicon-->
+
     <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
     <!-- Morris Chart Css-->
     <link rel="stylesheet" href="assets/plugins/morrisjs/morris.css" />
@@ -36,9 +36,9 @@
                         <div class="col-lg-6 col-md-12">
                             <div class="company_detail">
                                 <h4 class="logo">
-                                    <img src="assets/images/logo.svg" alt="" />
-                                    SAGAS</h4>
-                                <h3>Sistema de Administracion de Gas <strong>Ver. 1.0</strong></h3>
+                                    <img src="assets/images/LogoCorpKonsilio183x183.png" alt="" />
+                                    Corporativo Konsilio</h4>
+                                <h3>SAGAS. Sistema de Administracion de Gas <strong>Ver. 1.0</strong></h3>
                                 <p>
                                 </p>
                                 <div class="footer">
@@ -76,7 +76,7 @@
                                
                                 <div class="from">
                                     <div >
-                                     <asp:DropDownList CssClass="selectpicker" data-live-search="true" runat="server" ID="ddlRazon"></asp:DropDownList>
+                                     <asp:DropDownList CssClass="form-control selectpicker z-index show-tick" data-live-search="true" data-show-subtext="true" runat="server" ID="ddlRazon"></asp:DropDownList>
                                     <%-- <select runat="server" id="ddlRazon" class="form-control z-index show-tick" data-show-subtext="true" data-live-search="true" title="Razon social">
                                         </select>--%>
                                         </div>

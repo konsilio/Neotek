@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit">
+      <HintPath>..\..\..\..\packages\AjaxControlToolKit\AjaxControlToolkit.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -150,7 +153,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Compras\Model\" />
-    <Folder Include="OrdenCompra\Servisio\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\bundles\chartscripts.bundle.js" />
@@ -224,6 +226,12 @@
     <Content Include="assets\images\lg\avatar5.jpg" />
     <Content Include="assets\images\lg\avatar6.jpg" />
     <Content Include="assets\images\logo.svg" />
+    <Content Include="assets\images\LogoCorpKonsilio183x183.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\images\LogoCorpKonsilio500x500.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\images\model1.jpg" />
     <Content Include="assets\images\model2.jpg" />
     <Content Include="assets\images\model3.jpg" />
@@ -3599,7 +3607,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Controles\DateTimePicker.ascx" />
     <Content Include="DashBoard\Vista\Dashboard.aspx" />
+    <Content Include="fonts\cal.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -3815,6 +3825,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="fonts\Logo GMG.JPG" />
     <Content Include="Login.aspx" />
+    <Content Include="OrdenCompra\Vistas\Compra.aspx" />
     <Content Include="OrdenCompra\Vistas\OrdenCompra.aspx" />
     <Content Include="Requisicion\Vistas\Requisicion.aspx" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
@@ -3871,9 +3882,32 @@
     <Compile Include="Agente\AgenteServicios.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Catalogos\Model\CentroCostoDTO.cs" />
+    <Compile Include="Controles\DateTimePicker.ascx.cs">
+      <DependentUpon>DateTimePicker.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controles\DateTimePicker.ascx.designer.cs">
+      <DependentUpon>DateTimePicker.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="OrdenCompra\Model\enumIEPS.cs" />
+    <Compile Include="OrdenCompra\Model\enumIVA.cs" />
+    <Compile Include="OrdenCompra\Model\OrdenCompraDTO.cs" />
+    <Compile Include="OrdenCompra\Model\ProdcutoOC.cs" />
+    <Compile Include="OrdenCompra\Model\ProveedorDTO.cs" />
+    <Compile Include="OrdenCompra\Model\RequisicionOCDTO.cs" />
+    <Compile Include="OrdenCompra\Servisio\OrdenCompraServicio.cs" />
+    <Compile Include="OrdenCompra\Vistas\Compra.aspx.cs">
+      <DependentUpon>Compra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OrdenCompra\Vistas\Compra.aspx.designer.cs">
+      <DependentUpon>Compra.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Requisicion\Model\ProductoDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionAutorizacion.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionAutPutDTO.cs" />
+    <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionCancelaDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionCrearDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionRevisionDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionDtos\RequisicionRevPutDTO.cs" />
@@ -3927,8 +3961,8 @@
     <Compile Include="Requisicion\Model\RequisicionEDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionProductoEDTO.cs" />
     <Compile Include="Requisicion\Model\RequisiconEstatus.cs" />
-    <Compile Include="Requisicion\Model\RespuestaRequisicionDto.cs" />
-    <Compile Include="Requisicion\Servicio\RequsicionServicio.cs" />
+    <Compile Include="RespuestaRequisicionDto.cs" />
+    <Compile Include="Requisicion\Servicio\RequisicionServicio.cs" />
     <Compile Include="Requisicion\Vistas\Requisicion.aspx.cs">
       <DependentUpon>Requisicion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3942,6 +3976,7 @@
     <Compile Include="Seguridad\Model\RespuestaAutenticacionDto.cs" />
     <Compile Include="Seguridad\Servicio\AutenticacionServicio.cs" />
     <Compile Include="Compras\Servicio\ComprasServicio.cs" />
+    <Compile Include="Seguridad\Servicio\TokenServicio.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -14,13 +14,13 @@
     <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/plugins/morrisjs/morris.css" />
     <link rel="stylesheet" href="assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.css" />
-    <link href="assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" />
     <link rel="stylesheet" href="assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
     <link rel="stylesheet" href="assets/plugins/multi-select/css/multi-select.css">
     <link rel="stylesheet" href="assets/plugins/jquery-spinner/css/bootstrap-spinner.css">
-    <link href="assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
     <link rel="stylesheet" href="assets/plugins/sweetalert/sweetalert.css" />
+    <link rel="stylesheet" href="assets/plugins/bootstrap-select/css/bootstrap-select.css" />
     <link rel="stylesheet" href="assets/plugins/nouislider/nouislider.min.css" />
     <!-- Custom Css -->
     <link rel="stylesheet" href="assets/css/main.css">
@@ -114,7 +114,7 @@
             <li>
                 <a href="javascript:void(0);" class="bars"></a>
                 <a class="navbar-brand" href="../../DashBoard/Vista/Dashboard.aspx">
-                    <img src="../../fonts/Logo GMG.JPG" alt="Alpino"></a>
+                    <img src="../../assets/images/LogoCorpKonsilio183x183.png" alt="Corporativo Konsilio"></a>
             </li>
             <li class="power">
                 <a href="javascript:void(0);" class="menu-sm"><i class="zmdi zmdi-swap"></i></a>
@@ -479,7 +479,7 @@
                     <li class="menu_dark"><a href="../../Compras/Vistas/Compras.aspx"><i class="material-icons">feedback </i><span class="icon-name">Requisicion</span> </a></li>
                     <li><a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
                         <ul class="ml-menu">
-                            <li><a href="../../OrdenCompra/Vistas/OrdenCompra.aspx">Oden de Compra</a></li>
+                            <li><a href="../../OrdenCompra/Vistas/Compra.aspx">Orden de Compra</a></li>
                             <%--   <li><a href="events.html">Calendar</a></li>
                             <li><a href="file-dashboard.html">File Manager</a></li>
                             <li><a href="contact.html">Contact list</a></li>
@@ -519,25 +519,24 @@
             <asp:ContentPlaceHolder ID="ctRequisicion" runat="server" />
             <asp:ContentPlaceHolder ID="ctCompras" runat="server" />
             <asp:ContentPlaceHolder ID="ctOrdenCompra" runat="server" />
-        <asp:ContentPlaceHolder ID="ctProveedor" runat="server" />
+            <asp:ContentPlaceHolder ID="ctProveedor" runat="server" />
         </form>
     </section>
     <script src="../../assets/bundles/libscripts.bundle.js"></script>
     <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="../../assets/bundles/vendorscripts.bundle.js"></script>
-
     <script src="../../assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-    <script src="assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+    <script src="../../assets/plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
     <!-- Input Mask Plugin Js -->
     <script src="../../assets/plugins/multi-select/js/jquery.multi-select.js"></script>
-    <script src="assets/plugins/jquery-spinner/js/jquery.spinner.js"></script>
+    <script src="../../assets/plugins/jquery-spinner/js/jquery.spinner.js"></script>
     <!-- Jquery Spinner Plugin Js -->
-    <script src="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    <script src="../../assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
     <!-- Bootstrap Tags Input Plugin Js -->
-    <script src="assets/plugins/nouislider/nouislider.js"></script>
+    <script src="../../assets/plugins/nouislider/nouislider.js"></script>
     <!-- noUISlider Plugin Js -->
     <script src="../../assets/plugins/bootstrap-select/css/bootstrap-select.css"></script>
-
     <!-- slimscroll, waves Scripts Plugin Js -->
     <script src="../../assets/plugins/momentjs/moment.js"></script>
     <!-- Moment Plugin Js -->
@@ -551,16 +550,13 @@
     <!-- sparkline Plugin Js -->
     <script src="../../assets/bundles/doughnut.bundle.js"></script>
     <script src="../../assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-
-
-
     <script src="../../assets/plugins/sweetalert/sweetalert.min.js"></script>
-
     <script src="../../assets/bundles/mainscripts.bundle.js"></script>
+    <script src="../../assets/js/pages/forms/advanced-form-elements.js"></script>
     <script src="../../assets/js/pages/ui/dialogs.js"></script>
     <script src="../../assets/js/pages/index.js"></script>
     <script src="../../assets/js/pages/forms/basic-form-elements.js"></script>
-    <script src="assets/js/pages/forms/advanced-form-elements.js"></script>
+
 
 
 </body>

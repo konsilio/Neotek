@@ -49,15 +49,6 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.DropDownList ddlEmpresas;
         
         /// <summary>
-        /// Control lblNombreEmpresa.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombreEmpresa;
-        
-        /// <summary>
         /// Control lblIdRequisicion.
         /// </summary>
         /// <remarks>
@@ -67,13 +58,22 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.Label lblIdRequisicion;
         
         /// <summary>
+        /// Control divCamposRequi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCamposRequi;
+        
+        /// <summary>
         /// Control txtFechaRequerida.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFechaRequerida;
+        protected global::UserControls.DateTimePicker txtFechaRequerida;
         
         /// <summary>
         /// Control reqFecha.
@@ -202,6 +202,15 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.Label reqProd;
         
         /// <summary>
+        /// Control lblCantidadUnidad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCantidadUnidad;
+        
+        /// <summary>
         /// Control txtCantidad.
         /// </summary>
         /// <remarks>
@@ -271,34 +280,7 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregar;
-        
-        /// <summary>
-        /// Control divOpinion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOpinion;
-        
-        /// <summary>
-        /// Control txtOpinion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtOpinion;
-        
-        /// <summary>
-        /// Control reqOpinion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label reqOpinion;
+        protected global::System.Web.UI.WebControls.LinkButton btnAgregar;
         
         /// <summary>
         /// Control DivCamposPord.
@@ -355,6 +337,33 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.Label reqGrid;
         
         /// <summary>
+        /// Control divOpinion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOpinion;
+        
+        /// <summary>
+        /// Control txtOpinion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtOpinion;
+        
+        /// <summary>
+        /// Control reqOpinion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label reqOpinion;
+        
+        /// <summary>
         /// Control btnRegresar.
         /// </summary>
         /// <remarks>
@@ -362,6 +371,42 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRegresar;
+        
+        /// <summary>
+        /// Control btnCancel.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnCancel;
+        
+        /// <summary>
+        /// Control btnok.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnok;
+        
+        /// <summary>
+        /// Control lblbtnCrear.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblbtnCrear;
+        
+        /// <summary>
+        /// Control txtMotivoCancela.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMotivoCancela;
         
         /// <summary>
         /// Control btnCancelar.
@@ -382,21 +427,12 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.Button BtnCrear;
         
         /// <summary>
-        /// Control upModalCancelar.
+        /// Control btnFin.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upModalCancelar;
-        
-        /// <summary>
-        /// Control txtMotivoCancela.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMotivoCancela;
+        protected global::System.Web.UI.WebControls.Button btnFin;
     }
 }

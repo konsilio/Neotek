@@ -16,6 +16,7 @@ namespace Application.MainModule.DTOs.Catalogo
         public string Nombre { get; set; }
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
+        public string NombreCompleto { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public string NombreUsuario { get; set; }
