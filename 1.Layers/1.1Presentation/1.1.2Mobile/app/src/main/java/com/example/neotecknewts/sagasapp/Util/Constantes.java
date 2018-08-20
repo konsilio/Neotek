@@ -4,6 +4,7 @@ package com.example.neotecknewts.sagasapp.Util;
  * Created by neotecknewts on 08/08/18.
  */
 
+//clase de constantes, se declara la url base a donde se hacen las llamadas a web service y las rutas de cada llamada
 public class Constantes {
 
     public static final String BASE_URL = "http://192.168.0.12:7010/ds/api/";

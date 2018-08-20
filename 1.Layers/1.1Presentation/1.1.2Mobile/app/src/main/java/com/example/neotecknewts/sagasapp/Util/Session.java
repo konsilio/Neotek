@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * Created by neotecknewts on 08/08/18.
  */
-
+//clase para guardar la sesion
 public class Session {
     // Shared Preferences
     SharedPreferences pref;
@@ -93,14 +93,17 @@ public class Session {
         return user;
     }
 
+    //regresa el token junto con el texto "Bearer"
     public String getTokenWithBearer(){
         return "Bearer " + pref.getString(KEY_TOKEN,null);
     }
 
+    //regresa el token simple
     public String getToken(){
         return pref.getString(KEY_TOKEN,null);
     }
 
+    //regresa el id de la empresa
     public int getIdEmpresa(){
         return pref.getInt(KEY_ID_EMPRESA,0);
     }

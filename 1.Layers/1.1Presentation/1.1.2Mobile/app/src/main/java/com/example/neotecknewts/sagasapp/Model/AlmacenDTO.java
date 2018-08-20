@@ -1,12 +1,17 @@
 package com.example.neotecknewts.sagasapp.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by neotecknewts on 15/08/18.
  */
 
 public class AlmacenDTO {
+    @SerializedName("NombreAlmacen")
     private String NombreAlmacen;
-    private int IdAlmacen;
+
+    @SerializedName("IdAlmacenGas")
+    private int IdAlmacenGas;
 
     public String getNombreAlmacen() {
         return NombreAlmacen;
@@ -16,11 +21,11 @@ public class AlmacenDTO {
         NombreAlmacen = nombreAlmacen;
     }
 
-    public int getIdAlmacen() {
-        return IdAlmacen;
+    public int getIdAlmacenGas() {
+        return IdAlmacenGas;
     }
 
-    public void setIdAlmacen(int idAlmacen) {
-        IdAlmacen = idAlmacen;
+    public void setIdAlmacenGas(int idAlmacenGas) {
+        IdAlmacenGas = idAlmacenGas;
     }
 }

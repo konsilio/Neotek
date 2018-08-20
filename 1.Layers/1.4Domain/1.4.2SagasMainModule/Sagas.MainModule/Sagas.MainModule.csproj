@@ -40,9 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entidades\AdministracionCentral.cs">
-      <DependentUpon>Sagas.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entidades\Almacen.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -171,11 +168,7 @@
     <Compile Include="Entidades\Usuario.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\UsuarioAC.cs">
-      <DependentUpon>Sagas.tt</DependentUpon>
-    </Compile>
     <Compile Include="IRepositorios\IEmpresaRepositorio.cs" />
-    <Compile Include="IRepositorios\IAdministracionCentralRepositorio.cs" />
     <Compile Include="IRepositorios\IEstadosRepRepositorio.cs" />
     <Compile Include="IRepositorios\IPaisRepositorio.cs" />
     <Compile Include="IRepositorios\IRepository.cs" />
@@ -183,8 +176,8 @@
     <Compile Include="IRepositorios\IRequisicionProductoRepositorio.cs" />
     <Compile Include="IRepositorios\IRequisicionRepositorio.cs" />
     <Compile Include="IRepositorios\IRolRepositorio.cs" />
-    <Compile Include="IRepositorios\IUsuarioACRepositorio.cs" />
     <Compile Include="IRepositorios\IUsuarioRepositorio.cs" />
+    <Compile Include="ObjetosValor\Enum\ImagenDeEnum.cs" />
     <Compile Include="ObjetosValor\Enum\RequisicionEstatusEnum.cs" />
     <Compile Include="ObjetosValor\Enum\OrdenCompraEstatusEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoPersonaFiscalEnum.cs" />

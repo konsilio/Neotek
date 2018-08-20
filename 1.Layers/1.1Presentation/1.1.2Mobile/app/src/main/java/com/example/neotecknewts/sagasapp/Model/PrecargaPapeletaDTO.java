@@ -70,7 +70,7 @@ public class PrecargaPapeletaDTO implements Serializable {
     private String NombreResponsable;
 
     @SerializedName("Imagenes")
-    private List<byte[]> Imagenes;
+    private List<String> Imagenes;
 
     @SerializedName("ImagenesURL")
     private List<URI> ImagenesURI;
@@ -78,8 +78,13 @@ public class PrecargaPapeletaDTO implements Serializable {
     @SerializedName("PorcentajeMedidor")
     private Double PorcentajeMedidor;
 
+    @SerializedName("NombreTipoMedidorTractor")
     private String NombreTipoMedidorTractor;
+
+    @SerializedName("IdTipoMedidorTractor")
     private int IdTipoMedidorTractor;
+
+    @SerializedName("CantidadFotosTractor")
     private int CantidadFotosTractor;
 
 
@@ -231,11 +236,11 @@ public class PrecargaPapeletaDTO implements Serializable {
         IdProveedorExpedidor = idProveedorExpedidor;
     }
 
-    public List<byte[]> getImagenes() {
+    public List<String> getImagenes() {
         return Imagenes;
     }
 
-    public void setImagenes(List<byte[]> imagenes) {
+    public void setImagenes(List<String> imagenes) {
         Imagenes = imagenes;
     }
 

@@ -26,14 +26,12 @@ namespace Infrastructure.Data.DbContexts
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AdministracionCentral> AdministracionCentral { get; set; }
         public virtual DbSet<EstadosRepublica> EstadosRepublica { get; set; }
         public virtual DbSet<Pais> Pais { get; set; }
         public virtual DbSet<Empresa> Empresa { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<UsuarioAC> UsuarioAC { get; set; }
         public virtual DbSet<Requisicion> Requisicion { get; set; }
         public virtual DbSet<RequisicionEstatus> RequisicionEstatus { get; set; }
         public virtual DbSet<RequisicionProducto> RequisicionProducto { get; set; }

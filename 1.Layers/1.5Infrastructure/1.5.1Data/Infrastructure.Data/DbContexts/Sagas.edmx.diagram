@@ -186,6 +186,8 @@
         <EntityTypeShape EntityType="Sagas.MainModuleModel.CCuentaContable" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.CRegimenFiscal" Width="1.5" PointX="0.75" PointY="7.75" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.CTipoPersona" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.RolAccionCatalogo" Width="1.5" PointX="6" PointY="31.375" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,20 +12,42 @@ import java.util.List;
  */
 
 public class IniciarDescargaDTO implements Serializable {
+
+    @SerializedName("")
     private int IdOrdenCompra;
+
+    @SerializedName("")
     private String NombreTipoMedidorTractor;
+
+    @SerializedName("")
     private String NombreTipoMedidorAlmacen;
+
+    @SerializedName("")
     private int IdTipoMedidorTractor;
+
+    @SerializedName("")
     private int IdTipoMedidorAlmacen;
+
+    @SerializedName("")
     private int CantidadFotosAlmacen;
+
+    @SerializedName("")
     private int CantidadFotosTractor;
+
+    @SerializedName("")
     private boolean TanquePrestado;
+
+    @SerializedName("")
     private Double PorcentajeMedidorAlmacen;
+
+    @SerializedName("")
     private Double PorcentajeMedidorTractor;
+
+    @SerializedName("")
     private int IdAlmacen;
 
     @SerializedName("Imagenes")
-    private List<byte[]> Imagenes;
+    private List<String> Imagenes;
 
     @SerializedName("ImagenesURL")
     private List<URI> ImagenesURI;
@@ -75,11 +97,11 @@ public class IniciarDescargaDTO implements Serializable {
         PorcentajeMedidorAlmacen = porcentajeMedidorAlmacen;
     }
 
-    public List<byte[]> getImagenes() {
+    public List<String> getImagenes() {
         return Imagenes;
     }
 
-    public void setImagenes(List<byte[]> imagenes) {
+    public void setImagenes(List<String> imagenes) {
         Imagenes = imagenes;
     }
 

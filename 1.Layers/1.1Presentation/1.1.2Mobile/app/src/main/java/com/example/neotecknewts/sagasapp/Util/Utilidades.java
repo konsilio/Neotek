@@ -19,51 +19,10 @@ import java.util.List;
 /**
  * Created by neotecknewts on 07/08/18.
  */
-
+//clase de utilidades, contiene metodos que se pueden usar en las otras clases
 public class Utilidades {
 
-    private void showDialogAceptar(String mensaje, Context context){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-        builder1.setMessage(mensaje);
-        builder1.setCancelable(true);
-
-        builder1.setNegativeButton(
-                R.string.message_acept,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
-    }
-
-    private void showDialogPreguntar(String mensaje, Context context){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-        builder1.setMessage(mensaje);
-        builder1.setCancelable(true);
-
-        builder1.setNegativeButton(
-                R.string.message_cancel,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        builder1.setNegativeButton(
-                R.string.message_cancel,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
-    }
-
+    //metodo que revisa los permisos para el uso de la camara
     public static List<String> checkAndRequestPermissions(Context context) {
 
         int camera = ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA);
@@ -91,6 +50,8 @@ public class Utilidades {
 
         return listPermissionsNeeded;
     }
+
+    //metodo que encripta la contraseña en SHA256
     public static String getHash(String password) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance( "SHA-256" );
         String text = password;
@@ -101,6 +62,8 @@ public class Utilidades {
 
         return bin2hex(digest);
     }
+
+    //metodo que devuelve el string proveniente del sha256
     static String bin2hex(byte[] data) {
         return String.format("%0" + (data.length * 2) + 'x', new BigInteger(1, data)).toUpperCase();
     }

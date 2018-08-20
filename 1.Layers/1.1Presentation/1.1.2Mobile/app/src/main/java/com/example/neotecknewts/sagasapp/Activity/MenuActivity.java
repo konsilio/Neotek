@@ -37,21 +37,33 @@ import java.util.List;
 
 public class MenuActivity extends AppCompatActivity implements MenuView {
 
+    //lista que se usa para llenar el recycler view que crea el menu
     ArrayList<MenuDTO> menu;
+
+    //clase de la session
     Session session;
 
+    //objeto del recycler view
     RecyclerView recyclerView;
+
+    //adapter para el reclycler view
     MenuAdapter adapter;
+
+    //presenter
     MenuPresenter presenter;
+
+    //cuadro de progreso
     ProgressDialog progressDialog;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
 
+        //se inicializa menu y presenter
         session = new Session(getApplicationContext());
         presenter = new MenuPresenterImpl(this);
 
+        //de la vista se obtiene el recylcer view
         recyclerView = findViewById(R.id.recyclerView);
 
         menu = new ArrayList<>();
@@ -60,6 +72,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         menu.add("Inventario General");
         menu.add("Ordenes de compra");*/
 
+        //se obtiene el menu del login, en caso de que se llegue del login se hace un llamado a web service
         Bundle extras = getIntent().getExtras();
 
 
@@ -72,6 +85,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         }
 
 
+        //se agrega la lista al adapter y se agrega el adapter al recylcer view
         adapter = new MenuAdapter(menu);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -94,8 +108,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         }
 
     }
-
-
+    //metodo que muestra algun mensaje
     private void showDialog(String mensaje){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
         builder1.setMessage(mensaje);
@@ -113,12 +126,14 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         alert11.show();
     }
 
+    //metodo que muestra el progreso de la obtencion de datos
     @Override
     public void showProgress(int mensaje) {
         progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
                 getResources().getString(mensaje), true);
     }
 
+    //metodo que oculta el progreso
     @Override
     public void hideProgress() {
         if(progressDialog != null){
@@ -126,11 +141,13 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         }
     }
 
+    //metodo que muestra mensaje de error
     @Override
     public void messageError(int mensaje) {
         showDialog(getResources().getString(mensaje));
     }
 
+    //metodo que se llama al obtener el menu desde web service
     @Override
     public void onSuccessGetMenu(List<MenuDTO> menuDTOs) {
         Log.w("OnSuccesView",""+menuDTOs.size());

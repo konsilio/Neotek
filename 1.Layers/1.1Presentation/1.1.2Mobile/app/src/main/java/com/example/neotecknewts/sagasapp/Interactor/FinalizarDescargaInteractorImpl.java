@@ -25,12 +25,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class FinalizarDescargaInteractorImpl implements FinalizarDescargaInteractor {
+    //se declara el tag de la clase y el presenter correspondiente
     public static final String TAG = "FinalizarDescInteractor";
     FinalizarDescargaPresenter finalizarDescargaPresenter;
 
+    //constructor de la clase y se inicializa el presenter
     public FinalizarDescargaInteractorImpl(FinalizarDescargaPresenter finalizarDescargaPresenter){
         this.finalizarDescargaPresenter = finalizarDescargaPresenter;
     }
+
+    //funcion que hace el llamado al web service por el metodo indicado en la interfaz de restclient y con los parametros indicados
+    //obtiene todas las ordenes de compra
     @Override
     public void getOrdenesCompra(int IdEmpresa, String token) {
         String url = Constantes.BASE_URL;
@@ -84,6 +89,8 @@ public class FinalizarDescargaInteractorImpl implements FinalizarDescargaInterac
         });
     }
 
+    //funcion que hace el llamado al web service por el metodo indicado en la interfaz de restclient y con los parametros indicados
+    //obtiene todas los medidores
     @Override
     public void getMedidores(String token) {
         String url = Constantes.BASE_URL;
@@ -136,6 +143,8 @@ public class FinalizarDescargaInteractorImpl implements FinalizarDescargaInterac
         });
     }
 
+    //funcion que hace el llamado al web service por el metodo indicado en la interfaz de restclient y con los parametros indicados
+    //obtiene todas los almacenes
     @Override
     public void getAlmacenes(String token) {
         String url = Constantes.BASE_URL;
