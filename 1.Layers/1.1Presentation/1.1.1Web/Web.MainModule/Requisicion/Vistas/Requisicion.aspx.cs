@@ -259,16 +259,17 @@ namespace Web.MainModule.Requisicion.Vista
             {            
                 if (validacion.ModeloValido)
                 {
-                    if (Edto.FechaRequerida <= DateTime.Today)
-                    {
-                        validacion.MensajesError.Add(new Result { IdentidadError = "FechaRequerida", MensajeError = Exceptions.MainModule.Validaciones.Error.R0011 });
-                        validacion.ModeloValido = false;
-                    }
-                    if (Edto.FechaRequerida == null)
+                    if (Edto.FechaRequerida == DateTime.MinValue)
                     {
                         validacion.MensajesError.Add(new Result { IdentidadError = "FechaRequerida", MensajeError = Exceptions.MainModule.Validaciones.Error.S0001 });
                         validacion.ModeloValido = false;
                     }
+                    else if (Edto.FechaRequerida <= DateTime.Today)
+                    {
+                        validacion.MensajesError.Add(new Result { IdentidadError = "FechaRequerida", MensajeError = Exceptions.MainModule.Validaciones.Error.R0011 });
+                        validacion.ModeloValido = false;
+                    }
+                   
                 }
             }
             if (validacion.ModeloValido)
@@ -607,7 +608,7 @@ namespace Web.MainModule.Requisicion.Vista
                 LimpiarCamposProductos();
                 DivCamposPord.Visible = false;
                 BtnCrear.Enabled = true;
-                btnAgregar.Text = "Agregar";
+                btnAgregar.Text = "Agregar +";
             }
             else
             {               
@@ -717,9 +718,5 @@ namespace Web.MainModule.Requisicion.Vista
 
         }
 
-        protected void btnFin_Click(object sender, EventArgs e)
-        {
-
-        }
-    }
+       }
 }

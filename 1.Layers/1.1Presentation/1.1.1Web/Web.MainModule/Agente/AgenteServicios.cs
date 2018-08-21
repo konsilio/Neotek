@@ -39,6 +39,7 @@ namespace Web.MainModule.Agente
         public RequisicionOCDTO _requisicionOrdenCompra;
         public List<ProveedorDTO> _listaProveedores;
         public List<CentroCostoDTO> _listaCentrosCostos;
+        public List<CuentaContableDTO> _listaCuentasContable;
 
         public  AgenteServicios()
         {
@@ -109,6 +110,39 @@ namespace Web.MainModule.Agente
                     client.Dispose(); ;
                 }
                 _listaCentrosCostos = emp;
+            }
+        }
+        public void BuscarCuentasContables(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCuentasContables"];
+            ListaCuentaContable(tkn).Wait();
+        }
+        private async Task ListaCuentaContable(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CuentaContableDTO> emp = new List<CuentaContableDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<CuentaContableDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<CuentaContableDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaCuentasContable = emp;
             }
         }
         #endregion

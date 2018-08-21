@@ -12,14 +12,6 @@ namespace Web.MainModule.OrdenCompra.Model
     public class ProdcutoOC : RequisicionProductoAutorizacionDTO
     {
         [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdCentroCosto")]
-        public int IdCentroCosto { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "CentroCosto")]
-        public string CentroCosto { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Precio")]
         public decimal Precio { get; set; }
 

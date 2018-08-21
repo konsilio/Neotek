@@ -3,6 +3,22 @@
 <%@ Register Src="~/Controles/DateTimePicker.ascx" TagName="DateTimePicker" TagPrefix="dtp" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="OrdenCompra" ContentPlaceHolderID="ctOrdenCompra" runat="server">
+
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            $("#<%=dgListaproductos.ClientID%> [id*='txtPrecio']").change(function () {
+            var tr = $(this).parent().parent();
+            var cantidad = $("td:eq(2) span", tr).html();
+            var descuento = $("td:eq(9) :text", tr).html();
+            var precioTotal = ($(this).val() * cantidad);
+            var totalDescuento = ((descuento * precioTotal) / 100);
+            var total = (precioTotal - descuento);
+                //$("td:eq(12) span", tr).html(($(this).val() * cantidad) - ((descuento * ($(this).val() * cantidad)) / 100));
+            Console.log(cantidad + "|" + descuento + "|" + precioTotal + "|" + totalDescuento + "|" + total);
+            $("td:eq(12) span", tr).html(total.format("N2"));
+        });
+    });
+    </script>
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
@@ -50,7 +66,7 @@
                                 <%--Solicitante--%>
                                 <label class="card-inside-title">Solicitante:</label>
                                 <asp:TextBox runat="server" ID="TxtSolicitante" CssClass="form-control" data-live-search="true" Enabled="false" />
-                               
+
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-12 form-float">
@@ -101,6 +117,7 @@
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Producto") %>' />
+                                            <asp:Label ID="lblidProducto" runat="server" Text='<%# Bind("IdProducto") %>' Visible="false" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
@@ -158,13 +175,13 @@
                                             <asp:DropDownList ID="ddlCuentaContable" runat="server"></asp:DropDownList>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField >
+                                    <asp:TemplateField>
                                         <%--8 Precio--%>
                                         <HeaderTemplate>
                                             Precio
                                         </HeaderTemplate>
-                                        <ItemTemplate>                                            
-                                                <asp:TextBox ID="txtPrecio" CssClass="form-control" Width="100px" runat="server" TextMode="Number" />                                            
+                                        <ItemTemplate>
+                                            <asp:TextBox ID="txtPrecio" CssClass="form-control" Width="100px" runat="server" TextMode="Number" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
@@ -200,7 +217,13 @@
                                             <b>Importe</b>
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:Label ID="lbldgImporte" runat="server" Text="$ 0" />
+                                            <label>$ </label>
+                                            <asp:Label ID="lbldgImporte" runat="server" CssClass="right" Text="0.00" />
+
+                                            <%--<asp:LinkButton ID="lbRefrescar" runat="server" CommandName="Refresh" CommandArgument=<%# Eval("IdProducto") %> >
+                                                <i class="material-icons">refresh</i> 
+                                                <span class="icon-name"></span>
+                                            </asp:LinkButton>--%>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
@@ -409,4 +432,5 @@
             </div>
         </div>
     </section>
+    <script src="../js/OrdenCompraJS.js"></script>
 </asp:Content>
