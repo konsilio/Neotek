@@ -25,6 +25,7 @@ import com.example.neotecknewts.sagasapp.Presenter.LoginPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 Log.e("SAAAA", IdEmpresa+"");
                 //showDialog( Utilidades.getHash(contraseña));
                 this.contraseña = Utilidades.getHash(contraseña);
+                Log.w("FireBaseToken", FirebaseInstanceId.getInstance().getToken());
 
             }catch (NoSuchAlgorithmException ex){
                 ex.printStackTrace();
@@ -138,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
             usuarioLoginDTO.setIdEmpresa(IdEmpresa);
             usuarioLoginDTO.setPassword(this.contraseña);
             usuarioLoginDTO.setUsuario(usuario);
+            //usuarioLoginDTO.setFBToken(FirebaseInstanceId.getInstance().getToken());
             //por medio del presenter se llama al web service con el objeto de usuario
             loginPresenter.doLogin(usuarioLoginDTO);
         }

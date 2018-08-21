@@ -67,6 +67,7 @@
                 android:textSize="25dp" />
 
             <TextView
+                android:id="@+id/TvIniciarDescargaActivityNo"
                 android:layout_width="54dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -81,6 +82,7 @@
                 android:layout_gravity="center" />
 
             <TextView
+                android:id="@+id/TvIniciarDescargaActivitySi"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

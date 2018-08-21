@@ -1,7 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,12 +11,8 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
@@ -28,7 +23,8 @@ import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by neotecknewts on 14/08/18.
@@ -90,7 +86,12 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         }
 
         //se ejecuta la tarea asincrona para procesar las imagenes
-        new AsyncTaskRunner().execute();
+        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String format = s.format(new Date());
+        papeletaDTO.setClaveUnica("O"+format);
+        //new AsyncTaskRunner().execute();
+        processImage();
+        presenter.registrarPapeleta(papeletaDTO);
 
     }
 
@@ -212,6 +213,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         protected void onPostExecute(Void result) {
             textView.setText(R.string.cargando_imagenes_fin);
             showDialogAceptar("Operación Exitosa","Los datos se han guardado exitosamente");
+
         }
 
 

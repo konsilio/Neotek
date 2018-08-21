@@ -19,6 +19,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdOrdenCompra = ordenCompra.IdOrdenCompra,
                 NumOrdenCompra = ordenCompra.NumOrdenCompra,
                 Ieps = ordenCompra.Ieps,
+                IdProveedor = ordenCompra.IdProveedor,
                 FechaRequisicion = ordenCompra.Requisicion.FechaRequerida,
                 ProveedorCalle = ordenCompra.Proveedor.Calle,
                 ProveedorCelular1 = ordenCompra.Proveedor.Celular1,

@@ -87,6 +87,8 @@ public class PrecargaPapeletaDTO implements Serializable {
     @SerializedName("CantidadFotosTractor")
     private int CantidadFotosTractor;
 
+    @SerializedName("ClaveUnica")
+    private String ClaveUnica;
 
     public PrecargaPapeletaDTO(){
         Imagenes = new ArrayList<>();
@@ -282,5 +284,13 @@ public class PrecargaPapeletaDTO implements Serializable {
 
     public void setCantidadFotosTractor(int cantidadFotosTractor) {
         CantidadFotosTractor = cantidadFotosTractor;
+    }
+
+    public String getClaveUnica() {
+        return ClaveUnica;
+    }
+
+    public void setClaveUnica(String claveUnica) {
+        ClaveUnica = claveUnica;
     }
 }

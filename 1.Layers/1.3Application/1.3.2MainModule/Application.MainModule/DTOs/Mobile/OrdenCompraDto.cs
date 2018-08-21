@@ -9,6 +9,7 @@ namespace Application.MainModule.DTOs.Mobile
     public class OrdenCompraDTO
     {
         public int IdOrdenCompra { get; set; }
+        public int IdProveedor { get; set; }
         public string ProveedorNombreComercial { get; set; }
         public string ProveedorEstadoProvincia { get; set; }
         public string ProveedorMunicipio { get; set; }
