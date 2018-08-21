@@ -79,7 +79,7 @@ namespace Mail.MainModule
             set { _RutaArchivo = value; }
         }
 
-        public void EnviarCorreo(bool EsMensajeHtml = true)
+        public void EnviarCorreo(bool EsMensajeHtml = true, bool EsSSL = false)
         {
             //Creamos los objetos del emisor y receptor de los correos....
             MailMessage mensaje = new MailMessage();
@@ -136,8 +136,10 @@ namespace Mail.MainModule
                 // Se crea el objeto para el envío de correos electrónicos indicándole
                 // la dirección del servidor SMTP a utilizarse.
                 SmtpClient protocolo = new SmtpClient(_Servidor, _Puerto);
-                protocolo.EnableSsl = false;
-                System.Net.NetworkCredential credenciales = new System.Net.NetworkCredential(this._De, this._Contrasena);
+                protocolo.EnableSsl = EsSSL;
+                // Quitar la línea siguiente por la comentada en cuanto este lista la cuenta de correo de soporte
+                System.Net.NetworkCredential credenciales = new System.Net.NetworkCredential("neoteck.infraestructura@gmail.com", this._Contrasena);
+                //System.Net.NetworkCredential credenciales = new System.Net.NetworkCredential(this._De, this._Contrasena);
                 protocolo.Credentials = credenciales;
 
                 //Se enviará el correo a su destino o destinos.
