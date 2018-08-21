@@ -11,6 +11,7 @@ namespace Application.MainModule.Servicios.Seguridad
 {
     public static class PermisosServicio
     {
+        #region Proveedor
         public static RespuestaDto PuedeRegistrarProveedor()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
@@ -42,6 +43,41 @@ namespace Application.MainModule.Servicios.Seguridad
 
             return EvaluarPermiso(rol, Error.P0004, "Proveedores");
         }
+        #endregion
+
+        #region Cuenta Contable
+        public static RespuestaDto PuedeRegistrarCuentaContable()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatInsertarCuentaContable);
+
+            return EvaluarPermiso(rol, Error.P0001, "una cuenta contable");
+        }
+
+        public static RespuestaDto PuedeModificarCuentaContable()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatModificarCuentaContable);
+
+            return EvaluarPermiso(rol, Error.P0002, "una cuenta contable");
+        }
+
+        public static RespuestaDto PuedeEliminarCuentaContable()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatEliminarCuentaContable);
+
+            return EvaluarPermiso(rol, Error.P0003, "una cuenta contable");
+        }
+
+        public static RespuestaDto PuedeConsultarCuentaContable()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatConsultarCuentaContable);
+
+            return EvaluarPermiso(rol, Error.P0004, "las cuentas contables");
+        }
+        #endregion
 
         private static RespuestaDto EvaluarPermiso(Rol rol, string error, string format = "")
         {

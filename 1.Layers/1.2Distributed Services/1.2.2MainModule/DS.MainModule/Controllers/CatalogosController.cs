@@ -106,5 +106,37 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.ListaCentrosCostos(), Request);
         }
         #endregion
+
+        #region Cuentas Contables
+        [Route("registra/cuenta/contable")]
+        public HttpResponseMessage PostRegistraCuentaContable(ProveedorCrearDto provDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraCuentaContable(provDto), Request);
+        }
+
+        [Route("modifica/cuenta/contable")]
+        public HttpResponseMessage PutModificaCuentaContable(ProveedorModificarDto provDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaCuentaContable(provDto), Request);
+        }
+
+        [Route("elimina/cuenta/contable")]
+        public HttpResponseMessage PutEliminaCuentaContable(ProveedorEliminarDto provDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaCuentaContable(provDto), Request);
+        }
+
+        [Route("consulta/cuentas/contables")]
+        public HttpResponseMessage GetListaCuentasContables()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ConsultaCuentasContables(), Request);
+        }
+
+        [Route("consulta/cuenta/contable/{idCuenta}")]
+        public HttpResponseMessage GetCuentaContable(int idCuenta)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCuentaContable(idCuenta));
+        }
+        #endregion
     }
 }
