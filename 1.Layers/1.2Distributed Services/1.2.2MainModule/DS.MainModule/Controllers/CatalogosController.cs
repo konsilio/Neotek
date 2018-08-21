@@ -66,6 +66,7 @@ namespace DS.MainModule.Controllers
         #region Administracion Central
 
         #endregion
+
         #region Proveedor
         [Route("registra/proveedor")]
         public HttpResponseMessage PostRegistraProveedor(ProveedorCrearDto provDto)
@@ -88,7 +89,7 @@ namespace DS.MainModule.Controllers
         [Route("consulta/proveedores")]
         public HttpResponseMessage GetListaProveedores()
         {          
-            return RespuestaHttp.crearRepuesta(_catalogos.ConsultaProveedores(), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.ConsultaProveedores(), Request);
         }
 
         [Route("consulta/proveedor/{idProveedor}")]
@@ -97,11 +98,12 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedor(idProveedor));
         }        
         #endregion
+
         #region Centro de Costo
         [Route("consulta/centrosdecosto")]
         public HttpResponseMessage GetCentrosCostos()
         {
-            return RespuestaHttp.crearRepuesta(_catalogos.ListaCentrosCostos(), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaCentrosCostos(), Request);
         }
         #endregion
     }

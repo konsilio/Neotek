@@ -24,7 +24,6 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static List<Proveedor> Obtener()
         {
-
             var empresa = new EmpresaDataAccess().Buscar(Seguridad.TokenServicio.ObtenerIdEmpresa());
 
             if (empresa.EsAdministracionCentral)
