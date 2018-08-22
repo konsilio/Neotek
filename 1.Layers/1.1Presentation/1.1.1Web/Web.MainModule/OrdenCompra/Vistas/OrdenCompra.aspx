@@ -4,20 +4,35 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="OrdenCompra" ContentPlaceHolderID="ctOrdenCompra" runat="server">
 
-    <script language="javascript" type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
             $("#<%=dgListaproductos.ClientID%> [id*='txtPrecio']").change(function () {
-            var tr = $(this).parent().parent();
-            var cantidad = $("td:eq(2) span", tr).html();
-            var descuento = $("td:eq(9) :text", tr).html();
-            var precioTotal = ($(this).val() * cantidad);
-            var totalDescuento = ((descuento * precioTotal) / 100);
-            var total = (precioTotal - descuento);
+                var tr = $(this).parent().parent();
+                var cantidad = $("td:eq(2) span", tr).html();
+                var descuento = $(this).closest("table").find("[id*=txtgvDescuento]").val() == "" ? 0 : $(this).closest("table").find("[id*=txtgvDescuento]").val();
+                var precioTotal = ($(this).val() * cantidad);
+                var totalDescuento = ((descuento * precioTotal) / 100);
+                var total = (precioTotal - totalDescuento);
                 //$("td:eq(12) span", tr).html(($(this).val() * cantidad) - ((descuento * ($(this).val() * cantidad)) / 100));
-            Console.log(cantidad + "|" + descuento + "|" + precioTotal + "|" + totalDescuento + "|" + total);
-            $("td:eq(12) span", tr).html(total.format("N2"));
+                //Console.log(cantidad + "|" + descuento + "|" + precioTotal + "|" + totalDescuento + "|" + total);
+                $("td:eq(12) span", tr).html(total.format("N2"));
+            });
         });
-    });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#<%=dgListaproductos.ClientID%> [id*='txtgvDescuento']").change(function () {
+                var tr = $(this).parent().parent();
+                var cantidad = $("td:eq(2) span", tr).html();
+                var descuento = ($(this).val());
+                var precioTotal = parseFloat($(this).closest("table").find("[id*=txtPrecio]").val()) * cantidad;
+                var totalDescuento = ((descuento * precioTotal) / 100);
+                var total = (precioTotal - totalDescuento);
+                //$("td:eq(12) span", tr).html(($(this).val() * cantidad) - ((descuento * ($(this).val() * cantidad)) / 100));
+                //Console.log(cantidad + "|" + descuento + "|" + precioTotal + "|" + totalDescuento + "|" + total);
+                $("td:eq(12) span", tr).html(total.format("N2"));
+            });
+        });
     </script>
     <section class="content home">
         <div class="container-fluid">
@@ -191,6 +206,7 @@
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:TextBox ID="txtgvDescuento" runat="server" Width="100px" placeholder="%" type="number" CssClass="form-control" />
+                                            <%--<input type="number" name="txtgvDescuento"  class="form-control" Width="100px" placeholder="%" />--%>
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
@@ -218,13 +234,13 @@
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <label>$ </label>
-                                            <asp:Label ID="lbldgImporte" runat="server" CssClass="right" Text="0.00" />
-
+                                            <asp:Label ID="lbldgImporte" runat="server" CssClass="text-right" Text="0.00" />
                                             <%--<asp:LinkButton ID="lbRefrescar" runat="server" CommandName="Refresh" CommandArgument=<%# Eval("IdProducto") %> >
                                                 <i class="material-icons">refresh</i> 
                                                 <span class="icon-name"></span>
                                             </asp:LinkButton>--%>
                                         </ItemTemplate>
+                                        <ItemStyle HorizontalAlign="Right" />
                                     </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
