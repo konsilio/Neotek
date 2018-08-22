@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -191,6 +192,8 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
                     ordenCompraDTOExpedidor = ordenesCompraDTOExpedidor.get(spinnerOrdenCompraExpedidor.getSelectedItemPosition());
                     spinnerOrdenCompraExpedidor.getSelectedItemPosition();
                     editTextNombreExpedidor.setText(ordenCompraDTOExpedidor.getProveedorNombreComercial());
+                    papeletaDTO.setIdOrdenCompraExpedidor(ordenCompraDTOExpedidor.getIdOrdenCompra());
+                    papeletaDTO.setIdOrdenCompraExpedidor(ordenCompraDTOExpedidor.getIdProveedor());
                     editTextNombreExpedidor.setEnabled(false);
                 }
             }
@@ -210,6 +213,8 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
                     ordenCompraDTOPorteador = ordenesCompraDTOPorteador.get(spinnerOrdenCompraPorteador.getSelectedItemPosition());
                     spinnerOrdenCompraPorteador.getSelectedItemPosition();
                     editTextNombrePorteador.setText(ordenCompraDTOPorteador.getProveedorNombreComercial());
+                    papeletaDTO.setIdOrdenCompraPorteador(ordenCompraDTOPorteador.getIdOrdenCompra());
+                    papeletaDTO.setIdOrdenCompraPorteador(ordenCompraDTOPorteador.getIdProveedor());
                     editTextNombrePorteador.setEnabled(false);
                 }
             }
@@ -362,29 +367,36 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
     //metodo que construye el objeto papeleta
     public void buildPapeleta(){
+        SimpleDateFormat sf = new SimpleDateFormat("y-MM-dd HH:mm:ss");
+        String formato_fecha  = String.valueOf(fecha.getYear())+"-"+String.valueOf(fecha.getMonth())+"-"+String.valueOf(fecha.getDate())+" "+String.valueOf(fecha.getHours())
+                +":"+String.valueOf(fechaEmbarque.getMinutes())+":"+String.valueOf(fechaEmbarque.getSeconds());
+        String formato_fecha_embarque = String.valueOf(fechaEmbarque.getYear())+"-"+String.valueOf(fechaEmbarque.getMonth())+"-"+String.valueOf(fechaEmbarque.getDate())+" "+String.valueOf(fechaEmbarque.getHours())
+                +":"+String.valueOf(fechaEmbarque.getMinutes())+":"+String.valueOf(fechaEmbarque.getSeconds());
+                //sf.format(fechaEmbarque);
 
         papeletaDTO.setCapacidadTanque(Double.parseDouble(editTextCapTanque.getText().toString()));
-        papeletaDTO.setFecha(fecha);
-        papeletaDTO.setFechaEmbarque(fechaEmbarque);
+        papeletaDTO.setFecha(formato_fecha);
+        papeletaDTO.setFechaEmbarque(formato_fecha_embarque);
         papeletaDTO.setIdOrdenCompraExpedidor(ordenCompraDTOExpedidor.getIdOrdenCompra());
         papeletaDTO.setIdOrdenCompraPorteador(ordenCompraDTOPorteador.getIdOrdenCompra());
         papeletaDTO.setIdProveedorPorteador(ordenCompraDTOPorteador.getIdProveedor());
         papeletaDTO.setIdProveedorExpedidor(ordenCompraDTOExpedidor.getIdProveedor());
-        papeletaDTO.setNumeroEmbarque(editTextNumEmbarque.toString());
-        papeletaDTO.setPlacasTractor(editTextPlacasTractor.toString());
-        papeletaDTO.setNombreOperador(editTextNombreOperador.toString());
-        papeletaDTO.setProducto(editTextProducto.toString());
-        papeletaDTO.setNumeroTanque(editTextNumTanque.toString());
+        papeletaDTO.setNumeroEmbarque(editTextNumEmbarque.getText().toString());
+        papeletaDTO.setPlacasTractor(editTextPlacasTractor.getText().toString());
+        papeletaDTO.setNombreOperador(editTextNombreOperador.getText().toString());
+        papeletaDTO.setProducto(editTextProducto.getText().toString());
+        papeletaDTO.setNumeroTanque(editTextNumTanque.getText().toString());
         papeletaDTO.setPresionTanque(Double.parseDouble(editTextPresionTanque.getText().toString()));
         papeletaDTO.setPorcentajeTanque(Double.parseDouble(editTextPorcentajeTanque.getText().toString()));
         papeletaDTO.setMasa(Double.parseDouble(editTextMasa.getText().toString()));
-        papeletaDTO.setSello(editTextSello.toString());
+        papeletaDTO.setSello(editTextSello.getText().toString());
         papeletaDTO.setValorCarga(Double.parseDouble(editTextValorCarga.getText().toString()));
-        papeletaDTO.setNombreResponsable(editTextNombreResponsable.toString());
+        papeletaDTO.setNombreResponsable(editTextNombreResponsable.getText().toString());
 
         papeletaDTO.setCantidadFotosTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getCantidadFotografias());
         papeletaDTO.setIdTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getIdTipoMedidor());
         papeletaDTO.setNombreTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getNombreTipoMedidor());
+
         startActivity();
     }
 
@@ -443,7 +455,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     //metodo que oculta el progresso
     @Override
     public void hideProgress() {
-        if(progressDialog != null){
+        if(progressDialog != null && progressDialog.isShowing()){
             progressDialog.dismiss();
         }
     }
@@ -451,7 +463,22 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     //metodo que muestra mensaje de error
     @Override
     public void messageError(int mensaje) {
-        showDialog(getResources().getString(mensaje));
+        Log.w("Mensaje",getResources().getString(mensaje));
+        //showDialog(getResources().getString(mensaje));
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(getApplicationContext());
+        builder1.setMessage(mensaje);
+        builder1.setCancelable(true);
+
+        builder1.setNegativeButton(
+                R.string.message_acept,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 
     //metodo que se ejecuta al obtener las ordenes de compra del expedidor y llena el sppiner con los numeros de orden de compra
@@ -501,7 +528,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
      */
     @Override
     public void onSuccessRegistrarPapeleta() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getApplicationContext());
         builder.setTitle("Listo");
         builder.setMessage("Papeleta registrada");
         builder.show();

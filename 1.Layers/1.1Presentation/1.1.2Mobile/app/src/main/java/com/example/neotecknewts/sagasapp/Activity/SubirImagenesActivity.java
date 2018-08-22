@@ -21,6 +21,7 @@ import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
@@ -46,6 +47,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
 
     public SubirImagenesPresenter presenter;
     public ProgressDialog progressDialog;
+    public Session session;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         textView = (TextView) findViewById(R.id.textTitulo);
 
         presenter = new SubirImagenesPresenterImpl(this);
+        session = new Session(getApplicationContext());
 
         textView.setText(R.string.cargando_imagenes_inicio);
         Bundle extras = getIntent().getExtras();
@@ -86,12 +89,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         }
 
         //se ejecuta la tarea asincrona para procesar las imagenes
-        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmssS");
-        String format = s.format(new Date());
-        papeletaDTO.setClaveUnica("O"+format);
-        //new AsyncTaskRunner().execute();
-        processImage();
-        presenter.registrarPapeleta(papeletaDTO);
+        new AsyncTaskRunner().execute();
+        //processImage();
+
+        //hideProgress();
 
     }
 
@@ -107,7 +108,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
-                    papeletaDTO.getImagenes().add(image);
+                    papeletaDTO.getImagenes().add(image.trim());
                     Log.w("Imagenes"+i,""+uri.toString());
                 }catch (Exception e){
 
@@ -125,7 +126,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
-                    iniciarDescarga.getImagenes().add(image);
+                    iniciarDescarga.getImagenes().add(image.trim());
                     Log.w("Imagenes"+i,""+uri.toString());
                     Log.w("Imagenes"+i,"Base64: "+image);
                 }catch (Exception e){
@@ -144,7 +145,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
-                    finalizarDescarga.getImagenes().add(image);
+                    finalizarDescarga.getImagenes().add(image.trim());
                     Log.w("Imagenes"+i,""+uri.toString());
                 }catch (Exception e){
 
@@ -185,10 +186,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
      */
     @Override
     public void showProgress(int mensaje) {
-        progressDialog = new ProgressDialog(getApplicationContext());
-        progressDialog.setTitle(mensaje);
-        progressDialog.setIndeterminate(true);
-        progressDialog.show();
+        progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
+                getResources().getString(mensaje), true);
     }
 
     /**
@@ -211,6 +210,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
 
         @Override
         protected void onPostExecute(Void result) {
+            presenter.registrarPapeleta(papeletaDTO,session.getToken());
             textView.setText(R.string.cargando_imagenes_fin);
             showDialogAceptar("Operación Exitosa","Los datos se han guardado exitosamente");
 

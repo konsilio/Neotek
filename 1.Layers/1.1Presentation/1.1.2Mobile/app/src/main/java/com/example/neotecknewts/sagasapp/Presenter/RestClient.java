@@ -6,6 +6,7 @@ import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -56,9 +58,9 @@ public interface RestClient {
     @GET(Constantes.LISTA_MEDIDORES)
     Call<List<MedidorDTO>> getMedidores(@Header("Authorization")String token);
 
-    @POST(Constantes.VERIFICA_SERVICIO)
-    Call<UsuarioDTO> postServicio(@Header("Authorization")String token,@Header("Content-Type") String contentType);
+    //@POST(Constantes.VERIFICA_SERVICIO)
+    //Call<RespuestaServicioDisponibleDTO> postServicio(@Header("Authorization")String token, @Header("Content-Type") String contentType);
 
     @POST(Constantes.POST_PAPELETA)
-    Call<PrecargaPapeletaDTO> postPapeleta(@Body PrecargaPapeletaDTO papeletaDTO, @Header("Content-Type") String contentType);
+    Call<RespuestaPapeletaDTO> postPapeleta(@Body PrecargaPapeletaDTO papeletaDTO, @Header("Authorization")String token,@Header("Content-Type") String contentType);
 }

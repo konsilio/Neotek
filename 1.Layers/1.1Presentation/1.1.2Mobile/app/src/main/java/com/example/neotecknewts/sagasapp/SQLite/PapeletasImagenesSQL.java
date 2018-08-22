@@ -1,8 +1,12 @@
 package com.example.neotecknewts.sagasapp.SQLite;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 
 /**
  * Created by neotecknewts on 20/08/18.
@@ -19,9 +23,10 @@ public class PapeletasImagenesSQL extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE "+TABLE_NAME+"(" +
-                "IMAGEN TEXT,"+
-                "IMAGEN_URL TEXT,"+
-                "Uuid_ TEXT"+
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                "Imagen TEXT,"+
+                "Url TEXT,"+
+                "CalveUnica TEXT"+
                 ")");
     }
 
@@ -31,5 +36,34 @@ public class PapeletasImagenesSQL extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXIST "+TABLE_NAME);
         /* Invoca nuevamente el metodo para crear la tabla */
         onCreate(db);
+    }
+
+    /**
+     * Insert
+     * Realiza el registro en base de datos de los datos de la imagen,
+     * retornara en caso de ser correcto el id del registro en caso contrario retornara un -1
+     * @param imagen String de 64 bits de la imagen
+     * @param url Url en el dispositvo de la imagen
+     * @param CalveUnica Clave unica de la papeleta
+     * @return En caso de ser correcto el Id del registro, en caso erroneo un -1
+     */
+    public Long Insert(String imagen,String url,String CalveUnica){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("IMAGEN",imagen);
+        contentValues.put("Url",url);
+        contentValues.put("CalveUnica",CalveUnica);
+        return db.insert(TABLE_NAME,null,contentValues);
+    }
+
+    /**
+     * Retorna un arreglo con las imagenes de la papeleta, se tomara como parametro la
+     * ClaveOperacion
+     * @param ClaveOperacion Clave unica del la orden
+     * @return Registro/os que retorno la consulta
+     */
+    public Cursor GetRecordsByCalveUnica(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE CalveUnica ='"+ClaveOperacion+"'",null);
     }
 }

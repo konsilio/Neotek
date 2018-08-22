@@ -59,11 +59,7 @@ public class PapeletaSQL extends SQLiteOpenHelper {
                 "CantidadFotosTractor INTEGER,"+
                 "Falta BOOLEAN DEFAULT TRUE,"+
                 ")");
-        /*db.execSQL("CREATE TABLE "+TABLE_IMAGES_PAPELETAS+"(" +
-                "IMAGEN TEXT,"+
-                "IMAGEN_URL TEXT,"+
-                "Uuid_ TEXT"+
-                ")");*/
+
     }
 
     @Override
@@ -111,14 +107,6 @@ public class PapeletaSQL extends SQLiteOpenHelper {
         contentValues.put("CantidadFotosTractor",papeletaDTO.getImagenes().size());
         contentValues.put("Falta",true);
         db.insert(TABLE_NAME,null,contentValues);
-        //Guardar imagenes
-        /*ContentValues contentValues1 = new ContentValues();
-
-        for (Iterator<String> i = papeletaDTO.getImagenes().iterator(); i.hasNext(); ) {
-            String object = i.next();
-            contentValues1.put("");
-            // do something with object
-        }*/
         return true;
     }
 

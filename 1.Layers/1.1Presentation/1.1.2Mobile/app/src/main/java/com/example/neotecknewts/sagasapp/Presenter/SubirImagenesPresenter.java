@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface SubirImagenesPresenter {
 
-    void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO);
+    void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,String token);
     void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO);
     void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO);
     void onSuccessRegistrarPapeleta();

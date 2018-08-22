@@ -9,7 +9,7 @@ import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
  */
 
 public interface SubirImagenesInteractor {
-    void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO);
+    void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,String token);
     void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO);
     void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO);
 }

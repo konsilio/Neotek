@@ -27,10 +27,10 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     }
 
     @Override
-    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO) {
+    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,String token) {
         //crear show progress en vista igual que en otras vistas
         subirImagenesView.showProgress(R.string.message_cargando);
-        interactor.registrarPapeleta(precargaPapeletaDTO);
+        interactor.registrarPapeleta(precargaPapeletaDTO,token);
 
     }
 
@@ -51,14 +51,14 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     @Override
     public void onSuccessRegistrarPapeleta() {
         //crear hide progress en vista igual que en otras vistas
-        registrarPapeletaView.hideProgress();
+        //registrarPapeletaView.hideProgress();
         registrarPapeletaView.onSuccessRegistrarPapeleta();
     }
 
     @Override
     public void onSuccessRegistrarIniciarDescarga() {
         //crear hide progress en vista igual que en otras vistas
-        registrarPapeletaView.hideProgress();
+        //registrarPapeletaView.hideProgress();
         registrarPapeletaView.onSuccessRegistrarIniciarDescarga();
     }
 
@@ -73,8 +73,8 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     @Override
     public void onError() {
         //crear hide progress en vista igual que en otras vistas
-        registrarPapeletaView.hideProgress();
-        registrarPapeletaView.showMessageError();
+//        registrarPapeletaView.hideProgress();
+        //registrarPapeletaView.showMessageError();
 
     }
 }
