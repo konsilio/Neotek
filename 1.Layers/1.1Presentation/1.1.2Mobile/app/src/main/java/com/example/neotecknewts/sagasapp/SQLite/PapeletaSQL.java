@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 
@@ -105,8 +106,11 @@ public class PapeletaSQL extends SQLiteOpenHelper {
         contentValues.put("NombreTipoMedidorTractor",papeletaDTO.getNombreTipoMedidorTractor());
         contentValues.put("IdTipoMedidorTractor",papeletaDTO.getIdTipoMedidorTractor());
         contentValues.put("CantidadFotosTractor",papeletaDTO.getImagenes().size());
+        contentValues.put("Uuid",papeletaDTO.getClaveOperacion());
         contentValues.put("Falta",true);
-        db.insert(TABLE_NAME,null,contentValues);
+
+        Long id = db.insert(TABLE_NAME,null,contentValues);
+        Log.v("Registro",String.valueOf(id));
         return true;
     }
 

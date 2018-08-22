@@ -1,5 +1,7 @@
 package com.example.neotecknewts.sagasapp.Interactor;
 
+import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
@@ -7,9 +9,11 @@ import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.PapeletasImagenesSQL;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -40,10 +44,67 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
     //metodos para llamada web service
     @Override
-    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,String token) {
+    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL, Context context) {
+
+
         Log.w("Entra", String.valueOf(precargaPapeletaDTO.getImagenes().size()));
+
         SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "O"+s.format(new Date());
+        Log.w("Genero_clave",clave_unica);
+        Log.w("Consulta","Consulto si el servicio esta disponible");
+        //regionVerifica si el servcio esta disponible
+
+        Gson gsons = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofits =  new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gsons))
+                .build();
+        RestClient restClientS = retrofits.create(RestClient.class);
+
+        int servicio_intentos = 0;
+        final boolean[] esta_disponible = {false};
+
+        while (servicio_intentos<3) {
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio("","application/json");
+            callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                    RespuestaServicioDisponibleDTO data = response.body();
+                    if (response.isSuccessful() && data.isExito()) {
+                        esta_disponible[0] = true;
+                    }else {
+                        esta_disponible[0] = false;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
+                    esta_disponible[0] = false;
+                }
+            });
+            if (esta_disponible[0]) {
+                break;
+            }else {
+                servicio_intentos++;
+            }
+        }
+        PapeletasImagenesSQL papeletasImagenesSQLBuscar = new PapeletasImagenesSQL(context);
+        if (servicio_intentos == 3){
+            if(papeletaSQL.GetRecordByCalveUnica(clave_unica).getCount()==0) {
+                papeletaSQL.Insert(precargaPapeletaDTO, clave_unica);
+                if (papeletasImagenesSQLBuscar.GetRecordsByCalveUnica(clave_unica).getCount()==0) {
+                    PapeletasImagenesSQL papeletasImagenesSQL = new PapeletasImagenesSQL(context);
+                    papeletasImagenesSQL.Insert(precargaPapeletaDTO.getImagenesURI(), precargaPapeletaDTO.getImagenes(), clave_unica);
+                }
+            }
+        }
+
+        //endregion
+
         precargaPapeletaDTO.setClaveOperacion(clave_unica);
         String url = Constantes.BASE_URL;
 
@@ -69,18 +130,19 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     if (response.isSuccessful()) {
                         RespuestaPapeletaDTO data = response.body();
                         Log.w(TAG, "Success");
-                        subirImagenesPresenter.onSuccessRegistrarPapeleta();
+
+                        //subirImagenesPresenter.onSuccessRegistrarPapeleta();
                     } else {
                         RespuestaPapeletaDTO data = response.body();
                         //Log.w("Respuesta",data.getMensaje());
                         switch (response.code()) {
                             case 404:
                                 Log.w(TAG, "not found");
-                                subirImagenesPresenter.onError();
+                                //subirImagenesPresenter.onError();
                                 break;
                             case 500:
                                 Log.w(TAG, "server broken");
-                                subirImagenesPresenter.onError();
+                                //subirImagenesPresenter.onError();
                                 break;
                             default:
                                 Log.w(TAG, "" + response.code());

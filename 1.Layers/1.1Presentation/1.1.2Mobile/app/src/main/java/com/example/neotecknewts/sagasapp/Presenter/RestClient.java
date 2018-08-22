@@ -7,6 +7,7 @@ import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
@@ -58,8 +59,8 @@ public interface RestClient {
     @GET(Constantes.LISTA_MEDIDORES)
     Call<List<MedidorDTO>> getMedidores(@Header("Authorization")String token);
 
-    //@POST(Constantes.VERIFICA_SERVICIO)
-    //Call<RespuestaServicioDisponibleDTO> postServicio(@Header("Authorization")String token, @Header("Content-Type") String contentType);
+    @POST(Constantes.VERIFICA_SERVICIO)
+    Call<RespuestaServicioDisponibleDTO> postServicio(@Header("Authorization")String token, @Header("Content-Type") String contentType);
 
     @POST(Constantes.POST_PAPELETA)
     Call<RespuestaPapeletaDTO> postPapeleta(@Body PrecargaPapeletaDTO papeletaDTO, @Header("Authorization")String token,@Header("Content-Type") String contentType);

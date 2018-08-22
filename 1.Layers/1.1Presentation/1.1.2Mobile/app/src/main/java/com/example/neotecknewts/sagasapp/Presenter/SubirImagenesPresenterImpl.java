@@ -1,5 +1,7 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
+import android.content.Context;
+
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaView;
 import com.example.neotecknewts.sagasapp.Activity.SubirImagenesView;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractor;
@@ -8,6 +10,8 @@ import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.PapeletasImagenesSQL;
 
 /**
  * Created by neotecknewts on 15/08/18.
@@ -27,10 +31,10 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     }
 
     @Override
-    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,String token) {
+    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL, Context context) {
         //crear show progress en vista igual que en otras vistas
         subirImagenesView.showProgress(R.string.message_cargando);
-        interactor.registrarPapeleta(precargaPapeletaDTO,token);
+        interactor.registrarPapeleta(precargaPapeletaDTO,token,papeletaSQL,context);
 
     }
 
@@ -73,7 +77,7 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     @Override
     public void onError() {
         //crear hide progress en vista igual que en otras vistas
-//        registrarPapeletaView.hideProgress();
+        //registrarPapeletaView.hideProgress();
         //registrarPapeletaView.showMessageError();
 
     }

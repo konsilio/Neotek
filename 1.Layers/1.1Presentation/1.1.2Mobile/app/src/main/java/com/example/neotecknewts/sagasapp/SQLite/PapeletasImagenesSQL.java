@@ -5,8 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+
+import java.net.URI;
+import java.util.List;
 
 /**
  * Created by neotecknewts on 20/08/18.
@@ -33,7 +37,7 @@ public class PapeletasImagenesSQL extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
          /* Elimino la tabla de la base de dato */
-        db.execSQL("DROP TABLE IF EXIST "+TABLE_NAME);
+        db.execSQL("DROP TABLE IF  EXISTS "+TABLE_NAME);
         /* Invoca nuevamente el metodo para crear la tabla */
         onCreate(db);
     }
@@ -47,13 +51,19 @@ public class PapeletasImagenesSQL extends SQLiteOpenHelper {
      * @param CalveUnica Clave unica de la papeleta
      * @return En caso de ser correcto el Id del registro, en caso erroneo un -1
      */
-    public Long Insert(String imagen,String url,String CalveUnica){
+    public Long[] Insert(List<URI> imagen, List<String> url, String CalveUnica){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("IMAGEN",imagen);
-        contentValues.put("Url",url);
-        contentValues.put("CalveUnica",CalveUnica);
-        return db.insert(TABLE_NAME,null,contentValues);
+        Long[] inserts = new Long[imagen.size()];
+        for (int x = 0;x>imagen.size();x++){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("IMAGEN",imagen.get(x).toString());
+            contentValues.put("Url",url.get(x));
+            contentValues.put("CalveUnica",CalveUnica);
+            inserts[x] =  db.insert(TABLE_NAME,null,contentValues);
+            Log.w("Imagenes",String.valueOf(inserts[x]));
+
+        }
+        return inserts;
     }
 
     /**
