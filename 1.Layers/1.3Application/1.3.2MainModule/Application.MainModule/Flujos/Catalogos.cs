@@ -30,7 +30,6 @@ namespace Application.MainModule.Flujos
             return EmpresaServicio.BuscarEmpresas(conAC);
         }
         #endregion
-
         #region Usuarios
         public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
         {
@@ -40,7 +39,6 @@ namespace Application.MainModule.Flujos
                 return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();          
         }
         #endregion
-
         #region Productos
         public List<ProductoDTO> ListaProductos(short idEmpresa)
         {

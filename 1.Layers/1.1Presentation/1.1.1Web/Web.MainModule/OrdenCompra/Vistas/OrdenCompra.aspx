@@ -3,36 +3,66 @@
 <%@ Register Src="~/Controles/DateTimePicker.ascx" TagName="DateTimePicker" TagPrefix="dtp" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="OrdenCompra" ContentPlaceHolderID="ctOrdenCompra" runat="server">
+    <style>
+        .calculaPrecio {
+        }
+    </style>
+    <script type="text/javascript">
+        var CalcularImporte = function () {
+            var index;
+            var idtxtPrec;
+            var idtxtDesc;
+            var idddlIVA;
+            var idddlIEPS;
+            var precio = 0;
+            var descuento = 0;
+            var cantidad = 0;
+            var iva;
+            var ieps;
+            var total;
+            var subtotal;
+            var id = $(".calculaPrecio").context.activeElement.id;
+            if (id == "") {
+                id = $(".calculaPrecio").context.activeElement.dataset.id;
+            }
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#<%=dgListaproductos.ClientID%> [id*='txtPrecio']").change(function () {
-                var tr = $(this).parent().parent();
-                var cantidad = $("td:eq(2) span", tr).html();
-                var descuento = $(this).closest("table").find("[id*=txtgvDescuento]").val() == "" ? 0 : $(this).closest("table").find("[id*=txtgvDescuento]").val();
-                var precioTotal = ($(this).val() * cantidad);
-                var totalDescuento = ((descuento * precioTotal) / 100);
-                var total = (precioTotal - totalDescuento);
-                //$("td:eq(12) span", tr).html(($(this).val() * cantidad) - ((descuento * ($(this).val() * cantidad)) / 100));
-                //Console.log(cantidad + "|" + descuento + "|" + precioTotal + "|" + totalDescuento + "|" + total);
-                $("td:eq(12) span", tr).html(total.format("N2"));
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#<%=dgListaproductos.ClientID%> [id*='txtgvDescuento']").change(function () {
-                var tr = $(this).parent().parent();
-                var cantidad = $("td:eq(2) span", tr).html();
-                var descuento = ($(this).val());
-                var precioTotal = parseFloat($(this).closest("table").find("[id*=txtPrecio]").val()) * cantidad;
-                var totalDescuento = ((descuento * precioTotal) / 100);
-                var total = (precioTotal - totalDescuento);
-                //$("td:eq(12) span", tr).html(($(this).val() * cantidad) - ((descuento * ($(this).val() * cantidad)) / 100));
-                //Console.log(cantidad + "|" + descuento + "|" + precioTotal + "|" + totalDescuento + "|" + total);
-                $("td:eq(12) span", tr).html(total.format("N2"));
-            });
-        });
+            if (id.includes("txtPrecio")) {
+                idtxtPrec = "#" + id;
+                index = id.replace("ctOrdenCompra_dgListaproductos_txtPrecio_", "");
+                idtxtDesc = "#ctOrdenCompra_dgListaproductos_txtgvDescuento_" + index;
+                idddlIVA = "#ctOrdenCompra_dgListaproductos_ddlGvIVA_" + index;
+                idddlIEPS = "#ctOrdenCompra_dgListaproductos_ddlGvIEPS_" + index;
+            }
+            if (id.includes("txtgvDescuento")) {
+                idtxtDesc = "#" + id;
+                index = id.replace("ctOrdenCompra_dgListaproductos_txtgvDescuento_", "");
+                idtxtPrec = "#ctOrdenCompra_dgListaproductos_txtPrecio_" + index;
+                idddlIVA = "#ctOrdenCompra_dgListaproductos_ddlGvIVA_" + index;
+                idddlIEPS = "#ctOrdenCompra_dgListaproductos_ddlGvIEPS_" + index;
+            }
+            if (id.includes("ddlGvIVA")) {
+                idddlIVA = "#" + id;
+                index = id.replace("ctOrdenCompra_dgListaproductos_ddlGvIVA_", "");
+                idtxtPrec = "#ctOrdenCompra_dgListaproductos_txtPrecio_" + index;
+                idtxtDesc = "#ctOrdenCompra_dgListaproductos_txtgvDescuento_" + index;
+                idddlIEPS = "#ctOrdenCompra_dgListaproductos_ddlGvIEPS_" + index;
+            }
+            if (id.includes("ddlGvIEPS")) {
+                idddlIEPS = "#" + id;
+                index = id.replace("ctOrdenCompra_dgListaproductos_ddlGvIEPS_", "");
+                idtxtPrec = "#ctOrdenCompra_dgListaproductos_txtPrecio_" + index;
+                idtxtDesc = "#ctOrdenCompra_dgListaproductos_txtgvDescuento_" + index;
+                idddlIVA = "#ctOrdenCompra_dgListaproductos_ddlGvIVA_" + index;
+            }
+            precio = $(idtxtPrec).val();
+            cantidad = $("#ctOrdenCompra_dgListaproductos_lbldgCantidad_" + index).html();
+            descuento = ((precio * cantidad) * ($(idtxtDesc).val() / 100));
+            subtotal = (precio * cantidad) - (descuento);
+            iva = ((subtotal) * ($(idddlIVA + " option:selected").val().replace("IVA", "") / 100));
+            ieps = ((subtotal) * ($(idddlIEPS + " option:selected").val().replace("IEPS", "") / 100));
+            total = subtotal + iva + ieps;
+            $("#ctOrdenCompra_dgListaproductos_lbldgImporte_" + index).html(total.format("N2"));
+        }
     </script>
     <section class="content home">
         <div class="container-fluid">
@@ -114,7 +144,7 @@
                     </div>
                     <div class="row clearfix" runat="server" id="divCrearOC">
                         <div class="body table-responsive">
-                            <asp:GridView CssClass="table table-hover" runat="server" OnRowEditing="dgListaproductos_RowEditing" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" OnRowDataBound="dgListaproductos_RowDataBound" OnRowCommand="dgListaproductos_RowCommand">
+                            <asp:GridView CssClass="table table-hover" runat="server" OnRowEditing="dgListaproductos_RowEditing" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" OnRowDataBound="dgListaproductos_RowDataBound">
                                 <Columns>
                                     <asp:TemplateField>
                                         <%--0 Tipo de compra--%>
@@ -124,6 +154,7 @@
                                         <ItemTemplate>
                                             <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto") %>' />
                                         </ItemTemplate>
+                                        <ItemStyle CssClass="text-sm-center" />
                                     </asp:TemplateField>
                                     <asp:TemplateField>
                                         <%--1 Producto--%>
@@ -134,6 +165,7 @@
                                             <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Producto") %>' />
                                             <asp:Label ID="lblidProducto" runat="server" Text='<%# Bind("IdProducto") %>' Visible="false" />
                                         </ItemTemplate>
+                                        <ItemStyle CssClass="text-sm-center" />
                                     </asp:TemplateField>
                                     <asp:TemplateField>
                                         <%--2 Cantidad--%>
@@ -152,6 +184,7 @@
                                         <ItemTemplate>
                                             <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
                                         </ItemTemplate>
+                                        <ItemStyle CssClass="text-sm-center" />
                                     </asp:TemplateField>
                                     <asp:TemplateField>
                                         <%--4 Aplicacion--%>
@@ -161,6 +194,7 @@
                                         <ItemTemplate>
                                             <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
                                         </ItemTemplate>
+                                        <ItemStyle CssClass="text-sm-center" />
                                     </asp:TemplateField>
                                     <asp:TemplateField>
                                         <%--5 Centro costo--%>
@@ -169,7 +203,9 @@
                                         </HeaderTemplate>
                                         <ItemTemplate>
                                             <asp:Label ID="lbldgCentroCosto" runat="server" Text='<%# Bind("CentroCosto") %>' />
+                                            <asp:Label ID="lbldgidCentroCosto" runat="server" Text='<%# Bind("IdCentroCosto") %>' Visible="false" />
                                         </ItemTemplate>
+                                        <ItemStyle CssClass="text-sm-center" />
                                     </asp:TemplateField>
                                     <asp:TemplateField>
                                         <%--6 Proveedor--%>
@@ -180,7 +216,6 @@
                                             <asp:DropDownList ID="ddlProveedor" runat="server"></asp:DropDownList>
                                         </ItemTemplate>
                                     </asp:TemplateField>
-
                                     <asp:TemplateField>
                                         <%--7 Cuenta contable--%>
                                         <HeaderTemplate>
@@ -196,7 +231,8 @@
                                             Precio
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:TextBox ID="txtPrecio" CssClass="form-control" Width="100px" runat="server" TextMode="Number" />
+                                            <%--<input type="number" name="txtgvPrecio" runat="server" id="txtgvPrecio" class="form-control" onchange="CalcularImporte(<%=dgListaproductos.ClientID%>, this.id)" />--%>
+                                            <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control calculaPrecio" Width="100px" TextMode="Number" onchange="javascript: CalcularImporte();" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
@@ -205,7 +241,7 @@
                                             %Desc
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:TextBox ID="txtgvDescuento" runat="server" Width="100px" placeholder="%" type="number" CssClass="form-control" />
+                                            <asp:TextBox ID="txtgvDescuento" runat="server" Width="100px" placeholder="%" type="number" CssClass="form-control calculaPrecio" onchange="javascript: CalcularImporte();" />
                                             <%--<input type="number" name="txtgvDescuento"  class="form-control" Width="100px" placeholder="%" />--%>
                                         </ItemTemplate>
                                     </asp:TemplateField>
@@ -215,7 +251,7 @@
                                             %IVA
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:DropDownList ID="ddlGvIVA" runat="server" Width="100px" placeholder="%" CssClass="form-control" CommandName="ddl_IVA" />
+                                            <asp:DropDownList ID="ddlGvIVA" runat="server" Width="100px" placeholder="%" CssClass="form-control calculaPrecio" CommandName="ddl_IVA" onchange="javascript: CalcularImporte();" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
@@ -224,7 +260,7 @@
                                             %IEPS
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:DropDownList ID="ddlGvIEPS" runat="server" Width="100px" placeholder="%" CssClass="form-control" />
+                                            <asp:DropDownList ID="ddlGvIEPS" runat="server" Width="100px" placeholder="%" CssClass="form-control calculaPrecio" onchange="javascript: CalcularImporte();" />
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                     <asp:TemplateField>
@@ -235,12 +271,8 @@
                                         <ItemTemplate>
                                             <label>$ </label>
                                             <asp:Label ID="lbldgImporte" runat="server" CssClass="text-right" Text="0.00" />
-                                            <%--<asp:LinkButton ID="lbRefrescar" runat="server" CommandName="Refresh" CommandArgument=<%# Eval("IdProducto") %> >
-                                                <i class="material-icons">refresh</i> 
-                                                <span class="icon-name"></span>
-                                            </asp:LinkButton>--%>
                                         </ItemTemplate>
-                                        <ItemStyle HorizontalAlign="Right" />
+                                        <ItemStyle CssClass="text-sm-right" HorizontalAlign="Right" />
                                     </asp:TemplateField>
                                 </Columns>
                             </asp:GridView>
@@ -434,19 +466,79 @@
                     </div>
                 </div>
                 <div class="row clearfix">
-                    <div class="col-sm-4" align="center">
+                    <div class="col-sm-4 center">
                         <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Regresar" OnClick="btnRegresar_Click" />
                     </div>
-                    <div class="col-sm-4" align="center">
-                        <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" Enabled="false" />
+                    <div class="col-sm-4 center">
+                        <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" runat="server" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">Cancelar
+                        </a>
                     </div>
-                    <div class="col-sm-4" align="center">
-                        <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" OnClientClick="return confirm('¿Esta Seguro?');" Text="Crear" OnClick="BtnCrear_Click" />
+                    <div class="col-sm-4 center">
+                        <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" runat="server" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round">
+                            <asp:Label ID="lblbtnCrear" runat="server" Text="Crear" />
+                        </a>
                     </div>
                 </div>
 
             </div>
         </div>
     </section>
+    <%--Modal confirmacion--%>
+    <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Crear" OnClick="BtnCrear_Click" />
+
+                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--Modal de cancelar--%>
+    <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="body">
+                        <div class="col-sm-12">
+                            <asp:TextBox ID="txtMotivoCancela" TextMode="MultiLine" CssClass="form-control tex" runat="server" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></asp:TextBox>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" Enabled="false" />
+                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%--Modal de cancelar--%>
+    <div class="modal fade" id="ModalMensaje" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="title" id="ModalMensajeLabel">Orden de Compra exitosa</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="body">
+                        <div class="col-sm-12">
+                            <asp:TextBox ID="txtMensajeOrdenCompra" runat="server" TextMode="MultiLine" Rows="5" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <asp:Button ID="Button1" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Crear" OnClick="BtnCrear_Click" />
+                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="../js/OrdenCompraJS.js"></script>
 </asp:Content>

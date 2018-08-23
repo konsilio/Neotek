@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Requisicion;
 
 namespace Application.MainModule.Servicios
@@ -18,6 +19,15 @@ namespace Application.MainModule.Servicios
             numReq += _req.FechaRegistro.Year.ToString();
             numReq += contador.ToString("D4");
             return numReq;
+        }
+        public static string GeneraNumerOrdenCompra(OrdenCompraDTO _oc)
+        {
+            var contador = new AccesoADatos.OrdenCompraDataAccess().BuscarUltimaOC();
+            string numOC = "OC";
+            numOC += _oc.IdEmpresa.ToString("D3");
+            numOC += _oc.FechaRegistro.Year.ToString();
+            numOC += contador.ToString("D4");
+            return numOC;
         }
     }
 }

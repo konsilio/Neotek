@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Security.Claims;
 using Security.MainModule.Token_Service;
-using Web.MainModule.OrdenCompra.Servisio;
+using Web.MainModule.OrdenCompra.Servicio;
 using Web.MainModule.Seguridad.Servicio;
 using Web.MainModule.OrdenCompra.Model;
 
@@ -58,7 +58,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
             List<ListItem> listaIVAs = new List<ListItem>();
             foreach (Model.enumIVA r in Enum.GetValues(typeof(Model.enumIVA)))
             {
-                ListItem item = new ListItem(Enum.GetName(typeof(Model.enumIVA), r), ((byte)r).ToString());
+                ListItem item = new ListItem(Enum.GetName(typeof(Model.enumIVA), r).ToUpper(), ((byte)r).ToString());
                 listaIVAs.Add(item);
             }
             return listaIVAs;
@@ -68,42 +68,39 @@ namespace Web.MainModule.OrdenCompra.Vistas
             List<ListItem> listaIVAs = new List<ListItem>();
             foreach (Model.enumIEPS r in Enum.GetValues(typeof(Model.enumIEPS)))
             {
-                ListItem item = new ListItem(Enum.GetName(typeof(Model.enumIEPS), r), ((byte)r).ToString());
+                ListItem item = new ListItem(Enum.GetName(typeof(Model.enumIEPS), r).ToUpper(), ((byte)r).ToString());
                 listaIVAs.Add(item);
             }
             return listaIVAs;
-        }
-        private List<Model.OrdenCompraDTO> GenerarOCPorProveedor()
+        }        
+        private List<OrdenCompraProductoCrearDTO> ObtenerProductosGrid()
         {
-            List<Model.OrdenCompraDTO> lOrdenCompra = new List<Model.OrdenCompraDTO>();
+            List<OrdenCompraProductoCrearDTO> lp = new List<OrdenCompraProductoCrearDTO>();
             foreach (GridViewRow _row in dgListaproductos.Rows)
             {
-                if (!lOrdenCompra.Exists(x => x.IdProveedor.Equals(int.Parse((_row.Cells[0].FindControl("ddlProveedores") as DropDownList).SelectedValue))))
-                {
-                    lOrdenCompra.Add(new Model.OrdenCompraDTO
-                    {
-                        IdProveedor = int.Parse((_row.Cells[0].FindControl("ddlProveedores") as DropDownList).SelectedValue),
-                        IdCentroCosto = int.Parse((_row.Cells[0].FindControl("lblIdCentroCosto") as Label).Text),
-                        IdRequisicion = int.Parse(Request.QueryString["nr"])
-                    });
-                }
+                string precio = (_row.FindControl("txtPrecio") as TextBox).Text;
+                string descuento = (_row.FindControl("txtgvDescuento") as TextBox).Text;
+                OrdenCompraProductoCrearDTO p = new OrdenCompraProductoCrearDTO();
+                p.IdProducto = int.Parse((_row.FindControl("lblidProducto") as Label).Text);
+                p.IdCentroCosto = int.Parse((_row.FindControl("lbldgidCentroCosto") as Label).Text);
+                p.IdCuentaContable = int.Parse((_row.FindControl("ddlCuentaContable") as DropDownList).SelectedValue);
+                p.IdProveedor = int.Parse((_row.FindControl("ddlProveedor") as DropDownList).SelectedValue);
+                p.Precio = decimal.Parse(precio == "" ? "0" : precio);
+                p.Descuento = decimal.Parse(descuento == "" ? "0": descuento );
+                p.IVA = decimal.Parse((_row.FindControl("ddlGvIVA") as DropDownList).Text.Replace("IVA", ""));
+                p.IEPS = decimal.Parse((_row.FindControl("ddlGvIEPS") as DropDownList).Text.Replace("IEPS", ""));
+                p.Importe = decimal.Parse((_row.FindControl("lbldgImporte") as Label).Text);
+                lp.Add(p);
             }
-            return lOrdenCompra;
+            return lp;
         }
-        private void CalcularProducto(string idProd)
+        private OrdenCompraCrearDTO GenerarOrdenCompra()
         {
-            foreach (GridViewRow _row in  dgListaproductos.Rows)
-            {              
-                if ((_row.Cells[0].FindControl("lblidProducto")as Label).Text.Equals(idProd))
-                {
-                    string _precioString = (_row.Cells[0].FindControl("txtPrecio") as TextBox).Text;
-                    string _descuentoString = (_row.Cells[0].FindControl("txtgvDescuento") as TextBox).Text;
-                    decimal _CantidadAComprar = decimal.Parse((_row.Cells[0].FindControl("lbldgCantidad") as Label).Text);
-                    decimal _Precio = decimal.Parse(_precioString.Equals(string.Empty) ? "0" : _precioString);
-                    decimal _descuento = decimal.Parse(_descuentoString.Equals(string.Empty) ? "0" : _descuentoString);
-                    (_row.Cells[0].FindControl("lbldgImporte") as Label).Text = ((_CantidadAComprar * _Precio) - (_descuento *(_CantidadAComprar * _Precio)/ 100)).ToString("N2");
-                }
-            }
+            OrdenCompraCrearDTO oc = new OrdenCompraCrearDTO();
+            oc.IdRequisicion = int.Parse(Request.QueryString["nr"].ToString());
+            oc.Productos = ObtenerProductosGrid();
+            oc.IdOrdenCompraEstatus = 2;
+            return oc;
         }
         protected void btnRegresar_Click(object sender, EventArgs e)
         {
@@ -115,20 +112,13 @@ namespace Web.MainModule.OrdenCompra.Vistas
         }
         protected void BtnCrear_Click(object sender, EventArgs e)
         {
-            List<Model.OrdenCompraDTO> lOrdenCompra = GenerarOCPorProveedor();
-            foreach (Model.OrdenCompraDTO oc in lOrdenCompra)
+            foreach (var item in new OrdenCompraServicio().GenerarOrdenesCompra(GenerarOrdenCompra(), _token))
             {
-                foreach (GridViewRow _row in dgListaproductos.Rows)
+                if (item.Exito)
                 {
-                    if ((_row.Cells[0].FindControl("ddlProveedores") as DropDownList).SelectedValue.Equals(oc.IdProveedor))
-                    {
-                        oc.Productos.Add(new Model.ProdcutoOC
-                        {
-
-                        });
-                    }
-                }
-            }
+                    txtMensajeOrdenCompra.Text = txtMensajeOrdenCompra.Text + "N° de Orden de Compra: " + item.NumOrdenCompra + "n\r\"";
+                }               
+            } 
         }
         protected void dgListaproductos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -172,14 +162,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
                 ddlProvee.DataBind();
             }            
             #endregion
-        }
-        protected void dgListaproductos_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName.Equals("Refresh"))
-            {
-                CalcularProducto(e.CommandArgument.ToString());
-            }
-        }
+        }      
         protected void dgListaproductos_RowEditing(object sender, GridViewEditEventArgs e)
         {
 

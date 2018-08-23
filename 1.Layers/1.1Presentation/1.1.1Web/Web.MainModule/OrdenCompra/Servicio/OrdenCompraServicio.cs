@@ -6,7 +6,7 @@ using Web.MainModule.Agente;
 using Web.MainModule.Catalogos.Model;
 using Web.MainModule.OrdenCompra.Model;
 
-namespace Web.MainModule.OrdenCompra.Servisio
+namespace Web.MainModule.OrdenCompra.Servicio
 {
     public class OrdenCompraServicio
     {
@@ -27,6 +27,12 @@ namespace Web.MainModule.OrdenCompra.Servisio
             AgenteServicios agente = new AgenteServicios();
             agente.BuscarCuentasContables(Tkn);
             return agente._listaCuentasContable;
+        }
+        public List<OrdenCompraRespuestaDTO> GenerarOrdenesCompra(OrdenCompraCrearDTO ocDTO, string Tkn)
+        {
+            AgenteServicios agente = new AgenteServicios();
+            agente.GuardarOrdenesCompra(ocDTO, Tkn);
+            return agente._listaOrdenesCompraRespuesta;
         }
     }
 }

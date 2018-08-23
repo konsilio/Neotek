@@ -72,9 +72,13 @@
     <Compile Include="DTOs\Catalogo\ProveedorEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
+    <Compile Include="DTOs\Compras\OrdenCompraCrearDTO.cs" />
+    <Compile Include="DTOs\Compras\OrdenCompraDTO.cs" />
+    <Compile Include="DTOs\Compras\OrdenCompraProductoCrearDTO.cs" />
+    <Compile Include="DTOs\Compras\OrdenCompraProductoDTO.cs" />
     <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />
     <Compile Include="DTOs\Compras\RequisicionOCDTO.cs" />
-    <Compile Include="DTOs\Compras\RespuestaCompraDto.cs" />
+    <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\CorreoDto.cs" />
     <Compile Include="DTOs\Mobile\AlmacenDto.cs" />
     <Compile Include="DTOs\Mobile\DescargaDto.cs" />
