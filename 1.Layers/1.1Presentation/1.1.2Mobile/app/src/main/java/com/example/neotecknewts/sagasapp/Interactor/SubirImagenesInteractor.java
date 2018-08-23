@@ -6,7 +6,6 @@ import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.PapeletasImagenesSQL;
 
 /**
  * Created by neotecknewts on 15/08/18.

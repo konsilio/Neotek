@@ -11,7 +11,6 @@ import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
-import com.example.neotecknewts.sagasapp.SQLite.PapeletasImagenesSQL;
 
 /**
  * Created by neotecknewts on 15/08/18.
@@ -55,14 +54,14 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     @Override
     public void onSuccessRegistrarPapeleta() {
         //crear hide progress en vista igual que en otras vistas
-        //registrarPapeletaView.hideProgress();
+        registrarPapeletaView.hideProgress();
         registrarPapeletaView.onSuccessRegistrarPapeleta();
     }
 
     @Override
     public void onSuccessRegistrarIniciarDescarga() {
         //crear hide progress en vista igual que en otras vistas
-        //registrarPapeletaView.hideProgress();
+        registrarPapeletaView.hideProgress();
         registrarPapeletaView.onSuccessRegistrarIniciarDescarga();
     }
 
@@ -80,5 +79,27 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
         //registrarPapeletaView.hideProgress();
         //registrarPapeletaView.showMessageError();
 
+    }
+
+    /**
+     * Metodo sobreescrito para llamar a la interfaz implementer
+     * que muestre en la activity el dialogo de sucess en caso de
+     * subir la papeleta.
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @Override
+    public void onSuccessRegistroPapeleta() {
+        subirImagenesView.onSuccessRegistroPapeleta();
+    }
+
+    /**
+     * Metodo sobreescrito para llamar a la interfaz inplementer
+     * que muestre en la activity el dialogo de que los datos
+     * fueron guardados en el dispositivo
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @Override
+    public void onSuccessRegistroAndroid(){
+        subirImagenesView.onSuccessRegistroAndroid();
     }
 }

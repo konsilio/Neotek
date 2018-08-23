@@ -7,4 +7,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 public interface SubirImagenesView {
     void showProgress(int mensaje);
     void hideProgress();
+
+    void onSuccessRegistroPapeleta();
+    void onSuccessRegistroAndroid();
 }

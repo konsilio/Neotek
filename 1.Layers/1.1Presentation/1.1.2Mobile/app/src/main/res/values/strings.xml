@@ -102,4 +102,8 @@
     </string-array>
     <string name="message_goback_diabled">En caso de que hayas llenado datos estos se perderán, ¿Realmente deseas continuar?</string>
     <string name="title_alert_message">Advertencia</string>
+    <string name="titulo_exito_registro_papeleta">Operación Exitosa</string>
+    <string name="mensaje_exito_papeleta_registro_en_servicio">Los datos se han guardado exitosamente</string>
+    <string name="titulo_exito_registro_papeleta_android">Datos guardados en Android</string>
+    <string name="mensaje_exito_papeleta_android">No he logrado conectar con el servidor por falta de conexión a internet. Los datos se enviarán al detectar una conexion al internet.</string>
 </resources>
