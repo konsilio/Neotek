@@ -9,12 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
@@ -87,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         editTextContraseña.setText("saadmin");
         editTextCorreoElectronico.setText("sa@k.com");
 
+
         //linearLayoutLogin.setVisibility(View.GONE);
 
         //se inicializa el presenter
@@ -102,7 +106,16 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 onClickLogin();
             }
         });
-
+        editTextContraseña.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_DONE) {
+                    buttonLogin.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
        /* Date fecha = new Date();
         long millis = System.currentTimeMillis() % 1000;
         String str = ""+fecha.getDate()+""+fecha.getMonth()+""+(fecha.getYear()+1900)+""+fecha.getHours()+""+fecha.getMinutes()+""+fecha.getSeconds()+""+millis;
