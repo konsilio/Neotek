@@ -13,7 +13,7 @@ import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 
 public interface SubirImagenesPresenter {
 
-    void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL, Context context);
+    void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL);
     void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO);
     void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO);
     void onSuccessRegistrarPapeleta();
@@ -22,4 +22,6 @@ public interface SubirImagenesPresenter {
     void onError();
     void onSuccessRegistroPapeleta();
     void onSuccessRegistroAndroid();
+
+    void errorSolicitud(String mensaje);
 }

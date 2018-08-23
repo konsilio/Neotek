@@ -106,4 +106,5 @@
     <string name="mensaje_exito_papeleta_registro_en_servicio">Los datos se han guardado exitosamente</string>
     <string name="titulo_exito_registro_papeleta_android">Datos guardados en Android</string>
     <string name="mensaje_exito_papeleta_android">No he logrado conectar con el servidor por falta de conexión a internet. Los datos se enviarán al detectar una conexion al internet.</string>
+    <string name="titulo_error_papeleta">Se ha generado un error,intente nuevamente</string>
 </resources>

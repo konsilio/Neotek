@@ -1,17 +1,12 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -29,9 +24,7 @@ import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.Util.Session;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 /**
  * Created by neotecknewts on 14/08/18.
@@ -218,6 +211,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     /**
      * En caso de que el servicio web haya registrado los datos sin ningun error
      * se mostrara un dialog para mostrar al usuario que los datos fueron guardados correctamente
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
      */
     @Override
     public void onSuccessRegistroPapeleta() {
@@ -237,6 +231,11 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         builder.create().show();
     }
 
+    /**
+     * En caso de que el registro de los datos sean en el dispositivo , se mostrara el dialogo
+     * de que los datos fueron guardados en el dispositvo
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
     @Override
     public void onSuccessRegistroAndroid(){
         AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
@@ -255,6 +254,27 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         builder.create().show();
     }
 
+    /**
+     * En caso de generarce algun error interno se mostrara este dialogo de error
+     * en pantalla con el mensaje del mismo
+     * @param mensaje Mensaje de error retornado del servicio
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @Override
+    public void showError(String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
+        builder.setTitle(R.string.titulo_error_papeleta);
+        builder.setMessage(mensaje);
+        builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        builder.create().show();
+    }
+
     //tarea asincrona que ejecuta el procesado de las imagenes
     private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
 
@@ -267,7 +287,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
 
         @Override
         protected void onPostExecute(Void result) {
-            presenter.registrarPapeleta(papeletaDTO,session.getToken(),papeletaSQL,getApplicationContext());
+            presenter.registrarPapeleta(papeletaDTO,session.getToken(),papeletaSQL);
             textView.setText(R.string.cargando_imagenes_fin);
             //progressDialog.hide();
             //presenter.onSuccessRegistrarPapeleta();

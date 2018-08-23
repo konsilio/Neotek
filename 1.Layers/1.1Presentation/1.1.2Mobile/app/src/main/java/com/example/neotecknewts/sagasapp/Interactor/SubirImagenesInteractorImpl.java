@@ -1,10 +1,7 @@
 package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
@@ -14,7 +11,6 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
-import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
@@ -49,7 +45,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
     //metodos para llamada web service
     @Override
-    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL, final Context context) {
+    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL) {
         registro_local =false;
         Log.w("Entra", String.valueOf(precargaPapeletaDTO.getImagenes().size()));
 
@@ -150,6 +146,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 break;
                         }
                         //subirImagenesPresenter.onError();
+                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
                         registra_papeleta = false;
                     }
 

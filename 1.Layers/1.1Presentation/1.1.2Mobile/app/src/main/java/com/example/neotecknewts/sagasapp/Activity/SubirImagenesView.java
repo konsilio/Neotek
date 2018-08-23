@@ -10,4 +10,6 @@ public interface SubirImagenesView {
 
     void onSuccessRegistroPapeleta();
     void onSuccessRegistroAndroid();
+
+    void showError(String mensaje);
 }

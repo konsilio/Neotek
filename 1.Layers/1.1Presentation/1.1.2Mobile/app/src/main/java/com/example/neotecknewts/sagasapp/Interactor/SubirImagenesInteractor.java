@@ -12,7 +12,7 @@ import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
  */
 
 public interface SubirImagenesInteractor {
-    void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL, Context context);
+    void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL);
     void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO);
     void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO);
 }

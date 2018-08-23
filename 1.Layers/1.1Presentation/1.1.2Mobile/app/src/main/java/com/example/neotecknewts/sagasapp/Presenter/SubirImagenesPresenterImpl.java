@@ -30,10 +30,10 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     }
 
     @Override
-    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL, Context context) {
+    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL) {
         //crear show progress en vista igual que en otras vistas
         subirImagenesView.showProgress(R.string.message_cargando);
-        interactor.registrarPapeleta(precargaPapeletaDTO,token,papeletaSQL,context);
+        interactor.registrarPapeleta(precargaPapeletaDTO,token,papeletaSQL);
 
     }
 
@@ -80,8 +80,9 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
         //registrarPapeletaView.showMessageError();
 
     }
-
+    //region Metodos de respuesta Registro papeleta
     /**
+     * onSuccessRegistroPapeleta
      * Metodo sobreescrito para llamar a la interfaz implementer
      * que muestre en la activity el dialogo de sucess en caso de
      * subir la papeleta.
@@ -93,6 +94,7 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     }
 
     /**
+     * onSuccessRegistroAndroid
      * Metodo sobreescrito para llamar a la interfaz inplementer
      * que muestre en la activity el dialogo de que los datos
      * fueron guardados en el dispositivo
@@ -102,4 +104,17 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     public void onSuccessRegistroAndroid(){
         subirImagenesView.onSuccessRegistroAndroid();
     }
+
+    /**
+     * errorSolicitud
+     * En caso de surgir un error interno del servicio se mostrara el error
+     * generado en la app como dialog y se reiniciara en una anterior
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     * @param mensaje Mensaje de error generado
+     */
+    @Override
+    public void errorSolicitud(String mensaje) {
+        subirImagenesView.showError(mensaje);
+    }
+    //endregion
 }
