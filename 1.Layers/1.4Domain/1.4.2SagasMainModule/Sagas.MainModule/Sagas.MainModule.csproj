@@ -185,7 +185,9 @@
     <Compile Include="ObjetosValor\Enum\TipoProveedorEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Entidades\Sagas.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

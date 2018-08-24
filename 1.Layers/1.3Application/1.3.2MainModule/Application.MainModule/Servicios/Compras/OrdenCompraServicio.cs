@@ -22,37 +22,39 @@ namespace Application.MainModule.Servicios.Compras
         {
             return new OrdenCompraDataAccess().InsertarNuevo(oc);
         }
-        public static List<OrdenCompraDTO> IdentificarOrdenes(OrdenCompraCrearDTO ocInicial)
+        public static List<OrdenCompra> IdentificarOrdenes(OrdenCompraCrearDTO ocInicial)
         {
-            List<OrdenCompraDTO> nlist = new List<OrdenCompraDTO>();
+            List<OrdenCompra> nlist = new List<OrdenCompra>();
             foreach (var _prod in ocInicial.Productos)
             {
                 if (!nlist.Exists(x => x.IdProveedor.Equals(_prod.IdProveedor)))
                 {
-                    OrdenCompraDTO nOC = new OrdenCompraDTO();
+                    OrdenCompra nOC = new OrdenCompra();
                     nOC.IdProveedor = _prod.IdProveedor;
                     nOC.IdEmpresa = TokenServicio.ObtenerEsAdministracionCentral() == true ? ocInicial.IdEmpresa : TokenServicio.ObtenerIdEmpresa();
                     nOC.IdRequisicion = ocInicial.IdRequisicion;
                     nOC.IdCentroCosto = _prod.IdCentroCosto;
                     nOC.IdCuentaContable = _prod.IdCuentaContable;
+                    nOC.IdOrdenCompraEstatus = ocInicial.IdOrdenCompraEstatus;
+                    nOC.FechaRegistro = DateTime.Today;
                     nlist.Add(nOC);
                 }
             }
             return nlist;
         }
-        public static List<OrdenCompraDTO> AsignarProductos(List<OrdenCompraProductoCrearDTO> _prods, List<OrdenCompraDTO> _ocs)
+        public static List<OrdenCompra> AsignarProductos(List<OrdenCompraProductoCrearDTO> _prods, List<OrdenCompra> _ocs)
         {
             foreach (var _prod in _prods)
             {
                 foreach (var _oc in _ocs)
                 {
                     if (_prod.IdProveedor.Equals(_oc.IdProveedor))
-                        _oc.Prodcutos.Add(ProductosOCAdapter.ToDTO(_prod));                    
+                        _oc.Productos.Add(ProductosOCAdapter.FromDTO(_prod));                    
                 }
             }
             return _ocs;
         }
-        public static List<OrdenCompraDTO> CalcularTotales(List<OrdenCompraDTO> ocs)
+        public static List<OrdenCompra> CalcularTotales(List<OrdenCompra> ocs)
         {
             foreach (var oc in ocs)
             {

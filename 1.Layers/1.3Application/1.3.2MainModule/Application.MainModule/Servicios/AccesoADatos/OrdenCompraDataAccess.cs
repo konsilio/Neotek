@@ -32,8 +32,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                   && x.EsActivoVenta.Equals(EsActivoVenta)
                                                                   && x.EsTransporteGas.Equals(EsTransporteGas)
                                                                   && x.IdEmpresa.Equals(idEmpresa)
-                                                                  && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus))
-                                                                  .ToList();
+                                                                  && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus)).ToList();
             //return uow.Repository<OrdenCompra>().GetAll().ToList();
         }
         public List<OrdenCompra> BuscarTodos()
@@ -57,8 +56,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje= ex.Message;
-                           
+                    _respuesta.Mensaje= ex.Message;                           
                 }
             }
             return _respuesta;

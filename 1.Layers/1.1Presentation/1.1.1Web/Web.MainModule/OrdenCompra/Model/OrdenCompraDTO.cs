@@ -8,8 +8,7 @@ using System.Web;
 namespace Web.MainModule.OrdenCompra.Model
 {
     public class OrdenCompraDTO
-    {
-        
+    {        
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdOrdenCompra")]
         public int IdOrdenCompra { get; set; }
@@ -60,15 +59,15 @@ namespace Web.MainModule.OrdenCompra.Model
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "SubtotalSinIva")]
-        public decimal? SubtotalSinIva { get; set; }
+        public decimal SubtotalSinIva { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "SubtotalSinIeps")]
-        public decimal? SubtotalSinIeps { get; set; }
+        public decimal SubtotalSinIeps { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Iva")]
-        public decimal? Iva { get; set; }
+        public decimal Iva { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Ieps")]
