@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Seguridad;
 using System;
@@ -104,6 +105,30 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
 
             return ProveedorAdapter.ToDto(ProveedorServicio.Obtener(idProveedor));
+        }
+        #endregion
+        #region CuentaContable
+        public List<CuentaContableDTO> BuscarCuentaContable(int idEmpresa)
+        {
+            return CuentaContableAdapter.FromDTO(new CuentaContableDataAccess().BuscarCuentasContables(idEmpresa));
+        }
+        public RespuestaDto BorrarCuentaContable(int idCuentaContable)
+        {//Borrado logico                     
+          
+            var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(idCuentaContable);
+            ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
+            ctaCtble.Activo = false;
+
+            return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
+        }
+        public RespuestaDto EditarCuentaContable(CuentaContableDTO cc)
+        {
+            var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(cc.IdCuentaContable);
+            ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
+            ctaCtble.Numero = cc.Numero;
+            ctaCtble.Descripcion = cc.Descripcion;
+
+            return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
         }
         #endregion
     }

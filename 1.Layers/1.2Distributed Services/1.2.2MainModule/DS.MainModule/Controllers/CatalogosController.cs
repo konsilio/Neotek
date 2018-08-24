@@ -106,5 +106,13 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.ListaCentrosCostos(), Request);
         }
         #endregion
+
+        #region Cuenta contable
+        [Route("consulta/cuentacontable/{idEmpresa}")]
+        public HttpResponseMessage GetListaCuentasContables(int idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BuscarCuentaContable(idEmpresa));
+        }
+        #endregion
     }
 }

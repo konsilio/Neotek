@@ -3602,6 +3602,7 @@
     <Content Include="assets\plugins\waitme\waitMe.js" />
     <Content Include="assets\plugins\waitme\waitMe.min.css" />
     <Content Include="assets\plugins\waitme\waitMe.min.js" />
+    <Content Include="Catalogos\CuentasContables.aspx" />
     <Content Include="Catalogos\Proveedor.aspx" />
     <Content Include="Compras\Vistas\Compras.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -3883,8 +3884,17 @@
     <Compile Include="Agente\AgenteServicios.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Catalogos\CuentasContables.aspx.cs">
+      <DependentUpon>CuentasContables.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Catalogos\CuentasContables.aspx.designer.cs">
+      <DependentUpon>CuentasContables.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Catalogos\Model\CatalogoRespuestaDTO.cs" />
     <Compile Include="Catalogos\Model\CentroCostoDTO.cs" />
     <Compile Include="Catalogos\Model\CuentaContableDTO.cs" />
+    <Compile Include="Catalogos\Servicio\CuentaContableServicio.cs" />
     <Compile Include="Controles\DateTimePicker.ascx.cs">
       <DependentUpon>DateTimePicker.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

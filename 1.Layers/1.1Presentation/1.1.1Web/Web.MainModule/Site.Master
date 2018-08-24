@@ -500,9 +500,9 @@
                     </li>
                     <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-grid"></i><span>Catalogos</span></a>
                         <ul class="ml-menu">
-                            <li><a href="normal-tables.html">Proveedores</a></li>
+                            <li><a href="../../Catalogos/Proveedor.aspx">Proveedores</a></li>
                             <li><a href="jquery-datatable.html">Clientes</a></li>
-                            <li><a href="editable-table.html">Cuentas contables</a></li>
+                            <li><a href="../../Catalogos/CuentasContables.aspx">Cuentas contables</a></li>
                             <li><a href="table-color.html">Centro de costos</a></li>
                             <li><a href="table-filter.html">Puntos de venta</a></li>
                             <li><a href="table-filter.html">Equipo de transporte</a></li>
@@ -521,6 +521,7 @@
             <asp:ContentPlaceHolder ID="ctCompras" runat="server" />
             <asp:ContentPlaceHolder ID="ctOrdenCompra" runat="server" />
             <asp:ContentPlaceHolder ID="ctProveedor" runat="server" />
+            <asp:ContentPlaceHolder ID="ctCuentasContables" runat="server" />
         </form>
     </section>
     <script src="../../assets/bundles/libscripts.bundle.js"></script>

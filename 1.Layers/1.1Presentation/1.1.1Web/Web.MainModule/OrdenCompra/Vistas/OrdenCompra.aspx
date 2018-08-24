@@ -541,4 +541,17 @@
         </div>
     </div>
     <script src="../js/OrdenCompraJS.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAmt7VWV6PGYouqEHEFi2n6sJHmJUuwzRk",
+            authDomain: "sagas-23404.firebaseapp.com",
+            databaseURL: "https://sagas-23404.firebaseio.com",
+            projectId: "sagas-23404",
+            storageBucket: "sagas-23404.appspot.com",
+            messagingSenderId: "744018811790"
+        };
+        firebase.initializeApp(config);
+    </script>
 </asp:Content>

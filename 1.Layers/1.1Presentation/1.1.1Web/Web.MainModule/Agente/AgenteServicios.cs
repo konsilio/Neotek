@@ -42,6 +42,7 @@ namespace Web.MainModule.Agente
         public List<CentroCostoDTO> _listaCentrosCostos;
         public List<CuentaContableDTO> _listaCuentasContable;
         public List<OrdenCompraRespuestaDTO> _listaOrdenesCompraRespuesta;
+        public CatalogoRespuestaDTO _respuestaCatalogos;
 
         public  AgenteServicios()
         {
@@ -147,6 +148,42 @@ namespace Web.MainModule.Agente
                 _listaCuentasContable = emp;
             }
         }
+        public void GuardarCuentaContable(CuentaContableDTO _cc, string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRequisicion"];
+            SaveCtaCtble(_cc, token).Wait();
+        }
+        private async Task SaveCtaCtble(CuentaContableDTO _cc, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                CatalogoRespuestaDTO resp = new CatalogoRespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiCatalgos, _cc).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<CatalogoRespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaCatalogos = resp;
+            }
+        }
+
         #endregion
         #region Login
         public void ListaEmpresasLogin()
