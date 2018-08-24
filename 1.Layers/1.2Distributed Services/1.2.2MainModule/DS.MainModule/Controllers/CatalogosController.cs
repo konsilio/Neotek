@@ -109,21 +109,21 @@ namespace DS.MainModule.Controllers
 
         #region Cuentas Contables
         [Route("registra/cuenta/contable")]
-        public HttpResponseMessage PostRegistraCuentaContable(ProveedorCrearDto provDto)
+        public HttpResponseMessage PostRegistraCuentaContable(CuentaContableCrearDto cuentaDto)
         {
-            return RespuestaHttp.crearRespuesta(_catalogos.RegistraCuentaContable(provDto), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraCuentaContable(cuentaDto), Request);
         }
 
         [Route("modifica/cuenta/contable")]
-        public HttpResponseMessage PutModificaCuentaContable(ProveedorModificarDto provDto)
+        public HttpResponseMessage PutModificaCuentaContable(CuentaContableModificarDto cuentaDto)
         {
-            return RespuestaHttp.crearRespuesta(_catalogos.ModificaCuentaContable(provDto), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaCuentaContable(cuentaDto), Request);
         }
 
         [Route("elimina/cuenta/contable")]
-        public HttpResponseMessage PutEliminaCuentaContable(ProveedorEliminarDto provDto)
+        public HttpResponseMessage PutEliminaCuentaContable(CuentaContableEliminarDto cuentaDto)
         {
-            return RespuestaHttp.crearRespuesta(_catalogos.EliminaCuentaContable(provDto), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaCuentaContable(cuentaDto), Request);
         }
 
         [Route("consulta/cuentas/contables")]
