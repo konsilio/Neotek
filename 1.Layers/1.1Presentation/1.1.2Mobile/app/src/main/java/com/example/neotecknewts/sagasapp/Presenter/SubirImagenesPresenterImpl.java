@@ -10,6 +10,7 @@ import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 
 /**
@@ -38,10 +39,10 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     }
 
     @Override
-    public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO) {
+    public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO, String token, IniciarDescargaSQL iniciarDescargaSQL) {
         //crear show progress en vista igual que en otras vistas
         subirImagenesView.showProgress(R.string.message_cargando);
-        interactor.registrarIniciarDescarga(iniciarDescargaDTO);
+        interactor.registrarIniciarDescarga(iniciarDescargaDTO,token,iniciarDescargaSQL);
     }
 
     @Override

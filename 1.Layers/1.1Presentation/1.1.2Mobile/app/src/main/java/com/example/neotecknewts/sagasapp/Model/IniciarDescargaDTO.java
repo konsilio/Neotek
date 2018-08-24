@@ -52,6 +52,12 @@ public class IniciarDescargaDTO implements Serializable {
     @SerializedName("ImagenesURL")
     private List<URI> ImagenesURI;
 
+    @SerializedName("ClaveOperacion")
+    private String ClaveOperacion;
+
+    @SerializedName("FechaDescarga")
+    private String FechaDescarga;
+
     public IniciarDescargaDTO(){
         Imagenes = new ArrayList<>();
         ImagenesURI = new ArrayList<>();
@@ -159,5 +165,21 @@ public class IniciarDescargaDTO implements Serializable {
 
     public void setIdAlmacen(int idAlmacen) {
         IdAlmacen = idAlmacen;
+    }
+
+    public String getClaveOperacion() {
+        return ClaveOperacion;
+    }
+
+    public void setClaveOperacion(String claveOperacion) {
+        ClaveOperacion = claveOperacion;
+    }
+
+    public String getFechaDescarga() {
+        return FechaDescarga;
+    }
+
+    public void setFechaDescarga(String fechaDescarga) {
+        FechaDescarga = fechaDescarga;
     }
 }

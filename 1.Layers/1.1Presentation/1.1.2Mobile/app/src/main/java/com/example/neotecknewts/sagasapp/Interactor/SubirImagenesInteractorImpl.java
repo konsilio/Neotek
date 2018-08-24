@@ -7,10 +7,12 @@ import android.util.Log;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
+import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
@@ -45,15 +47,17 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
     //metodos para llamada web service
     @Override
-    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL) {
+    public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,
+                                  String token, PapeletaSQL papeletaSQL) {
         registro_local =false;
         Log.w("Entra", String.valueOf(precargaPapeletaDTO.getImagenes().size()));
 
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmssS");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "O"+s.format(new Date());
         Log.w("Genero_clave",clave_unica);
         Log.w("Consulta","Consulto si el servicio esta disponible");
-        //regionVerifica si el servcio esta disponible
+        //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -112,14 +116,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         int intentos_post = 0;
         registra_papeleta = true;
         while(intentos_post<3) {
-            Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(precargaPapeletaDTO, token, "application/json");
+            Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(precargaPapeletaDTO,
+                    token, "application/json");
 
             Log.w(TAG, retrofit.baseUrl().toString());
             Log.w("Numero ", precargaPapeletaDTO.toString());
 
             call.enqueue(new Callback<RespuestaPapeletaDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaPapeletaDTO> call, Response<RespuestaPapeletaDTO> response) {
+                public void onResponse(Call<RespuestaPapeletaDTO> call,
+                                       Response<RespuestaPapeletaDTO> response) {
 
                     if (response.isSuccessful()) {
                         RespuestaPapeletaDTO data = response.body();
@@ -141,7 +147,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 break;
                             default:
                                 Log.w(TAG, "" + response.code());
-                                Log.w(" Error", response.message() + " " + response.raw().toString());
+                                Log.w(" Error", response.message() + " " +
+                                        response.raw().toString());
 
                                 break;
                         }
@@ -175,10 +182,84 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
     }
 
-
+    /**
+     * registrarIniciarDescarga
+     * Hace el llamado al servicio web para realizar el registro de la descarga , recive como
+     * parametros  un objeto de tipo {@link IniciarDescargaDTO} que contiene todos los datos de
+     * la descrga, un {@link String} que reprecenta el token de seguridad del usuario y un
+     * objeto {@link IniciarDescargaSQL} para el almacienamiento en local en caso de error
+     * @param iniciarDescargaDTO Objeto {@link IniciarDescargaDTO} con los datos de la descarga
+     * @param token {@link String} que reprecenta el token de seguridad
+     * @param iniciarDescargaSQL Objeto {@link IniciarDescargaSQL} que permite el uso de base de
+     *                           datos en local de la descarga
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     */
     @Override
-    public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO) {
+    public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO,
+                                         String token, IniciarDescargaSQL iniciarDescargaSQL) {
+        //region Verificar si el servicio esta disponible
+        //endregion
+        //region Realiza el registro de la descarga
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String clave_unica = "D"+s.format(new Date());
+        Log.w("Genero_clave",clave_unica);
+        Log.w("Consulta","Consulto si el servicio esta disponible");
+        iniciarDescargaDTO.setClaveOperacion(clave_unica);
+        Date fecha_operacion = new Date();
+        String formato_fecha_operacion  = String.valueOf(fecha_operacion.getYear())+"-"+String.valueOf(fecha_operacion.getMonth())+"-"+String.valueOf(fecha_operacion.getDate())+" "+String.valueOf(fecha_operacion.getHours())
+                +":"+String.valueOf(fecha_operacion.getMinutes())+":"+String.valueOf(fecha_operacion.getSeconds());
 
+        iniciarDescargaDTO.setFechaDescarga(formato_fecha_operacion);
+        String url = Constantes.BASE_URL;
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+
+        Call<RespuestaIniciarDescargaDTO> call = restClient.postDescarga(iniciarDescargaDTO,
+                token,"application/json");
+        Log.w(TAG, retrofit.baseUrl().toString());
+        Log.w("Numero ", iniciarDescargaDTO.toString());
+        call.enqueue(new Callback<RespuestaIniciarDescargaDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaIniciarDescargaDTO> call,
+                                   Response<RespuestaIniciarDescargaDTO> response) {
+                RespuestaIniciarDescargaDTO data = response.body();
+                if(response.isSuccessful()){
+                    Log.w("IniciarDescarga","Success");
+                    //subirImagenesPresenter.onSuccessRegistroDescarga();
+                }else{
+                    switch (response.code()){
+                        case 404:
+                            Log.w("IniciarDescarga", "not found");
+                            break;
+                        case 500:
+                            Log.w("IniciarDescarga", "server broken");
+                            break;
+                        default:
+                            Log.w("IniciarDescarga", "" + response.code());
+                            Log.w(" Error", response.message() + " " +
+                                    response.raw().toString());
+                            break;
+                    }
+                    subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaIniciarDescargaDTO> call, Throwable t) {
+                Log.e("error", t.toString());
+            }
+        });
+        //endregion
     }
 
     @Override

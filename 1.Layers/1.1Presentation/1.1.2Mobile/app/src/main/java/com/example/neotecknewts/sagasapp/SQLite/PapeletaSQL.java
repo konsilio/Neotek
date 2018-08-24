@@ -11,12 +11,17 @@ import android.util.Log;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 
 import java.net.URI;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Created by neotecknewts on 20/08/18.
+ * PapeletaSQL
+ * Clase que extiende de {@link SQLiteOpenHelper} para realizar las transacciónales
+ * en una base de datos local los datos de la papeleta y la imagenes de la papeleta
+ * @author Jorge Omar Tovar Martìnez <jorge.tovar@neotheck.com.mx>
+ * @date 20/08/18.
+ * @lastupdate 24/08/2018
+ * @company NEOTECK
  */
 
 public class PapeletaSQL extends SQLiteOpenHelper {
@@ -28,11 +33,28 @@ public class PapeletaSQL extends SQLiteOpenHelper {
     private static final String TABLE_IMAGES_PAPELETAS = "papeletas_imagenes";
     public Integer RowId;
     //endregion
+    //region Constructor
 
+    /**
+     * Constrcutor del clase , tomara como parametro el {@link Context} o contexto
+     * de la aplicación con la que se trabaja la base de datos
+     * @param context Objeto de tipo {@link Context} que es la activity actual
+     *                (Example:MyActivity.this)
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     */
     public PapeletaSQL(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
+    //endregion
+    //region Metodos sobreescritos
 
+    /**
+     * onCreate
+     * Se llama cuando la base de datos se crea por primera vez. Aquí es donde debería ocurrir la
+     * creación de tablas y la población inicial de las tablas.
+     * @param db Objeto {@link SQLiteDatabase} que permite la inteacción con bases de datos locales
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         //region Tabla Papeleta
@@ -75,6 +97,21 @@ public class PapeletaSQL extends SQLiteOpenHelper {
         //endregion
     }
 
+    /**
+     * onUpgrade
+     * Se llama cuando la base de datos necesita ser actualizada.La implementación debería usar este
+     * método para eliminar tablas, agregar tablas o hacer cualquier otra cosa que necesite para
+     * actualizar a la nueva versión de esquema. Si agrega nuevas columnas, puede usar ALTER TABLE
+     * para insertarlas en una tabla activa. Si cambia el nombre o elimina las columnas, puede usar
+     * ALTER TABLE para cambiar el nombre de la tabla anterior, luego crear la nueva tabla y llenar
+     * la nueva tabla con el contenido de la tabla anterior.
+     * Este método se ejecuta dentro de una transacción. Si se lanza una excepción, todos
+     * los cambios se revertirán automáticamente.
+     * @param db Objeto {@link SQLiteDatabase} que permite la inteacción con bases de datos locales
+     * @param oldVersion Valor de tipo int que reprecenta la verción mas vieja de la base de datos
+     * @param newVersion Valor de tipo int que reprecenta la versión nueva de la base de datos
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         /* Elimino la tabla de la base de dato */
@@ -83,6 +120,7 @@ public class PapeletaSQL extends SQLiteOpenHelper {
         /* Invoca nuevamente el metodo para crear la tabla */
         onCreate(db);
     }
+    //endregion
     //region Acciónes papeleta
     /**
      * Permite hacer el registro en local de los datos de la
@@ -139,6 +177,14 @@ public class PapeletaSQL extends SQLiteOpenHelper {
                 "ClaveOperacion = '"+ClaveOperacion+"'",
                 null);
     }
+
+    /**
+     * Permite buscar un registro por medio de su id en la base de datos local
+     * retornara un objeto de tipo {@link Cursor} con los datos encontrados
+     * @param id Id del registro a buscar
+     * @return Objeto {@link Cursor} con los datos obtenidos
+     *
+     */
     public Integer EliminarById(String id){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_PAPELETAS,
@@ -153,13 +199,14 @@ public class PapeletaSQL extends SQLiteOpenHelper {
      */
     public Cursor GetRecordByCalveUnica(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM "+TABLE_PAPELETAS+ " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
+        return db.rawQuery("SELECT * FROM "+TABLE_PAPELETAS+ " WHERE ClaveOperacion = '"+
+                ClaveOperacion+"'",null);
     }
 
     /**
      * GetNumberOfRecors
-     * Permie obtener el numero total de registros en la tabla
-     * @return
+     * Prime obtener el numero total de registros en la tabla
+     * @return Un valor de tipo entero que reprecenta el numero de registros en la base de datos
      */
     public int GetNumberOfRecors(){
         SQLiteDatabase db = this.getReadableDatabase();

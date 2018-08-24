@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,8 +11,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -300,6 +303,48 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
+    }
+
+    /**
+     * Permite detectar cuan se da click en la tecla de back para lanzar el
+     * dialogo de advertencia en caso de ser necesario
+     * @param keyCode Codigo de la tecla que seleccióno el usuario
+     * @param event Objeto que contiene una referencia {@link KeyEvent} de la tecla seleccíonada
+     * @return Valor voleano de que si se ejecuta la acción o no
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            if(iniciar) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog);
+                builder.setTitle(R.string.title_alert_message);
+                builder.setMessage(R.string.message_goback_diabled);
+                builder.setNegativeButton(getString(R.string.label_no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setPositiveButton(getString(R.string.label_si), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        Intent intent = new Intent(CameraDescargaActivity.this, IniciarDescargaActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+                return false;
+            }else{
+                return super.onKeyDown(keyCode, event);
+            }
+        }else{
+            return super.onKeyDown(keyCode, event);
+        }
     }
 
     //metodo que inicia y pasa los parametros a capturar porcentaje

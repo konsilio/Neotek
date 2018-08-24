@@ -2,9 +2,11 @@ package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
+import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
@@ -59,9 +61,51 @@ public interface RestClient {
     @GET(Constantes.LISTA_MEDIDORES)
     Call<List<MedidorDTO>> getMedidores(@Header("Authorization")String token);
 
+    /**
+     * postServicio
+     * Permite verificar si el servicio de .NET esta disponible
+     * @param token {@link String} que reprecenta el token de seguridad  del usuario para el servicio
+     * @param contentType El tipo de contenido con el que se trabaja (Ej. 'application/json')
+     * @return Objeto {@link RespuestaServicioDisponibleDTO} con la respuesta que dio el web service
+     * @author Jorge Omar Tovar Martínez
+     */
     @POST(Constantes.VERIFICA_SERVICIO)
-    Call<RespuestaServicioDisponibleDTO> postServicio(@Header("Authorization")String token, @Header("Content-Type") String contentType);
+    Call<RespuestaServicioDisponibleDTO> postServicio(
+            @Header("Authorization")String token, @Header("Content-Type") String contentType);
 
+    /**
+     * postPapeleta
+     * Permite realizar el el vio de los datros de la papeleta al servicio web ,este retornara un
+     * objeto de respuesta tipo {@link RespuestaPapeletaDTO} que da el servicio web
+     * @param papeletaDTO Objeto de tipo {@link PrecargaPapeletaDTO} con los datos a enviar de la
+     *                    papeleta
+     * @param token {@link String} que reprecenta el token de seguridad del usuario
+     * @param contentType {@link String} que reprecenta el tipo de contenido (Ej. 'application/json')
+     * @return Objeto {@link RespuestaPapeletaDTO} que contiene la repspuesta del servicio web
+     * @author Jorge Omar Tovar Martínez
+     */
     @POST(Constantes.POST_PAPELETA)
-    Call<RespuestaPapeletaDTO> postPapeleta(@Body PrecargaPapeletaDTO papeletaDTO, @Header("Authorization")String token,@Header("Content-Type") String contentType);
+    Call<RespuestaPapeletaDTO> postPapeleta(@Body PrecargaPapeletaDTO papeletaDTO,
+                                            @Header("Authorization")String token,
+                                            @Header("Content-Type") String contentType);
+
+    /**
+     * postDescarga
+     * Permite realizar el consumo del servicio para el registro de la descarga, se enviaran como
+     * parametros un objeto de tipo {@link IniciarDescargaDTO} que contiene los valores del
+     * formulario , una cadena {@link String} que contiene el token de seguridad y un {@link String}
+     * con el tipo de contenido enviado, al finalizar retornara una respuesta que se almacena en un
+     * objeto de tipo {@link RespuestaIniciarDescargaDTO}.
+     * @param iniciarDescargaDTO Objeto {@link IniciarDescargaDTO} con los datos de la descarga
+     * @param token {@link String} que contiene el token de seguridad
+     * @param contentType {@link String} que reprecenta el tipo de contenido  (Ej. 'application/json')
+     * @return Objeto {@link RespuestaIniciarDescargaDTO} Con la respuesta del servicio
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @POST(Constantes.POST_iINICIAR_DESCARGA)
+    Call<RespuestaIniciarDescargaDTO> postDescarga(@Body IniciarDescargaDTO iniciarDescargaDTO,
+                                                   @Header("Authorization")String token,
+                                                   @Header("Content-Type") String contentType
+                                                  );
+
 }

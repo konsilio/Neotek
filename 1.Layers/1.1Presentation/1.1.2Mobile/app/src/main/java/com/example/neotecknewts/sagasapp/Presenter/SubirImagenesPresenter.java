@@ -5,6 +5,7 @@ import android.content.Context;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 
 /**
@@ -14,7 +15,7 @@ import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 public interface SubirImagenesPresenter {
 
     void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO, String token, PapeletaSQL papeletaSQL);
-    void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO);
+    void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO, String token, IniciarDescargaSQL iniciarDescargaSQL);
     void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO);
     void onSuccessRegistrarPapeleta();
     void onSuccessRegistrarIniciarDescarga();
