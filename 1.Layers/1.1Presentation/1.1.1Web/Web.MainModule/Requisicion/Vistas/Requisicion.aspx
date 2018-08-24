@@ -22,12 +22,6 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="body" id="divNoRequi" runat="server" visible="false">
-                        <div class="alert alert-success">
-                            <strong>
-                                <asp:Label ID="lblNoRequisicion" runat="server" Text="" /></strong>
-                        </div>
-                    </div>
                 </div>
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -135,9 +129,7 @@
                                     <div class="col-lg-2 col-md-6">
                                         <label>&nbsp; </label>
                                         <div class="form-group">
-                                            <asp:LinkButton ID="btnAgregar" runat="server" CssClass="btn btn-danger btn-simple btn-round btn-sm" data-type="ajax-loader" OnClick="btnAgregar_Click">
-                                            <i class="material-icons">add</i>    
-                                            <span class="icon-name">Agregar</span>                                                                                    
+                                            <asp:LinkButton ID="btnAgregar" runat="server" CssClass="btn btn-danger btn-simple btn-round btn-sm" Text="Agregar +" data-type="ajax-loader" OnClick="btnAgregar_Click">                                                                               
                                             </asp:LinkButton>
                                         </div>
 
@@ -306,7 +298,7 @@
                                                     <HeaderTemplate>
                                                         Revision Fisica
                                                     </HeaderTemplate>
-                                                    <ItemTemplate>                                                     
+                                                    <ItemTemplate>
                                                         <asp:CheckBox ID="chbRevision" runat="server" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
@@ -389,7 +381,7 @@
                                                         Autoriza entrega
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:CheckBox ID="chbAutEntrega" runat="server" CssClass="checkbox" />
+                                                        <asp:CheckBox ID="chbAutEntrega" runat="server" />
                                                     </ItemTemplate>
                                                     <ItemStyle HorizontalAlign="Center" />
                                                 </asp:TemplateField>
@@ -408,7 +400,7 @@
                                                         Autoriza Compra
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
-                                                        <asp:CheckBox ID="chbAutCompra" runat="server" CssClass="checkbox" />
+                                                        <asp:CheckBox ID="chbAutCompra" runat="server" />
                                                     </ItemTemplate>
                                                     <ItemStyle HorizontalAlign="Center" />
                                                 </asp:TemplateField>
@@ -493,6 +485,9 @@
                     <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
                 </div>
                 <div class="modal-footer">
+                   <%-- <a href="#ModalMensaje" data-toggle="modal" id="tbnCrear2" runat="server" data-target="#ModalMensaje" onclick="BtnCrear_Click" class="btn btn-raised btn-primary btn-round">
+                        <asp:Label ID="Label1" runat="server" Text="Si 2" />
+                    </a>--%>
                     <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Si" OnClick="BtnCrear_Click" />
                     <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
                 </div>
@@ -503,10 +498,20 @@
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="title" id="ModalMensajeLabel">Ree</h4>
+                    <h4 class="title" id="ModalMensajeLabel">Requisicion</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="body">
+                        <div class="body" id="divNoRequi" runat="server" visible="false">
+                            <div class="alert alert-success">
+                                <strong>
+                                    <asp:Label ID="lblNoRequisicion" runat="server" Text="R0000000000" /></strong>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="btnFin" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Si" OnClick="btnFin_Click" />
+                    <asp:Button ID="btnFin" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Si" OnClick="btnRegresar_Click" />
                 </div>
             </div>
         </div>

@@ -9,15 +9,15 @@ using Web.MainModule.Requisicion.Model;
 namespace Web.MainModule.OrdenCompra.Model
 {
     [Serializable]
-    public class ProdcutoOC : RequisicionProductoAutorizacionDTO
+    public class ProdcutoOCDTO : RequisicionProductoAutorizacionDTO
     {
         [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdCentroCosto")]
-        public int IdCentroCosto { get; set; }
+        [Display(Name = "IdProdveedor")]
+        public int IdProdveedor { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "CentroCosto")]
-        public string CentroCosto { get; set; }
+        [Display(Name = "IDCuentaContable")]
+        public int IdCuentaContable { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Precio")]

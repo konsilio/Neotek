@@ -3825,6 +3825,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="fonts\Logo GMG.JPG" />
     <Content Include="Login.aspx" />
+    <Content Include="OrdenCompra\js\OrdenCompraJS.js" />
     <Content Include="OrdenCompra\Vistas\Compra.aspx" />
     <Content Include="OrdenCompra\Vistas\OrdenCompra.aspx" />
     <Content Include="Requisicion\Vistas\Requisicion.aspx" />
@@ -3883,6 +3884,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Catalogos\Model\CentroCostoDTO.cs" />
+    <Compile Include="Catalogos\Model\CuentaContableDTO.cs" />
     <Compile Include="Controles\DateTimePicker.ascx.cs">
       <DependentUpon>DateTimePicker.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3892,11 +3894,14 @@
     </Compile>
     <Compile Include="OrdenCompra\Model\enumIEPS.cs" />
     <Compile Include="OrdenCompra\Model\enumIVA.cs" />
+    <Compile Include="OrdenCompra\Model\OrdenCompraCrearDTO.cs" />
     <Compile Include="OrdenCompra\Model\OrdenCompraDTO.cs" />
+    <Compile Include="OrdenCompra\Model\OrdenCompraProductoCrearDTO.cs" />
+    <Compile Include="OrdenCompra\Model\OrdenCompraRespuestaDTO.cs" />
     <Compile Include="OrdenCompra\Model\ProdcutoOC.cs" />
     <Compile Include="OrdenCompra\Model\ProveedorDTO.cs" />
     <Compile Include="OrdenCompra\Model\RequisicionOCDTO.cs" />
-    <Compile Include="OrdenCompra\Servisio\OrdenCompraServicio.cs" />
+    <Compile Include="OrdenCompra\Servicio\OrdenCompraServicio.cs" />
     <Compile Include="OrdenCompra\Vistas\Compra.aspx.cs">
       <DependentUpon>Compra.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

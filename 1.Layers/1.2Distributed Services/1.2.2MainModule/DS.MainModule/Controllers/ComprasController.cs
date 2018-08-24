@@ -1,4 +1,5 @@
-﻿using Application.MainModule.Flujos;
+﻿using Application.MainModule.DTOs.Compras;
+using Application.MainModule.Flujos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,11 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetBuscarReq(int idReq)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _compras.BuscarRequisicion(idReq));
-        }  
+        }
+        [Route("guardar/ordencompra")]
+        public HttpResponseMessage PostGenerarOrdenesCompra(OrdenCompraCrearDTO ocDTO)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _compras.GenerarOrdenesCompra(ocDTO));
+        }
     }
 }

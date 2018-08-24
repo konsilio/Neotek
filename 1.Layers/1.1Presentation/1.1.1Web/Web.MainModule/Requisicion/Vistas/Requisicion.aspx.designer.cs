@@ -22,24 +22,6 @@ namespace Web.MainModule.Requisicion.Vista {
         protected global::System.Web.UI.WebControls.Label lblRuta;
         
         /// <summary>
-        /// Control divNoRequi.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divNoRequi;
-        
-        /// <summary>
-        /// Control lblNoRequisicion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNoRequisicion;
-        
-        /// <summary>
         /// Control ddlEmpresas.
         /// </summary>
         /// <remarks>
@@ -425,6 +407,24 @@ namespace Web.MainModule.Requisicion.Vista {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnCrear;
+        
+        /// <summary>
+        /// Control divNoRequi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divNoRequi;
+        
+        /// <summary>
+        /// Control lblNoRequisicion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNoRequisicion;
         
         /// <summary>
         /// Control btnFin.

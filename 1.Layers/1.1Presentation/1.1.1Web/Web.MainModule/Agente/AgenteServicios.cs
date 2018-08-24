@@ -24,6 +24,7 @@ namespace Web.MainModule.Agente
         private string ApiUsuarios;
         private string ApiProducto;
         private string ApiCatalgos;
+        private string ApiOrdenCompra;
 
         public RespuestaAutenticacionDto _respuestaAutenticacion;
         public RespuestaRequisicionDto _respuestaRequisicion;
@@ -39,6 +40,8 @@ namespace Web.MainModule.Agente
         public RequisicionOCDTO _requisicionOrdenCompra;
         public List<ProveedorDTO> _listaProveedores;
         public List<CentroCostoDTO> _listaCentrosCostos;
+        public List<CuentaContableDTO> _listaCuentasContable;
+        public List<OrdenCompraRespuestaDTO> _listaOrdenesCompraRespuesta;
 
         public  AgenteServicios()
         {
@@ -109,6 +112,39 @@ namespace Web.MainModule.Agente
                     client.Dispose(); ;
                 }
                 _listaCentrosCostos = emp;
+            }
+        }
+        public void BuscarCuentasContables(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCuentasContables"];
+            ListaCuentaContable(tkn).Wait();
+        }
+        private async Task ListaCuentaContable(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CuentaContableDTO> emp = new List<CuentaContableDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<CuentaContableDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<CuentaContableDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaCuentasContable = emp;
             }
         }
         #endregion
@@ -471,8 +507,7 @@ namespace Web.MainModule.Agente
         {
             this.ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionByNumRequisicionAut"];
             RequisicionesPorNumRequisicionAuto(NumRequisicion, tkn).Wait();
-        }
-       
+        }       
         private async Task RequisicionesPorNumRequisicionAuto(int numReq, string token)
         {
             using (var client = new HttpClient())
@@ -633,6 +668,41 @@ namespace Web.MainModule.Agente
                     client.Dispose(); ;
                 }
                 _requisicionOrdenCompra = emp;
+            }
+        }
+        public void GuardarOrdenesCompra(OrdenCompraCrearDTO ocDTO, string token)
+        {
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["PostGenerarOrdenesCompra"];
+            SaveOrdenCompra(ocDTO, token).Wait();
+        }
+        private async Task SaveOrdenCompra(OrdenCompraCrearDTO _oc, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<OrdenCompraRespuestaDTO> resp = new List<OrdenCompraRespuestaDTO>();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiOrdenCompra, _oc).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<List<OrdenCompraRespuestaDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Add(new OrdenCompraRespuestaDTO { Mensaje = ex.Message, Exito = false });
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _listaOrdenesCompraRespuesta = resp;
             }
         }
         #endregion

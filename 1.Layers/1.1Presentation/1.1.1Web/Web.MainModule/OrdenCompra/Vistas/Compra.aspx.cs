@@ -67,7 +67,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
         }
         private void CargarProveedores()
         {
-            ddlFiltroProveedores.DataSource = new Servisio.OrdenCompraServicio().Proveedores(Session["StringToken"].ToString());
+            ddlFiltroProveedores.DataSource = new Servicio.OrdenCompraServicio().Proveedores(Session["StringToken"].ToString());
             ddlFiltroProveedores.DataTextField = "NombreComercial";
             ddlFiltroProveedores.DataValueField = "IdProveedor";
             ddlFiltroProveedores.DataBind();
