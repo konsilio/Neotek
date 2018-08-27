@@ -121,6 +121,8 @@
     <Compile Include="Servicios\AccesoADatos\CentroCostoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenGasDescargaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EmpresaDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\EquipoTransporteDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\EstacionCarburacionDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\RequisicionDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraDataAccess.cs" />
@@ -132,6 +134,8 @@
     <Compile Include="Servicios\Almacen\AlmacenGasServicio.cs" />
     <Compile Include="Servicios\Catalogos\CentroCostoServicio.cs" />
     <Compile Include="Servicios\Catalogos\EmpresaServicio.cs" />
+    <Compile Include="Servicios\Catalogos\EquipoTransporteServicio.cs" />
+    <Compile Include="Servicios\Catalogos\EstacionCarburacionServicio.cs" />
     <Compile Include="Servicios\Catalogos\ProductoServicios.cs" />
     <Compile Include="Servicios\Catalogos\ProveedorServicio.cs" />
     <Compile Include="Servicios\Catalogos\TipoMedidorGasServicio.cs" />
