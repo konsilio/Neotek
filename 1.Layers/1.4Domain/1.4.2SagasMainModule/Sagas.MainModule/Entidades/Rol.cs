@@ -51,6 +51,10 @@ namespace Sagas.MainModule.Entidades
         public bool CatModificarProducto { get; set; }
         public bool CatEliminarProducto { get; set; }
         public bool CatConsultarProducto { get; set; }
+        public bool CatInsertarCentroCosto { get; set; }
+        public bool CatModificarCentroCosto { get; set; }
+        public bool CatEliminarCentroCosto { get; set; }
+        public bool CatConsultarCentroCosto { get; set; }
         public bool CatInsertarCuentaContable { get; set; }
         public bool CatModificarCuentaContable { get; set; }
         public bool CatEliminarCuentaContable { get; set; }
