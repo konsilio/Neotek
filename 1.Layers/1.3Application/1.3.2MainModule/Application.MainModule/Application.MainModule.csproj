@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdaptadoresDTO\Catalogo\CentroCostoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\CuentaContableAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
@@ -64,7 +65,14 @@
     <Compile Include="AdaptadoresDTO\Catalogo\UsuarioAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Requisicion\RequisicionProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\OrdenesCompraAdapter.cs" />
+    <Compile Include="DTOs\Catalogo\CentroCostoCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\CentroCostoDTO.cs" />
+    <Compile Include="DTOs\Catalogo\CentroCostoEliminarDto.cs" />
+    <Compile Include="DTOs\Catalogo\CentroCostoModificarDto.cs" />
+    <Compile Include="DTOs\Catalogo\CuentaContableCrearDto.cs" />
+    <Compile Include="DTOs\Catalogo\CuentaContableDto.cs" />
+    <Compile Include="DTOs\Catalogo\CuentaContableEliminarDto.cs" />
+    <Compile Include="DTOs\Catalogo\CuentaContableModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorDto.cs" />
@@ -120,6 +128,7 @@
     <Compile Include="Servicios\AccesoADatos\AlmacenGasDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CentroCostoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenGasDescargaDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\CuentaContableDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EmpresaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\RequisicionDataAccess.cs" />
@@ -131,11 +140,13 @@
     <Compile Include="Servicios\Almacen\ProductoAlmacenServicio.cs" />
     <Compile Include="Servicios\Almacen\AlmacenGasServicio.cs" />
     <Compile Include="Servicios\Catalogos\CentroCostoServicio.cs" />
+    <Compile Include="Servicios\Catalogos\CuentaContableServicio.cs" />
     <Compile Include="Servicios\Catalogos\EmpresaServicio.cs" />
     <Compile Include="Servicios\Catalogos\ProductoServicios.cs" />
     <Compile Include="Servicios\Catalogos\ProveedorServicio.cs" />
     <Compile Include="Servicios\Catalogos\TipoMedidorGasServicio.cs" />
     <Compile Include="Servicios\Catalogos\UsuarioServicio.cs" />
+    <Compile Include="Servicios\Catalogos\ValidarCatalogoServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
     <Compile Include="Servicios\Notificacion\CorreoHtmlServicio.cs" />

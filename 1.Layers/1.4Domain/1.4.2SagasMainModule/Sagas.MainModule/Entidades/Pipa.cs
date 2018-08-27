@@ -18,6 +18,7 @@ namespace Sagas.MainModule.Entidades
         public Pipa()
         {
             this.UnidadAlmacenGas = new HashSet<UnidadAlmacenGas>();
+            this.CCentroCosto = new HashSet<CentroCosto>();
         }
     
         public int IdPipa { get; set; }
@@ -30,5 +31,7 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnidadAlmacenGas> UnidadAlmacenGas { get; set; }
         public virtual Empresa Empresa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CentroCosto> CCentroCosto { get; set; }
     }
 }
