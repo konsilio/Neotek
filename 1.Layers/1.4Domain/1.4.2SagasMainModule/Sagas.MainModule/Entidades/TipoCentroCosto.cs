@@ -12,24 +12,18 @@ namespace Sagas.MainModule.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class CAlmacenGasCilindro
+    public partial class TipoCentroCosto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CAlmacenGasCilindro()
+        public TipoCentroCosto()
         {
-            this.CamionetaCilindro = new HashSet<CamionetaCilindro>();
-            this.CCentroCosto = new HashSet<CentroCosto>();
+            this.CentroCosto = new HashSet<CentroCosto>();
         }
     
-        public int IdCilindro { get; set; }
-        public decimal Cantidad { get; set; }
-        public decimal CapacidadLt { get; set; }
-        public decimal CapacidadKg { get; set; }
-        public decimal Precio { get; set; }
+        public byte IdTipoCentroCosto { get; set; }
+        public string Descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CamionetaCilindro> CamionetaCilindro { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CentroCosto> CCentroCosto { get; set; }
+        public virtual ICollection<CentroCosto> CentroCosto { get; set; }
     }
 }
