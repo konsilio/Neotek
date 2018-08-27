@@ -68,7 +68,7 @@ namespace Web.MainModule.Requisicion.Vista
         }
         private void CargarCentrosCosto()
         {
-            ddlCentroCostos.DataSource = new RequisicionServicio().ListaCentroCostos(_tok);
+            ddlCentroCostos.DataSource = new RequisicionServicio().ListaCentroCostos(_tok, short.Parse(ddlEmpresas.SelectedValue));
             ddlCentroCostos.DataTextField = "Descripcion";
             ddlCentroCostos.DataValueField = "IdCentroCosto";
             ddlCentroCostos.DataBind();

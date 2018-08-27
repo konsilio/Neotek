@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs;
 using Application.MainModule.Servicios.Seguridad;
+using Utilities.MainModule;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -18,20 +19,43 @@ namespace Application.MainModule.Servicios.Notificacion
         {
             var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
             var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.RequisicionRevisarExistencia).ToList();
-
+            var destinatarios = ObtenerDestinatarios(roles);
             var correoDto = new CorreoDto()
             {
                 De = ObtenerCorreo(usuAplicacion),
-                ParaLista = ObtenerCorreo(ObtenerDestinatarios(roles)),
+                ParaLista = ObtenerCorreo(destinatarios),
                 Asunto = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], req.NumeroRequisicion),
                 Mensaje = CorreoHtmlServicio.RequisicionNueva(req),
             };
-
-            //if (incluirMensajePush)
-          
-
-            //Enviar(correoDto);
+           
+                var NotDto = new NotificacionDTO()
+                {
+                    UsuarioKey = FilterFunciones.ConcatenarLista((ObtenerKeysMovile(destinatarios)),','),
+                    Mensaje = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], req.NumeroRequisicion),
+                    Id = req.IdRequisicion
+                };
+            
+            
+            Enviar(correoDto);
+            if (incluirMensajePush)
+                Enviar(NotDto);
             //MensajePushServicio.Enviar(dto);
+        }
+        public static void OrdenDeCompraNueva(OrdenCompra oc, bool incluirMensajePush = false)
+        {
+            var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
+            var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.CompraAutorizarOCompra).ToList();
+            var destinatarios = ObtenerDestinatarios(roles);           
+
+            var NotDto = new NotificacionDTO()
+            {
+                UsuarioKey = FilterFunciones.ConcatenarLista((ObtenerKeysMovile(destinatarios)), ','),
+                Mensaje = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], oc.NumOrdenCompra),
+                Id = oc.IdOrdenCompra
+            };
+                      
+            if (incluirMensajePush)
+                Enviar(NotDto);
         }
 
         private static List<Usuario> ObtenerDestinatarios(List<Rol> roles)
@@ -40,12 +64,14 @@ namespace Application.MainModule.Servicios.Notificacion
             roles.ToList().ForEach(x => destinatarios.AddRange(x.ListaUsuarios));
             return destinatarios.Distinct().ToList();
         }
-
         private static List<string> ObtenerCorreo(List<Usuario> usuarios)
         {
             return usuarios.Select(x => ObtenerCorreo(x)).ToList();
         }
-
+        private static List<string> ObtenerKeysMovile(List<Usuario> usuarios)
+        {
+            return usuarios.Select(x => x.MovileKey).ToList();
+        }
         private static string ObtenerCorreo(Usuario usuario)
         {
             if (!string.IsNullOrEmpty(usuario.Email1))
@@ -58,7 +84,7 @@ namespace Application.MainModule.Servicios.Notificacion
                 return usuario.Email3;
 
             return string.Empty;
-        }
+        }        
 
         private static void Enviar(CorreoDto dto)
         {
@@ -71,12 +97,12 @@ namespace Application.MainModule.Servicios.Notificacion
             var webAddr = "https://fcm.googleapis.com/fcm/send";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
             httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Headers.Add(HttpRequestHeader.Authorization, "key=" + dto.AutorizacionKey); //"AAAArTr6G44:APA91bFujr3tEdesRnwtYGkUtABZeZudWn0kVhD383ts2HWyo4RvzRFgK28POs2IYxjbTQnqMwa9rjJN30Xpogjtz_KV6QuwFFJFyqqQxXOLwkbBCZQPWmgFnBvep_jh7YcEfJ_rmFhnal8gE4i3Uo3U4MeI-uAQQg");
+            httpWebRequest.Headers.Add(HttpRequestHeader.Authorization, "key=" +  ConfigurationManager.AppSettings["AppNotificacionKeyAutorizacion"]);
             httpWebRequest.Method = "POST";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 string strNJson = @"{
-                    ""to"": "" [[keyMovil]] "",
+                    ""registration_ids"": "" [[keyMovil]] "",
                     ""data"": {
                         ""ShortDesc"": ""Some short desc"",
                         ""IncidentNo"": ""any number"",

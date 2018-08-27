@@ -82,12 +82,12 @@ namespace Web.MainModule.Agente
                 _listaProveedores = emp;
             }
         }
-        public void BuscarCentrosCostos(string tkn)
+        public void BuscarCentrosCostos(string tkn, short IdEmpresa)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetCentrosCostos"];
-            ListaCentrosCosto(tkn).Wait();
+            ListaCentrosCosto(tkn, IdEmpresa).Wait();
         }
-        private async Task ListaCentrosCosto(string token)
+        private async Task ListaCentrosCosto(string token,short IdEmpresa)
         {
             using (var client = new HttpClient())
             {
@@ -97,7 +97,7 @@ namespace Web.MainModule.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + IdEmpresa.ToString()).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<CentroCostoDTO>>();
                     else
