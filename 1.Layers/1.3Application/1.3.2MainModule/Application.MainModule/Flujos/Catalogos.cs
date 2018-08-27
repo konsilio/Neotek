@@ -214,7 +214,7 @@ namespace Application.MainModule.Flujos
         {//Borrado logico    
             var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(idCuentaContable);
             ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
-            ctaCtble.IdUsuarioBorrado = TokenServicio.ObtenerIdUsuario();
+
             ctaCtble.Activo = false;
             return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
         }
