@@ -2,6 +2,7 @@
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.Compras;
+using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using System;
@@ -36,9 +37,12 @@ namespace Application.MainModule.Flujos
             locDTO = OrdenCompraServicio.AsignarProductos(oc.Productos, locDTO);
             locDTO = OrdenCompraServicio.CalcularTotales(locDTO);
             foreach (var ocDTO in locDTO)
-            {
+            {                
                 ocDTO.NumOrdenCompra = FolioServicio.GeneraNumerOrdenCompra(ocDTO);
-                lrOC.Add(OrdenCompraServicio.GuardarOrdenCompra(ocDTO));
+                OrdenCompraRespuestaDTO orDTO = OrdenCompraServicio.GuardarOrdenCompra(ocDTO);
+                lrOC.Add(orDTO);
+                if (orDTO.Exito)
+                    NotificarServicio.OrdenDeCompraNueva(ocDTO, true);
             }
             return lrOC;
         }

@@ -12,7 +12,12 @@ namespace Utilities.MainModule
         {
             return fields.Split(separador).ToList();
         }
-
+        public static string ConcatenarLista(List<String> lstrng, char separador = '|')
+        {
+            string cadenaFinal = string.Empty;
+            lstrng.ForEach(x => string.Concat(cadenaFinal, x, separador));
+            return cadenaFinal.Substring(0, cadenaFinal.Length - 1);
+        }
         public static Dictionary<string, string> ObtenerFilters(string filters)
         {
             Dictionary<string, string> filtros = new Dictionary<string, string>();
