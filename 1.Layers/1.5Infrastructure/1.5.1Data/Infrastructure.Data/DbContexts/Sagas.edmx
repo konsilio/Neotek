@@ -161,6 +161,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenSalidaProducto' 
           <Property Name="IdCamioneta" Type="int" />
           <Property Name="IdPipa" Type="int" />
           <Property Name="EsGeneral" Type="bit" Nullable="false" />
+          <Property Name="Numero" Type="varchar" MaxLength="50" />
           <Property Name="CapacidadTanqueLt" Type="decimal" Precision="18" Scale="4" />
           <Property Name="CapacidadTanqueKg" Type="decimal" Precision="18" Scale="4" />
           <Property Name="CantidadActualLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
@@ -4740,6 +4741,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <Property Name="IdCamioneta" Type="Int32" />
           <Property Name="IdPipa" Type="Int32" />
           <Property Name="EsGeneral" Type="Boolean" Nullable="false" />
+          <Property Name="Numero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CapacidadTanqueLt" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="CapacidadTanqueKg" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="CantidadActualLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
@@ -4761,6 +4763,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <NavigationProperty Name="Pipa" Relationship="Sagas.MainModuleModel.FK_UnidadAlmacenGas_Pipa" FromRole="UnidadAlmacenGas" ToRole="Pipa" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_UnidadAlmacenGas_Empresa" FromRole="UnidadAlmacenGas" ToRole="Empresa" />
           <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="CentroCosto" />
+          
           <!--<NavigationProperty Name="CAlmacenGasCalibracion" Relationship="Sagas.MainModuleModel.FK_CAlmacenGasCalibracion_CAlmacenGas" FromRole="CAlmacenGas" ToRole="CAlmacenGasCalibracion" />
           <NavigationProperty Name="CAlmacenGas" Relationship="Sagas.MainModuleModel.FK_CAlmacenGasCalibracion_CAlmacenGas" FromRole="CAlmacenGasCalibracion" ToRole="CAlmacenGas" />-->
         </EntityType>
@@ -6342,6 +6345,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySetMapping Name="UnidadAlmacenGas">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.UnidadAlmacenGas">
               <MappingFragment StoreEntitySet="CAlmacenGas">
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="P5000Actual" ColumnName="P5000Actual" />
