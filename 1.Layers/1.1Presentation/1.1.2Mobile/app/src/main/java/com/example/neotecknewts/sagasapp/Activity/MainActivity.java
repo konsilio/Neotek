@@ -136,13 +136,15 @@ public class MainActivity extends AppCompatActivity implements MainView{
         }else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(usuario).matches()) {
             showDialog(getResources().getString(R.string.invalid_email));
         }else{
+            String fb_token = "";
             try{
                 //se codifica la contraseña en SHA256
                 Log.e("SAAAA", Utilidades.getHash(contraseña));
                 Log.e("SAAAA", IdEmpresa+"");
                 //showDialog( Utilidades.getHash(contraseña));
                 this.contraseña = Utilidades.getHash(contraseña);
-                Log.w("FireBaseToken", FirebaseInstanceId.getInstance().getToken());
+                fb_token =FirebaseInstanceId.getInstance().getToken();
+                Log.w("FireBaseToken",fb_token );
 
             }catch (NoSuchAlgorithmException ex){
                 ex.printStackTrace();
@@ -153,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
             usuarioLoginDTO.setIdEmpresa(IdEmpresa);
             usuarioLoginDTO.setPassword(this.contraseña);
             usuarioLoginDTO.setUsuario(usuario);
+            usuarioLoginDTO.setFbToken(fb_token);
             //usuarioLoginDTO.setFBToken(FirebaseInstanceId.getInstance().getToken());
             //por medio del presenter se llama al web service con el objeto de usuario
             loginPresenter.doLogin(usuarioLoginDTO);

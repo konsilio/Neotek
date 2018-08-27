@@ -16,6 +16,9 @@ public class UsuarioLoginDTO {
     @SerializedName("Password")
     private String Password;
 
+    @SerializedName("FbToken")
+    private String FbToken;
+
     public int getIdEmpresa() {
         return IdEmpresa;
     }
@@ -38,5 +41,13 @@ public class UsuarioLoginDTO {
 
     public void setPassword(String password) {
         Password = password;
+    }
+
+    public String getFbToken() {
+        return FbToken;
+    }
+
+    public void setFbToken(String fbToken) {
+        FbToken = fbToken;
     }
 }
