@@ -54,7 +54,6 @@ namespace Application.MainModule.Servicios.Seguridad
                     MensajesError = new List<string>() { mensaje }
                 };
             }
-
             return new RespuestaDto() {Exito = true };
         }
     }

@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Security.MainModule.Token_Service;
-using System.Security.Claims;
 using Utilities.MainModule;
-using System.Globalization;
-using System.ComponentModel.DataAnnotations;
-using Exceptions.MainModule.Validaciones;
 using Web.MainModule.Requisicion.Servicio;
 using Web.MainModule.Seguridad.Servicio;
 
@@ -106,7 +100,7 @@ namespace Web.MainModule.Requisicion.Vista
         }
         private void ValidarCampos(List<Result> list)
         {
-            if (list.Exists(x => x.IdentidadError.Equals("FechaRequerida"))) { reqFecha.Visible = true; reqFecha.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("FechaRequerida")).MensajeError; }
+            if (list.Exists(x => x.IdentidadError.Equals("Numero"))) { reqFecha.Visible = true; reqFecha.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("Numero")).MensajeError; }
             else reqFecha.Visible = false;
             if (list.Exists(x => x.IdentidadError.Equals("IdUsuarioSolicitante"))) { reqSol.Visible = true; reqSol.Text = list.SingleOrDefault(x => x.IdentidadError.Equals("IdUsuarioSolicitante")).MensajeError; }
             else reqSol.Visible = false;

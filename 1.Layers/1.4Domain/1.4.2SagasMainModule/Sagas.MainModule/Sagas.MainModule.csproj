@@ -109,7 +109,9 @@
     <Compile Include="Entidades\Pais.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\Partial\CuentaContablePartial.cs" />
     <Compile Include="Entidades\Partial\OrdenCompraPartial.cs" />
+    <Compile Include="Entidades\Partial\UsuarioPartial.cs" />
     <Compile Include="Entidades\Pipa.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>

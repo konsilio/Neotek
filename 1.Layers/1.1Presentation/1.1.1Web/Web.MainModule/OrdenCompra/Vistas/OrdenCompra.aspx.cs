@@ -167,5 +167,15 @@ namespace Web.MainModule.OrdenCompra.Vistas
         {
 
         }
+
+        protected void btnSolicitarPagoExpedidor_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnSolicitarPaogPorteador_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Seguridad;
+using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +38,7 @@ namespace Application.MainModule.Flujos
             if (TokenServicio.ObtenerEsAdministracionCentral())
                 return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
             else
-                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();          
+                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
         #endregion
         #region Productos
@@ -63,7 +65,7 @@ namespace Application.MainModule.Flujos
 
             return ProveedorServicio.RegistrarProveedor(ProveedorAdapter.FromDto(provDto));
         }
-        
+
         public RespuestaDto ModificaProveedor(ProveedorModificarDto provDto)
         {
             var resp = PermisosServicio.PuedeModificarProveedor();
@@ -104,6 +106,35 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
 
             return ProveedorAdapter.ToDto(ProveedorServicio.Obtener(idProveedor));
+        }
+        #endregion
+        #region CuentaContable
+        public List<CuentaContableDTO> BuscarCuentaContable(int idEmpresa)
+        {
+            var listaCuentasContables = new CuentaContableDataAccess().BuscarCuentasContables(idEmpresa);
+            return CuentaContableAdapter.FromDTO(listaCuentasContables);
+        }
+        public RespuestaDto BorrarCuentaContable(int idCuentaContable)
+        {//Borrado logico    
+            var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(idCuentaContable);
+            ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
+            ctaCtble.IdUsuarioBorrado = TokenServicio.ObtenerIdUsuario();
+            ctaCtble.Activo = false;
+            return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
+        }
+        public RespuestaDto EditarCuentaContable(CuentaContableDTO cc)
+        {
+            var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(cc.IdCuentaContable);
+            ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
+            ctaCtble.Numero = cc.Numero;
+            ctaCtble.Descripcion = cc.Descripcion;
+
+            return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
+        }
+        public RespuestaDto CrearCuentaContable(CuentaContableDTO cc)
+        {
+            CuentaContable ctaCtble = CuentaContableAdapter.ToDTO(cc);
+            return new CuentaContableDataAccess().InsertarCuentaContable(ctaCtble);
         }
         #endregion
     }

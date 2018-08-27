@@ -7,90 +7,99 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace Web.MainModule {
+namespace Web.MainModule.Catalogos {
     
     
-    public partial class SiteMaster {
+    public partial class CuentasContables {
         
         /// <summary>
-        /// Control lblNombre.
+        /// Control lblRuta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombre;
+        protected global::System.Web.UI.WebControls.Label lblRuta;
         
         /// <summary>
-        /// Control lblUsuario.
+        /// Control txtNumero.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUsuario;
+        protected global::System.Web.UI.WebControls.TextBox txtNumero;
         
         /// <summary>
-        /// Control ScriptManager1.
+        /// Control reqNum.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        protected global::System.Web.UI.WebControls.Label reqNum;
         
         /// <summary>
-        /// Control ctDashBoard.
+        /// Control txtDesc.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ctDashBoard;
+        protected global::System.Web.UI.WebControls.TextBox txtDesc;
         
         /// <summary>
-        /// Control ctRequisicion.
+        /// Control reqDesc.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ctRequisicion;
+        protected global::System.Web.UI.WebControls.Label reqDesc;
         
         /// <summary>
-        /// Control ctCompras.
+        /// Control btnok.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ctCompras;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnok;
         
         /// <summary>
-        /// Control ctOrdenCompra.
+        /// Control ddlEmpresas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ctOrdenCompra;
+        protected global::System.Web.UI.WebControls.DropDownList ddlEmpresas;
         
         /// <summary>
-        /// Control ctProveedor.
+        /// Control txtNumeroCtaCtble.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ctProveedor;
+        protected global::System.Web.UI.WebControls.TextBox txtNumeroCtaCtble;
         
         /// <summary>
-        /// Control ctCuentasContables.
+        /// Control gvCuentasContables.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ctCuentasContables;
+        protected global::System.Web.UI.WebControls.GridView gvCuentasContables;
+        
+        /// <summary>
+        /// Control BtnCrear.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCrear;
     }
 }
