@@ -1,5 +1,4 @@
-﻿using Application.MainModule.AdaptadoresDTO.Compras;
-using Application.MainModule.DTOs;
+﻿using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.Compras;
@@ -7,7 +6,9 @@ using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,6 +41,18 @@ namespace Application.MainModule.Flujos
                 lrOC.Add(OrdenCompraServicio.GuardarOrdenCompra(ocDTO));
             }
             return lrOC;
+        }
+        public OrdenCompraRespuestaDTO AutorizarOrdenCompra(OrdenCompraDTO dto)
+        {
+            OrdenCompraRespuestaDTO respDTO = new OrdenCompraRespuestaDTO();
+
+            return respDTO;
+        }
+        public OrdenCompraRespuestaDTO CancelarOrdenCompra(OrdenCompraDTO dto)
+        {
+            OrdenCompraRespuestaDTO respDTO = new OrdenCompraRespuestaDTO();
+
+            return respDTO;
         }
     }
 }

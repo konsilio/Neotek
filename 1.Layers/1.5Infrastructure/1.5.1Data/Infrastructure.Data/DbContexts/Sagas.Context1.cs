@@ -67,5 +67,6 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<CuentaContable> CuentaContable { get; set; }
         public virtual DbSet<RegimenFiscal> RegimenFiscal { get; set; }
         public virtual DbSet<TipoPersona> TipoPersona { get; set; }
+        public virtual DbSet<TipoCentroCosto> TipoCentroCosto { get; set; }
     }
 }

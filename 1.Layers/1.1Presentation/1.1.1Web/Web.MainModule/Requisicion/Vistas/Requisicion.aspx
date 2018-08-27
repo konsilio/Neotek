@@ -504,8 +504,7 @@
                     <div class="body">
                         <div class="body" id="divNoRequi" runat="server" visible="false">
                             <div class="alert alert-success">
-                                <strong>
-                                    <asp:Label ID="lblNoRequisicion" runat="server" Text="R0000000000" /></strong>
+                                <strong><asp:Label ID="lblNoRequisicion" runat="server" Text="R0000000000" /></strong>
                             </div>
                         </div>
                     </div>
