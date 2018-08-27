@@ -53,7 +53,7 @@ namespace Application.MainModule.Servicios.Almacen
             if (!string.IsNullOrEmpty(nombre))
                 return nombre;
 
-            return EquipoTransporteServicio.ObtenerNombre(uAG);
+            return EstacionCarburacionServicio.ObtenerNombre(uAG);
         }
     }
 }

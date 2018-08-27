@@ -93,11 +93,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                      && x.Activo);
         }
 
-        public EstacionCarburacion BuscarEstacionCarburacion(int idEstacionCarburacion)
-        {
-            return uow.Repository<EstacionCarburacion>().GetSingle(x => x.IdEstacionCarburacion.Equals(idEstacionCarburacion)
-                                                                    && x.Activo);
-        }
         public Camioneta BuscarCamioneta(UnidadAlmacenGas uAG)
         {
             if (uAG.Camioneta != null)
@@ -118,18 +113,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 if (uAG.IdPipa != null && uAG.IdPipa > 0)
                     return BuscarPipa(uAG.IdPipa.Value);
-                else
-                    return null;
-            }
-        }
-        public EstacionCarburacion BuscarEstacionCarburacion(UnidadAlmacenGas uAG)
-        {
-            if (uAG.EstacionCarburacion != null)
-                return uAG.EstacionCarburacion;
-            else
-            {
-                if (uAG.IdPipa != null && uAG.IdPipa > 0)
-                    return BuscarEstacionCarburacion(uAG.IdEstacionCarburacion.Value);
                 else
                     return null;
             }

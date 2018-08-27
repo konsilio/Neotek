@@ -8,15 +8,12 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
-    public static class EquipoTransporteServicio
+    public static class EstacionCarburacionServicio
     {
         public static string ObtenerNombre(UnidadAlmacenGas uAG)
-        {
-            if (uAG.IdCamioneta != null)
-                return new EquipoTransporteDataAccess().BuscarCamioneta(uAG).Nombre;
-            if (uAG.IdPipa != null)
-                return new EquipoTransporteDataAccess().BuscarPipa(uAG).Nombre;
-            
+        {   
+            if (uAG.IdEstacionCarburacion != null)
+                return new EstacionCarburacionDataAccess().BuscarEstacionCarburacion(uAG).Nombre;
             return null;
         }
     }
