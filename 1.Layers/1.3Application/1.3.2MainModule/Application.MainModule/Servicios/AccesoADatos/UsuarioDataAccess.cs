@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.UnitOfWork;
 using Sagas.MainModule.Entidades;
+using Exceptions.MainModule.Validaciones;
+using Exceptions.MainModule;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
@@ -41,6 +44,32 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.Password.Equals(password)
                                                          && x.Activo);
         }
+
+        public RespuestaDto Actualizar(Usuario usuario)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.Usuario>().Update(usuario);
+                    uow.SaveChanges();
+                    _respuesta.Id = usuario.IdUsuario;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del Usuario"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
         public Usuario Buscar(Empresa _empresa, int idUsuario)
         {
             if (_empresa.Usuario != null)
