@@ -65,6 +65,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public boolean finalizar;
     public int cantidadFotos;
     public boolean almacen;
+    public boolean TanquePrestado;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,6 +113,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 iniciar=extras.getBoolean("EsDescargaIniciar");
                 almacen = extras.getBoolean("Almacen");
                 textViewMensaje.setText(R.string.mensaje_primera_foto);
+                TanquePrestado = extras.getBoolean("TanquePrestado");
             }
             //se acomoda la vista en modo Finalizar descarga y se les da valor a las variables realcionadas con finalizar descarga
             else if(extras.getBoolean("EsDescargaFinalizar")){
@@ -224,7 +226,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                     iniciarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
                     //si es el medidor del tractor (la variable almacen es falsa por lo que estamos en la fotos del medidor del tractor
                     //se inicia el captivity para capturar el porcentaje del siguiente medidor
-                    startActivityPorcentaje();
+                    if(!TanquePrestado)
+                        startActivityPorcentaje();
+                    else
+                        startActivity();
                 }else if(finalizar&&!almacen){
                     Log.w("Boton","TractorFinalizar"+cantidadFotos);
                     finalizarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
@@ -368,7 +373,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         if(iniciar){
             intent.putExtra("IniciarDescarga", iniciarDescarga);
         }else if(finalizar){
-
+            if(TanquePrestado){
+                finalizarDescarga.setCantidadFotosTractor(0);
+                finalizarDescarga.setPorcentajeMedidorTractor(0.0);
+            }
             intent.putExtra("FinalizarDescarga",finalizarDescarga);
         }else if(papeleta){
             intent.putExtra("Papeleta",papeletaDTO);

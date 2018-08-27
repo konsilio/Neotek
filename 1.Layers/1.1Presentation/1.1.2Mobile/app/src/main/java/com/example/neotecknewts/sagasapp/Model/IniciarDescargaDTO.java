@@ -13,37 +13,37 @@ import java.util.List;
 
 public class IniciarDescargaDTO implements Serializable {
 
-    @SerializedName("")
+    @SerializedName("IdOrdenCompra")
     private int IdOrdenCompra;
 
-    @SerializedName("")
+    @SerializedName("NombreTipoMedidorTractor")
     private String NombreTipoMedidorTractor;
 
-    @SerializedName("")
+    @SerializedName("NombreTipoMedidorAlmacen")
     private String NombreTipoMedidorAlmacen;
 
-    @SerializedName("")
+    @SerializedName("IdTipoMedidorTractor")
     private int IdTipoMedidorTractor;
 
-    @SerializedName("")
+    @SerializedName("IdTipoMedidorAlmacen")
     private int IdTipoMedidorAlmacen;
 
-    @SerializedName("")
+    @SerializedName("CantidadFotosAlmacen")
     private int CantidadFotosAlmacen;
 
-    @SerializedName("")
+    @SerializedName("CantidadFotosTractor")
     private int CantidadFotosTractor;
 
-    @SerializedName("")
+    @SerializedName("TanquePrestado")
     private boolean TanquePrestado;
 
-    @SerializedName("")
+    @SerializedName("PorcentajeMedidorAlmacen")
     private Double PorcentajeMedidorAlmacen;
 
-    @SerializedName("")
+    @SerializedName("PorcentajeMedidorTractor")
     private Double PorcentajeMedidorTractor;
 
-    @SerializedName("")
+    @SerializedName("IdAlmacen")
     private int IdAlmacen;
 
     @SerializedName("Imagenes")

@@ -83,7 +83,7 @@ public class PapeletaSQL extends SQLiteOpenHelper {
                 "NombreTipoMedidorTractor TEXT,"+
                 "IdTipoMedidorTractor INTEGER,"+
                 "CantidadFotosTractor INTEGER,"+
-                "Falta BOOLEAN DEFAULT(TRUE))");
+                "Falta BOOLEAN DEFAULT 1)");
 
         //endregion
         //region tabla Imagenes de la papeleta
@@ -92,7 +92,7 @@ public class PapeletaSQL extends SQLiteOpenHelper {
                 "Imagen TEXT,"+
                 "Url TEXT,"+
                 "CalveUnica TEXT,"+
-                "Falta BOOLEAN DEFAULT(TRUE)"+
+                "Falta BOOLEAN DEFAULT 1"+
                 ")");
         //endregion
     }

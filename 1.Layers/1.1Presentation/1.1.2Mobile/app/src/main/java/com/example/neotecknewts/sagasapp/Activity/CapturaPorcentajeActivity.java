@@ -44,6 +44,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean iniciar;
     public boolean finalizar;
     public boolean almacen;
+    public boolean es_tanque_prestado;
 
 
     @Override
@@ -79,6 +80,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                     iniciar = true;
                     finalizar = false;
                     almacen = extras.getBoolean("Almacen");
+                    es_tanque_prestado = extras.getBoolean("TanquePrestado");
                 if (almacen) {
                     textViewTitulo.setText(iniciarDescargaDTO.getNombreTipoMedidorTractor()+" - Almacen");
                     textView.setText(R.string.porcentaje_medidor_almacen_message);
@@ -163,6 +165,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             intent.putExtra("Papeleta",papeletaDTO);
         }else if(iniciar) {
             intent.putExtra("IniciarDescarga",iniciarDescargaDTO);
+            intent.putExtra("TanquePrestado",es_tanque_prestado);
         }else if(finalizar){
             intent.putExtra("FinalizarDescarga",finalizarDescargaDTO);
         }

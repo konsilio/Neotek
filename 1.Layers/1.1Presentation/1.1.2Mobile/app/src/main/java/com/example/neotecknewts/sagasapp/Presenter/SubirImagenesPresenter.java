@@ -25,4 +25,6 @@ public interface SubirImagenesPresenter {
     void onSuccessRegistroAndroid();
 
     void errorSolicitud(String mensaje);
+
+    void onRegistrarIniciarDescarga();
 }

@@ -12,4 +12,6 @@ public interface SubirImagenesView {
     void onSuccessRegistroAndroid();
 
     void showError(String mensaje);
+
+    void onRegistrarIniciarDescarga();
 }

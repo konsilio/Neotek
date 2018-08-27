@@ -117,5 +117,10 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     public void errorSolicitud(String mensaje) {
         subirImagenesView.showError(mensaje);
     }
+
+    @Override
+    public void onRegistrarIniciarDescarga() {
+        subirImagenesView.onRegistrarIniciarDescarga();
+    }
     //endregion
 }

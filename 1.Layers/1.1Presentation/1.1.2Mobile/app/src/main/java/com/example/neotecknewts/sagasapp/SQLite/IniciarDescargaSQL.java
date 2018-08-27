@@ -67,11 +67,11 @@ public class IniciarDescargaSQL extends SQLiteOpenHelper {
                         "IdTipoMedidorAlmacen INTEGER,"+
                         "CantidadFotosAlmacen INTEGER,"+
                         "CantidadFotosTractor INTEGER,"+
-                        "TanquePrestado BOOLEAN DEFAULT(FALSE),"+
+                        "TanquePrestado BOOLEAN DEFAULT 1,"+
                         "PorcentajeMedidorAlmacen DOUBLE,"+
                         "PorcentajeMedidorTractor DOUBLE,"+
                         "IdAlmacen INTEGER," +
-                        "Falta BOOLEAN DEFAULT(TRUE))"
+                        "Falta BOOLEAN DEFAULT 1)"
         );
         //endregion
         //region Tabla de imagenes descargas
@@ -81,7 +81,7 @@ public class IniciarDescargaSQL extends SQLiteOpenHelper {
                         "ClaveOperacion TEXT,"+
                         "Imagen TEXT,"+
                         "Uri TEXT,"+
-                        "Falta BOOLEAN DEFAULT(TRUE))"
+                        "Falta BOOLEAN DEFAULT 1)"
         );
         //endregion
     }
@@ -145,7 +145,7 @@ public class IniciarDescargaSQL extends SQLiteOpenHelper {
         contentValues.put("PorcentajeMedidorAlmacen",iniciarDescargaDTO.getPorcentajeMedidorAlmacen());
         contentValues.put("PorcentajeMedidorTractor",iniciarDescargaDTO.getPorcentajeMedidorTractor());
         contentValues.put("IdAlmacen",iniciarDescargaDTO.getIdAlmacen());
-        contentValues.put("FechaDescarga","");//Falta verificar si la fecha es digitada o es timestamp
+        contentValues.put("FechaDescarga",iniciarDescargaDTO.getFechaDescarga());//Falta verificar si la fecha es digitada o es timestamp
         contentValues.put("Falta",true);
         return db.insert(TABLE_DESCARGAS,null,contentValues);
     }
@@ -235,7 +235,7 @@ public class IniciarDescargaSQL extends SQLiteOpenHelper {
      */
     public Cursor GetImagenesDescargaByClaveUnica(String ClaveUnica){
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM "+TABLE_DESCARGAS_IMAGENES+" WHERE ClaveUnica = '"+ClaveUnica+"'",null);
+        return db.rawQuery("SELECT * FROM "+TABLE_DESCARGAS_IMAGENES+" WHERE ClaveOperacion = '"+ClaveUnica+"'",null);
     }
 
     /**

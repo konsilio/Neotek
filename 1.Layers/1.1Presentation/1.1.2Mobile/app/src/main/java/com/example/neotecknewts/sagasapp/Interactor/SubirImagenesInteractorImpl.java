@@ -38,6 +38,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     SubirImagenesPresenter subirImagenesPresenter;
     private boolean esta_disponible;
     private boolean registra_papeleta;
+    private boolean registra_descarga;
     private boolean registro_local;
 
     //constructor de la clase y se inicializa el presenter
@@ -197,19 +198,58 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     @Override
     public void registrarIniciarDescarga(IniciarDescargaDTO iniciarDescargaDTO,
                                          String token, IniciarDescargaSQL iniciarDescargaSQL) {
-        //region Verificar si el servicio esta disponible
-        //endregion
-        //region Realiza el registro de la descarga
+
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "D"+s.format(new Date());
         Log.w("Genero_clave",clave_unica);
         Log.w("Consulta","Consulto si el servicio esta disponible");
-        iniciarDescargaDTO.setClaveOperacion(clave_unica);
-        Date fecha_operacion = new Date();
-        String formato_fecha_operacion  = String.valueOf(fecha_operacion.getYear())+"-"+String.valueOf(fecha_operacion.getMonth())+"-"+String.valueOf(fecha_operacion.getDate())+" "+String.valueOf(fecha_operacion.getHours())
-                +":"+String.valueOf(fecha_operacion.getMinutes())+":"+String.valueOf(fecha_operacion.getSeconds());
+        //region Verifica si el servcio esta disponible
 
+        Gson gsons = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofits =  new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gsons))
+                .build();
+        RestClient restClientS = retrofits.create(RestClient.class);
+
+        int servicio_intentos = 0;
+        esta_disponible= true;
+
+        while (servicio_intentos<3) {
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio("","application/json");
+            callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                    RespuestaServicioDisponibleDTO data = response.body();
+                    esta_disponible = response.isSuccessful() && data.isExito();
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
+                    esta_disponible = false;
+                }
+            });
+            if (esta_disponible) {
+                break;
+            }else {
+                servicio_intentos++;
+            }
+        }
+
+        if (servicio_intentos == 3) {
+            registrar_descarga_local(iniciarDescargaSQL,iniciarDescargaDTO,clave_unica);
+            registro_local = true;
+        }
+
+        //endregion
+        //region Realiza el registro de la descarga
+        iniciarDescargaDTO.setClaveOperacion(clave_unica);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        String formato_fecha_operacion = f.format(new Date());
         iniciarDescargaDTO.setFechaDescarga(formato_fecha_operacion);
         String url = Constantes.BASE_URL;
 
@@ -223,42 +263,58 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-
-        Call<RespuestaIniciarDescargaDTO> call = restClient.postDescarga(iniciarDescargaDTO,
-                token,"application/json");
-        Log.w(TAG, retrofit.baseUrl().toString());
-        Log.w("Numero ", iniciarDescargaDTO.toString());
-        call.enqueue(new Callback<RespuestaIniciarDescargaDTO>() {
-            @Override
-            public void onResponse(Call<RespuestaIniciarDescargaDTO> call,
-                                   Response<RespuestaIniciarDescargaDTO> response) {
-                RespuestaIniciarDescargaDTO data = response.body();
-                if(response.isSuccessful()){
-                    Log.w("IniciarDescarga","Success");
-                    //subirImagenesPresenter.onSuccessRegistroDescarga();
-                }else{
-                    switch (response.code()){
-                        case 404:
-                            Log.w("IniciarDescarga", "not found");
-                            break;
-                        case 500:
-                            Log.w("IniciarDescarga", "server broken");
-                            break;
-                        default:
-                            Log.w("IniciarDescarga", "" + response.code());
-                            Log.w(" Error", response.message() + " " +
-                                    response.raw().toString());
-                            break;
+        int intentos_post = 0;
+        registra_descarga = true;
+        while(intentos_post<3) {
+            Call<RespuestaIniciarDescargaDTO> call = restClient.postDescarga(iniciarDescargaDTO,
+                    token, "application/json");
+            Log.w(TAG, retrofit.baseUrl().toString());
+            Log.w("Numero ", iniciarDescargaDTO.toString());
+            call.enqueue(new Callback<RespuestaIniciarDescargaDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaIniciarDescargaDTO> call,
+                                       Response<RespuestaIniciarDescargaDTO> response) {
+                    RespuestaIniciarDescargaDTO data = response.body();
+                    if (response.isSuccessful()) {
+                        Log.w("IniciarDescarga", "Success");
+                        subirImagenesPresenter.onRegistrarIniciarDescarga();
+                    } else {
+                        switch (response.code()) {
+                            case 404:
+                                Log.w("IniciarDescarga", "not found");
+                                break;
+                            case 500:
+                                Log.w("IniciarDescarga", "server broken");
+                                break;
+                            default:
+                                Log.w("IniciarDescarga", "" + response.code());
+                                Log.w(" Error", response.message() + " " +
+                                        response.raw().toString());
+                                break;
+                        }
+                        //subirImagenesPresenter.errorSolicitud(data.getMensaje());
                     }
-                    subirImagenesPresenter.errorSolicitud(data.getMensaje());
                 }
-            }
 
-            @Override
-            public void onFailure(Call<RespuestaIniciarDescargaDTO> call, Throwable t) {
-                Log.e("error", t.toString());
+                @Override
+                public void onFailure(Call<RespuestaIniciarDescargaDTO> call, Throwable t) {
+                    Log.e("error", t.toString());
+                }
+            });
+            intentos_post++;
+            if(registra_descarga){
+                break;
+            }else{
+                intentos_post++;
             }
-        });
+        }
+        if(intentos_post==3){
+            registrar_descarga_local(iniciarDescargaSQL,iniciarDescargaDTO,clave_unica);
+            registro_local = true;
+        }
+        if(registro_local ){
+            subirImagenesPresenter.onSuccessRegistroAndroid();
+        }
         //endregion
     }
 
@@ -283,6 +339,28 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             papeletaSQL.Insert(precargaPapeletaDTO, clave_unica);
             if (papeletaSQL.GetRecordsByCalveUnica(clave_unica).getCount() == 0) {
                 papeletaSQL.InsertImagenes(precargaPapeletaDTO.getImagenesURI(), precargaPapeletaDTO.getImagenes(), clave_unica);
+            }
+        }
+    }
+
+    /**
+     * registrar_descarga_local
+     * Permite realizar el envio para el registro en local de los datos de la descarga, primero
+     * se verifica si los registros ya existen, en caso contrario se realiza el registro en local.
+     * @param iniciarDescargaSQL Objeto {@link IniciarDescargaSQL} que permite el uso de base
+     *                           de datos en local de la descarga
+     * @param iniciarDescargaDTO Objero {@link IniciarDescargaDTO} que reprecenta el modelo con
+     *                           los datos de la descarga
+     * @param clave_unica        Cadena {@link String} que reprecenta la clave unica de la operación
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx >
+     */
+    public void registrar_descarga_local(IniciarDescargaSQL iniciarDescargaSQL,
+                                         IniciarDescargaDTO iniciarDescargaDTO,
+                                         String clave_unica){
+        if(iniciarDescargaSQL.GetDescargaByClaveOperacion(clave_unica).getCount()== 0){
+            iniciarDescargaSQL.InsertDescarga(iniciarDescargaDTO,clave_unica);
+            if(iniciarDescargaSQL.GetImagenesDescargaByClaveUnica(clave_unica).getCount()==0){
+                iniciarDescargaSQL.IncertarImagenesDescarga(iniciarDescargaDTO,clave_unica);
             }
         }
     }
