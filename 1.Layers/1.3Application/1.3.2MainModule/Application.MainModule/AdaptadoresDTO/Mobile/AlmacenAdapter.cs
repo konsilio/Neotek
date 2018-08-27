@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Mobile;
+using Application.MainModule.Servicios.Almacen;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
 using System;
@@ -60,13 +61,13 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 descarga.ClaveOperacion = DescargaDto.ClaveOperacion;
                 //descarga.IdAlmacenEntradaGasDescarga = inicioDescargaDto;
-                descarga.IdAlmacenGas = DescargaDto.IdAlmacen;
+                //descarga.IdAlmacenGas = DescargaDto.IdAlmacen;
                 //descarga.IdRequisicion = papeletaDto;
                 //descarga.IdOrdenCompraExpedidor = papeletaDto;
                 //descarga.IdOrdenCompraPorteador = papeletaDto;
                 //descarga.IdProveedorExpedidor = papeletaDto;
                 //descarga.IdProveedorPorteador = papeletaDto;
-                //descarga.IdCAlmacenGas = papeletaDto;
+                descarga.IdCAlmacenGas = DescargaDto.IdAlmacen;
                 //descarga.IdTipoMedidorTractor = papeletaDto;
                 descarga.IdTipoMedidorAlmacen = DescargaDto.IdTipoMedidorAlmacen;
                 //descarga.PorcenMagnatelOcularTractorFIN = papeletaDto;
@@ -203,16 +204,16 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return fotos;
         }
 
-        public static AlmacenDto ToDto(AlmacenGas alm)
+        public static AlmacenDto ToDto(UnidadAlmacenGas alm)
         {
             return new AlmacenDto()
             {
-                IdAlmacenGas = alm.IdAlmacenGas,
-                NombreAlmacen= "Núm. 1",
+                IdAlmacenGas = alm.IdCAlmacenGas,
+                NombreAlmacen= AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(alm),
             };
         }
 
-        public static List<AlmacenDto> ToDto(List<AlmacenGas> alm)
+        public static List<AlmacenDto> ToDto(List<UnidadAlmacenGas> alm)
         {
             return alm.ToList().Select(x => ToDto(x)).ToList();
         }

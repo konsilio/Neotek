@@ -10,7 +10,59 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
 {
     public static class CuentaContableAdapter
     {
-        public static CuentaContable ToDTO(CuentaContableDTO dto)
+        public static CuentaContable FromDto(CuentaContableCrearDto cuentaContableDto)
+        {
+            return new CuentaContable()
+            {
+                IdEmpresa = cuentaContableDto.IdEmpresa,
+                Numero = cuentaContableDto.Numero,
+                Descripcion = cuentaContableDto.Descripcion,
+                FechaRegistro = DateTime.Now,
+                Activo = true,
+            };
+        }
+        public static CuentaContable FromDto(CuentaContableModificarDto cuentaContableDto)
+        {
+            return new CuentaContable()
+            {
+                IdCuentaContable = cuentaContableDto.IdCuenta,
+                IdEmpresa = cuentaContableDto.IdEmpresa,
+                Numero = cuentaContableDto.Numero,
+                Descripcion = cuentaContableDto.Descripcion,
+                Activo = true,
+            };
+        }        public static CuentaContable FromEntity(CuentaContable cuentaContable)
+        {
+            return new CuentaContable()
+            {
+                IdCuentaContable = cuentaContable.IdCuentaContable,
+                IdEmpresa = cuentaContable.IdEmpresa,
+                Numero = cuentaContable.Numero,
+                Descripcion = cuentaContable.Descripcion,
+                FechaRegistro = cuentaContable.FechaRegistro,
+                Activo = cuentaContable.Activo,
+            };
+        }
+        public static CuentaContableDto ToDto(CuentaContable cuentaContable)
+        {
+            return new CuentaContableDto()
+            {
+                IdCuentaContable = cuentaContable.IdCuentaContable,
+                IdEmpresa = cuentaContable.IdEmpresa,
+                Numero = cuentaContable.Numero,
+                Descripcion = cuentaContable.Descripcion,
+                FechaRegistro = cuentaContable.FechaRegistro,
+                Activo = cuentaContable.Activo,
+            };
+        }
+        public static List<CuentaContableDto> ToDto(List<CuentaContable> CuentaContablees)
+        {
+            return CuentaContablees.ToList()
+                              .Select(x => ToDto(x))
+                              .ToList();
+        }
+
+        public static CuentaContable ToDTO(CuentaContableDto dto)
         {
             CuentaContable cc = new CuentaContable()
             {
@@ -23,9 +75,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             };
             return cc;
         }
-        public static CuentaContableDTO FromDTO(CuentaContable cc)
+        public static CuentaContableDto FromDto(CuentaContable cc)
         {
-            CuentaContableDTO ccDTO = new CuentaContableDTO()
+            CuentaContableDto ccDTO = new CuentaContableDto()
             {
                 IdCuentaContable = cc.IdCuentaContable,
                 Numero = cc.Numero,
@@ -36,9 +88,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             };
             return ccDTO;
         }
-        public static List<CuentaContableDTO> FromDTO(List<CuentaContable> ccs)
+        public static List<CuentaContableDto> FromDto(List<CuentaContable> ccs)
         {
-            List<CuentaContableDTO> lccDTO = ccs.ToList().Select(x => FromDTO(x)).ToList();
+            List<CuentaContableDto> lccDTO = ccs.ToList().Select(x => FromDto(x)).ToList();
             return lccDTO;
         }
         public static CuentaContable FromEmtyte(CuentaContable cc)

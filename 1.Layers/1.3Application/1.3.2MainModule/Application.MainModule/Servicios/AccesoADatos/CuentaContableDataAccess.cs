@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.UnitOfWork;
+using Exceptions.MainModule;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
@@ -22,10 +23,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<CuentaContable>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();            
         }
-        public CuentaContable Buscar(int idCuentaContable)
-        {
-            return uow.Repository<CuentaContable>().GetSingle(x => x.IdCuentaContable.Equals(idCuentaContable));
-        }
+       
         public RespuestaDto InsertarCuentaContable(CuentaContable cc)
         {
             RespuestaDto respuesta = new RespuestaDto();
@@ -137,5 +135,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<CuentaContable>().GetSingle(x => x.IdCuentaContable.Equals(idCuentaContable)
                                                          && x.Activo);
         }
+        //public CuentaContable Buscar(int idCuentaContable)
+        //{
+        //    return uow.Repository<CuentaContable>().GetSingle(x => x.IdCuentaContable.Equals(idCuentaContable));
+        //}
     }
 }

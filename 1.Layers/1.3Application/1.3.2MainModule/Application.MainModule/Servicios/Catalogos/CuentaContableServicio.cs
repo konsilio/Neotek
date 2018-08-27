@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -32,10 +33,10 @@ namespace Application.MainModule.Servicios.Catalogos
             return new CuentaContableDataAccess().Insertar(cuenta);
         }
 
-        public static RespuestaDto ModificarCuentaContable(CuentaContable cuenta)
-        {
-            return new CuentaContableDataAccess().Actualizar(cuenta);
-        }
+        //public static RespuestaDto ModificarCuentaContable(CuentaContable cuenta)
+        //{
+        //    return new CuentaContableDataAccess().Actualizar(cuenta);
+        //}
         public static List<CuentaContable> Obtener()
         {
             var empresa = new EmpresaDataAccess().Buscar(Seguridad.TokenServicio.ObtenerIdEmpresa());

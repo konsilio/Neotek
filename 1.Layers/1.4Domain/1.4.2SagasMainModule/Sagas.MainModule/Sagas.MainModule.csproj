@@ -167,6 +167,7 @@
     <Compile Include="Entidades\TipoUnidadAlmacenGas.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\UnidadAlmacenGasPartial.cs" />
     <Compile Include="Entidades\UnidadAlmacenGas.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>

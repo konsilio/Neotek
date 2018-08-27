@@ -164,7 +164,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BuscarCuentaContable(idEmpresa));
         }
         [Route("crear/cuentacontable")]
-        public HttpResponseMessage PostCrearCuentaContables(CuentaContableDTO ccDTO)
+        public HttpResponseMessage PostCrearCuentaContables(CuentaContableDto ccDTO)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.CrearCuentaContable(ccDTO));
         }
@@ -174,7 +174,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BorrarCuentaContable(idCtaCtble));
         }
         [Route("editar/cuentacontable")]
-        public HttpResponseMessage PutModificarCuentaContable(CuentaContableDTO ccDTO)
+        public HttpResponseMessage PutModificarCuentaContable(CuentaContableDto ccDTO)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.EditarCuentaContable(ccDTO));
         }

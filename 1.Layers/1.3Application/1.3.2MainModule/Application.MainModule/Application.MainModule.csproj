@@ -70,7 +70,6 @@
     <Compile Include="DTOs\Catalogo\CentroCostoEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\CentroCostoModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\CuentaContableCrearDto.cs" />
-    <Compile Include="DTOs\Catalogo\CuentaContableDto.cs" />
     <Compile Include="DTOs\Catalogo\CuentaContableEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\CuentaContableModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
@@ -131,6 +130,8 @@
     <Compile Include="Servicios\AccesoADatos\AlmacenGasDescargaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CuentaContableDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EmpresaDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\EquipoTransporteDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\EstacionCarburacionDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\RequisicionDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraDataAccess.cs" />
@@ -144,6 +145,8 @@
     <Compile Include="Servicios\Catalogos\CuentaContableServicio.cs" />
     <Compile Include="DTOs\Catalogo\CuentaContableDTO.cs" />
     <Compile Include="Servicios\Catalogos\EmpresaServicio.cs" />
+    <Compile Include="Servicios\Catalogos\EquipoTransporteServicio.cs" />
+    <Compile Include="Servicios\Catalogos\EstacionCarburacionServicio.cs" />
     <Compile Include="Servicios\Catalogos\ProductoServicios.cs" />
     <Compile Include="Servicios\Catalogos\ProveedorServicio.cs" />
     <Compile Include="Servicios\Catalogos\TipoMedidorGasServicio.cs" />

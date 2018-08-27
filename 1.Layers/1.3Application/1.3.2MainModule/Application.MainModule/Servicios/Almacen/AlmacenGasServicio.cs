@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,10 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa);
         }
-
+        public static List<UnidadAlmacenGas> ObtenerAlmacenGeneral(short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().BuscarTodos(idEmpresa,true);
+        }
         public static AlmacenGas Obtener(short idAlmacenGas)
         {
             return new AlmacenGasDataAccess().Buscar(idAlmacenGas);
@@ -39,6 +43,17 @@ namespace Application.MainModule.Servicios.Almacen
         public static AlmacenGasDescarga ObtenerDescargaPorClaveOperacion(string claveOperacion)
         {
             return new AlmacenGasDescargaDataAccess().BuscarClaveOperacion(claveOperacion);
+        }
+
+        public static string ObtenerNombreUnidadAlmacenGas(UnidadAlmacenGas uAG)
+        {
+            if (uAG.EsGeneral) return uAG.Numero;
+
+            var nombre = EquipoTransporteServicio.ObtenerNombre(uAG);
+            if (!string.IsNullOrEmpty(nombre))
+                return nombre;
+
+            return EstacionCarburacionServicio.ObtenerNombre(uAG);
         }
     }
 }

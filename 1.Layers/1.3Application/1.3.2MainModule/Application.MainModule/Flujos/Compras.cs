@@ -1,5 +1,4 @@
-﻿using Application.MainModule.AdaptadoresDTO.Compras;
-using Application.MainModule.DTOs;
+﻿using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.Compras;
