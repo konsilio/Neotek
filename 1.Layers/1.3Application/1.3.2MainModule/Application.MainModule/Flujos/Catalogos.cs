@@ -51,7 +51,6 @@ namespace Application.MainModule.Flujos
             return ProductoServicios.ListaProductoAsociados(ProductoServicios.ListaProductoAsociados(idProdcuto));
         }
         #endregion
-
         #region CentroCosto
         public RespuestaDto RegistraCentroCosto(CentroCostoCrearDto ccDto)
         {
@@ -105,7 +104,6 @@ namespace Application.MainModule.Flujos
             return CentroCostoAdapter.ToDTO(CentroCostoServicio.Obtener(idCentroCosto));
         }
         #endregion
-
         #region Proveedor
         public RespuestaDto RegistraProveedor(ProveedorCrearDto provDto)
         {
@@ -157,7 +155,6 @@ namespace Application.MainModule.Flujos
             return ProveedorAdapter.ToDto(ProveedorServicio.Obtener(idProveedor));
         }
         #endregion
-
         #region Cuentas Contables
         public RespuestaDto RegistraCuentaContable(CuentaContableCrearDto ccDto)
         {
@@ -166,7 +163,6 @@ namespace Application.MainModule.Flujos
 
             return CuentaContableServicio.RegistrarCuentaContable(CuentaContableAdapter.FromDto(ccDto));
         }
-
         public RespuestaDto ModificaCuentaContable(CuentaContableModificarDto ccDto)
         {
             var resp = PermisosServicio.PuedeModificarCuentaContable();
@@ -179,7 +175,6 @@ namespace Application.MainModule.Flujos
             CuentaContable.FechaRegistro = provee.FechaRegistro;
             return CuentaContableServicio.ModificarCuentaContable(CuentaContable);
         }
-
         public RespuestaDto EliminaCuentaContable(CuentaContableEliminarDto ccDto)
         {
             var resp = PermisosServicio.PuedeEliminarCuentaContable();
@@ -188,7 +183,7 @@ namespace Application.MainModule.Flujos
             var provee = CuentaContableServicio.Obtener(ccDto.IdCuenta);
             if (provee == null) return CuentaContableServicio.NoExiste();
 
-            provee = CuentaContableAdapter.FromEntity(provee);
+            provee = CuentaContableAdapter.FromEmtyte(provee);
             provee.Activo = false;
             return CuentaContableServicio.ModificarCuentaContable(provee);
         }
@@ -210,10 +205,10 @@ namespace Application.MainModule.Flujos
         }
         #endregion
         #region CuentaContable
-        public List<CuentaContableDTO> BuscarCuentaContable(int idEmpresa)
+        public List<CuentaContableDto> BuscarCuentaContable(int idEmpresa)
         {
             var listaCuentasContables = new CuentaContableDataAccess().BuscarCuentasContables(idEmpresa);
-            return CuentaContableAdapter.FromDTO(listaCuentasContables);
+            return CuentaContableAdapter.FromDto(listaCuentasContables);
         }
         public RespuestaDto BorrarCuentaContable(int idCuentaContable)
         {//Borrado logico    
@@ -223,7 +218,7 @@ namespace Application.MainModule.Flujos
             ctaCtble.Activo = false;
             return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
         }
-        public RespuestaDto EditarCuentaContable(CuentaContableDTO cc)
+        public RespuestaDto EditarCuentaContable(CuentaContableDto cc)
         {
             var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(cc.IdCuentaContable);
             ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
@@ -232,7 +227,7 @@ namespace Application.MainModule.Flujos
 
             return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
         }
-        public RespuestaDto CrearCuentaContable(CuentaContableDTO cc)
+        public RespuestaDto CrearCuentaContable(CuentaContableDto cc)
         {
             CuentaContable ctaCtble = CuentaContableAdapter.ToDTO(cc);
             return new CuentaContableDataAccess().InsertarCuentaContable(ctaCtble);
