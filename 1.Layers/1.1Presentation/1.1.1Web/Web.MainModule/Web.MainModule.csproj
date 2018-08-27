@@ -3602,8 +3602,8 @@
     <Content Include="assets\plugins\waitme\waitMe.js" />
     <Content Include="assets\plugins\waitme\waitMe.min.css" />
     <Content Include="assets\plugins\waitme\waitMe.min.js" />
-    <Content Include="Catalogos\CuentasContables.aspx" />
-    <Content Include="Catalogos\Proveedor.aspx" />
+    <Content Include="Catalogos\Vista\CuentasContables.aspx" />
+    <Content Include="Catalogos\Vista\Proveedor.aspx" />
     <Content Include="Compras\Vistas\Compras.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -3884,11 +3884,11 @@
     <Compile Include="Agente\AgenteServicios.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Catalogos\CuentasContables.aspx.cs">
+    <Compile Include="Catalogos\Vista\CuentasContables.aspx.cs">
       <DependentUpon>CuentasContables.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Catalogos\CuentasContables.aspx.designer.cs">
+    <Compile Include="Catalogos\Vista\CuentasContables.aspx.designer.cs">
       <DependentUpon>CuentasContables.aspx</DependentUpon>
     </Compile>
     <Compile Include="Catalogos\Model\CatalogoRespuestaDTO.cs" />
@@ -3931,11 +3931,11 @@
     <Compile Include="Requisicion\Model\RequisicionProductoDtos\RequisicionProductoAutorizacionDTO.cs" />
     <Compile Include="Requisicion\Model\RequisicionProductoDtos\RequisicionProductoRevisionDTO.cs" />
     <Compile Include="Requisicion\Model\UsuarioDTO.cs" />
-    <Compile Include="Catalogos\Proveedor.aspx.cs">
+    <Compile Include="Catalogos\Vista\Proveedor.aspx.cs">
       <DependentUpon>Proveedor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Catalogos\Proveedor.aspx.designer.cs">
+    <Compile Include="Catalogos\Vista\Proveedor.aspx.designer.cs">
       <DependentUpon>Proveedor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Compras\Vistas\Compras.aspx.cs">

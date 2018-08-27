@@ -4,6 +4,7 @@ using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Seguridad;
+using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace Application.MainModule.Flujos
             if (TokenServicio.ObtenerEsAdministracionCentral())
                 return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
             else
-                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();          
+                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
         #endregion
         #region Productos
@@ -64,7 +65,7 @@ namespace Application.MainModule.Flujos
 
             return ProveedorServicio.RegistrarProveedor(ProveedorAdapter.FromDto(provDto));
         }
-        
+
         public RespuestaDto ModificaProveedor(ProveedorModificarDto provDto)
         {
             var resp = PermisosServicio.PuedeModificarProveedor();
@@ -110,15 +111,15 @@ namespace Application.MainModule.Flujos
         #region CuentaContable
         public List<CuentaContableDTO> BuscarCuentaContable(int idEmpresa)
         {
-            return CuentaContableAdapter.FromDTO(new CuentaContableDataAccess().BuscarCuentasContables(idEmpresa));
+            var listaCuentasContables = new CuentaContableDataAccess().BuscarCuentasContables(idEmpresa);
+            return CuentaContableAdapter.FromDTO(listaCuentasContables);
         }
         public RespuestaDto BorrarCuentaContable(int idCuentaContable)
-        {//Borrado logico                     
-          
+        {//Borrado logico    
             var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(idCuentaContable);
             ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
+            ctaCtble.IdUsuarioBorrado = TokenServicio.ObtenerIdUsuario();
             ctaCtble.Activo = false;
-
             return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
         }
         public RespuestaDto EditarCuentaContable(CuentaContableDTO cc)
@@ -129,6 +130,11 @@ namespace Application.MainModule.Flujos
             ctaCtble.Descripcion = cc.Descripcion;
 
             return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
+        }
+        public RespuestaDto CrearCuentaContable(CuentaContableDTO cc)
+        {
+            CuentaContable ctaCtble = CuentaContableAdapter.ToDTO(cc);
+            return new CuentaContableDataAccess().InsertarCuentaContable(ctaCtble);
         }
         #endregion
     }

@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Compras;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Flujos;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,16 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostGenerarOrdenesCompra(OrdenCompraCrearDTO ocDTO)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _compras.GenerarOrdenesCompra(ocDTO));
+        }
+        [Route("cancelar/ordencompra")]
+        public HttpResponseMessage PutCancelarOrdenCompra(OrdenCompraDTO ocDTO)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _compras.CancelarOrdenCompra(ocDTO));
+        }
+        [Route("autoroizar/ordencompra")]
+        public HttpResponseMessage PutAutorizarCompra(OrdenCompraDTO ocDTo)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _compras.AutorizarOrdenCompra(ocDTo));
         }
     }
 }

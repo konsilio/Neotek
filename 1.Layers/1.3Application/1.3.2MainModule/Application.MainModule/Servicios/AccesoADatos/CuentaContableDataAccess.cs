@@ -52,7 +52,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             RespuestaDto respuesta = new RespuestaDto();
             try
             {
-                uow.Repository<CuentaContable>().Insert(cc);
+                uow.Repository<CuentaContable>().Update(cc);
                 uow.SaveChanges();
                 respuesta.Exito = true;
                 respuesta.Id = cc.IdCuentaContable;

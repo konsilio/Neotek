@@ -79,6 +79,7 @@
     <Compile Include="DTOs\Compras\OrdenCompraProductoDTO.cs" />
     <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />
     <Compile Include="DTOs\Compras\RequisicionOCDTO.cs" />
+    <Compile Include="DTOs\NotificacionDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\CorreoDto.cs" />
     <Compile Include="DTOs\Mobile\AlmacenDto.cs" />
@@ -111,7 +112,6 @@
     <Compile Include="DTOs\Seguridad\UsuarioAplicacionDto.cs" />
     <Compile Include="Flujos\Catalogos.cs" />
     <Compile Include="Flujos\Compras.cs" />
-    <Compile Include="Flujos\CuentaContable.cs" />
     <Compile Include="Flujos\Inventarios.cs" />
     <Compile Include="Flujos\Requisicion.cs" />
     <Compile Include="Flujos\Mobile.cs" />

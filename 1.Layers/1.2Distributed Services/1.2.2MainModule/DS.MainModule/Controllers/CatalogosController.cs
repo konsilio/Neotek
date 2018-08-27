@@ -29,7 +29,7 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresasLogin());
         }
-        
+
         [Route("empresas/listaempresa")]
         public HttpResponseMessage GetListaEmpresas()
         {
@@ -41,7 +41,6 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresas(conAdminCent));
         }
         #endregion
-
         #region Usuarios
         [Route("usuarios/listausuarios/{idEmpresa}")]
         public HttpResponseMessage GetListaUsuarios(short idEmpresa)
@@ -49,7 +48,6 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaUsuarios(idEmpresa));
         }
         #endregion
-
         #region Productos
         [Route("productos/listaproductos/{idEmpresa}")]
         public HttpResponseMessage GetListaProductos(short idEmpresa)
@@ -62,11 +60,9 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPorductosAsociados(idProducto));
         }
         #endregion
-
         #region Administracion Central
 
         #endregion
-
         #region Proveedor
         [Route("registra/proveedor")]
         public HttpResponseMessage PostRegistraProveedor(ProveedorCrearDto provDto)
@@ -88,7 +84,7 @@ namespace DS.MainModule.Controllers
 
         [Route("consulta/proveedores")]
         public HttpResponseMessage GetListaProveedores()
-        {          
+        {
             return RespuestaHttp.crearRespuesta(_catalogos.ConsultaProveedores(), Request);
         }
 
@@ -96,9 +92,8 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaProveedores(int idProveedor)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedor(idProveedor));
-        }        
+        }
         #endregion
-
         #region Centro de Costo
         [Route("consulta/centrosdecosto")]
         public HttpResponseMessage GetCentrosCostos()
@@ -106,12 +101,26 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.ListaCentrosCostos(), Request);
         }
         #endregion
-
         #region Cuenta contable
         [Route("consulta/cuentacontable/{idEmpresa}")]
         public HttpResponseMessage GetListaCuentasContables(int idEmpresa)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BuscarCuentaContable(idEmpresa));
+        }
+        [Route("crear/cuentacontable")]
+        public HttpResponseMessage PostCrearCuentaContables(CuentaContableDTO ccDTO)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.CrearCuentaContable(ccDTO));
+        }
+        [Route("borrar/cuentacontable/{idCtaCtble}")]
+        public HttpResponseMessage PutBorrarCuentaContable(int idCtaCtble)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BorrarCuentaContable(idCtaCtble));
+        }
+        [Route("editar/cuentacontable")]
+        public HttpResponseMessage PutModificarCuentaContable(CuentaContableDTO ccDTO)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.EditarCuentaContable(ccDTO));
         }
         #endregion
     }

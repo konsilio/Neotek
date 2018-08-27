@@ -19,9 +19,13 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new CuentaContableDataAccess().Buscar(idCuentaContable);
         }
-        public static RespuestaDto ModificarCuentaContable(CuentaContable cc)
+        public static RespuestaDto ModificarCuentaContable(CuentaContable cc )
         {
             return new CuentaContableDataAccess().ActualizarCuentaContable(cc);
+        }
+        public static RespuestaDto InsertarCuentaContable(CuentaContable cc)
+        {
+            return new CuentaContableDataAccess().InsertarCuentaContable(cc);
         }
     }
 }

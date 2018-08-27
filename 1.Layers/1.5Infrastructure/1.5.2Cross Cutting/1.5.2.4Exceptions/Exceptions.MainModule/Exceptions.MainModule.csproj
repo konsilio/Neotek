@@ -70,6 +70,7 @@
     <Compile Include="Validaciones\Error.cs" />
     <Compile Include="Validaciones\Exito.cs" />
     <Compile Include="Validaciones\ExpresionRegular.cs" />
+    <Compile Include="Validaciones\Notificacion.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="LEEME.txt" />
