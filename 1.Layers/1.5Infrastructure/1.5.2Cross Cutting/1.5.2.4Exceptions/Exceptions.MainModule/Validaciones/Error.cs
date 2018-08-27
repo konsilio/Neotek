@@ -29,6 +29,8 @@ namespace Exceptions.MainModule.Validaciones
         public const string C0002 = "No se logró hacer el registro {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
         public const string C0003 = "No se logró hacer la modificación {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
         public const string C0004 = "El campo {0} no tiene el formato de correo electrónico.";
+        public const string C0005 = "{0} que intenta registrar ya existe como {1}. Ingresa otro o modifica el existente.";
+        public const string C0006 = "Un centro de costos no puede contener multiples unidades físicas. Unidades seleccionadas {0}. Deselecciones las unidades hasta dejar una o ninguna.";
 
         public const string M0001 = "No se encontraron {0} para mostrar.";
         public const string M0002 = "No se encontró {0} en el servidor.";

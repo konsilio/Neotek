@@ -53,9 +53,56 @@ namespace Application.MainModule.Flujos
         #endregion
 
         #region CentroCosto
-        public List<CentroCostoDTO> ListaCentrosCostos()
+        public RespuestaDto RegistraCentroCosto(CentroCostoCrearDto ccDto)
         {
-            return CentroCostoServicio.ObtenerCentrosCostos();
+            var resp = PermisosServicio.PuedeRegistrarCentroCosto();
+            if (!resp.Exito) return resp;
+
+            resp = ValidarCatalogoServicio.CentroCosto(ccDto);
+            if (!resp.Exito) return resp;
+
+            return CentroCostoServicio.RegistrarCentroCosto(CentroCostoAdapter.FromDto(ccDto));
+        }
+
+        public RespuestaDto ModificaCentroCosto(CentroCostoModificarDto ccDto)
+        {
+            var resp = PermisosServicio.PuedeModificarCentroCosto();
+            if (!resp.Exito) return resp;
+
+            resp = ValidarCatalogoServicio.CentroCosto(ccDto);
+            if (!resp.Exito) return resp;
+
+            var centro = CentroCostoServicio.Obtener(ccDto.IdCentroCosto);
+            if (centro == null) return CentroCostoServicio.NoExiste();
+
+            var CentroCosto = CentroCostoAdapter.FromDto(ccDto);
+            CentroCosto.FechaRegistro = centro.FechaRegistro;
+            return CentroCostoServicio.ModificarCentroCosto(CentroCosto);
+        }
+
+        public RespuestaDto EliminaCentroCosto(CentroCostoEliminarDto ccDto)
+        {
+            var resp = PermisosServicio.PuedeEliminarCentroCosto();
+            if (!resp.Exito) return resp;
+
+            var centro = CentroCostoServicio.Obtener(ccDto.IdCentroCosto);
+            if (centro == null) return CentroCostoServicio.NoExiste();
+
+            centro = CentroCostoAdapter.FromEntity(centro);
+            centro.Activo = false;
+            return CentroCostoServicio.ModificarCentroCosto(centro);
+        }
+
+        public List<CentroCostoDTO> ListaCentrosCostos(short idEmpresa)
+        {
+            return CentroCostoAdapter.ToDTO(CentroCostoServicio.Obtener(idEmpresa));
+        }
+        public CentroCostoDTO ConsultaCentroCosto(int idCentroCosto)
+        {
+            var resp = PermisosServicio.PuedeConsultarCentroCosto();
+            if (!resp.Exito) return null;
+
+            return CentroCostoAdapter.ToDTO(CentroCostoServicio.Obtener(idCentroCosto));
         }
         #endregion
 

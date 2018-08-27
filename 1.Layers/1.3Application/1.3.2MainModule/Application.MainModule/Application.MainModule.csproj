@@ -65,7 +65,10 @@
     <Compile Include="AdaptadoresDTO\Catalogo\UsuarioAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Requisicion\RequisicionProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\OrdenesCompraAdapter.cs" />
+    <Compile Include="DTOs\Catalogo\CentroCostoCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\CentroCostoDTO.cs" />
+    <Compile Include="DTOs\Catalogo\CentroCostoEliminarDto.cs" />
+    <Compile Include="DTOs\Catalogo\CentroCostoModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\CuentaContableCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\CuentaContableDto.cs" />
     <Compile Include="DTOs\Catalogo\CuentaContableEliminarDto.cs" />
@@ -139,6 +142,7 @@
     <Compile Include="Servicios\Catalogos\ProveedorServicio.cs" />
     <Compile Include="Servicios\Catalogos\TipoMedidorGasServicio.cs" />
     <Compile Include="Servicios\Catalogos\UsuarioServicio.cs" />
+    <Compile Include="Servicios\Catalogos\ValidarCatalogoServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
     <Compile Include="Servicios\Notificacion\CorreoHtmlServicio.cs" />

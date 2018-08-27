@@ -96,14 +96,38 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaProveedores(int idProveedor)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedor(idProveedor));
-        }        
+        }
         #endregion
 
         #region Centro de Costo
-        [Route("consulta/centrosdecosto")]
-        public HttpResponseMessage GetCentrosCostos()
+        [Route("registra/centro/costo")]
+        public HttpResponseMessage PostRegistraCentroCosto(CentroCostoCrearDto cuentaDto)
         {
-            return RespuestaHttp.crearRespuesta(_catalogos.ListaCentrosCostos(), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraCentroCosto(cuentaDto), Request);
+        }
+
+        [Route("modifica/centro/costo")]
+        public HttpResponseMessage PutModificaCentroCosto(CentroCostoModificarDto cuentaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaCentroCosto(cuentaDto), Request);
+        }
+
+        [Route("elimina/centro/costo")]
+        public HttpResponseMessage PutEliminaCentroCosto(CentroCostoEliminarDto cuentaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaCentroCosto(cuentaDto), Request);
+        }
+
+        [Route("consulta/centrosdecosto/{idEmpresa}")]
+        public HttpResponseMessage GetCentrosCostos(short idEmpresa)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaCentrosCostos(idEmpresa), Request);
+        }
+
+        [Route("consulta/centro/costo/{idCosto}")]
+        public HttpResponseMessage GetCentroCosto(int idCosto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCentroCosto(idCosto));
         }
         #endregion
 

@@ -45,6 +45,40 @@ namespace Application.MainModule.Servicios.Seguridad
         }
         #endregion
 
+        #region Centro Costo
+        public static RespuestaDto PuedeRegistrarCentroCosto()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatInsertarCentroCosto);
+
+            return EvaluarPermiso(rol, Error.P0001, "un centro de costo");
+        }
+
+        public static RespuestaDto PuedeModificarCentroCosto()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatModificarCentroCosto);
+
+            return EvaluarPermiso(rol, Error.P0002, "un centro de costo");
+        }
+
+        public static RespuestaDto PuedeEliminarCentroCosto()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatEliminarCentroCosto);
+
+            return EvaluarPermiso(rol, Error.P0003, "un centro de costo");
+        }
+
+        public static RespuestaDto PuedeConsultarCentroCosto()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatConsultarCentroCosto);
+
+            return EvaluarPermiso(rol, Error.P0004, "los centros de costo");
+        }
+        #endregion
+
         #region Cuenta Contable
         public static RespuestaDto PuedeRegistrarCuentaContable()
         {
