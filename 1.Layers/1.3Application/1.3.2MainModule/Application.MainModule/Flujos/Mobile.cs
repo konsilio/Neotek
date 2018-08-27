@@ -34,7 +34,7 @@ namespace Application.MainModule.Flujos
 
         public List<AlmacenDto> ObtenerAlmacenesGas()
         {
-            return AlmacenAdapter.ToDto(AlmacenGasServicio.ObtenerTodos(TokenServicio.ObtenerIdEmpresa()));
+            return AlmacenAdapter.ToDto(AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa()));
         }
 
         public RespuestaDto RegistrarPapeleta(PapeletaDTO papeletaDto)
