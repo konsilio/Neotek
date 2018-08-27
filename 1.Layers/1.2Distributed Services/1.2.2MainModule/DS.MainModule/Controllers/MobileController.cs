@@ -36,7 +36,7 @@ namespace DS.MainModule.Controllers
 
         [AllowAnonymous]
         [Route("login")]
-        public HttpResponseMessage PostLogin(AutenticacionDto autenticacionDto)
+        public HttpResponseMessage PostLogin(LoginFbDTO autenticacionDto)
         {
             return RespuestaHttp.crearRespuesta(_seguridad.AutenticacionMobile(autenticacionDto), Request);
         }
