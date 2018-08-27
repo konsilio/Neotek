@@ -75,7 +75,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<AlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                       && x.Activo).ToList();
         }
-
+        public List<UnidadAlmacenGas> BuscarTodos(short idEmpresa,bool almacenGral)
+        {
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                      && x.Activo && x.EsGeneral.Equals(almacenGral)).ToList();
+        }
         public AlmacenGas Buscar(short idAlmacenGas)
         {
             return uow.Repository<AlmacenGas>().GetSingle(x => x.IdAlmacenGas.Equals(idAlmacenGas)

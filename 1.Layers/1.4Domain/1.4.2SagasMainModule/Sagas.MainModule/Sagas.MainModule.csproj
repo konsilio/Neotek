@@ -76,7 +76,6 @@
     <Compile Include="Entidades\CentroCosto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\CentroCostoPartial.cs" />
     <Compile Include="Entidades\CuentaContable.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -110,9 +109,6 @@
     <Compile Include="Entidades\Pais.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\Partial\CuentaContablePartial.cs" />
-    <Compile Include="Entidades\Partial\OrdenCompraPartial.cs" />
-    <Compile Include="Entidades\Partial\UsuarioPartial.cs" />
     <Compile Include="Entidades\Pipa.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -140,7 +136,6 @@
     <Compile Include="Entidades\Rol.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\RolPartial.cs" />
     <Compile Include="Entidades\Sagas1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

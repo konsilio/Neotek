@@ -21,6 +21,8 @@ namespace Sagas.MainModule.Entidades
             this.RecibeMercancia = new HashSet<AlmacenEntradaProducto>();
             this.EntregaMercancia = new HashSet<AlmacenSalidaProducto>();
             this.Roles = new HashSet<Rol>();
+            this.OrdenesCompraAutorizadas = new HashSet<OrdenCompra>();
+            this.OrdenesCompraGeneradas = new HashSet<OrdenCompra>();
         }
     
         public int IdUsuario { get; set; }
@@ -34,6 +36,7 @@ namespace Sagas.MainModule.Entidades
         public System.DateTime FechaRegistro { get; set; }
         public string NombreUsuario { get; set; }
         public string Password { get; set; }
+        public string MovileKey { get; set; }
         public string Telefono1 { get; set; }
         public string Telefono2 { get; set; }
         public string Telefono3 { get; set; }
@@ -67,5 +70,9 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<AlmacenSalidaProducto> EntregaMercancia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rol> Roles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrdenCompra> OrdenesCompraAutorizadas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrdenCompra> OrdenesCompraGeneradas { get; set; }
     }
 }

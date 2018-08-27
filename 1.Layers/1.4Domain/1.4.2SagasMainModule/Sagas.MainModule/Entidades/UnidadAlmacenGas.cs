@@ -29,6 +29,7 @@ namespace Sagas.MainModule.Entidades
         public Nullable<int> IdCamioneta { get; set; }
         public Nullable<int> IdPipa { get; set; }
         public bool EsGeneral { get; set; }
+        public string Numero { get; set; }
         public Nullable<decimal> CapacidadTanqueLt { get; set; }
         public Nullable<decimal> CapacidadTanqueKg { get; set; }
         public decimal CantidadActualLt { get; set; }

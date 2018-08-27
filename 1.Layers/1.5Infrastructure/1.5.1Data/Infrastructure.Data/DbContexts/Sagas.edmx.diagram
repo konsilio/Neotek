@@ -189,6 +189,8 @@
         <EntityTypeShape EntityType="Sagas.MainModuleModel.RolAccionCatalogo" Width="1.5" PointX="6" PointY="31.375" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol" />
         <EntityTypeShape EntityType="Sagas.MainModuleModel.CTipoCentroCosto" Width="1.5" PointX="3.375" PointY="0.75" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompra_UsuarioAutorizador" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompra_UsuarioGenerador" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
