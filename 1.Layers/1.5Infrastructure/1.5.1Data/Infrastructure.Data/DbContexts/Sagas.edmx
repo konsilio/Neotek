@@ -625,24 +625,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Ieps" Type="decimal" Precision="18" Scale="4" />
           <Property Name="Total" Type="decimal" Precision="18" Scale="4" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="OrdenCompraProducto">
           <Key>
             <PropertyRef Name="IdOrdenCompra" />
             <PropertyRef Name="IdProducto" />
-            <PropertyRef Name="IdCentroCosto" />
-            <PropertyRef Name="ProductoServicioTipo" />
-            <PropertyRef Name="Producto" />
-            <PropertyRef Name="UnidadMedida" />
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="Precio" />
-            <PropertyRef Name="Descuento" />
-            <PropertyRef Name="IVA" />
-            <PropertyRef Name="IEPS" />
-            <PropertyRef Name="Importe" />
-            <PropertyRef Name="EsActivoVenta" />
-            <PropertyRef Name="EsGas" />
           </Key>
           <Property Name="IdOrdenCompra" Type="int" Nullable="false" />
           <Property Name="IdProducto" Type="int" Nullable="false" />
@@ -2321,6 +2307,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
           <EntitySet Name="OrdenCompra" EntityType="Self.OrdenCompra" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrdenCompraEstatus" EntityType="Self.OrdenCompraEstatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrdenCompraImporte" EntityType="Self.OrdenCompraImporte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenCompraProducto" EntityType="Self.OrdenCompraProducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Requisicion" EntityType="Self.Requisicion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequisicionAlmacen" EntityType="Self.RequisicionAlmacen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequisicionAlmacenProducto" EntityType="Self.RequisicionAlmacenProducto" Schema="dbo" store:Type="Tables" />
@@ -2380,28 +2367,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
     [CProductoAsociado].[Activo] AS [Activo], 
     [CProductoAsociado].[FechaRegistro] AS [FechaRegistro]
     FROM [dbo].[CProductoAsociado] AS [CProductoAsociado]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="OrdenCompraProducto" EntityType="Self.OrdenCompraProducto" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [OrdenCompraProducto].[IdOrdenCompra] AS [IdOrdenCompra], 
-    [OrdenCompraProducto].[IdProducto] AS [IdProducto], 
-    [OrdenCompraProducto].[IdCentroCosto] AS [IdCentroCosto], 
-    [OrdenCompraProducto].[ProductoServicioTipo] AS [ProductoServicioTipo], 
-    [OrdenCompraProducto].[Producto] AS [Producto], 
-    [OrdenCompraProducto].[Categoria] AS [Categoria], 
-    [OrdenCompraProducto].[Linea] AS [Linea], 
-    [OrdenCompraProducto].[UnidadMedida] AS [UnidadMedida], 
-    [OrdenCompraProducto].[UnidadMedida2] AS [UnidadMedida2], 
-    [OrdenCompraProducto].[Descripcion] AS [Descripcion], 
-    [OrdenCompraProducto].[Cantidad] AS [Cantidad], 
-    [OrdenCompraProducto].[Precio] AS [Precio], 
-    [OrdenCompraProducto].[Descuento] AS [Descuento], 
-    [OrdenCompraProducto].[IVA] AS [IVA], 
-    [OrdenCompraProducto].[IEPS] AS [IEPS], 
-    [OrdenCompraProducto].[Importe] AS [Importe], 
-    [OrdenCompraProducto].[EsActivoVenta] AS [EsActivoVenta], 
-    [OrdenCompraProducto].[EsGas] AS [EsGas]
-    FROM [dbo].[OrdenCompraProducto] AS [OrdenCompraProducto]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_Almacen_CProducto" Association="Self.FK_Almacen_CProducto">
             <End Role="CProducto" EntitySet="CProducto" />
@@ -4311,19 +4276,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
         <EntityType Name="OrdenCompraProducto">
           <Key>
             <PropertyRef Name="IdOrdenCompra" />
-            <PropertyRef Name="ProductoServicioTipo" />
-            <PropertyRef Name="Producto" />
-            <PropertyRef Name="UnidadMedida" />
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="Precio" />
-            <PropertyRef Name="Descuento" />
-            <PropertyRef Name="IVA" />
-            <PropertyRef Name="IEPS" />
-            <PropertyRef Name="Importe" />
             <PropertyRef Name="IdProducto" />
-            <PropertyRef Name="IdCentroCosto" />
-            <PropertyRef Name="EsActivoVenta" />
-            <PropertyRef Name="EsGas" />
           </Key>
           <Property Name="IdOrdenCompra" Type="Int32" Nullable="false" />
           <Property Name="IdProducto" Type="Int32" Nullable="false" />
@@ -6298,26 +6251,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OrdenCompraEstatus">
-            <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompraEstatus">
-              <MappingFragment StoreEntitySet="OrdenCompraEstatus">
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="IdOrdenCompraEstatus" ColumnName="IdOrdenCompraEstatus" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>          
-          <EntitySetMapping Name="ProductoAsociado">
-            <EntityTypeMapping TypeName="Sagas.MainModuleModel.ProductoAsociado">
-              <MappingFragment StoreEntitySet="CProductoAsociado">
-                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-                <ScalarProperty Name="Activo" ColumnName="Activo" />
-                <ScalarProperty Name="IdProductoAsociado" ColumnName="IdProductoAsociado" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OrdenCompraProducto">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompraProducto">
               <MappingFragment StoreEntitySet="OrdenCompraProducto">
@@ -6342,6 +6275,26 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.OrdenCompraProducto' no
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OrdenCompraEstatus">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompraEstatus">
+              <MappingFragment StoreEntitySet="OrdenCompraEstatus">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdOrdenCompraEstatus" ColumnName="IdOrdenCompraEstatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>          
+          <EntitySetMapping Name="ProductoAsociado">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.ProductoAsociado">
+              <MappingFragment StoreEntitySet="CProductoAsociado">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdProductoAsociado" ColumnName="IdProductoAsociado" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>          
           <EntitySetMapping Name="Almacen">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Almacen">
               <MappingFragment StoreEntitySet="Almacen">
