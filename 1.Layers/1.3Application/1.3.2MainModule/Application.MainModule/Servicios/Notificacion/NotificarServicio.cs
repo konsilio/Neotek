@@ -32,12 +32,14 @@ namespace Application.MainModule.Servicios.Notificacion
                 {
                     UsuarioKey = FilterFunciones.ConcatenarLista((ObtenerKeysMovile(destinatarios)),','),
                     Mensaje = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], req.NumeroRequisicion),
-                    Id = req.IdRequisicion
+                    Id = req.IdRequisicion,
+                    Titulo = "Alerta",
+                    TipoNotificacion = "R",
                 };
             
             
-            Enviar(correoDto);
-            if (incluirMensajePush)
+            //Enviar(correoDto);
+            if (!incluirMensajePush)
                 Enviar(NotDto);
             //MensajePushServicio.Enviar(dto);
         }
@@ -45,16 +47,18 @@ namespace Application.MainModule.Servicios.Notificacion
         {
             var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
             var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.CompraAutorizarOCompra).ToList();
-            var destinatarios = ObtenerDestinatarios(roles);           
+            var destinatarios = ObtenerDestinatarios(roles);
 
             var NotDto = new NotificacionDTO()
             {
                 UsuarioKey = FilterFunciones.ConcatenarLista((ObtenerKeysMovile(destinatarios)), ','),
                 Mensaje = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], oc.NumOrdenCompra),
+                Titulo = "Alerta",
+                TipoNotificacion="R",
                 Id = oc.IdOrdenCompra
             };
                       
-            if (incluirMensajePush)
+            if (!incluirMensajePush)
                 Enviar(NotDto);
         }
 
@@ -70,7 +74,7 @@ namespace Application.MainModule.Servicios.Notificacion
         }
         private static List<string> ObtenerKeysMovile(List<Usuario> usuarios)
         {
-            return usuarios.Select(x => x.MovileKey).ToList();
+            return usuarios.Where(x => x.MovileKey != null).Select(y => y.MovileKey).ToList();
         }
         private static string ObtenerCorreo(Usuario usuario)
         {
@@ -102,17 +106,17 @@ namespace Application.MainModule.Servicios.Notificacion
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 string strNJson = @"{
-                    ""registration_ids"": "" [[keyMovil]] "",
+                    ""registration_ids"": ""[[keyMovil]]"",
                     ""data"": {
                         ""ShortDesc"": ""Some short desc"",
                         ""IncidentNo"": ""any number"",
                         ""Description"": ""detail desc"",
-                        ""Tipo"": "" [[Tipo]] "", 
-                        ""OrderNo"": "" [[NoOrden]]  ""
+                        ""Tipo"": ""[[Tipo]]"", 
+                        ""OrderNo"": ""[[NoOrden]]""
                             },
                             ""notification"": {
-                                        ""title"": ""SAGAS: [[Titulo]] "",
-                            ""text"": "" [[Mensaje]] "", 
+                                        ""title"": ""SAGAS:[[Titulo]]"",
+                            ""text"": ""[[Mensaje]]"", 
                             ""sound"":""default""
                             }
                         }";
