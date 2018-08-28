@@ -26,7 +26,7 @@ import java.util.UUID;
 
 public class PapeletaSQL extends SQLiteOpenHelper {
     //region Constantes
-    private static final String DB_NAME = "sagas_db";
+    private static final String DB_NAME = "sagas_db_papeleta";
     private static final int DB_VERSION = 1;
     private static final String TABLE_PAPELETAS = "papeletas";
     private static final String TABLE_PAPELETAS_IMAGENES = "papeletas_imagenes";

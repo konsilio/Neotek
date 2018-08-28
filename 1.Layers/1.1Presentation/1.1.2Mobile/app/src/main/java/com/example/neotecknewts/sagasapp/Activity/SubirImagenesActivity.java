@@ -21,6 +21,7 @@ import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.Util.Session;
@@ -50,6 +51,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public Session session;
     public PapeletaSQL papeletaSQL;
     public IniciarDescargaSQL iniciarDescargaSQL;
+    public FinalizarDescargaSQL finalizarDescargaSQL;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +95,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             papeletaSQL = new PapeletaSQL(this.getApplicationContext());
         }else if (iniciar) {
             iniciarDescargaSQL = new IniciarDescargaSQL(getApplicationContext());
+        }else if(finalizar){
+            finalizarDescargaSQL = new FinalizarDescargaSQL(getApplicationContext());
         }
         //se ejecuta la tarea asincrona para procesar las imagenes
         new AsyncTaskRunner().execute();
@@ -315,6 +319,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 presenter.registrarPapeleta(papeletaDTO, session.getToken(), papeletaSQL);
             }else if (iniciar){
                 presenter.registrarIniciarDescarga(iniciarDescarga,session.getToken(),iniciarDescargaSQL);
+            }else if (finalizar){
+                presenter.registrarFinalizarDescarga(finalizarDescarga,session.getToken(),finalizarDescargaSQL);
             }
             textView.setText(R.string.cargando_imagenes_fin);
             //progressDialog.hide();

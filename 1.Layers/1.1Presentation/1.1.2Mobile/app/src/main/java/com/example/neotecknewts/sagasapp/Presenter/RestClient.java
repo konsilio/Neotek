@@ -2,10 +2,12 @@ package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
+import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
@@ -20,6 +22,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -102,10 +105,31 @@ public interface RestClient {
      * @return Objeto {@link RespuestaIniciarDescargaDTO} Con la respuesta del servicio
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
      */
-    @POST(Constantes.POST_iINICIAR_DESCARGA)
+    @POST(Constantes.POST_INICIAR_DESCARGA)
     Call<RespuestaIniciarDescargaDTO> postDescarga(@Body IniciarDescargaDTO iniciarDescargaDTO,
                                                    @Header("Authorization")String token,
                                                    @Header("Content-Type") String contentType
                                                   );
 
+    /**
+     * postFinalizarDescarga
+     * Permite realizar el consumo del servicio para el registro de la finalizacion de la descarga,
+     * se requiere como parametros un objeto de tipo {@link FinalizarDescargaDTO} que contine los
+     * valores de la finalizaciòn de la descarga, una cadena {@link String} que contiene el token
+     * de seguridad y finalmente un {@link String} que contiene el tipo de contenido enviado,
+     * tras finalizar se retornara una repuesta que se almacenara en un objeto de tipo
+     * {@link RespuestaFinalizarDescargaDTO}.
+     * @param finalizarDescargaDTO Objeto {@link FinalizarDescargaDTO} con los datos de la
+     *                             finalización de la descarga
+     * @param token {@link String} que contiene  el token de seguridad
+     * @param contentType {@link String} que reprecenta el tipo de contenido (Ej. 'application/json')
+     * @return Un objeto de tipo {@link RespuestaFinalizarDescargaDTO} Con lo que responde el servicio.
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @POST(Constantes.POST_FINALIZAR_DESCARGA)
+    Call<RespuestaFinalizarDescargaDTO> postFinalizarDescarga(@Body FinalizarDescargaDTO
+                                                                   finalizarDescargaDTO,
+                                                              @Header("Authorization")String token,
+                                                              @Header("Content-Type") String contentType
+    );
 }

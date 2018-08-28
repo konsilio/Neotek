@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,35 +13,44 @@ import java.util.List;
  */
 
 public class FinalizarDescargaDTO implements Serializable{
-    @SerializedName("")
+    @SerializedName("IdOrdenCompra")
     private int IdOrdenCompra;
 
-    @SerializedName("")
+    @SerializedName("ClaveOperacion")
+    private String ClaveOperacion;
+
+    @SerializedName("NombreTipoMedidorTractor")
     private String NombreTipoMedidorTractor;
 
-    @SerializedName("")
+    @SerializedName("NombreTipoMedidorAlmacen")
     private String NombreTipoMedidorAlmacen;
 
-    @SerializedName("")
+    @SerializedName("IdTipoMedidorTractor")
     private int IdTipoMedidorTractor;
 
-    @SerializedName("")
+    @SerializedName("IdTipoMedidorAlmacen")
     private int IdTipoMedidorAlmacen;
 
-    @SerializedName("")
+    @SerializedName("CantidadFotosAlmacen")
     private int CantidadFotosAlmacen;
 
-    @SerializedName("")
+    @SerializedName("CantidadFotosTractor")
     private int CantidadFotosTractor;
 
-    @SerializedName("")
+    @SerializedName("PorcentajeMedidorAlmacen")
     private Double PorcentajeMedidorAlmacen;
 
-    @SerializedName("")
+    @SerializedName("PorcentajeMedidorTractor")
     private Double PorcentajeMedidorTractor;
 
-    @SerializedName("")
+    @SerializedName("IdAlmacen")
     private int IdAlmacen;
+
+    @SerializedName("FechaDescarga")
+    private String FechaDescarga;
+
+    @SerializedName("TanquePrestado")
+    private Boolean TanquePrestado;
 
     @SerializedName("Imagenes")
     private List<String> Imagenes;
@@ -147,5 +157,29 @@ public class FinalizarDescargaDTO implements Serializable{
 
     public void setIdAlmacen(int idAlmacen) {
         IdAlmacen = idAlmacen;
+    }
+
+    public String getClaveOperacion() {
+        return ClaveOperacion;
+    }
+
+    public void setClaveOperacion(String claveOperacion) {
+        ClaveOperacion = claveOperacion;
+    }
+
+    public String getFechaDescarga() {
+        return FechaDescarga;
+    }
+
+    public void setFechaDescarga(String fechaDescarga) {
+        FechaDescarga = fechaDescarga;
+    }
+
+    public Boolean getTanquePrestado() {
+        return TanquePrestado;
+    }
+
+    public void setTanquePrestado(Boolean tanquePrestado) {
+        TanquePrestado = tanquePrestado;
     }
 }
