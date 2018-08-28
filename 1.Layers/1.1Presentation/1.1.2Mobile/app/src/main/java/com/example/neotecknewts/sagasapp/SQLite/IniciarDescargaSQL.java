@@ -22,7 +22,7 @@ import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 
 public class IniciarDescargaSQL extends SQLiteOpenHelper {
     //region Constantes
-    private static final String DB_NAME = "sagas_db";
+    private static final String DB_NAME = "sagas_db_descarga";
     private static final int DB_VERSION = 1;
     private static final String TABLE_DESCARGAS = "iniciar_descarga";
     private static final String TABLE_DESCARGAS_IMAGENES = "iniciar_descarga_imagenes";
