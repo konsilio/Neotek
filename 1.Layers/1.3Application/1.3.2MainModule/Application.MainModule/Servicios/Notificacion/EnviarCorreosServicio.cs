@@ -14,7 +14,7 @@ namespace Application.MainModule.Servicios.Notificacion
         public static void Enviar(CorreoDto datos)
         {
             var _enviarCorreos = CorreoAdapter.FromDto(datos);
-            _enviarCorreos.EnviarCorreo();
+            _enviarCorreos.EnviarCorreo(true, true);
         }
     }
 }

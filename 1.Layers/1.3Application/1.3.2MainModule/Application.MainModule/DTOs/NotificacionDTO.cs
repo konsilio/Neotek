@@ -8,7 +8,7 @@ namespace Application.MainModule.DTOs
 {
     public class NotificacionDTO
     {
-        public string UsuarioKey { get; set;  }
+        public List<string> UsuarioKey { get; set;  }
         public string AutorizacionKey { get; set; }
         public string TipoNotificacion { get; set; }
         public int Id { get; set; }
