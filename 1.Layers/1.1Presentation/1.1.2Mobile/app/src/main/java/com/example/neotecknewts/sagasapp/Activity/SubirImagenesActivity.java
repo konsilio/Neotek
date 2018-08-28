@@ -21,10 +21,11 @@ import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
+import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.io.ByteArrayOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by neotecknewts on 14/08/18.
@@ -46,6 +47,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
 
     public SubirImagenesPresenter presenter;
     public ProgressDialog progressDialog;
+    public Session session;
+    public PapeletaSQL papeletaSQL;
+    public IniciarDescargaSQL iniciarDescargaSQL;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +60,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         textView = (TextView) findViewById(R.id.textTitulo);
 
         presenter = new SubirImagenesPresenterImpl(this);
+        session = new Session(getApplicationContext());
 
         textView.setText(R.string.cargando_imagenes_inicio);
         Bundle extras = getIntent().getExtras();
@@ -84,14 +89,16 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             }
 
         }
-
+        if(papeleta) {
+            papeletaSQL = new PapeletaSQL(this.getApplicationContext());
+        }else if (iniciar) {
+            iniciarDescargaSQL = new IniciarDescargaSQL(getApplicationContext());
+        }
         //se ejecuta la tarea asincrona para procesar las imagenes
-        SimpleDateFormat s = new SimpleDateFormat("ddMMyyyyhhmmssS");
-        String format = s.format(new Date());
-        papeletaDTO.setClaveUnica("O"+format);
-        //new AsyncTaskRunner().execute();
-        processImage();
-        presenter.registrarPapeleta(papeletaDTO);
+        new AsyncTaskRunner().execute();
+        //processImage();
+
+        //hideProgress();
 
     }
 
@@ -103,11 +110,13 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Uri uri = Uri.parse(papeletaDTO.getImagenesURI().get(i).toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(), uri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
-                    papeletaDTO.getImagenes().add(image);
+                    papeletaDTO.getImagenes().add(image.trim());
+
                     Log.w("Imagenes"+i,""+uri.toString());
                 }catch (Exception e){
 
@@ -121,11 +130,12 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Uri uri = Uri.parse(iniciarDescarga.getImagenesURI().get(i).toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(), uri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
-                    iniciarDescarga.getImagenes().add(image);
+                    iniciarDescarga.getImagenes().add(image.trim());
                     Log.w("Imagenes"+i,""+uri.toString());
                     Log.w("Imagenes"+i,"Base64: "+image);
                 }catch (Exception e){
@@ -140,11 +150,12 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Uri uri = Uri.parse(finalizarDescarga.getImagenesURI().get(i).toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(), uri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 50, bs);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
-                    finalizarDescarga.getImagenes().add(image);
+                    finalizarDescarga.getImagenes().add(image.trim());
                     Log.w("Imagenes"+i,""+uri.toString());
                 }catch (Exception e){
 
@@ -153,7 +164,6 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         }
 
     }
-
     //se muestra un cuadro de dialogo con un mensaje
     private void showDialogAceptar(String titulo, String mensaje){
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
@@ -185,8 +195,11 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
      */
     @Override
     public void showProgress(int mensaje) {
-        progressDialog = new ProgressDialog(getApplicationContext());
-        progressDialog.setTitle(mensaje);
+        /*progressDialog = ProgressDialog.show(SubirImagenesActivity.this,getResources().getString(R.string.app_name),
+                getResources().getString(mensaje), true);*/
+        progressDialog = new ProgressDialog(SubirImagenesActivity.this);
+        progressDialog.setMessage(getString(mensaje));
+        progressDialog.setTitle(getString(R.string.app_name));
         progressDialog.setIndeterminate(true);
         progressDialog.show();
     }
@@ -196,7 +209,94 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
      */
     @Override
     public void hideProgress() {
-        progressDialog.hide();
+        if(progressDialog != null && progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+    }
+
+    /**
+     * En caso de que el servicio web haya registrado los datos sin ningun error
+     * se mostrara un dialog para mostrar al usuario que los datos fueron guardados correctamente
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @Override
+    public void onSuccessRegistroPapeleta() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
+        builder.setTitle(R.string.titulo_exito_registro_papeleta);
+        builder.setMessage(R.string.mensaje_exito_papeleta_registro_en_servicio);
+        builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(SubirImagenesActivity.this, MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.create().show();
+    }
+
+    /**
+     * En caso de que el registro de los datos sean en el dispositivo , se mostrara el dialogo
+     * de que los datos fueron guardados en el dispositvo
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @Override
+    public void onSuccessRegistroAndroid(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
+        builder.setTitle(R.string.titulo_exito_registro_papeleta_android);
+        builder.setMessage(R.string.mensaje_exito_papeleta_android);
+        builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(SubirImagenesActivity.this, MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.create().show();
+    }
+
+    /**
+     * En caso de generarce algun error interno se mostrara este dialogo de error
+     * en pantalla con el mensaje del mismo
+     * @param mensaje Mensaje de error retornado del servicio
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @Override
+    public void showError(String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
+        builder.setTitle(R.string.titulo_error_papeleta);
+        builder.setMessage(mensaje);
+        builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        builder.create().show();
+    }
+
+    @Override
+    public void onRegistrarIniciarDescarga() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
+        builder.setTitle(R.string.titulo_exito_registro_papeleta);
+        builder.setMessage(R.string.mensaje_exito_papeleta_registro_en_servicio);
+        builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(SubirImagenesActivity.this, MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.create().show();
     }
 
     //tarea asincrona que ejecuta el procesado de las imagenes
@@ -211,8 +311,15 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
 
         @Override
         protected void onPostExecute(Void result) {
+            if(papeleta) {
+                presenter.registrarPapeleta(papeletaDTO, session.getToken(), papeletaSQL);
+            }else if (iniciar){
+                presenter.registrarIniciarDescarga(iniciarDescarga,session.getToken(),iniciarDescargaSQL);
+            }
             textView.setText(R.string.cargando_imagenes_fin);
-            showDialogAceptar("Operación Exitosa","Los datos se han guardado exitosamente");
+            //progressDialog.hide();
+            //presenter.onSuccessRegistrarPapeleta();
+            //showDialogAceptar("Operación Exitosa","Los datos se han guardado exitosamente");
 
         }
 
