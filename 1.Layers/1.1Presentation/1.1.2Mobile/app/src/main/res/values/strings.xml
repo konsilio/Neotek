@@ -107,4 +107,7 @@
     <string name="titulo_exito_registro_papeleta_android">Datos guardados en Android</string>
     <string name="mensaje_exito_papeleta_android">No he logrado conectar con el servidor por falta de conexión a internet. Los datos se enviarán al detectar una conexion al internet.</string>
     <string name="titulo_error_papeleta">Se ha generado un error,intente nuevamente</string>
+    <string name="toma_de_lectura_inicial">Toma de lectura inicial</string>
+    <string name="seleciona_la_estaci_n_de_carburaci_n">Seleciona la Estación de Carburación:</string>
+    <string name="selecciona_el_tipo_de_medidor_porcentual">Selecciona el tipo de medidor porcentual:</string>
 </resources>
