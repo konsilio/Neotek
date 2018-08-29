@@ -553,6 +553,15 @@ namespace Web.MainModule.OrdenCompra.Vistas {
         protected global::System.Web.UI.WebControls.Button btnRegresar;
         
         /// <summary>
+        /// Control btnMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnMensaje;
+        
+        /// <summary>
         /// Control btnCancel.
         /// </summary>
         /// <remarks>
@@ -607,13 +616,13 @@ namespace Web.MainModule.OrdenCompra.Vistas {
         protected global::System.Web.UI.WebControls.Button btnCancelar;
         
         /// <summary>
-        /// Control txtMensajeOrdenCompra.
+        /// Control lblMensajeOrdenCompra.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtMensajeOrdenCompra;
+        protected global::System.Web.UI.WebControls.Label lblMensajeOrdenCompra;
         
         /// <summary>
         /// Control Button1.

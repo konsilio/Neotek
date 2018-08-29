@@ -1,0 +1,68 @@
+﻿<!doctype html>
+<html class="no-js " lang="es-mx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="">
+    <title>Sagas. Nueva Requisición</title>
+    <!-- Favicon-->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="[[WebAppURL]]/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="[[WebAppURL]]/assets/css/main.css">
+    <link rel="stylesheet" href="[[WebAppURL]]/assets/css/inbox.css">
+    <link rel="stylesheet" href="[[WebAppURL]]/assets/css/color_skins.css">
+</head>
+<body class="theme-black">
+    <section class="content inbox">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>[[TITULO]]</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>[[SUBTITULO]]</strong> <small><i class="zmdi zmdi-attachment-alt m-r-5"></i>[[FECHA]]</small></h2>
+                            <ul class="header-dropdown">
+                                <li><a href="[[IR_A_SAGAS]]"><i class="zmdi zmdi-forward m-r-5"></i>Ir a Sagas</a></li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <h5>Núm. Orden de Compra: [[NUM_REQ]]</h5>
+                            <hr>
+                            <p>
+                                Hola, buen día.
+                            </p>
+                            <p>
+                                Se ha registrado una nueva orden de compra dentro del sistema <a href="[[IR_A_SAGAS]]"><i class="zmdi zmdi-forward m-r-5"></i>Sagas</a>,
+                                que requiere de tu revisión en disponibilidad y existencia de los insumos solicitados dentro del almacén.
+                                La orden de compra cuenta con los siguientes datos:
+                            </p>
+                            <p>
+                                Núm. Orden de Compra: [[NUM_REQ]] <br />
+                                Fecha de creación: [[FECHA_REQUISICION]] <br />
+                                Solicitante: [[SOLICITANTE]] <br />
+                                Motivo de requisición: [[MOTIVO]] <br />
+                            </p>
+                            <p>
+                                ***Este mensaje ha sido enviado por el sistema Sagas***
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Jquery Core Js -->
+    <script src="[[WebAppURL]]/assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
+    <script src="[[WebAppURL]]/assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
+    <script src="[[WebAppURL]]/assets/bundles/mainscripts.bundle.js"></script><!-- Custom Js -->
+</body>
+</html>

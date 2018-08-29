@@ -7,6 +7,7 @@ using System.Net.Http;
 using Application.MainModule.DTOs.Seguridad;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.DTOs.Compras;
 
 namespace DS.MainModule.Results
 {
@@ -48,7 +49,18 @@ namespace DS.MainModule.Results
             return respuestaHttp;
         }
 
-        public static HttpResponseMessage crearRespuesta(RespuestaOrdenesCompraDTO respuesta, HttpRequestMessage request)
+        public static HttpResponseMessage crearRespuesta(RespuestaOrdenesCompraDTO  respuesta, HttpRequestMessage request)
+        {
+            HttpResponseMessage respuestaHttp;
+
+            if (respuesta.Exito)
+                respuestaHttp = request.CreateResponse(HttpStatusCode.OK, respuesta);
+            else
+                respuestaHttp = request.CreateResponse(HttpStatusCode.OK, respuesta);
+
+            return respuestaHttp;
+        }
+        public static HttpResponseMessage crearRespuesta(OrdenCompraRespuestaDTO respuesta, HttpRequestMessage request)
         {
             HttpResponseMessage respuestaHttp;
 

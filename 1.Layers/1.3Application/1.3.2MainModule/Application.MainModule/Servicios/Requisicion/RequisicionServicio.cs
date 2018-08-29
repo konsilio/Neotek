@@ -46,6 +46,13 @@ namespace Application.MainModule.Servicios.Requisicion
             var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
             return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
         }
+        public static RespuestaRequisicionDto UpDateRequisicionEstaus(int _req, byte status)
+        {
+            var req = new RequisicionDataAccess().BuscarPorIdRequisicion(_req);
+            var entity = RequisicionAdapter.FromEntity(req);
+            entity.IdRequisicionEstatus = status;
+            return new RequisicionDataAccess().Actualizar(entity);
+        }
         public static RespuestaRequisicionDto CancelarRequisicion(RequisicionCancelaDTO _req)
         {
             var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);

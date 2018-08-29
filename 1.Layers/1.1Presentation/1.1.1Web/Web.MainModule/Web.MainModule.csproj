@@ -3884,6 +3884,9 @@
     <Compile Include="Agente\AgenteServicios.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Catalogos\Model\CuentaContableCrearDto.cs" />
+    <Compile Include="Catalogos\Model\CuentaContableEliminarDto.cs" />
+    <Compile Include="Catalogos\Model\CuentaContableModificarDto.cs" />
     <Compile Include="Catalogos\Vista\CuentasContables.aspx.cs">
       <DependentUpon>CuentasContables.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3989,6 +3992,7 @@
     <Compile Include="OrdenCompra\Model\ComprasDTO.cs" />
     <Compile Include="Seguridad\Model\EmpresaDTO.cs" />
     <Compile Include="Seguridad\Model\RespuestaAutenticacionDto.cs" />
+    <Compile Include="Seguridad\Model\RespuestaDto.cs" />
     <Compile Include="Seguridad\Servicio\AutenticacionServicio.cs" />
     <Compile Include="Compras\Servicio\ComprasServicio.cs" />
     <Compile Include="Seguridad\Servicio\TokenServicio.cs" />

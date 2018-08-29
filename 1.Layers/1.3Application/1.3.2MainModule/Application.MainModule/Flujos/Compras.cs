@@ -1,8 +1,12 @@
-﻿using Application.MainModule.DTOs;
+﻿using Application.MainModule.AdaptadoresDTO.Compras;
+using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios;
+using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Notificacion;
+using Application.MainModule.Servicios.Requisicion;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using System;
@@ -42,21 +46,48 @@ namespace Application.MainModule.Flujos
                 OrdenCompraRespuestaDTO orDTO = OrdenCompraServicio.GuardarOrdenCompra(ocDTO);
                 lrOC.Add(orDTO);
                 if (orDTO.Exito)
+                {
+                    RequisicionServicio.UpDateRequisicionEstaus(oc.IdRequisicion, 8);
                     NotificarServicio.OrdenDeCompraNueva(ocDTO, true);
-            }
+                }
+            }            
             return lrOC;
         }
-        public OrdenCompraRespuestaDTO AutorizarOrdenCompra(OrdenCompraDTO dto)
+        public RespuestaDto AutorizarOrdenCompra(OrdenCompraDTO dto)
         {
-            OrdenCompraRespuestaDTO respDTO = new OrdenCompraRespuestaDTO();
-
-            return respDTO;
+            var resp = PermisosServicio.PuedeAutorizarOrdenCompra();
+            if (!resp.Exito) return resp;
+           
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            if (oc == null) return OrdenCompraServicio.NoExiste();
+          
+            var entity = OrdenComprasAdapter.FromEntity(oc);
+            entity.IdUsuarioAutorizador = TokenServicio.ObtenerIdUsuario();
+            entity.FechaAutorizacion = DateTime.Now;
+            entity.IdOrdenCompraEstatus = 3;
+            return OrdenCompraServicio.AutorizarOrdenCompra(entity);
         }
-        public OrdenCompraRespuestaDTO CancelarOrdenCompra(OrdenCompraDTO dto)
+        public RespuestaDto CancelarOrdenCompra(OrdenCompraDTO dto)
         {
-            OrdenCompraRespuestaDTO respDTO = new OrdenCompraRespuestaDTO();
+            //Falta rol en la Base de datos
+            //var resp = PermisosServicio.PuedeCancelarOrdeCompra();
+            //if (!resp.Exito) return resp;
 
-            return respDTO;
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            if (oc == null) return OrdenCompraServicio.NoExiste();
+
+            var entity = OrdenComprasAdapter.FromEntity(oc);
+            entity.IdOrdenCompraEstatus = 5;
+            return OrdenCompraServicio.AutorizarOrdenCompra(entity);
+        }
+        public List<OrdenCompraDTO> ListaOrdenCompra(int IdEmpresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarOrdenCompra();
+            if (!resp.Exito) return new List<OrdenCompraDTO>();
+
+            var _locEntity = OrdenCompraServicio.BuscarTodo(IdEmpresa);
+            List<OrdenCompraDTO> loc = OrdenComprasAdapter.ToDTO(_locEntity);
+            return loc;
         }
     }
 }

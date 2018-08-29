@@ -81,6 +81,7 @@
     <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraCrearDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraDTO.cs" />
+    <Compile Include="DTOs\Compras\OrdenCompraEstatusDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraProductoDTO.cs" />
     <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />

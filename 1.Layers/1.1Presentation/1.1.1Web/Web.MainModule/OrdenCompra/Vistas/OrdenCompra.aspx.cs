@@ -42,7 +42,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
         }
         private void CargarDatosRequisicon(int id)
         {
-            Model.RequisicionOCDTO reqDto = new OrdenCompraServicio().DatosRequisicion(id, _token);
+            RequisicionOCDTO reqDto = new OrdenCompraServicio().DatosRequisicion(id, _token);
             txtFechaRequerida.Text = reqDto.FechaRequerida.Date.ToString();
             TxtSolicitante.Text = reqDto.UsuarioSolicitante;
             txtMotivoCompra.Text = reqDto.MotivoRequisicion;
@@ -116,9 +116,10 @@ namespace Web.MainModule.OrdenCompra.Vistas
             {
                 if (item.Exito)
                 {
-                    txtMensajeOrdenCompra.Text = txtMensajeOrdenCompra.Text + "N° de Orden de Compra: " + item.NumOrdenCompra + "n\r\"";
+                    lblMensajeOrdenCompra.Text = lblMensajeOrdenCompra.Text + "N° de Orden de Compra: " + item.NumOrdenCompra;
+                    
                 }               
-            } 
+            }         
         }
         protected void dgListaproductos_RowDataBound(object sender, GridViewRowEventArgs e)
         {

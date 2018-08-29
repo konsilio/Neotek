@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Flujos;
+using DS.MainModule.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace DS.MainModule.Controllers
     public class ComprasController : ApiController
     {
         private Compras _compras;
+
+       
 
         public ComprasController()
         {
@@ -44,7 +47,12 @@ namespace DS.MainModule.Controllers
         [Route("autoroizar/ordencompra")]
         public HttpResponseMessage PutAutorizarCompra(OrdenCompraDTO ocDTo)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _compras.AutorizarOrdenCompra(ocDTo));
+            return RespuestaHttp.crearRespuesta(_compras.AutorizarOrdenCompra(ocDTo), Request);
+        }
+        [Route("buscar/ordenescompra/{idEmpresa}")]
+        public HttpResponseMessage GetOrdenesCompra(int idEmpresa)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.ListaOrdenCompra(idEmpresa), Request);
         }
     }
 }

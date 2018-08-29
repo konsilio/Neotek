@@ -3,10 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Application.MainModule.DTOs.Catalogo
+namespace Web.MainModule.Catalogos.Model
 {
     [Serializable]
     public class CuentaContableCrearDto

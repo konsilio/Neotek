@@ -22,10 +22,10 @@ namespace Web.MainModule.OrdenCompra.Servicio
             agente.BuscarProveedoresOC(Tkn);
             return agente._listaProveedores;
         }
-        public List<CuentaContableDTO> ListaCuentasContables(string Tkn)
+        public List<CuentaContableDTO> ListaCuentasContables(short idEmpresa, string Tkn)
         {
             AgenteServicios agente = new AgenteServicios();
-            agente.BuscarCuentasContables(Tkn);
+            agente.BuscarCuentasContables(idEmpresa, Tkn);
             return agente._listaCuentasContable;
         }
         public List<OrdenCompraRespuestaDTO> GenerarOrdenesCompra(OrdenCompraCrearDTO ocDTO, string Tkn)

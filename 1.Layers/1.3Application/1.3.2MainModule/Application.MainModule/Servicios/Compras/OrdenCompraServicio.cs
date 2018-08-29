@@ -1,8 +1,10 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Seguridad;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -68,6 +70,32 @@ namespace Application.MainModule.Servicios.Compras
                 }
             }
             return ocs;
+        }
+        public static List<OrdenCompra> BuscarTodo(int idEmpresa)
+        {
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return new OrdenCompraDataAccess().BuscarTodos().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();            
+            else
+                return new OrdenCompraDataAccess().BuscarTodos().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+        }
+        public static OrdenCompra Buscar(int idOrdenCompra)
+        {
+            return new OrdenCompraDataAccess().Buscar(idOrdenCompra);
+        }
+        public static RespuestaDto AutorizarOrdenCompra(OrdenCompra oc)
+        {
+            return new OrdenCompraDataAccess().Actualizar(oc);
+        }
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "La Orden de Compra");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }

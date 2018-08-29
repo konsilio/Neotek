@@ -33,7 +33,8 @@ namespace Web.MainModule.OrdenCompra.Vistas
         }
         private void CargarRequisiciones(short idEmpresa)
         {
-            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequisicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString()).ToList().OrderByDescending(x => x.IdRequisicion).ToList();
+            dgRequisisiones.DataSource = ViewState["ListRequisicionDTO"] = new Requisicion.Servicio.RequisicionServicio().BuscarRequisiciones(idEmpresa, Session["StringToken"].ToString()).ToList().
+                                                Where(y => y.IdRequisicionEstatus.Equals(10)).ToList().OrderByDescending(x => x.IdRequisicion).ToList();
             dgRequisisiones.DataBind();
             if (!Convert.ToBoolean(TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(Session["StringToken"].ToString(), "EsAdminCentral").Value))
                 dgRequisisiones.Columns[0].Visible = false;

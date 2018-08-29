@@ -22,6 +22,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             Prod.Unidad = _prod.Producto.UnidadMedida.Nombre;
             Prod.Aplicacion = _prod.Aplicacion;
             Prod.CentroCosto = _prod.CentroCosto.Descripcion;
+            Prod.IdCentroCosto = _prod.CentroCosto.IdCentroCosto;
             return Prod;
         }
         public static List<ProductoOCDTO> ToDTO(List<Sagas.MainModule.Entidades.RequisicionProducto> _prods)
@@ -75,15 +76,16 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
         }
         public static OrdenCompraProducto FromDTO(OrdenCompraProductoCrearDTO _prod)
         {
-            //Producto p = new ProductoDataAccess().BuscarPorducto(_prod.IdProducto);
+            Producto p = new ProductoDataAccess().BuscarPorducto(_prod.IdProducto);
             OrdenCompraProducto _prodDTO = new OrdenCompraProducto()
             {
                 IdProducto = _prod.IdProducto,
-                //ProductoServicioTipo = p.TipoServicioOProducto.Nombre,
-                //Producto = p.Descripcion,
+                ProductoServicioTipo = p.TipoServicioOProducto.Nombre,
+                IdCentroCosto = _prod.IdCentroCosto,
+                Producto = p.Descripcion,
                 Categoria = _prod.Categoria,
                 Linea = _prod.Linea,
-                //UnidadMedida = p.UnidadMedida.Acronimo,
+                UnidadMedida = p.UnidadMedida.Acronimo,
                 UnidadMedida2 = _prod.UnidadMedida2,
                 Descripcion = _prod.Descripcion,
                 Precio = _prod.Precio,

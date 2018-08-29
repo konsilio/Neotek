@@ -168,32 +168,34 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeModificarCuentaContable();
             if (!resp.Exito) return resp;
 
-            var provee = CuentaContableServicio.Obtener(ccDto.IdCuenta);
-            if (provee == null) return CuentaContableServicio.NoExiste();
+            var ctactble = CuentaContableServicio.Obtener(ccDto.IdCuenta);
+            if (ctactble == null) return CuentaContableServicio.NoExiste();
 
-            var CuentaContable = CuentaContableAdapter.FromDto(ccDto);
-            CuentaContable.FechaRegistro = provee.FechaRegistro;
-            return CuentaContableServicio.ModificarCuentaContable(CuentaContable);
+            //var CuentaContable = CuentaContableAdapter.FromDto(ccDto);
+            var ctactbleEmptity = CuentaContableAdapter.FromEntity(ctactble);
+            ctactbleEmptity.Numero = ccDto.Numero;
+            ctactbleEmptity.Descripcion = ccDto.Descripcion;
+            return CuentaContableServicio.ModificarCuentaContable(ctactbleEmptity);
         }
         public RespuestaDto EliminaCuentaContable(CuentaContableEliminarDto ccDto)
         {
             var resp = PermisosServicio.PuedeEliminarCuentaContable();
             if (!resp.Exito) return resp;
 
-            var provee = CuentaContableServicio.Obtener(ccDto.IdCuenta);
-            if (provee == null) return CuentaContableServicio.NoExiste();
+            var ctactble = CuentaContableServicio.Obtener(ccDto.IdCuenta);
+            if (ctactble == null) return CuentaContableServicio.NoExiste();
 
-            provee = CuentaContableAdapter.FromEmtyte(provee);
-            provee.Activo = false;
-            return CuentaContableServicio.ModificarCuentaContable(provee);
+            var ctactbleEmptity = CuentaContableAdapter.FromEmtyte(ctactble);
+            ctactbleEmptity.Activo = false;
+            return CuentaContableServicio.ModificarCuentaContable(ctactbleEmptity);
         }
 
-        public List<CuentaContableDto> ConsultaCuentasContables()
+        public List<CuentaContableDto> ConsultaCuentasContables(short idEmpresa)
         {
             var resp = PermisosServicio.PuedeConsultarCuentaContable();
             if (!resp.Exito) return new List<CuentaContableDto>();
 
-            return CuentaContableAdapter.ToDto(CuentaContableServicio.Obtener());
+            return CuentaContableAdapter.ToDto(CuentaContableServicio.Obtener().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList());
         }
 
         public CuentaContableDto ConsultaCuentaContable(int idCuentaContable)

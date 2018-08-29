@@ -64,6 +64,12 @@
             $("#ctOrdenCompra_dgListaproductos_lbldgImporte_" + index).html(total.format("N2"));
         }
     </script>
+    <script type="text/javascript">
+        $("#lblMensajeOrdenCompra").html('new-label').trigger('labelchanged')
+        $("#lblMensajeOrdenCompra").on('labelchanged', function () {
+            ocument.getElementById('btnMensaje').clic;
+        })
+    </script>
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
@@ -93,7 +99,7 @@
                                 </div>
                                 <div class="input-group">
                                     <b>Número de Requisición:</b>&nbsp;
-                                    <asp:Label runat="server" ID="lblNunOrdenCompra" Text="OC00000000"></asp:Label>
+                                    <asp:Label runat="server" ID="lblNunOrdenCompra" Text="OC00000000" Visible="false"></asp:Label>
                                 </div>
                             </div>
                         </div>
@@ -604,20 +610,20 @@
                                         </div>
                                         <hr>
                                         <div class="row clearfix">
-                                            <h6>Tractor</h6>                                            
+                                            <h6>Tractor</h6>
                                         </div>
                                         <div class="row clearfix">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                <label>Placa tractor:</label>
-                                                <asp:TextBox ID="txtPlacaTractor" runat="server" CssClass="form-control" />
-                                                    </div>
+                                                    <label>Placa tractor:</label>
+                                                    <asp:TextBox ID="txtPlacaTractor" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                             <div class="col-md-4">
-                                                  <div class="form-group">
-                                                <label>Nombre operador:</label>
-                                                <asp:TextBox ID="txtNombreOperador" runat="server" CssClass="form-control" />
-                                                      </div>
+                                                <div class="form-group">
+                                                    <label>Nombre operador:</label>
+                                                    <asp:TextBox ID="txtNombreOperador" runat="server" CssClass="form-control" />
+                                                </div>
 
                                             </div>
                                             <div class="col-md-4">
@@ -991,6 +997,7 @@
                 <div class="row clearfix">
                     <div class="col-sm-4 center">
                         <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Regresar" OnClick="btnRegresar_Click" />
+                        <a href="#ModalMensaje" data-toggle="modal" id="btnMensaje" runat="server" data-target="#ModalMensaje" class="btn btn-raised btn-primary btn-round">Ver</a>
                     </div>
                     <div class="col-sm-4 center">
                         <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" runat="server" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">Cancelar
@@ -1041,7 +1048,7 @@
             </div>
         </div>
     </div>
-    <%--Modal de cancelar--%>
+    <%--Modal de mensaje--%>
     <div class="modal fade" id="ModalMensaje" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -1051,7 +1058,7 @@
                 <div class="modal-body">
                     <div class="body">
                         <div class="col-sm-12">
-                            <asp:TextBox ID="txtMensajeOrdenCompra" runat="server" TextMode="MultiLine" Rows="5" />
+                            <asp:Label ID="lblMensajeOrdenCompra" runat="server" TextMode="MultiLine" />
                         </div>
                     </div>
                 </div>

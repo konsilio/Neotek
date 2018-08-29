@@ -34,7 +34,7 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaEmpresas()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresas());
-        }
+        }       
         [Route("empresas/listaempresa/{conAdminCent}")]
         public HttpResponseMessage GetListaEmpresascad(bool conAdminCent)
         {
@@ -145,38 +145,16 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.EliminaCuentaContable(cuentaDto), Request);
         }
 
-        [Route("consulta/cuentas/contables")]
-        public HttpResponseMessage GetListaCuentasContables()
+        [Route("consulta/cuentas/contables/{idEmpresa}")]
+        public HttpResponseMessage GetListaCuentasContables(short idEmpresa)
         {
-            return RespuestaHttp.crearRespuesta(_catalogos.ConsultaCuentasContables(), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.ConsultaCuentasContables(idEmpresa), Request);
         }
 
         [Route("consulta/cuenta/contable/{idCuenta}")]
         public HttpResponseMessage GetCuentaContable(int idCuenta)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCuentaContable(idCuenta));
-        }
-        #endregion
-        #region Cuenta contable
-        [Route("consulta/cuentacontable/{idEmpresa}")]
-        public HttpResponseMessage GetListaCuentasContables(int idEmpresa)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BuscarCuentaContable(idEmpresa));
-        }
-        [Route("crear/cuentacontable")]
-        public HttpResponseMessage PostCrearCuentaContables(CuentaContableDto ccDTO)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.CrearCuentaContable(ccDTO));
-        }
-        [Route("borrar/cuentacontable/{idCtaCtble}")]
-        public HttpResponseMessage PutBorrarCuentaContable(int idCtaCtble)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BorrarCuentaContable(idCtaCtble));
-        }
-        [Route("editar/cuentacontable")]
-        public HttpResponseMessage PutModificarCuentaContable(CuentaContableDto ccDTO)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.EditarCuentaContable(ccDTO));
         }
         #endregion
     }

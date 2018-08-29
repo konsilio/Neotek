@@ -43,6 +43,7 @@ namespace Web.MainModule.Agente
         public List<CuentaContableDTO> _listaCuentasContable;
         public List<OrdenCompraRespuestaDTO> _listaOrdenesCompraRespuesta;
         public CatalogoRespuestaDTO _respuestaCatalogos;
+        public RespuestaDto _respuestaDTO;
 
         public  AgenteServicios()
         {
@@ -115,22 +116,22 @@ namespace Web.MainModule.Agente
                 _listaCentrosCostos = emp;
             }
         }
-        public void BuscarCuentasContables(string tkn)
+        public void BuscarCuentasContables(short idEmpresa, string tkn)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCuentasContables"];
-            ListaCuentaContable(tkn).Wait();
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCuentasContables"];
+            ListaCuentaContable(idEmpresa, tkn).Wait();
         }
-        private async Task ListaCuentaContable(string token)
+        private async Task ListaCuentaContable(short idEmpresa,string token)
         {
             using (var client = new HttpClient())
             {
                 List<CuentaContableDTO> emp = new List<CuentaContableDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiCatalgos, idEmpresa)).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<CuentaContableDTO>>();
                     else
@@ -148,26 +149,26 @@ namespace Web.MainModule.Agente
                 _listaCuentasContable = emp;
             }
         }
-        public void GuardarCuentaContable(CuentaContableDTO _cc, string token)
+        public void GuardarCuentaContable(CuentaContableCrearDto _cc, string token)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRequisicion"];
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraCuentaContable"];
             SaveCtaCtble(_cc, token).Wait();
         }
-        private async Task SaveCtaCtble(CuentaContableDTO _cc, string token)
+        private async Task SaveCtaCtble(CuentaContableCrearDto _cc, string token)
         {
             using (var client = new HttpClient())
             {
-                CatalogoRespuestaDTO resp = new CatalogoRespuestaDTO();
+                RespuestaDto resp = new RespuestaDto();
 
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
                     HttpResponseMessage response = await client.PostAsJsonAsync(ApiCatalgos, _cc).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        resp = await response.Content.ReadAsAsync<CatalogoRespuestaDTO>();
+                        resp = await response.Content.ReadAsAsync<RespuestaDto>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -180,10 +181,81 @@ namespace Web.MainModule.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaCatalogos = resp;
+                _respuestaDTO = resp;
             }
         }
+        public void ModificarCtaCtble(CuentaContableModificarDto _cc, string token)
+        {
+            this.ApiRequisicion = ConfigurationManager.AppSettings["PutModificaCuentaContable"];
+            ModificarCuentaContable(_cc, token).Wait();
+        }
+        private async Task ModificarCuentaContable(CuentaContableModificarDto _cc, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDto resp = new RespuestaDto();
 
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiRequisicion, _cc).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDto>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<RespuestaDto>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
+            }
+        }
+        public void EliminarCtaCtble(CuentaContableEliminarDto _cc, string token)
+        {
+            this.ApiRequisicion = ConfigurationManager.AppSettings["PutEliminaCuentaContable"];
+            EliminarCuentaContable(_cc, token).Wait();
+        }
+        private async Task EliminarCuentaContable(CuentaContableEliminarDto _cc, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDto resp = new RespuestaDto();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiRequisicion, _cc).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDto>();
+                    else
+                    {
+                        resp = await response.Content.ReadAsAsync<RespuestaDto>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
+            }
+        }        
         #endregion
         #region Login
         public void ListaEmpresasLogin()
@@ -742,6 +814,6 @@ namespace Web.MainModule.Agente
                 _listaOrdenesCompraRespuesta = resp;
             }
         }
-        #endregion
+        #endregion      
     }
 }

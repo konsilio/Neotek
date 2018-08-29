@@ -7,6 +7,7 @@ using System.Web;
 
 namespace Web.MainModule.Catalogos.Model
 {
+    [Serializable]
     public class CuentaContableDTO
     {
         [Required(ErrorMessage = Error.R0002)]
@@ -16,6 +17,10 @@ namespace Web.MainModule.Catalogos.Model
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdEmpresa")]
         public short IdEmpresa { get; set; }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Empresa")]
+        public string Empresa { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Numero")]
