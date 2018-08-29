@@ -110,4 +110,11 @@
     <string name="toma_de_lectura_inicial">Toma de lectura inicial</string>
     <string name="seleciona_la_estaci_n_de_carburaci_n">Seleciona la Estación de Carburación:</string>
     <string name="selecciona_el_tipo_de_medidor_porcentual">Selecciona el tipo de medidor porcentual:</string>
+    <string name="toma_de_lectura_final">Toma de lectura final</string>
+    <string name="error_titulo">Error</string>
+    <string name="toma_de_lectura">Toma de lectura</string>
+    <string name="p500">P500 -</string>
+    <string name="c_al_es_la_lectura_del_p500">¿Cúal es la lectura del P500?</string>
+    <string name="registra_la_lectura_del_p500_de_la_estaci_n">Registra la lectura del P500 de la estación</string>
+    <string name="mensjae_error_campos">Existen errores en algunos campos:</string>
 </resources>

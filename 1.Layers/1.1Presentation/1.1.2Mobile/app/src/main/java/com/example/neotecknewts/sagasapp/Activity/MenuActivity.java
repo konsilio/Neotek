@@ -83,8 +83,15 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         }else{
             presenter.getMenu(session.getTokenWithBearer());
         }
-
-
+        MenuDTO m = new MenuDTO();
+        m.setHeaderMenu("Toma de lectura");
+        m.setName("Estación de carb. (Inicial)");
+        MenuDTO m2 = new MenuDTO();
+        m2.setHeaderMenu("Toma de lectura");
+        m2.setName("Estación de carb. (Final)");
+        //m.setImageRef(R.g);
+        menu.add(m);
+        menu.add(m2);
         //se agrega la lista al adapter y se agrega el adapter al recylcer view
         adapter = new MenuAdapter(menu);
         recyclerView.setAdapter(adapter);

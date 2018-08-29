@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Activity.FinalizarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.IniciarDescargaActivity;
+import com.example.neotecknewts.sagasapp.Activity.LecturaDatosActivity;
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaActivity;
 import com.example.neotecknewts.sagasapp.Activity.VistaOrdenCompraActivity;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
@@ -97,6 +98,18 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 }
                 else if(menuItem.getName().equals("Ordenes de compra")){
                     Intent intent = new Intent(view.getContext() , VistaOrdenCompraActivity.class);
+                    view.getContext().startActivity(intent);
+                }
+                else if(menuItem.getName().equals("Estación de carb. (Inicial)")){
+                    Intent intent = new Intent(view.getContext() , LecturaDatosActivity.class);
+                    intent.putExtra("EsLecturaInicial",true);
+                    intent.putExtra("EsLecturaFinal",false);
+                    view.getContext().startActivity(intent);
+                }
+                else if(menuItem.getName().equals("Estación de carb. (Final)")){
+                    Intent intent = new Intent(view.getContext() , LecturaDatosActivity.class);
+                    intent.putExtra("EsLecturaInicial",false);
+                    intent.putExtra("EsLecturaFinal",true);
                     view.getContext().startActivity(intent);
                 }
 

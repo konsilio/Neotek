@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.LecturaP5000Activity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/TVLecturaP5000Titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="15dp"
+                android:paddingTop="25dp"
+                android:text="@string/toma_de_lectura"
+                android:textAlignment="center"
+                android:textSize="25sp"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/TVLecturaP5000Tipo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="@string/p500"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/TVLecturaP5000Pregunta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="@string/c_al_es_la_lectura_del_p500"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVLecturaP5000Registro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:labelFor="@id/ETLecturaP500CantidadLectura"
+                android:paddingBottom="10dp"
+                android:paddingTop="15dp"
+                android:text="@string/registra_la_lectura_del_p500_de_la_estaci_n"
+                android:textAlignment="center"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/ETLecturaP500CantidadLectura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:ems="10"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                />
+
+            <Button
+                android:id="@+id/BtnLecturaP5000Guardar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:background="@color/colorButtonLogin"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
+                android:text="@string/message_acept"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="136dp"
+                tools:layout_editor_absoluteY="325dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

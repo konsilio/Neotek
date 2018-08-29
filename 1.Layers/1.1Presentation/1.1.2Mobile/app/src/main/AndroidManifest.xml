@@ -92,7 +92,11 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".LecturaDatosActivity"></activity>
+        <activity
+            android:name=".Activity.LecturaDatosActivity"
+            android:label="@string/toma_de_lectura" />
+        <activity android:name=".Activity.LecturaP5000Activity"
+            android:label="@string/toma_de_lectura" ></activity>
     </application>
 
 </manifest>
