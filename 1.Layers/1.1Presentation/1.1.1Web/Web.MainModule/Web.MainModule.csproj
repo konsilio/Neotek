@@ -3909,6 +3909,7 @@
     <Compile Include="OrdenCompra\Model\enumIVA.cs" />
     <Compile Include="OrdenCompra\Model\OrdenCompraCrearDTO.cs" />
     <Compile Include="OrdenCompra\Model\OrdenCompraDTO.cs" />
+    <Compile Include="OrdenCompra\Model\OrdenCompraEstatus.cs" />
     <Compile Include="OrdenCompra\Model\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="OrdenCompra\Model\OrdenCompraRespuestaDTO.cs" />
     <Compile Include="OrdenCompra\Model\ProdcutoOC.cs" />

@@ -80,7 +80,7 @@ namespace Application.MainModule.Flujos
             entity.IdOrdenCompraEstatus = 5;
             return OrdenCompraServicio.AutorizarOrdenCompra(entity);
         }
-        public List<OrdenCompraDTO> ListaOrdenCompra(int IdEmpresa)
+        public List<OrdenCompraDTO> ListaOrdenCompra(short IdEmpresa)
         {
             var resp = PermisosServicio.PuedeConsultarOrdenCompra();
             if (!resp.Exito) return new List<OrdenCompraDTO>();

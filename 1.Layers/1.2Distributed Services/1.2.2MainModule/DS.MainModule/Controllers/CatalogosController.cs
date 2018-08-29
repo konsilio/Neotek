@@ -1,11 +1,6 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
-using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.DTOs.Seguridad;
 using Application.MainModule.Flujos;
 using DS.MainModule.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;

@@ -34,5 +34,11 @@ namespace Web.MainModule.OrdenCompra.Servicio
             agente.GuardarOrdenesCompra(ocDTO, Tkn);
             return agente._listaOrdenesCompraRespuesta;
         }
+        public List<OrdenCompraDTO> ObtenerOrdenesCompra(short idEmpresa, string Tkn)
+        {
+            AgenteServicios agente = new AgenteServicios();
+            agente.BuscarOrdenesCompra(idEmpresa, Tkn);
+            return agente._listaOrdenCompraDTO;
+        }
     }
 }

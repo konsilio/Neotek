@@ -39,6 +39,7 @@ namespace Application.MainModule.Servicios.Compras
                     nOC.IdCuentaContable = _prod.IdCuentaContable;
                     nOC.IdOrdenCompraEstatus = ocInicial.IdOrdenCompraEstatus;
                     nOC.FechaRegistro = DateTime.Today;
+                    nOC.IdUsuarioGenerador = TokenServicio.ObtenerIdUsuario();
                     nlist.Add(nOC);
                 }
             }
@@ -71,7 +72,7 @@ namespace Application.MainModule.Servicios.Compras
             }
             return ocs;
         }
-        public static List<OrdenCompra> BuscarTodo(int idEmpresa)
+        public static List<OrdenCompra> BuscarTodo(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
                 return new OrdenCompraDataAccess().BuscarTodos().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();            

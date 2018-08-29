@@ -189,7 +189,6 @@ namespace Application.MainModule.Flujos
             ctactbleEmptity.Activo = false;
             return CuentaContableServicio.ModificarCuentaContable(ctactbleEmptity);
         }
-
         public List<CuentaContableDto> ConsultaCuentasContables(short idEmpresa)
         {
             var resp = PermisosServicio.PuedeConsultarCuentaContable();
@@ -197,7 +196,6 @@ namespace Application.MainModule.Flujos
 
             return CuentaContableAdapter.ToDto(CuentaContableServicio.Obtener().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList());
         }
-
         public CuentaContableDto ConsultaCuentaContable(int idCuentaContable)
         {
             var resp = PermisosServicio.PuedeConsultarCuentaContable();

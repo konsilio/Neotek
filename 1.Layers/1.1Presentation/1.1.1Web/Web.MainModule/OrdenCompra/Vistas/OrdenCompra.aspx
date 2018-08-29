@@ -627,101 +627,131 @@
 
                                             </div>
                                             <div class="col-md-4">
-                                                <b>Presión tanque tractor:</b>
-                                                <asp:TextBox ID="txtPrecsionTantqueTractor" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Presión tanque tractor:</label>
+                                                    <asp:TextBox ID="txtPrecsionTantqueTractor" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row clearfix">
                                             <div class="col-md-6">
-                                                <b>Número tanque tractor:</b>
-                                                <asp:TextBox ID="txtNumeroTanqueTractor" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Número tanque tractor:</label>
+                                                    <asp:TextBox ID="txtNumeroTanqueTractor" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <b>Capasidad (Ltr) tanque tractor:</b>
-                                                <asp:TextBox ID="txtCapasidadLtrTanqueTractor" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Capasidad (Ltr) tanque tractor:</label>
+                                                    <asp:TextBox ID="txtCapasidadLtrTanqueTractor" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row clearfix">
                                             <div class="col-md-6">
-                                                <b>% Magnatel tractor (Ocultar)</b>
-                                                <asp:TextBox ID="txtPorcentajeMagnatelTractorOcultar" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>% Magnatel tractor (Ocultar)</label>
+                                                    <asp:TextBox ID="txtPorcentajeMagnatelTractorOcultar" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                        <hr>
+                                   <%-- </div>--%>
+                                      
+                               <%-- </div>
                             </div>
-                            <%--Descarga--%>
+                            Descarga
                             <div class="panel panel-primary">
                                 <div class="panel-heading" role="tab" id="headingDescargas">
                                     <h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseDescargas" aria-expanded="false"
                                         aria-controls="collapseDescargas">Descarga </a></h4>
                                 </div>
                                 <div id="collapseDescargas" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingDescargas">
-                                    <div class="panel-body">
+                                    <div class="panel-body">--%>
                                         <div class="row clearfix">
                                             <div class="col-md-12">
-                                                <label>Fecha descarga:</label>
-                                                <dtp:DateTimePicker ID="dtpFechaDescarga" CssClass="dataTxt" runat="server" Enabled="True" />
-                                            </div>
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="col-md-3 content-center">
-                                                <b>% Magnatel Tractor</b>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <b>Inicial</b>
-                                                <asp:TextBox ID="txtMagnatelTractorInicial" runat="server" CssClass="form-control" />
-                                            </div>
-                                            <div class="col-md-3">
-                                                <b>Final</b>
-                                                <asp:TextBox ID="txtMagnatelTractorFinal" runat="server" CssClass="form-control" />
-                                            </div>
-                                            <div class="col-md-3 content-center">
-                                                <div class="checkbox">
-                                                    <b>¿Almacen prestado?
-                                                    </b>
-                                                    <input id="chBoxAlmacenPrestado" runat="server" type="checkbox">
+                                                <div class="form-group">
+                                                    <label>Fecha descarga:</label>
+                                                    <dtp:DateTimePicker ID="dtpFechaDescarga" CssClass="dataTxt" runat="server" Enabled="True" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row clearfix">
                                             <div class="col-md-3 content-center">
-                                                <b>% Magnatel Almacen</b>
+                                                <div class="form-group">
+                                                    <label>% Magnatel Tractor</label>
+                                                </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <b>Inicial</b>
-                                                <asp:TextBox ID="txtMagnatelAlmacenInicial" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Inicial</label>
+                                                    <asp:TextBox ID="txtMagnatelTractorInicial" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <b>Final</b>
-                                                <asp:TextBox ID="txtMagnatelAlmacenFinal" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Final</label>
+                                                    <asp:TextBox ID="txtMagnatelTractorFinal" runat="server" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 content-center">
+                                                <div class="checkbox">                                                                                                          
+                                                        <input id="chBoxAlmacenPrestado" runat="server" type="checkbox">
+                                                        <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>                                                    
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="row clearfix">
+                                            <div class="col-md-3 content-center">
+                                                <div class="form-group">
+                                                    <label>% Magnatel Almacen</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Inicial</label>
+                                                    <asp:TextBox ID="txtMagnatelAlmacenInicial" runat="server" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Final</label>
+                                                    <asp:TextBox ID="txtMagnatelAlmacenFinal" runat="server" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                          <hr >
+                                    <%--</div>
                                 </div>
                             </div>
-                            <%--Kilos Finales--%>
+                            Kilos Finales
                             <div class="panel panel-primary">
                                 <div class="panel-heading" role="tab" id="headingKilosFinales">
                                     <h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseKilosFinales" aria-expanded="false"
                                         aria-controls="collapseKilosFinales">Kilos Finales </a></h4>
                                 </div>
                                 <div id="collapseKilosFinales" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingKilosFinales">
-                                    <div class="panel-body">
+                                    <div class="panel-body">--%>
                                         <div class="row clearfix">
                                             <div class="col-md-4">
-                                                <b>Papeleta</b>
-                                                <asp:TextBox ID="txtKFinalesPapeleta" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Papeleta</label>
+                                                    <asp:TextBox ID="txtKFinalesPapeleta" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <b>Descargados</b>
-                                                <asp:TextBox ID="txtKFinalesDescargados" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Descargados</label>
+                                                    <asp:TextBox ID="txtKFinalesDescargados" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <b>Diferencia</b>
-                                                <asp:TextBox ID="txtKFinalesDiferencia" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Diferencia</label>
+                                                    <asp:TextBox ID="txtKFinalesDiferencia" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
-                                        </div>
+                                        </div>   
                                     </div>
                                 </div>
                             </div>

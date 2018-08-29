@@ -15,10 +15,7 @@ namespace DS.MainModule.Controllers
     [RoutePrefix("api/compras")]
     public class ComprasController : ApiController
     {
-        private Compras _compras;
-
-       
-
+        private Compras _compras;      
         public ComprasController()
         {
             _compras = new Compras();
@@ -50,7 +47,7 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_compras.AutorizarOrdenCompra(ocDTo), Request);
         }
         [Route("buscar/ordenescompra/{idEmpresa}")]
-        public HttpResponseMessage GetOrdenesCompra(int idEmpresa)
+        public HttpResponseMessage GetOrdenesCompra(short idEmpresa)
         {
             return RespuestaHttp.crearRespuesta(_compras.ListaOrdenCompra(idEmpresa), Request);
         }

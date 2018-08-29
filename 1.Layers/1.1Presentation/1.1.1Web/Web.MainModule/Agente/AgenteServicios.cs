@@ -42,6 +42,8 @@ namespace Web.MainModule.Agente
         public List<CentroCostoDTO> _listaCentrosCostos;
         public List<CuentaContableDTO> _listaCuentasContable;
         public List<OrdenCompraRespuestaDTO> _listaOrdenesCompraRespuesta;
+        public List<OrdenCompraDTO> _listaOrdenCompraDTO;
+        public OrdenCompraDTO _ordeCompraDTO;
         public CatalogoRespuestaDTO _respuestaCatalogos;
         public RespuestaDto _respuestaDTO;
 
@@ -812,6 +814,39 @@ namespace Web.MainModule.Agente
                     client.Dispose();
                 }
                 _listaOrdenesCompraRespuesta = resp;
+            }
+        }
+        public void BuscarOrdenesCompra(short idEmpresa, string tkn)
+        {
+            this.ApiCompras = ConfigurationManager.AppSettings["GetOrdenesCompra"];
+            ListaOrdenCompra(idEmpresa, tkn).Wait();
+        }
+        private async Task ListaOrdenCompra(short idEmpresa, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<OrdenCompraDTO> emp = new List<OrdenCompraDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiCompras,idEmpresa.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<OrdenCompraDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<OrdenCompraDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaOrdenCompraDTO = emp;
             }
         }
         #endregion      
