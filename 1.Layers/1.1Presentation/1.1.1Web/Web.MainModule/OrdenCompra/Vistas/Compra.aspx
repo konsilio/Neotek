@@ -79,14 +79,11 @@
                                         <HeaderTemplate>
                                             Accion
                                         </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3">
-                                                <div class="demo-google-material-icon">
+                                        <ItemTemplate>            
                                                     <asp:LinkButton runat="server" ID="lbGenerarOrden" Text=" " CommandName="Requisicion" CommandArgument='<%# Bind("IdRequisicion") %>'>
                                                                     <i class="material-icons">launch</i>                                                                    
                                                                     <span class="icon-name"></span>
-                                                    </asp:LinkButton>
-                                                </div>
+                                                    </asp:LinkButton>                                               
                                         </ItemTemplate>
                                     </asp:TemplateField>
                                 </Columns>
@@ -190,7 +187,7 @@
                                                 No. Orden de Compra
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:Label runat="server" ID="lblIdRequisicionEstatus" Text='<%# Bind("IdOrdenCompra") %>' Visible="false"></asp:Label>
+                                                <asp:Label runat="server" ID="lblIdRequisicionEstatus" Text='<%# Bind("IdOrdenCompra") %>' Visible="true"></asp:Label>
                                                 <asp:Label runat="server" ID="lblDgFechaRequerida" Text='<%# Bind("NumOrdenCompra") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
@@ -241,16 +238,16 @@
                                                 Accion
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:LinkButton runat="server" ID="lbPDF" Text=" " Visible="false" CommnadnName="PDF" CommandArgument='<%# Bind("IdOrdenCompra") %>'>
+                                                <asp:LinkButton runat="server" ID="lbPDF" Visible="false" CommandName="PDF" CommandArgument='<%# Bind("IdOrdenCompra") %>' >
                                                                     <i class="material-icons">picture_as_pdf</i>                                                                    
                                                                     <span class="icon-name"></span></asp:LinkButton>
-                                                <asp:LinkButton runat="server" ID="lbAutOC" Text=" " Visible="false" CommnadnName="OrdenCompra" CommandArgument='<%# Bind("IdOrdenCompra") %>'>
+                                                <asp:LinkButton runat="server" ID="lbAutOC" Text=" " Visible="false" CommandName="OrdenCompra" CommandArgument='<%# Bind("IdOrdenCompra") %>'>
                                                                     <i class="material-icons">spellcheck</i>                                                                    
                                                                     <span class="icon-name"></span></asp:LinkButton>
-                                                <asp:LinkButton runat="server" ID="lbAgregarMercancia" Text=" " Visible="false" CommnadnName="AgregarMerca" CommandArgument='<%# Bind("IdOrdenCompra") %>'>
+                                                <asp:LinkButton runat="server" ID="lbAgregarMercancia" Text=" " Visible="false" CommandName="AgregarMerca" CommandArgument='<%# Bind("IdOrdenCompra") %>'>
                                                                     <i class="material-icons"> assignment_turned_in</i>                                                                    
                                                                     <span class="icon-name"></span></asp:LinkButton>
-                                                <asp:LinkButton runat="server" ID="lbVisualizarOC" Text=" " Visible="false" CommnadnName="Ver" CommandArgument='<%# Bind("IdOrdenCompra") %>'>
+                                                <asp:LinkButton runat="server" ID="lbVisualizarOC" Text=" " Visible="false" CommandName="Ver" CommandArgument='<%# Bind("IdOrdenCompra") %>'>
                                                                     <i class="material-icons">remove_red_eye</i>                                                                    
                                                                     <span class="icon-name"></span></asp:LinkButton>
                                             </ItemTemplate>

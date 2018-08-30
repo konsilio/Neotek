@@ -12,7 +12,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
 {
     public class ProductosOCAdapter
     {
-        public static ProductoOCDTO ToDTO(Sagas.MainModule.Entidades.RequisicionProducto _prod)
+        public static ProductoOCDTO ToDTO(RequisicionProducto _prod)
         {
             ProductoOCDTO Prod = new ProductoOCDTO();
             Prod.IdProducto = _prod.IdProducto;
@@ -25,7 +25,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             Prod.IdCentroCosto = _prod.CentroCosto.IdCentroCosto;
             return Prod;
         }
-        public static List<ProductoOCDTO> ToDTO(List<Sagas.MainModule.Entidades.RequisicionProducto> _prods)
+        public static List<ProductoOCDTO> ToDTO(List<RequisicionProducto> _prods)
         {
             List<ProductoOCDTO> Prods = _prods.ToList().Select(x => ToDTO(x)).ToList();
             return Prods;
@@ -89,6 +89,33 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 UnidadMedida2 = _prod.UnidadMedida2,
                 Descripcion = _prod.Descripcion,
                 Precio = _prod.Precio,
+                Descuento = _prod.Descuento,                
+                IVA = _prod.IVA,
+                IEPS = _prod.IEPS,
+                Importe = _prod.Importe,
+                EsActivoVenta = _prod.EsActivoVenta,
+                EsGas = _prod.EsGas,
+            };
+            return _prodDTO;
+        }
+        public static OrdenCompraProductoCrearDTO ToDTO(OrdenCompraProducto _prod)
+        {
+            OrdenCompraProductoCrearDTO _prodDTO = new OrdenCompraProductoCrearDTO()
+            {
+                IdProducto = _prod.IdProducto,
+                ProductoServicioTipo = _prod.ProductoServicioTipo,
+                Producto = _prod.Producto,
+                TipoProducto = _prod.ProductoServicioTipo,
+                Categoria = _prod.Categoria,
+                Linea = _prod.Linea,
+                UnidadMedida = _prod.UnidadMedida,
+                UnidadMedida2 = _prod.UnidadMedida2,
+                Descripcion = _prod.Descripcion,
+                Precio = _prod.Precio,
+                Cantidad = _prod.Cantidad,
+                IdCentroCosto = _prod.IdCentroCosto,
+                CentroCosto = _prod.CentroCosto.Descripcion,
+                IdCuentaContable = _prod.OrdenCompra.IdCuentaContable,
                 Descuento = _prod.Descuento,
                 IVA = _prod.IVA,
                 IEPS = _prod.IEPS,
@@ -97,6 +124,11 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 EsGas = _prod.EsGas,
             };
             return _prodDTO;
+        }
+        public static List<OrdenCompraProductoCrearDTO> ToDTO(List<OrdenCompraProducto> _prods)
+        {
+            List<OrdenCompraProductoCrearDTO> Prods = _prods.ToList().Select(x => ToDTO(x)).ToList();
+            return Prods;
         }
     }
 }

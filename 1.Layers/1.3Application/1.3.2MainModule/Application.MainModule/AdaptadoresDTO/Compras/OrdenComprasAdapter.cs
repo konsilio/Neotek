@@ -8,6 +8,7 @@ using Sagas.MainModule.Entidades;
 using Application.MainModule.DTOs;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios;
+using Application.MainModule.AdaptadoresDTO.Compras;
 
 namespace Application.MainModule.AdaptadoresDTO.Compras
 {
@@ -25,10 +26,9 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             Req.Productos = ProductosOCAdapter.ToDTO(_req.Productos.ToList());
             return Req;
         }
-
-        public static OrdenCompraDTO ToDTO(OrdenCompra oc)
+        public static OrdenCompraCrearDTO ToCDTO(OrdenCompra oc)
         {
-            OrdenCompraDTO ocDTO = new OrdenCompraDTO
+            OrdenCompraCrearDTO ocDTO = new OrdenCompraCrearDTO
             {
                 IdEmpresa = oc.IdEmpresa,
                 Empresa = oc.Empresa.NombreComercial,
@@ -55,15 +55,49 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Iva = oc.Iva != null ? oc.Iva.Value :  0,
                 Ieps = oc.Ieps != null ? oc.Ieps.Value : 0,
                 Total = oc.Total != null ? oc.Total.Value : 0,
-                EsTransporteGas = oc.EsTransporteGas
+                EsTransporteGas = oc.EsTransporteGas,
+                Productos =  ProductosOCAdapter.ToDTO(oc.Productos.ToList())
             };
             return ocDTO;
-        }
-
+        }        
         public static List<OrdenCompraDTO>ToDTO(List<OrdenCompra> ocDTO)
         {
             List<OrdenCompraDTO> oc = ocDTO.Select(x => ToDTO(x)).ToList();
             return oc;
+        }
+        public static OrdenCompraDTO ToDTO(OrdenCompra oc)
+        {
+            OrdenCompraDTO ocDTO = new OrdenCompraDTO
+            {
+                IdOrdenCompra = oc.IdOrdenCompra,
+                IdEmpresa = oc.IdEmpresa,
+                Empresa = oc.Empresa.NombreComercial,
+                IdOrdenCompraEstatus = oc.IdOrdenCompraEstatus,
+                NumOrdenCompra = oc.NumOrdenCompra,
+                OrdenCompraEstatus = oc.OrdenCompraEstatus.Descripcion,
+                IdRequisicion = oc.IdRequisicion,
+                NumeroRequisicion = oc.Requisicion.NumeroRequisicion,
+                IdProveedor = oc.IdProveedor,
+                Proveedor = oc.Proveedor.NombreComercial,
+                IdCentroCosto = oc.IdCentroCosto,
+                IdCuentaContable = oc.IdCuentaContable,
+                IdUsuarioGenerador = oc.IdUsuarioGenerador,
+                usuarioSolicitante = string.Concat(oc.UsuarioGenerador.Nombre, " ", oc.UsuarioGenerador.Apellido1),
+                IdUsuarioAutorizador = oc.IdUsuarioAutorizador,
+                EsActivoVenta = oc.EsActivoVenta,
+                EsGas = oc.EsGas,
+                Activo = oc.Activo,
+                FechaRegistro = oc.FechaRegistro,
+                FechaAutorizacion = oc.FechaAutorizacion,
+                FechaRequerida = oc.Requisicion.FechaRequerida,
+                SubtotalSinIva = oc.SubtotalSinIva != null ? oc.SubtotalSinIva.Value : 0,
+                SubtotalSinIeps = oc.SubtotalSinIeps != null ? oc.SubtotalSinIeps.Value : 0,
+                Iva = oc.Iva != null ? oc.Iva.Value : 0,
+                Ieps = oc.Ieps != null ? oc.Ieps.Value : 0,
+                Total = oc.Total != null ? oc.Total.Value : 0,
+                EsTransporteGas = oc.EsTransporteGas,              
+            };
+            return ocDTO;
         }
         public static OrdenCompra FromDTO(OrdenCompraDTO ocDTO)
         {

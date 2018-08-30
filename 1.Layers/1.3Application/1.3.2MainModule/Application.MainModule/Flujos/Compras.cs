@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Compras;
+using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Respuesta;
@@ -48,7 +49,7 @@ namespace Application.MainModule.Flujos
                 if (orDTO.Exito)
                 {
                     RequisicionServicio.UpDateRequisicionEstaus(oc.IdRequisicion, 8);
-                    NotificarServicio.OrdenDeCompraNueva(ocDTO, true);
+                    NotificarServicio.OrdenDeCompraNueva(OrdenCompraServicio.Buscar(oc.IdOrdenCompra));
                 }
             }            
             return lrOC;
@@ -88,6 +89,23 @@ namespace Application.MainModule.Flujos
             var _locEntity = OrdenCompraServicio.BuscarTodo(IdEmpresa);
             List<OrdenCompraDTO> loc = OrdenComprasAdapter.ToDTO(_locEntity);
             return loc;
+        }
+        public OrdenCompraCrearDTO BuscarOrdenCompra(int idOrdeCompra)
+        { 
+            //Valida permiso para consultar orden de compra
+            var resp = PermisosServicio.PuedeConsultarOrdenCompra();
+            if (!resp.Exito) return new OrdenCompraCrearDTO();
+                     
+            //Se busca el id en la base y se genera DTO para enviar
+            return OrdenComprasAdapter.ToCDTO(OrdenCompraServicio.Buscar(idOrdeCompra));
+        }
+        public ComplementoGasDTO BuscarComplementoGas(int idOrdenCompra)
+        {
+            var oc = OrdenCompraServicio.Buscar(idOrdenCompra);
+            var cg = OrdenCompraServicio.BuscarComplemento(oc);
+
+
+            return cg;
         }
     }
 }

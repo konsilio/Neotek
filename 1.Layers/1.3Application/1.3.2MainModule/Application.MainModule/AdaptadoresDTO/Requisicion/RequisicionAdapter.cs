@@ -160,6 +160,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             _requisicion.IdUsuarioAutorizacion = _requisicionDTO.IdUsuarioAutorizacion;
             _requisicion.FechaAutorizacion = _requisicionDTO.FechaAutorizacion;
             _requisicion.IdRequisicionEstatus = _requisicionDTO.IdRequisicionEstatus;
+
             return _requisicion;
         }
         public static Sagas.MainModule.Entidades.Requisicion FromEntity(Sagas.MainModule.Entidades.Requisicion _entidadAnterior)

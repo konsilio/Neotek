@@ -41,10 +41,10 @@ namespace Application.MainModule.Servicios.Requisicion
             var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
             return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad), RequisicionProductoAdapter.FromDTO(_req.ListaProductos, entidad.Productos.ToList()));
         }
-        public static RespuestaRequisicionDto UpDateRequisicionAutoriza(RequisicionAutPutDTO _req)
+        public static Sagas.MainModule.Entidades.Requisicion UpDateRequisicionAutoriza(RequisicionAutPutDTO _req)
         {
-            var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
-            return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
+
+            //return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
         }
         public static RespuestaRequisicionDto UpDateRequisicionEstaus(int _req, byte status)
         {

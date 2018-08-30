@@ -79,7 +79,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
         }
         private void CargarOrdenesCompra()
         {
-            gvOrdenCompra.DataSource = ViewState["OrdenCompraDTO"] = new OrdenCompraServicio().ObtenerOrdenesCompra(short.Parse(ddlEmpresas.SelectedValue), _token);
+            gvOrdenCompra.DataSource = ViewState["OrdenCompraDTO"] = new OrdenCompraServicio().ObtenerOrdenesCompra(short.Parse(ddlEmpresas.SelectedValue), _token).ToList().OrderByDescending(x => x.NumOrdenCompra).ToList();
             gvOrdenCompra.DataBind();
         }
         private void CargarOrdenesCompra(List<OrdenCompraDTO> lista)
@@ -141,21 +141,20 @@ namespace Web.MainModule.OrdenCompra.Vistas
         }
         protected void gvOrdenCompra_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-            gvOrdenCompra.DataSource = ViewState["ListRequisicionDTO"];
+            gvOrdenCompra.DataSource = ViewState["OrdenCompraDTO"];
             gvOrdenCompra.PageIndex = e.NewPageIndex;
             gvOrdenCompra.DataBind();
         }
         protected void gvOrdenCompra_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("OrdenCompra"))            
-                Response.Redirect("~/OrdenCompra/Vistas/Compras.aspx.aspx?oc=" + e.CommandArgument.ToString());
+                Response.Redirect("~/OrdenCompra/Vistas/OrdenCompra.aspx?oc=" + e.CommandArgument.ToString());
             
             if (e.CommandName.Equals("AgregarMerca"))            
-                Response.Redirect("~/OrdenCompra/Vistas/Compras.aspx.aspx?oc=" + e.CommandArgument.ToString());
+                Response.Redirect("~/OrdenCompra/Vistas/OrdenCompra.aspx?oc=" + e.CommandArgument.ToString());
             
             if (e.CommandName.Equals("Ver"))            
-                Response.Redirect("~/OrdenCompra/Vistas/Compras.aspx.aspx?oc=" + e.CommandArgument.ToString());
-            
+                Response.Redirect("~/OrdenCompra/Vistas/OrdenCompra.aspx?oc=" + e.CommandArgument.ToString());            
         }
         protected void gvOrdenCompra_RowDataBound(object sender, GridViewRowEventArgs e)
         {

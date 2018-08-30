@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Compras;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,5 @@ namespace Application.MainModule.DTOs
         public Nullable<decimal> Iva { get; set; }
         public Nullable<decimal> Ieps { get; set; }
         public Nullable<decimal> Total { get; set; }
-
     }
 }

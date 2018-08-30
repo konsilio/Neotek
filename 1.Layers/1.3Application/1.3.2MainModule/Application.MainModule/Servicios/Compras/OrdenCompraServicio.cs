@@ -1,5 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Compras;
-using Application.MainModule.DTOs;
+using Application.MainModule.Servicios.Almacen;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
@@ -97,6 +97,11 @@ namespace Application.MainModule.Servicios.Compras
                 Mensaje = mensaje,
                 MensajesError = new List<string>() { mensaje },
             };
+        }
+        public static ComplementoGasDTO BuscarComplemento(OrdenCompra oc)
+        {
+            var descarga = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
+            return ComplementoGasAdapter.ToDTO(descarga);
         }
     }
 }

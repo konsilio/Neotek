@@ -5,6 +5,7 @@ using System.Web;
 using Web.MainModule.Agente;
 using Web.MainModule.Catalogos.Model;
 using Web.MainModule.OrdenCompra.Model;
+using Web.MainModule.Seguridad.Model;
 
 namespace Web.MainModule.OrdenCompra.Servicio
 {
@@ -39,6 +40,24 @@ namespace Web.MainModule.OrdenCompra.Servicio
             AgenteServicios agente = new AgenteServicios();
             agente.BuscarOrdenesCompra(idEmpresa, Tkn);
             return agente._listaOrdenCompraDTO;
+        }
+        public RespuestaDto CancelarOrdenCompra(OrdenCompraDTO dto, string Tkn)
+        {
+            AgenteServicios agente = new AgenteServicios();
+            agente.CancelarOrdenCompra(dto, Tkn);
+            return agente._respuestaDTO;
+        }
+        public RespuestaDto AutorizarOrdenCompra(OrdenCompraDTO dto, string Tkn)
+        {
+            AgenteServicios agente = new AgenteServicios();
+            agente.AutorizarOrdenCompra(dto, Tkn);
+            return agente._respuestaDTO;
+        }
+        public OrdenCompraCrearDTO OrdenCompraPorId(int dto, string Tkn)
+        {
+            AgenteServicios agente = new AgenteServicios();
+            agente.BuscarOrdenCompra(dto, Tkn);
+            return agente._ordenCompraCrearDTO;
         }
     }
 }

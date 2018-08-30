@@ -364,6 +364,15 @@ namespace Web.MainModule.OrdenCompra.Vistas {
         protected global::System.Web.UI.WebControls.TextBox txtKFinalesDiferencia;
         
         /// <summary>
+        /// Control btnGuardarDatosPapeleta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGuardarDatosPapeleta;
+        
+        /// <summary>
         /// Control txtReferenciaPormedioMensualGallon.
         /// </summary>
         /// <remarks>
@@ -454,15 +463,6 @@ namespace Web.MainModule.OrdenCompra.Vistas {
         protected global::System.Web.UI.WebControls.Label txtPrecioConIVA;
         
         /// <summary>
-        /// Control btnSolicitarPagoExpedidor.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSolicitarPagoExpedidor;
-        
-        /// <summary>
         /// Control lblImporteAPagar.
         /// </summary>
         /// <remarks>
@@ -470,6 +470,24 @@ namespace Web.MainModule.OrdenCompra.Vistas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblImporteAPagar;
+        
+        /// <summary>
+        /// Control btnguardarDatosExpedidor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnguardarDatosExpedidor;
+        
+        /// <summary>
+        /// Control btnSolicitarPagoExpedidor.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSolicitarPagoExpedidor;
         
         /// <summary>
         /// Control txtFactorConversion.
@@ -517,15 +535,6 @@ namespace Web.MainModule.OrdenCompra.Vistas {
         protected global::System.Web.UI.WebControls.DropDownList ddlIvaPorteador;
         
         /// <summary>
-        /// Control btnSolicitarPaogPorteador.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSolicitarPaogPorteador;
-        
-        /// <summary>
         /// Control ImportePagarPorteador.
         /// </summary>
         /// <remarks>
@@ -533,6 +542,24 @@ namespace Web.MainModule.OrdenCompra.Vistas {
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ImportePagarPorteador;
+        
+        /// <summary>
+        /// Control btnGuardarDatosPorteador.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGuardarDatosPorteador;
+        
+        /// <summary>
+        /// Control btnSolicitarPaogPorteador.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSolicitarPaogPorteador;
         
         /// <summary>
         /// Control divImagenes.

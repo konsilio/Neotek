@@ -132,7 +132,6 @@
                                             <asp:LinkButton ID="btnAgregar" runat="server" CssClass="btn btn-danger btn-simple btn-round btn-sm" Text="Agregar +" data-type="ajax-loader" OnClick="btnAgregar_Click">                                                                               
                                             </asp:LinkButton>
                                         </div>
-
                                         <%--<asp:Button ID="btnAgregar" CssClass="btn btn-raised btn-primary waves-effect btn-round" data-type="ajax-loader" OnClick="btnAgregar_Click" Text="Agregar" />--%>
                                     </div>
                                 </div>

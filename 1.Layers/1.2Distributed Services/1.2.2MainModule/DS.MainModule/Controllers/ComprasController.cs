@@ -31,6 +31,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _compras.BuscarRequisicion(idReq));
         }
+        [Route("buscar/ordencompra/{idOC}")]
+        public HttpResponseMessage GetBuscarOrdenCompra(int idOC)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _compras.BuscarOrdenCompra(idOC));
+        }
         [Route("guardar/ordencompra")]
         public HttpResponseMessage PostGenerarOrdenesCompra(OrdenCompraCrearDTO ocDTO)
         {

@@ -22,5 +22,13 @@ namespace Application.MainModule.DTOs.Requisicion
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "AutorizaCompra")]
         public bool AutorizaCompra { get; set; }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "CantidadRequerida")]
+        public decimal CantidadRequerida { get; set; }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "CantidadAComprar")]
+        public decimal CantidadAComprar { get; set; }
     }
 }

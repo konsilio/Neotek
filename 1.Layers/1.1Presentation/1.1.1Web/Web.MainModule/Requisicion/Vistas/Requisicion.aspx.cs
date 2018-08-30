@@ -539,6 +539,8 @@ namespace Web.MainModule.Requisicion.Vista
                     IdProducto = int.Parse((_row.Cells[0].FindControl("lbldgProductoID") as Label).Text),
                     AutorizaCompra = (_row.Cells[0].FindControl("chbAutCompra") as CheckBox).Checked,
                     AutorizaEntrega = (_row.Cells[0].FindControl("chbAutEntrega") as CheckBox).Checked,
+                    CantidadAComprar = decimal.Parse((_row.Cells[0].FindControl("txtRequiereComp") as TextBox).Text),
+                    CantidadRequerida = decimal.Parse((_row.Cells[0].FindControl("lbldgCantidad") as Label).Text),
                 });
             }
             ViewState["ListaRequisicionProdAutPutDTO"] = lProd;
@@ -573,8 +575,7 @@ namespace Web.MainModule.Requisicion.Vista
             Convert.ToDecimal(txtCantidad.Text != string.Empty ? txtCantidad.Text : "0"),
             ((List<Model.ProductoDTO>)ViewState["ProductosDTO"]));
             return prod;
-        }
-      
+        }      
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             var validacion = ValidarProdNuevo();

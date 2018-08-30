@@ -56,6 +56,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Compras\ComplementoGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\CorreoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\TipoMedidorAdapter.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="DTOs\Catalogo\ProveedorEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
+    <Compile Include="DTOs\Compras\ComplementoGasDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraCrearDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraEstatusDTO.cs" />
@@ -117,13 +119,13 @@
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionMobileDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioAplicacionDto.cs" />
-    <Compile Include="DTOs\Flujos\Catalogos.cs" />
-    <Compile Include="DTOs\Flujos\Compras.cs" />
-    <Compile Include="DTOs\Flujos\Inventarios.cs" />
-    <Compile Include="DTOs\Flujos\Requisicion.cs" />
-    <Compile Include="DTOs\Flujos\Mobile.cs" />
-    <Compile Include="DTOs\Flujos\Seguridad.cs" />
-    <Compile Include="DTOs\Flujos\Ventas.cs" />
+    <Compile Include="Flujos\Catalogos.cs" />
+    <Compile Include="Flujos\Compras.cs" />
+    <Compile Include="Flujos\Inventarios.cs" />
+    <Compile Include="Flujos\Requisicion.cs" />
+    <Compile Include="Flujos\Mobile.cs" />
+    <Compile Include="Flujos\Seguridad.cs" />
+    <Compile Include="Flujos\Ventas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenGasDataAccess.cs" />

@@ -40,7 +40,7 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaRequisicionDto ActualizarRequisicionAutorizacion(RequisicionAutPutDTO _req)
         {
-            return RequisicionServicio.UpDateRequisicionAutoriza(_req);
+            var req =   RequisicionServicio.UpDateRequisicionAutoriza(_req);
         }        
         public RespuestaRequisicionDto CancelarRequisicion(RequisicionCancelaDTO _req)
         {
