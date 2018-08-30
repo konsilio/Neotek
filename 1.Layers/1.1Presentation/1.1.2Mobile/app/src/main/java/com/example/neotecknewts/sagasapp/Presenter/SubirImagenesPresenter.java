@@ -1,13 +1,13 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
-import android.content.Context;
-
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 /**
  * Created by neotecknewts on 15/08/18.
@@ -28,4 +28,6 @@ public interface SubirImagenesPresenter {
     void errorSolicitud(String mensaje);
 
     void onRegistrarIniciarDescarga();
+
+    void registrarLecturaInicial(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO);
 }

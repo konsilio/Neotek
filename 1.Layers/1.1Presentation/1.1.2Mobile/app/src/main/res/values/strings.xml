@@ -113,8 +113,11 @@
     <string name="toma_de_lectura_final">Toma de lectura final</string>
     <string name="error_titulo">Error</string>
     <string name="toma_de_lectura">Toma de lectura</string>
-    <string name="p500">P500 -</string>
-    <string name="c_al_es_la_lectura_del_p500">¿Cúal es la lectura del P500?</string>
+    <string name="p500">P5000 -</string>
+    <string name="c_al_es_la_lectura_del_p500">¿Cúal es la lectura del P5000?</string>
     <string name="registra_la_lectura_del_p500_de_la_estaci_n">Registra la lectura del P500 de la estación</string>
     <string name="mensjae_error_campos">Existen errores en algunos campos:</string>
+    <string name="tomar_foto">Tomar foto</string>
+    <string name="tomar_foto_estacion">Tomar foto de P5000 </string>
+    <string name="registra_porcentaje_estacion">Registra el porcentaje del </string>
 </resources>

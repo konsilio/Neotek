@@ -1,6 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
-import android.app.ProgressDialog;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,11 +23,11 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
-import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.util.List;
 
@@ -58,6 +58,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public PrecargaPapeletaDTO papeletaDTO;
     public IniciarDescargaDTO iniciarDescarga;
     public FinalizarDescargaDTO finalizarDescarga;
+    public LecturaDTO lecturaDTO;
 
     //Banderas para indicar que objeto trabajar
     public boolean papeleta;
@@ -66,7 +67,9 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public int cantidadFotos;
     public boolean almacen;
     public boolean TanquePrestado;
+    public boolean EsLecturaInicial,EsLecturaFinal;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +98,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 papeleta=true;
                 iniciar=false;
                 finalizar=false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
                 textViewMensaje.setText(R.string.mensaje_primera_foto);
             }
             //se acomoda la vista en modo Iniciar descarga y se les da valor a las variables realcionadas con Iniciar descarga
@@ -114,6 +119,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 almacen = extras.getBoolean("Almacen");
                 textViewMensaje.setText(R.string.mensaje_primera_foto);
                 TanquePrestado = extras.getBoolean("TanquePrestado");
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
             }
             //se acomoda la vista en modo Finalizar descarga y se les da valor a las variables realcionadas con finalizar descarga
             else if(extras.getBoolean("EsDescargaFinalizar")){
@@ -130,6 +137,12 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 finalizar= extras.getBoolean("EsDescargaFinalizar");
                 almacen = extras.getBoolean("Almacen");
                 textViewMensaje.setText(R.string.mensaje_primera_foto);
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+            }else if (extras.getBoolean("EsLecturaInicial")){
+                cantidadFotos = lecturaDTO.getCantidadFotografias();
+                textViewTitulo.setText("Fotografia "+lecturaDTO.getNombreTipoMedidor()
+                        +" - "+lecturaDTO.getNombreEstacionCarburacion() );
             }
 
         }
@@ -201,6 +214,9 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }else if(finalizar){
                     Log.w("Boton","finalizar"+cantidadFotos);
                     finalizarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
+                }else if(EsLecturaInicial){
+                    Log.w("Boton lec.Inic.","finalizar"+cantidadFotos);
+                    lecturaDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 }
             }catch(Exception ex){
 
@@ -243,6 +259,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                     Log.w("Boton","AlmacenFinalizar"+cantidadFotos);
                     finalizarDescarga.getImagenesURI().add(new URI(imageUri.toString()));
                     //processImages();
+                    startActivity();
+                }else if(EsLecturaInicial){
+                    Log.w("Boton lec.Inic.","finalizar"+cantidadFotos);
+                    lecturaDTO.getImagenesURI().add(new URI(imageUri.toString()));
                     startActivity();
                 }
             }catch(Exception ex){
@@ -380,11 +400,15 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             intent.putExtra("FinalizarDescarga",finalizarDescarga);
         }else if(papeleta){
             intent.putExtra("Papeleta",papeletaDTO);
+        }else if(EsLecturaInicial){
+            intent.putExtra("lecturaDTO",lecturaDTO);
         }
         intent.putExtra("EsPapeleta",papeleta);
         intent.putExtra("EsDescargaFinalizar",finalizar);
         intent.putExtra("EsDescargaIniciar",iniciar);
         intent.putExtra("Almacen",true);
+        intent.putExtra("EsLecturaInicial",EsLecturaInicial);
+        intent.putExtra("EsLecturaInicial",EsLecturaFinal);
         startActivity(intent);
     }
 }

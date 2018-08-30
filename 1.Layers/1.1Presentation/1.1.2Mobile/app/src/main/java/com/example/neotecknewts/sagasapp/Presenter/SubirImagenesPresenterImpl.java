@@ -1,18 +1,18 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
-import android.content.Context;
-
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaView;
 import com.example.neotecknewts.sagasapp.Activity.SubirImagenesView;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 /**
  * Created by neotecknewts on 15/08/18.
@@ -122,6 +122,12 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     @Override
     public void onRegistrarIniciarDescarga() {
         subirImagenesView.onRegistrarIniciarDescarga();
+    }
+
+    @Override
+    public void registrarLecturaInicial(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarLecturaInicial(sagasSql,token,lecturaDTO);
     }
     //endregion
 }

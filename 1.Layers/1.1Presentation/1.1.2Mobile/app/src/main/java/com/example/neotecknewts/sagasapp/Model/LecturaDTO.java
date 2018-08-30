@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * @company Neoteck
  * @date 29/08/2018
  */
-public class LecturaDTO {
+public class LecturaDTO implements Serializable {
     //region Variables privadas
     @SerializedName("IdTipoMedidor")
     private int IdTipoMedidor;
@@ -37,6 +38,20 @@ public class LecturaDTO {
     @SerializedName("IdEstacionCarburacion")
     private int IdEstacionCarburacion;
 
+    @SerializedName("ImagenP500")
+    private String ImagenP500;
+
+    @SerializedName("ImagenP500URI")
+    private URI ImagenP500URI;
+
+    @SerializedName("CantidadP500")
+    private int CantidadP500;
+
+    @SerializedName("PorcentajeMedidor")
+    private Double PorcentajeMedidor;
+
+    @SerializedName("ClaveProceso")
+    private String ClaveProceso;
     //endregion
     //region Constructores
     public LecturaDTO() {
@@ -101,5 +116,44 @@ public class LecturaDTO {
         IdEstacionCarburacion = idEstacionCarburacion;
     }
 
+    public String getImagenP500() {
+        return ImagenP500;
+    }
+
+    public void setImagenP500(String imagenP500) {
+        ImagenP500 = imagenP500;
+    }
+
+    public URI getImagenP500URI() {
+        return ImagenP500URI;
+    }
+
+    public void setImagenP500URI(URI imagenP500URI) {
+        ImagenP500URI = imagenP500URI;
+    }
+
+    public int getCantidadP500() {
+        return CantidadP500;
+    }
+
+    public void setCantidadP500(int cantidadP500) {
+        CantidadP500 = cantidadP500;
+    }
+
+    public Double getPorcentajeMedidor() {
+        return PorcentajeMedidor;
+    }
+
+    public void setPorcentajeMedidor(Double porcentajeMedidor) {
+        PorcentajeMedidor = porcentajeMedidor;
+    }
+
+    public String getClaveProceso() {
+        return ClaveProceso;
+    }
+
+    public void setClaveProceso(String claveProceso) {
+        ClaveProceso = claveProceso;
+    }
     //endregion
 }

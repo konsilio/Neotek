@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaDatosPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaDatosPresenterImpl;
@@ -43,8 +44,8 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
     public Session session;
     public List<MedidorDTO> listaDTO;
 
-    public int IdEstacionCarburacion,IdTipoMedidor,CantidadDeFotos;
-    public String MedidorNombre, EstacionCarburacionNombre;
+    public LecturaDTO lecturaDTO;
+
 
 
     @Override
@@ -78,6 +79,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
             EsLecturaFinal = false;
         }
 
+        lecturaDTO = new LecturaDTO();
 
         TVLecturaDatosActivityTitulo.setText(
                 EsLecturaInicial ? getString(R.string.toma_de_lectura_inicial):
@@ -104,9 +106,9 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                             Log.w("id", String.valueOf(medidor.getIdTipoMedidor()));
                             Log.w("meidor", medidor.getNombreTipoMedidor());
                             Log.w("cantidad", String.valueOf(medidor.getCantidadFotografias()));
-                            IdTipoMedidor = medidor.getIdTipoMedidor();
-                            CantidadDeFotos = medidor.getCantidadFotografias();
-                            MedidorNombre = medidor.getNombreTipoMedidor();
+                            lecturaDTO.setIdTipoMedidor(medidor.getIdTipoMedidor());
+                            lecturaDTO.setCantidadFotografias(medidor.getCantidadFotografias());
+                            lecturaDTO.setNombreTipoMedidor(medidor.getNombreTipoMedidor());
                         }
                     }
                 }
@@ -115,6 +117,9 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Log.v("Posicion",String.valueOf(parent.getSelectedItemPosition()));
+                lecturaDTO.setIdTipoMedidor(0);
+                lecturaDTO.setCantidadFotografias(0);
+                lecturaDTO.setNombreTipoMedidor("");
             }
         });
 
@@ -123,18 +128,20 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(parent.getItemAtPosition(position).toString().equals("Tipo 1")){
-                    EstacionCarburacionNombre = parent.getItemAtPosition(position).toString();
-                    IdEstacionCarburacion = 1;
+                    lecturaDTO.setNombreEstacionCarburacion(parent.getItemAtPosition(position)
+                            .toString());
+                    lecturaDTO.setIdEstacionCarburacion(1);
                 }else{
-                    EstacionCarburacionNombre = parent.getItemAtPosition(position).toString();
-                    IdEstacionCarburacion = 1;
+                    lecturaDTO.setNombreEstacionCarburacion(parent.getItemAtPosition(position)
+                            .toString());
+                    lecturaDTO.setIdEstacionCarburacion(1);
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                EstacionCarburacionNombre = "";
-                IdEstacionCarburacion = 0;
+                lecturaDTO.setNombreEstacionCarburacion("");
+                lecturaDTO.setIdEstacionCarburacion(0);
             }
         });
 
@@ -201,12 +208,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                             LecturaP5000Activity.class);
                     intent.putExtra("EsLecturaInicial", EsLecturaInicial);
                     intent.putExtra("EsLecturaFinal", EsLecturaFinal);
-                    intent.putExtra("IdEstacionCarburacion", IdEstacionCarburacion);
-                    intent.putExtra("EstacionCarburacionNombre", EstacionCarburacionNombre);
-                    intent.putExtra("IdTipoMedidor", IdTipoMedidor);
-                    intent.putExtra("MedidorNombre", MedidorNombre);
-                    intent.putExtra("CantidadDeFotos", CantidadDeFotos);
-
+                    intent.putExtra("lecturaDTO",lecturaDTO);
                     startActivity(intent);
                 }
 

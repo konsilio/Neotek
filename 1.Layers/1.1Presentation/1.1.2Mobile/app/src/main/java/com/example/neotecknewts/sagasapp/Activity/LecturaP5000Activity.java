@@ -4,25 +4,24 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5000View,
         View.OnClickListener {
     public Boolean EsLecturaInicial,EsLecturaFinal;
-    public int IdEstacionCarburacion,IdTipoMedidor,CantidadDeFotos;
-    public String EstacionCarburacionNombre,MedidorNombre;
+    public LecturaDTO lecturaDTO;
     public TextView TVLecturaP5000Titulo,TVLecturaP5000Tipo,TVLecturaP5000Pregunta
             ,TVLecturaP5000Registro;
-    public EditText ETLecturaP500CantidadLectura;
+    public NumberPicker NPLecturaP500CantidadLectura;
     public Button BtnLecturaP5000Guardar;
 
 
@@ -35,11 +34,9 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
         if(b!=null) {
             EsLecturaInicial = (boolean) b.get("EsLecturaInicial");
             EsLecturaFinal = (boolean) b.get("EsLecturaFinal");
-            IdEstacionCarburacion = (int) b.get("IdEstacionCarburacion");
-            EstacionCarburacionNombre = (String) b.get("EstacionCarburacionNombre");
-            IdTipoMedidor = (int) b.get("IdTipoMedidor");
-            MedidorNombre = (String) b.get("MedidorNombre");
-            CantidadDeFotos = (int)b.get("CantidadDeFotos");
+            if(EsLecturaInicial){
+                lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
+            }
         }
 
         TVLecturaP5000Titulo = findViewById(R.id.TVLecturaP5000Titulo);
@@ -48,23 +45,17 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
         TVLecturaP5000Registro = findViewById(R.id.TVLecturaP5000Registro);
 
         TVLecturaP5000Titulo.setText(EsLecturaInicial ? R.string.toma_de_lectura_inicial:R.string.toma_de_lectura_final);
-        TVLecturaP5000Tipo.setText(getString(R.string.p500)+EstacionCarburacionNombre);
+        TVLecturaP5000Tipo.setText(getString(R.string.p500)+lecturaDTO.getNombreEstacionCarburacion());
         TVLecturaP5000Registro.setText(R.string.registra_la_lectura_del_p500_de_la_estaci_n);
 
-        ETLecturaP500CantidadLectura = findViewById(R.id.ETLecturaP500CantidadLectura);
-        ETLecturaP500CantidadLectura.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == EditorInfo.IME_ACTION_DONE) {
-                    BtnLecturaP5000Guardar.performClick();
-                }
-                return false;
-            }
-        });
+        NPLecturaP500CantidadLectura = findViewById(R.id.NPLecturaP500CantidadLectura);
+
 
         BtnLecturaP5000Guardar = findViewById(R.id.BtnLecturaP5000Guardar);
         BtnLecturaP5000Guardar.setOnClickListener(this);
 
+        NPLecturaP500CantidadLectura.setValue(5000);
+        NPLecturaP500CantidadLectura.setMaxValue(5000);
     }
 
     @Override
@@ -106,7 +97,6 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.BtnLecturaP5000Guardar:
-                    //Intent intent = new Intent()
                     VerificaValor();
                 break;
         }
@@ -116,12 +106,13 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
     public void VerificaValor() {
         String mensaje = "";
         boolean error = false;
-        if (ETLecturaP500CantidadLectura.getText().toString().equals(""))
+        int CantidadP500 = NPLecturaP500CantidadLectura.getValue();
+        if (CantidadP500 ==0)
         {
             mensaje += "La lectura del P5000 es un valor requerido";
             error = true;
         }else{
-            if(Integer.parseInt(ETLecturaP500CantidadLectura.getText().toString())<=0) {
+            if(CantidadP500<0) {
                 mensaje += "La lectura del P5000 es un valor entero mayor a cero";
                 error = true;
             }
@@ -129,17 +120,26 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
 
         if(error){
             mensaje = getString(R.string.mensjae_error_campos)+"\n"+mensaje;
-        }
-
-        AlertDialog.Builder dialogo= CrearDialogo(R.string.error_titulo,mensaje);
-        dialogo.setNegativeButton(R.string.message_acept, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            AlertDialog.Builder dialogo= CrearDialogo(R.string.error_titulo,mensaje);
+            dialogo.setNegativeButton(R.string.message_acept, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            dialogo.create();
+            dialogo.show();
+        }else{
+            if(EsLecturaInicial) {
+                Intent intent = new Intent(LecturaP5000Activity.this,
+                        CameraLecturaActivity.class);
+                intent.putExtra("EsLecturaInicial",EsLecturaInicial);
+                intent.putExtra("EsLecturaFinal",EsLecturaFinal);
+                lecturaDTO.setCantidadP500(CantidadP500);
+                intent.putExtra("EsFotoP5000",true);
+                intent.putExtra("lecturaDTO",lecturaDTO);
+                startActivity(intent);
             }
-        });
-        dialogo.create();
-        dialogo.show();
-
+        }
     }
 }

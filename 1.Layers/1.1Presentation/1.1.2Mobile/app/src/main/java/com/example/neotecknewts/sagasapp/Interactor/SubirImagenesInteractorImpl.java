@@ -1,12 +1,11 @@
 package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
@@ -17,6 +16,7 @@ import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -459,6 +459,31 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
 
     }
+
+    /**
+     * Permite realizar el registro de la Lectura inicial , se tomara como paramretos un objeto
+     * de tipo {@link SAGASSql} con la conexion a base de datos local, una cadena de tipo
+     * {@link String} con el token de seguirdad del usuario y un objeto de tipo {@link LecturaDTO}
+     * con los datos a enviar al servicio web o registro en movil.
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param lecturaDTO Objeto de tipo {@link LecturaDTO} con los datos a registrar en el servicio
+     *                   web o en local.
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     * @date 30/08/2018
+     */
+    @Override
+    public void registrarLecturaInicial(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String clave_unica = "LI"+s.format(new Date());
+        lecturaDTO.setClaveProceso(clave_unica);
+        sagasSql.InsertLecturaInicial(lecturaDTO);
+        sagasSql.InsertLecturaImagenes(lecturaDTO);
+        sagasSql.InsertLecturaP5000(lecturaDTO);
+        subirImagenesPresenter.onSuccessRegistroAndroid();
+    }
+
     //region Metodos de clase privados
     /**
      * registrar_local
