@@ -250,7 +250,7 @@
                                             </HeaderTemplate>
                                             <ItemTemplate>
                                                 <%--<input type="number" name="txtgvPrecio" runat="server" id="txtgvPrecio" class="form-control" onchange="CalcularImporte(<%=dgListaproductos.ClientID%>, this.id)" />--%>
-                                                <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control calculaPrecio" Width="100px" TextMode="Number" onchange="javascript: CalcularImporte();" />
+                                                <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control calculaPrecio" Width="100px" TextMode="Number" onkeyup="javascript: CalcularImporte();"  />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -259,7 +259,7 @@
                                                 %Desc
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtgvDescuento" runat="server" Width="100px" placeholder="%" type="number" CssClass="form-control calculaPrecio" onchange="javascript: CalcularImporte();" />
+                                                <asp:TextBox ID="txtgvDescuento" runat="server" Width="100px" placeholder="%" type="number" CssClass="form-control calculaPrecio" onkeyup="javascript: CalcularImporte();" />
                                                 <%--<input type="number" name="txtgvDescuento"  class="form-control" Width="100px" placeholder="%" />--%>
                                             </ItemTemplate>
                                         </asp:TemplateField>

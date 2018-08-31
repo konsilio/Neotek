@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Application.MainModule.DTOs.Compras
 {
+    [Serializable]
     public class OrdenCompraProductoCrearDTO
     {
         public int IdProducto { get; set; }

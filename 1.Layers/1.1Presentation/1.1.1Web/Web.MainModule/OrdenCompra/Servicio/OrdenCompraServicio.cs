@@ -11,7 +11,7 @@ namespace Web.MainModule.OrdenCompra.Servicio
 {
     public class OrdenCompraServicio
     {
-        public Model.RequisicionOCDTO DatosRequisicion(int idReq, string Tkn)
+        public RequisicionOCDTO DatosRequisicion(int idReq, string Tkn)
         {
             AgenteServicios agente = new AgenteServicios();
             agente.BuscarRequisicioOC(idReq, Tkn);

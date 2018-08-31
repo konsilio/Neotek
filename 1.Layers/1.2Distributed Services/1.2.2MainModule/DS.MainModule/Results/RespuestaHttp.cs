@@ -25,6 +25,11 @@ namespace DS.MainModule.Results
             return respuestaHttp;
         }
 
+        internal static HttpResponseMessage crearRespuesta(RespuestaDto respuestaDto, object request)
+        {
+            throw new NotImplementedException();
+        }
+
         public static HttpResponseMessage crearRespuesta(DS.MainModule.Filters.ValidateModelAttribute.RespuestaDto respuesta, HttpRequestMessage request)
         {
             HttpResponseMessage respuestaHttp;

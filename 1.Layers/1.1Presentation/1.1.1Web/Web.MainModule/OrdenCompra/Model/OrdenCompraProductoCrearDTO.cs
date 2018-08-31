@@ -5,6 +5,7 @@ using System.Web;
 
 namespace Web.MainModule.OrdenCompra.Model
 {
+    [Serializable]
     public class OrdenCompraProductoCrearDTO
     {
         public int IdProducto { get; set; }

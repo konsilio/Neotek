@@ -10,6 +10,7 @@ using Web.MainModule.Requisicion.Model;
 using Web.MainModule.OrdenCompra.Model;
 using System.Configuration;
 using Web.MainModule.Catalogos.Model;
+using Web.MainModule.Inventario.Model;
 
 namespace Web.MainModule.Agente
 {
@@ -25,6 +26,7 @@ namespace Web.MainModule.Agente
         private string ApiProducto;
         private string ApiCatalgos;
         private string ApiOrdenCompra;
+        private string ApiAlmacen;
 
         public RespuestaAutenticacionDto _respuestaAutenticacion;
         public RespuestaRequisicionDto _respuestaRequisicion;
@@ -955,6 +957,47 @@ namespace Web.MainModule.Agente
                 _ordenCompraCrearDTO = emp;
             }
         }
-        #endregion      
+        #endregion
+        #region 
+        public void GenerarEntradas(List<AlmacenEntradaCrearDTO> _entradas , string tkn)
+        {
+            this.ApiAlmacen = ConfigurationManager.AppSettings["PostGuardarEntradas"];
+            GuardarEntradas(_entradas, tkn).Wait();
+        }
+        private async Task GuardarEntradas(List<AlmacenEntradaCrearDTO> _entradas, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDto resp = new RespuestaDto();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiOrdenCompra, _entradas).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDto>();
+                    else
+                    {
+                        _respuestaDTO = resp;
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (resp.MensajesError != null)
+                        resp.MensajesError = new List<string>();
+                    resp.MensajesError.Add(ex.Message);
+                    resp.Exito = false;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
+            }
+        }
+        #endregion
     }
 }

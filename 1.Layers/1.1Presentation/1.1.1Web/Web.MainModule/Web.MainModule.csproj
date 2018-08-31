@@ -153,6 +153,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Compras\Model\" />
+    <Folder Include="Inventario\Vista\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\bundles\chartscripts.bundle.js" />
@@ -3905,6 +3906,8 @@
     <Compile Include="Controles\DateTimePicker.ascx.designer.cs">
       <DependentUpon>DateTimePicker.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Inventario\Model\AlmacenEntradaCrearDTO.cs" />
+    <Compile Include="Inventario\Servicio\AlmacenServicio.cs" />
     <Compile Include="OrdenCompra\Model\enumIEPS.cs" />
     <Compile Include="OrdenCompra\Model\enumIVA.cs" />
     <Compile Include="OrdenCompra\Model\OrdenCompraAutorizacionDTO.cs" />

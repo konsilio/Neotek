@@ -120,7 +120,6 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCentroCosto(idCosto));
         }
         #endregion
-
         #region Cuentas Contables
         [Route("registra/cuenta/contable")]
         public HttpResponseMessage PostRegistraCuentaContable(CuentaContableCrearDto cuentaDto)

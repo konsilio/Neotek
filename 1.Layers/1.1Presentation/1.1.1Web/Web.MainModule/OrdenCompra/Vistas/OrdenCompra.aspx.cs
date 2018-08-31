@@ -9,10 +9,11 @@ using Security.MainModule.Token_Service;
 using Web.MainModule.OrdenCompra.Servicio;
 using Web.MainModule.Seguridad.Servicio;
 using Web.MainModule.OrdenCompra.Model;
+using Web.MainModule.Inventario.Model;
 
 namespace Web.MainModule.OrdenCompra.Vistas
 {
-    public partial class OrdenCompra : System.Web.UI.Page
+    public partial class OrdenCompra : Page
     {
         private string _token;
         protected void Page_Load(object sender, EventArgs e)
@@ -70,7 +71,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
         private void ActivarAutorizar(OrdenCompraCrearDTO oc)
         {
             var reqDto = new OrdenCompraServicio().DatosRequisicion(oc.IdRequisicion, _token);
-            Session["intIdOrdenCompra"] = oc.IdOrdenCompra;
+            ViewState["OrdenCompraCrearDTO"] = oc;
             txtFechaRequerida.Text = reqDto.FechaRequerida.Date.ToString();
             TxtSolicitante.Text = reqDto.UsuarioSolicitante;
             txtMotivoCompra.Text = reqDto.MotivoRequisicion;
@@ -91,6 +92,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
         {
             lblProveedor.Text = oc.Proveedor;
             divAutorizarOC.Visible = true;
+            lblbtnCrear.Text = "Aceptar";
             //gvProdcutosOrdenCompra.DataSource = oc.Productos;
             //gvProdcutosOrdenCompra.DataBind();
         }
@@ -104,6 +106,58 @@ namespace Web.MainModule.OrdenCompra.Vistas
             divDatosComplementoGas.Visible = true;
             divGvvComplementoGas.Visible = true;
             divCrearOC.Visible = false;
+        }
+        private void Crear()
+        {
+            foreach (var item in new OrdenCompraServicio().GenerarOrdenesCompra(GenerarOrdenCompra(), _token))
+            {
+                if (item.Exito)
+                {
+                    lblMensajeOrdenCompra.Text = lblMensajeOrdenCompra.Text + "N° de Orden de Compra: " + item.NumOrdenCompra;
+                }
+            }
+        }
+        private void Autorizar()
+        {
+            var resp = new OrdenCompraServicio().AutorizarOrdenCompra(new OrdenCompraAutorizacionDTO { IdOrdenCompra = ((OrdenCompraCrearDTO)ViewState["OrdenCompraCrearDTO"]).IdOrdenCompra, UsuarioAutoriza = TokenServicio.ObtenerIdUsuario(_token) }, _token);
+            if (resp.Exito)
+            {
+                btnok.Attributes.Remove("class");
+                btnok.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
+                lblMensajeOrdenCompra.Text = resp.Mensaje;
+                Session["OrdenCompraCrearDTO"] = null;
+            }
+            else
+            {
+                divMensajeError.Visible = true;
+                lblErrorCampos.Text = resp.MensajesError[0];
+
+            }
+        }
+        private void ActualizarAlmacen()
+        {
+            //if (true)
+            //{
+            //    var resp = 
+            //}
+        }
+        private List<AlmacenEntradaCrearDTO> GenerarEntradasAlmacen()
+        {
+            List<AlmacenEntradaCrearDTO> _lEntradas = new List<AlmacenEntradaCrearDTO>();
+            foreach (GridViewRow _r in gvEntrada.Rows)
+            {
+                OrdenCompraCrearDTO oc = (OrdenCompraCrearDTO)ViewState["OrdenCompraCrearDTO"];
+                _lEntradas.Add(new AlmacenEntradaCrearDTO
+                {
+                    IdEmpresa = oc.IdEmpresa,
+                    IdOrdenCompra = oc.IdEmpresa,
+                    IdProduto = int.Parse((_r.Cells[0].FindControl("") as Label).Text),
+                    Cantidad = decimal.Parse((_r.Cells[0].FindControl("") as TextBox).Text),
+                    Observaciones = (_r.Cells[0].FindControl("") as TextBox).Text
+                });
+            }
+
+            return _lEntradas;
         }
         private List<ListItem> IVAs()
         {
@@ -175,33 +229,18 @@ namespace Web.MainModule.OrdenCompra.Vistas
         {
             
             if (lblbtnCrear.Text.Equals("Crear"))
-            {                
-                foreach (var item in new OrdenCompraServicio().GenerarOrdenesCompra(GenerarOrdenCompra(), _token))
-                {
-                    if (item.Exito)
-                    {
-                        lblMensajeOrdenCompra.Text = lblMensajeOrdenCompra.Text + "N° de Orden de Compra: " + item.NumOrdenCompra;
-                    }
-                }
+            {
+                Crear();
             }
             if (lblbtnCrear.Text.Equals("Autorizar"))
             {
-                var resp = new OrdenCompraServicio().AutorizarOrdenCompra(new OrdenCompraAutorizacionDTO { IdOrdenCompra = (int)Session["intIdOrdenCompra"], UsuarioAutoriza = TokenServicio.ObtenerIdUsuario(_token) }, _token);
-                if (resp.Exito)
-                {
-                    btnok.Attributes.Remove("class");
-                    btnok.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
-                    lblMensajeOrdenCompra.Text = resp.Mensaje;
-                    Session["intIdOrdenCompra"] = null;
-                }
-                else
-                {
-                    divMensajeError.Visible = true;
-                    lblErrorCampos.Text = resp.MensajesError[0];
-                   
-                }
+                Autorizar();
             }
 
+            if (lblbtnCrear.Text.Equals("Aceptar"))
+            {
+                ActualizarAlmacen();
+            }
         }
         protected void dgListaproductos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -258,7 +297,6 @@ namespace Web.MainModule.OrdenCompra.Vistas
         {
 
         }
-
         protected void btnGuardarDatosPapeleta_Click(object sender, EventArgs e)
         {
 
