@@ -46,10 +46,15 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _compras.CancelarOrdenCompra(ocDTO));
         }
+        /// <summary>
+        /// Cambia de estatus a Autorizada
+        /// </summary>
+        /// <param name="idOrdenCompra"></param>
+        /// <returns></returns>
         [Route("autoroizar/ordencompra")]
-        public HttpResponseMessage PutAutorizarCompra(OrdenCompraDTO ocDTo)
+        public HttpResponseMessage PutAutorizarCompra(OrdenCompraAutorizacionDTO oc)
         {
-            return RespuestaHttp.crearRespuesta(_compras.AutorizarOrdenCompra(ocDTo), Request);
+            return RespuestaHttp.crearRespuesta(_compras.AutorizarOrdenCompra(oc), Request);
         }
         [Route("buscar/ordenescompra/{idEmpresa}")]
         public HttpResponseMessage GetOrdenesCompra(short idEmpresa)

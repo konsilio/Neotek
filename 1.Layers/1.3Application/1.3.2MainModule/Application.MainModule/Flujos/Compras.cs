@@ -49,24 +49,24 @@ namespace Application.MainModule.Flujos
                 if (orDTO.Exito)
                 {
                     RequisicionServicio.UpDateRequisicionEstaus(oc.IdRequisicion, 8);
-                    NotificarServicio.OrdenDeCompraNueva(OrdenCompraServicio.Buscar(oc.IdOrdenCompra));
+                    NotificarServicio.OrdenDeCompraNueva(OrdenCompraServicio.Buscar(orDTO.IdOrdenCompra));
                 }
             }            
             return lrOC;
         }
-        public RespuestaDto AutorizarOrdenCompra(OrdenCompraDTO dto)
+        public RespuestaDto AutorizarOrdenCompra(OrdenCompraAutorizacionDTO _oc)
         {
             var resp = PermisosServicio.PuedeAutorizarOrdenCompra();
             if (!resp.Exito) return resp;
            
-            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            var oc = OrdenCompraServicio.Buscar(_oc.IdOrdenCompra);
             if (oc == null) return OrdenCompraServicio.NoExiste();
           
             var entity = OrdenComprasAdapter.FromEntity(oc);
             entity.IdUsuarioAutorizador = TokenServicio.ObtenerIdUsuario();
-            entity.FechaAutorizacion = DateTime.Now;
+            entity.FechaAutorizacion = Convert.ToDateTime(DateTime.Today.ToShortDateString());
             entity.IdOrdenCompraEstatus = 3;
-            return OrdenCompraServicio.AutorizarOrdenCompra(entity);
+            return OrdenCompraServicio.Actualizar(entity);
         }
         public RespuestaDto CancelarOrdenCompra(OrdenCompraDTO dto)
         {
@@ -79,7 +79,7 @@ namespace Application.MainModule.Flujos
 
             var entity = OrdenComprasAdapter.FromEntity(oc);
             entity.IdOrdenCompraEstatus = 5;
-            return OrdenCompraServicio.AutorizarOrdenCompra(entity);
+            return OrdenCompraServicio.Actualizar(entity);
         }
         public List<OrdenCompraDTO> ListaOrdenCompra(short IdEmpresa)
         {

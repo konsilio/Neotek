@@ -59,7 +59,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
         {
             var Oc = new OrdenCompraServicio().OrdenCompraPorId(id, _token);
             if (Oc.IdOrdenCompraEstatus.Equals(Convert.ToByte((byte)OrdenCompraEstatus.Espera_de_Autorización)))            
-                ActivarAturizar(Oc);
+                ActivarAutorizar(Oc);
             if (Oc.IdOrdenCompraEstatus.Equals((byte)OrdenCompraEstatus.Proceso_de_Compra))
                 ActivarAlmacen(Oc);
             if (Oc.IdOrdenCompraEstatus.Equals((byte)OrdenCompraEstatus.Proceso_de_Compra) && Oc.EsGas && Oc.EsTransporteGas)
@@ -67,22 +67,25 @@ namespace Web.MainModule.OrdenCompra.Vistas
             if (Oc.IdOrdenCompraEstatus.Equals((byte)OrdenCompraEstatus.Compra_Cancelada) || Oc.IdOrdenCompraEstatus.Equals((byte)OrdenCompraEstatus.Compra_Exitosa))
                 ActivarVerOrdenCompra(Oc);
         }
-        private void ActivarAturizar(OrdenCompraCrearDTO oc)
+        private void ActivarAutorizar(OrdenCompraCrearDTO oc)
         {
             var reqDto = new OrdenCompraServicio().DatosRequisicion(oc.IdRequisicion, _token);
+            Session["intIdOrdenCompra"] = oc.IdOrdenCompra;
             txtFechaRequerida.Text = reqDto.FechaRequerida.Date.ToString();
             TxtSolicitante.Text = reqDto.UsuarioSolicitante;
             txtMotivoCompra.Text = reqDto.MotivoRequisicion;
             txtRequeridoEn.Text = reqDto.RequeridoEn;
             lblNumRequisicion.Text = reqDto.NumeroRequisicion;            
 
-            lblNunOrdenCompra.Text = oc.NumOrdenCompra;        
+            lblNunOrdenCompra.Text = oc.NumOrdenCompra;
+            lblNunOrdenCompra.Visible = true;      
             gvProdcutosOrdenCompra.DataSource =oc.Productos;
             gvProdcutosOrdenCompra.DataBind();
             lblProveedor.Text = oc.Proveedor;
             divCrearOC.Visible = false;
             divAutorizarOC.Visible = true;
-            BtnCrear.Text = "Actualizar";
+            //BtnCrear.Text = "Actualizar";
+            lblbtnCrear.Text = "Autorizar";
         }
         private void ActivarAlmacen(OrdenCompraDTO oc)
         {
@@ -170,14 +173,35 @@ namespace Web.MainModule.OrdenCompra.Vistas
         }
         protected void BtnCrear_Click(object sender, EventArgs e)
         {
-            //Validar modelo
-            foreach (var item in new OrdenCompraServicio().GenerarOrdenesCompra(GenerarOrdenCompra(), _token))
-            {
-                if (item.Exito)
+            
+            if (lblbtnCrear.Text.Equals("Crear"))
+            {                
+                foreach (var item in new OrdenCompraServicio().GenerarOrdenesCompra(GenerarOrdenCompra(), _token))
                 {
-                    lblMensajeOrdenCompra.Text = lblMensajeOrdenCompra.Text + "N° de Orden de Compra: " + item.NumOrdenCompra;                    
-                }               
-            }         
+                    if (item.Exito)
+                    {
+                        lblMensajeOrdenCompra.Text = lblMensajeOrdenCompra.Text + "N° de Orden de Compra: " + item.NumOrdenCompra;
+                    }
+                }
+            }
+            if (lblbtnCrear.Text.Equals("Autorizar"))
+            {
+                var resp = new OrdenCompraServicio().AutorizarOrdenCompra(new OrdenCompraAutorizacionDTO { IdOrdenCompra = (int)Session["intIdOrdenCompra"], UsuarioAutoriza = TokenServicio.ObtenerIdUsuario(_token) }, _token);
+                if (resp.Exito)
+                {
+                    btnok.Attributes.Remove("class");
+                    btnok.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
+                    lblMensajeOrdenCompra.Text = resp.Mensaje;
+                    Session["intIdOrdenCompra"] = null;
+                }
+                else
+                {
+                    divMensajeError.Visible = true;
+                    lblErrorCampos.Text = resp.MensajesError[0];
+                   
+                }
+            }
+
         }
         protected void dgListaproductos_RowDataBound(object sender, GridViewRowEventArgs e)
         {

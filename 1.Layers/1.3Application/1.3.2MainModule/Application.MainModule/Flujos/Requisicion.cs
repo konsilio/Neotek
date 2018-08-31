@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.DTOs.Seguridad;
 using Application.MainModule.Servicios.Requisicion;
 using Application.MainModule.Servicios.Notificacion;
+using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.AdaptadoresDTO.Requisicion;
 
 namespace Application.MainModule.Flujos
 {
@@ -16,7 +14,7 @@ namespace Application.MainModule.Flujos
         public RespuestaRequisicionDto InsertRequisicionNueva(RequisicionEDTO _req)
         {
             var _requisicion = AdaptadoresDTO.Requisicion.RequisicionAdapter.FromEDTO(_req);
-            _requisicion =  Servicios.Almacen.ProductoAlmacenServicio.CalcularAlmacenProcutos(_requisicion);
+            _requisicion = Servicios.Almacen.ProductoAlmacenServicio.CalcularAlmacenProcutos(_requisicion);
             var respuesta = RequisicionServicio.GuardarRequisicionNueva(_requisicion);
             if (respuesta.Exito)
                 NotificarServicio.RequisicionNueva(RequisicionServicio.Buscar(respuesta.IdRequisicion));
@@ -34,15 +32,39 @@ namespace Application.MainModule.Flujos
         {
             return RequisicionServicio.BuscarRequisicionAuto(numRequisicon);
         }
-        public RespuestaRequisicionDto ActualizarRequisicionRevision(RequisicionRevPutDTO _req)
+        public RespuestaDto ActualizarRequisicionRevision(RequisicionRevPutDTO _req)
         {
             return RequisicionServicio.UpdateRequisicionRevision(_req);
         }
-        public RespuestaRequisicionDto ActualizarRequisicionAutorizacion(RequisicionAutPutDTO _req)
+        public RespuestaDto ActualizarRequisicionAutorizacion(RequisicionAutPutDTO _req)
         {
-            var req =   RequisicionServicio.UpDateRequisicionAutoriza(_req);
+            var ReqAnterior = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
+            var newReq = RequisicionAdapter.FromEntity(ReqAnterior);
+            newReq.IdUsuarioAutorizacion = _req.IdUsuarioAutorizacion;
+            newReq.FechaAutorizacion = _req.FechaAutorizacion;
+            newReq.IdRequisicionEstatus = _req.IdRequisicionEstatus;
+
+            var ReqProd = RequisicionProductoAdapter.FromDTO(_req.ListaProductos);
+            var prodEdit = RequisicionProductoAdapter.FromEntity(new RequisicionDataAccess().BuscarProductoRequisicion(_req.IdRequisicion));
+            foreach (var item in prodEdit)
+            {
+                foreach (var prod in ReqProd)
+                {
+                    if (item.IdProducto.Equals(prod.IdProducto))
+                    {
+                        item.AutorizaCompra = prod.AutorizaCompra;
+                        item.AutorizaEntrega = prod.AutorizaEntrega;
+                        if (prod.AutorizaEntrega.Value)
+                        {
+                            //Notificar
+                        }
+                        item.CantidadAComprar = prod.CantidadAComprar;
+                    }
+                }
+            }
+            return RequisicionServicio.UpDateRequisicionAutoriza(newReq, prodEdit);
         }        
-        public RespuestaRequisicionDto CancelarRequisicion(RequisicionCancelaDTO _req)
+        public RespuestaDto CancelarRequisicion(RequisicionCancelaDTO _req)
         {
             return RequisicionServicio.CancelarRequisicion(_req);
         }       

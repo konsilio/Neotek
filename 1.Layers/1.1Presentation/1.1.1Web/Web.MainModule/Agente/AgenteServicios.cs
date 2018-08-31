@@ -886,12 +886,12 @@ namespace Web.MainModule.Agente
                 _respuestaDTO = resp;
             }
         }
-        public void AutorizarOrdenCompra(OrdenCompraDTO _oc, string token)
+        public void AutorizarOrdenCompra(OrdenCompraAutorizacionDTO _oc, string token)
         {
             this.ApiOrdenCompra = ConfigurationManager.AppSettings["PutAutorizarCompra"];
             AutorizarOC(_oc, token).Wait();
         }
-        private async Task AutorizarOC(OrdenCompraDTO _oc, string token)
+        private async Task AutorizarOC(OrdenCompraAutorizacionDTO _oc, string token)
         {
             using (var client = new HttpClient())
             {
@@ -900,7 +900,7 @@ namespace Web.MainModule.Agente
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
                     HttpResponseMessage response = await client.PutAsJsonAsync(ApiOrdenCompra, _oc).ConfigureAwait(false);

@@ -1,6 +1,8 @@
 ﻿using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Requisicion;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -84,6 +86,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 IdCentroCosto = _prod.IdCentroCosto,
                 Producto = p.Descripcion,
                 Categoria = _prod.Categoria,
+                Cantidad = _prod.Cantidad,
                 Linea = _prod.Linea,
                 UnidadMedida = p.UnidadMedida.Acronimo,
                 UnidadMedida2 = _prod.UnidadMedida2,
@@ -100,6 +103,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
         }
         public static OrdenCompraProductoCrearDTO ToDTO(OrdenCompraProducto _prod)
         {
+            var prodRequ = RequisicionServicio.BuscarRequisiconProductoPorId(_prod.IdProducto, _prod.OrdenCompra.IdRequisicion);
             OrdenCompraProductoCrearDTO _prodDTO = new OrdenCompraProductoCrearDTO()
             {
                 IdProducto = _prod.IdProducto,
@@ -110,12 +114,14 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Linea = _prod.Linea,
                 UnidadMedida = _prod.UnidadMedida,
                 UnidadMedida2 = _prod.UnidadMedida2,
-                Descripcion = _prod.Descripcion,
+                Descripcion = prodRequ.Aplicacion,
                 Precio = _prod.Precio,
                 Cantidad = _prod.Cantidad,
+                CantidadRequerida = prodRequ.Cantidad,
                 IdCentroCosto = _prod.IdCentroCosto,
-                CentroCosto = _prod.CentroCosto.Descripcion,
+                CentroCosto = _prod.CentroCosto.Numero,
                 IdCuentaContable = _prod.OrdenCompra.IdCuentaContable,
+                CuentaContable = CuentaContableServicio.ObtenerCuentaContable(_prod.OrdenCompra.IdCuentaContable).Descripcion,//BuscarNombre 
                 Descuento = _prod.Descuento,
                 IVA = _prod.IVA,
                 IEPS = _prod.IEPS,

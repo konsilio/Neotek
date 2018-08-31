@@ -98,7 +98,7 @@
                                     <asp:Label runat="server" ID="lblNumRequisicion" Text="R000000000"></asp:Label>
                                 </div>
                                 <div class="input-group">
-                                    <b>Número de Requisición:</b>&nbsp;
+                                    <b>Número de Orden de Compra:</b>&nbsp;
                                     <asp:Label runat="server" ID="lblNunOrdenCompra" Text="OC00000000" Visible="false"></asp:Label>
                                 </div>
                             </div>
@@ -146,6 +146,17 @@
                         </div>
                         <div class="col-sm-6">
                             <dtp:DateTimePicker ID="dtpFechaEntrada" runat="server" Visible="false" />
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div id="divMensajeError" runat="server" visible="false" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <asp:Label ID="lblErrorCampos" runat="server" Text="" /></strong>
+                            </div>
                         </div>
                     </div>
                     <div class="body">
@@ -314,7 +325,7 @@
                                                 <b>Requeridos</b>
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("Cantidad") %>' />
+                                                <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("CantidadRequerida") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -1044,7 +1055,7 @@
                         </a>
                     </div>
                     <div class="col-sm-4 center">
-                        <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" runat="server" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round">
+                        <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" runat="server" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
                             <asp:Label ID="lblbtnCrear" runat="server" Text="Crear" />
                         </a>
                     </div>
@@ -1060,7 +1071,7 @@
                     <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Crear" OnClick="BtnCrear_Click" />
+                    <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Si" OnClick="BtnCrear_Click" />
 
                     <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
                 </div>

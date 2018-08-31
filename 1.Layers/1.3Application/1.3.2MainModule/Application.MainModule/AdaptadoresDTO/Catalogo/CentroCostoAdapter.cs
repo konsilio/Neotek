@@ -29,7 +29,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Activo = true,
             };
         }
-
         public static CentroCosto FromDto(CentroCostoModificarDto cCostoDto)
         {
             return new CentroCosto()
@@ -49,7 +48,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Activo = true,
             };
         }
-
         public static CentroCosto FromEntity(CentroCosto centro)
         {
             return new CentroCosto()
@@ -70,7 +68,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Activo = centro.Activo,
             };
         }
-
         public static CentroCostoDTO ToDTO(CentroCosto cc)
         {
             CentroCostoDTO ccDTO = new CentroCostoDTO();

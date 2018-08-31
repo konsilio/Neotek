@@ -169,6 +169,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 IdRequisicion = _prodEntity.IdRequisicion,
                 IdProducto = _prodEntity.IdProducto,
                 IdCentroCosto = _prodEntity.IdCentroCosto,
+                IdTipoProducto = _prodEntity.IdTipoProducto,
                 Cantidad = _prodEntity.Cantidad,
                 Aplicacion = _prodEntity.Aplicacion,
                 RevisionFisica = _prodEntity.RevisionFisica,

@@ -24,8 +24,7 @@ namespace Sagas.MainModule.Entidades
         public Nullable<decimal> CantidadAlmacenActual { get; set; }
         public Nullable<decimal> CantidadAComprar { get; set; }
         public Nullable<bool> AutorizaEntrega { get; set; }
-        public Nullable<bool> AutorizaCompra { get; set; }
-    
+        public Nullable<bool> AutorizaCompra { get; set; }    
         public virtual Requisicion Requisicion { get; set; }
         public virtual Producto Producto { get; set; }
         public virtual CentroCosto CentroCosto { get; set; }

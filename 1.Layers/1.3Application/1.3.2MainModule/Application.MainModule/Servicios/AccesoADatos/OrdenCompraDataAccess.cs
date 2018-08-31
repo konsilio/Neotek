@@ -81,6 +81,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
                 catch (Exception ex)
                 {
+                    _respuesta.MensajesError = new List<string>();
                     _respuesta.Exito = false;
                     _respuesta.MensajesError.Add(string.Concat(Error.OC0001, " | ", ex.Message));
                     if (ex.InnerException != null)

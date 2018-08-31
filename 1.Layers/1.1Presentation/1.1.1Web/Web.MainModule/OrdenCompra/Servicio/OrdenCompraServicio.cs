@@ -47,7 +47,7 @@ namespace Web.MainModule.OrdenCompra.Servicio
             agente.CancelarOrdenCompra(dto, Tkn);
             return agente._respuestaDTO;
         }
-        public RespuestaDto AutorizarOrdenCompra(OrdenCompraDTO dto, string Tkn)
+        public RespuestaDto AutorizarOrdenCompra(OrdenCompraAutorizacionDTO dto, string Tkn)
         {
             AgenteServicios agente = new AgenteServicios();
             agente.AutorizarOrdenCompra(dto, Tkn);

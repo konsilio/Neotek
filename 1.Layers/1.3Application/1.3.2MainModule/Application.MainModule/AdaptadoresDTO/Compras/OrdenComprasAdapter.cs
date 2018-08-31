@@ -32,6 +32,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             {
                 IdEmpresa = oc.IdEmpresa,
                 Empresa = oc.Empresa.NombreComercial,
+                IdOrdenCompra = oc.IdOrdenCompra,
                 IdOrdenCompraEstatus = oc.IdOrdenCompraEstatus,
                 NumOrdenCompra = oc.NumOrdenCompra,
                 OrdenCompraEstatus = oc.OrdenCompraEstatus.Descripcion,
@@ -126,15 +127,19 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             List<OrdenCompra> oc = ocDTO.Select(x => FromDTO(x)).ToList();
             return oc;
         }
-          public static OrdenCompra FromEntity(OrdenCompra ocDTO)
+        public static OrdenCompra FromEntity(OrdenCompra ocDTO)
         {
             OrdenCompra oc = new OrdenCompra
             {
                 IdEmpresa = ocDTO.IdEmpresa,
                 IdOrdenCompraEstatus = ocDTO.IdOrdenCompraEstatus,
                 IdRequisicion = ocDTO.IdRequisicion,
+                IdOrdenCompra = ocDTO.IdOrdenCompra,
+                NumOrdenCompra = ocDTO.NumOrdenCompra,
                 IdProveedor = ocDTO.IdProveedor,
+                IdUsuarioGenerador = ocDTO.IdUsuarioGenerador,
                 IdCentroCosto = ocDTO.IdCentroCosto,
+                FechaRegistro = ocDTO.FechaRegistro,
                 IdCuentaContable = ocDTO.IdCuentaContable,               
                 EsActivoVenta = ocDTO.EsActivoVenta,
                 EsGas = ocDTO.EsGas,

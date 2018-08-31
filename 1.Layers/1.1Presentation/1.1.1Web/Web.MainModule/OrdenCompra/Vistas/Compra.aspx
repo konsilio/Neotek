@@ -187,7 +187,7 @@
                                                 No. Orden de Compra
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:Label runat="server" ID="lblIdRequisicionEstatus" Text='<%# Bind("IdOrdenCompra") %>' Visible="true"></asp:Label>
+                                                <asp:Label runat="server" ID="lblIdRequisicionEstatus" Text='<%# Bind("IdOrdenCompra") %>' Visible="false"></asp:Label>
                                                 <asp:Label runat="server" ID="lblDgFechaRequerida" Text='<%# Bind("NumOrdenCompra") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
