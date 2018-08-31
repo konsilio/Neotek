@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
 using Sagas.MainModule.Entidades;
+using Application.MainModule.DTOs.Respuesta;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -30,6 +31,11 @@ namespace Application.MainModule.Servicios.Catalogos
         public static string ObtenerNombreCompleto(Usuario usuario)
         {
             return string.Concat(usuario.Nombre, " ", usuario.Apellido1, " ", usuario.Apellido2);
+        }
+
+        public static RespuestaDto Actualizar(Usuario usuario)
+        {
+            return new UsuarioDataAccess().Actualizar(usuario);
         }
     }
 }

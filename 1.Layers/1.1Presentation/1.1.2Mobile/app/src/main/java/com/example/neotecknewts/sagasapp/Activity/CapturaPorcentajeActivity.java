@@ -44,6 +44,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean iniciar;
     public boolean finalizar;
     public boolean almacen;
+    public boolean es_tanque_prestado;
 
 
     @Override
@@ -79,6 +80,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                     iniciar = true;
                     finalizar = false;
                     almacen = extras.getBoolean("Almacen");
+                    es_tanque_prestado = extras.getBoolean("TanquePrestado");
                 if (almacen) {
                     textViewTitulo.setText(iniciarDescargaDTO.getNombreTipoMedidorTractor()+" - Almacen");
                     textView.setText(R.string.porcentaje_medidor_almacen_message);
@@ -163,6 +165,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             intent.putExtra("Papeleta",papeletaDTO);
         }else if(iniciar) {
             intent.putExtra("IniciarDescarga",iniciarDescargaDTO);
+            intent.putExtra("TanquePrestado",es_tanque_prestado);
         }else if(finalizar){
             intent.putExtra("FinalizarDescarga",finalizarDescargaDTO);
         }
@@ -182,26 +185,54 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
+            if(iniciar&& almacen) {
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this,android.R.style.Theme_DeviceDefault_Light_Dialog);
-            builder.setTitle(R.string.title_alert_message);
-            builder.setMessage(R.string.message_goback_diabled);
-            builder.setNegativeButton(getString(R.string.label_no), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            builder.setPositiveButton(getString(R.string.label_si), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                    finish();
-                }
-            });
-            builder.setCancelable(false);
-            builder.show();
-            return  false;
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog);
+                builder.setTitle(R.string.title_alert_message);
+                builder.setMessage(R.string.message_goback_diabled);
+                builder.setNegativeButton(getString(R.string.label_no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setPositiveButton(getString(R.string.label_si), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        Intent intent = new Intent(CapturaPorcentajeActivity.this, IniciarDescargaActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+                return false;
+            }else if (iniciar) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog);
+                builder.setTitle(R.string.title_alert_message);
+                builder.setMessage(R.string.message_goback_diabled);
+                builder.setNegativeButton(getString(R.string.label_no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                builder.setPositiveButton(getString(R.string.label_si), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        finish();
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+                return false;
+
+            }else{
+                return super.onKeyDown(keyCode, event);
+            }
         }
         else {
             return super.onKeyDown(keyCode, event);

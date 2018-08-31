@@ -89,6 +89,7 @@
     <Compile Include="DTOs\Compras\OrdenCompraProductoDTO.cs" />
     <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />
     <Compile Include="DTOs\Compras\RequisicionOCDTO.cs" />
+    <Compile Include="DTOs\Mobile\LoginFbDTO.cs" />
     <Compile Include="DTOs\NotificacionDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\CorreoDto.cs" />

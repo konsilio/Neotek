@@ -14,6 +14,9 @@ abstract class RespuestaDTO {
     @SerializedName("Mensaje")
     private String Mensaje;
 
+    @SerializedName("MensajesError")
+    private String MensajesError;
+
     public boolean isExito() {
         return Exito;
     }
@@ -28,5 +31,13 @@ abstract class RespuestaDTO {
 
     public void setMensaje(String mensaje) {
         Mensaje = mensaje;
+    }
+
+    public String getMensajesError() {
+        return MensajesError;
+    }
+
+    public void setMensajesError(String mensajesError) {
+        MensajesError = mensajesError;
     }
 }

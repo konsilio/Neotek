@@ -13,37 +13,37 @@ import java.util.List;
 
 public class IniciarDescargaDTO implements Serializable {
 
-    @SerializedName("")
+    @SerializedName("IdOrdenCompra")
     private int IdOrdenCompra;
 
-    @SerializedName("")
+    @SerializedName("NombreTipoMedidorTractor")
     private String NombreTipoMedidorTractor;
 
-    @SerializedName("")
+    @SerializedName("NombreTipoMedidorAlmacen")
     private String NombreTipoMedidorAlmacen;
 
-    @SerializedName("")
+    @SerializedName("IdTipoMedidorTractor")
     private int IdTipoMedidorTractor;
 
-    @SerializedName("")
+    @SerializedName("IdTipoMedidorAlmacen")
     private int IdTipoMedidorAlmacen;
 
-    @SerializedName("")
+    @SerializedName("CantidadFotosAlmacen")
     private int CantidadFotosAlmacen;
 
-    @SerializedName("")
+    @SerializedName("CantidadFotosTractor")
     private int CantidadFotosTractor;
 
-    @SerializedName("")
+    @SerializedName("TanquePrestado")
     private boolean TanquePrestado;
 
-    @SerializedName("")
+    @SerializedName("PorcentajeMedidorAlmacen")
     private Double PorcentajeMedidorAlmacen;
 
-    @SerializedName("")
+    @SerializedName("PorcentajeMedidorTractor")
     private Double PorcentajeMedidorTractor;
 
-    @SerializedName("")
+    @SerializedName("IdAlmacen")
     private int IdAlmacen;
 
     @SerializedName("Imagenes")
@@ -51,6 +51,12 @@ public class IniciarDescargaDTO implements Serializable {
 
     @SerializedName("ImagenesURL")
     private List<URI> ImagenesURI;
+
+    @SerializedName("ClaveOperacion")
+    private String ClaveOperacion;
+
+    @SerializedName("FechaDescarga")
+    private String FechaDescarga;
 
     public IniciarDescargaDTO(){
         Imagenes = new ArrayList<>();
@@ -159,5 +165,21 @@ public class IniciarDescargaDTO implements Serializable {
 
     public void setIdAlmacen(int idAlmacen) {
         IdAlmacen = idAlmacen;
+    }
+
+    public String getClaveOperacion() {
+        return ClaveOperacion;
+    }
+
+    public void setClaveOperacion(String claveOperacion) {
+        ClaveOperacion = claveOperacion;
+    }
+
+    public String getFechaDescarga() {
+        return FechaDescarga;
+    }
+
+    public void setFechaDescarga(String fechaDescarga) {
+        FechaDescarga = fechaDescarga;
     }
 }

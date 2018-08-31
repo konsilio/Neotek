@@ -2,10 +2,16 @@ package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
+import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
@@ -14,7 +20,9 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -56,9 +64,72 @@ public interface RestClient {
     @GET(Constantes.LISTA_MEDIDORES)
     Call<List<MedidorDTO>> getMedidores(@Header("Authorization")String token);
 
+    /**
+     * postServicio
+     * Permite verificar si el servicio de .NET esta disponible
+     * @param token {@link String} que reprecenta el token de seguridad  del usuario para el servicio
+     * @param contentType El tipo de contenido con el que se trabaja (Ej. 'application/json')
+     * @return Objeto {@link RespuestaServicioDisponibleDTO} con la respuesta que dio el web service
+     * @author Jorge Omar Tovar Martínez
+     */
     @POST(Constantes.VERIFICA_SERVICIO)
-    Call<UsuarioDTO> postServicio(@Header("Authorization")String token,@Header("Content-Type") String contentType);
+    Call<RespuestaServicioDisponibleDTO> postServicio(
+            @Header("Authorization")String token, @Header("Content-Type") String contentType);
 
+    /**
+     * postPapeleta
+     * Permite realizar el el vio de los datros de la papeleta al servicio web ,este retornara un
+     * objeto de respuesta tipo {@link RespuestaPapeletaDTO} que da el servicio web
+     * @param papeletaDTO Objeto de tipo {@link PrecargaPapeletaDTO} con los datos a enviar de la
+     *                    papeleta
+     * @param token {@link String} que reprecenta el token de seguridad del usuario
+     * @param contentType {@link String} que reprecenta el tipo de contenido (Ej. 'application/json')
+     * @return Objeto {@link RespuestaPapeletaDTO} que contiene la repspuesta del servicio web
+     * @author Jorge Omar Tovar Martínez
+     */
     @POST(Constantes.POST_PAPELETA)
-    Call<PrecargaPapeletaDTO> postPapeleta(@Body PrecargaPapeletaDTO papeletaDTO, @Header("Content-Type") String contentType);
+    Call<RespuestaPapeletaDTO> postPapeleta(@Body PrecargaPapeletaDTO papeletaDTO,
+                                            @Header("Authorization")String token,
+                                            @Header("Content-Type") String contentType);
+
+    /**
+     * postDescarga
+     * Permite realizar el consumo del servicio para el registro de la descarga, se enviaran como
+     * parametros un objeto de tipo {@link IniciarDescargaDTO} que contiene los valores del
+     * formulario , una cadena {@link String} que contiene el token de seguridad y un {@link String}
+     * con el tipo de contenido enviado, al finalizar retornara una respuesta que se almacena en un
+     * objeto de tipo {@link RespuestaIniciarDescargaDTO}.
+     * @param iniciarDescargaDTO Objeto {@link IniciarDescargaDTO} con los datos de la descarga
+     * @param token {@link String} que contiene el token de seguridad
+     * @param contentType {@link String} que reprecenta el tipo de contenido  (Ej. 'application/json')
+     * @return Objeto {@link RespuestaIniciarDescargaDTO} Con la respuesta del servicio
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @POST(Constantes.POST_INICIAR_DESCARGA)
+    Call<RespuestaIniciarDescargaDTO> postDescarga(@Body IniciarDescargaDTO iniciarDescargaDTO,
+                                                   @Header("Authorization")String token,
+                                                   @Header("Content-Type") String contentType
+                                                  );
+
+    /**
+     * postFinalizarDescarga
+     * Permite realizar el consumo del servicio para el registro de la finalizacion de la descarga,
+     * se requiere como parametros un objeto de tipo {@link FinalizarDescargaDTO} que contine los
+     * valores de la finalizaciòn de la descarga, una cadena {@link String} que contiene el token
+     * de seguridad y finalmente un {@link String} que contiene el tipo de contenido enviado,
+     * tras finalizar se retornara una repuesta que se almacenara en un objeto de tipo
+     * {@link RespuestaFinalizarDescargaDTO}.
+     * @param finalizarDescargaDTO Objeto {@link FinalizarDescargaDTO} con los datos de la
+     *                             finalización de la descarga
+     * @param token {@link String} que contiene  el token de seguridad
+     * @param contentType {@link String} que reprecenta el tipo de contenido (Ej. 'application/json')
+     * @return Un objeto de tipo {@link RespuestaFinalizarDescargaDTO} Con lo que responde el servicio.
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @POST(Constantes.POST_FINALIZAR_DESCARGA)
+    Call<RespuestaFinalizarDescargaDTO> postFinalizarDescarga(@Body FinalizarDescargaDTO
+                                                                   finalizarDescargaDTO,
+                                                              @Header("Authorization")String token,
+                                                              @Header("Content-Type") String contentType
+    );
 }

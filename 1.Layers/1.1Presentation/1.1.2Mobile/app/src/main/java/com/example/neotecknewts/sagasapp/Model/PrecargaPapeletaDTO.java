@@ -28,10 +28,10 @@ public class PrecargaPapeletaDTO implements Serializable {
     private int IdProveedorExpedidor;
 
     @SerializedName("Fecha")
-    private Date Fecha;
+    private String Fecha;
 
     @SerializedName("FechaEmbarque")
-    private Date FechaEmbarque;
+    private String FechaEmbarque;
 
     @SerializedName("NumeroEmbarque")
     private String NumeroEmbarque;
@@ -87,8 +87,8 @@ public class PrecargaPapeletaDTO implements Serializable {
     @SerializedName("CantidadFotosTractor")
     private int CantidadFotosTractor;
 
-    @SerializedName("ClaveUnica")
-    private String ClaveUnica;
+    @SerializedName("ClaveOperacion")
+    private String ClaveOperacion;
 
     public PrecargaPapeletaDTO(){
         Imagenes = new ArrayList<>();
@@ -118,19 +118,19 @@ public class PrecargaPapeletaDTO implements Serializable {
         IdProveedorPorteador = idProveedorPorteador;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return Fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         Fecha = fecha;
     }
 
-    public Date getFechaEmbarque() {
+    public String getFechaEmbarque() {
         return FechaEmbarque;
     }
 
-    public void setFechaEmbarque(Date fechaEmbarque) {
+    public void setFechaEmbarque(String fechaEmbarque) {
         FechaEmbarque = fechaEmbarque;
     }
 
@@ -286,11 +286,11 @@ public class PrecargaPapeletaDTO implements Serializable {
         CantidadFotosTractor = cantidadFotosTractor;
     }
 
-    public String getClaveUnica() {
-        return ClaveUnica;
+    public String getClaveOperacion() {
+        return ClaveOperacion;
     }
 
-    public void setClaveUnica(String claveUnica) {
-        ClaveUnica = claveUnica;
+    public void setClaveOperacion(String Clave) {
+        ClaveOperacion = Clave;
     }
 }
