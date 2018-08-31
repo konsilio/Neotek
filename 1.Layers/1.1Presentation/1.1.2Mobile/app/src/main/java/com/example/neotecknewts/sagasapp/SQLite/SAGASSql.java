@@ -14,6 +14,9 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_LECTURA_INICIAL = "lectura_inicial";
     private static final String TABLE_LECTURA_INICIAL_P5000 = "lectura_inicial_p5000";
     private static final String TABLE_LECTURA_INICIAL_IMAGENES = "lectura_inicial_imagenes";
+    private static final String TABLE_LECTURA_FINALIZAR = "lectura_finalizar";
+    private static final String TABLE_LECTURA_FINALIZAR_P5000 = "lectura_finalizar_p5000";
+    private static final String TABLE_LECTURA_FINALIZAR_IAMGENES = "lectura_finalizar_imagenes";
 
     //region Constructor de clase
     /**
@@ -117,7 +120,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         contentValues.put("CantidadFotografiasMedidor",lecturaDTO.getCantidadFotografias());
         contentValues.put("NombreEstacionCarburacion",lecturaDTO.getNombreEstacionCarburacion());
         contentValues.put("IdEstacionCarburacion",lecturaDTO.getIdEstacionCarburacion());
-        contentValues.put("CantidadP5000",lecturaDTO.getCantidadP500());
+        contentValues.put("CantidadP5000",lecturaDTO.getCantidadP5000());
         contentValues.put("PorcentajeMedidor",lecturaDTO.getPorcentajeMedidor());
 
         return db.insert(TABLE_LECTURA_INICIAL,null,contentValues);
@@ -155,6 +158,19 @@ public class SAGASSql extends SQLiteOpenHelper {
         return db.delete(TABLE_LECTURA_INICIAL,"ClaveProceso = "+
                 ClaveProceso,null);
     }
+
+    /**
+     * <h3>GetLecturasIniciales</h3>
+     * Permite retornar todas la lecturas iniciales que se almacenaron en base de datos,
+     * retornara un objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @return Objeto de tipo {@link Cursor} con los resultados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     * @date 31/08/2018
+     */
+    public Cursor GetLecturasIniciales() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_INICIAL,null);
+    }
     //endregion
 
     //region Metodos para la lectura del P5000
@@ -174,8 +190,8 @@ public class SAGASSql extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("ClaveProceso",lecturaDTO.getClaveProceso());
-        contentValues.put("Imagen",lecturaDTO.getImagenP500());
-        contentValues.put("Url",lecturaDTO.getImagenP500URI().toString());
+        contentValues.put("Imagen",lecturaDTO.getImagenP5000());
+        contentValues.put("Url",lecturaDTO.getImagenP5000URI().toString());
         return db.insert(TABLE_LECTURA_INICIAL_P5000,null,contentValues);
     }
 
@@ -189,7 +205,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
      * @date 30/08/2018
      */
-    public Cursor GetLecturaP500ByClaveUnica(String ClaveProceso){
+    public Cursor GetLecturaP5000ByClaveUnica(String ClaveProceso){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_INICIAL_P5000+" WHERE ClaveProceso = '"
                 +ClaveProceso+"'",null);
@@ -231,8 +247,8 @@ public class SAGASSql extends SQLiteOpenHelper {
         for (int x = 0; x<lecturaDTO.getImagenesURI().size();x++) {
             ContentValues contentValues = new ContentValues();
             contentValues.put("ClaveProceso", lecturaDTO.getClaveProceso());
-            contentValues.put("Imagen", lecturaDTO.getImagenP500());
-            contentValues.put("Url", lecturaDTO.getImagenP500URI().toString());
+            contentValues.put("Imagen", lecturaDTO.getImagenP5000());
+            contentValues.put("Url", lecturaDTO.getImagenP5000URI().toString());
             inserts[x] = db.insert(TABLE_LECTURA_INICIAL_IMAGENES,null,contentValues);
         }
         return inserts;

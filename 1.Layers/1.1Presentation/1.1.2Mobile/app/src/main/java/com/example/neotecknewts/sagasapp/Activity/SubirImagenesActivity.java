@@ -108,6 +108,14 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finalizar=false;
                 EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
                 EsLecturaFinal = extras.getBoolean("EsLecturaFinal");
+            }else if (extras.getBoolean("EsLecturaFinal")){
+                Log.w("Subir","LecturaFinal");
+                lecturaDTO= (LecturaDTO) extras.getSerializable("lecturaDTO");
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
+                EsLecturaFinal = extras.getBoolean("EsLecturaFinal");
             }
 
         }
@@ -118,6 +126,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         }else if(finalizar){
             finalizarDescargaSQL = new FinalizarDescargaSQL(getApplicationContext());
         }else if (EsLecturaInicial){
+            sagasSql = new SAGASSql(getApplicationContext());
+        }else if (EsLecturaFinal){
             sagasSql = new SAGASSql(getApplicationContext());
         }
         //se ejecuta la tarea asincrona para procesar las imagenes
@@ -204,7 +214,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     e.printStackTrace();
                 }
             }
-            Uri uri = Uri.parse(lecturaDTO.getImagenP500URI().toString());
+            Uri uri = Uri.parse(lecturaDTO.getImagenP5000URI().toString());
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(
@@ -214,7 +224,40 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
                 byte[] b = bs.toByteArray();
                 String image = Base64.encodeToString(b, Base64.DEFAULT);
-                lecturaDTO.setImagenP500(image.trim());
+                lecturaDTO.setImagenP5000(image.trim());
+                Log.w("Imagen P5000",""+uri.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else if(EsLecturaFinal){//LecturaFinal
+            for (int i=0; i<lecturaDTO.getImagenesURI().size();i++){
+                try {
+                    Uri uri = Uri.parse(lecturaDTO.getImagenesURI().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(), uri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    lecturaDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            Uri uri = Uri.parse(lecturaDTO.getImagenP5000URI().toString());
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), uri);
+                bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                byte[] b = bs.toByteArray();
+                String image = Base64.encodeToString(b, Base64.DEFAULT);
+                lecturaDTO.setImagenP5000(image.trim());
                 Log.w("Imagen P5000",""+uri.toString());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -310,7 +353,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                Intent intent = new Intent(SubirImagenesActivity.this, MenuActivity.class);
+                Intent intent = new Intent(SubirImagenesActivity.this,
+                        MenuActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
@@ -378,6 +422,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 presenter.registrarFinalizarDescarga(finalizarDescarga,session.getToken(),finalizarDescargaSQL);
             }else if (EsLecturaInicial){
                 presenter.registrarLecturaInicial(sagasSql,session.getToken(),lecturaDTO);
+            }else if (EsLecturaFinal){
+                presenter.registrarLecturaFinal(sagasSql,session.getToken(),lecturaDTO);
             }
             textView.setText(R.string.cargando_imagenes_fin);
             //progressDialog.hide();

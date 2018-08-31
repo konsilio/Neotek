@@ -73,6 +73,9 @@ public class CameraLecturaActivity extends AppCompatActivity {
         if(EsLecturaInicial){
             TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
                     " - "+lecturaDTO.getNombreEstacionCarburacion());
+        }else if (EsLecturaFinal){
+            TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
+                    " - "+lecturaDTO.getNombreEstacionCarburacion());
         }
 
         BtnCameraLecturaTomarFoto.setOnClickListener(new View.OnClickListener() {
@@ -108,8 +111,8 @@ public class CameraLecturaActivity extends AppCompatActivity {
     private void verificarBoton() {
         if(EsFotoP5000 && EsLecturaInicial){
             try {
-                lecturaDTO.setImagenP500(imageurl);
-                lecturaDTO.setImagenP500URI(new URI(imageUri.toString()));
+                lecturaDTO.setImagenP5000(imageurl);
+                lecturaDTO.setImagenP5000URI(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         CapturaPorcentajeActivity.class);
                 intent.putExtra("lecturaDTO",lecturaDTO);
@@ -120,7 +123,21 @@ public class CameraLecturaActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+        }else if (EsFotoP5000 && EsLecturaFinal){
+            try {
+                lecturaDTO.setImagenP5000(imageurl);
+                lecturaDTO.setImagenP5000URI(new URI(imageUri.toString()));
+                Intent intent = new Intent(CameraLecturaActivity.this,
+                        CapturaPorcentajeActivity.class);
+                intent.putExtra("lecturaDTO",lecturaDTO);
+                intent.putExtra("EsLecturaInicial",EsLecturaInicial);
+                intent.putExtra("EsLecturaFinal",EsLecturaFinal);
+                startActivity(intent);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     @Override

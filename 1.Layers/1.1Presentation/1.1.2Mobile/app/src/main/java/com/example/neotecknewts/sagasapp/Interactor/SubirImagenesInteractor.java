@@ -19,4 +19,6 @@ public interface SubirImagenesInteractor {
     void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO, String token, FinalizarDescargaSQL finalizarDescargaSQL);
 
     void registrarLecturaInicial(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO);
+
+    void registrarLecturaFinal(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO);
 }

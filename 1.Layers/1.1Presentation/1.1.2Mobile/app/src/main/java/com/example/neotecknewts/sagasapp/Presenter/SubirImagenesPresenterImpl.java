@@ -129,5 +129,11 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
         subirImagenesView.showProgress(R.string.message_cargando);
         interactor.registrarLecturaInicial(sagasSql,token,lecturaDTO);
     }
+
+    @Override
+    public void registrarLecturaFinal(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarLecturaFinal(sagasSql,token,lecturaDTO);
+    }
     //endregion
 }

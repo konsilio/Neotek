@@ -19,4 +19,5 @@ public class Constantes {
     public static final String POST_PAPELETA = "mobile/registrar/papeleta";
     public static final String POST_INICIAR_DESCARGA = "mobile/iniciar/descarga";
     public static final String POST_FINALIZAR_DESCARGA = "mobile/finalizar/descarga";
+    public static final String POST_LECTURA_INICIAL = "mobile/lectura/inicial";
 }

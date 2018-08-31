@@ -18,6 +18,7 @@ import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
+import com.example.neotecknewts.sagasapp.Util.Lisener;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -37,8 +38,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     //se declara el tag de la clase y el presenter correspondiente
-    public static final String TAG = "SubirImagInteractor";
-    SubirImagenesPresenter subirImagenesPresenter;
+    private static final String TAG = "SubirImagInteractor";
+    private SubirImagenesPresenter subirImagenesPresenter;
     private boolean esta_disponible;
     private boolean registra_papeleta;
     private boolean registra_descarga;
@@ -78,7 +79,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio("","application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
@@ -228,7 +229,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio("","application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
@@ -365,7 +366,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio("","application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
@@ -481,6 +482,25 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         sagasSql.InsertLecturaInicial(lecturaDTO);
         sagasSql.InsertLecturaImagenes(lecturaDTO);
         sagasSql.InsertLecturaP5000(lecturaDTO);
+        subirImagenesPresenter.onSuccessRegistroAndroid();
+        Lisener lisener = new Lisener(sagasSql,token);
+        lisener.CrearRunable(Lisener.LecturaInicial);
+    }
+
+    /**
+     * Permite realizar el registro de los datos de la lectura final, se enviara como paramertros
+     * un objeto de tipo {@link SAGASSql} que tiene el acceso a base de datos, una cadena de tipo
+     * {@link String} que tiene el token del usuario y un objeto {@link LecturaDTO} con los datos
+     * a registrar de la descarga
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token  Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param lecturaDTO Objeto de tipo {@link LecturaDTO} con los datos a registrar en el servicio
+     *                   web o en local.
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     * @date 31/08/2018
+     */
+    @Override
+    public void registrarLecturaFinal(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO) {
         subirImagenesPresenter.onSuccessRegistroAndroid();
     }
 

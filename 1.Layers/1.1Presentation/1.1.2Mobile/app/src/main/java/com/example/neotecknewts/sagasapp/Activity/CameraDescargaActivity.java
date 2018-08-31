@@ -140,9 +140,19 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
             }else if (extras.getBoolean("EsLecturaInicial")){
+                lecturaDTO = (LecturaDTO) extras.getSerializable("lecturaDTO");
+                             cantidadFotos = lecturaDTO.getCantidadFotografias();
+                textViewTitulo.setText("Fotografia "+lecturaDTO.getNombreTipoMedidor()
+                        +" - "+lecturaDTO.getNombreEstacionCarburacion() );
+                EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
+                EsLecturaFinal = extras.getBoolean("EsLecturaFinal");
+            }else if (extras.getBoolean("EsLecturaFinal")){
+                lecturaDTO = (LecturaDTO) extras.getSerializable("lecturaDTO");
                 cantidadFotos = lecturaDTO.getCantidadFotografias();
                 textViewTitulo.setText("Fotografia "+lecturaDTO.getNombreTipoMedidor()
                         +" - "+lecturaDTO.getNombreEstacionCarburacion() );
+                EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
+                EsLecturaFinal = extras.getBoolean("EsLecturaFinal");
             }
 
         }
@@ -217,6 +227,9 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }else if(EsLecturaInicial){
                     Log.w("Boton lec.Inic.","finalizar"+cantidadFotos);
                     lecturaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                }else if(EsLecturaFinal){
+                    Log.w("Boton lec.Final.","finalizar"+cantidadFotos);
+                    lecturaDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 }
             }catch(Exception ex){
 
@@ -262,6 +275,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                     startActivity();
                 }else if(EsLecturaInicial){
                     Log.w("Boton lec.Inic.","finalizar"+cantidadFotos);
+                    lecturaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                    startActivity();
+                }else if(EsLecturaFinal){
+                    Log.w("Boton lec.Final.","finalizar"+cantidadFotos);
                     lecturaDTO.getImagenesURI().add(new URI(imageUri.toString()));
                     startActivity();
                 }
@@ -402,13 +419,15 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             intent.putExtra("Papeleta",papeletaDTO);
         }else if(EsLecturaInicial){
             intent.putExtra("lecturaDTO",lecturaDTO);
+        }else if(EsLecturaFinal){
+            intent.putExtra("lecturaDTO",lecturaDTO);
         }
         intent.putExtra("EsPapeleta",papeleta);
         intent.putExtra("EsDescargaFinalizar",finalizar);
         intent.putExtra("EsDescargaIniciar",iniciar);
         intent.putExtra("Almacen",true);
         intent.putExtra("EsLecturaInicial",EsLecturaInicial);
-        intent.putExtra("EsLecturaInicial",EsLecturaFinal);
+        intent.putExtra("EsLecturaFinal",EsLecturaFinal);
         startActivity(intent);
     }
 }

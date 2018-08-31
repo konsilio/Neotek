@@ -30,4 +30,6 @@ public interface SubirImagenesPresenter {
     void onRegistrarIniciarDescarga();
 
     void registrarLecturaInicial(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO);
+
+    void registrarLecturaFinal(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO);
 }

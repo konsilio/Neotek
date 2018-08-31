@@ -4,11 +4,13 @@ import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
@@ -20,9 +22,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.HEAD;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -131,5 +131,11 @@ public interface RestClient {
                                                                    finalizarDescargaDTO,
                                                               @Header("Authorization")String token,
                                                               @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_LECTURA_INICIAL)
+    Call<RespuestaLecturaInicialDTO> postLecturaInicial(@Body LecturaDTO lecturaDTO,
+                                                        @Header("Authorization")String token,
+                                                        @Header("Content-Type") String contentType
     );
 }

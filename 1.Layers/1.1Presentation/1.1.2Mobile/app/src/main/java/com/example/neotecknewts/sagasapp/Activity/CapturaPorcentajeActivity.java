@@ -128,6 +128,18 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 finalizar=false;
                 almacen=false;
 
+            }else if (extras.getBoolean("EsLecturaFinal")){
+                lecturaDTO = (LecturaDTO) extras.getSerializable("lecturaDTO");
+                textViewTitulo.setText(lecturaDTO.getNombreTipoMedidor()+
+                        " - Estación "+lecturaDTO.getNombreEstacionCarburacion());
+                textView.setText(R.string.registra_porcentaje_estacion+" "+
+                        lecturaDTO.getNombreTipoMedidor()+" de la estación");
+                EsLecturaInicial = (boolean) extras.get("EsLecturaInicial");
+                EsLecturaFinal = (boolean) extras.get("EsLecturaFinal");
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                almacen=false;
             }
         }
 
@@ -180,6 +192,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             finalizarDescargaDTO.setPorcentajeMedidorTractor(porcentaje);
         }else if(EsLecturaInicial){
             lecturaDTO.setPorcentajeMedidor(porcentaje);
+        }else if(EsLecturaFinal){
+            lecturaDTO.setPorcentajeMedidor(porcentaje);
         }
         startActivity();
     }
@@ -196,6 +210,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         }else if(finalizar){
             intent.putExtra("FinalizarDescarga",finalizarDescargaDTO);
         }else if(EsLecturaInicial){
+            intent.putExtra("lecturaDTO",lecturaDTO);
+        }else if(EsLecturaFinal){
             intent.putExtra("lecturaDTO",lecturaDTO);
         }
         intent.putExtra("EsPapeleta",papeleta);

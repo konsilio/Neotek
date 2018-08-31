@@ -38,14 +38,14 @@ public class LecturaDTO implements Serializable {
     @SerializedName("IdEstacionCarburacion")
     private int IdEstacionCarburacion;
 
-    @SerializedName("ImagenP500")
-    private String ImagenP500;
+    @SerializedName("ImagenP5000")
+    private String ImagenP5000;
 
-    @SerializedName("ImagenP500URI")
-    private URI ImagenP500URI;
+    @SerializedName("ImagenP5000URI")
+    private URI ImagenP5000URI;
 
-    @SerializedName("CantidadP500")
-    private int CantidadP500;
+    @SerializedName("CantidadP5000")
+    private int CantidadP5000;
 
     @SerializedName("PorcentajeMedidor")
     private Double PorcentajeMedidor;
@@ -116,28 +116,28 @@ public class LecturaDTO implements Serializable {
         IdEstacionCarburacion = idEstacionCarburacion;
     }
 
-    public String getImagenP500() {
-        return ImagenP500;
+    public String getImagenP5000() {
+        return ImagenP5000;
     }
 
-    public void setImagenP500(String imagenP500) {
-        ImagenP500 = imagenP500;
+    public void setImagenP5000(String imagenP5000) {
+        ImagenP5000 = imagenP5000;
     }
 
-    public URI getImagenP500URI() {
-        return ImagenP500URI;
+    public URI getImagenP5000URI() {
+        return ImagenP5000URI;
     }
 
-    public void setImagenP500URI(URI imagenP500URI) {
-        ImagenP500URI = imagenP500URI;
+    public void setImagenP5000URI(URI imagenP5000URI) {
+        ImagenP5000URI = imagenP5000URI;
     }
 
-    public int getCantidadP500() {
-        return CantidadP500;
+    public int getCantidadP5000() {
+        return CantidadP5000;
     }
 
-    public void setCantidadP500(int cantidadP500) {
-        CantidadP500 = cantidadP500;
+    public void setCantidadP5000(int cantidadP500) {
+        CantidadP5000 = cantidadP500;
     }
 
     public Double getPorcentajeMedidor() {

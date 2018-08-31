@@ -36,6 +36,8 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             EsLecturaFinal = (boolean) b.get("EsLecturaFinal");
             if(EsLecturaInicial){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
+            }else if(EsLecturaFinal){
+                lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
             }
         }
 
@@ -135,7 +137,16 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                         CameraLecturaActivity.class);
                 intent.putExtra("EsLecturaInicial",EsLecturaInicial);
                 intent.putExtra("EsLecturaFinal",EsLecturaFinal);
-                lecturaDTO.setCantidadP500(CantidadP500);
+                lecturaDTO.setCantidadP5000(CantidadP500);
+                intent.putExtra("EsFotoP5000",true);
+                intent.putExtra("lecturaDTO",lecturaDTO);
+                startActivity(intent);
+            }else if (EsLecturaFinal){
+                Intent intent = new Intent(LecturaP5000Activity.this,
+                        CameraLecturaActivity.class);
+                intent.putExtra("EsLecturaInicial",EsLecturaInicial);
+                intent.putExtra("EsLecturaFinal",EsLecturaFinal);
+                lecturaDTO.setCantidadP5000(CantidadP500);
                 intent.putExtra("EsFotoP5000",true);
                 intent.putExtra("lecturaDTO",lecturaDTO);
                 startActivity(intent);
