@@ -480,11 +480,6 @@
                     <li><a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
                         <ul class="ml-menu">
                             <li><a href="../../OrdenCompra/Vistas/Compra.aspx">Orden de Compra</a></li>
-                            <%--   <li><a href="events.html">Calendar</a></li>
-                            <li><a href="file-dashboard.html">File Manager</a></li>
-                            <li><a href="contact.html">Contact list</a></li>
-                            <li><a href="blog-dashboard.html">Blog</a></li>
-                            <li><a href="app-ticket.html">Support Ticket</a></li>--%>
                         </ul>
                     </li>
                     <li><a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">attach_money</i><span>Ventas</span> </a>
@@ -500,10 +495,10 @@
                     </li>
                     <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-grid"></i><span>Catalogos</span></a>
                         <ul class="ml-menu">
-                            <li><a href="../../Catalogos/Proveedor.aspx">Proveedores</a></li>
+                            <li><a href="../../Catalogos/Vista/Proveedor.aspx">Proveedores</a></li>
                             <li><a href="table-color.html">Clientes</a></li>
                             <li><a href="../../Catalogos/Vista/CuentasContables.aspx">Cuentas contables</a></li>
-                            <li><a href="table-color.html">Centro de costos</a></li>
+                            <li><a href="../../Catalogos/Vista/CentrosCosto.aspx">Centro de costos</a></li>
                             <li><a href="table-filter.html">Puntos de venta</a></li>
                             <li><a href="table-filter.html">Equipo de transporte</a></li>
                         </ul>
@@ -522,6 +517,9 @@
             <asp:ContentPlaceHolder ID="ctOrdenCompra" runat="server" />
             <asp:ContentPlaceHolder ID="ctProveedor" runat="server" />
             <asp:ContentPlaceHolder ID="ctCuentasContables" runat="server" />
+            <asp:ContentPlaceHolder ID="ctCentrosCosto" runat="server" />
+
+            ctCentrosCosto
         </form>
     </section>
     <script src="../../assets/bundles/libscripts.bundle.js"></script>

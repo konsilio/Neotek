@@ -62,6 +62,7 @@
     <Compile Include="DTOs\Almacen\AlmacenCrearEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenDTO.cs" />
+    <Compile Include="DTOs\Catalogo\TipoCentroCostoEnum.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraAutorizacionDTO.cs" />
     <Compile Include="AdaptadoresDTO\CorreoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAdapter.cs" />

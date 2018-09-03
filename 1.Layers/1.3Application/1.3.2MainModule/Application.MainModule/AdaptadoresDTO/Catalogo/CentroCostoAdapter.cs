@@ -73,8 +73,16 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             CentroCostoDTO ccDTO = new CentroCostoDTO();
             ccDTO.IdCentroCosto = cc.IdCentroCosto;
             ccDTO.IdEmpresa = cc.IdEmpresa;
+            ccDTO.Empresa = cc.Empresa.NombreComercial;
             ccDTO.IdTipoCentroCosto = cc.IdTipoCentroCosto;
+            ccDTO.TipoCentroCosto = cc.TipoCentroCosto.Descripcion;
             ccDTO.IdEquipoTransporte = cc.IdEquipoTransporte != null ? cc.IdEquipoTransporte.Value : 0;
+            ccDTO.IdVehiculoUtilitario = cc.IdVehiculoUtilitario != null ? cc.IdVehiculoUtilitario.Value : 0;
+            ccDTO.IdCAlmacenGas = cc.IdCAlmacenGas != null ? cc.IdCAlmacenGas.Value : (short)0;
+            ccDTO.IdEstacionCarburacion = cc.IdEstacionCarburacion != null ? cc.IdEstacionCarburacion.Value : 0;
+            ccDTO.IdCamioneta = cc.IdCamioneta != null ? cc.IdCamioneta.Value : 0;
+            ccDTO.IdPipa = cc.IdPipa != null ? cc.IdPipa.Value : 0;
+            ccDTO.IdCilindro = cc.IdCilindro != null ? cc.IdCilindro.Value : 0;
             ccDTO.Numero = cc.Numero;
             ccDTO.Descripcion = cc.Descripcion;
             ccDTO.Activo = cc.Activo;

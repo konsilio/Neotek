@@ -31,10 +31,24 @@ namespace Application.MainModule.Flujos
                 Exito = true
             };
         }
+        /// <summary>
+        /// Con el id de la Requisicion se genera un DTO con los datos para poder generar ordenes de compras
+        /// </summary>
+        /// <param name="idRequisicion"></param>
+        /// <returns></returns>
         public RequisicionOCDTO BuscarRequisicion(int idRequisicion)
         {
-            return OrdenCompraServicio.BuscarRequisicion(idRequisicion);
+            var Req = OrdenCompraServicio.BuscarRequisicion(idRequisicion);
+            Req.Productos = OrdenCompraServicio.DescartarProductosParaOC(Req.Productos);
+            //Retornamos el objeto con los productos filtrados
+            return Req;
+
         }
+        /// <summary>
+        /// Generamos la(s) ordene(s) de compra segun los provedores de la lista de productos.
+        /// </summary>
+        /// <param name="oc"></param>
+        /// <returns></returns>
         public List<OrdenCompraRespuestaDTO> GenerarOrdenesCompra(OrdenCompraCrearDTO oc)
         {
             List<OrdenCompraRespuestaDTO> lrOC = new List<OrdenCompraRespuestaDTO>();
@@ -54,6 +68,11 @@ namespace Application.MainModule.Flujos
             }            
             return lrOC;
         }
+        /// <summary>
+        /// Actualiza los datos de la orden de compra de su autorizacion
+        /// </summary>
+        /// <param name="_oc"></param>
+        /// <returns></returns>
         public RespuestaDto AutorizarOrdenCompra(OrdenCompraAutorizacionDTO _oc)
         {
             var resp = PermisosServicio.PuedeAutorizarOrdenCompra();

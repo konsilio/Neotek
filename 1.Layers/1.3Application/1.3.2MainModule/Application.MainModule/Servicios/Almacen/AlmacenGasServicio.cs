@@ -26,7 +26,7 @@ namespace Application.MainModule.Servicios.Almacen
         }
         public static List<UnidadAlmacenGas> ObtenerAlmacenGeneral(short idEmpresa)
         {
-            return new AlmacenGasDataAccess().BuscarTodos(idEmpresa,true);
+            return new AlmacenGasDataAccess().BuscarTodos(idEmpresa, true);
         }
         public static AlmacenGas Obtener(short idAlmacenGas)
         {
@@ -49,6 +49,15 @@ namespace Application.MainModule.Servicios.Almacen
                 return nombre;
 
             return EstacionCarburacionServicio.ObtenerNombre(uAG);
+        }
+        public static decimal ObtenerCantidadActualAlmacenGeneral(short IdEmpresa, bool EnLitros = true)
+        {
+            var almacenGas = new AlmacenGasDataAccess().ProductoAlmacenGas(IdEmpresa);
+            if (EnLitros)
+                return almacenGas.UnidadesAlmacenGas.Where(z => z.EsGeneral).Sum(x => x.CantidadActualLt);
+            else
+                return almacenGas.UnidadesAlmacenGas.Where(z => z.EsGeneral).Sum(x => x.CantidadActualKg);
+
         }
     }
 }

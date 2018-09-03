@@ -108,10 +108,10 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.EliminaCentroCosto(cuentaDto), Request);
         }
 
-        [Route("consulta/centrosdecosto/{idEmpresa}")]
-        public HttpResponseMessage GetCentrosCostos(short idEmpresa)
+        [Route("consulta/centrosdecosto")]
+        public HttpResponseMessage GetCentrosCostos()
         {
-            return RespuestaHttp.crearRespuesta(_catalogos.ListaCentrosCostos(idEmpresa), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaCentrosCostos(), Request);
         }
 
         [Route("consulta/centro/costo/{idCosto}")]

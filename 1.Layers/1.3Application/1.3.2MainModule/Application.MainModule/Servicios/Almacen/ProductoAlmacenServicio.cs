@@ -8,6 +8,7 @@ using Sagas.MainModule.Entidades;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.Servicios.Catalogos;
 
 namespace Application.MainModule.Servicios.Almacen
 {
@@ -18,16 +19,26 @@ namespace Application.MainModule.Servicios.Almacen
             int x = 0;
             foreach (RequisicionProducto _prod in _requisicion.Productos)
             {
-                var almacen = new AlmacenDataAccess().ProductoAlmacen(_prod.IdProducto, _requisicion.IdEmpresa);
-                _requisicion.Productos.ElementAt(x).CantidadAlmacenActual = almacen != null ? almacen.Cantidad : 0;
+                var prod = ProductoServicios.ObtenerProdcuto(_prod.IdProducto);
+                if (prod.EsGas)                
+                    _requisicion.Productos.ElementAt(x).CantidadAlmacenActual = AlmacenGasServicio.ObtenerCantidadActualAlmacenGeneral(_requisicion.IdEmpresa);                
+                else
+                {
+                    var almacen = new AlmacenDataAccess().ProductoAlmacen(_prod.IdProducto, _requisicion.IdEmpresa);
+                    _requisicion.Productos.ElementAt(x).CantidadAlmacenActual = almacen != null ? almacen.Cantidad : 0;
+                }
                 if (_prod.CantidadAlmacenActual.Value > _prod.Cantidad)
                     _requisicion.Productos.ElementAt(x).CantidadAComprar = 0;
                 else
-                    _requisicion.Productos.ElementAt(x).CantidadAComprar = Math.Abs(_prod.CantidadAlmacenActual.Value - _prod.Cantidad);             
+                    _requisicion.Productos.ElementAt(x).CantidadAComprar = Math.Abs(_prod.CantidadAlmacenActual.Value - _prod.Cantidad);
+                _requisicion.Productos.ElementAt(x).EsActivoVenta = prod.EsActivoVenta;
+                _requisicion.Productos.ElementAt(x).EsGas = prod.EsGas;
+                _requisicion.Productos.ElementAt(x).EsTransporteGas = prod.EsTransporteGas != null ? prod.EsTransporteGas.Value : false;
+
                 x++;
             }
             return _requisicion;
-       }
+        }
         public static RespuestaDto EntradaAlmcacenProductos(Sagas.MainModule.Entidades.Almacen _almacen, AlmacenEntradaProducto prod)
         {
             return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, prod);
@@ -51,5 +62,5 @@ namespace Application.MainModule.Servicios.Almacen
                 FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
             };
         }
-    }    
+    }
 }

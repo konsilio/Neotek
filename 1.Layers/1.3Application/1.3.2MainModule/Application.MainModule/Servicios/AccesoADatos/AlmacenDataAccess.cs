@@ -26,7 +26,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public Sagas.MainModule.Entidades.Almacen ProductoAlmacen(int idProducto, short idEmpresa)
         {
             return uow.Repository<Sagas.MainModule.Entidades.Almacen>().GetSingle(x => x.IdProduto.Equals(idProducto) && x.IdEmpresa.Equals(idEmpresa));
-        }       
+        }
+       
         public RespuestaDto ActualizarAlmacenEntradas(Sagas.MainModule.Entidades.Almacen _alm  , AlmacenEntradaProducto _entrada)
         {
             RespuestaDto _respuesta = new RespuestaDto();

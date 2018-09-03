@@ -13,8 +13,9 @@ namespace Application.MainModule.Flujos
     {
         public RespuestaRequisicionDto InsertRequisicionNueva(RequisicionEDTO _req)
         {
-            var _requisicion = AdaptadoresDTO.Requisicion.RequisicionAdapter.FromEDTO(_req);
+            var _requisicion = RequisicionAdapter.FromEDTO(_req);
             _requisicion = Servicios.Almacen.ProductoAlmacenServicio.CalcularAlmacenProcutos(_requisicion);
+
             var respuesta = RequisicionServicio.GuardarRequisicionNueva(_requisicion);
             if (respuesta.Exito)
                 NotificarServicio.RequisicionNueva(RequisicionServicio.Buscar(respuesta.IdRequisicion));

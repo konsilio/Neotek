@@ -19,8 +19,8 @@ namespace Web.MainModule.OrdenCompra.Servicio
         }
         public List<ProveedorDTO> Proveedores(string Tkn)
         {
-            Agente.AgenteServicios agente = new Agente.AgenteServicios();
-            agente.BuscarProveedoresOC(Tkn);
+           var agente = new AgenteServicios();
+            agente.BuscarProveedores(Tkn);
             return agente._listaProveedores;
         }
         public List<CuentaContableDTO> ListaCuentasContables(short idEmpresa, string Tkn)

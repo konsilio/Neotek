@@ -61,5 +61,34 @@ namespace Application.MainModule.Servicios.Requisicion
         {
             return new RequisicionDataAccess().BuscarProducto(idProd, idReq);
         }
+        public static List<Sagas.MainModule.Entidades.Requisicion> IdentificarRequisicones(Sagas.MainModule.Entidades.Requisicion _req)
+        {
+            List<Sagas.MainModule.Entidades.Requisicion> lRequi = new List<Sagas.MainModule.Entidades.Requisicion>();
+            foreach (var prod in _req.Productos)
+            {
+                if (lRequi.Count.Equals(0))
+                {
+                    Sagas.MainModule.Entidades.Requisicion newReq = _req;
+                    newReq.Productos = new List<RequisicionProducto>();
+                    newReq.Productos.Add(prod);
+                    lRequi.Add(newReq);
+                }
+                else 
+                {
+                    if (prod.Producto.EsGas || prod.Producto.EsTransporteGas.Value)
+                    {
+                        foreach (var lr in lRequi)
+                        {
+                            
+                        }
+                        if (lRequi.Exists(x => x.Productos.ToList().Exists(p => p.EsGas != null ? p.EsGas.Value : false && p.EsTransporteGas != null ? p.EsTransporteGas.Value : false)))
+                        {
+
+                        }
+                    }
+                }
+            }
+            return lRequi;
+        }
     }
 }

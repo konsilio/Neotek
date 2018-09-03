@@ -92,9 +92,9 @@ namespace Application.MainModule.Flujos
             return CentroCostoServicio.ModificarCentroCosto(centro);
         }
 
-        public List<CentroCostoDTO> ListaCentrosCostos(short idEmpresa)
+        public List<CentroCostoDTO> ListaCentrosCostos()
         {
-            return CentroCostoAdapter.ToDTO(CentroCostoServicio.Obtener(idEmpresa));
+            return CentroCostoAdapter.ToDTO(CentroCostoServicio.Obtener());
         }
         public CentroCostoDTO ConsultaCentroCosto(int idCentroCosto)
         {
@@ -205,33 +205,33 @@ namespace Application.MainModule.Flujos
         }
         #endregion
         #region CuentaContable
-        public List<CuentaContableDto> BuscarCuentaContable(int idEmpresa)
-        {
-            var listaCuentasContables = new CuentaContableDataAccess().BuscarCuentasContables(idEmpresa);
-            return CuentaContableAdapter.FromDto(listaCuentasContables);
-        }
-        public RespuestaDto BorrarCuentaContable(int idCuentaContable)
-        {//Borrado logico    
-            var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(idCuentaContable);
-            ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
+        //public List<CuentaContableDto> BuscarCuentaContable(int idEmpresa)
+        //{
+        //    var listaCuentasContables = new CuentaContableDataAccess().BuscarCuentasContables(idEmpresa);
+        //    return CuentaContableAdapter.FromDto(listaCuentasContables);
+        //}
+        //public RespuestaDto BorrarCuentaContable(int idCuentaContable)
+        //{//Borrado logico    
+        //    var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(idCuentaContable);
+        //    ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
 
-            ctaCtble.Activo = false;
-            return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
-        }
-        public RespuestaDto EditarCuentaContable(CuentaContableDto cc)
-        {
-            var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(cc.IdCuentaContable);
-            ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
-            ctaCtble.Numero = cc.Numero;
-            ctaCtble.Descripcion = cc.Descripcion;
+        //    ctaCtble.Activo = false;
+        //    return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
+        //}
+        //public RespuestaDto EditarCuentaContable(CuentaContableDto cc)
+        //{
+        //    var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(cc.IdCuentaContable);
+        //    ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
+        //    ctaCtble.Numero = cc.Numero;
+        //    ctaCtble.Descripcion = cc.Descripcion;
 
-            return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
-        }
-        public RespuestaDto CrearCuentaContable(CuentaContableDto cc)
-        {
-            CuentaContable ctaCtble = CuentaContableAdapter.ToDTO(cc);
-            return new CuentaContableDataAccess().InsertarCuentaContable(ctaCtble);
-        }
+        //    return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
+        //}
+        //public RespuestaDto CrearCuentaContable(CuentaContableDto cc)
+        //{
+        //    CuentaContable ctaCtble = CuentaContableAdapter.ToDTO(cc);
+        //    return new CuentaContableDataAccess().InsertarCuentaContable(ctaCtble);
+        //}
         #endregion
     }
 }

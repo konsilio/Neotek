@@ -27,8 +27,8 @@ namespace Sagas.MainModule.Entidades
         public decimal Cantidad { get; set; }
         public string Ubicacion { get; set; }
         public System.DateTime FechaActualizacion { get; set; }
-        public System.DateTime FechaRegistro { get; set; }    
-
+        public System.DateTime FechaRegistro { get; set; }
+    
         public virtual Producto Producto { get; set; }
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

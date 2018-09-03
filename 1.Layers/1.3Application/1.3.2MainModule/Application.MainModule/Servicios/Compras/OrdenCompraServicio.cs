@@ -15,10 +15,24 @@ using System.Threading.Tasks;
 namespace Application.MainModule.Servicios.Compras
 {
     public class OrdenCompraServicio
-    {   
+    {
+        /// <summary>
+        /// Busca los datos necesarios para una Orden de Compra de la requisicion Autorizada 
+        /// </summary>
+        /// <param name="_idrequi"></param>
+        /// <returns></returns>
         public static RequisicionOCDTO BuscarRequisicion(int _idrequi)
         {
             return OrdenComprasAdapter.ToDTO(new RequisicionDataAccess().BuscarPorIdRequisicion(_idrequi));
+        }
+        /// <summary>
+        /// Descarta los prodcuto que no son aptos para una orden de compra
+        /// </summary>
+        /// <param name="prods"></param>
+        /// <returns></returns>
+        public static List<ProductoOCDTO> DescartarProductosParaOC(List<ProductoOCDTO> prods)
+        {
+            return prods.ToList().Where(x => !x.CantidadAComprar.Equals(0)).ToList();
         }
         public static OrdenCompraRespuestaDTO GuardarOrdenCompra(OrdenCompra oc)
         {

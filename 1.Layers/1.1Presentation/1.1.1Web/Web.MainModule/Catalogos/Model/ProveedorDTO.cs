@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Web.MainModule.OrdenCompra.Model
+namespace Web.MainModule.Catalogos.Model
 {
     public class ProveedorDTO
     {
