@@ -31,7 +31,42 @@ namespace Application.MainModule.Flujos
         {
             return EmpresaServicio.BuscarEmpresas(conAC);
         }
+
+        public RespuestaDto RegistraEmpresa(EmpresaCrearDTO empDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarEmpresa();
+            if (!resp.Exito) return resp;
+
+            return EmpresaServicio.RegistrarEmpresa(EmpresaAdapter.FromDto(empDto));
+        }
+        
+        public RespuestaDto ModificaEmpresa(EmpresaModificarDto empDto)
+        {
+            var resp = PermisosServicio.PuedeModificarEmpresa();
+            if (!resp.Exito) return resp;
+
+            var empresas = EmpresaServicio.Obtener(empDto.IdEmpresa);
+            if (empresas == null) return EmpresaServicio.NoExiste();
+
+            var emp = EmpresaAdapter.FromDto(empDto);
+            emp.FechaRegistro = emp.FechaRegistro;
+            return EmpresaServicio.ModificarEmpresa(emp);
+        }
+
+        public RespuestaDto EliminaEmpresa(EmpresaEliminarDto empDto)
+        {
+            var resp = PermisosServicio.PuedeEliminarEmpresa();
+            if (!resp.Exito) return resp;
+
+            var empresas = EmpresaServicio.Obtener(empDto.IdEmpresa);
+            if (empresas == null) return EmpresaServicio.NoExiste();
+
+            empresas = EmpresaAdapter.FromEntity(empresas);
+            empresas.Activo = false;
+            return EmpresaServicio.ModificarEmpresa(empresas);
+        }
         #endregion
+
         #region Usuarios
         public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
         {
@@ -40,7 +75,42 @@ namespace Application.MainModule.Flujos
             else
                 return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
+
+        public RespuestaDto AltaUsuarios(UsuarioCrearDto userDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarUsuario();
+            if (!resp.Exito) return resp;
+
+            return UsuarioServicio.AltaUsuario(UsuarioAdapter.FromDto(userDto));
+        }
+
+        public RespuestaDto ModificaUsuario(UsuarioModificarDto userDto)
+        {
+            var resp = PermisosServicio.PuedeModificarUsuario();
+            if (!resp.Exito) return resp;
+
+            var user = UsuarioServicio.Obtener(userDto.Idusuario);
+            if (user == null) return UsuarioServicio.NoExiste();
+
+            var emp = UsuarioAdapter.FromDto(userDto);
+            emp.FechaRegistro = emp.FechaRegistro;
+            return UsuarioServicio.Actualizar(emp);
+        }
+
+        public RespuestaDto EliminaUsuario(UsuarioEliminarDto userDto)
+        {
+            var resp = PermisosServicio.PuedeEliminarUsuario();
+            if (!resp.Exito) return resp;
+
+            var user = UsuarioServicio.Obtener(userDto.Idusuario);
+            if (user == null) return UsuarioServicio.NoExiste();
+
+            user = UsuarioAdapter.FromEntity(user);
+            user.Activo = false;
+            return UsuarioServicio.Actualizar(user);
+        }
         #endregion
+
         #region Productos
         public List<ProductoDTO> ListaProductos(short idEmpresa)
         {
@@ -51,6 +121,7 @@ namespace Application.MainModule.Flujos
             return ProductoServicios.ListaProductoAsociados(ProductoServicios.ListaProductoAsociados(idProdcuto));
         }
         #endregion
+
         #region CentroCosto
         public RespuestaDto RegistraCentroCosto(CentroCostoCrearDto ccDto)
         {
@@ -104,6 +175,7 @@ namespace Application.MainModule.Flujos
             return CentroCostoAdapter.ToDTO(CentroCostoServicio.Obtener(idCentroCosto));
         }
         #endregion
+
         #region Proveedor
         public RespuestaDto RegistraProveedor(ProveedorCrearDto provDto)
         {
@@ -155,6 +227,7 @@ namespace Application.MainModule.Flujos
             return ProveedorAdapter.ToDto(ProveedorServicio.Obtener(idProveedor));
         }
         #endregion
+
         #region Cuentas Contables
         public RespuestaDto RegistraCuentaContable(CuentaContableCrearDto ccDto)
         {
@@ -204,6 +277,7 @@ namespace Application.MainModule.Flujos
             return CuentaContableAdapter.ToDto(CuentaContableServicio.Obtener(idCuentaContable));
         }
         #endregion
+
         #region CuentaContable
         public List<CuentaContableDto> BuscarCuentaContable(int idEmpresa)
         {

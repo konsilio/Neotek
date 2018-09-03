@@ -96,7 +96,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             };            
             return us;
         }
-
         public static Usuario FromEntity(Usuario user)
         {
             return new Usuario()
@@ -141,5 +140,38 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             List<Usuario> lu = luDTO.ToList().Select(x => FromDTO(x)).ToList();
             return lu;
         }
+
+        public static Usuario FromDto(UsuarioCrearDto usDTO)
+        {
+            return new Usuario()
+            {
+                Nombre = usDTO.Nombre,
+                Apellido1 = usDTO.Apellido1,
+                Apellido2 = usDTO.Apellido2,                
+                NombreUsuario = usDTO.NombreUsuario,
+                Password = usDTO.Password,
+                Telefono1 = usDTO.Telefono1,
+                Telefono2 = usDTO.Telefono2,
+                Telefono3 = usDTO.Telefono3,
+                Celular1 = usDTO.Celular1,
+                Celular2 = usDTO.Celular2,
+                Celular3 = usDTO.Celular3,
+                Email2 = usDTO.Email2,
+                Email3 = usDTO.Email3,
+                SitioWeb1 = usDTO.SitioWeb1,
+                SitioWeb2 = usDTO.SitioWeb2,
+                SitioWeb3 = usDTO.SitioWeb3,
+                IdPais = usDTO.IdPais,
+                IdEstadoRep = usDTO.IdEstadoRep,
+                EstadoProvincia = usDTO.EstadoProvincia,
+                Municipio = usDTO.Municipio,
+                CodigoPostal = usDTO.CodigoPostal,
+                Colonia = usDTO.Colonia,
+                Calle = usDTO.Calle,
+                NumExt = usDTO.NumExt,
+                NumInt = usDTO.NumInt,
+            };
+        }
+
     }
 }

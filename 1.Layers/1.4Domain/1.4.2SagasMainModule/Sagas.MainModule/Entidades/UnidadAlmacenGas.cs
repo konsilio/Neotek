@@ -39,6 +39,7 @@ namespace Sagas.MainModule.Entidades
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public decimal PorcentajeCalibracionPlaneada { get; set; }
+        public Nullable<short> IdAlmacenGas { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasDescarga> DescargasGas { get; set; }
@@ -50,5 +51,6 @@ namespace Sagas.MainModule.Entidades
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentroCosto> CCentroCosto { get; set; }
+        public virtual AlmacenGas AlmacenGas { get; set; }
     }
 }

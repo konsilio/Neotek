@@ -27,6 +27,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Calle = empresa.Calle,
                 NumExt = empresa.NumExt,
                 NumInt = empresa.NumInt,
+                Persona1 = empresa.Persona1,
+                Persona2 = empresa.Persona2,
+                Persona3 = empresa.Persona3,
                 Telefono1 = empresa.Telefono1,
                 Telefono2 = empresa.Telefono2,
                 Telefono3 = empresa.Telefono3,
@@ -47,7 +50,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 InventarioCrítico = empresa.InventarioCrítico,
                 MaxRemaGaseraMensual = empresa.MaxRemaGaseraMensual,
                 UrlLogotipoMenu = empresa.UrlLogotipoMenu,
-                UrlLogotipoLogin = empresa.UrlLogotipoLogin
+                UrlLogotipoLogin = empresa.UrlLogotipoLogin,
+                UrlLogotipo180px = empresa.UrlLogotipo180px,
+                UrlLogotipo500px = empresa.UrlLogotipo500px,
+                UrlLogotipo1000px = empresa.UrlLogotipo1000px
+
             };
             return empresaDto;
         }
@@ -102,6 +109,81 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             List<Empresa> empreas = empresasDTO.ToList().Select(x => FromDTO(x)).ToList();
             return empreas;
-        }        
+        }
+
+        public static Empresa FromDto(EmpresaCrearDTO empresa)
+        {
+            return new Empresa()
+            {                
+                NombreComercial = empresa.NombreComercial,                
+                IdPais = empresa.IdPais,
+              //  IdEstadoRep = empresa.IdEstadoRep,
+                EstadoProvincia = empresa.EstadoProvincia,
+                Municipio = empresa.Municipio,
+                CodigoPostal = empresa.CodigoPostal,
+                Colonia = empresa.Colonia,
+                Calle = empresa.Calle,
+                NumExt = empresa.NumExt,
+                NumInt = empresa.NumInt,
+                Persona1 = empresa.Persona1,
+                Persona2 = empresa.Persona2,
+                Persona3 = empresa.Persona3,
+                Telefono1 = empresa.Telefono1,
+                Telefono2 = empresa.Telefono2,
+                Telefono3 = empresa.Telefono3,
+                Celular1 = empresa.Celular1,
+                Celular2 = empresa.Celular2,
+                Celular3 = empresa.Celular3,
+                Email1 = empresa.Email1,
+                Email2 = empresa.Email2,
+                Email3 = empresa.Email3,
+                SitioWeb1 = empresa.SitioWeb1,
+                SitioWeb2 = empresa.SitioWeb2,
+                SitioWeb3 = empresa.SitioWeb3,
+                Rfc = empresa.Rfc,
+                RazonSocial = empresa.RazonSocial,               
+                UrlLogotipo180px = empresa.UrlLogotipo180px,
+                UrlLogotipo500px = empresa.UrlLogotipo500px,
+                UrlLogotipo1000px = empresa.UrlLogotipo1000px
+            };
+        }
+        
+        public static Empresa FromEntity(Empresa empresa)
+        {
+            return new Empresa()
+            {
+                NombreComercial = empresa.NombreComercial,
+                IdPais = empresa.IdPais,
+                //  IdEstadoRep = empresa.IdEstadoRep,
+                EstadoProvincia = empresa.EstadoProvincia,
+                Municipio = empresa.Municipio,
+                CodigoPostal = empresa.CodigoPostal,
+                Colonia = empresa.Colonia,
+                Calle = empresa.Calle,
+                NumExt = empresa.NumExt,
+                NumInt = empresa.NumInt,
+                Persona1 = empresa.Persona1,
+                Persona2 = empresa.Persona2,
+                Persona3 = empresa.Persona3,
+                Telefono1 = empresa.Telefono1,
+                Telefono2 = empresa.Telefono2,
+                Telefono3 = empresa.Telefono3,
+                Celular1 = empresa.Celular1,
+                Celular2 = empresa.Celular2,
+                Celular3 = empresa.Celular3,
+                Email1 = empresa.Email1,
+                Email2 = empresa.Email2,
+                Email3 = empresa.Email3,
+                SitioWeb1 = empresa.SitioWeb1,
+                SitioWeb2 = empresa.SitioWeb2,
+                SitioWeb3 = empresa.SitioWeb3,
+                Rfc = empresa.Rfc,
+                RazonSocial = empresa.RazonSocial,
+                UrlLogotipo180px = empresa.UrlLogotipo180px,
+                UrlLogotipo500px = empresa.UrlLogotipo500px,
+                UrlLogotipo1000px = empresa.UrlLogotipo1000px
+            };
+        }
+
     }
 }

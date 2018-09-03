@@ -21,6 +21,9 @@ namespace Application.MainModule.DTOs.Catalogo
         public string Calle { get; set; }
         public string NumExt { get; set; }
         public string NumInt { get; set; }
+        public string Persona1 { get; set; }
+        public string Persona2 { get; set; }
+        public string Persona3 { get; set; }
         public string Telefono1 { get; set; }
         public string Telefono2 { get; set; }
         public string Telefono3 { get; set; }
@@ -35,6 +38,8 @@ namespace Application.MainModule.DTOs.Catalogo
         public string SitioWeb3 { get; set; }
         public string Rfc { get; set; }
         public string RazonSocial { get; set; }
+        public bool Activo { get; set; }
+       // public System.DateTime FechaRegistro { get; set; }
         public decimal FactorLitrosAKilos { get; set; }
         public System.DateTime CierreInventario { get; set; }
         public byte InventarioSano { get; set; }
@@ -42,5 +47,8 @@ namespace Application.MainModule.DTOs.Catalogo
         public decimal MaxRemaGaseraMensual { get; set; }
         public string UrlLogotipoMenu { get; set; }
         public string UrlLogotipoLogin { get; set; }
+        public string UrlLogotipo180px { get; set; }
+        public string UrlLogotipo500px { get; set; }
+        public string UrlLogotipo1000px { get; set; }
     }
 }
