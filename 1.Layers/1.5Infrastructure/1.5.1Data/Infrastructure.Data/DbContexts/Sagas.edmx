@@ -126,6 +126,46 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto'
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="AlmacenGasTomaLectura">
+          <Key>
+            <PropertyRef Name="IdCAlmacenGas" />
+            <PropertyRef Name="IdOrden" />
+          </Key>
+          <Property Name="IdCAlmacenGas" Type="smallint" Nullable="false" />
+          <Property Name="IdOrden" Type="int" Nullable="false" />
+          <Property Name="IdTipoMedidor" Type="smallint" Nullable="false" />
+          <Property Name="IdTipoEvento" Type="tinyint" Nullable="false" />
+          <Property Name="P5000" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Porcentaje" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="DatosProcesados" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlmacenGasTomaLecturaCilindro">
+          <Key>
+            <PropertyRef Name="IdCAlmacenGas" />
+            <PropertyRef Name="IdOrden" />
+            <PropertyRef Name="IdOrdenCilindro" />
+          </Key>
+          <Property Name="IdCAlmacenGas" Type="smallint" Nullable="false" />
+          <Property Name="IdOrden" Type="int" Nullable="false" />
+          <Property Name="IdOrdenCilindro" Type="smallint" Nullable="false" />
+          <Property Name="Cantidad" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlmacenGasTomaLecturaFoto">
+          <Key>
+            <PropertyRef Name="IdCAlmacenGas" />
+            <PropertyRef Name="IdOrden" />
+            <PropertyRef Name="IdOrdenFoto" />
+          </Key>
+          <Property Name="IdCAlmacenGas" Type="smallint" Nullable="false" />
+          <Property Name="IdOrden" Type="int" Nullable="false" />
+          <Property Name="IdOrdenFoto" Type="smallint" Nullable="false" />
+          <Property Name="IdImagenDe" Type="smallint" Nullable="false" />
+          <Property Name="UrlImagen" Type="varchar" MaxLength="350" />
+          <Property Name="PathImagen" Type="varchar" MaxLength="250" />
+          <Property Name="CadenaBase64" Type="varchar(max)" />
+        </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenSalidaProducto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AlmacenSalidaProducto">
@@ -516,6 +556,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="NombreComercial" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="EsAdministracionCentral" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="EmpresaConfiguracion">
           <Key>
@@ -1136,6 +1177,46 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="AlmacenGas">
               <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasTomaLectura_CAlmacenGas">
+          <End Role="CAlmacenGas" Type="Self.CAlmacenGas" Multiplicity="1" />
+          <End Role="AlmacenGasTomaLectura" Type="Self.AlmacenGasTomaLectura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAlmacenGas">
+              <PropertyRef Name="IdCAlmacenGas" />
+            </Principal>
+            <Dependent Role="AlmacenGasTomaLectura">
+              <PropertyRef Name="IdCAlmacenGas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura">
+          <End Role="AlmacenGasTomaLectura" Type="Self.AlmacenGasTomaLectura" Multiplicity="1" />
+          <End Role="AlmacenGasTomaLecturaCilindro" Type="Self.AlmacenGasTomaLecturaCilindro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasTomaLectura">
+              <PropertyRef Name="IdCAlmacenGas" />
+              <PropertyRef Name="IdOrden" />
+            </Principal>
+            <Dependent Role="AlmacenGasTomaLecturaCilindro">
+              <PropertyRef Name="IdCAlmacenGas" />
+              <PropertyRef Name="IdOrden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura">
+          <End Role="AlmacenGasTomaLectura" Type="Self.AlmacenGasTomaLectura" Multiplicity="1" />
+          <End Role="AlmacenGasTomaLecturaFoto" Type="Self.AlmacenGasTomaLecturaFoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasTomaLectura">
+              <PropertyRef Name="IdCAlmacenGas" />
+              <PropertyRef Name="IdOrden" />
+            </Principal>
+            <Dependent Role="AlmacenGasTomaLecturaFoto">
+              <PropertyRef Name="IdCAlmacenGas" />
+              <PropertyRef Name="IdOrden" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2295,6 +2376,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="AlmacenEntradaGasDescargaIniciar" EntityType="Self.AlmacenEntradaGasDescargaIniciar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenEntradaGasDescargaPuerta" EntityType="Self.AlmacenEntradaGasDescargaPuerta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenGas" EntityType="Self.AlmacenGas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenGasTomaLectura" EntityType="Self.AlmacenGasTomaLectura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenGasTomaLecturaCilindro" EntityType="Self.AlmacenGasTomaLecturaCilindro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenGasTomaLecturaFoto" EntityType="Self.AlmacenGasTomaLecturaFoto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAlmacenGas" EntityType="Self.CAlmacenGas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAlmacenGasCalibracion" EntityType="Self.CAlmacenGasCalibracion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAlmacenGasCilindro" EntityType="Self.CAlmacenGasCilindro" Schema="dbo" store:Type="Tables" />
@@ -2481,6 +2565,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_AlmacenGas_Empresa" Association="Self.FK_AlmacenGas_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="AlmacenGas" EntitySet="AlmacenGas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasTomaLectura_CAlmacenGas" Association="Self.FK_AlmacenGasTomaLectura_CAlmacenGas">
+            <End Role="CAlmacenGas" EntitySet="CAlmacenGas" />
+            <End Role="AlmacenGasTomaLectura" EntitySet="AlmacenGasTomaLectura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura" Association="Self.FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura">
+            <End Role="AlmacenGasTomaLectura" EntitySet="AlmacenGasTomaLectura" />
+            <End Role="AlmacenGasTomaLecturaCilindro" EntitySet="AlmacenGasTomaLecturaCilindro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura" Association="Self.FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura">
+            <End Role="AlmacenGasTomaLectura" EntitySet="AlmacenGasTomaLectura" />
+            <End Role="AlmacenGasTomaLecturaFoto" EntitySet="AlmacenGasTomaLecturaFoto" />
           </AssociationSet>
           <AssociationSet Name="FK_AlmacenSalidaProducto_Almacen" Association="Self.FK_AlmacenSalidaProducto_Almacen">
             <End Role="Almacen" EntitySet="Almacen" />
@@ -2960,7 +3056,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Persona3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="UrlLogotipo180px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="UrlLogotipo500px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="UrlLogotipo1000px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />          
+          <Property Name="UrlLogotipo1000px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />          
           <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaFiscal_Empresa" FromRole="EmpresaFiscal" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaImagen_Empresa" FromRole="EmpresaImagen" ToRole="Empresa" />-->
@@ -3860,6 +3957,21 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_CAlmacenGas_AlmacenGas" Association="Sagas.MainModuleModel.FK_CAlmacenGas_AlmacenGas">
             <End Role="AlmacenGas" EntitySet="AlmacenGas" />
             <End Role="UnidadAlmacenGas" EntitySet="UnidadAlmacenGas" />
+          </AssociationSet>
+          <EntitySet Name="AlmacenGasTomaLectura" EntityType="Sagas.MainModuleModel.AlmacenGasTomaLectura" />
+          <EntitySet Name="AlmacenGasTomaLecturaCilindro" EntityType="Sagas.MainModuleModel.AlmacenGasTomaLecturaCilindro" />
+          <EntitySet Name="AlmacenGasTomaLecturaFoto" EntityType="Sagas.MainModuleModel.AlmacenGasTomaLecturaFoto" />
+          <AssociationSet Name="FK_AlmacenGasTomaLectura_CAlmacenGas" Association="Sagas.MainModuleModel.FK_AlmacenGasTomaLectura_CAlmacenGas">
+            <End Role="UnidadAlmacenGas" EntitySet="UnidadAlmacenGas" />
+            <End Role="AlmacenGasTomaLectura" EntitySet="AlmacenGasTomaLectura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura" Association="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura">
+            <End Role="AlmacenGasTomaLectura" EntitySet="AlmacenGasTomaLectura" />
+            <End Role="AlmacenGasTomaLecturaCilindro" EntitySet="AlmacenGasTomaLecturaCilindro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura" Association="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura">
+            <End Role="AlmacenGasTomaLectura" EntitySet="AlmacenGasTomaLectura" />
+            <End Role="AlmacenGasTomaLecturaFoto" EntitySet="AlmacenGasTomaLecturaFoto" />
           </AssociationSet>
           <!--<EntitySet Name="RolAccionCatalogo" EntityType="Sagas.MainModuleModel.RolAccionCatalogo" />-->
           <!--<AssociationSet Name="FK_RolAccionCatalogo_Rol" Association="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol">
@@ -4808,8 +4920,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="P5000Actual" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
-          
-
           <!--"CAlmacenGasCalibracion"
           <Property Name="IdCAlmacenGas" Type="Int16" Nullable="false" />-->
           <Property Name="PorcentajeCalibracionPlaneada" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
@@ -4823,6 +4933,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_UnidadAlmacenGas_Empresa" FromRole="UnidadAlmacenGas" ToRole="Empresa" />
           <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="CentroCosto" />
           <NavigationProperty Name="AlmacenGas" Relationship="Sagas.MainModuleModel.FK_CAlmacenGas_AlmacenGas" FromRole="UnidadAlmacenGas" ToRole="AlmacenGas" />
+          <NavigationProperty Name="TomasLectura" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLectura_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="AlmacenGasTomaLectura" />
           
           
           <!--<NavigationProperty Name="CAlmacenGasCalibracion" Relationship="Sagas.MainModuleModel.FK_CAlmacenGasCalibracion_CAlmacenGas" FromRole="CAlmacenGas" ToRole="CAlmacenGasCalibracion" />
@@ -5851,6 +5962,91 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="IdAlmacenGas" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AlmacenGasTomaLectura">
+          <Key>
+            <PropertyRef Name="IdCAlmacenGas" />
+            <PropertyRef Name="IdOrden" />
+          </Key>
+          <Property Name="IdCAlmacenGas" Type="Int16" Nullable="false" />
+          <Property Name="IdOrden" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoMedidor" Type="Int16" Nullable="false" />
+          <Property Name="IdTipoEvento" Type="Byte" Nullable="false" />
+          <Property Name="P5000" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Porcentaje" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="ClaveOperacion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="DatosProcesados" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UnidadAlmacenGas" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLectura_CAlmacenGas" FromRole="AlmacenGasTomaLectura" ToRole="UnidadAlmacenGas" />
+          <NavigationProperty Name="Cilindros" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura" FromRole="AlmacenGasTomaLectura" ToRole="AlmacenGasTomaLecturaCilindro" />
+          <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura" FromRole="AlmacenGasTomaLectura" ToRole="AlmacenGasTomaLecturaFoto" />
+        </EntityType>
+        <EntityType Name="AlmacenGasTomaLecturaCilindro">
+          <Key>
+            <PropertyRef Name="IdCAlmacenGas" />
+            <PropertyRef Name="IdOrden" />
+            <PropertyRef Name="IdOrdenCilindro" />
+          </Key>
+          <Property Name="IdCAlmacenGas" Type="Int16" Nullable="false" />
+          <Property Name="IdOrden" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenCilindro" Type="Int16" Nullable="false" />
+          <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <NavigationProperty Name="TomaLectura" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura" FromRole="AlmacenGasTomaLecturaCilindro" ToRole="AlmacenGasTomaLectura" />
+        </EntityType>
+        <EntityType Name="AlmacenGasTomaLecturaFoto">
+          <Key>
+            <PropertyRef Name="IdCAlmacenGas" />
+            <PropertyRef Name="IdOrden" />
+            <PropertyRef Name="IdOrdenFoto" />
+          </Key>
+          <Property Name="IdCAlmacenGas" Type="Int16" Nullable="false" />
+          <Property Name="IdOrden" Type="Int32" Nullable="false" />
+          <Property Name="IdOrdenFoto" Type="Int16" Nullable="false" />
+          <Property Name="IdImagenDe" Type="Int16" Nullable="false" />
+          <Property Name="UrlImagen" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="PathImagen" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CadenaBase64" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TomaLectura" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura" FromRole="AlmacenGasTomaLecturaFoto" ToRole="AlmacenGasTomaLectura" />
+        </EntityType>
+        <Association Name="FK_AlmacenGasTomaLectura_CAlmacenGas">
+          <End Type="Sagas.MainModuleModel.UnidadAlmacenGas" Role="UnidadAlmacenGas" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasTomaLectura" Role="AlmacenGasTomaLectura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnidadAlmacenGas">
+              <PropertyRef Name="IdCAlmacenGas" />
+            </Principal>
+            <Dependent Role="AlmacenGasTomaLectura">
+              <PropertyRef Name="IdCAlmacenGas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura">
+          <End Type="Sagas.MainModuleModel.AlmacenGasTomaLectura" Role="AlmacenGasTomaLectura" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasTomaLecturaCilindro" Role="AlmacenGasTomaLecturaCilindro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasTomaLectura">
+              <PropertyRef Name="IdCAlmacenGas" />
+              <PropertyRef Name="IdOrden" />
+            </Principal>
+            <Dependent Role="AlmacenGasTomaLecturaCilindro">
+              <PropertyRef Name="IdCAlmacenGas" />
+              <PropertyRef Name="IdOrden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura">
+          <End Type="Sagas.MainModuleModel.AlmacenGasTomaLectura" Role="AlmacenGasTomaLectura" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasTomaLecturaFoto" Role="AlmacenGasTomaLecturaFoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasTomaLectura">
+              <PropertyRef Name="IdCAlmacenGas" />
+              <PropertyRef Name="IdOrden" />
+            </Principal>
+            <Dependent Role="AlmacenGasTomaLecturaFoto">
+              <PropertyRef Name="IdCAlmacenGas" />
+              <PropertyRef Name="IdOrden" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>        
         <!--<Association Name="FK_RolAccionCatalogo_Rol">
           <End Type="Sagas.MainModuleModel.Rol" Role="Rol" Multiplicity="1">
@@ -5894,6 +6090,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Empresa">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Empresa">
               <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="EsAdministracionCentral" ColumnName="EsAdministracionCentral" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="NombreComercial" ColumnName="NombreComercial" />
@@ -6707,6 +6904,44 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <MappingFragment StoreEntitySet="CTipoCentroCosto">
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdTipoCentroCosto" ColumnName="IdTipoCentroCosto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlmacenGasTomaLectura">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasTomaLectura">
+              <MappingFragment StoreEntitySet="AlmacenGasTomaLectura">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="DatosProcesados" ColumnName="DatosProcesados" />
+                <ScalarProperty Name="ClaveOperacion" ColumnName="ClaveOperacion" />
+                <ScalarProperty Name="Porcentaje" ColumnName="Porcentaje" />
+                <ScalarProperty Name="P5000" ColumnName="P5000" />
+                <ScalarProperty Name="IdTipoEvento" ColumnName="IdTipoEvento" />
+                <ScalarProperty Name="IdTipoMedidor" ColumnName="IdTipoMedidor" />
+                <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
+                <ScalarProperty Name="IdCAlmacenGas" ColumnName="IdCAlmacenGas" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlmacenGasTomaLecturaCilindro">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasTomaLecturaCilindro">
+              <MappingFragment StoreEntitySet="AlmacenGasTomaLecturaCilindro">
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdOrdenCilindro" ColumnName="IdOrdenCilindro" />
+                <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
+                <ScalarProperty Name="IdCAlmacenGas" ColumnName="IdCAlmacenGas" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AlmacenGasTomaLecturaFoto">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasTomaLecturaFoto">
+              <MappingFragment StoreEntitySet="AlmacenGasTomaLecturaFoto">
+                <ScalarProperty Name="CadenaBase64" ColumnName="CadenaBase64" />
+                <ScalarProperty Name="PathImagen" ColumnName="PathImagen" />
+                <ScalarProperty Name="UrlImagen" ColumnName="UrlImagen" />
+                <ScalarProperty Name="IdImagenDe" ColumnName="IdImagenDe" />
+                <ScalarProperty Name="IdOrdenFoto" ColumnName="IdOrdenFoto" />
+                <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
+                <ScalarProperty Name="IdCAlmacenGas" ColumnName="IdCAlmacenGas" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>          

@@ -68,5 +68,8 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<RegimenFiscal> RegimenFiscal { get; set; }
         public virtual DbSet<TipoPersona> TipoPersona { get; set; }
         public virtual DbSet<TipoCentroCosto> TipoCentroCosto { get; set; }
+        public virtual DbSet<AlmacenGasTomaLectura> AlmacenGasTomaLectura { get; set; }
+        public virtual DbSet<AlmacenGasTomaLecturaCilindro> AlmacenGasTomaLecturaCilindro { get; set; }
+        public virtual DbSet<AlmacenGasTomaLecturaFoto> AlmacenGasTomaLecturaFoto { get; set; }
     }
 }

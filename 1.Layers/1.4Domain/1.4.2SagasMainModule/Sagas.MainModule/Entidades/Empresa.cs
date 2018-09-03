@@ -81,6 +81,7 @@ namespace Sagas.MainModule.Entidades
         public string UrlLogotipo180px { get; set; }
         public string UrlLogotipo500px { get; set; }
         public string UrlLogotipo1000px { get; set; }
+        public bool Activo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
