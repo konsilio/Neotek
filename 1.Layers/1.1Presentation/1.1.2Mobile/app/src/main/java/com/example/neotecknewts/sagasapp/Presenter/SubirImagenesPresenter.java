@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Presenter;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
@@ -32,4 +33,8 @@ public interface SubirImagenesPresenter {
     void registrarLecturaInicial(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO);
 
     void registrarLecturaFinal(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO);
+
+    void registrarLecturaInicialPipa(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
+
+    void registrarLecturaFinalalPipa(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
 }

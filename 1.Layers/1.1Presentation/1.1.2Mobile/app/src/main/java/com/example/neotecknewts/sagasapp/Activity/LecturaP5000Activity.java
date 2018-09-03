@@ -13,17 +13,19 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5000View,
         View.OnClickListener {
-    public Boolean EsLecturaInicial,EsLecturaFinal;
-    public LecturaDTO lecturaDTO;
     public TextView TVLecturaP5000Titulo,TVLecturaP5000Tipo,TVLecturaP5000Pregunta
             ,TVLecturaP5000Registro;
     public NumberPicker NPLecturaP500CantidadLectura;
     public Button BtnLecturaP5000Guardar;
 
+    public Boolean EsLecturaInicial,EsLecturaFinal,EsLecturaFinalPipa,EsLecturaInicialPipa;
+    public LecturaDTO lecturaDTO;
+    public LecturaPipaDTO lecturaPipaDTO;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -34,10 +36,16 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
         if(b!=null) {
             EsLecturaInicial = (boolean) b.get("EsLecturaInicial");
             EsLecturaFinal = (boolean) b.get("EsLecturaFinal");
+            EsLecturaFinalPipa = (boolean) b.get("EsLecturaFinalPipa");
+            EsLecturaInicialPipa = (boolean) b.get("EsLecturaInicialPipa");
             if(EsLecturaInicial){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
             }else if(EsLecturaFinal){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
+            }else if (EsLecturaInicialPipa){
+                lecturaPipaDTO = (LecturaPipaDTO) b.getSerializable("lecturaPipaDTO");
+            }else if(EsLecturaFinalPipa){
+                lecturaPipaDTO = (LecturaPipaDTO) b.getSerializable("lecturaPipaDTO");
             }
         }
 
@@ -45,10 +53,27 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
         TVLecturaP5000Tipo = findViewById(R.id.TVLecturaP5000Tipo);
         TVLecturaP5000Pregunta = findViewById(R.id.TVLecturaP5000Pregunta);
         TVLecturaP5000Registro = findViewById(R.id.TVLecturaP5000Registro);
+        if(EsLecturaInicial) {
+            TVLecturaP5000Titulo.setText(  R.string.toma_de_lectura_inicial );
+            TVLecturaP5000Tipo.setText(getString(R.string.p500)+
+                    lecturaDTO.getNombreEstacionCarburacion());
+        }else if(EsLecturaFinal){
+            TVLecturaP5000Titulo.setText( R.string.toma_de_lectura_final);
+            TVLecturaP5000Tipo.setText(getString(R.string.p500)+
+                    lecturaDTO.getNombreEstacionCarburacion());
+        }else if (EsLecturaInicialPipa){
+            TVLecturaP5000Titulo.setText( R.string.toma_de_lectura_inicial);
+            TVLecturaP5000Tipo.setText(getString(R.string.p500)+" "+getString(R.string.Pipa));
+        }else if (EsLecturaFinalPipa){
+            TVLecturaP5000Titulo.setText(R.string.toma_de_lectura_final);
+            TVLecturaP5000Tipo.setText(getString(R.string.p500)+" "+getString(R.string.Pipa));
+        }
 
-        TVLecturaP5000Titulo.setText(EsLecturaInicial ? R.string.toma_de_lectura_inicial:R.string.toma_de_lectura_final);
-        TVLecturaP5000Tipo.setText(getString(R.string.p500)+lecturaDTO.getNombreEstacionCarburacion());
-        TVLecturaP5000Registro.setText(R.string.registra_la_lectura_del_p500_de_la_estaci_n);
+        if(EsLecturaInicial||EsLecturaFinal ) {
+            TVLecturaP5000Registro.setText(R.string.registra_la_lectura_del_p500_de_la_estaci_n);
+        }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+            TVLecturaP5000Registro.setText(R.string.registra_la_lectura_del_p500_de_la_pipa);
+        }
 
         NPLecturaP500CantidadLectura = findViewById(R.id.NPLecturaP500CantidadLectura);
 
@@ -132,25 +157,26 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             dialogo.create();
             dialogo.show();
         }else{
-            if(EsLecturaInicial) {
-                Intent intent = new Intent(LecturaP5000Activity.this,
-                        CameraLecturaActivity.class);
+            Intent intent = new Intent(LecturaP5000Activity.this,
+                    CameraLecturaActivity.class);
+            if(EsLecturaInicial || EsLecturaFinal) {
                 intent.putExtra("EsLecturaInicial",EsLecturaInicial);
                 intent.putExtra("EsLecturaFinal",EsLecturaFinal);
+                intent.putExtra("EsLecturaInicialPipa",false);
+                intent.putExtra("EsLecturaFinalPipa",false);
                 lecturaDTO.setCantidadP5000(CantidadP500);
                 intent.putExtra("EsFotoP5000",true);
                 intent.putExtra("lecturaDTO",lecturaDTO);
-                startActivity(intent);
-            }else if (EsLecturaFinal){
-                Intent intent = new Intent(LecturaP5000Activity.this,
-                        CameraLecturaActivity.class);
+            }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+                lecturaPipaDTO.setCantidadP5000(CantidadP500);
+                intent.putExtra("lecturaPipaDTO",lecturaPipaDTO);
                 intent.putExtra("EsLecturaInicial",EsLecturaInicial);
                 intent.putExtra("EsLecturaFinal",EsLecturaFinal);
-                lecturaDTO.setCantidadP5000(CantidadP500);
+                intent.putExtra("EsLecturaInicialPipa",EsLecturaInicialPipa);
+                intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
                 intent.putExtra("EsFotoP5000",true);
-                intent.putExtra("lecturaDTO",lecturaDTO);
-                startActivity(intent);
             }
+            startActivity(intent);
         }
     }
 }

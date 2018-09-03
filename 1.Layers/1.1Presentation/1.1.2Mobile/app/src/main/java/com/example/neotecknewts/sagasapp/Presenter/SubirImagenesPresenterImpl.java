@@ -7,6 +7,7 @@ import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
@@ -135,5 +136,41 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
         subirImagenesView.showProgress(R.string.message_cargando);
         interactor.registrarLecturaFinal(sagasSql,token,lecturaDTO);
     }
+
+    /**
+     * <h3>registrarLecturaInicialPipa</h3>
+     * Permite realizar el registro de la lectura inicial de la pipa, temoara como parametros
+     * un objeto de tipo {@link SAGASSql} que tiene el acceso a base de datos en local,
+     * una cadena de tipo {@link String} con el token del usuario y un objeto {@link LecturaPipaDTO}
+     * con los valores a registrar.
+     * @param sagasSql Objeto de tipo {@link SAGASSql} que permite el acceso a base de datos local
+     * @param token Cadena de tipo {@link String} que reprecenta el token de usuario
+     * @param lecturaPipaDTO Objeto de tipo {@link LecturaPipaDTO} que tien los valores de la
+     *                       lectura de la pipa
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @Override
+    public void registrarLecturaInicialPipa(SAGASSql sagasSql, String token,
+                                            LecturaPipaDTO lecturaPipaDTO) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarLecturaInicialPipa(sagasSql,token,lecturaPipaDTO);
+    }
+
+    /**
+     * <h3>registrarLecturaFinalalPipa</h3>
+     * Permite realizar la lectura final de la pipa, se enviaran como parametros
+     * @param sagasSql Objeto de tipo {@link SAGASSql} que permite el acceso a base de datos local
+     * @param token Cadena de tipo {@link String} que reprecenta el token de usuario
+     * @param lecturaPipaDTO Objeto de tipo {@link LecturaPipaDTO} que tien los valores de la
+     *                       lectura de la pipa
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    @Override
+    public void registrarLecturaFinalalPipa(SAGASSql sagasSql, String token,
+                                            LecturaPipaDTO lecturaPipaDTO) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarLecturaFinalizalPipa(sagasSql,token,lecturaPipaDTO);
+    }
+
     //endregion
 }

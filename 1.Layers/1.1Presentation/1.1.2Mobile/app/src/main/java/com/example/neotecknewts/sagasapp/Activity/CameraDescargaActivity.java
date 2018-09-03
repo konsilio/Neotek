@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
@@ -59,6 +60,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public IniciarDescargaDTO iniciarDescarga;
     public FinalizarDescargaDTO finalizarDescarga;
     public LecturaDTO lecturaDTO;
+    public LecturaPipaDTO lecturaPipaDTO;
 
     //Banderas para indicar que objeto trabajar
     public boolean papeleta;
@@ -68,6 +70,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public boolean almacen;
     public boolean TanquePrestado;
     public boolean EsLecturaInicial,EsLecturaFinal;
+    public boolean EsLecturaInicialPipa,EsLecturaFinalPipa;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -100,6 +103,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 finalizar=false;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa= false;
                 textViewMensaje.setText(R.string.mensaje_primera_foto);
             }
             //se acomoda la vista en modo Iniciar descarga y se les da valor a las variables realcionadas con Iniciar descarga
@@ -121,6 +126,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 TanquePrestado = extras.getBoolean("TanquePrestado");
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa= false;
             }
             //se acomoda la vista en modo Finalizar descarga y se les da valor a las variables realcionadas con finalizar descarga
             else if(extras.getBoolean("EsDescargaFinalizar")){
@@ -139,20 +146,28 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 textViewMensaje.setText(R.string.mensaje_primera_foto);
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
-            }else if (extras.getBoolean("EsLecturaInicial")){
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa= false;
+            }else if (extras.getBoolean("EsLecturaInicial") ||
+                    extras.getBoolean("EsLecturaFinal")){
                 lecturaDTO = (LecturaDTO) extras.getSerializable("lecturaDTO");
                              cantidadFotos = lecturaDTO.getCantidadFotografias();
                 textViewTitulo.setText("Fotografia "+lecturaDTO.getNombreTipoMedidor()
                         +" - "+lecturaDTO.getNombreEstacionCarburacion() );
                 EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
                 EsLecturaFinal = extras.getBoolean("EsLecturaFinal");
-            }else if (extras.getBoolean("EsLecturaFinal")){
-                lecturaDTO = (LecturaDTO) extras.getSerializable("lecturaDTO");
-                cantidadFotos = lecturaDTO.getCantidadFotografias();
-                textViewTitulo.setText("Fotografia "+lecturaDTO.getNombreTipoMedidor()
-                        +" - "+lecturaDTO.getNombreEstacionCarburacion() );
-                EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
-                EsLecturaFinal = extras.getBoolean("EsLecturaFinal");
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa= false;
+            }else if (extras.getBoolean("EsLecturaInicialPipa")||
+                    extras.getBoolean("EsLecturaFinalPipa")){
+                lecturaPipaDTO = (LecturaPipaDTO) extras.getSerializable("lecturaPipaDTO");
+                cantidadFotos = lecturaPipaDTO.getCantidadFotografias();
+                textViewTitulo.setText("Fotografia "+lecturaPipaDTO.getTipoMedidor()
+                        +" - "+lecturaPipaDTO.getNombrePipa() );
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = extras.getBoolean("EsLecturaInicialPipa");
+                EsLecturaFinalPipa= extras.getBoolean("EsLecturaFinalPipa");
             }
 
         }
@@ -230,6 +245,9 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }else if(EsLecturaFinal){
                     Log.w("Boton lec.Final.","finalizar"+cantidadFotos);
                     lecturaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+                    Log.w("Lectura Pipa","finalizar"+cantidadFotos);
+                    lecturaPipaDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 }
             }catch(Exception ex){
 
@@ -280,6 +298,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }else if(EsLecturaFinal){
                     Log.w("Boton lec.Final.","finalizar"+cantidadFotos);
                     lecturaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                    startActivity();
+                }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+                    Log.w("Lectura Pipa","finalizar"+cantidadFotos);
+                    lecturaPipaDTO.getImagenesURI().add(new URI(imageUri.toString()));
                     startActivity();
                 }
             }catch(Exception ex){
@@ -421,6 +443,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
             intent.putExtra("lecturaDTO",lecturaDTO);
         }else if(EsLecturaFinal){
             intent.putExtra("lecturaDTO",lecturaDTO);
+        }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+            intent.putExtra("lecturaPipaDTO",lecturaPipaDTO);
+            intent.putExtra("EsLecturaInicialPipa",EsLecturaInicialPipa);
+            intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
         }
         intent.putExtra("EsPapeleta",papeleta);
         intent.putExtra("EsDescargaFinalizar",finalizar);

@@ -23,6 +23,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 import com.jsibbold.zoomage.ZoomageView;
@@ -41,9 +42,11 @@ public class CameraLecturaActivity extends AppCompatActivity {
     public TextView TVCameraLecturaActivityTitulo,TVCameraLecturaActivityFotoEstacion;
     public ZoomageView IVZCameraLecturaActivityImagen;
 
-    public boolean EsLecturaInicial,EsLecturaFinal,EsFotoP5000,fotoTomada;
+    public boolean EsLecturaInicial,EsLecturaFinal,EsFotoP5000,fotoTomada,
+            EsLecturaInicialPipa,EsLecturaFinalPipa;
     public String imageurl;
     public LecturaDTO lecturaDTO;
+    public LecturaPipaDTO lecturaPipaDTO;
 
     public Uri imageUri;
 
@@ -56,8 +59,11 @@ public class CameraLecturaActivity extends AppCompatActivity {
         if(b!=null) {
             EsLecturaFinal = (boolean) b.get("EsLecturaFinal");
             EsLecturaInicial = (boolean) b.get("EsLecturaInicial");
+            EsLecturaInicialPipa = (boolean) b.get("EsLecturaInicialPipa");
+            EsLecturaFinalPipa = (boolean) b.get("EsLecturaFinalPipa");
             EsFotoP5000 = (boolean) b.get("EsFotoP5000");
             lecturaDTO = (LecturaDTO) b.getSerializable("lecturaDTO");
+            lecturaPipaDTO = (LecturaPipaDTO) b.get("lecturaPipaDTO");
         }
 
         LLCameraLecturaActivityTitulo = findViewById(R.id.LLCameraLecturaActivityTitulo);
@@ -76,6 +82,12 @@ public class CameraLecturaActivity extends AppCompatActivity {
         }else if (EsLecturaFinal){
             TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
                     " - "+lecturaDTO.getNombreEstacionCarburacion());
+        }else if (EsLecturaInicialPipa){
+            TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
+                    " - "+lecturaPipaDTO.getNombrePipa());
+        }else if (EsLecturaFinalPipa){
+            TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
+                    " - "+lecturaPipaDTO.getNombrePipa());
         }
 
         BtnCameraLecturaTomarFoto.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +121,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
     }
 
     private void verificarBoton() {
-        if(EsFotoP5000 && EsLecturaInicial){
+        if(EsFotoP5000 && EsLecturaInicial || EsLecturaFinal){
             try {
                 lecturaDTO.setImagenP5000(imageurl);
                 lecturaDTO.setImagenP5000URI(new URI(imageUri.toString()));
@@ -123,15 +135,17 @@ public class CameraLecturaActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        }else if (EsFotoP5000 && EsLecturaFinal){
+        }else if (EsFotoP5000 && (EsLecturaInicialPipa || EsLecturaFinalPipa)){
             try {
-                lecturaDTO.setImagenP5000(imageurl);
-                lecturaDTO.setImagenP5000URI(new URI(imageUri.toString()));
+                lecturaPipaDTO.setImagenP5000(imageurl);
+                lecturaPipaDTO.setImagenP5000URI(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         CapturaPorcentajeActivity.class);
-                intent.putExtra("lecturaDTO",lecturaDTO);
+                intent.putExtra("lecturaPipaDTO",lecturaPipaDTO);
                 intent.putExtra("EsLecturaInicial",EsLecturaInicial);
                 intent.putExtra("EsLecturaFinal",EsLecturaFinal);
+                intent.putExtra("EsLecturaInicialPipa",EsLecturaInicialPipa);
+                intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
                 startActivity(intent);
             } catch (URISyntaxException e) {
                 e.printStackTrace();

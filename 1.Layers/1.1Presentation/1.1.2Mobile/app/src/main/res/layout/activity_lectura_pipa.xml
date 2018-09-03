@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.LecturaDatosActivity">
+    tools:context=".Activity.LecturaPipaActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,50 +16,48 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/TVLecturaDatosactivityTitulo"
+                android:id="@+id/TVLecturaPipaActivityTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:paddingBottom="15dp"
                 android:paddingTop="25dp"
-                android:text="@string/toma_de_lectura_inicial"
+                android:text="@string/toma_de_lectura"
                 android:textAlignment="center"
-                android:textSize="25sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/TVLecturaDatosEstacion"
+                android:id="@+id/TVLecturaPipaAcivitySeleccionPipa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="25dp"
-                android:text="@string/seleciona_la_estaci_n_de_carburaci_n"
-                android:textAlignment="viewStart"
-                android:textSize="15sp" />
+                android:paddingTop="15dp"
+                android:text="@string/selecciona_la_pipa"
+                android:textSize="18sp" />
 
             <Spinner
-                android:id="@+id/SLecturaDatosActivityListaCarburacion"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:padding="20dp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="126dp" />
-
-            <TextView
-                android:id="@+id/TVLecturaDatosActivityTipoMedidor"
+                android:id="@+id/SLecturaPipaActivityListaPipa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="25dp"
+                android:padding="20dp" />
+
+            <TextView
+                android:id="@+id/TVLecturaPipaActivityTipoLector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingTop="15dp"
                 android:text="@string/selecciona_el_tipo_de_medidor_porcentual"
-                android:textSize="15sp" />
+                android:textSize="18sp" />
 
             <Spinner
-                android:id="@+id/SLecturaDatosActivityTipoMedidor"
+                android:id="@+id/SLecturaPipaActivityListaTipoMedidor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -75,21 +71,20 @@
                 android:layout_marginRight="15dp" />
 
             <Button
-                android:id="@+id/BLecturaDatosActivityAceptar"
+                android:id="@+id/BtnLecturaPipaActivityGuardar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="85dp"
                 android:layout_marginRight="85dp"
                 android:layout_marginTop="15dp"
                 android:backgroundTint="@color/colorButtonLogin"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="30sp"
-                tools:ignore="ObsoleteLayoutParam,UnusedAttribute" />
-
+                tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>
-
 </android.support.constraint.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
@@ -501,6 +502,60 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      */
     @Override
     public void registrarLecturaFinal(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String clave_unica = "LF"+s.format(new Date());
+        sagasSql.IncertarLecturaFinal(lecturaDTO);
+        sagasSql.InsertImagenLecturaFinalP5000(lecturaDTO);
+        sagasSql.IncertImagenesLecturaFinal(lecturaDTO);
+        subirImagenesPresenter.onSuccessRegistroAndroid();
+
+    }
+
+    /**
+     * <h3>registrarLecturaInicialPipa</h3>
+     * Permite realizar el envio de los datos al api del web service, se tomaran como parametros
+     * un objeto de tipo {@link SAGASSql} con la conexion a la base de datos local, una cadena
+     * {@link String} que reprecenta el token de usuario y un objeto de tipo {@link LecturaPipaDTO}
+     * con los datos de la lectura inicial de la pipa tras finalizar retornara a la pantalla de
+     * menu y en caso de que no se guarde en el api se guardara en local
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param lecturaPipaDTO Objeto de tipo {@link LecturaPipaDTO} con los datos de lectura de la
+     *                       pipa
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     * @date 03/09/2018
+     */
+    @Override
+    public void registrarLecturaInicialPipa(SAGASSql sagasSql, String token,
+                                            LecturaPipaDTO lecturaPipaDTO) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String clave_unica = "LIP"+s.format(new Date());
+
+        subirImagenesPresenter.onSuccessRegistroAndroid();
+
+    }
+    /**
+     * <h3>registrarLecturaFinalizalPipa</h3>
+     * Permite realizar el envio de los datos al api del web service, se tomaran como parametros
+     * un objeto de tipo {@link SAGASSql} con la conexion a la base de datos local, una cadena
+     * {@link String} que reprecenta el token de usuario y un objeto de tipo {@link LecturaPipaDTO}
+     * con los datos de la lectura final de la pipa tras finalizar retornara a la pantalla de
+     * menu y en caso de que no se guarde en el api se guardara en local
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param lecturaPipaDTO Objeto de tipo {@link LecturaPipaDTO} con los datos de lectura de la
+     *                       pipa
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     * @date 03/09/2018
+     */
+    @Override
+    public void registrarLecturaFinalizalPipa(SAGASSql sagasSql, String token,
+                                              LecturaPipaDTO lecturaPipaDTO) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String clave_unica = "LFP"+s.format(new Date());
         subirImagenesPresenter.onSuccessRegistroAndroid();
     }
 

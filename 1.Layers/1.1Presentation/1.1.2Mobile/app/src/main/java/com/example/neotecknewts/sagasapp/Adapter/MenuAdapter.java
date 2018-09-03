@@ -2,21 +2,7 @@ package com.example.neotecknewts.sagasapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +13,13 @@ import android.widget.TextView;
 import com.example.neotecknewts.sagasapp.Activity.FinalizarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.IniciarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaDatosActivity;
+import com.example.neotecknewts.sagasapp.Activity.LecturaPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaActivity;
 import com.example.neotecknewts.sagasapp.Activity.VistaOrdenCompraActivity;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.R;
 
-import java.util.List;
-import java.util.Locale;
+import java.util.ArrayList;
 
 /**
  * Created by neotecknewts on 02/08/18.
@@ -110,6 +96,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     Intent intent = new Intent(view.getContext() , LecturaDatosActivity.class);
                     intent.putExtra("EsLecturaInicial",false);
                     intent.putExtra("EsLecturaFinal",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getName().equals("Pipa (Inicial)")){
+                    Intent intent = new Intent(view.getContext(),LecturaPipaActivity.class);
+                    intent.putExtra("EsLecturaInicialPipa",true);
+                    intent.putExtra("EsLecturaFinalPipa",false);
+                    view.getContext().startActivity(intent);
+                }else if (menuItem.getName().equals("Pipa (Final)")){
+                    Intent intent = new Intent(view.getContext(),LecturaPipaActivity.class);
+                    intent.putExtra("EsLecturaInicialPipa",false);
+                    intent.putExtra("EsLecturaFinalPipa",true);
                     view.getContext().startActivity(intent);
                 }
 

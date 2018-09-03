@@ -99,9 +99,12 @@
         <activity
             android:name=".Activity.LecturaP5000Activity"
             android:label="@string/toma_de_lectura" />
-        <activity android:name=".Activity.CameraLecturaActivity" android:label="@string/toma_de_lectura">
-
-        </activity>
+        <activity
+            android:name=".Activity.CameraLecturaActivity"
+            android:label="@string/toma_de_lectura" />
+        <activity
+            android:name=".Activity.LecturaPipaActivity"
+            android:label="@string/Pipa" />
     </application>
 
 </manifest>

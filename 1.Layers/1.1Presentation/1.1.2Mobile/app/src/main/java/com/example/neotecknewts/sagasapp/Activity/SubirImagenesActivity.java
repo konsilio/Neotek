@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenterImpl;
@@ -45,11 +46,13 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public IniciarDescargaDTO iniciarDescarga;
     public FinalizarDescargaDTO finalizarDescarga;
     public LecturaDTO lecturaDTO;
+    public LecturaPipaDTO lecturaPipaDTO;
+
     //banderas para indicar el objeto a utlizar
     public boolean papeleta;
     public boolean iniciar;
     public boolean finalizar;
-    public boolean EsLecturaInicial,EsLecturaFinal;
+    public boolean EsLecturaInicial,EsLecturaFinal,EsLecturaInicialPipa,EsLecturaFinalPipa;
 
     public SubirImagenesPresenter presenter;
     public ProgressDialog progressDialog;
@@ -116,6 +119,16 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finalizar=false;
                 EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
                 EsLecturaFinal = extras.getBoolean("EsLecturaFinal");
+            }else  if(extras.getBoolean("EsLecturaInicialPipa") ||
+                    extras.getBoolean("EsLecturaFinalPipa")){
+                lecturaPipaDTO = (LecturaPipaDTO) extras.getSerializable("lecturaPipaDTO");
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = (boolean) extras.get("EsLecturaInicialPipa");
+                EsLecturaFinalPipa = (boolean) extras.get("EsLecturaFinalPipa");
             }
 
         }
@@ -125,9 +138,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             iniciarDescargaSQL = new IniciarDescargaSQL(getApplicationContext());
         }else if(finalizar){
             finalizarDescargaSQL = new FinalizarDescargaSQL(getApplicationContext());
-        }else if (EsLecturaInicial){
+        }else if (EsLecturaInicial || EsLecturaFinal){
             sagasSql = new SAGASSql(getApplicationContext());
-        }else if (EsLecturaFinal){
+        }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
             sagasSql = new SAGASSql(getApplicationContext());
         }
         //se ejecuta la tarea asincrona para procesar las imagenes
@@ -263,6 +276,38 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 e.printStackTrace();
             }
 
+        }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){//Lectura pipa
+            for (int i=0; i<lecturaPipaDTO.getImagenesURI().size();i++){
+                try {
+                    Uri uri = Uri.parse(lecturaPipaDTO.getImagenesURI().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(), uri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    lecturaPipaDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            Uri uri = Uri.parse(lecturaPipaDTO.getImagenP5000URI().toString());
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), uri);
+                bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                byte[] b = bs.toByteArray();
+                String image = Base64.encodeToString(b, Base64.DEFAULT);
+                lecturaPipaDTO.setImagenP5000(image.trim());
+                Log.w("Imagen P5000",""+uri.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -424,6 +469,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 presenter.registrarLecturaInicial(sagasSql,session.getToken(),lecturaDTO);
             }else if (EsLecturaFinal){
                 presenter.registrarLecturaFinal(sagasSql,session.getToken(),lecturaDTO);
+            }else if (EsLecturaInicialPipa){
+                presenter.registrarLecturaInicialPipa(sagasSql,session.getToken(),lecturaPipaDTO);
+            }else if (EsLecturaFinalPipa){
+                presenter.registrarLecturaFinalalPipa(sagasSql,session.getToken(),lecturaPipaDTO);
             }
             textView.setText(R.string.cargando_imagenes_fin);
             //progressDialog.hide();

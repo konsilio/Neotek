@@ -203,21 +203,14 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                if(EsLecturaInicial) {
                     Intent intent = new Intent(LecturaDatosActivity.this,
                             LecturaP5000Activity.class);
                     intent.putExtra("EsLecturaInicial", EsLecturaInicial);
                     intent.putExtra("EsLecturaFinal", EsLecturaFinal);
+                    intent.putExtra("EsLecturaInicialPipa",false);
+                    intent.putExtra("EsLecturaFinalPipa",false);
                     intent.putExtra("lecturaDTO",lecturaDTO);
                     startActivity(intent);
-                }else if (EsLecturaFinal){
-                    Intent intent = new Intent(LecturaDatosActivity.this,
-                            LecturaP5000Activity.class);
-                    intent.putExtra("EsLecturaInicial", EsLecturaInicial);
-                    intent.putExtra("EsLecturaFinal", EsLecturaFinal);
-                    intent.putExtra("lecturaDTO",lecturaDTO);
-                    startActivity(intent);
-                }
 
             }
         });
