@@ -67,6 +67,33 @@ namespace Web.MainModule.Catalogos {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor btnok;
         
         /// <summary>
+        /// Control iSimboloBoton.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl iSimboloBoton;
+        
+        /// <summary>
+        /// Control DivAlerta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivAlerta;
+        
+        /// <summary>
+        /// Control lblErrorPord.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorPord;
+        
+        /// <summary>
         /// Control ddlEmpresas.
         /// </summary>
         /// <remarks>

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Catalogo
 {
+    [Serializable]
     public class CuentaContableCrearDto
     {
         [Required(ErrorMessage = Error.R0002)]

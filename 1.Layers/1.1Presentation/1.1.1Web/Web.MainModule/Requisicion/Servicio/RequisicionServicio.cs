@@ -142,10 +142,10 @@ namespace Web.MainModule.Requisicion.Servicio
             agente.BuscarProductosAsociados(idProdcuto, Token);
             return agente._listProductos;
         }
-        public List<CentroCostoDTO> ListaCentroCostos(string Token, short idEmpresa)
+        public List<CentroCostoDTO> ListaCentroCostos(string Token)
         {
             var agente = new AgenteServicios();
-            agente.BuscarCentrosCostos(Token, idEmpresa);
+            agente.BuscarCentrosCostos(Token);
             return agente._listaCentrosCostos;
         }      
         #endregion

@@ -180,6 +180,7 @@
     <Compile Include="IRepositorios\IRequisicionRepositorio.cs" />
     <Compile Include="IRepositorios\IRolRepositorio.cs" />
     <Compile Include="IRepositorios\IUsuarioRepositorio.cs" />
+    <Compile Include="ObjetosValor\Constantes\NotificacionPushConst.cs" />
     <Compile Include="ObjetosValor\Enum\ImagenDeEnum.cs" />
     <Compile Include="ObjetosValor\Enum\RequisicionEstatusEnum.cs" />
     <Compile Include="ObjetosValor\Enum\OrdenCompraEstatusEnum.cs" />

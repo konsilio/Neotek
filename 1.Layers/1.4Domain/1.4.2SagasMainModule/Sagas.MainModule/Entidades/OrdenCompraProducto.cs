@@ -24,7 +24,7 @@ namespace Sagas.MainModule.Entidades
         public string UnidadMedida { get; set; }
         public string UnidadMedida2 { get; set; }
         public string Descripcion { get; set; }
-        public int Cantidad { get; set; }
+        public decimal Cantidad { get; set; }
         public decimal Precio { get; set; }
         public decimal Descuento { get; set; }
         public decimal IVA { get; set; }

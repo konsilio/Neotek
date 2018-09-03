@@ -15,7 +15,7 @@ namespace Utilities.MainModule
         public static string ConcatenarLista(List<String> lstrng, char separador = '|')
         {
             string cadenaFinal = string.Empty;
-            lstrng.ForEach(x => string.Concat(cadenaFinal, x, separador));
+            lstrng.ForEach(x => cadenaFinal = string.Concat(cadenaFinal, x, separador));
             return cadenaFinal.Substring(0, cadenaFinal.Length - 1);
         }
         public static Dictionary<string, string> ObtenerFilters(string filters)

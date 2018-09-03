@@ -27,6 +27,8 @@ namespace Exceptions.MainModule.Validaciones
         public const string R0011 = "La fecha de requisición no puede ser menor o igual a la fehca actual";
         public const string R0012 = "Verifique que los datos esten completos";
 
+        public const string OC0001 = "La orden de compra no se actualizo correctamente";
+
         public const string C0001 = "El '{0}' no coincide con los lineamientos establecidos por el Servicio de Administración Tributaria. Corrígelo por favor.";
         public const string C0002 = "No se logró hacer el registro {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
         public const string C0003 = "No se logró hacer la modificación {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
@@ -41,5 +43,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string P0002 = "No cuentas con los permisos necesario para modificar {0}.";
         public const string P0003 = "No cuentas con los permisos necesario para eliminar {0}.";
         public const string P0004 = "No cuentas con los permisos necesario para consultar {0}.";
+
+        public const string A0001 = "No se logró hacer el registro {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
     }
 }

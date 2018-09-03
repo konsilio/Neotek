@@ -85,5 +85,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<AlmacenGas>().GetSingle(x => x.IdAlmacenGas.Equals(idAlmacenGas)
                                                          && x.Activo);
         }
+        public AlmacenGas ProductoAlmacenGas(short idEmpresa)
+        {
+            return uow.Repository<AlmacenGas>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa));
+        }
     }
 }

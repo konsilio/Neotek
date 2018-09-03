@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Catalogo
 {
+    [Serializable]
     public class CuentaContableDto
     {
         public int IdCuentaContable { get; set; }
         public short IdEmpresa { get; set; }
+        public string Empresa { get; set; }
         public string Numero { get; set; }
         public string Descripcion { get; set; }
         public bool Activo { get; set; }

@@ -7,78 +7,35 @@ using System.Web;
 
 namespace Web.MainModule.OrdenCompra.Model
 {
+    [Serializable]
     public class OrdenCompraDTO
-    {        
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdOrdenCompra")]
+    {
         public int IdOrdenCompra { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdEmpresa")]
         public short IdEmpresa { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdOrdenCompraEstatus")]
+        public string Empresa { get; set; }
         public byte IdOrdenCompraEstatus { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdRequisicion")]
+        public string OrdenCompraEstatus { get; set; }
         public int IdRequisicion { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdProveedor")]
+        public string NumeroRequisicion { get; set; }
+        public string usuarioSolicitante { get; set; }
         public int IdProveedor { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdCentroCosto")]
+        public string Proveedor { get; set; }
+        public Nullable<int> IdUsuarioGenerador { get; set; }
+        public Nullable<int> IdUsuarioAutorizador { get; set; }
         public int IdCentroCosto { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdCuentaContable")]
         public int IdCuentaContable { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "NumOrdenCompra")]
         public string NumOrdenCompra { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "EsActivoVenta")]
         public bool EsActivoVenta { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "EsGas")]
         public bool EsGas { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Activo")]
+        public bool EsTransporteGas { get; set; }
         public bool Activo { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "FechaRegistro")]
-        public DateTime FechaRegistro { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "SubtotalSinIva")]
-        public decimal SubtotalSinIva { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "SubtotalSinIeps")]
-        public decimal SubtotalSinIeps { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Iva")]
-        public decimal Iva { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Ieps")]
-        public decimal Ieps { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Total")]
-        public decimal Total { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "EsTransporteGas")]
-        public bool EsTransporteGas { get; set; }        
+        public System.DateTime FechaRegistro { get; set; }
+        public Nullable<System.DateTime> FechaAutorizacion { get; set; }
+        public DateTime FechaRequerida { get; set; }
+        public Nullable<decimal> SubtotalSinIva { get; set; }
+        public Nullable<decimal> SubtotalSinIeps { get; set; }
+        public Nullable<decimal> Iva { get; set; }
+        public Nullable<decimal> Ieps { get; set; }
+        public Nullable<decimal> Total { get; set; }
     }
 }

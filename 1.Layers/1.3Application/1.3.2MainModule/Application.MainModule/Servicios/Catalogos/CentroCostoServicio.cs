@@ -25,12 +25,12 @@ namespace Application.MainModule.Servicios.Catalogos
             return new CentroCostoDataAccess().Actualizar(cCosto);
         }
 
-        public static List<CentroCosto> Obtener(short idEmpresa)
+        public static List<CentroCosto> Obtener()
         {
-            var empresa = new EmpresaDataAccess().Buscar(Seguridad.TokenServicio.ObtenerIdEmpresa());
+            var empresa = new EmpresaDataAccess().Buscar(TokenServicio.ObtenerIdEmpresa());
 
             if (empresa.EsAdministracionCentral)
-                return new CentroCostoDataAccess().BuscarTodos(idEmpresa);
+                return new CentroCostoDataAccess().BuscarTodos();
             else
                 return new CentroCostoDataAccess().BuscarTodos(empresa.IdEmpresa);
         }
