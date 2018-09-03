@@ -11,10 +11,9 @@ namespace Application.MainModule.Servicios.Requisicion
 {
     public static class RequisicionServicio
     {
-        public static RespuestaRequisicionDto GuardarRequisicionNueva(Sagas.MainModule.Entidades.Requisicion _req)
+        public static RespuestaDto GuardarRequisicionNueva(Sagas.MainModule.Entidades.Requisicion _req)
         {
-            var respuesta = new RequisicionDataAccess().InsertarNueva(_req);
-            return respuesta;
+            return new RequisicionDataAccess().InsertarNueva(_req);
         }
         public static List<RequisicionDTO> BuscarRequisicionPorIdEmpresa(Int16 _IdEmpresa)
         {
@@ -42,7 +41,7 @@ namespace Application.MainModule.Servicios.Requisicion
             return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad), RequisicionProductoAdapter.FromDTO(_req.ListaProductos, entidad.Productos.ToList()));
         }
         public static RespuestaDto UpDateRequisicionAutoriza(Sagas.MainModule.Entidades.Requisicion _req, List<Sagas.MainModule.Entidades.RequisicionProducto> prods)
-        { 
+        {
             return new RequisicionDataAccess().Actualizar(_req, prods);
         }
         public static RespuestaDto UpDateRequisicionEstaus(int _req, byte status)
@@ -63,7 +62,29 @@ namespace Application.MainModule.Servicios.Requisicion
         }
         public static List<Sagas.MainModule.Entidades.Requisicion> IdentificarRequisicones(Sagas.MainModule.Entidades.Requisicion _req)
         {
-            List<Sagas.MainModule.Entidades.Requisicion> lRequi = new List<Sagas.MainModule.Entidades.Requisicion>();
+            var a = _req.Productos.Where(x => x.EsGas.Value || x.EsTransporteGas.Value).ToList();
+            if (a != null)
+            {
+                new Sagas.MainModule.Entidades.Requisicion()
+                {
+                    Productos = a,
+                };
+            }
+
+            a = _req.Productos.Where(x => !x.EsGas.Value && !x.EsTransporteGas.Value).ToList();
+            if (a != null)
+            {
+                new Sagas.MainModule.Entidades.Requisicion()
+                {
+                    Productos = a,
+                };
+            }
+
+
+
+
+
+                List<Sagas.MainModule.Entidades.Requisicion> lRequi = new List<Sagas.MainModule.Entidades.Requisicion>();
             foreach (var prod in _req.Productos)
             {
                 if (lRequi.Count.Equals(0))
@@ -73,17 +94,39 @@ namespace Application.MainModule.Servicios.Requisicion
                     newReq.Productos.Add(prod);
                     lRequi.Add(newReq);
                 }
-                else 
+                else
                 {
-                    if (prod.Producto.EsGas || prod.Producto.EsTransporteGas.Value)
+                    if (prod.EsGas.Value || prod.EsTransporteGas.Value)
                     {
+                        bool crear = false;
                         foreach (var lr in lRequi)
                         {
-                            
+                            if (lr.Productos.ToList().Where(p => p.EsGas.Value.Equals(true) || p.EsTransporteGas.Value.Equals(true)).ToList().Count().Equals(0))                         
+                            { lr.Productos.Add(prod); }
                         }
-                        if (lRequi.Exists(x => x.Productos.ToList().Exists(p => p.EsGas != null ? p.EsGas.Value : false && p.EsTransporteGas != null ? p.EsTransporteGas.Value : false)))
+                        if (crear)
                         {
-
+                            Sagas.MainModule.Entidades.Requisicion newReq = _req;
+                            newReq.IdRequisicionEstatus = 3;
+                            newReq.Productos = new List<RequisicionProducto>();
+                            newReq.Productos.Add(prod);
+                            lRequi.Add(newReq);
+                        }
+                    }
+                    else
+                    {
+                        bool crear = false;
+                        foreach (var lr in lRequi)
+                            if (!lr.Productos.ToList().Where(p => p.EsGas.Value.Equals(true) || p.EsTransporteGas.Value.Equals(true)).ToList().Count().Equals(0))
+                                lr.Productos.Add(prod);
+                            else
+                                crear = true;
+                        if (crear)
+                        {
+                            Sagas.MainModule.Entidades.Requisicion newReq = _req;
+                            newReq.Productos = new List<RequisicionProducto>();
+                            newReq.Productos.Add(prod);
+                            lRequi.Add(newReq);
                         }
                     }
                 }
