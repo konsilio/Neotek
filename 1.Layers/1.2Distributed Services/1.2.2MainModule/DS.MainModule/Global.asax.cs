@@ -26,8 +26,8 @@ namespace DS.MainModule
 
         public void EjecutaServicios(object source, ElapsedEventArgs e)
         {
-            Notificacion24Hrs.MailDisponibilidad();
-            servTipoCambio.GenerarTipoCambioDelDia();
+            //Notificacion24Hrs.MailDisponibilidad();
+            //servTipoCambio.GenerarTipoCambioDelDia();
         }
 
         private void Timer()

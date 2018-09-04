@@ -20,6 +20,7 @@ namespace Sagas.MainModule.Entidades
             this.DescargasGas = new HashSet<AlmacenGasDescarga>();
             this.CCentroCosto = new HashSet<CentroCosto>();
             this.TomasLectura = new HashSet<AlmacenGasTomaLectura>();
+            this.Recargas = new HashSet<AlmacenGasRecarga>();
         }
     
         public short IdCAlmacenGas { get; set; }
@@ -55,5 +56,7 @@ namespace Sagas.MainModule.Entidades
         public virtual AlmacenGas AlmacenGas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasTomaLectura> TomasLectura { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasRecarga> Recargas { get; set; }
     }
 }

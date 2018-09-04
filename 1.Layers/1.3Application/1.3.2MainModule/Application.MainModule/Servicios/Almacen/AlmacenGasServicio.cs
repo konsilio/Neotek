@@ -59,16 +59,5 @@ namespace Application.MainModule.Servicios.Almacen
                 return almacenGas.UnidadesAlmacenGas.Where(z => z.EsGeneral).Sum(x => x.CantidadActualKg);
 
         }
-
-        public static string ObtenerNombreUnidadAlmacenGas(UnidadAlmacenGas uAG)
-        {
-            if (uAG.EsGeneral) return uAG.Numero;
-
-            var nombre = EquipoTransporteServicio.ObtenerNombre(uAG);
-            if (!string.IsNullOrEmpty(nombre))
-                return nombre;
-
-            return EstacionCarburacionServicio.ObtenerNombre(uAG);
-        }
     }
 }
