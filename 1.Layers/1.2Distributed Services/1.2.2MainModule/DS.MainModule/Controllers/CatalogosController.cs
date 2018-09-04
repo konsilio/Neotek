@@ -193,29 +193,6 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCuentaContable(idCuenta));
         }
-        #endregion
-
-        #region Cuenta contable
-        [Route("consulta/cuentacontable/{idEmpresa}")]
-        public HttpResponseMessage GetListaCuentasContables(int idEmpresa)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BuscarCuentaContable(idEmpresa));
-        }
-        [Route("crear/cuentacontable")]
-        public HttpResponseMessage PostCrearCuentaContables(CuentaContableDto ccDTO)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.CrearCuentaContable(ccDTO));
-        }
-        [Route("borrar/cuentacontable/{idCtaCtble}")]
-        public HttpResponseMessage PutBorrarCuentaContable(int idCtaCtble)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BorrarCuentaContable(idCtaCtble));
-        }
-        [Route("editar/cuentacontable")]
-        public HttpResponseMessage PutModificarCuentaContable(CuentaContableDto ccDTO)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.EditarCuentaContable(ccDTO));
-        }
-        #endregion
+        #endregion      
     }
 }

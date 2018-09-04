@@ -43,7 +43,6 @@ namespace Sagas.MainModule.Entidades
         public string PathImagen { get; set; }
         public bool Activo { get; set; }
         public Nullable<System.DateTime> FechaRegistro { get; set; }
-        public Nullable<bool> EsTransporteGas { get; set; }
     
         public virtual CategoriaProducto Categoria { get; set; }
         public virtual LineaProducto LineaProducto { get; set; }

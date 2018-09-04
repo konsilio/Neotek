@@ -42,6 +42,7 @@ namespace Sagas.MainModule.Entidades
         public bool EsAdministracionCentral { get; set; }
         public string NombreComercial { get; set; }
         public System.DateTime FechaRegistro { get; set; }
+        public bool Activo { get; set; }
         public byte IdPais { get; set; }
         public Nullable<byte> IdEstadoRep { get; set; }
         public string EstadoProvincia { get; set; }
@@ -78,16 +79,9 @@ namespace Sagas.MainModule.Entidades
         public decimal FactorFleteGas { get; set; }
         public string UrlLogotipoMenu { get; set; }
         public string UrlLogotipoLogin { get; set; }
-        public decimal FactorGalonALitros { get; set; }
-        public decimal FactorCompraLitroAKilos { get; set; }
-        public decimal FactorFleteGas { get; set; }
-        public string Persona1 { get; set; }
-        public string Persona2 { get; set; }
-        public string Persona3 { get; set; }
         public string UrlLogotipo180px { get; set; }
         public string UrlLogotipo500px { get; set; }
         public string UrlLogotipo1000px { get; set; }
-        public bool Activo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
