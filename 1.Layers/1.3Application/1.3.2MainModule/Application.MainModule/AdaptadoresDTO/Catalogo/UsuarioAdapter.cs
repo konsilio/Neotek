@@ -96,6 +96,46 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             };            
             return us;
         }
+
+        public static Usuario FromEntity(Usuario user)
+        {
+            return new Usuario()
+            {
+                IdUsuario = user.IdUsuario,
+         IdEmpresa = user.IdEmpresa,
+        EsAdministracionCentral = user.EsAdministracionCentral,
+        EsSuperAdmin = user.EsSuperAdmin,
+        Nombre = user.Nombre,
+        Apellido1 = user.Apellido1,
+        Apellido2 = user.Apellido2,
+        Activo = user.Activo,
+         FechaRegistro = user.FechaRegistro,
+        NombreUsuario = user.NombreUsuario,
+        Password = user.Password,
+        MovileKey = user.MovileKey,
+        Telefono1 = user.Telefono1,
+        Telefono2 = user.Telefono2,
+        Telefono3 = user.Telefono3,
+        Celular1 = user.Celular1,
+        Celular2 = user.Celular2,
+        Celular3 = user.Celular3,
+        Email1 = user.Email1,
+        Email2 = user.Email2,
+        Email3 = user.Email3,
+        SitioWeb1 = user.SitioWeb1,
+        SitioWeb2 = user.SitioWeb2,
+        SitioWeb3 = user.SitioWeb3,
+         IdPais = user.IdPais,
+         IdEstadoRep = user.IdEstadoRep,
+        EstadoProvincia = user.EstadoProvincia,
+        Municipio = user.Municipio,
+        CodigoPostal = user.CodigoPostal,
+        Colonia = user.Colonia,
+        Calle = user.Calle,
+        NumExt = user.NumExt,
+        NumInt = user.NumInt,
+    };
+        }
         public static List<Usuario> FromDTO(List<UsuarioDTO> luDTO)
         {
             List<Usuario> lu = luDTO.ToList().Select(x => FromDTO(x)).ToList();

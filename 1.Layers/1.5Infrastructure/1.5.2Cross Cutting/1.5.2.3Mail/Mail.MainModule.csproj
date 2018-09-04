@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\FBNotificacionDTO.cs" />
     <Compile Include="EnviarCorreos.cs" />
     <Compile Include="IMensajeCorreo.cs" />
     <Compile Include="MensajeCorreo.cs" />

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Catalogo
 {
+    [Serializable]
     public class CentroCostoDTO
     {
         [Required(ErrorMessage = Error.R0002)]
@@ -17,13 +18,27 @@ namespace Application.MainModule.DTOs.Catalogo
         [Display(Name = "IdEmpresa")]
         public short IdEmpresa { get; set; }
 
+        public string Empresa { get; set; }
+
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdTipoCentroCosto")]
         public byte IdTipoCentroCosto { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdEquipoTransporte")]
+        public string TipoCentroCosto { get; set; }
+
         public int IdEquipoTransporte { get; set; }
+
+        public int IdVehiculoUtilitario { get; set; }
+
+        public short IdCAlmacenGas { get; set; }
+
+        public int IdEstacionCarburacion { get; set; }
+
+        public int IdCamioneta { get; set; }
+
+        public int IdPipa { get; set; }
+
+        public int IdCilindro { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Numero")]

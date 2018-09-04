@@ -16,17 +16,29 @@ namespace Web.MainModule.Catalogos.Servicio
             agente.ListaEmpresas(tkn);
             return agente._listaEmpresas;
         }
-        public CatalogoRespuestaDTO GuardarCtaCtble(CuentaContableDTO cc, string tkn)
+        public RespuestaDto GuardarCtaCtble(CuentaContableCrearDto cc, string tkn)
         {
             var agente = new AgenteServicios();
             agente.GuardarCuentaContable(cc, tkn);
-            return agente._respuestaCatalogos;
+            return agente._respuestaDTO;
         }
-        public List<CuentaContableDTO> ListaCtaCtble(string tkn)
+        public List<CuentaContableDTO> ListaCtaCtble(short idEmpresa, string tkn)
         {
             var agente = new AgenteServicios();
-            agente.BuscarCuentasContables(tkn);
+            agente.BuscarCuentasContables(idEmpresa, tkn);
             return agente._listaCuentasContable;
+        }
+        public RespuestaDto EliminarCtaContable(CuentaContableEliminarDto cc, string tkn)
+        {
+            var agente = new AgenteServicios();
+            agente.EliminarCtaCtble(cc, tkn);
+            return agente._respuestaDTO;
+        }
+        public RespuestaDto ModificarCtaContable(CuentaContableModificarDto cc, string tkn)
+        {
+            var agente = new AgenteServicios();
+            agente.ModificarCtaCtble(cc, tkn);
+            return agente._respuestaDTO;
         }
     }
 }

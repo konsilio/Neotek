@@ -9,12 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
@@ -87,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         editTextContraseña.setText("saadmin");
         editTextCorreoElectronico.setText("sa@k.com");
 
+
         //linearLayoutLogin.setVisibility(View.GONE);
 
         //se inicializa el presenter
@@ -102,7 +106,16 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 onClickLogin();
             }
         });
-
+        editTextContraseña.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_DONE) {
+                    buttonLogin.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
        /* Date fecha = new Date();
         long millis = System.currentTimeMillis() % 1000;
         String str = ""+fecha.getDate()+""+fecha.getMonth()+""+(fecha.getYear()+1900)+""+fecha.getHours()+""+fecha.getMinutes()+""+fecha.getSeconds()+""+millis;
@@ -123,13 +136,15 @@ public class MainActivity extends AppCompatActivity implements MainView{
         }else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(usuario).matches()) {
             showDialog(getResources().getString(R.string.invalid_email));
         }else{
+            String fb_token = "";
             try{
                 //se codifica la contraseña en SHA256
                 Log.e("SAAAA", Utilidades.getHash(contraseña));
                 Log.e("SAAAA", IdEmpresa+"");
                 //showDialog( Utilidades.getHash(contraseña));
                 this.contraseña = Utilidades.getHash(contraseña);
-                Log.w("FireBaseToken", FirebaseInstanceId.getInstance().getToken());
+                fb_token =FirebaseInstanceId.getInstance().getToken();
+                Log.w("FireBaseToken",fb_token );
 
             }catch (NoSuchAlgorithmException ex){
                 ex.printStackTrace();
@@ -140,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
             usuarioLoginDTO.setIdEmpresa(IdEmpresa);
             usuarioLoginDTO.setPassword(this.contraseña);
             usuarioLoginDTO.setUsuario(usuario);
+            usuarioLoginDTO.setFbToken(fb_token);
             //usuarioLoginDTO.setFBToken(FirebaseInstanceId.getInstance().getToken());
             //por medio del presenter se llama al web service con el objeto de usuario
             loginPresenter.doLogin(usuarioLoginDTO);

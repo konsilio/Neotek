@@ -33,14 +33,14 @@ namespace Web.MainModule.Requisicion.Vista
                             CargarEmpresas();
                             if (Convert.ToBoolean(TokenServicio.ObtenerEsAdministracionCentral(_tok)))
                             {
-                                CargarUsuariosSolicitante(Int16.Parse(ddlEmpresas.SelectedValue));
-                                CargarCentrosCosto();
+                                CargarUsuariosSolicitante(short.Parse(ddlEmpresas.SelectedValue));
+                                CargarCentrosCosto(short.Parse(ddlEmpresas.SelectedValue));
                             }
                             else
                             {
                                 ddlEmpresas.Enabled = false;
                                 CargarUsuariosSolicitante(TokenServicio.ObtenerIdEmpresa(_tok));
-                                CargarCentrosCosto();
+                                CargarCentrosCosto(TokenServicio.ObtenerIdEmpresa(_tok));
                             }
                         }
                         dgListaproductos.DataBind();
@@ -66,9 +66,9 @@ namespace Web.MainModule.Requisicion.Vista
 
             CargarProductos(short.Parse(ddlTipoCompra.SelectedValue));
         }
-        private void CargarCentrosCosto()
+        private void CargarCentrosCosto(short idEmpresa)
         {
-            ddlCentroCostos.DataSource = new RequisicionServicio().ListaCentroCostos(_tok);
+            ddlCentroCostos.DataSource = new RequisicionServicio().ListaCentroCostos(_tok).ToList().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
             ddlCentroCostos.DataTextField = "Descripcion";
             ddlCentroCostos.DataValueField = "IdCentroCosto";
             ddlCentroCostos.DataBind();
@@ -233,10 +233,13 @@ namespace Web.MainModule.Requisicion.Vista
             var validacion = ValidadorClases.EnlistaErrores(prod);
             if (validacion.ModeloValido)
             {
-                if (!(prod.Cantidad > 0))
+                if (prod.IdTipoProducto.Equals(2))
                 {
-                    validacion.MensajesError.Add(new Result { IdentidadError = "Cantidad", MensajeError = Exceptions.MainModule.Validaciones.Error.R0003 });
-                    validacion.ModeloValido = false;
+                    if (!(prod.Cantidad > 0))
+                    {
+                        validacion.MensajesError.Add(new Result { IdentidadError = "Cantidad", MensajeError = Exceptions.MainModule.Validaciones.Error.R0003 });
+                        validacion.ModeloValido = false;
+                    }
                 }
             }
             if (validacion.ModeloValido)
@@ -250,7 +253,7 @@ namespace Web.MainModule.Requisicion.Vista
             Model.RequisicionCrearDTO Edto = CrearReq();
             var validacion = ValidadorClases.EnlistaErrores<Model.RequisicionCrearDTO>(Edto);
             if (ValidarListaprodcutos())
-            {            
+            {
                 if (validacion.ModeloValido)
                 {
                     if (Edto.FechaRequerida == DateTime.MinValue)
@@ -263,7 +266,7 @@ namespace Web.MainModule.Requisicion.Vista
                         validacion.MensajesError.Add(new Result { IdentidadError = "FechaRequerida", MensajeError = Exceptions.MainModule.Validaciones.Error.R0011 });
                         validacion.ModeloValido = false;
                     }
-                   
+
                 }
             }
             if (validacion.ModeloValido)
@@ -420,7 +423,7 @@ namespace Web.MainModule.Requisicion.Vista
         private void GuardarRequisicion()
         {
             Servicio.RequisicionServicio serv = new Servicio.RequisicionServicio();
-            var validacionRequisicion = ValidarReqNuevo(); 
+            var validacionRequisicion = ValidarReqNuevo();
             if (validacionRequisicion.ModeloValido)
             {
                 var respuesta = serv.GuardarRequisicion(new Servicio.RequisicionServicio().UnirDtos(CrearReq()), _tok);
@@ -452,7 +455,7 @@ namespace Web.MainModule.Requisicion.Vista
                 }
             }
             else
-            {                
+            {
                 lblErrorCampos.Text = Exceptions.MainModule.Validaciones.Error.R0012;
                 divCampos.Visible = true;
             }
@@ -539,6 +542,8 @@ namespace Web.MainModule.Requisicion.Vista
                     IdProducto = int.Parse((_row.Cells[0].FindControl("lbldgProductoID") as Label).Text),
                     AutorizaCompra = (_row.Cells[0].FindControl("chbAutCompra") as CheckBox).Checked,
                     AutorizaEntrega = (_row.Cells[0].FindControl("chbAutEntrega") as CheckBox).Checked,
+                    CantidadAComprar = decimal.Parse((_row.Cells[0].FindControl("txtRequiereComp") as TextBox).Text),
+                    CantidadRequerida = decimal.Parse((_row.Cells[0].FindControl("lbldgCantidad") as Label).Text),
                 });
             }
             ViewState["ListaRequisicionProdAutPutDTO"] = lProd;
@@ -574,7 +579,6 @@ namespace Web.MainModule.Requisicion.Vista
             ((List<Model.ProductoDTO>)ViewState["ProductosDTO"]));
             return prod;
         }
-      
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             var validacion = ValidarProdNuevo();
@@ -605,7 +609,7 @@ namespace Web.MainModule.Requisicion.Vista
                 btnAgregar.Text = "Agregar +";
             }
             else
-            {               
+            {
                 lblErrorPord.Text = Exceptions.MainModule.Validaciones.Error.R0012;
                 DivCamposPord.Visible = true;
             }
@@ -697,6 +701,7 @@ namespace Web.MainModule.Requisicion.Vista
                     (e.Row.Cells[0].FindControl("chbAutEntrega") as CheckBox).Enabled = false;
                 //if (decimal.Parse((e.Row.Cells[0].FindControl("txtRequiereComp") as TextBox).Text).Equals(0))
                 //    (e.Row.Cells[0].FindControl("chbAutCompra") as CheckBox).Enabled = false;
+
             }
         }
         protected void ddlProdcutos_SelectedIndexChanged(object sender, EventArgs e)
@@ -706,11 +711,27 @@ namespace Web.MainModule.Requisicion.Vista
         protected void ddlTipoCompra_SelectedIndexChanged(object sender, EventArgs e)
         {
             CargarProductos(short.Parse(ddlTipoCompra.SelectedValue));
+            if (ddlTipoCompra.SelectedValue.Equals("3"))
+                txtCantidad.Enabled = false;
+            else
+                txtCantidad.Enabled = true;
         }
         protected void gvProductoAut_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
-       }
+        protected void dgListaproductos_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType.Equals(DataControlRowType.DataRow))
+            {
+                if ((e.Row.Cells[0].FindControl("lbldgTipo") as Label).Text.Equals("Servicio"))
+                {
+                    (e.Row.Cells[0].FindControl("lblCantidadNA") as Label).Visible = true;
+                    (e.Row.Cells[0].FindControl("lblUnidadNA") as Label).Visible = true;
+                    (e.Row.Cells[0].FindControl("lbldgCantidad") as Label).Visible = false;
+                    (e.Row.Cells[0].FindControl("lbldgUnidad") as Label).Visible = false;
+                }
+            }
+        }
+    }
 }

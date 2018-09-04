@@ -15,6 +15,8 @@ public class Constantes {
     public static final String LISTA_MENU = "mobile/obtener/menu";
     public static final String LISTA_ALMACEN = "mobile/obtener/almacenes";
     public static final String LISTA_MEDIDORES = "mobile/obtener/medidores";
-    public static final String VERIFICA_SERVICIO = "api/seguridad/servicio/disponible";
-    public static final String POST_PAPELETA = "api/mobile/registrar/papeleta";
+    public static final String VERIFICA_SERVICIO = "seguridad/servicio/disponible";
+    public static final String POST_PAPELETA = "mobile/registrar/papeleta";
+    public static final String POST_INICIAR_DESCARGA = "mobile/iniciar/descarga";
+    public static final String POST_FINALIZAR_DESCARGA = "mobile/finalizar/descarga";
 }

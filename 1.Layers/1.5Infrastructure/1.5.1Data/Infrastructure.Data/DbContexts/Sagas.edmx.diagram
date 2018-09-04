@@ -191,6 +191,11 @@
         <EntityTypeShape EntityType="Sagas.MainModuleModel.CTipoCentroCosto" Width="1.5" PointX="3.375" PointY="0.75" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompra_UsuarioAutorizador" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompra_UsuarioGenerador" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasTomaLectura" Width="1.5" PointX="0.75" PointY="11.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasTomaLecturaCilindro" Width="1.5" PointX="3" PointY="10.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasTomaLecturaFoto" Width="1.5" PointX="3" PointY="12.875" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

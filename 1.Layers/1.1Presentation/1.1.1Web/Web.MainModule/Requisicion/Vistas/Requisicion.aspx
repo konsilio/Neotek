@@ -132,7 +132,6 @@
                                             <asp:LinkButton ID="btnAgregar" runat="server" CssClass="btn btn-danger btn-simple btn-round btn-sm" Text="Agregar +" data-type="ajax-loader" OnClick="btnAgregar_Click">                                                                               
                                             </asp:LinkButton>
                                         </div>
-
                                         <%--<asp:Button ID="btnAgregar" CssClass="btn btn-raised btn-primary waves-effect btn-round" data-type="ajax-loader" OnClick="btnAgregar_Click" Text="Agregar" />--%>
                                     </div>
                                 </div>
@@ -148,7 +147,7 @@
                                 <!--Grid productos agregados nueva requisicion-->
                                 <div class="row clearfix">
                                     <div class="table-responsive">
-                                        <asp:GridView CssClass="table table-hover" OnRowCommand="dgListaproductos_RowCommand" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
+                                        <asp:GridView CssClass="table table-hover" OnRowCommand="dgListaproductos_RowCommand" OnRowDataBound="dgListaproductos_RowDataBound" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
                                             <Columns>
                                                 <asp:TemplateField>
                                                     <%--0 Tipo de compra--%>
@@ -175,6 +174,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("Cantidad") %>' />
+                                                        <asp:label runat="server" ID="lblCantidadNA" Visible="false" Text="NA"/>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -184,6 +184,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
+                                                         <asp:label runat="server" ID="lblUnidadNA" Visible="false" Text="NA" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>

@@ -54,7 +54,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Fotos = FromDto(papeletaDto.Imagenes, 0, 1)
             };
         }
-
         public static AlmacenGasDescarga FromDto(DescargaDto DescargaDto, AlmacenGasDescarga descarga, bool finDescarga)
         {
             if(!finDescarga)
@@ -134,7 +133,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
             return descarga;
         }
-
         public static AlmacenGasDescarga FromEntity(AlmacenGasDescarga descarga)
         {
             return new AlmacenGasDescarga()
@@ -176,7 +174,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 FechaRegistro = descarga.FechaRegistro,
             };
         }
-
         public static AlmacenGasDescargaFoto FromDto(string cadenaBase64, int idAlmEntrGasDes, short numOrden)
         {
             var resp = new AlmacenGasDescargaFoto()
@@ -191,7 +188,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
             return resp;
         }
-
         public static List<AlmacenGasDescargaFoto> FromDto(List<string> lista, int idAlmEntrGasDes, short numOrden)
         {
             var fotos = new List<AlmacenGasDescargaFoto>();
@@ -203,7 +199,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
             return fotos;
         }
-
         public static AlmacenDto ToDto(UnidadAlmacenGas alm)
         {
             return new AlmacenDto()
@@ -212,7 +207,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 NombreAlmacen= AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(alm),
             };
         }
-
         public static List<AlmacenDto> ToDto(List<UnidadAlmacenGas> alm)
         {
             return alm.ToList().Select(x => ToDto(x)).ToList();

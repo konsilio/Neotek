@@ -27,7 +27,7 @@
                                         <b>Número</b>
                                         <asp:TextBox runat="server" ID="txtNumero" CssClass="form-control form-control-sm" />
                                     </div>
-                                      <asp:Label runat="server" ID="reqNum" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
+                                    <asp:Label runat="server" ID="reqNum" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -39,10 +39,10 @@
                                 <div class="col-md-1">
                                     <b>&nbsp; </b>
                                     <div class="form-group">
-                                          <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" runat="server" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round btn-sm">
-                                             <i class="zmdi zmdi-plus"></i>
+                                        <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" runat="server" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round btn-sm">
+                                            <i class="zmdi zmdi-plus" runat="server" id="iSimboloBoton"></i>
                                         </a>
-                                       <%-- <button class="btn btn-primary btn-icon  btn-icon-mini btn-round btn-sm">
+                                        <%-- <button class="btn btn-primary btn-icon  btn-icon-mini btn-round btn-sm">
                                             <i class="zmdi zmdi-plus"></i>
                                         </button>--%>
                                     </div>
@@ -51,7 +51,15 @@
                         </div>
                     </div>
                 </div>
-                <br />
+                <div id="DivAlerta" runat="server" visible="false" class="container">
+                    <div class="alert alert-danger">
+                        <div class="alert-icon">
+                            <i class="zmdi zmdi-block"></i>
+                        </div>
+                        <strong>
+                            <asp:Label ID="lblErrorPord" runat="server" Text="" /></strong>
+                    </div>
+                </div>
                 <div class="row clearfix">
                     <div class="card">
                         <div class="body">
@@ -64,15 +72,15 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <b>Numero</b>
-                                        <asp:TextBox runat="server" ID="txtNumeroCtaCtble" CssClass="form-control" />
+                                        <asp:TextBox runat="server" ID="txtNumeroCtaCtble" CssClass="form-control" OnTextChanged="txtNumeroCtaCtble_TextChanged" />
                                     </div>
                                 </div>
                             </div>
                             <div class="row clearfix">
                                 <div class="table-responsive">
-                                    <asp:GridView runat="server" ID="gvCuentasContables" AutoGenerateColumns="false" OnRowCommand="gvCuentasContables_RowCommand">
+                                    <asp:GridView runat="server" ID="gvCuentasContables" AutoGenerateColumns="false" Width="100%" OnRowCommand="gvCuentasContables_RowCommand">
                                         <Columns>
-                                            <asp:BoundField HeaderText="Gasera" DataField="NombreGasera" />
+                                            <asp:BoundField HeaderText="Gasera" DataField="Empresa" />
                                             <asp:BoundField HeaderText="Número" DataField="Numero" />
                                             <asp:BoundField HeaderText="Descripción" DataField="Descripcion" />
                                             <asp:TemplateField>
@@ -100,14 +108,14 @@
             </div>
         </div>
     </section>
-     <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
+    <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
                 </div>
                 <div class="modal-footer">
-                  
+
                     <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Si" OnClick="BtnCrear_Click" />
                     <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
                 </div>

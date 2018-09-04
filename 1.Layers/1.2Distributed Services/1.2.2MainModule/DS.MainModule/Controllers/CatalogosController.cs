@@ -1,11 +1,6 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
-using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.DTOs.Seguridad;
 using Application.MainModule.Flujos;
 using DS.MainModule.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -34,7 +29,7 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaEmpresas()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresas());
-        }
+        }       
         [Route("empresas/listaempresa/{conAdminCent}")]
         public HttpResponseMessage GetListaEmpresascad(bool conAdminCent)
         {
@@ -113,10 +108,10 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.EliminaCentroCosto(cuentaDto), Request);
         }
 
-        [Route("consulta/centrosdecosto/{idEmpresa}")]
-        public HttpResponseMessage GetCentrosCostos(short idEmpresa)
+        [Route("consulta/centrosdecosto")]
+        public HttpResponseMessage GetCentrosCostos()
         {
-            return RespuestaHttp.crearRespuesta(_catalogos.ListaCentrosCostos(idEmpresa), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaCentrosCostos(), Request);
         }
 
         [Route("consulta/centro/costo/{idCosto}")]
@@ -125,7 +120,6 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCentroCosto(idCosto));
         }
         #endregion
-
         #region Cuentas Contables
         [Route("registra/cuenta/contable")]
         public HttpResponseMessage PostRegistraCuentaContable(CuentaContableCrearDto cuentaDto)
@@ -145,38 +139,16 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.EliminaCuentaContable(cuentaDto), Request);
         }
 
-        [Route("consulta/cuentas/contables")]
-        public HttpResponseMessage GetListaCuentasContables()
+        [Route("consulta/cuentas/contables/{idEmpresa}")]
+        public HttpResponseMessage GetListaCuentasContables(short idEmpresa)
         {
-            return RespuestaHttp.crearRespuesta(_catalogos.ConsultaCuentasContables(), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.ConsultaCuentasContables(idEmpresa), Request);
         }
 
         [Route("consulta/cuenta/contable/{idCuenta}")]
         public HttpResponseMessage GetCuentaContable(int idCuenta)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCuentaContable(idCuenta));
-        }
-        #endregion
-        #region Cuenta contable
-        [Route("consulta/cuentacontable/{idEmpresa}")]
-        public HttpResponseMessage GetListaCuentasContables(int idEmpresa)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BuscarCuentaContable(idEmpresa));
-        }
-        [Route("crear/cuentacontable")]
-        public HttpResponseMessage PostCrearCuentaContables(CuentaContableDto ccDTO)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.CrearCuentaContable(ccDTO));
-        }
-        [Route("borrar/cuentacontable/{idCtaCtble}")]
-        public HttpResponseMessage PutBorrarCuentaContable(int idCtaCtble)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.BorrarCuentaContable(idCtaCtble));
-        }
-        [Route("editar/cuentacontable")]
-        public HttpResponseMessage PutModificarCuentaContable(CuentaContableDto ccDTO)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.EditarCuentaContable(ccDTO));
         }
         #endregion
     }

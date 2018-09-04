@@ -14,6 +14,7 @@ namespace Mail.MainModule
         private string _Servidor = ConfigurationManager.AppSettings["MailServidor"];
         private int _Puerto = Convert.ToInt32(ConfigurationManager.AppSettings["MailPuerto"]);
         private string _Contrasena = ConfigurationManager.AppSettings["MailContrasena"];
+        private string _Usuario = ConfigurationManager.AppSettings["MailUsuario"];
         private string _De;
         private string _Mensaje;
         private string _Asunto;
@@ -33,7 +34,6 @@ namespace Mail.MainModule
             get { return _Puerto; }
             set { _Puerto = value; }
         }
-
         public string De
         {
             get { return _De; }
@@ -135,10 +135,10 @@ namespace Mail.MainModule
 
                 // Se crea el objeto para el envío de correos electrónicos indicándole
                 // la dirección del servidor SMTP a utilizarse.
-                SmtpClient protocolo = new SmtpClient(_Servidor, _Puerto);
+                SmtpClient protocolo = new SmtpClient(_Servidor, _Puerto);                
                 protocolo.EnableSsl = EsSSL;
                 // Quitar la línea siguiente por la comentada en cuanto este lista la cuenta de correo de soporte
-                System.Net.NetworkCredential credenciales = new System.Net.NetworkCredential("neoteck.infraestructura@gmail.com", this._Contrasena);
+                System.Net.NetworkCredential credenciales = new System.Net.NetworkCredential(this._Usuario, this._Contrasena);
                 //System.Net.NetworkCredential credenciales = new System.Net.NetworkCredential(this._De, this._Contrasena);
                 protocolo.Credentials = credenciales;
 

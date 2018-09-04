@@ -152,7 +152,8 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             {
                 IdProducto = _reqProducto.IdProducto,
                 AutorizaEntrega = _reqProducto.AutorizaEntrega,
-                AutorizaCompra = _reqProducto.AutorizaCompra
+                AutorizaCompra = _reqProducto.AutorizaCompra,
+                CantidadAComprar = _reqProducto.CantidadAComprar
             };
             return prod;
         }
@@ -168,6 +169,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 IdRequisicion = _prodEntity.IdRequisicion,
                 IdProducto = _prodEntity.IdProducto,
                 IdCentroCosto = _prodEntity.IdCentroCosto,
+                IdTipoProducto = _prodEntity.IdTipoProducto,
                 Cantidad = _prodEntity.Cantidad,
                 Aplicacion = _prodEntity.Aplicacion,
                 RevisionFisica = _prodEntity.RevisionFisica,

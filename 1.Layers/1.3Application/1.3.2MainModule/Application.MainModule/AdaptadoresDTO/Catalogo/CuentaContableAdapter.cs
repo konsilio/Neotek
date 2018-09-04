@@ -49,6 +49,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             {
                 IdCuentaContable = cuentaContable.IdCuentaContable,
                 IdEmpresa = cuentaContable.IdEmpresa,
+                Empresa = cuentaContable.Empresa.NombreComercial,
                 Numero = cuentaContable.Numero,
                 Descripcion = cuentaContable.Descripcion,
                 FechaRegistro = cuentaContable.FechaRegistro,

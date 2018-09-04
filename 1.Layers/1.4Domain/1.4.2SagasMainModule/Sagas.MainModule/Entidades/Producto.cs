@@ -36,6 +36,7 @@ namespace Sagas.MainModule.Entidades
         public string Descripcion { get; set; }
         public bool EsActivoVenta { get; set; }
         public bool EsGas { get; set; }
+        public Nullable<bool> EsTransporteGas { get; set; }
         public Nullable<decimal> Minimos { get; set; }
         public Nullable<decimal> Maximo { get; set; }
         public string UrlImagen { get; set; }
