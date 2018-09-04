@@ -49,6 +49,7 @@ namespace Web.MainModule.Agente
         public OrdenCompraCrearDTO _ordenCompraCrearDTO;
         public CatalogoRespuestaDTO _respuestaCatalogos;
         public RespuestaDto _respuestaDTO;
+        public List<OrdenCompraEstatusDTO> _listaOrdenCompraEstatus;
 
         public AgenteServicios()
         {
@@ -1175,6 +1176,39 @@ namespace Web.MainModule.Agente
                     client.Dispose(); ;
                 }
                 _ordenCompraCrearDTO = emp;
+            }
+        }
+        public void BuscarOrdenCompraEstatus(string tkn)
+        {
+            this.ApiCompras = ConfigurationManager.AppSettings["GetOrdenCompraEstatus"];
+            ListaOrdenCompraEstatus(tkn).Wait();
+        }
+        private async Task ListaOrdenCompraEstatus(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<OrdenCompraEstatusDTO> emp = new List<OrdenCompraEstatusDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCompras).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<OrdenCompraEstatusDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<OrdenCompraEstatusDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaOrdenCompraEstatus = emp;
             }
         }
         #endregion

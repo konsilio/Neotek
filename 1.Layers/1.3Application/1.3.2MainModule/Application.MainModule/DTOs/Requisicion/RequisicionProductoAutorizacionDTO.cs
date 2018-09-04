@@ -49,5 +49,8 @@ namespace Application.MainModule.DTOs.Requisicion
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "AutorizaCompra")]
         public bool AutorizaCompra { get; set; }
+        public bool EsActivoVenta { get; set; }
+        public bool EsGas { get; set; }
+        public bool EsTransporteGas { get; set; }
     }
 }

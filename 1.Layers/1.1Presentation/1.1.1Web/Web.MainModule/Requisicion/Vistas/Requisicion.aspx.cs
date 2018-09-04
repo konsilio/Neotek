@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Utilities.MainModule;
+using Web.MainModule.Requisicion.Model;
 using Web.MainModule.Requisicion.Servicio;
 using Web.MainModule.Seguridad.Servicio;
 
@@ -337,6 +338,15 @@ namespace Web.MainModule.Requisicion.Vista
             gvProductosRevision.DataSource = ViewState["ListaRequisicionProductoGridDTO"] = _reqEDTO.ListaProductos;
             gvProductosRevision.DataBind();
         }
+        private bool ValidarRequisiconGas()
+        {
+            bool EsGas = false;
+            var prod = ((List<RequisicionProductoAutorizacionDTO>)ViewState["ListaRequisicionProductoGridDTO"]).Where(x => x.EsGas || x.EsTransporteGas).ToList();
+            if (!prod.Count.Equals(0))            
+                EsGas = true;            
+            return EsGas;
+        }
+        
         private void ActivarRevisarAutorizacion()
         {
             Model.RequisicionAutorizacion _reqEDTO = new Model.RequisicionAutorizacion();
@@ -367,6 +377,13 @@ namespace Web.MainModule.Requisicion.Vista
             dgListaproductos.Visible = false;
             gvProductoAut.DataSource = ViewState["ListaRequisicionProductoGridDTO"] = _reqEDTO.ListaProductos;
             gvProductoAut.DataBind();
+            if (ValidarRequisiconGas())
+            {
+                gvProductoAut.Columns[7].Visible = false;
+                divOpinion.Visible = false;
+            }
+           
+            
         }
         private void BorrarProductoLista(int id, int cc)
         {
@@ -446,6 +463,7 @@ namespace Web.MainModule.Requisicion.Vista
                         btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
                         btnAgregar.CssClass = "btn btn danger btn simple btn round btn sm disabled";
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "ShowPopup();", true);
+                        Response.Redirect("~/Compras/Vistas/Compras.aspx");
                     }
                     else
                     {
@@ -485,6 +503,7 @@ namespace Web.MainModule.Requisicion.Vista
                         gvProductosRevision.Enabled = false;
                         btnCancel.Attributes.Remove("class");
                         btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
+                        Response.Redirect("~/Compras/Vistas/Compras.aspx");
                     }
                     else
                     {
@@ -518,6 +537,7 @@ namespace Web.MainModule.Requisicion.Vista
                     gvProductoAut.Enabled = false;
                     btnCancel.Attributes.Remove("class");
                     btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
+                    Response.Redirect("~/Compras/Vistas/Compras.aspx");
                 }
                 else
                 {
@@ -699,9 +719,21 @@ namespace Web.MainModule.Requisicion.Vista
             {
                 if (decimal.Parse((e.Row.Cells[0].FindControl("lblAlmacen") as Label).Text).Equals(0))
                     (e.Row.Cells[0].FindControl("chbAutEntrega") as CheckBox).Enabled = false;
-                //if (decimal.Parse((e.Row.Cells[0].FindControl("txtRequiereComp") as TextBox).Text).Equals(0))
-                //    (e.Row.Cells[0].FindControl("chbAutCompra") as CheckBox).Enabled = false;
+                if ((e.Row.Cells[0].FindControl("lbldgTipo") as Label).Text.Equals("Servicio"))
+                {
+                    (e.Row.Cells[0].FindControl("lbldgCantidad") as Label).Visible = false;
+                    (e.Row.Cells[0].FindControl("lblCantidadNA") as Label).Visible = true;                   
 
+                    (e.Row.Cells[0].FindControl("lbldgUnidad") as Label).Visible = false;
+                    (e.Row.Cells[0].FindControl("lblUnidadNA") as Label).Visible = true;     
+
+                    (e.Row.Cells[0].FindControl("lblAlmacen") as Label).Visible = false;
+                    (e.Row.Cells[0].FindControl("lblAlmacenNA") as Label).Visible = true;
+
+                    (e.Row.Cells[0].FindControl("txtRequiereComp") as TextBox).Visible = false;
+                    (e.Row.Cells[0].FindControl("lblCantidadAComprarNA") as Label).Visible = true;
+
+                }
             }
         }
         protected void ddlProdcutos_SelectedIndexChanged(object sender, EventArgs e)

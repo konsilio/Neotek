@@ -45,12 +45,9 @@ namespace Web.MainModule.OrdenCompra.Vistas
         }
         private void CargarEstatus()
         {
-            foreach (OrdenCompraEstatus r in Enum.GetValues(typeof(OrdenCompraEstatus)))
-            {
-                ListItem item = new ListItem(Enum.GetName(typeof(OrdenCompraEstatus), r).Replace("_", " "), ((byte)r).ToString());
-                ddlFiltroEstatus.Items.Add(item);
-
-            }
+            ddlFiltroEstatus.DataSource = new OrdenCompraServicio().ListaOCEstatus(_token);
+            ddlFiltroEstatus.DataTextField = "Descripcion";
+            ddlFiltroEstatus.DataValueField = "IdOrdenCompraEstatus";
             ddlFiltroEstatus.DataBind();
         }
         private void CargarEmpresas()
@@ -161,13 +158,13 @@ namespace Web.MainModule.OrdenCompra.Vistas
             if (e.Row.RowType.Equals(DataControlRowType.DataRow))
             {
                 int estatus = int.Parse((e.Row.Cells[0].FindControl("lblgvIdEstatus") as Label).Text);
-                if (estatus.Equals(2))
+                if (estatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion))
                     (e.Row.Cells[0].FindControl("lbAutOC") as LinkButton).Visible = true;
-                if (estatus.Equals(3)) { 
+                if (estatus.Equals(OrdenCompraEstatusEnum.Proceso_compra)) { 
                     (e.Row.Cells[0].FindControl("lbAgregarMercancia") as LinkButton).Visible = true;
                     (e.Row.Cells[0].FindControl("lbPDF") as LinkButton).Visible = true;
                 }
-                if (estatus.Equals(4) || estatus.Equals(5))
+                if (estatus.Equals(OrdenCompraEstatusEnum.Compra_exitosa) || estatus.Equals(OrdenCompraEstatusEnum.Compra_cancelada))
                     (e.Row.Cells[0].FindControl("lbVisualizarOC") as LinkButton).Visible = true;
             }
         }

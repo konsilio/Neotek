@@ -6,20 +6,37 @@ using Application.MainModule.Servicios.Requisicion;
 using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.AdaptadoresDTO.Requisicion;
+using Application.MainModule.Servicios;
 
 namespace Application.MainModule.Flujos
 {
     public class Requisicion
     {
-        public RespuestaRequisicionDto InsertRequisicionNueva(RequisicionEDTO _req)
+        public RespuestaDto InsertRequisicionNueva(RequisicionEDTO _req)
         {
             var _requisicion = RequisicionAdapter.FromEDTO(_req);
             _requisicion = Servicios.Almacen.ProductoAlmacenServicio.CalcularAlmacenProcutos(_requisicion);
-
-            var respuesta = RequisicionServicio.GuardarRequisicionNueva(_requisicion);
-            if (respuesta.Exito)
-                NotificarServicio.RequisicionNueva(RequisicionServicio.Buscar(respuesta.IdRequisicion));
-            return respuesta;
+            var ListaRequisiciones = RequisicionServicio.IdentificarRequisicones(_requisicion);
+            ListaRequisiciones = FolioServicio.GenerarNumeroRequisicion(ListaRequisiciones);
+            RespuestaDto resp = new RespuestaDto();
+            foreach (var item in ListaRequisiciones)
+            {
+                var respuesta = RequisicionServicio.GuardarRequisicionNueva(item);
+                if (respuesta.Exito)
+                {
+                    resp.Id = respuesta.Id;
+                    resp.Mensaje = string.Concat(resp.Mensaje, " ,", respuesta.Mensaje);
+                    resp.Exito = true;
+                    resp.EsInsercion = true;          
+                        NotificarServicio.RequisicionNueva(RequisicionServicio.Buscar(resp.Id));
+                }
+                else
+                {
+                    resp.MensajesError = new List<string>();
+                    resp.MensajesError.AddRange(respuesta.MensajesError != null ? respuesta.MensajesError : new List<string>());
+                }
+            }
+            return resp;     
         }
         public List<RequisicionDTO> BuscarRequisicionesPorEmpresa(Int16 idEmpresa)
         {

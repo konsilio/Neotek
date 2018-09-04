@@ -31,5 +31,6 @@ namespace Application.MainModule.DTOs.Compras
         public decimal Importe { get; set; }
         public bool EsActivoVenta { get; set; }
         public bool EsGas { get; set; }
+        public bool EsTransporte { get; set; }
     }
 }

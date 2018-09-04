@@ -6,15 +6,15 @@ using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.AdaptadoresDTO.Requisicion;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.Servicios.Requisicion
 {
     public static class RequisicionServicio
     {
-        public static RespuestaRequisicionDto GuardarRequisicionNueva(Sagas.MainModule.Entidades.Requisicion _req)
+        public static RespuestaDto GuardarRequisicionNueva(Sagas.MainModule.Entidades.Requisicion _req)
         {
-            var respuesta = new RequisicionDataAccess().InsertarNueva(_req);
-            return respuesta;
+            return new RequisicionDataAccess().InsertarNueva(_req);
         }
         public static List<RequisicionDTO> BuscarRequisicionPorIdEmpresa(Int16 _IdEmpresa)
         {
@@ -42,7 +42,7 @@ namespace Application.MainModule.Servicios.Requisicion
             return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad), RequisicionProductoAdapter.FromDTO(_req.ListaProductos, entidad.Productos.ToList()));
         }
         public static RespuestaDto UpDateRequisicionAutoriza(Sagas.MainModule.Entidades.Requisicion _req, List<Sagas.MainModule.Entidades.RequisicionProducto> prods)
-        { 
+        {
             return new RequisicionDataAccess().Actualizar(_req, prods);
         }
         public static RespuestaDto UpDateRequisicionEstaus(int _req, byte status)
@@ -64,30 +64,27 @@ namespace Application.MainModule.Servicios.Requisicion
         public static List<Sagas.MainModule.Entidades.Requisicion> IdentificarRequisicones(Sagas.MainModule.Entidades.Requisicion _req)
         {
             List<Sagas.MainModule.Entidades.Requisicion> lRequi = new List<Sagas.MainModule.Entidades.Requisicion>();
-            foreach (var prod in _req.Productos)
+            var productos = _req.Productos.ToList();
+            var productosGas = _req.Productos.Where(x => x.EsGas || x.EsTransporteGas).ToList();
+            if (productosGas != null)
             {
-                if (lRequi.Count.Equals(0))
+                if (!productosGas.Count.Equals(0))
                 {
-                    Sagas.MainModule.Entidades.Requisicion newReq = _req;
-                    newReq.Productos = new List<RequisicionProducto>();
-                    newReq.Productos.Add(prod);
-                    lRequi.Add(newReq);
-                }
-                else 
-                {
-                    if (prod.Producto.EsGas || prod.Producto.EsTransporteGas.Value)
-                    {
-                        foreach (var lr in lRequi)
-                        {
-                            
-                        }
-                        if (lRequi.Exists(x => x.Productos.ToList().Exists(p => p.EsGas != null ? p.EsGas.Value : false && p.EsTransporteGas != null ? p.EsTransporteGas.Value : false)))
-                        {
-
-                        }
-                    }
+                    var reqGas = RequisicionAdapter.FromEntity(_req, productosGas);
+                    reqGas.IdRequisicionEstatus = RequisicionEstatusEnum.Revision_exitosa;
+                    lRequi.Add(reqGas);     
                 }
             }
+            productos = productos.Where(x => !x.EsGas && !x.EsTransporteGas).ToList();
+            if (productos != null)
+            {
+                if (!productos.Count.Equals(0))
+                {
+                    var req = RequisicionAdapter.FromEntity(_req, productos);
+                    req.IdRequisicionEstatus = RequisicionEstatusEnum.Creada;
+                    lRequi.Add(req);
+                }
+            }            
             return lRequi;
         }
     }

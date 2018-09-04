@@ -338,6 +338,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("Cantidad") %>' />
+                                                        <asp:Label ID="lblCantidadNA" runat="server" Text="NA" Visible="false" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -347,6 +348,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
+                                                        <asp:Label ID="lblUnidadNA" runat="server" Text='<%# Bind("Unidad") %>' Visible="false" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -374,6 +376,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:Label ID="lblAlmacen" runat="server" Text='<%# Bind("CantidadAlmacenActual") %>' />
+                                                          <asp:Label ID="lblAlmacenNA" runat="server" Text="NA" Visible="false" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -393,6 +396,7 @@
                                                     </HeaderTemplate>
                                                     <ItemTemplate>
                                                         <asp:TextBox ID="txtRequiereComp" CssClass="form-control" runat="server" Text='<%# Bind("CantidadAComprar") %>' TextMode="Number"></asp:TextBox>
+                                                        <asp:Label ID="lblCantidadAComprarNA" runat="server" Text="NA" Visible="false" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>

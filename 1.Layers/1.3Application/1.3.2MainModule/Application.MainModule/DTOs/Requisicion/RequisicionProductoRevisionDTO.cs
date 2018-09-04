@@ -59,6 +59,6 @@ namespace Application.MainModule.DTOs.Requisicion
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "CantidadAComprar")]
-        public decimal CantidadAComprar { get; set; }
+        public decimal CantidadAComprar { get; set; }     
     }
 }

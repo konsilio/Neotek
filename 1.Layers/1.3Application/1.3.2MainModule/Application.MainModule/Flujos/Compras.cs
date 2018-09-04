@@ -10,6 +10,7 @@ using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.Requisicion;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -84,7 +85,7 @@ namespace Application.MainModule.Flujos
             var entity = OrdenComprasAdapter.FromEntity(oc);
             entity.IdUsuarioAutorizador = TokenServicio.ObtenerIdUsuario();
             entity.FechaAutorizacion = Convert.ToDateTime(DateTime.Today.ToShortDateString());
-            entity.IdOrdenCompraEstatus = 3;
+            entity.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Proceso_compra;
             return OrdenCompraServicio.Actualizar(entity);
         }
         public RespuestaDto CancelarOrdenCompra(OrdenCompraDTO dto)
@@ -125,6 +126,10 @@ namespace Application.MainModule.Flujos
 
 
             return cg;
+        }
+        public List<OrdenCompraEstatusDTO> ListaEstatus()
+        {
+            return OrdenComprasAdapter.ToDTO(OrdenCompraServicio.ListaEstatus());
         }
     }
 }

@@ -53,15 +53,15 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 FechaRequerida = oc.Requisicion.FechaRequerida,
                 SubtotalSinIva = oc.SubtotalSinIva != null ? oc.SubtotalSinIva.Value : 0,
                 SubtotalSinIeps = oc.SubtotalSinIeps != null ? oc.SubtotalSinIeps.Value : 0,
-                Iva = oc.Iva != null ? oc.Iva.Value :  0,
+                Iva = oc.Iva != null ? oc.Iva.Value : 0,
                 Ieps = oc.Ieps != null ? oc.Ieps.Value : 0,
                 Total = oc.Total != null ? oc.Total.Value : 0,
                 EsTransporteGas = oc.EsTransporteGas,
-                Productos =  ProductosOCAdapter.ToDTO(oc.Productos.ToList())
+                Productos = ProductosOCAdapter.ToDTO(oc.Productos.ToList())
             };
             return ocDTO;
-        }        
-        public static List<OrdenCompraDTO>ToDTO(List<OrdenCompra> ocDTO)
+        }
+        public static List<OrdenCompraDTO> ToDTO(List<OrdenCompra> ocDTO)
         {
             List<OrdenCompraDTO> oc = ocDTO.Select(x => ToDTO(x)).ToList();
             return oc;
@@ -96,7 +96,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Iva = oc.Iva != null ? oc.Iva.Value : 0,
                 Ieps = oc.Ieps != null ? oc.Ieps.Value : 0,
                 Total = oc.Total != null ? oc.Total.Value : 0,
-                EsTransporteGas = oc.EsTransporteGas,              
+                EsTransporteGas = oc.EsTransporteGas,
             };
             return ocDTO;
         }
@@ -109,7 +109,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 IdRequisicion = ocDTO.IdRequisicion,
                 IdProveedor = ocDTO.IdProveedor,
                 IdCentroCosto = ocDTO.IdCentroCosto,
-                IdCuentaContable = ocDTO.IdCuentaContable,               
+                IdCuentaContable = ocDTO.IdCuentaContable,
                 EsActivoVenta = ocDTO.EsActivoVenta,
                 EsGas = ocDTO.EsGas,
                 Activo = ocDTO.Activo,
@@ -140,7 +140,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 IdUsuarioGenerador = ocDTO.IdUsuarioGenerador,
                 IdCentroCosto = ocDTO.IdCentroCosto,
                 FechaRegistro = ocDTO.FechaRegistro,
-                IdCuentaContable = ocDTO.IdCuentaContable,               
+                IdCuentaContable = ocDTO.IdCuentaContable,
                 EsActivoVenta = ocDTO.EsActivoVenta,
                 EsGas = ocDTO.EsGas,
                 Activo = ocDTO.Activo,
@@ -152,6 +152,19 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 EsTransporteGas = ocDTO.EsTransporteGas
             };
             return oc;
+        }
+
+        public static OrdenCompraEstatusDTO ToDTO(OrdenCompraEstatus est)
+        {
+            return new OrdenCompraEstatusDTO()
+            {
+                IdOrdenCompraEstatus = est.IdOrdenCompraEstatus,
+                Descripcion = est.Descripcion
+            };
+        }
+        public static List<OrdenCompraEstatusDTO> ToDTO(List<OrdenCompraEstatus> est)
+        {
+            return est.Select(x => ToDTO(x)).ToList();
         }
     }
 }

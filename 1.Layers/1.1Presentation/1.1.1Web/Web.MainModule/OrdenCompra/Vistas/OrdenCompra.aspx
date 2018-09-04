@@ -231,7 +231,7 @@
                                                 Proveedor
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:DropDownList ID="ddlProveedor" runat="server"></asp:DropDownList>
+                                                <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-control show-tick" data-live-search="true" data-show-subtext="true" ></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -240,7 +240,7 @@
                                                 Cuenta Contable
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:DropDownList ID="ddlCuentaContable" runat="server"></asp:DropDownList>
+                                                <asp:DropDownList ID="ddlCuentaContable" runat="server"  CssClass="form-control show-tick" data-live-search="true" data-show-subtext="true" ></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -471,12 +471,22 @@
                                                 <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <%--5 Cantidad --%>
                                         <asp:TemplateField>
                                             <HeaderTemplate>
                                                 Cantidad
                                             </HeaderTemplate>
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtCantidadaMercancia" runat="server" type="number" CssClass="form-control" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <%--6 Justificacion --%>
+                                         <asp:TemplateField>
+                                            <HeaderTemplate>
+                                                Justificación
+                                            </HeaderTemplate>
+                                            <ItemTemplate>
+                                                <asp:TextBox ID="txtJustifica" runat="server" type="number" CssClass="form-control" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -578,7 +588,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card" runat="server" id="divDatosComplementoGas">
+                <div class="card" runat="server" id="divDatosComplementoGas" visible="false" >
                     <div class="body">
                         <%--Campos para complemento de gas--%>
                         <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
@@ -1048,7 +1058,7 @@
                 <div class="row clearfix">
                     <div class="col-sm-4 center">
                         <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Regresar" OnClick="btnRegresar_Click" />
-                        <a href="#ModalMensaje" data-toggle="modal" id="btnMensaje" runat="server" data-target="#ModalMensaje" class="btn btn-raised btn-primary btn-round">Ver</a>
+                        <%--<a href="#ModalMensaje" data-toggle="modal" id="btnMensaje" runat="server" data-target="#ModalMensaje" class="btn btn-raised btn-primary btn-round">Ver</a>--%>
                     </div>
                     <div class="col-sm-4 center">
                         <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" runat="server" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">Cancelar

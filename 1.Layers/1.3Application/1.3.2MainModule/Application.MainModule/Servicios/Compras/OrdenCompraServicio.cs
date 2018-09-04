@@ -32,7 +32,7 @@ namespace Application.MainModule.Servicios.Compras
         /// <returns></returns>
         public static List<ProductoOCDTO> DescartarProductosParaOC(List<ProductoOCDTO> prods)
         {
-            return prods.ToList().Where(x => !x.CantidadAComprar.Equals(0)).ToList();
+            return prods.ToList().Where(x => !x.CantidadAComprar.Equals(0) || x.EsTransporteGas).ToList();
         }
         public static OrdenCompraRespuestaDTO GuardarOrdenCompra(OrdenCompra oc)
         {
@@ -66,7 +66,7 @@ namespace Application.MainModule.Servicios.Compras
                 foreach (var _oc in _ocs)
                 {
                     if (_prod.IdProveedor.Equals(_oc.IdProveedor))
-                        _oc.Productos.Add(ProductosOCAdapter.FromDTO(_prod));                    
+                        _oc.Productos.Add(ProductosOCAdapter.FromDTO(_prod));
                 }
             }
             return _ocs;
@@ -87,8 +87,8 @@ namespace Application.MainModule.Servicios.Compras
                     if (oc.Ieps == null) oc.Ieps = 0;
                     if (oc.SubtotalSinIeps == null) oc.SubtotalSinIeps = 0;
                     if (oc.SubtotalSinIva == null) oc.SubtotalSinIva = 0;
-                    if (oc.Total == null) oc.Total = 0;    
-                   
+                    if (oc.Total == null) oc.Total = 0;
+
                     oc.Iva += (prod.Precio * (prod.IVA / 100));
                     oc.Ieps += (prod.Precio * (prod.IEPS / 100));
                     oc.SubtotalSinIeps = prod.Importe - oc.Ieps;
@@ -109,7 +109,7 @@ namespace Application.MainModule.Servicios.Compras
         public static List<OrdenCompra> BuscarTodo(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
-                return new OrdenCompraDataAccess().BuscarTodos().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();            
+                return new OrdenCompraDataAccess().BuscarTodos().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
             else
                 return new OrdenCompraDataAccess().BuscarTodos().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
@@ -136,6 +136,10 @@ namespace Application.MainModule.Servicios.Compras
         {
             var descarga = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
             return ComplementoGasAdapter.ToDTO(descarga);
+        }
+        public static List<OrdenCompraEstatus> ListaEstatus()
+        {
+            return new OrdenCompraDataAccess().Estatus();
         }
     }
 }

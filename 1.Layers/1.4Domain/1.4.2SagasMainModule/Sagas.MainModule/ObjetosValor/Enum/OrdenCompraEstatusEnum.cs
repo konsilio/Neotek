@@ -15,10 +15,9 @@ namespace Sagas.MainModule.ObjetosValor.Enum
     }
     enum Estatus : byte
     {
-        Espera_autorizacion = 3,
+        Espera_autorizacion = 2,
         Proceso_compra = 1,
-        Compra_exitosa = 5,
-        Compra_cancelada = 6
+        Compra_exitosa = 4,
+        Compra_cancelada = 5
     }
-
 }

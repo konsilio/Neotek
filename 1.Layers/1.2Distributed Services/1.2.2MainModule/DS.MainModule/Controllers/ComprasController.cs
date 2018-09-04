@@ -81,5 +81,10 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_compras.ListaOrdenCompra(idEmpresa), Request);
         }
+        [Route("buscar/ordenescompra/estatus")]
+        public HttpResponseMessage GetEstatus()
+        {
+            return RespuestaHttp.crearRespuesta(_compras.ListaEstatus(), Request);
+        }
     }
 }

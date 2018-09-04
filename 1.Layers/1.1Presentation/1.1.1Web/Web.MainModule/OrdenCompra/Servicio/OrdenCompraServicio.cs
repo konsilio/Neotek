@@ -59,5 +59,11 @@ namespace Web.MainModule.OrdenCompra.Servicio
             agente.BuscarOrdenCompra(dto, Tkn);
             return agente._ordenCompraCrearDTO;
         }
+        public List<OrdenCompraEstatusDTO> ListaOCEstatus(string Tkn)
+        {
+            AgenteServicios agente = new AgenteServicios();
+            agente.BuscarOrdenCompraEstatus(Tkn);
+            return agente._listaOrdenCompraEstatus;
+        }
     }
 }

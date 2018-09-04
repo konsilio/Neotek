@@ -91,5 +91,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
 
         }
+        public List<OrdenCompraEstatus> Estatus()
+        {
+            return uow.Repository<OrdenCompraEstatus>().Get(x => x.Activo).ToList();
+        }
     }
 }
