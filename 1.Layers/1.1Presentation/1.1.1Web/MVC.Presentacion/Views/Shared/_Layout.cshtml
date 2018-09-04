@@ -1,0 +1,47 @@
+﻿@{
+    string rootUrl = Url.Content("~/");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <script src="../../assets/js/pages/forms/basic-form-elements.js"></script>
+    <script src="../../assets/js/pages/forms/advanced-form-elements.js"></script>
+
+    <!-- Global vars from server -->
+    <script>
+        var global_baseUrl = "@rootUrl";
+    </script>
+</head>
+<body>
+    <header class="header">
+        @{Html.RenderAction("Menu");}
+    </header>
+    <div class="page-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        @{ Html.RenderAction("Footer"); }
+    </footer>
+    @{Html.RenderAction("Loading");}
+
+
+    @{Html.RenderAction("Dialog");}
+
+
+    @{Html.RenderAction("Confirmation");}
+    <!-- Global vars -->
+    <script>
+        var global_baseUrl = "@Url.Content("~/")";
+    </script>
+</body>
+</html>

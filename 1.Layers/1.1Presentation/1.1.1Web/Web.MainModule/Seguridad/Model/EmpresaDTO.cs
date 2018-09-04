@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Web.MainModule.Seguridad.Model
 {
-    
+    [Serializable]
     public class EmpresaDTO
     {
         public short IdEmpresa { get; set; }
