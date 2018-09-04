@@ -506,6 +506,7 @@
                             <li><a href="table-color.html">Centro de costos</a></li>
                             <li><a href="table-filter.html">Puntos de venta</a></li>
                             <li><a href="table-filter.html">Equipo de transporte</a></li>
+                            <li><a href="../../Catalogos/Vista/Empresas.aspx">Gaseras</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -521,6 +522,8 @@
             <asp:ContentPlaceHolder ID="ctCompras" runat="server" />
             <asp:ContentPlaceHolder ID="ctOrdenCompra" runat="server" />
             <asp:ContentPlaceHolder ID="ctProveedor" runat="server" />
+            <asp:ContentPlaceHolder ID="ctEmpresa" runat="server" />
+            <asp:ContentPlaceHolder ID="ctNuevaEmpresa" runat="server" />
             <asp:ContentPlaceHolder ID="ctCuentasContables" runat="server" />
         </form>
     </section>

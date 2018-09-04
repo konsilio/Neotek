@@ -51,6 +51,9 @@ namespace Sagas.MainModule.Entidades
         public string Calle { get; set; }
         public string NumExt { get; set; }
         public string NumInt { get; set; }
+        public string Persona1 { get; set; }
+        public string Persona2 { get; set; }
+        public string Persona3 { get; set; }
         public string Telefono1 { get; set; }
         public string Telefono2 { get; set; }
         public string Telefono3 { get; set; }
@@ -70,8 +73,15 @@ namespace Sagas.MainModule.Entidades
         public byte InventarioSano { get; set; }
         public byte InventarioCrítico { get; set; }
         public decimal MaxRemaGaseraMensual { get; set; }
+        public decimal FactorGalonALitros { get; set; }
+        public decimal FactorCompraLitroAKilos { get; set; }
+        public decimal FactorFleteGas { get; set; }
         public string UrlLogotipoMenu { get; set; }
         public string UrlLogotipoLogin { get; set; }
+        public string UrlLogotipo180px { get; set; }
+        public string UrlLogotipo500px { get; set; }
+        public string UrlLogotipo1000px { get; set; }
+        public bool Activo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }

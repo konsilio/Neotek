@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.DTOs.Respuesta;
+using Sagas.MainModule.Entidades;
+using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -24,6 +27,33 @@ namespace Application.MainModule.Servicios.Catalogos
         public static List<EmpresaDTO> BuscarEmpresasLogin()
         {            
             return BuscarEmpresas();
+        }
+
+        public static Empresa Obtener(int IdEmpresa)
+        {
+            return new EmpresaDataAccess().Buscar(IdEmpresa);
+        }
+
+        public static RespuestaDto RegistrarEmpresa(Empresa emp)
+        {
+            return new EmpresaDataAccess().Insertar(emp);
+        }
+
+        public static RespuestaDto ModificarEmpresa(Empresa emp)
+        {
+            return new EmpresaDataAccess().Actualizar(emp);
+        }
+
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "La Empresa");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }

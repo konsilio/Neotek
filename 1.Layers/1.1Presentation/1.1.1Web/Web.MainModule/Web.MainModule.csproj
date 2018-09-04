@@ -3603,6 +3603,8 @@
     <Content Include="assets\plugins\waitme\waitMe.min.css" />
     <Content Include="assets\plugins\waitme\waitMe.min.js" />
     <Content Include="Catalogos\Vista\CuentasContables.aspx" />
+    <Content Include="Catalogos\Vista\Empresas.aspx" />
+    <Content Include="Catalogos\Vista\NuevaEmpresa.aspx" />
     <Content Include="Catalogos\Vista\Proveedor.aspx" />
     <Content Include="Compras\Vistas\Compras.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -3884,6 +3886,8 @@
     <Compile Include="Agente\AgenteServicios.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Catalogos\Model\EmpDTO.cs" />
+    <Compile Include="Catalogos\Servicio\EmpresaSvo.cs" />
     <Compile Include="Catalogos\Vista\CuentasContables.aspx.cs">
       <DependentUpon>CuentasContables.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3895,6 +3899,20 @@
     <Compile Include="Catalogos\Model\CentroCostoDTO.cs" />
     <Compile Include="Catalogos\Model\CuentaContableDTO.cs" />
     <Compile Include="Catalogos\Servicio\CuentaContableServicio.cs" />
+    <Compile Include="Catalogos\Vista\Empresas.aspx.cs">
+      <DependentUpon>Empresas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Catalogos\Vista\Empresas.aspx.designer.cs">
+      <DependentUpon>Empresas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Catalogos\Vista\NuevaEmpresa.aspx.cs">
+      <DependentUpon>NuevaEmpresa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Catalogos\Vista\NuevaEmpresa.aspx.designer.cs">
+      <DependentUpon>NuevaEmpresa.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Controles\DateTimePicker.ascx.cs">
       <DependentUpon>DateTimePicker.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

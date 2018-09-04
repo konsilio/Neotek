@@ -11,6 +11,58 @@ namespace Application.MainModule.Servicios.Seguridad
 {
     public static class PermisosServicio
     {
+        #region Usuario
+        public static RespuestaDto PuedeRegistrarUsuario()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatInsertarUsuario);
+
+            return EvaluarPermiso(rol, Error.P0001, "Usuario");
+        }
+
+        public static RespuestaDto PuedeModificarUsuario()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatModificarUsuario);
+
+            return EvaluarPermiso(rol, Error.P0002, "Usuario");
+        }
+
+        public static RespuestaDto PuedeEliminarUsuario()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatEliminarUsuario);
+
+            return EvaluarPermiso(rol, Error.P0003, "Usuario");
+        }
+        #endregion
+
+        #region Empresa
+        public static RespuestaDto PuedeRegistrarEmpresa()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatInsertarUsuario);//CatInsertarEmpresa
+
+            return EvaluarPermiso(rol, Error.P0001, "Empresa");
+        }
+
+        public static RespuestaDto PuedeModificarEmpresa()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatModificarUsuario);//CatModificarEmpresa
+
+            return EvaluarPermiso(rol, Error.P0002, "Empresa");
+        }
+
+        public static RespuestaDto PuedeEliminarEmpresa()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatEliminarUsuario);//CatEliminarEmpresa
+
+            return EvaluarPermiso(rol, Error.P0003, "Empresa");
+        }
+        #endregion
+
         #region Proveedor
         public static RespuestaDto PuedeRegistrarProveedor()
         {

@@ -23,6 +23,25 @@ namespace DS.MainModule.Controllers
             _catalogos = new Catalogos();
         }
         #region Empresas
+        [Route("registra/empresa")]
+        
+        public HttpResponseMessage PostRegistraEmpresas(EmpresaCrearDTO empresaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraEmpresa(empresaDto), Request);
+        }
+
+        [Route("modifica/empresa")]
+        public HttpResponseMessage PutModificaEmpresas(EmpresaModificarDto empresaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaEmpresa(empresaDto), Request);
+        }
+
+        [Route("elimina/empresa")]
+        public HttpResponseMessage PutEliminaEmpresas(EmpresaEliminarDto empresaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaEmpresa(empresaDto), Request);
+        }
+
         [AllowAnonymous]
         [Route("empresas/listaempresaslogin")]
         public HttpResponseMessage GetListaEmpresasLogin()
@@ -41,13 +60,34 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresas(conAdminCent));
         }
         #endregion
+
         #region Usuarios
         [Route("usuarios/listausuarios/{idEmpresa}")]
         public HttpResponseMessage GetListaUsuarios(short idEmpresa)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaUsuarios(idEmpresa));
         }
+
+        [Route("registra/usuarios")]
+        public HttpResponseMessage PostRegistraUsuario(UsuarioCrearDto usuarioDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.AltaUsuarios(usuarioDto), Request);
+        }
+
+        [Route("modifica/usuario")]
+        public HttpResponseMessage PutModificaUsuario(UsuarioModificarDto usuarioDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaUsuario(usuarioDto), Request);
+        }
+
+        [Route("elimina/usuario")]
+        public HttpResponseMessage PutEliminaUsuario(UsuarioEliminarDto usuarioDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaUsuario(usuarioDto), Request);
+        }
+
         #endregion
+
         #region Productos
         [Route("productos/listaproductos/{idEmpresa}")]
         public HttpResponseMessage GetListaProductos(short idEmpresa)
@@ -60,11 +100,13 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPorductosAsociados(idProducto));
         }
         #endregion
+
         #region Administracion Central
 
         #endregion
+
         #region Proveedor
-        [Route("registra/proveedor")]
+        [Route("registra/proveedor")]        
         public HttpResponseMessage PostRegistraProveedor(ProveedorCrearDto provDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.RegistraProveedor(provDto), Request);
@@ -94,6 +136,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedor(idProveedor));
         }
         #endregion
+
         #region Centro de Costo
         [Route("registra/centro/costo")]
         public HttpResponseMessage PostRegistraCentroCosto(CentroCostoCrearDto cuentaDto)
@@ -157,6 +200,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCuentaContable(idCuenta));
         }
         #endregion
+
         #region Cuenta contable
         [Route("consulta/cuentacontable/{idEmpresa}")]
         public HttpResponseMessage GetListaCuentasContables(int idEmpresa)

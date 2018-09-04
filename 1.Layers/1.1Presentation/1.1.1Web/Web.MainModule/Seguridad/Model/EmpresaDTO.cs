@@ -21,6 +21,9 @@ namespace Web.MainModule.Seguridad.Model
         public string Calle { get; set; }
         public string NumExt { get; set; }
         public string NumInt { get; set; }
+        public string Persona1 { get; set; }
+        public string Persona2 { get; set; }
+        public string Persona3 { get; set; }
         public string Telefono1 { get; set; }
         public string Telefono2 { get; set; }
         public string Telefono3 { get; set; }
