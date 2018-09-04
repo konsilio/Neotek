@@ -138,7 +138,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 almacen=false;
 
             }else if (extras.getBoolean("EsLecturaInicialPipa") ||
-                    extras.getBoolean("EsLecturaIFinalPipa")){
+                    extras.getBoolean("EsLecturaFinalPipa")){
                 lecturaPipaDTO = (LecturaPipaDTO) extras.getSerializable("lecturaPipaDTO");
                 textViewTitulo.setText(lecturaPipaDTO.getTipoMedidor()+
                         " - "+getString(R.string.Pipa));
