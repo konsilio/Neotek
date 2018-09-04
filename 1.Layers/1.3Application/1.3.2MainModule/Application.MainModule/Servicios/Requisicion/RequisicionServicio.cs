@@ -80,9 +80,9 @@ namespace Application.MainModule.Servicios.Requisicion
             {
                 if (!productos.Count.Equals(0))
                 {
-                    var reqGas = RequisicionAdapter.FromEntity(_req, productosGas);
-                    reqGas.IdRequisicionEstatus = RequisicionEstatusEnum.Creada;
-                    lRequi.Add(reqGas);
+                    var req = RequisicionAdapter.FromEntity(_req, productos);
+                    req.IdRequisicionEstatus = RequisicionEstatusEnum.Creada;
+                    lRequi.Add(req);
                 }
             }            
             return lRequi;

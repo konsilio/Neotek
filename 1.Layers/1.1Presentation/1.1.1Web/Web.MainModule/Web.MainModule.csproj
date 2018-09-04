@@ -3932,12 +3932,13 @@
     <Compile Include="OrdenCompra\Model\OrdenCompraCancelar.cs" />
     <Compile Include="OrdenCompra\Model\OrdenCompraCrearDTO.cs" />
     <Compile Include="OrdenCompra\Model\OrdenCompraDTO.cs" />
-    <Compile Include="OrdenCompra\Model\OrdenCompraEstatus.cs" />
+    <Compile Include="OrdenCompra\Model\OrdenCompraEstatusEnum.cs" />
     <Compile Include="OrdenCompra\Model\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="OrdenCompra\Model\OrdenCompraRespuestaDTO.cs" />
     <Compile Include="OrdenCompra\Model\ProdcutoOC.cs" />
     <Compile Include="Catalogos\Model\ProveedorDTO.cs" />
     <Compile Include="OrdenCompra\Model\RequisicionOCDTO.cs" />
+    <Compile Include="OrdenCompra\Model\OrdenCompraEstatusDTO.cs" />
     <Compile Include="OrdenCompra\Servicio\OrdenCompraServicio.cs" />
     <Compile Include="OrdenCompra\Vistas\Compra.aspx.cs">
       <DependentUpon>Compra.aspx</DependentUpon>

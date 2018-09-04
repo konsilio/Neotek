@@ -30,7 +30,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
                         if (Request.QueryString["oc"] != null)
                             CargarOrdenCompra(int.Parse(Request.QueryString["oc"].ToString()));
                         //else
-                            //Salir();
+                        //Salir();
                     }
                     else
                         Salir();
@@ -55,8 +55,13 @@ namespace Web.MainModule.OrdenCompra.Vistas
             dgListaproductos.DataSource = ViewState["ListaProdcutoOC"] = reqDto.Productos;
             dgListaproductos.Visible = true;
             dgListaproductos.DataBind();
-            if (true)
+            if (ValidarRequisiconGas())
             {
+                dgListaproductos.Columns[8].Visible = false;
+                dgListaproductos.Columns[9].Visible = false;
+                dgListaproductos.Columns[10].Visible = false;
+                dgListaproductos.Columns[11].Visible = false;
+                dgListaproductos.Columns[12].Visible = false;
 
             }
         }
@@ -68,16 +73,25 @@ namespace Web.MainModule.OrdenCompra.Vistas
                 EsGas = true;
             return EsGas;
         }
+        //private bool ValidarOrdenCompraGas(OrdenCompraCrearDTO oc)
+        //{
+        //    bool EsGas = false;
+        //    var prod = ((List<OrdenCompraProductoCrearDTO>)ViewState["ListaProdcutoOC"]).Where(x => x.EsGas || x.EsTransporteGas).ToList();
+        //    if (!prod.Count.Equals(0))
+        //        EsGas = true;
+        //    return EsGas;
+        //}
+        
         private void CargarOrdenCompra(int id)
         {
             var Oc = new OrdenCompraServicio().OrdenCompraPorId(id, _token);
-            if (Oc.IdOrdenCompraEstatus.Equals(Convert.ToByte((byte)OrdenCompraEstatus.Espera_de_Autorización)))            
+            if (Oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion))
                 ActivarAutorizar(Oc);
-            if (Oc.IdOrdenCompraEstatus.Equals((byte)OrdenCompraEstatus.Proceso_de_Compra))
+            if (Oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Proceso_compra))
                 ActivarAlmacen(Oc);
-            if (Oc.IdOrdenCompraEstatus.Equals((byte)OrdenCompraEstatus.Proceso_de_Compra) && Oc.EsGas && Oc.EsTransporteGas)
+            if (Oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Proceso_compra) && Oc.EsGas && Oc.EsTransporteGas)
                 ActivarAlmacen(Oc);
-            if (Oc.IdOrdenCompraEstatus.Equals((byte)OrdenCompraEstatus.Compra_Cancelada) || Oc.IdOrdenCompraEstatus.Equals((byte)OrdenCompraEstatus.Compra_Exitosa))
+            if (Oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_cancelada) || Oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_exitosa))
                 ActivarVerOrdenCompra(Oc);
         }
         private void ActivarAutorizar(OrdenCompraCrearDTO oc)
@@ -88,24 +102,33 @@ namespace Web.MainModule.OrdenCompra.Vistas
             TxtSolicitante.Text = reqDto.UsuarioSolicitante;
             txtMotivoCompra.Text = reqDto.MotivoRequisicion;
             txtRequeridoEn.Text = reqDto.RequeridoEn;
-            lblNumRequisicion.Text = reqDto.NumeroRequisicion;            
+            lblNumRequisicion.Text = reqDto.NumeroRequisicion;
 
             lblNunOrdenCompra.Text = oc.NumOrdenCompra;
-            lblNunOrdenCompra.Visible = true;      
-            gvProdcutosOrdenCompra.DataSource =oc.Productos;
+            lblNunOrdenCompra.Visible = true;
+            gvProdcutosOrdenCompra.DataSource = ViewState["ListaProdcutoOC"] =  oc.Productos;
             gvProdcutosOrdenCompra.DataBind();
             lblProveedor.Text = oc.Proveedor;
             divCrearOC.Visible = false;
-            divAutorizarOC.Visible = true;           
+            divAutorizarOC.Visible = true;
             lblbtnCrear.Text = "Autorizar";
+            //if (ValidarRequisiconGas())
+            //{
+            //    gvProdcutosOrdenCompra.Columns[8].Visible = false;
+            //    gvProdcutosOrdenCompra.Columns[9].Visible = false;
+            //    gvProdcutosOrdenCompra.Columns[10].Visible = false;
+            //    gvProdcutosOrdenCompra.Columns[11].Visible = false;
+            //    gvProdcutosOrdenCompra.Columns[12].Visible = false;
+            //}
         }
-        private void ActivarAlmacen(OrdenCompraDTO oc)
+        private void ActivarAlmacen(OrdenCompraCrearDTO oc)
         {
             lblProveedor.Text = oc.Proveedor;
             divAutorizarOC.Visible = true;
             lblbtnCrear.Text = "Aceptar";
-            //gvProdcutosOrdenCompra.DataSource = oc.Productos;
-            //gvProdcutosOrdenCompra.DataBind();
+            gvEntrada.DataSource = oc.Productos;
+            gvEntrada.DataBind();
+            gvEntrada.Columns[6].Visible = false;
         }
         private void ActivarVerOrdenCompra(OrdenCompraDTO oc)
         {
@@ -125,6 +148,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
                 if (item.Exito)
                 {
                     lblMensajeOrdenCompra.Text = lblMensajeOrdenCompra.Text + "N° de Orden de Compra: " + item.NumOrdenCompra;
+                    Response.Redirect("~/OrdenCompra/Vistas/Compra.aspx");
                 }
             }
         }
@@ -137,12 +161,12 @@ namespace Web.MainModule.OrdenCompra.Vistas
                 btnok.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
                 lblMensajeOrdenCompra.Text = resp.Mensaje;
                 Session["OrdenCompraCrearDTO"] = null;
+                Response.Redirect("~/OrdenCompra/Vistas/Compra.aspx");
             }
             else
             {
                 divMensajeError.Visible = true;
                 lblErrorCampos.Text = resp.MensajesError[0];
-
             }
         }
         private void ActualizarAlmacen()
@@ -189,7 +213,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
                 listaIVAs.Add(item);
             }
             return listaIVAs;
-        }        
+        }
         private List<OrdenCompraProductoCrearDTO> ObtenerProductosGrid()
         {
             List<OrdenCompraProductoCrearDTO> lp = new List<OrdenCompraProductoCrearDTO>();
@@ -203,7 +227,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
                 p.IdCuentaContable = int.Parse((_row.FindControl("ddlCuentaContable") as DropDownList).SelectedValue);
                 p.IdProveedor = int.Parse((_row.FindControl("ddlProveedor") as DropDownList).SelectedValue);
                 p.Precio = decimal.Parse(precio == "" ? "0" : precio);
-                p.Descuento = decimal.Parse(descuento == "" ? "0": descuento );
+                p.Descuento = decimal.Parse(descuento == "" ? "0" : descuento);
                 p.IVA = decimal.Parse((_row.FindControl("ddlGvIVA") as DropDownList).Text.Replace("IVA", ""));
                 p.IEPS = decimal.Parse((_row.FindControl("ddlGvIEPS") as DropDownList).Text.Replace("IEPS", ""));
                 p.Cantidad = decimal.Parse((_row.FindControl("lbldgCantidad") as Label).Text);
@@ -221,7 +245,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
             OrdenCompraCrearDTO oc = new OrdenCompraCrearDTO();
             oc.IdRequisicion = int.Parse(Request.QueryString["nr"].ToString());
             oc.Productos = ObtenerProductosGrid();
-            oc.IdOrdenCompraEstatus = 2;
+            oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Espera_autorizacion;
             return oc;
         }
         protected void btnRegresar_Click(object sender, EventArgs e)
@@ -231,14 +255,14 @@ namespace Web.MainModule.OrdenCompra.Vistas
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             OrdenCompraDTO _ocCancelar = new OrdenCompraDTO();
-            if (Request.QueryString["oc"] != null)            
-                _ocCancelar.IdOrdenCompra = int.Parse(Request.QueryString["oc"].ToString());     
-            _ocCancelar.IdOrdenCompraEstatus = (byte)OrdenCompraEstatus.Compra_Cancelada;
+            if (Request.QueryString["oc"] != null)
+                _ocCancelar.IdOrdenCompra = int.Parse(Request.QueryString["oc"].ToString());
+            _ocCancelar.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_cancelada;
             var resp = new OrdenCompraServicio().CancelarOrdenCompra(_ocCancelar, _token);
         }
         protected void BtnCrear_Click(object sender, EventArgs e)
         {
-            
+
             if (lblbtnCrear.Text.Equals("Crear"))
             {
                 Crear();
@@ -277,13 +301,12 @@ namespace Web.MainModule.OrdenCompra.Vistas
             DropDownList ddlCtaContable = e.Row.Cells[0].FindControl("ddlCuentaContable") as DropDownList;
             if (ddlCtaContable != null)
             {
-                //Descomentar cuando las Cuentas conables este listas
-                //ddlCtaContable.DataSource = new OrdenCompraServicio().ListaCuentasContables(_token);
-                //ddlCtaContable.DataTextField = "IdCuentaContable";
-                //ddlCtaContable.DataValueField = "Descripcion";
-                ddlCtaContable.Items.Add(new ListItem("CuentaContable1", "1"));
+                ddlCtaContable.DataSource = new OrdenCompraServicio().ListaCuentasContables(TokenServicio.ObtenerIdEmpresa(_token) , _token);
+                ddlCtaContable.DataTextField = "Descripcion";
+                ddlCtaContable.DataValueField = "IdCuentaContable";
+                //ddlCtaContable.Items.Add(new ListItem("CuentaContable1", "1"));
                 ddlCtaContable.DataBind();
-            }          
+            }
             #endregion
             #region Cargar dropDownList Proveedores
             DropDownList ddlProvee = e.Row.Cells[0].FindControl("ddlProveedor") as DropDownList;
@@ -293,9 +316,9 @@ namespace Web.MainModule.OrdenCompra.Vistas
                 ddlProvee.DataTextField = "NombreComercial";
                 ddlProvee.DataValueField = "IdProveedor";
                 ddlProvee.DataBind();
-            }            
+            }
             #endregion
-        }      
+        }
         protected void dgListaproductos_RowEditing(object sender, GridViewEditEventArgs e)
         {
 

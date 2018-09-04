@@ -133,6 +133,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             Importe = _prod.Importe,
             EsActivoVenta = _prod.EsActivoVenta,
             EsGas = _prod.EsGas,
+         
         };
         return _prodDTO;
     }

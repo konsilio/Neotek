@@ -380,6 +380,7 @@ namespace Web.MainModule.Requisicion.Vista
             if (ValidarRequisiconGas())
             {
                 gvProductoAut.Columns[7].Visible = false;
+                divOpinion.Visible = false;
             }
            
             
