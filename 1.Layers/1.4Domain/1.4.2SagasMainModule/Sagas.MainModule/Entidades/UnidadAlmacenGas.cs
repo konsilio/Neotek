@@ -20,7 +20,13 @@ namespace Sagas.MainModule.Entidades
             this.DescargasGas = new HashSet<AlmacenGasDescarga>();
             this.CCentroCosto = new HashSet<CentroCosto>();
             this.TomasLectura = new HashSet<AlmacenGasTomaLectura>();
-            this.Recargas = new HashSet<AlmacenGasRecarga>();
+            this.RecargasSalida = new HashSet<AlmacenGasRecarga>();
+            this.RecargasEntrada = new HashSet<AlmacenGasRecarga>();
+            this.AutoConsumosSalida = new HashSet<AlmacenGasAutoConsumo>();
+            this.AutoConsumosEntrada = new HashSet<AlmacenGasAutoConsumo>();
+            this.Calibraciones = new HashSet<AlmacenGasCalibracion>();
+            this.TraspasosSalida = new HashSet<AlmacenGasTraspaso>();
+            this.TraspasosEntrada = new HashSet<AlmacenGasTraspaso>();
         }
     
         public short IdCAlmacenGas { get; set; }
@@ -57,6 +63,18 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasTomaLectura> TomasLectura { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlmacenGasRecarga> Recargas { get; set; }
+        public virtual ICollection<AlmacenGasRecarga> RecargasSalida { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasRecarga> RecargasEntrada { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasAutoConsumo> AutoConsumosSalida { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasAutoConsumo> AutoConsumosEntrada { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasCalibracion> Calibraciones { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasTraspaso> TraspasosSalida { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasTraspaso> TraspasosEntrada { get; set; }
     }
 }
