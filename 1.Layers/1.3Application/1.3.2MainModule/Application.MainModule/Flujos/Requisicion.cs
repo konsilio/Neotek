@@ -6,6 +6,7 @@ using Application.MainModule.Servicios.Requisicion;
 using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.AdaptadoresDTO.Requisicion;
+using Application.MainModule.Servicios;
 
 namespace Application.MainModule.Flujos
 {
@@ -16,11 +17,11 @@ namespace Application.MainModule.Flujos
             var _requisicion = RequisicionAdapter.FromEDTO(_req);
             _requisicion = Servicios.Almacen.ProductoAlmacenServicio.CalcularAlmacenProcutos(_requisicion);
             var ListaRequisiciones = RequisicionServicio.IdentificarRequisicones(_requisicion);
-
+            ListaRequisiciones = FolioServicio.GenerarNumeroRequisicion(ListaRequisiciones);
             RespuestaDto resp = new RespuestaDto();
             foreach (var item in ListaRequisiciones)
             {
-                var respuesta = RequisicionServicio.GuardarRequisicionNueva(_requisicion);
+                var respuesta = RequisicionServicio.GuardarRequisicionNueva(item);
                 if (respuesta.Exito)
                 {
                     resp.Id = respuesta.Id;

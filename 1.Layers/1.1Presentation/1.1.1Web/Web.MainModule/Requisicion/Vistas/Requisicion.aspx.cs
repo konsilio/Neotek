@@ -446,6 +446,7 @@ namespace Web.MainModule.Requisicion.Vista
                         btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
                         btnAgregar.CssClass = "btn btn danger btn simple btn round btn sm disabled";
                         ClientScript.RegisterStartupScript(this.GetType(), "alert", "ShowPopup();", true);
+                        Response.Redirect("~/Compras/Vistas/Compras.aspx");
                     }
                     else
                     {
@@ -485,6 +486,7 @@ namespace Web.MainModule.Requisicion.Vista
                         gvProductosRevision.Enabled = false;
                         btnCancel.Attributes.Remove("class");
                         btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
+                        Response.Redirect("~/Compras/Vistas/Compras.aspx");
                     }
                     else
                     {
@@ -518,6 +520,7 @@ namespace Web.MainModule.Requisicion.Vista
                     gvProductoAut.Enabled = false;
                     btnCancel.Attributes.Remove("class");
                     btnCancel.Attributes.Add("class", "btn btn-raised btn-primary btn-round disabled");
+                    Response.Redirect("~/Compras/Vistas/Compras.aspx");
                 }
                 else
                 {

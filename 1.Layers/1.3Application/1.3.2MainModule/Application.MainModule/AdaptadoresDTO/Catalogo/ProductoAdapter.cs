@@ -62,6 +62,33 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             List<Producto> lprod = lProdDTO.ToList().Select(x => FromDTO(x)).ToList();
             return lprod;
         }
+        public static Producto FromEntity(Producto prodAnterior)
+        {
+            return new Producto()
+            {
+                IdProducto = prodAnterior.IdProducto,
+                IdEmpresa = prodAnterior.IdEmpresa,
+                IdProductoServicioTipo = prodAnterior.IdProductoServicioTipo,
+                IdCategoria = prodAnterior.IdCategoria,
+                IdProductoLinea = prodAnterior.IdProductoLinea,
+                IdUnidadMedida = prodAnterior.IdUnidadMedida,
+                IdUnidadMedida2 = prodAnterior.IdUnidadMedida2,
+                Descripcion = prodAnterior.Descripcion,
+                Minimos = prodAnterior.Minimos,
+                Maximo = prodAnterior.Maximo,
+                UrlImagen = prodAnterior.UrlImagen,
+                PathImagen = prodAnterior.PathImagen,
+                Activo = prodAnterior.Activo,
+                FechaRegistro = prodAnterior.FechaRegistro,
+                EsActivoVenta = prodAnterior.EsActivoVenta,
+                EsGas = prodAnterior.EsGas,
+                EsTransporteGas = prodAnterior.EsTransporteGas,
+            };
+        }
 
+        public static List<Producto> FromEntity(List<Producto> lProdDTO)
+        {
+            return lProdDTO.ToList().Select(x => FromEntity(x)).ToList();
+        }
     }
 }
