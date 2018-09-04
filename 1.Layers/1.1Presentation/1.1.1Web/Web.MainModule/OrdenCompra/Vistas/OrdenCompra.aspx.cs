@@ -55,6 +55,18 @@ namespace Web.MainModule.OrdenCompra.Vistas
             dgListaproductos.DataSource = ViewState["ListaProdcutoOC"] = reqDto.Productos;
             dgListaproductos.Visible = true;
             dgListaproductos.DataBind();
+            if (true)
+            {
+
+            }
+        }
+        private bool ValidarRequisiconGas()
+        {
+            bool EsGas = false;
+            var prod = ((List<ProdcutoOCDTO>)ViewState["ListaProdcutoOC"]).Where(x => x.EsGas || x.EsTransporteGas).ToList();
+            if (!prod.Count.Equals(0))
+                EsGas = true;
+            return EsGas;
         }
         private void CargarOrdenCompra(int id)
         {
@@ -84,8 +96,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
             gvProdcutosOrdenCompra.DataBind();
             lblProveedor.Text = oc.Proveedor;
             divCrearOC.Visible = false;
-            divAutorizarOC.Visible = true;
-            //BtnCrear.Text = "Actualizar";
+            divAutorizarOC.Visible = true;           
             lblbtnCrear.Text = "Autorizar";
         }
         private void ActivarAlmacen(OrdenCompraDTO oc)

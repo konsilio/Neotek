@@ -20,17 +20,20 @@ namespace Application.MainModule.Servicios.Almacen
             foreach (RequisicionProducto _prod in _requisicion.Productos)
             {
                 var prod = ProductoServicios.ObtenerProdcuto(_prod.IdProducto);
-                if (prod.EsGas)                
-                    _requisicion.Productos.ElementAt(x).CantidadAlmacenActual = AlmacenGasServicio.ObtenerCantidadActualAlmacenGeneral(_requisicion.IdEmpresa);                
+                if (prod.EsGas)
+                {
+                    _requisicion.Productos.ElementAt(x).CantidadAlmacenActual = AlmacenGasServicio.ObtenerCantidadActualAlmacenGeneral(_requisicion.IdEmpresa);
+                    _requisicion.Productos.ElementAt(x).CantidadAComprar = _prod.Cantidad;
+                }
                 else
                 {
                     var almacen = new AlmacenDataAccess().ProductoAlmacen(_prod.IdProducto, _requisicion.IdEmpresa);
                     _requisicion.Productos.ElementAt(x).CantidadAlmacenActual = almacen != null ? almacen.Cantidad : 0;
+                    if (_prod.CantidadAlmacenActual.Value > _prod.Cantidad)
+                        _requisicion.Productos.ElementAt(x).CantidadAComprar = 0;
+                    else
+                        _requisicion.Productos.ElementAt(x).CantidadAComprar = Math.Abs(_prod.CantidadAlmacenActual.Value - _prod.Cantidad);
                 }
-                if (_prod.CantidadAlmacenActual.Value > _prod.Cantidad)
-                    _requisicion.Productos.ElementAt(x).CantidadAComprar = 0;
-                else
-                    _requisicion.Productos.ElementAt(x).CantidadAComprar = Math.Abs(_prod.CantidadAlmacenActual.Value - _prod.Cantidad);
                 _requisicion.Productos.ElementAt(x).EsActivoVenta = prod.EsActivoVenta;
                 _requisicion.Productos.ElementAt(x).EsGas = prod.EsGas;
                 _requisicion.Productos.ElementAt(x).EsTransporteGas = prod.EsTransporteGas != null ? prod.EsTransporteGas.Value : false;

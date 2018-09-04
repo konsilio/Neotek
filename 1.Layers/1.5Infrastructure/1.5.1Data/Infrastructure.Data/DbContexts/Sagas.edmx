@@ -516,6 +516,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="NombreComercial" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="EsAdministracionCentral" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="EmpresaConfiguracion">
           <Key>
@@ -731,9 +732,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdCentroCosto" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Aplicacion" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="EsActivoVenta" Type="bit" />
-          <Property Name="EsGas" Type="bit" />
-          <Property Name="EsTransporteGas" Type="bit" />
+          <Property Name="EsActivoVenta" Type="bit" Nullable="false" />
+          <Property Name="EsGas" Type="bit" Nullable="false" />
+          <Property Name="EsTransporteGas" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -2960,7 +2961,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Persona3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="UrlLogotipo180px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="UrlLogotipo500px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="UrlLogotipo1000px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />          
+          <Property Name="UrlLogotipo1000px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />          
           <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaFiscal_Empresa" FromRole="EmpresaFiscal" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaImagen_Empresa" FromRole="EmpresaImagen" ToRole="Empresa" />-->
@@ -3952,9 +3954,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdProducto" Type="Int32" Nullable="false" />-->
           <Property Name="AutorizaEntrega" Type="Boolean" />
           <Property Name="AutorizaCompra" Type="Boolean" />
-          <Property Name="EsActivoVenta" Type="Boolean" />
-          <Property Name="EsGas" Type="Boolean" />
-          <Property Name="EsTransporteGas" Type="Boolean" />
+          <Property Name="EsActivoVenta" Type="Boolean" Nullable="false" />
+          <Property Name="EsGas" Type="Boolean" Nullable="false" />
+          <Property Name="EsTransporteGas" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Requisicion" Relationship="Sagas.MainModuleModel.FK_RequisicionProducto_Requisicion" FromRole="RequisicionProducto" ToRole="Requisicion" />
           <NavigationProperty Name="Producto" Relationship="Sagas.MainModuleModel.FK_RequisicionProducto_Producto" FromRole="RequisicionProducto" ToRole="Producto" />
           <NavigationProperty Name="CentroCosto" Relationship="Sagas.MainModuleModel.FK_RequisicionProducto_CentroCosto" FromRole="RequisicionProducto" ToRole="CentroCosto" />
@@ -5894,6 +5896,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="Empresa">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Empresa">
               <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="EsAdministracionCentral" ColumnName="EsAdministracionCentral" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="NombreComercial" ColumnName="NombreComercial" />

@@ -32,7 +32,7 @@ namespace Application.MainModule.Servicios.Compras
         /// <returns></returns>
         public static List<ProductoOCDTO> DescartarProductosParaOC(List<ProductoOCDTO> prods)
         {
-            return prods.ToList().Where(x => !x.CantidadAComprar.Equals(0)).ToList();
+            return prods.ToList().Where(x => !x.CantidadAComprar.Equals(0) || x.EsTransporteGas).ToList();
         }
         public static OrdenCompraRespuestaDTO GuardarOrdenCompra(OrdenCompra oc)
         {

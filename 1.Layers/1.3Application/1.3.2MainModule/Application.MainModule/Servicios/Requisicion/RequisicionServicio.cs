@@ -65,32 +65,24 @@ namespace Application.MainModule.Servicios.Requisicion
         {
             List<Sagas.MainModule.Entidades.Requisicion> lRequi = new List<Sagas.MainModule.Entidades.Requisicion>();
             var productos = _req.Productos.ToList();
-            var productosGas = _req.Productos.Where(x => x.EsGas.Value || x.EsTransporteGas.Value).ToList();
+            var productosGas = _req.Productos.Where(x => x.EsGas || x.EsTransporteGas).ToList();
             if (productosGas != null)
             {
                 if (!productosGas.Count.Equals(0))
                 {
                     var reqGas = RequisicionAdapter.FromEntity(_req, productosGas);
                     reqGas.IdRequisicionEstatus = RequisicionEstatusEnum.Revision_exitosa;
-                    lRequi.Add(reqGas);
-                    //Sagas.MainModule.Entidades.Requisicion newReq = new Sagas.MainModule.Entidades.Requisicion();
-                    //newReq = _req;
-                    //newReq.Productos = new List<RequisicionProducto>();
-                    //newReq.Productos = productosGas;
-                    
+                    lRequi.Add(reqGas);     
                 }
             }
-            productos = productos.Where(x => !x.EsGas.Value && !x.EsTransporteGas.Value).ToList();
+            productos = productos.Where(x => !x.EsGas && !x.EsTransporteGas).ToList();
             if (productos != null)
             {
                 if (!productos.Count.Equals(0))
                 {
-                    lRequi.Add(RequisicionAdapter.FromEntity(_req, productos));
-                    //Sagas.MainModule.Entidades.Requisicion newReq = new Sagas.MainModule.Entidades.Requisicion();
-                    //newReq = _req;                   
-                    //newReq.Productos = new List<RequisicionProducto>();
-                    //newReq.Productos = productos;
-                    //lRequi.Add(newReq);
+                    var reqGas = RequisicionAdapter.FromEntity(_req, productosGas);
+                    reqGas.IdRequisicionEstatus = RequisicionEstatusEnum.Creada;
+                    lRequi.Add(reqGas);
                 }
             }            
             return lRequi;

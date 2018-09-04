@@ -578,7 +578,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card" runat="server" id="divDatosComplementoGas">
+                <div class="card" runat="server" id="divDatosComplementoGas" visible="false" >
                     <div class="body">
                         <%--Campos para complemento de gas--%>
                         <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">

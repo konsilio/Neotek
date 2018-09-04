@@ -25,9 +25,9 @@ namespace Sagas.MainModule.Entidades
         public Nullable<decimal> CantidadAComprar { get; set; }
         public Nullable<bool> AutorizaEntrega { get; set; }
         public Nullable<bool> AutorizaCompra { get; set; }
-        public Nullable<bool> EsActivoVenta { get; set; }
-        public Nullable<bool> EsGas { get; set; }
-        public Nullable<bool> EsTransporteGas { get; set; }
+        public bool EsActivoVenta { get; set; }
+        public bool EsGas { get; set; }
+        public bool EsTransporteGas { get; set; }
     
         public virtual Requisicion Requisicion { get; set; }
         public virtual Producto Producto { get; set; }
