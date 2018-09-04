@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Proveedor.aspx.cs" Inherits="Web.MainModule.Catalogos.Proveedor" %>
 <asp:Content ID="ContentProveedor" ContentPlaceHolderID="ctProveedor" runat="server">
+
     <form runat="server">
         <section class="content home">
             <div class="container-fluid">
