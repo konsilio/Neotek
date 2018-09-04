@@ -559,6 +559,22 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         subirImagenesPresenter.onSuccessRegistroAndroid();
     }
 
+    @Override
+    public void registrarLecturaInicialAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String clave_unica = "LIA"+s.format(new Date());
+        subirImagenesPresenter.onSuccessRegistroAndroid();
+    }
+
+    @Override
+    public void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String clave_unica = "LFA"+s.format(new Date());
+        subirImagenesPresenter.onSuccessRegistroAndroid();
+    }
+
     //region Metodos de clase privados
     /**
      * registrar_local

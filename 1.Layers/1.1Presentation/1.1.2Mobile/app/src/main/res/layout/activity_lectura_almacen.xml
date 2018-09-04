@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.LecturaPipaActivity">
+    tools:context=".Activity.LecturaAlmacenActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,32 +13,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/TVLecturaPipaActivityTitulo"
+                android:id="@+id/TVLecturaAlmacenActivityTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:paddingBottom="15dp"
                 android:paddingTop="25dp"
-                android:text="@string/toma_de_lectura"
+                android:text="@string/toma_de_lectura_inicial"
                 android:textAlignment="center"
-                android:textSize="24sp" />
+                android:textSize="25sp" />
 
             <TextView
-                android:id="@+id/TVLecturaPipaAcivitySeleccionPipa"
+                android:id="@+id/TVLecturaAlmacenActivityTipoAlmacen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="15dp"
-                android:text="@string/selecciona_la_pipa"
-                android:textSize="18sp" />
+                android:paddingTop="25dp"
+                android:text="@string/selecciona_almacen_principal" />
 
             <Spinner
-                android:id="@+id/SLecturaPipaActivityListaPipa"
+                android:id="@+id/SLecturaAlmacenActivityListaAlmacen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -46,17 +45,16 @@
                 android:padding="20dp" />
 
             <TextView
-                android:id="@+id/TVLecturaPipaActivityTipoLector"
+                android:id="@+id/TVLecturaAlmacenActivityTipoMedidor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="15dp"
-                android:text="@string/selecciona_el_tipo_de_medidor_porcentual"
-                android:textSize="18sp" />
+                android:paddingTop="25dp"
+                android:text="@string/selecciona_el_tipo_de_medidor_porcentual" />
 
             <Spinner
-                android:id="@+id/SLecturaPipaActivityListaTipoMedidor"
+                android:id="@+id/SLecturaAlmacenActivityListaMedidor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -70,7 +68,7 @@
                 android:layout_marginRight="15dp" />
 
             <Button
-                android:id="@+id/BtnLecturaPipaActivityGuardar"
+                android:id="@+id/BtnLecturaAlamacenActivityGuardar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -78,8 +76,6 @@
                 android:layout_marginRight="85dp"
                 android:layout_marginTop="15dp"
                 android:backgroundTint="@color/colorButtonLogin"
-                android:clickable="true"
-                android:focusable="true"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="30sp"

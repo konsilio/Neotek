@@ -123,4 +123,6 @@
     <string name="selecciona_la_pipa">Selecciona la pipa</string>
     <string name="Pipa">Pipa</string>
     <string name="registra_la_lectura_del_p500_de_la_pipa">Registra la lectura del P500 de la pipa</string>
+    <string name="selecciona_almacen_principal">Seleccióna el Almacén principal</string>
+    <string name="Almacen">Almacén</string>
 </resources>

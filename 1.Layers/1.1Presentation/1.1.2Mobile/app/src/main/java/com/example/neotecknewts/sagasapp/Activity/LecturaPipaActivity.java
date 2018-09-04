@@ -51,6 +51,11 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
             EsLecturaFinalPipa = (boolean) b.get("EsLecturaFinalPipa");
         }
         TVLecturaPipaActivityTitulo = findViewById(R.id.TVLecturaPipaActivityTitulo);
+        if(EsLecturaInicialPipa){
+            TVLecturaPipaActivityTitulo.setText(R.string.toma_de_lectura_inicial);
+        }else if (EsLecturaFinalPipa){
+            TVLecturaPipaActivityTitulo.setText(R.string.toma_de_lectura_final);
+        }
         TVLecturaPipaAcivitySeleccionPipa = findViewById(R.id.TVLecturaPipaAcivitySeleccionPipa);
         TVLecturaPipaActivityTipoLector = findViewById(R.id.TVLecturaPipaActivityTipoLector);
 

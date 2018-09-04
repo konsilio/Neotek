@@ -37,4 +37,8 @@ public interface SubirImagenesPresenter {
     void registrarLecturaInicialPipa(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
 
     void registrarLecturaFinalalPipa(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
+
+    void registrarLecturaInicialAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
+
+    void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
 }

@@ -26,4 +26,8 @@ public interface SubirImagenesInteractor {
     void registrarLecturaInicialPipa(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
 
     void registrarLecturaFinalizalPipa(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
+
+    void registrarLecturaInicialAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
+
+    void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
 }

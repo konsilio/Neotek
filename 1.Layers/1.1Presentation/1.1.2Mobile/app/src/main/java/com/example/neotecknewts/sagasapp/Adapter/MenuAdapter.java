@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Activity.FinalizarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.IniciarDescargaActivity;
+import com.example.neotecknewts.sagasapp.Activity.LecturaAlmacenActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaDatosActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaActivity;
@@ -106,6 +107,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     Intent intent = new Intent(view.getContext(),LecturaPipaActivity.class);
                     intent.putExtra("EsLecturaInicialPipa",false);
                     intent.putExtra("EsLecturaFinalPipa",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getName().equals("Almacén Pral. (Inicial)")){
+                    Intent intent = new Intent(view.getContext(), LecturaAlmacenActivity.class);
+                    intent.putExtra("EsLecturaInicialAlmacen",true);
+                    intent.putExtra("EsLecturaFinalAlmacen",false);
+                    view.getContext().startActivity(intent);
+                }else if (menuItem.getName().equals("Almacén Pral. (Final)")){
+                    Intent intent = new Intent(view.getContext(),LecturaAlmacenActivity.class);
+                    intent.putExtra("EsLecturaInicialAlmacen",false);
+                    intent.putExtra("EsLecturaFinalAlmacen",true);
                     view.getContext().startActivity(intent);
                 }
 

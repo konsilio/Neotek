@@ -172,5 +172,17 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
         interactor.registrarLecturaFinalizalPipa(sagasSql,token,lecturaPipaDTO);
     }
 
+    @Override
+    public void registrarLecturaInicialAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarLecturaInicialAlmacen(sagasSql,token,lecturaPipaDTO);
+    }
+
+    @Override
+    public void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarLecturaFinalAlmacen(sagasSql,token,lecturaPipaDTO);
+    }
+
     //endregion
 }

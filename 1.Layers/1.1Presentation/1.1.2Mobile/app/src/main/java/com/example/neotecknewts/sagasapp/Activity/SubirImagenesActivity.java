@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
@@ -47,12 +48,14 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public FinalizarDescargaDTO finalizarDescarga;
     public LecturaDTO lecturaDTO;
     public LecturaPipaDTO lecturaPipaDTO;
+    public LecturaAlmacenDTO lecturaAlmacenDTO;
 
     //banderas para indicar el objeto a utlizar
     public boolean papeleta;
     public boolean iniciar;
     public boolean finalizar;
     public boolean EsLecturaInicial,EsLecturaFinal,EsLecturaInicialPipa,EsLecturaFinalPipa;
+    public boolean EsLecturaInicialAlmacen,EsLecturaFinalAlamacen;
 
     public SubirImagenesPresenter presenter;
     public ProgressDialog progressDialog;
@@ -85,6 +88,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finalizar=false;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
             }
             else if(extras.getBoolean("EsDescargaIniciar")){
                 Log.w("SUBIR","EsDescargaIniciar");
@@ -94,6 +101,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finalizar=false;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
             }
             else if(extras.getBoolean("EsDescargaFinalizar")){
                 Log.w("SUBIR","EsDescargaFinalizar");
@@ -103,6 +114,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finalizar=true;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
             }else if (extras.getBoolean("EsLecturaInicial")){
                 Log.w("Subir","LecturaInicial");
                 lecturaDTO= (LecturaDTO) extras.getSerializable("lecturaDTO");
@@ -111,6 +126,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finalizar=false;
                 EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
                 EsLecturaFinal = extras.getBoolean("EsLecturaFinal");
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
             }else if (extras.getBoolean("EsLecturaFinal")){
                 Log.w("Subir","LecturaFinal");
                 lecturaDTO= (LecturaDTO) extras.getSerializable("lecturaDTO");
@@ -119,6 +138,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 finalizar=false;
                 EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
                 EsLecturaFinal = extras.getBoolean("EsLecturaFinal");
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
             }else  if(extras.getBoolean("EsLecturaInicialPipa") ||
                     extras.getBoolean("EsLecturaFinalPipa")){
                 lecturaPipaDTO = (LecturaPipaDTO) extras.getSerializable("lecturaPipaDTO");
@@ -129,6 +152,21 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 EsLecturaFinal = false;
                 EsLecturaInicialPipa = (boolean) extras.get("EsLecturaInicialPipa");
                 EsLecturaFinalPipa = (boolean) extras.get("EsLecturaFinalPipa");
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
+            }else if(extras.getBoolean("EsLecturaInicialAlmacen")||
+                    extras.getBoolean("EsLecturaFinalAlamacen")){
+                lecturaAlmacenDTO = (LecturaAlmacenDTO) extras.
+                        getSerializable("lecturaAlmacenDTO");
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = (boolean) extras.get("EsLecturaInicialAlmacen") ;
+                EsLecturaFinalAlamacen = (boolean)extras.get("EsLecturaFinalAlamacen");
             }
 
         }
@@ -141,6 +179,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         }else if (EsLecturaInicial || EsLecturaFinal){
             sagasSql = new SAGASSql(getApplicationContext());
         }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+            sagasSql = new SAGASSql(getApplicationContext());
+        }else if(EsLecturaInicialAlmacen || EsLecturaFinalPipa){
             sagasSql = new SAGASSql(getApplicationContext());
         }
         //se ejecuta la tarea asincrona para procesar las imagenes
@@ -308,6 +348,23 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if(EsLecturaInicialAlmacen || EsLecturaFinalAlamacen){
+            for (int i=0; i<lecturaAlmacenDTO.getImagenesURI().size();i++){
+                try {
+                    Uri uri = Uri.parse(lecturaAlmacenDTO.getImagenesURI().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(), uri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    lecturaAlmacenDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
 
     }
@@ -473,6 +530,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 presenter.registrarLecturaInicialPipa(sagasSql,session.getToken(),lecturaPipaDTO);
             }else if (EsLecturaFinalPipa){
                 presenter.registrarLecturaFinalalPipa(sagasSql,session.getToken(),lecturaPipaDTO);
+            }else if(EsLecturaInicialAlmacen){
+                presenter.registrarLecturaInicialAlmacen(sagasSql,session.getToken(),lecturaPipaDTO);
+            }else if (EsLecturaFinalAlamacen){
+                presenter.registrarLecturaFinalAlmacen(sagasSql,session.getToken(),lecturaPipaDTO);
             }
             textView.setText(R.string.cargando_imagenes_fin);
             //progressDialog.hide();

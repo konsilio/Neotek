@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
@@ -43,6 +44,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     FinalizarDescargaDTO finalizarDescargaDTO;
     LecturaDTO lecturaDTO;
     LecturaPipaDTO lecturaPipaDTO;
+    LecturaAlmacenDTO lecturaAlmacenDTO;
 
     //banderas para saber que objeto utilizar
     public boolean papeleta;
@@ -53,6 +55,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean EsLecturaInicial;
     public boolean EsLecturaFinal;
     public boolean EsLecturaInicialPipa,EsLecturaFinalPipa;
+    public boolean EsLecturaInicialAlmacen,EsLecturaFinalAlmacen;
 
 
     @SuppressLint("SetTextI18n")
@@ -152,6 +155,24 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 iniciar=false;
                 finalizar=false;
                 almacen=false;
+            }else if(extras.getBoolean("EsLecturaInicialAlmacen")||
+                    extras.getBoolean("EsLecturaFinalAlmacen")){
+                lecturaAlmacenDTO = (LecturaAlmacenDTO) extras
+                        .getSerializable("lecturaAlmacenDTO");
+                EsLecturaInicialAlmacen = extras.getBoolean("EsLecturaInicialAlmacen");
+                EsLecturaFinalAlmacen = extras.getBoolean("EsLecturaFinalAlmacen");
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                almacen=false;
+                textViewTitulo.setText(EsLecturaInicial? "Toma de lectura inicial":
+                        "Toma de lectura final");
+                textView.setText("Registra el porcentaje del "+
+                        lecturaAlmacenDTO.getNombreTipoMedidor()+"del almacén pral.");
             }
         }
 
@@ -206,6 +227,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             lecturaDTO.setPorcentajeMedidor(porcentaje);
         }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
             lecturaPipaDTO.setPorcentajeMedidor(porcentaje);
+        }else if (EsLecturaInicialAlmacen ||EsLecturaFinalAlmacen){
+            lecturaAlmacenDTO.setPorcentajeMedidor(porcentaje);
         }
         startActivity();
     }
@@ -223,24 +246,40 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             intent.putExtra("EsLecturaFinal",false);
             intent.putExtra("EsLecturaInicialPipa",false);
             intent.putExtra("EsLecturaFinalPipa",false);
+            intent.putExtra("EsLecturaInicialAlmacen",false);
+            intent.putExtra("EsLecturaFinalAlmacen",false);
         }else if(finalizar){
             intent.putExtra("FinalizarDescarga",finalizarDescargaDTO);
             intent.putExtra("EsLecturaInicial",false);
             intent.putExtra("EsLecturaFinal",false);
             intent.putExtra("EsLecturaInicialPipa",false);
             intent.putExtra("EsLecturaFinalPipa",false);
+            intent.putExtra("EsLecturaInicialAlmacen",false);
+            intent.putExtra("EsLecturaFinalAlmacen",false);
         }else if(EsLecturaInicial || EsLecturaFinal){
             intent.putExtra("lecturaDTO",lecturaDTO);
             intent.putExtra("EsLecturaInicial",EsLecturaInicial);
             intent.putExtra("EsLecturaFinal",EsLecturaFinal);
             intent.putExtra("EsLecturaInicialPipa",false);
             intent.putExtra("EsLecturaFinalPipa",false);
+            intent.putExtra("EsLecturaInicialAlmacen",false);
+            intent.putExtra("EsLecturaFinalAlmacen",false);
         }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
             intent.putExtra("lecturaPipaDTO",lecturaPipaDTO);
             intent.putExtra("EsLecturaInicial",EsLecturaInicial);
             intent.putExtra("EsLecturaFinal",EsLecturaFinal);
             intent.putExtra("EsLecturaInicialPipa",EsLecturaInicialPipa);
             intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
+            intent.putExtra("EsLecturaInicialAlmacen",false);
+            intent.putExtra("EsLecturaFinalAlmacen",false);
+        }else if (EsLecturaInicialAlmacen ||EsLecturaFinalAlmacen){
+            intent.putExtra("lecturaAlmacenDTO",lecturaAlmacenDTO);
+            intent.putExtra("EsLecturaInicial",EsLecturaInicial);
+            intent.putExtra("EsLecturaFinal",EsLecturaFinal);
+            intent.putExtra("EsLecturaInicialPipa",false);
+            intent.putExtra("EsLecturaFinalPipa",false);
+            intent.putExtra("EsLecturaInicialAlmacen",EsLecturaInicialAlmacen);
+            intent.putExtra("EsLecturaFinalAlmacen",EsLecturaFinalAlmacen);
         }
         intent.putExtra("EsPapeleta",papeleta);
         intent.putExtra("EsDescargaIniciar",iniciar);
