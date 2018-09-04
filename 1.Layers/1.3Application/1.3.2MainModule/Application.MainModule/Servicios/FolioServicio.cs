@@ -30,5 +30,27 @@ namespace Application.MainModule.Servicios
             numOC += contador.ToString("D4");
             return numOC;
         }
+        public static List<Sagas.MainModule.Entidades.Requisicion> GenerarNumeroRequisicion(List<Sagas.MainModule.Entidades.Requisicion> _req)
+        {
+            var contador = new AccesoADatos.RequisicionDataAccess().BuscarUltimaRequi() + 1;
+            int index = 0;
+            foreach (var r in _req)
+            {
+                _req.ElementAt(index).NumeroRequisicion = GenerarNumeroRequisicion(_req.ElementAt(index), contador);
+                index++;
+                contador++;
+            }
+            return _req;
+        }
+
+        public static string GenerarNumeroRequisicion(Sagas.MainModule.Entidades.Requisicion _r, int contador)
+        {
+            string numReq = "R";
+            numReq += _r.IdEmpresa.ToString("D3");
+            numReq += _r.FechaRegistro.Year.ToString();
+            numReq += contador.ToString("D4");
+            
+            return numReq;
+        }
     }
 }

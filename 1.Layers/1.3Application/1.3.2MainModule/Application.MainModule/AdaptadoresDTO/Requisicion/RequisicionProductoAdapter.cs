@@ -27,20 +27,25 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
         }
         public static RequisicionProductoAutorizacionDTO ToAutDTO(RequisicionProducto _reqProducto)
         {
-            RequisicionProductoAutorizacionDTO _reqProdDTO = new RequisicionProductoAutorizacionDTO();
-            _reqProdDTO.IdProducto = _reqProducto.IdProducto;
-            _reqProdDTO.Producto = _reqProducto.Producto.Descripcion;
-            _reqProdDTO.TipoProducto = _reqProducto.Producto.TipoServicioOProducto.Nombre;
-            _reqProdDTO.Unidad = _reqProducto.Producto.UnidadMedida.Nombre;
-            _reqProdDTO.IdCentroCosto = _reqProducto.IdCentroCosto;
-            _reqProdDTO.CentroCosto = _reqProducto.CentroCosto.Descripcion;
-            _reqProdDTO.Cantidad = _reqProducto.Cantidad;
-            _reqProdDTO.Aplicacion = _reqProducto.Aplicacion;
-            _reqProdDTO.CantidadAlmacenActual = _reqProducto.CantidadAlmacenActual.Value;
-            _reqProdDTO.CantidadAComprar = _reqProducto.CantidadAComprar.Value;
-            _reqProdDTO.AutorizaEntrega = _reqProducto.AutorizaEntrega.Value;
-            _reqProdDTO.AutorizaCompra = _reqProducto.AutorizaCompra.Value;
-            return _reqProdDTO;
+            return new RequisicionProductoAutorizacionDTO()
+            {
+                IdProducto = _reqProducto.IdProducto,
+                Producto = _reqProducto.Producto.Descripcion,
+                TipoProducto = _reqProducto.Producto.TipoServicioOProducto.Nombre,
+                Unidad = _reqProducto.Producto.UnidadMedida.Nombre,
+                IdCentroCosto = _reqProducto.IdCentroCosto,
+                CentroCosto = _reqProducto.CentroCosto.Descripcion,
+                Cantidad = _reqProducto.Cantidad,
+                Aplicacion = _reqProducto.Aplicacion,
+                CantidadAlmacenActual = _reqProducto.CantidadAlmacenActual.Value,
+                CantidadAComprar = _reqProducto.CantidadAComprar.Value,
+                AutorizaEntrega = _reqProducto.AutorizaEntrega.Value,
+                AutorizaCompra = _reqProducto.AutorizaCompra.Value,
+                EsActivoVenta = _reqProducto.EsActivoVenta,
+                EsGas = _reqProducto.EsGas,
+                EsTransporteGas = _reqProducto.EsTransporteGas
+            };            
+           
         }
         public static List<RequisicionProductoAutorizacionDTO> ToAutDTO(List<RequisicionProducto> _reqProductos)
         {
@@ -152,7 +157,8 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             {
                 IdProducto = _reqProducto.IdProducto,
                 AutorizaEntrega = _reqProducto.AutorizaEntrega,
-                AutorizaCompra = _reqProducto.AutorizaCompra
+                AutorizaCompra = _reqProducto.AutorizaCompra,
+                CantidadAComprar = _reqProducto.CantidadAComprar
             };
             return prod;
         }
@@ -168,13 +174,18 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 IdRequisicion = _prodEntity.IdRequisicion,
                 IdProducto = _prodEntity.IdProducto,
                 IdCentroCosto = _prodEntity.IdCentroCosto,
+                IdTipoProducto = _prodEntity.IdTipoProducto,
                 Cantidad = _prodEntity.Cantidad,
                 Aplicacion = _prodEntity.Aplicacion,
                 RevisionFisica = _prodEntity.RevisionFisica,
                 CantidadAlmacenActual = _prodEntity.CantidadAlmacenActual,
                 CantidadAComprar = _prodEntity.CantidadAComprar,
                 AutorizaEntrega = _prodEntity.AutorizaEntrega,
-                AutorizaCompra = _prodEntity.AutorizaCompra
+                AutorizaCompra = _prodEntity.AutorizaCompra,
+                EsActivoVenta = _prodEntity.EsActivoVenta,
+                EsGas = _prodEntity.EsGas,
+                EsTransporteGas = _prodEntity.EsTransporteGas
+                
             };
             return _prod;
         }

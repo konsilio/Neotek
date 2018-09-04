@@ -24,7 +24,7 @@ namespace Web.MainModule.Catalogos
                 {
                     if (TokenServicio.ObtenerAutenticado(_tok))
                     {
-                        CargarGaseras();
+                        CargarGaseras(TokenServicio.ObtenerIdEmpresa(_tok));
                     }
                     else
                         Salir();
@@ -35,42 +35,40 @@ namespace Web.MainModule.Catalogos
         {
             Response.Redirect("../../Login.aspx");
         }
-        private void CargarGaseras()
+        private void CargarGaseras(short idEmpresa)
         {
             ddlEmpresas.DataSource = new CuentaContableServicio().BuscarGaseras(_tok).Where(x => x.EsAdministracionCentral.Equals(false)).ToList();
             ddlEmpresas.DataTextField = "NombreComercial";
             ddlEmpresas.DataValueField = "IdEmpresa";
             ddlEmpresas.DataBind();
-            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))            
+            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
                 ddlEmpresas.Enabled = false;
-            
+            CargarCtasCtbles(short.Parse(ddlEmpresas.SelectedValue));
         }
-        private void CargarCtasCtbles()
+        private void CargarCtasCtbles(short idEmpresa)
         {
-            gvCuentasContables.DataSource = ViewState["List<CuentaContableServicio>"] = new CuentaContableServicio().ListaCtaCtble(_tok);
+            gvCuentasContables.DataSource = ViewState["List<CuentaContableDTO>"] = new CuentaContableServicio().ListaCtaCtble(idEmpresa , _tok);
             gvCuentasContables.DataBind();
+            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+                gvCuentasContables.Columns[0].Visible = false;
         }
-        private CuentaContableDTO GenerarCtaCtble()
+        private CuentaContableCrearDto GenerarCtaCtble()
         {
-            CuentaContableDTO cc = new CuentaContableDTO();
+            CuentaContableCrearDto cc = new CuentaContableCrearDto();
             cc.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tok);
             cc.Numero = txtNumero.Text;
             cc.Descripcion = txtDesc.Text;
-            cc.FechaRegistro = DateTime.Today;
             return cc;
         }
         protected void BtnCrear_Click(object sender, EventArgs e)
         {
-            CatalogoRespuestaDTO crDTO = new CatalogoRespuestaDTO();
-            CuentaContableDTO cc = GenerarCtaCtble();
-            var Validar = ValidadorClases.EnlistaErrores(cc);
-            if (Validar.ModeloValido)
+            if (ViewState["CuentaContableModificarDto"] == null)
             {
-                crDTO = new CuentaContableServicio().GuardarCtaCtble(cc, _tok);
-                if (crDTO.Exito)
-                {
-                    CargarCtasCtbles();
-                }
+                GuardarNuevaCtaContable();
+            }
+            else
+            {
+                ModificarCtaContable();
             }
         }
         private void ValidarCampos(List<Result> list)
@@ -82,18 +80,123 @@ namespace Web.MainModule.Catalogos
         }
         protected void ddlEmpresas_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            CargarGaseras(short.Parse(ddlEmpresas.SelectedValue));
         }
-
         protected void gvCuentasContables_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName.Equals("Editar"))
-            {
+                ActicarModificar(int.Parse(e.CommandArgument.ToString()));
 
-            }
             if (e.CommandName.Equals("Borrar"))
-            {
+                EliminarCtaContable(int.Parse(e.CommandArgument.ToString()));
 
+        }
+        private CuentaContableModificarDto CrearCCmod(int id)
+        {
+            var cc = ((List<CuentaContableDTO>)ViewState["List<CuentaContableDTO>"]).SingleOrDefault(x => x.IdCuentaContable.Equals(id));
+            return new CuentaContableModificarDto()
+            {
+                IdCuenta = cc.IdCuentaContable,
+                Descripcion = cc.Descripcion,
+                IdEmpresa = cc.IdEmpresa,
+                Numero = cc.Numero
+            };
+        }
+        private CuentaContableEliminarDto CrearCCEliminar(int id)
+        {
+            var cc = ((List<CuentaContableDTO>)ViewState["List<CuentaContableDTO>"]).SingleOrDefault(x => x.IdCuentaContable.Equals(id));
+            return new CuentaContableEliminarDto()
+            {
+                IdCuenta = cc.IdCuentaContable
+            };
+        }
+        private void EliminarCtaContable(int idCC)
+        {
+            var resp = new CuentaContableServicio().EliminarCtaContable(CrearCCEliminar(idCC), _tok);
+            if (resp.Exito)
+            {
+                CargarCtasCtbles(short.Parse(ddlEmpresas.SelectedValue));
+                DivAlerta.Visible = false;
+            }
+            else
+            {
+                if (resp.MensajesError != null)
+                    lblErrorPord.Text = resp.MensajesError[0];
+                else
+                    lblErrorPord.Text = "Algo salio mal";
+                DivAlerta.Visible = true;
+            }
+        }
+        private void CargarDatosParaModificar(int idCC)
+        {
+            var _cc = CrearCCmod(idCC);
+            txtNumero.Text = _cc.Numero;
+            txtDesc.Text = _cc.Descripcion;
+            ViewState["CuentaContableModificarDto"] = _cc;
+        }
+        private void ModificarCtaContable()
+        {
+            CuentaContableModificarDto ccmDTO = (CuentaContableModificarDto)ViewState["CuentaContableModificarDto"];
+            ccmDTO.Numero = txtNumero.Text;
+            ccmDTO.Descripcion = txtDesc.Text;
+            var resp = new CuentaContableServicio().ModificarCtaContable(ccmDTO, _tok);
+            if (resp.Exito)
+            {
+                CargarCtasCtbles(short.Parse(ddlEmpresas.SelectedValue));
+                DivAlerta.Visible = false;
+                ViewState["CuentaContableModificarDto"] = null;
+            }
+            else
+            {
+                if (resp.MensajesError != null)
+                    lblErrorPord.Text = resp.MensajesError[0];
+                else
+                    lblErrorPord.Text = "Algo salio mal";
+                DivAlerta.Visible = true;
+            }
+            txtDesc.Text = string.Empty;
+            txtNumero.Text = string.Empty;
+            iSimboloBoton.Attributes.Remove("class");
+            iSimboloBoton.Attributes.Add("class", "zmdi zmdi-plus");
+        }
+        private void GuardarNuevaCtaContable()
+        {
+            CuentaContableCrearDto cc = GenerarCtaCtble();
+            var Validar = ValidadorClases.EnlistaErrores(cc);
+            if (Validar.ModeloValido)
+            {
+                var resp = new CuentaContableServicio().GuardarCtaCtble(cc, _tok);
+                if (resp.Exito)
+                {
+                    CargarCtasCtbles(short.Parse(ddlEmpresas.SelectedValue));
+                    txtDesc.Text = string.Empty;
+                    txtNumero.Text = string.Empty;
+                }
+                else
+                {
+                    if (resp.MensajesError != null)
+                        lblErrorPord.Text = resp.MensajesError[0];
+                    else
+                        lblErrorPord.Text = "Algo salio mal";
+                    DivAlerta.Visible = true;
+                }
+            }
+        }
+        private void ActicarModificar(int idCC)
+        {
+            CargarDatosParaModificar(idCC);
+            iSimboloBoton.Attributes.Remove("class");
+            iSimboloBoton.Attributes.Add("class", "zmdi zmdi-swap");
+        }
+        protected void txtNumeroCtaCtble_TextChanged(object sender, EventArgs e)
+        {
+            if (ViewState["List<CuentaContableDTO>"] != null)
+            {
+                List<CuentaContableDTO> lcc = ((List<CuentaContableDTO>)ViewState["List<CuentaContableDTO>"]).ToList().Where(x => x.Numero.Equals(txtNumeroCtaCtble.Text)).ToList();
+                gvCuentasContables.DataSource = lcc;
+                gvCuentasContables.DataBind();
+                if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+                    gvCuentasContables.Columns[0].Visible = false;
             }
         }
     }

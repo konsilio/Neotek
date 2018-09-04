@@ -11,7 +11,7 @@ namespace Application.MainModule.DTOs.Mobile
         public int IdOrdenCompra { get; set; }
         public string Producto { get; set; }
         public string UnidadMedida { get; set; }
-        public int Cantidad { get; set; }
+        public Decimal Cantidad { get; set; }
         public decimal Precio { get; set; }
         public decimal Descuento { get; set; }
         public decimal IVA { get; set; }

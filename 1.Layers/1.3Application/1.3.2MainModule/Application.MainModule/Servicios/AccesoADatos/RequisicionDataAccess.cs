@@ -41,31 +41,34 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetAll().ToList();
         }
-        public RespuestaRequisicionDto InsertarNueva(Sagas.MainModule.Entidades.Requisicion _req)
+        public RespuestaDto InsertarNueva(Sagas.MainModule.Entidades.Requisicion _req)
         {
-            RespuestaRequisicionDto _respuesta = new RespuestaRequisicionDto();
+            RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
                     uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Insert(_req);
                     uow.SaveChanges();
-                    _respuesta.IdRequisicion = _req.IdRequisicion;
-                    _respuesta.NumRequisicion = _req.NumeroRequisicion;
+                    _respuesta.Id = _req.IdRequisicion;
+                    _respuesta.Mensaje = _req.NumeroRequisicion;
                     _respuesta.Exito = true;
                     _respuesta.Mensaje = Exito.OK;
                 }
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = ex.Message;
+                    _respuesta.MensajesError = new List<string>();
+                    _respuesta.MensajesError.Add(ex.Message);
+                    if (ex.InnerException != null)
+                        _respuesta.MensajesError.Add(ex.InnerException.Message);
                 }
             }
             return _respuesta;
         }
-        public RespuestaRequisicionDto Actualizar(Sagas.MainModule.Entidades.Requisicion _req)
+        public RespuestaDto Actualizar(Sagas.MainModule.Entidades.Requisicion _req)
         {
-            RespuestaRequisicionDto _respuesta = new RespuestaRequisicionDto();
+            RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
@@ -78,14 +81,17 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Concat(Error.R0009, " | ", ex.Message);
+                    _respuesta.MensajesError.Add(string.Concat(Error.R0009, " | ", ex.Message));
+                    if (ex.InnerException != null)
+                        _respuesta.MensajesError.Add(ex.InnerException.Message);
+
                 }
             }
             return _respuesta;
         }
-        public RespuestaRequisicionDto Actualizar(Sagas.MainModule.Entidades.Requisicion _req, List<RequisicionProducto> _reqProd)
+        public RespuestaDto Actualizar(Sagas.MainModule.Entidades.Requisicion _req, List<RequisicionProducto> _reqProd)
         {
-            RespuestaRequisicionDto _respuesta = new RespuestaRequisicionDto();
+            RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
@@ -100,10 +106,20 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Concat(Error.R0009, " | ", ex.Message);
+                    _respuesta.MensajesError.Add(string.Concat(Error.R0009, " | ", ex.Message));
+                    if (ex.InnerException != null)
+                        _respuesta.MensajesError.Add(ex.InnerException.Message);
                 }
             }
             return _respuesta;
         }     
+        public RequisicionProducto BuscarProducto (int idProd, int idRequ)
+        {
+            return uow.Repository<RequisicionProducto>().GetSingle(x => x.IdRequisicion.Equals(idRequ) && x.IdProducto.Equals(idProd));
+        }
+        public List<RequisicionProducto> BuscarProductoRequisicion(int idRequ)
+        {
+            return uow.Repository<RequisicionProducto>().Get(x => x.IdRequisicion.Equals(idRequ)).ToList();
+        }
     }
 }

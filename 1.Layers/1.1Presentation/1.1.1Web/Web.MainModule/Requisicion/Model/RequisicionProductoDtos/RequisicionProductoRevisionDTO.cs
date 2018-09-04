@@ -60,5 +60,6 @@ namespace Web.MainModule.Requisicion.Model
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "CantidadAComprar")]
         public decimal CantidadAComprar { get; set; }
+  
     }
 }

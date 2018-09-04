@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Compras;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.UnitOfWork;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
@@ -35,6 +36,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                   && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus)).ToList();
             //return uow.Repository<OrdenCompra>().GetAll().ToList();
         }
+        public OrdenCompra Buscar(int idOrdenCompr)
+        {
+            return uow.Repository<OrdenCompra>().GetSingle(x => x.IdOrdenCompra.Equals(idOrdenCompr));
+            //return uow.Repository<OrdenCompra>().GetAll().ToList();
+        }
         public List<OrdenCompra> BuscarTodos()
         {
             return uow.Repository<OrdenCompra>().GetAll().ToList();
@@ -60,6 +66,34 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
             }
             return _respuesta;
+        }
+        public RespuestaDto Actualizar(OrdenCompra oc)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<OrdenCompra>().Update(oc);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.MensajesError = new List<string>();
+                    _respuesta.Exito = false;
+                    _respuesta.MensajesError.Add(string.Concat(Error.OC0001, " | ", ex.Message));
+                    if (ex.InnerException != null)
+                        _respuesta.MensajesError.Add(ex.InnerException.Message);
+                }
+            }
+            return _respuesta;
+
+        }
+        public List<OrdenCompraEstatus> Estatus()
+        {
+            return uow.Repository<OrdenCompraEstatus>().Get(x => x.Activo).ToList();
         }
     }
 }

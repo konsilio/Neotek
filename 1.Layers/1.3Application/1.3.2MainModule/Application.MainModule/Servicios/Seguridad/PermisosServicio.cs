@@ -165,6 +165,39 @@ namespace Application.MainModule.Servicios.Seguridad
         }
         #endregion
 
+        #region Orden de Compra
+        public static RespuestaDto PuedeRegistrarOrdenCompra()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CompraGenerarOCompra);
+
+            return EvaluarPermiso(rol, Error.P0001, "Orden de Compra");
+        }
+        public static RespuestaDto PuedeAutorizarOrdenCompra()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CompraAutorizarOCompra);
+
+            return EvaluarPermiso(rol, Error.P0002, "Orden de Compra");
+        }
+        public static RespuestaDto PuedeConsultarOrdenCompra()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CompraVerOCompra);
+
+            return EvaluarPermiso(rol, Error.P0004, "Orden de Compra");
+        }
+
+        //public static RespuestaDto PuedeEliminarOrdenCompra()
+        //{
+        //    var usuario = UsuarioAplicacionServicio.Obtener();
+        //    var rol = usuario.Roles.FirstOrDefault(x => x.Compra);
+
+        //    return EvaluarPermiso(rol, Error.P0003, "Proveedores");
+        //}
+
+        #endregion
+
         private static RespuestaDto EvaluarPermiso(Rol rol, string error, string format = "")
         {
             if (rol == null)

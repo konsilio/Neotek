@@ -160,6 +160,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             _requisicion.IdUsuarioAutorizacion = _requisicionDTO.IdUsuarioAutorizacion;
             _requisicion.FechaAutorizacion = _requisicionDTO.FechaAutorizacion;
             _requisicion.IdRequisicionEstatus = _requisicionDTO.IdRequisicionEstatus;
+
             return _requisicion;
         }
         public static Sagas.MainModule.Entidades.Requisicion FromEntity(Sagas.MainModule.Entidades.Requisicion _entidadAnterior)
@@ -182,6 +183,38 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 IdUsuarioAutorizacion = _entidadAnterior.IdUsuarioAutorizacion,
                 FechaAutorizacion = _entidadAnterior.FechaAutorizacion,
             };
+            return _endidad;
+        }
+
+        public static Sagas.MainModule.Entidades.RequisicionProducto FromEntity(Sagas.MainModule.Entidades.RequisicionProducto _entidadAnterior)
+        {
+            return new Sagas.MainModule.Entidades.RequisicionProducto()
+            {
+                IdRequisicion  = _entidadAnterior.IdRequisicion,
+                IdProducto  = _entidadAnterior.IdProducto,
+                IdTipoProducto  = _entidadAnterior.IdTipoProducto,
+                IdCentroCosto  = _entidadAnterior.IdCentroCosto,
+                Cantidad  = _entidadAnterior.Cantidad,
+                Aplicacion  = _entidadAnterior.Aplicacion,
+                RevisionFisica  = _entidadAnterior.RevisionFisica,
+                CantidadAlmacenActual  = _entidadAnterior.CantidadAlmacenActual,
+                CantidadAComprar  = _entidadAnterior.CantidadAComprar,
+                AutorizaEntrega  = _entidadAnterior.AutorizaEntrega,
+                AutorizaCompra  = _entidadAnterior.AutorizaCompra,
+                EsActivoVenta  = _entidadAnterior.EsActivoVenta,
+                EsGas  = _entidadAnterior.EsGas,
+                EsTransporteGas  = _entidadAnterior.EsTransporteGas,
+            };
+        }
+        public static List<Sagas.MainModule.Entidades.RequisicionProducto> FromEntity(List<Sagas.MainModule.Entidades.RequisicionProducto> lProdDTO)
+        {
+            return lProdDTO.ToList().Select(x => FromEntity(x)).ToList();
+        }
+
+        public static Sagas.MainModule.Entidades.Requisicion FromEntity(Sagas.MainModule.Entidades.Requisicion _entidadAnterior, List<Sagas.MainModule.Entidades.RequisicionProducto> _productos)
+        {
+            Sagas.MainModule.Entidades.Requisicion _endidad = FromEntity(_entidadAnterior);
+            _endidad.Productos = FromEntity(_productos);
             return _endidad;
         }
         #endregion

@@ -64,6 +64,12 @@
             $("#ctOrdenCompra_dgListaproductos_lbldgImporte_" + index).html(total.format("N2"));
         }
     </script>
+    <script type="text/javascript">
+        $("#lblMensajeOrdenCompra").html('new-label').trigger('labelchanged')
+        $("#lblMensajeOrdenCompra").on('labelchanged', function () {
+            ocument.getElementById('btnMensaje').clic;
+        })
+    </script>
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
@@ -92,8 +98,8 @@
                                     <asp:Label runat="server" ID="lblNumRequisicion" Text="R000000000"></asp:Label>
                                 </div>
                                 <div class="input-group">
-                                    <b>Número de Requisición:</b>&nbsp;
-                                    <asp:Label runat="server" ID="lblNunOrdenCompra" Text="OC00000000"></asp:Label>
+                                    <b>Número de Orden de Compra:</b>&nbsp;
+                                    <asp:Label runat="server" ID="lblNunOrdenCompra" Text="OC00000000" Visible="false"></asp:Label>
                                 </div>
                             </div>
                         </div>
@@ -140,6 +146,17 @@
                         </div>
                         <div class="col-sm-6">
                             <dtp:DateTimePicker ID="dtpFechaEntrada" runat="server" Visible="false" />
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div id="divMensajeError" runat="server" visible="false" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <asp:Label ID="lblErrorCampos" runat="server" Text="" /></strong>
+                            </div>
                         </div>
                     </div>
                     <div class="body">
@@ -214,7 +231,7 @@
                                                 Proveedor
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:DropDownList ID="ddlProveedor" runat="server"></asp:DropDownList>
+                                                <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-control show-tick" data-live-search="true" data-show-subtext="true" ></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -223,7 +240,7 @@
                                                 Cuenta Contable
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:DropDownList ID="ddlCuentaContable" runat="server"></asp:DropDownList>
+                                                <asp:DropDownList ID="ddlCuentaContable" runat="server"  CssClass="form-control show-tick" data-live-search="true" data-show-subtext="true" ></asp:DropDownList>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -233,7 +250,7 @@
                                             </HeaderTemplate>
                                             <ItemTemplate>
                                                 <%--<input type="number" name="txtgvPrecio" runat="server" id="txtgvPrecio" class="form-control" onchange="CalcularImporte(<%=dgListaproductos.ClientID%>, this.id)" />--%>
-                                                <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control calculaPrecio" Width="100px" TextMode="Number" onchange="javascript: CalcularImporte();" />
+                                                <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control calculaPrecio" Width="100px" TextMode="Number" onkeyup="javascript: CalcularImporte();"  />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -242,7 +259,7 @@
                                                 %Desc
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtgvDescuento" runat="server" Width="100px" placeholder="%" type="number" CssClass="form-control calculaPrecio" onchange="javascript: CalcularImporte();" />
+                                                <asp:TextBox ID="txtgvDescuento" runat="server" Width="100px" placeholder="%" type="number" CssClass="form-control calculaPrecio" onkeyup="javascript: CalcularImporte();" />
                                                 <%--<input type="number" name="txtgvDescuento"  class="form-control" Width="100px" placeholder="%" />--%>
                                             </ItemTemplate>
                                         </asp:TemplateField>
@@ -303,12 +320,12 @@
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
-                                            <%--2 Cantidad--%>
+                                            <%--2 Requeridos--%>
                                             <HeaderTemplate>
-                                                <b>Cantidad</b>
+                                                <b>Requeridos</b>
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("CantidadAComprar") %>' />
+                                                <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("CantidadRequerida") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -317,16 +334,16 @@
                                                 <b>Unidad</b>
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
+                                                <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("UnidadMedida") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
-                                            <%--4 Aplicacion--%>
+                                            <%--4 Detalle--%>
                                             <HeaderTemplate>
-                                                <b>Aplicación</b>
+                                                <b>Detalle</b>
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
+                                                <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Descripcion") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -344,7 +361,7 @@
                                                 Cuenta Contable
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:Label ID="lblCuentaContable" runat="server" Text='<%# Bind("CuantaContable") %>'></asp:Label>
+                                                <asp:Label ID="lblCuentaContable" runat="server" Text='<%# Bind("CuentaContable") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -353,7 +370,7 @@
                                                 Cantidad
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:Label runat="server" ID="lblCantidad" Text='<%# Bind("Cantidad") %>' />
+                                                <asp:Label runat="server" ID="lblgvAutoCantidad" Text='<%# Bind("Cantidad") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -362,7 +379,7 @@
                                                 Precio
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:Label runat="server" ID="lblPrecio" Text='<%# Bind("Precio") %>'></asp:Label>
+                                                <asp:Label runat="server" ID="lblgvAutoPrecio" Text='<%# Bind("Precio") %>'></asp:Label>
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -371,7 +388,7 @@
                                                 %Desc
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:Label ID="lblPrecio" runat="server" Text='<%# Bind("Descuento") %>' />
+                                                <asp:Label ID="lblgvAutoDescuento" runat="server" Text='<%# Bind("Descuento") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -380,7 +397,7 @@
                                                 %IVA
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtPrecio" runat="server" placeholder="%" type="number" CssClass="form-control" />
+                                                <asp:Label ID="lblgvAutoIVA" runat="server" Text='<%# Bind("IVA") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -389,7 +406,7 @@
                                                 %IEPS
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:TextBox ID="txtgvDescuento" runat="server" placeholder="%" type="number" CssClass="form-control" />
+                                                <asp:Label ID="lblgvAutoIEPS" runat="server" Text='<%# Bind("IEPS") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                         <asp:TemplateField>
@@ -398,7 +415,7 @@
                                                 <b>Importe</b>
                                             </HeaderTemplate>
                                             <ItemTemplate>
-                                                <asp:Label ID="lbldgImporte" runat="server" Text='<%# Bind("Aplicacion") %>' />
+                                                <asp:Label ID="lbldgImporte" runat="server" Text='<%# Bind("Importe") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -454,12 +471,22 @@
                                                 <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
                                             </ItemTemplate>
                                         </asp:TemplateField>
+                                        <%--5 Cantidad --%>
                                         <asp:TemplateField>
                                             <HeaderTemplate>
                                                 Cantidad
                                             </HeaderTemplate>
                                             <ItemTemplate>
                                                 <asp:TextBox ID="txtCantidadaMercancia" runat="server" type="number" CssClass="form-control" />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <%--6 Justificacion --%>
+                                         <asp:TemplateField>
+                                            <HeaderTemplate>
+                                                Justificación
+                                            </HeaderTemplate>
+                                            <ItemTemplate>
+                                                <asp:TextBox ID="txtJustifica" runat="server" type="number" CssClass="form-control" />
                                             </ItemTemplate>
                                         </asp:TemplateField>
                                     </Columns>
@@ -561,7 +588,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card" runat="server" id="divDatosComplementoGas">
+                <div class="card" runat="server" id="divDatosComplementoGas" visible="false" >
                     <div class="body">
                         <%--Campos para complemento de gas--%>
                         <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
@@ -576,13 +603,13 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="dtpFechaPapeleta">Fecha papeleta:</label>
-                                                    <dtp:DateTimePicker ID="dtpFechaPapeleta" CssClass="dataTxt" runat="server" Enabled="True" />
+                                                    <dtp:DateTimePicker ID="dtpFechaPapeleta" CssClass="dataTxt form-control-sm" runat="server" Enabled="True" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="dtpFechaEmbarque">Fecha embarque:</label>
-                                                    <dtp:DateTimePicker ID="dtpFechaEmbarque" CssClass="dataTxt" runat="server" Enabled="True" />
+                                                    <dtp:DateTimePicker ID="dtpFechaEmbarque" CssClass="dataTxt form-control-sm" runat="server" Enabled="True" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -604,116 +631,135 @@
                                         </div>
                                         <hr>
                                         <div class="row clearfix">
-                                            <h6>Tractor</h6>                                            
+                                            <h6>Tractor</h6>
                                         </div>
                                         <div class="row clearfix">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                <label>Placa tractor:</label>
-                                                <asp:TextBox ID="txtPlacaTractor" runat="server" CssClass="form-control" />
-                                                    </div>
+                                                    <label>Placa tractor:</label>
+                                                    <asp:TextBox ID="txtPlacaTractor" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                             <div class="col-md-4">
-                                                  <div class="form-group">
-                                                <label>Nombre operador:</label>
-                                                <asp:TextBox ID="txtNombreOperador" runat="server" CssClass="form-control" />
-                                                      </div>
+                                                <div class="form-group">
+                                                    <label>Nombre operador:</label>
+                                                    <asp:TextBox ID="txtNombreOperador" runat="server" CssClass="form-control" />
+                                                </div>
 
                                             </div>
                                             <div class="col-md-4">
-                                                <b>Presión tanque tractor:</b>
-                                                <asp:TextBox ID="txtPrecsionTantqueTractor" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Presión tanque tractor:</label>
+                                                    <asp:TextBox ID="txtPrecsionTantqueTractor" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row clearfix">
                                             <div class="col-md-6">
-                                                <b>Número tanque tractor:</b>
-                                                <asp:TextBox ID="txtNumeroTanqueTractor" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Número tanque tractor:</label>
+                                                    <asp:TextBox ID="txtNumeroTanqueTractor" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <b>Capasidad (Ltr) tanque tractor:</b>
-                                                <asp:TextBox ID="txtCapasidadLtrTanqueTractor" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Capasidad (Ltr) tanque tractor:</label>
+                                                    <asp:TextBox ID="txtCapasidadLtrTanqueTractor" runat="server" CssClass="form-control " />
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row clearfix">
                                             <div class="col-md-6">
-                                                <b>% Magnatel tractor (Ocultar)</b>
-                                                <asp:TextBox ID="txtPorcentajeMagnatelTractorOcultar" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>% Magnatel tractor (Ocultar)</label>
+                                                    <asp:TextBox ID="txtPorcentajeMagnatelTractorOcultar" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <%--Descarga--%>
-                            <div class="panel panel-primary">
-                                <div class="panel-heading" role="tab" id="headingDescargas">
-                                    <h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseDescargas" aria-expanded="false"
-                                        aria-controls="collapseDescargas">Descarga </a></h4>
-                                </div>
-                                <div id="collapseDescargas" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingDescargas">
-                                    <div class="panel-body">
+                                        <hr>
+                                        <div class="row clearfix">
+                                            <h6>Descarga</h6>
+                                        </div>
                                         <div class="row clearfix">
                                             <div class="col-md-12">
-                                                <label>Fecha descarga:</label>
-                                                <dtp:DateTimePicker ID="dtpFechaDescarga" CssClass="dataTxt" runat="server" Enabled="True" />
-                                            </div>
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="col-md-3 content-center">
-                                                <b>% Magnatel Tractor</b>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <b>Inicial</b>
-                                                <asp:TextBox ID="txtMagnatelTractorInicial" runat="server" CssClass="form-control" />
-                                            </div>
-                                            <div class="col-md-3">
-                                                <b>Final</b>
-                                                <asp:TextBox ID="txtMagnatelTractorFinal" runat="server" CssClass="form-control" />
-                                            </div>
-                                            <div class="col-md-3 content-center">
-                                                <div class="checkbox">
-                                                    <b>¿Almacen prestado?
-                                                    </b>
-                                                    <input id="chBoxAlmacenPrestado" runat="server" type="checkbox">
+                                                <div class="form-group">
+                                                    <label>Fecha descarga:</label>
+                                                    <dtp:DateTimePicker ID="dtpFechaDescarga" CssClass="dataTxt" runat="server" Enabled="True" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row clearfix">
                                             <div class="col-md-3 content-center">
-                                                <b>% Magnatel Almacen</b>
+                                                <div class="form-group">
+                                                    <label>% Magnatel Tractor</label>
+                                                </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <b>Inicial</b>
-                                                <asp:TextBox ID="txtMagnatelAlmacenInicial" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Inicial</label>
+                                                    <asp:TextBox ID="txtMagnatelTractorInicial" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                             <div class="col-md-3">
-                                                <b>Final</b>
-                                                <asp:TextBox ID="txtMagnatelAlmacenFinal" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Final</label>
+                                                    <asp:TextBox ID="txtMagnatelTractorFinal" runat="server" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 content-center">
+                                                <div class="checkbox">
+                                                    <input id="chBoxAlmacenPrestado" runat="server" type="checkbox">
+                                                    <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <%--Kilos Finales--%>
-                            <div class="panel panel-primary">
-                                <div class="panel-heading" role="tab" id="headingKilosFinales">
-                                    <h4 class="panel-title"><a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseKilosFinales" aria-expanded="false"
-                                        aria-controls="collapseKilosFinales">Kilos Finales </a></h4>
-                                </div>
-                                <div id="collapseKilosFinales" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingKilosFinales">
-                                    <div class="panel-body">
+                                        <div class="row clearfix">
+                                            <div class="col-md-3 content-center">
+                                                <div class="form-group">
+                                                    <label>% Magnatel Almacen</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Inicial</label>
+                                                    <asp:TextBox ID="txtMagnatelAlmacenInicial" runat="server" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Final</label>
+                                                    <asp:TextBox ID="txtMagnatelAlmacenFinal" runat="server" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row clearfix">
+                                            <h6>Kilos Finales</h6>
+                                        </div>
                                         <div class="row clearfix">
                                             <div class="col-md-4">
-                                                <b>Papeleta</b>
-                                                <asp:TextBox ID="txtKFinalesPapeleta" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Papeleta</label>
+                                                    <asp:TextBox ID="txtKFinalesPapeleta" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <b>Descargados</b>
-                                                <asp:TextBox ID="txtKFinalesDescargados" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Descargados</label>
+                                                    <asp:TextBox ID="txtKFinalesDescargados" runat="server" CssClass="form-control" />
+                                                </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <b>Diferencia</b>
-                                                <asp:TextBox ID="txtKFinalesDiferencia" runat="server" CssClass="form-control" />
+                                                <div class="form-group">
+                                                    <label>Diferencia</label>
+                                                    <asp:TextBox ID="txtKFinalesDiferencia" runat="server" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row clearfix">
+                                            <div class="col-md-2">
+                                                <asp:Button ID="btnGuardarDatosPapeleta" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Guardar" OnClick="btnGuardarDatosPapeleta_Click" />
                                             </div>
                                         </div>
                                     </div>
@@ -727,14 +773,15 @@
                                 </div>
                                 <div id="collapseCostos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCostos">
                                     <div class="panel-body">
-                                        <ul class="nav nav-tabs">
-                                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Expedidor">Pago al expedidor de gas</a></li>
-                                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Porteador">Pago al porteador de gas</a></li>
-                                        </ul>
-                                        <div class="tab-content">
-                                            <div role="tabpanel" class="tab-pane in active" id="Expedidor">
+                                        <div class="row">
+                                            <%--Pago al expedidor de gas--%>
+                                            <div class="col-md-6 blockquote blockquote-info">
                                                 <div class="row clearfix">
-                                                    <div class="col-md-4 form-control-label">
+                                                    <b>Pago al expedidor de gas </b>
+                                                </div>
+                                                <hr>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="txtReferenciaPormedioMensualGallon">Referencia promedio mensual MB Non Tet Propano Gallon</label>
                                                     </div>
                                                     <div class="col-md-4">
@@ -742,12 +789,12 @@
                                                             <asp:TextBox ID="txtReferenciaPormedioMensualGallon" runat="server" CssClass="form-control" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-3 form-control-label">
                                                         <label for="txtReferenciaPormedioMensualGallon">(En dolares)</label>
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="txtTarifaServicioGallon">Tarifa de Servicio por gallon</label>
                                                     </div>
                                                     <div class="col-md-4">
@@ -755,12 +802,12 @@
                                                             <asp:TextBox ID="txtTarifaServicioGallon" runat="server" CssClass="form-control" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-3 form-control-label">
                                                         <label for="txtTarifaServicioGallon">(En dolares)</label>
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="txtTipoCambioDOF">Tipo de cambio DOF:</label>
                                                     </div>
                                                     <div class="col-md-4">
@@ -768,12 +815,12 @@
                                                             <asp:TextBox ID="txtTipoCambioDOF" runat="server" CssClass="form-control" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-3 form-control-label">
                                                         <label for="form-control-label">(En pesos)</label>
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="lbPlPrecioPorGalon">Precio por galon</label>
                                                     </div>
                                                     <div class="col-md-4 text-right">
@@ -783,7 +830,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-3 form-control-label">
                                                         <label for="lbPlPrecioPorGalon">(En pesos)</label>
                                                     </div>
                                                 </div>
@@ -798,7 +845,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="lblImporteLitros">Importe en Litros</label>
                                                     </div>
                                                     <div class="col-md-4 text-right">
@@ -806,7 +853,7 @@
                                                             <asp:Label ID="lblImporteLitros" runat="server" Text="$ 0.00" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-3 form-control-label">
                                                         <label for="lblImporteLitros">(En pesos)</label>
                                                     </div>
                                                 </div>
@@ -821,7 +868,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="txtPVMP">PVPM($/Kg) CON DESCUENTO:</label>
                                                     </div>
                                                     <div class="col-md-4 text-right">
@@ -829,7 +876,7 @@
                                                             <asp:Label ID="txtPVMP" runat="server" Text="$ 0.00" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-3 form-control-label">
                                                         <label for="txtPVMP">(En pesos)</label>
                                                     </div>
                                                 </div>
@@ -837,7 +884,7 @@
                                                     <div class="col-md-4 form-control-label">
                                                         <label for="ddlIVACostos">IVA</label>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <asp:DropDownList ID="ddlIVACostos" runat="server" CssClass="form-control z-index">
                                                             </asp:DropDownList>
@@ -845,7 +892,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="txtPrecioConIVA">PRECIO DE VENTA CON IVA:</label>
                                                     </div>
                                                     <div class="col-md-4 text-right">
@@ -853,41 +900,54 @@
                                                             <asp:Label ID="txtPrecioConIVA" runat="server" Text="$ 0.00" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-3 form-control-label">
                                                         <label for="txtPrecioConIVA">(En pesos)</label>
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="row clearfix">
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <asp:Button ID="btnSolicitarPagoExpedidor" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Solisitar pago" OnClick="btnSolicitarPagoExpedidor_Click" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 form-control-label">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="btnSolicitarPagoExpedidor">IMPORTE A PAGAR</label>
                                                     </div>
-                                                    <div class="col-md-2 form-control-label text-right">
+                                                    <div class="col-md-4 form-control-label text-right">
                                                         <asp:Label ID="lblImporteAPagar" runat="server" Text="$ 0.00" />
                                                     </div>
                                                     <div class="col-md-3 form-control-label">
                                                         <label for="lblImporteAPagar">(En pesos)</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane" id="Porteador">
                                                 <div class="row clearfix">
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <asp:Button ID="btnguardarDatosExpedidor" CssClass="btn btn-raised btn-primary btn-round" Text="Guardar" runat="server" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <asp:Button ID="btnSolicitarPagoExpedidor" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Solisitar pago" OnClick="btnSolicitarPagoExpedidor_Click" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <%--pago al porteador--%>
+                                            <div class="col-md-6 blockquote blockquote-info">
+                                                <div class="row clearfix">
+                                                    <b>Pago al porteador de gas</b>
+                                                </div>
+                                                <hr>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="txtFactorConversion">Factor de conversión</label>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <asp:TextBox ID="txtFactorConversion" runat="server" CssClass="form-control" />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="lblPrecioTransporte">Precio del transporte:</label>
                                                     </div>
                                                     <div class="col-md-4 text-right">
@@ -895,12 +955,12 @@
                                                             <asp:Label ID="lblPrecioTransporte" runat="server" Text="$ 0.00" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4  form-control-label">
+                                                    <div class="col-md-3  form-control-label">
                                                         <label for="lblPrecioTransporte">(En pesos)</label>
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="txtCasetas">Casetas:</label>
                                                     </div>
                                                     <div class="col-md-4">
@@ -908,12 +968,12 @@
                                                             <asp:TextBox ID="txtCasetas" runat="server" CssClass="form-control" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-3 form-control-label">
                                                         <label for="txtCasetas">(En pesos)</label>
                                                     </div>
                                                 </div>
                                                 <div class="row clearfix">
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="lblSubtotal">Subtotal:</label>
                                                     </div>
                                                     <div class="col-md-4 text-right">
@@ -921,7 +981,7 @@
                                                             <asp:Label ID="lblSubtotal" runat="server" Text="$ 0.00" />
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4 form-control-label">
+                                                    <div class="col-md-3 form-control-label">
                                                         <label for="lblSubtotal">(En pesos)</label>
                                                     </div>
                                                 </div>
@@ -929,7 +989,7 @@
                                                     <div class="col-md-4 form-control-label">
                                                         <label for="ddlIvaPorteador">IVA</label>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <div class="form-group">
                                                             <asp:DropDownList ID="ddlIvaPorteador" runat="server" CssClass="form-control z-index">
                                                             </asp:DropDownList>
@@ -938,19 +998,26 @@
                                                 </div>
                                                 <hr>
                                                 <div class="row clearfix">
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <asp:Button ID="btnSolicitarPaogPorteador" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Solicitar Pago" OnClick="btnSolicitarPaogPorteador_Click" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3 form-control-label">
+                                                    <div class="col-md-5 form-control-label">
                                                         <label for="btnSolicitarPaogPorteador">IMPORTE A PAGAR</label>
                                                     </div>
-                                                    <div class="col-md-2 form-control-label text-right">
+                                                    <div class="col-md-4 form-control-label text-right">
                                                         <asp:Label ID="ImportePagarPorteador" runat="server" Text="$ 00.0" />
                                                     </div>
                                                     <div class="col-md-3 form-control-label">
                                                         <label for="btnSolicitarPaogPorteador">(En pesos)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <asp:Button ID="btnGuardarDatosPorteador" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Guardar" OnClick="btnSolicitarPaogPorteador_Click" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <asp:Button ID="btnSolicitarPaogPorteador" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Solicitar Pago" OnClick="btnSolicitarPaogPorteador_Click" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -991,13 +1058,14 @@
                 <div class="row clearfix">
                     <div class="col-sm-4 center">
                         <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Regresar" OnClick="btnRegresar_Click" />
+                        <%--<a href="#ModalMensaje" data-toggle="modal" id="btnMensaje" runat="server" data-target="#ModalMensaje" class="btn btn-raised btn-primary btn-round">Ver</a>--%>
                     </div>
                     <div class="col-sm-4 center">
                         <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" runat="server" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">Cancelar
                         </a>
                     </div>
                     <div class="col-sm-4 center">
-                        <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" runat="server" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round">
+                        <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" runat="server" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
                             <asp:Label ID="lblbtnCrear" runat="server" Text="Crear" />
                         </a>
                     </div>
@@ -1013,7 +1081,7 @@
                     <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
                 </div>
                 <div class="modal-footer">
-                    <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Crear" OnClick="BtnCrear_Click" />
+                    <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Si" OnClick="BtnCrear_Click" />
 
                     <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
                 </div>
@@ -1041,7 +1109,7 @@
             </div>
         </div>
     </div>
-    <%--Modal de cancelar--%>
+    <%--Modal de mensaje--%>
     <div class="modal fade" id="ModalMensaje" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -1051,7 +1119,7 @@
                 <div class="modal-body">
                     <div class="body">
                         <div class="col-sm-12">
-                            <asp:TextBox ID="txtMensajeOrdenCompra" runat="server" TextMode="MultiLine" Rows="5" />
+                            <asp:Label ID="lblMensajeOrdenCompra" runat="server" TextMode="MultiLine" />
                         </div>
                     </div>
                 </div>

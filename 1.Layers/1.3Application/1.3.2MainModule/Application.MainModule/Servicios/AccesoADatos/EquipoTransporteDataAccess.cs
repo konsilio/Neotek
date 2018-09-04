@@ -74,14 +74,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.Activo).ToList();
         }
-
         public List<UnidadAlmacenGas> BuscarTodos(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                          && x.Activo)
                                                          .ToList();
         }
-
         public Camioneta BuscarCamioneta(int idCamioneta)
         {
             return uow.Repository<Camioneta>().GetSingle(x => x.IdCamioneta.Equals(idCamioneta)
@@ -92,7 +90,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<Pipa>().GetSingle(x => x.IdPipa.Equals(idPipa)
                                                      && x.Activo);
         }
-
         public Camioneta BuscarCamioneta(UnidadAlmacenGas uAG)
         {
             if (uAG.Camioneta != null)

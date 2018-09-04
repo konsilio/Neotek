@@ -51,11 +51,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdaptadoresDTO\Almacen\AlmacenAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Almacen\AlmacenProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CentroCostoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CuentaContableAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Compras\ComplementoGasAdapter.cs" />
+    <Compile Include="DTOs\Almacen\AlmacenCrearEntradaDTO.cs" />
+    <Compile Include="DTOs\Almacen\AlmacenEntradaDTO.cs" />
+    <Compile Include="DTOs\Almacen\AlmacenDTO.cs" />
+    <Compile Include="DTOs\Catalogo\TipoCentroCostoEnum.cs" />
+    <Compile Include="DTOs\Compras\OrdenCompraAutorizacionDTO.cs" />
     <Compile Include="AdaptadoresDTO\CorreoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\TipoMedidorAdapter.cs" />
@@ -85,8 +93,10 @@
     <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
     <Compile Include="DTOs\Catalogo\UsuarioEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\UsuarioModificarDto.cs" />
+    <Compile Include="DTOs\Compras\ComplementoGasDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraCrearDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraDTO.cs" />
+    <Compile Include="DTOs\Compras\OrdenCompraEstatusDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraProductoDTO.cs" />
     <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />
@@ -123,6 +133,7 @@
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionMobileDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioAplicacionDto.cs" />
+    <Compile Include="Flujos\Almacen.cs" />
     <Compile Include="Flujos\Catalogos.cs" />
     <Compile Include="Flujos\Compras.cs" />
     <Compile Include="Flujos\Inventarios.cs" />

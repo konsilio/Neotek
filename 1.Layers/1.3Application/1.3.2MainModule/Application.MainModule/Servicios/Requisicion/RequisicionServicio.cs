@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.AdaptadoresDTO.Requisicion;
-using Exceptions.MainModule.Validaciones;
-using Application.MainModule.Servicios.Notificacion;
+using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.Servicios.Requisicion
 {
     public static class RequisicionServicio
     {
-        public static RespuestaRequisicionDto GuardarRequisicionNueva(Sagas.MainModule.Entidades.Requisicion _req)
+        public static RespuestaDto GuardarRequisicionNueva(Sagas.MainModule.Entidades.Requisicion _req)
         {
-            var respuesta = new RequisicionDataAccess().InsertarNueva(_req);  
-            return respuesta;
+            return new RequisicionDataAccess().InsertarNueva(_req);
         }
-       
         public static List<RequisicionDTO> BuscarRequisicionPorIdEmpresa(Int16 _IdEmpresa)
         {
             return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas().Where(x => x.IdEmpresa.Equals(_IdEmpresa)).ToList());
@@ -27,6 +23,10 @@ namespace Application.MainModule.Servicios.Requisicion
         public static RequisicionRevisionDTO BuscarRequisicion(int _idrequi)
         {
             return RequisicionAdapter.ToRevDTO(new RequisicionDataAccess().BuscarPorIdRequisicion(_idrequi));
+        }
+        public static Sagas.MainModule.Entidades.Requisicion BuscarRequisicionPorId(int _idrequi)
+        {
+            return new RequisicionDataAccess().BuscarPorIdRequisicion(_idrequi);
         }
         public static Sagas.MainModule.Entidades.Requisicion Buscar(int _idrequi)
         {
@@ -36,21 +36,56 @@ namespace Application.MainModule.Servicios.Requisicion
         {
             return RequisicionAdapter.ToAutDTO(new RequisicionDataAccess().BuscarPorIdRequisicion(_idequi));
         }
-        public static RespuestaRequisicionDto UpdateRequisicionRevision(RequisicionRevPutDTO _req)
+        public static RespuestaDto UpdateRequisicionRevision(RequisicionRevPutDTO _req)
         {
             var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
             return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad), RequisicionProductoAdapter.FromDTO(_req.ListaProductos, entidad.Productos.ToList()));
         }
-        public static RespuestaRequisicionDto UpDateRequisicionAutoriza(RequisicionAutPutDTO _req)
+        public static RespuestaDto UpDateRequisicionAutoriza(Sagas.MainModule.Entidades.Requisicion _req, List<Sagas.MainModule.Entidades.RequisicionProducto> prods)
+        {
+            return new RequisicionDataAccess().Actualizar(_req, prods);
+        }
+        public static RespuestaDto UpDateRequisicionEstaus(int _req, byte status)
+        {
+            var req = new RequisicionDataAccess().BuscarPorIdRequisicion(_req);
+            var entity = RequisicionAdapter.FromEntity(req);
+            entity.IdRequisicionEstatus = status;
+            return new RequisicionDataAccess().Actualizar(entity);
+        }
+        public static RespuestaDto CancelarRequisicion(RequisicionCancelaDTO _req)
         {
             var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
             return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
         }
-        public static RespuestaRequisicionDto CancelarRequisicion(RequisicionCancelaDTO _req)
+        public static RequisicionProducto BuscarRequisiconProductoPorId(int idProd, int idReq)
         {
-            var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
-            return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
-
+            return new RequisicionDataAccess().BuscarProducto(idProd, idReq);
+        }
+        public static List<Sagas.MainModule.Entidades.Requisicion> IdentificarRequisicones(Sagas.MainModule.Entidades.Requisicion _req)
+        {
+            List<Sagas.MainModule.Entidades.Requisicion> lRequi = new List<Sagas.MainModule.Entidades.Requisicion>();
+            var productos = _req.Productos.ToList();
+            var productosGas = _req.Productos.Where(x => x.EsGas || x.EsTransporteGas).ToList();
+            if (productosGas != null)
+            {
+                if (!productosGas.Count.Equals(0))
+                {
+                    var reqGas = RequisicionAdapter.FromEntity(_req, productosGas);
+                    reqGas.IdRequisicionEstatus = RequisicionEstatusEnum.Revision_exitosa;
+                    lRequi.Add(reqGas);     
+                }
+            }
+            productos = productos.Where(x => !x.EsGas && !x.EsTransporteGas).ToList();
+            if (productos != null)
+            {
+                if (!productos.Count.Equals(0))
+                {
+                    var req = RequisicionAdapter.FromEntity(_req, productos);
+                    req.IdRequisicionEstatus = RequisicionEstatusEnum.Creada;
+                    lRequi.Add(req);
+                }
+            }            
+            return lRequi;
         }
     }
 }
