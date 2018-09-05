@@ -506,6 +506,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LF"+s.format(new Date());
+        lecturaDTO.setClaveProceso(clave_unica);
         sagasSql.IncertarLecturaFinal(lecturaDTO);
         sagasSql.InsertImagenLecturaFinalP5000(lecturaDTO);
         sagasSql.IncertImagenesLecturaFinal(lecturaDTO);
@@ -533,6 +534,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LIP"+s.format(new Date());
+        lecturaPipaDTO.setClaveProceso(clave_unica);
         sagasSql.InsertLecturaInicialPipas(lecturaPipaDTO);
         sagasSql.InsertLecturaInicialPipaP5000(lecturaPipaDTO);
         sagasSql.InsertImagenesLecturaInicialPipa(lecturaPipaDTO);

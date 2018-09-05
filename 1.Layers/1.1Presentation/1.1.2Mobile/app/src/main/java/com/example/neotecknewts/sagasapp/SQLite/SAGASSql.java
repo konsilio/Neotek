@@ -490,6 +490,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         contentValues.put("NombreEstacionCarburacion",lecturaDTO.getNombreEstacionCarburacion());
         contentValues.put("IdEstacionCarburacion",lecturaDTO.getIdEstacionCarburacion());
         contentValues.put("PorcentajeMedidor",lecturaDTO.getPorcentajeMedidor());
+        contentValues.put("CantidadP5000",lecturaDTO.getCantidadP5000());
         return db.insert(TABLE_LECTURA_FINALIZAR,null,contentValues);
     }
 
@@ -539,7 +540,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         contentValues.put("ClaveProceso",lecturaDTO.getClaveProceso());
         contentValues.put("Imagen",lecturaDTO.getImagenP5000());
         contentValues.put("Url",lecturaDTO.getImagenP5000URI().toString());
-        return db.insert(TABLE_LECTURA_INICIAL_P5000,null,contentValues);
+        return db.insert(TABLE_LECTURA_FINALIZAR_P5000,null,contentValues);
     }
 
     /**
@@ -589,7 +590,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         for (int x = 0;x<lecturaDTO.getImagenes().size();x++){
             ContentValues contentValues = new ContentValues();
             contentValues.put("ClaveProceso",lecturaDTO.getClaveProceso());
-            contentValues.put("Imagen",lecturaDTO.getImagenes().get(x));
+            contentValues.put("Imagen",lecturaDTO.getImagenes().get(x).toString());
             contentValues.put("Url",lecturaDTO.getImagenesURI().toString());
             incerts[x] = db.insert(TABLE_LECTURA_FINALIZAR_IAMGENES,
                     null,contentValues);
@@ -647,6 +648,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         contentValues.put("IdTipoMedidor",lecturaPipaDTO.getIdTipoMedidor());
         contentValues.put("CantidadFotografias",lecturaPipaDTO.getCantidadFotografias());
         contentValues.put("CantidadP5000",lecturaPipaDTO.getCantidadP5000());
+        contentValues.put("TipoMedidor",lecturaPipaDTO.getTipoMedidor());
         return db.insert(TABLE_LECTURA_INICIAL_PIPA,null,contentValues);
     }
 
@@ -703,7 +705,7 @@ public class SAGASSql extends SQLiteOpenHelper {
             contentValues.put("ClaveOperacion",lecturaPipaDTO.getClaveProceso());
             contentValues.put("Imagen", lecturaPipaDTO.getImagenes().get(x));
             contentValues.put("Url",lecturaPipaDTO.getImagenesURI().get(x).toString());
-            inserts[x] = db.insert(TABLE_LECTURA_INICIAL_PIPA_P5000,null,contentValues);
+            inserts[x] = db.insert(TABLE_LECTURA_INICIAL_PIPA_IMAGENES,null,contentValues);
         }
         return inserts;
     }
@@ -809,6 +811,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         contentValues.put("IdTipoMedidor",lecturaPipaDTO.getIdTipoMedidor());
         contentValues.put("CantidadFotografias",lecturaPipaDTO.getCantidadFotografias());
         contentValues.put("CantidadP5000",lecturaPipaDTO.getCantidadP5000());
+        contentValues.put("TipoMedidor",lecturaPipaDTO.getTipoMedidor());
         return db.insert(TABLE_LECTURA_FINAL_PIPA,null,contentValues);
     }
 
@@ -861,10 +864,10 @@ public class SAGASSql extends SQLiteOpenHelper {
         Long[] inserts = new Long[lecturaPipaDTO.getImagenes().size()];
         for (int x = 0; x<lecturaPipaDTO.getImagenes().size();x++){
             ContentValues contentValues = new ContentValues();
-            contentValues.put("ClaveProceso",lecturaPipaDTO.getClaveProceso());
+            contentValues.put("ClaveOperacion",lecturaPipaDTO.getClaveProceso());
             contentValues.put("Imagen", lecturaPipaDTO.getImagenes().get(x));
             contentValues.put("Url",lecturaPipaDTO.getImagenesURI().get(x).toString());
-            inserts[x] = db.insert(TABLE_LECTURA_FINAL_PIPA_P5000,null,contentValues);
+            inserts[x] = db.insert(TABLE_LECTURA_FINAL_PIPA_IMAGENES,null,contentValues);
         }
         return inserts;
     }
@@ -1126,7 +1129,7 @@ public class SAGASSql extends SQLiteOpenHelper {
             contentValues.put("ClaveOperacion", lecturaAlmacenDTO.getClaveOperacion());
             contentValues.put("Imagen", lecturaAlmacenDTO.getImagenes().get(x));
             contentValues.put("Url", lecturaAlmacenDTO.getImagenesURI().get(x).toString());
-            _inserts[x] = db.insert(TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES,
+            _inserts[x] = db.insert(TABLE_LECTURA_FINAL_ALMACEN_IMAGENES,
                     null,contentValues);
         }
         return _inserts;

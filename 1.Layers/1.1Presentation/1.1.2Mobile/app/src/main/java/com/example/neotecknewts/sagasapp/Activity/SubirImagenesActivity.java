@@ -155,7 +155,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 EsLecturaInicialAlmacen = false ;
                 EsLecturaFinalAlamacen = false;
             }else if(extras.getBoolean("EsLecturaInicialAlmacen")||
-                    extras.getBoolean("EsLecturaFinalAlamacen")){
+                    extras.getBoolean("EsLecturaFinalAlmacen")){
                 lecturaAlmacenDTO = (LecturaAlmacenDTO) extras.
                         getSerializable("lecturaAlmacenDTO");
                 papeleta=false;
@@ -166,7 +166,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 EsLecturaInicialPipa = false;
                 EsLecturaFinalPipa = false;
                 EsLecturaInicialAlmacen = (boolean) extras.get("EsLecturaInicialAlmacen") ;
-                EsLecturaFinalAlamacen = (boolean)extras.get("EsLecturaFinalAlamacen");
+                EsLecturaFinalAlamacen = (boolean)extras.get("EsLecturaFinalAlmacen");
             }
 
         }
@@ -180,7 +180,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             sagasSql = new SAGASSql(getApplicationContext());
         }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
             sagasSql = new SAGASSql(getApplicationContext());
-        }else if(EsLecturaInicialAlmacen || EsLecturaFinalPipa){
+        }else if(EsLecturaInicialAlmacen || EsLecturaFinalAlamacen){
             sagasSql = new SAGASSql(getApplicationContext());
         }
         //se ejecuta la tarea asincrona para procesar las imagenes
