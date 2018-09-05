@@ -12,10 +12,10 @@ using System.Web.Mvc;
 namespace MVC.Presentacion.Controllers
 {
     public class HomeController : Controller
-    {
+    {        
         public ActionResult Index()
         {
-            ViewData["Empresas"] = AutenticacionServicio.EmpresasLogin();
+            ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
             return View();
         }
 
@@ -33,7 +33,7 @@ namespace MVC.Presentacion.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult IniciarSesion(AutenticacionDTO login)
+        public ActionResult Inicio(AutenticacionDTO login)
         {
     
             var respuesta = AutenticacionServicio.Autenticar(login.IdEmpresa, login.Usuario, SHA.GenerateSHA256String(login.Password));
