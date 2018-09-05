@@ -1,31 +1,93 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using MVC.Presentacion.Models.Seguridad
+
+@model  LoginModel
+    
+@{
+    ViewBag.Title = "Iniciar sesión";
 }
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+<!-- Morris Chart Css-->
+<link rel="stylesheet" href="assets/plugins/morrisjs/morris.css" />
+<!-- Colorpicker Css -->
+<link rel="stylesheet" href="assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
+<!-- Multi Select Css -->
+<link rel="stylesheet" href="assets/plugins/multi-select/css/multi-select.css">
+<!-- Bootstrap Spinner Css -->
+<link rel="stylesheet" href="assets/plugins/jquery-spinner/css/bootstrap-spinner.css">
+<!-- Bootstrap Tagsinput Css -->
+<link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
+<!-- Bootstrap Select Css -->
+<link rel="stylesheet" href="assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+<!-- noUISlider Css -->
+<link rel="stylesheet" href="assets/plugins/nouislider/nouislider.min.css" />
+<!-- Custom Css -->
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/color_skins.css">
+<div class="authentication">
+    <div class="container">
+        <div class="col-md-12 content-center">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="company_detail">
+                        <h4 class="logo">
+                            <img src="assets/images/LogoCorpKonsilio183x183.png" alt="" />
+                            Corporativo Konsilio
+                        </h4>
+                        <h3>SAGAS. Sistema de Administracion de Gas <strong>Ver. 1.0</strong></h3>
+                        <p>
+                        </p>
+                        <div class="footer">
+                            <hr>
+                            <ul></ul>
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-12 offset-lg-1">
+                    <div class="card-plain">
+                        <div class="header">
+                            <h5>Inicio de Sesion</h5>
+                        </div>
+
+                        <div class="from">
+                            <div>
+                                <select name="slEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" data-show-subtext="true">
+                                  @foreach (var lst in Model.Empresas)
+                                  {
+
+                                  }
+                                </select>
+                                @*<asp:DropDownList CssClass="form-control selectpicker z-index show-tick" data-live-search="true" data-show-subtext="true" runat="server" ID="ddlRazon"></asp:DropDownList>*@
+                            </div>
+                            <br />
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="usuario" name="Email" />
+                                @*<asp:TextBox runat="server" ID="Email" CssClass="form-control" placeholder="Usuario" />*@
+                                <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" class="form-control" placeholder="Contraseña" name="Password" />
+                                @*<asp:TextBox runat="server" ID="Password" TextMode="Password" class="form-control" placeholder="Contraseña" />*@
+                                <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                            </div>
+
+                        </div>
+                        <div class="footer">
+                            <input id="btnIniciar" type="submit" value="IniciarSesion" class="btn btn-primary btn-round btn-block" />
+                            @*<asp:Button ID="btnIniciar" runat="server" OnClick="btnIniciar_Click" class="btn btn-primary btn-round btn-block" Text="Iniciar" />*@
+
+                        </div>
+                        <div class="alert alert-danger" id="divMensaje" hidden="hidden">
+                            <input ID="lblMensaje" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+
