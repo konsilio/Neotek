@@ -40,10 +40,11 @@ namespace MVC.Presentacion.Controllers
             if (respuesta.Exito)
             {
                 Session["StringToken"] = respuesta.token;
-                Response.Redirect("~/DashBoard/Vista/Dashboard.aspx");
+                //  Response.Redirect("~/DashBoard/Vista/Dashboard.aspx");
+                return View();
             }           
 
-            return View();
+           return View();
             
         }
     }
