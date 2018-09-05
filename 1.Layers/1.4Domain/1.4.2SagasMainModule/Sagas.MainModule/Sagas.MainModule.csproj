@@ -49,10 +49,31 @@
     <Compile Include="Entidades\AlmacenGas.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\AlmacenGasAutoConsumo.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\AlmacenGasAutoConsumoFoto.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\AlmacenGasCalibracion.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\AlmacenGasCalibracionFoto.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\AlmacenGasDescarga.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\AlmacenGasDescargaFoto.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\AlmacenGasRecarga.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\AlmacenGasRecargaCilindro.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\AlmacenGasRecargaFoto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\AlmacenGasTomaLectura.cs">
@@ -62,6 +83,12 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\AlmacenGasTomaLecturaFoto.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\AlmacenGasTraspaso.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\AlmacenGasTraspasoFoto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\AlmacenSalidaProducto.cs">
