@@ -92,6 +92,12 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         MenuDTO m6 = new MenuDTO();
         m6.setHeaderMenu("Toma de lectura");
         m6.setName("Almacén Pral. (Final)");
+        MenuDTO m7 = new MenuDTO();
+        m7.setHeaderMenu("Toma de lectura");
+        m7.setName("Camioneta (Inicial)");
+        MenuDTO m8 = new MenuDTO();
+        m8.setHeaderMenu("Toma de lectura");
+        m8.setName("Camioneta (Final)");
         //m.setImageRef(R.g);
         menu.add(m);
         menu.add(m2);
@@ -99,6 +105,8 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         menu.add(m4);
         menu.add(m5);
         menu.add(m6);
+        menu.add(m7);
+        menu.add(m8);
 
         //se agrega la lista al adapter y se agrega el adapter al recylcer view
         adapter = new MenuAdapter(menu);

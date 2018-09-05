@@ -105,8 +105,11 @@
         <activity
             android:name=".Activity.LecturaPipaActivity"
             android:label="@string/Pipa" />
-        <activity android:name=".Activity.LecturaAlmacenActivity"
-            android:label="@string/Almacen"/>
+        <activity
+            android:name=".Activity.LecturaAlmacenActivity"
+            android:label="@string/Almacen" />
+        <activity android:name=".Activity.LecturaCamionetaActivity"
+            android:label="@string/Camioneta"/>
     </application>
 
 </manifest>

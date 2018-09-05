@@ -125,4 +125,9 @@
     <string name="registra_la_lectura_del_p500_de_la_pipa">Registra la lectura del P500 de la pipa</string>
     <string name="selecciona_almacen_principal">Seleccióna el Almacén principal</string>
     <string name="Almacen">Almacén</string>
+    <string name="Camioneta">Camioneta</string>
+    <string name="Recordatorio_uno">Recuerda que en la siguiente pantalla debes contabilizar <u>todos</u> los cilindros sin importar que <b>esten llenos o vacíos</b>.<u>El total.</u></string>
+    <string name="Recordatorio_dos">Recuerda que las siguiente pantalla debes contabilizar <u>todos</u> los cilindros <b>llenos.</b></string>
+    <string name="Selecciona_la_camioneta">Selecciona la camioneta:</string>
+    <string name="Quien_eres">¿Quién toma la lectura? es decir, ¿quién eres?</string>
 </resources>
