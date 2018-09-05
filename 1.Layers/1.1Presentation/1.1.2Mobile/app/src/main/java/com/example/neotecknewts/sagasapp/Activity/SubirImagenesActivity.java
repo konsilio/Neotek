@@ -531,9 +531,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             }else if (EsLecturaFinalPipa){
                 presenter.registrarLecturaFinalalPipa(sagasSql,session.getToken(),lecturaPipaDTO);
             }else if(EsLecturaInicialAlmacen){
-                presenter.registrarLecturaInicialAlmacen(sagasSql,session.getToken(),lecturaPipaDTO);
+                presenter.registrarLecturaInicialAlmacen(sagasSql,session.getToken(),lecturaAlmacenDTO);
             }else if (EsLecturaFinalAlamacen){
-                presenter.registrarLecturaFinalAlmacen(sagasSql,session.getToken(),lecturaPipaDTO);
+                presenter.registrarLecturaFinalAlmacen(sagasSql,session.getToken(),lecturaAlmacenDTO);
             }
             textView.setText(R.string.cargando_imagenes_fin);
             //progressDialog.hide();

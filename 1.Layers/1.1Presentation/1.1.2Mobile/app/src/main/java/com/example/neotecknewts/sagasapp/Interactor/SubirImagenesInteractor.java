@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
@@ -27,7 +28,9 @@ public interface SubirImagenesInteractor {
 
     void registrarLecturaFinalizalPipa(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
 
-    void registrarLecturaInicialAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
+    void registrarLecturaInicialAlmacen(SAGASSql sagasSql, String token,
+                                        LecturaAlmacenDTO lecturaAlmacenDTO);
 
-    void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO);
+    void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token,
+                                      LecturaAlmacenDTO lecturaAlmacenDTO);
 }

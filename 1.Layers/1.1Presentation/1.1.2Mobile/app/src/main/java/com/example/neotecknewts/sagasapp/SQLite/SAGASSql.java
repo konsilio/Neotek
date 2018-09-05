@@ -6,9 +6,19 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 
+/**
+ * Clase SAGASSql para el manejo de base de datos local
+ * @author Jorge Omar Tovar Martínez <jorge.tovar@neothec.com.mx>
+ * @companny Neoteck
+ * @date 28/08/2018
+ * @updated 05/09/2018
+ */
 public class SAGASSql extends SQLiteOpenHelper {
+    //region Variables estaticas
     private static final String DB_NAME = "sagas_db";
     private static final int DB_VERSION = 1;
     private static final String TABLE_LECTURA_INICIAL = "lectura_inicial";
@@ -17,6 +27,20 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_LECTURA_FINALIZAR = "lectura_finalizar";
     private static final String TABLE_LECTURA_FINALIZAR_P5000 = "lectura_finalizar_p5000";
     private static final String TABLE_LECTURA_FINALIZAR_IAMGENES = "lectura_finalizar_imagenes";
+    private static final String TABLE_LECTURA_INICIAL_PIPA = "lectura_inicial_pipa";
+    private static final String TABLE_LECTURA_INICIAL_PIPA_P5000 = "lectura_inicial_pipa_p5000";
+    private static final String TABLE_LECTURA_INICIAL_PIPA_IMAGENES =
+            "lectura_inicial_pipa_imagenes";
+    private static final String TABLE_LECTURA_FINAL_PIPA = "lectura_final_pipa";
+    private static final String TABLE_LECTURA_FINAL_PIPA_P5000 = "lectura_finalal_pipa_p5000";
+    private static final String TABLE_LECTURA_FINAL_PIPA_IMAGENES = "lectura_final_pipa_imagenes";
+    private static final String TABLE_LECTURA_INICIAL_ALMACEN = "lectura_incial_almancen";
+    private static final String TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES =
+            "lectura_inicial_almacen_imagenes";
+    private static final String TABLE_LECTURA_FINAL_ALMACEN = "lectura_final_almacen";
+    private static final String TABLE_LECTURA_FINAL_ALMACEN_IMAGENES =
+            "lectura_final_almacen_imagenes";
+    //endregion
 
     //region Constructor de clase
     /**
@@ -71,6 +95,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
+
         //region Tabla lectura_finalizar
         db.execSQL("CREATE TABLE "+TABLE_LECTURA_FINALIZAR+"(" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -103,6 +128,117 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
+
+        //region Tabla lectura_inicial_pipa
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_INICIAL_PIPA+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "IdPipa INTEGER," +
+                "ClaveOperacion TEXT," +
+                "NombrePipa TEXT," +
+                "IdTipoMedidor INTEGER," +
+                "TipoMedidor TEXT," +
+                "CantidadFotografias INTEGER," +
+                "CantidadP5000 INTEGER," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+        //region Tabla lectura_inicial_pipa_p5000
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_INICIAL_PIPA_P5000+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT," +
+                "Imagen TEXT," +
+                "Url TEXT," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+        //region Tabla lectura_inicial_pipa_imagenes
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_INICIAL_PIPA_IMAGENES+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT," +
+                "Imagen TEXT," +
+                "Url TEXT," +
+                "Falta BOOLEAN DEFAULT 1"+
+                ")");
+        //endregion
+
+        //region Tabla lectura_final_pipa
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_FINAL_PIPA+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "IdPipa INTEGER," +
+                "ClaveOperacion TEXT," +
+                "NombrePipa TEXT," +
+                "IdTipoMedidor INTEGER," +
+                "TipoMedidor TEXT," +
+                "CantidadFotografias INTEGER," +
+                "CantidadP5000 INTEGER," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+        //region Tabla lectura_inicial_pipa_p5000
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_FINAL_PIPA_P5000+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT," +
+                "Imagen TEXT," +
+                "Url TEXT," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+        //region Tabla lectura_inicial_pipa_imagenes
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_FINAL_PIPA_IMAGENES+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT," +
+                "Imagen TEXT," +
+                "Url TEXT," +
+                "Falta BOOLEAN DEFAULT 1"+
+                ")");
+        //endregion
+
+        //region Tabla lectura_inicial_almacen
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_INICIAL_ALMACEN+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT," +
+                "IdAlmacen INTEGER," +
+                "NombreAlmacen TEXT," +
+                "IdTipoMedidor INTEGER," +
+                "NombreTipoMedidor TEXT," +
+                "CantidadFotografias TEXT," +
+                "PorcentajeMedidor DOUBLE," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+        //region Tabla lectura_inicial_almacen_imagenes
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT," +
+                "Imagen TEXT," +
+                "Url TEXT," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+
+        //region Tabla lectura_final_almacen
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_FINAL_ALMACEN+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT," +
+                "IdAlmacen INTEGER," +
+                "NombreAlmacen TEXT," +
+                "IdTipoMedidor INTEGER," +
+                "NombreTipoMedidor TEXT," +
+                "CantidadFotografias TEXT," +
+                "PorcentajeMedidor DOUBLE," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+        //region Tabla lectura_final_almacen_imagenes
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_FINAL_ALMACEN_IMAGENES+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT," +
+                "Imagen TEXT," +
+                "Url TEXT," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+
     }
 
     /**
@@ -129,6 +265,16 @@ public class SAGASSql extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINALIZAR);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINALIZAR_P5000);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINALIZAR_IAMGENES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL_PIPA);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL_PIPA_P5000);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL_PIPA_IMAGENES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINAL_PIPA);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINAL_PIPA_P5000);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINAL_PIPA_IMAGENES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL_ALMACEN);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINAL_ALMACEN);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINAL_ALMACEN_IMAGENES);
         onCreate(db);
     }
     //endregion
@@ -477,6 +623,542 @@ public class SAGASSql extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_LECTURA_FINALIZAR_IAMGENES,
                 "ClaveOperacion = "+ClaveOperacion,null);
+    }
+    //endregion
+
+    //region Metodos para la lectura inicial de pipas
+
+    /**
+     * <h3>InsertLecturaInicialPipas</h3>
+     * Permite realizar el registro en la base de datos de los valores de la lectura inicial de la
+     * pipa, se envia de parametro un objeto de tipo {@link LecturaPipaDTO} con los valores a
+     * registrar.
+     * @param lecturaPipaDTO Objeto de tipo {@link LecturaPipaDTO} con los valores a registrar
+     * @return Variable de tipo {@link Long} con el id del registro , en caso de ser -1 quiere decir
+     * que no se registro
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Long InsertLecturaInicialPipas(LecturaPipaDTO lecturaPipaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("IdPipa",lecturaPipaDTO.getIdPipa());
+        contentValues.put("ClaveOperacion",lecturaPipaDTO.getClaveProceso());
+        contentValues.put("NombrePipa",lecturaPipaDTO.getNombrePipa());
+        contentValues.put("IdTipoMedidor",lecturaPipaDTO.getIdTipoMedidor());
+        contentValues.put("CantidadFotografias",lecturaPipaDTO.getCantidadFotografias());
+        contentValues.put("CantidadP5000",lecturaPipaDTO.getCantidadP5000());
+        return db.insert(TABLE_LECTURA_INICIAL_PIPA,null,contentValues);
+    }
+
+    /**
+     * <h3>GetLecturaIncialPipasByClaveOperacion</h3>
+     * Permite realizar la biusqueda del registro de una lectrua inicial de pipa por medio
+     * de su Clave de operación se nevia de parametro una cadena de {@link String} con dicha
+     * clave y retornara un objeto de tipo {@link Cursor} con el resultado de la misma.
+     * @param ClaveOperacion Cadena de Cadena de tipo {@link String} que reprecenta la
+     *                       clave unica de proceso
+     * @return Objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Cursor GetLecturaIncialPipasByClaveOperacion(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_INICIAL_PIPA+
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    /**
+     * <h3>EliminarLecturaInicialPipa</h3>
+     * Permite realizar la eliminación de un registro de lectura incial de pipa,
+     * se enviara como parametro un {@link String} con la clave de operación y
+     * el metodo retornara un valor de tipo {@link Integer} que reprecenta el nùmero de registros
+     * eliminados.
+     * @param ClaveOperacion Cadena de Cadena de tipo {@link String} que reprecenta la
+     *                       clave unica de proceso
+     * @return Valor de tipo {@link Integer} que reprecenta el numero de registros eliminados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Integer EliminarLecturaInicialPipa(String ClaveOperacion){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_LECTURA_INICIAL_PIPA,
+                "ClaveOperacion = "+ClaveOperacion,null);
+    }
+    //endregion
+
+    //region Metodos para las imagenes de la lectura inicial de pipas
+
+    /**
+     * <h3>InsertImagenesLecturaInicialPipa</h3>
+     * Permite el registro de las imagenes de la lectura incial de la pipa, se envia como parametro
+     * un objeto de tipo {@link LecturaPipaDTO} con los datos de la lectura y al final se retorna un
+     * array de tipo {@link Long} con los ids registrados.
+     * @param lecturaPipaDTO Objeto de tipo {@link LecturaPipaDTO} con los valores a registrar
+     * @return Array de tipo {@link Long} con los valores registrados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Long[] InsertImagenesLecturaInicialPipa(LecturaPipaDTO lecturaPipaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Long[] inserts = new Long[lecturaPipaDTO.getImagenes().size()];
+        for (int x = 0; x<lecturaPipaDTO.getImagenes().size();x++){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ClaveOperacion",lecturaPipaDTO.getClaveProceso());
+            contentValues.put("Imagen", lecturaPipaDTO.getImagenes().get(x));
+            contentValues.put("Url",lecturaPipaDTO.getImagenesURI().get(x).toString());
+            inserts[x] = db.insert(TABLE_LECTURA_INICIAL_PIPA_P5000,null,contentValues);
+        }
+        return inserts;
+    }
+
+    /**
+     * <h3>GetImagenesLecturaInicialPipaByClaveOperacion</h3>
+     * Permite retornar un objeto de tipo {@link Cursor} con las imagenes de la lectura
+     * inicial de la pipa, se tomara como parametro un {@link String} con la clave de operación.
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Objeto de tipo {@link Cursor} con los resultados de la consulta
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Cursor GetImagenesLecturaInicialPipaByClaveOperacion(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_INICIAL_PIPA_IMAGENES+
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    /**
+     * <h3>EliminarImagenesLecturaInicialPipas</h3>
+     * Permite eliminar los registros de las imagenes de lectura incial de pipas, se enviara una
+     * cadena de tipo {@link String} que reprecenta la clave de proceso y al finalizar retornara
+     * un valor de tipo {@link Integer} que reprecenta el numero de registros eliminados.
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Valor de tipo {@link Integer} con el total de registros eliminados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Integer EliminarImagenesLecturaInicialPipas(String ClaveOperacion){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_LECTURA_INICIAL_PIPA_IMAGENES,
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+    //endregion
+
+    //region Metodos para la lectura inicial del P5000 de las pipas
+
+    /**
+     * <H3>InsertLecturaInicialPipaP5000</H3>
+     * Permite registrar las imagenes de la lectura incial del P5000 de la pipa, se toma como
+     * parametro un {@link String} que reprecenta la clave de operación y retornara un valor
+     * de tipo {@link Long} con el id que re registro
+     * @param lecturaPipaDTO Objeto de tipo {@link LecturaPipaDTO} con los valores a registrar
+     * @return Valor de tipo {@link Long} que reprecenta el id registrado en la base de datos
+     *          en caso de ser -1 es que no se pudo registrar
+     * @author Jorge Omar Tovart Martínez <jorge.tovar@neoteck.com.mx>
+     *
+     */
+    public Long InsertLecturaInicialPipaP5000(LecturaPipaDTO lecturaPipaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ClaveOperacion",lecturaPipaDTO.getClaveProceso());
+        contentValues.put("Imagen",lecturaPipaDTO.getImagenP5000());
+        contentValues.put("Url",lecturaPipaDTO.getImagenP5000URI().toString());
+        return db.insert(TABLE_LECTURA_INICIAL_PIPA_P5000,null,contentValues);
+    }
+
+    /**
+     * <h3>GetLecturaInicialPipaP5000ByClaveOperacion</h3>
+     * Permite realizar la consulta de la imagen del P5000 para la lectura inicial de la
+     * pipa, se enviara como parametro un {@link String} con la clave de operación y se
+     * retornara un objeto de tipo {@link Cursor } con el resultado de la consulta
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Objeto de tipo {@link Cursor} con el resultado de la consulta
+     */
+    public Cursor GetLecturaInicialPipaP5000ByClaveOperacion(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+ TABLE_LECTURA_INICIAL_PIPA_P5000+
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    /**
+     * <h3>EliminarLecturaInicialPipaP500</h3>
+     * Permite eliminar un registro de la lectura del P5000 de la pipa, se tomara como parametro
+     * un {@link String} que reprecenta la clave de operación y al final se retornara un valor
+     * de tipo {@link Integer} con el número de registros eliminados
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Valor de tipo {@link Integer} con el total de registros eliminados
+     */
+    public Integer EliminarLecturaInicialPipaP500(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.delete(TABLE_LECTURA_INICIAL_PIPA_P5000," WHERE ClaveOperacion = "
+                +ClaveOperacion,null);
+    }
+    //endregion
+
+    //region Metodos para la lectura final de pipas
+    /**
+     * <h3>InsertLecturaFinalPipas</h3>
+     * Permite realizar el registro en la base de datos de los valores de la lectura final de la
+     * pipa, se envia de parametro un objeto de tipo {@link LecturaPipaDTO} con los valores a
+     * registrar.
+     * @param lecturaPipaDTO Objeto de tipo {@link LecturaPipaDTO} con los valores a registrar
+     * @return Variable de tipo {@link Long} con el id del registro , en caso de ser -1 quiere decir
+     * que no se registro
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Long InsertLecturaFinalPipas(LecturaPipaDTO lecturaPipaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("IdPipa",lecturaPipaDTO.getIdPipa());
+        contentValues.put("ClaveOperacion",lecturaPipaDTO.getClaveProceso());
+        contentValues.put("NombrePipa",lecturaPipaDTO.getNombrePipa());
+        contentValues.put("IdTipoMedidor",lecturaPipaDTO.getIdTipoMedidor());
+        contentValues.put("CantidadFotografias",lecturaPipaDTO.getCantidadFotografias());
+        contentValues.put("CantidadP5000",lecturaPipaDTO.getCantidadP5000());
+        return db.insert(TABLE_LECTURA_FINAL_PIPA,null,contentValues);
+    }
+
+    /**
+     * <h3>GetLecturaFinalPipasByClaveOperacion</h3>
+     * Permite realizar la biusqueda del registro de una lectrua final de pipa por medio
+     * de su Clave de operación se nevia de parametro una cadena de {@link String} con dicha
+     * clave y retornara un objeto de tipo {@link Cursor} con el resultado de la misma.
+     * @param ClaveOperacion Cadena de Cadena de tipo {@link String} que reprecenta la
+     *                       clave unica de proceso
+     * @return Objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Cursor GetLecturaFinalPipasByClaveOperacion(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_FINAL_PIPA+
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    /**
+     * <h3>EliminarLecturaFinalPipa</h3>
+     * Permite realizar la eliminación de un registro de lectura final de pipa,
+     * se enviara como parametro un {@link String} con la clave de operación y
+     * el metodo retornara un valor de tipo {@link Integer} que reprecenta el nùmero de registros
+     * eliminados.
+     * @param ClaveOperacion Cadena de Cadena de tipo {@link String} que reprecenta la
+     *                       clave unica de proceso
+     * @return Valor de tipo {@link Integer} que reprecenta el numero de registros eliminados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Integer EliminarLecturaFinalPipa(String ClaveOperacion){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_LECTURA_FINAL_PIPA,
+                "ClaveOperacion = "+ClaveOperacion,null);
+    }
+    //endregion
+
+    //region Metodos para las imagenes de la lectura final de pipas
+    /**
+     * <h3>InsertImagenerLecturaInicialPipa</h3>
+     * Permite el registro de las imagenes de la lectura incial de la pipa, se envia como parametro
+     * un objeto de tipo {@link LecturaPipaDTO} con los datos de la lectura y al final se retorna un
+     * array de tipo {@link Long} con los ids registrados.
+     * @param lecturaPipaDTO Objeto de tipo {@link LecturaPipaDTO} con los valores a registrar
+     * @return Array de tipo {@link Long} con los valores registrados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Long[] InsertImagenesLecturaFinalPipa(LecturaPipaDTO lecturaPipaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Long[] inserts = new Long[lecturaPipaDTO.getImagenes().size()];
+        for (int x = 0; x<lecturaPipaDTO.getImagenes().size();x++){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ClaveProceso",lecturaPipaDTO.getClaveProceso());
+            contentValues.put("Imagen", lecturaPipaDTO.getImagenes().get(x));
+            contentValues.put("Url",lecturaPipaDTO.getImagenesURI().get(x).toString());
+            inserts[x] = db.insert(TABLE_LECTURA_FINAL_PIPA_P5000,null,contentValues);
+        }
+        return inserts;
+    }
+
+    /**
+     * <h3>GetImagenesLecturaInicialPipaByClaveOperacion</h3>
+     * Permite retornar un objeto de tipo {@link Cursor} con las imagenes de la lectura
+     * inicial de la pipa, se tomara como parametro un {@link String} con la clave de operación.
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Objeto de tipo {@link Cursor} con los resultados de la consulta
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Cursor GetImagenesLecturaFinalPipaByClaveOperacion(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_FINAL_PIPA_IMAGENES+
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    /**
+     * <h3>EliminarImagenesLecturaInicialPipas</h3>
+     * Permite eliminar los registros de las imagenes de lectura incial de pipas, se enviara una
+     * cadena de tipo {@link String} que reprecenta la clave de proceso y al finalizar retornara
+     * un valor de tipo {@link Integer} que reprecenta el numero de registros eliminados.
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Valor de tipo {@link Integer} con el total de registros eliminados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Integer EliminarImagenesLecturaFinalPipas(String ClaveOperacion){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_LECTURA_FINAL_PIPA_IMAGENES,
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+    //endregion
+
+    //region Metodos para las images del P5000 de la lectura final
+    public Long InsertLecturaFinalPipaP5000(LecturaPipaDTO lecturaPipaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ClaveOperacion",lecturaPipaDTO.getClaveProceso());
+        contentValues.put("Imagen",lecturaPipaDTO.getImagenP5000());
+        contentValues.put("Url",lecturaPipaDTO.getImagenP5000URI().toString());
+        return db.insert(TABLE_LECTURA_FINAL_PIPA_P5000,null,contentValues);
+    }
+
+    /**
+     * <h3>GetLecturaInicialPipaP5000ByClaveOperacion</h3>
+     * Permite realizar la consulta de la imagen del P5000 para la lectura inicial de la
+     * pipa, se enviara como parametro un {@link String} con la clave de operación y se
+     * retornara un objeto de tipo {@link Cursor } con el resultado de la consulta
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Objeto de tipo {@link Cursor} con el resultado de la consulta
+     */
+    public Cursor GetLecturaFinalPipaP5000ByClaveOperacion(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+ TABLE_LECTURA_FINAL_PIPA_P5000+
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    /**
+     * <h3>EliminarLecturaInicialPipaP500</h3>
+     * Permite eliminar un registro de la lectura del P5000 de la pipa, se tomara como parametro
+     * un {@link String} que reprecenta la clave de operación y al final se retornara un valor
+     * de tipo {@link Integer} con el número de registros eliminados
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Valor de tipo {@link Integer} con el total de registros eliminados
+     */
+    public Integer EliminarLecturaFinalPipaP500(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.delete(TABLE_LECTURA_FINAL_PIPA_P5000," WHERE ClaveOperacion = "
+                +ClaveOperacion,null);
+    }
+    //endregion
+
+    //region Metodos para la lectura incial de almacen
+
+    /**
+     * <h3>InsertLecturaInicialAlmacen</h3>
+     * Permite realizar el registro de una nueva lectura inicial para el almacen en la base de
+     * datos, se envia como parametro un objeto de tipo {@link LecturaAlmacenDTO} con los datos
+     * a registrar tras terminar, el metodo retornara un valor de tipo {@link Long} en caso de
+     * que este se registre correctamente se retornara el id de insercion, en caso de que no
+     * retornara un -1
+     * @param lecturaAlmacenDTO Objeto de tipo {@link LecturaAlmacenDTO} con los valores a registrar
+     * @return Un valor de tipo {@link Long} que reprecenta el id del registro, en caso de que no
+     *          retornara un -1
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Long InsertLecturaInicialAlmacen(LecturaAlmacenDTO lecturaAlmacenDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ClaveOperacion",lecturaAlmacenDTO.getClaveOperacion());
+        contentValues.put("IdAlmacen",lecturaAlmacenDTO.getIdAlmacen());
+        contentValues.put("NombreAlmacen",lecturaAlmacenDTO.getNombreAlmacen());
+        contentValues.put("IdTipoMedidor",lecturaAlmacenDTO.getIdTipoMedior());
+        contentValues.put("NombreTipoMedidor",lecturaAlmacenDTO.getNombreTipoMedidor());
+        contentValues.put("CantidadFotografias",lecturaAlmacenDTO.getCantidadFotografias());
+        contentValues.put("PorcentajeMedidor",lecturaAlmacenDTO.getPorcentajeMedidor());
+        return  db.insert(TABLE_LECTURA_INICIAL_ALMACEN,null,contentValues);
+    }
+
+    /**
+     * <h3>GetLecturaInicialAlmacenByClaveOperacion</h3>
+     * Permite obtener un registro de la lectura inicial del almacen, se tomara como parametro un
+     * {@link String} que reprecenta la clave de operación y tras consultar se retornara un objeto
+     * de tipo {@link Cursor} con el resultado de la consulta.
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Cursor GetLecturaInicialAlmacenByClaveOperacion(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_INICIAL_ALMACEN+
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    /**
+     * <h3>EliminarLecturaIncialAlmacen</h3>
+     * Permite eliminar un registro de la lectura inicial del almacen , se envia como parametro
+     * un {@link String} con la clave de operación , tras finalizar se retornara un objeto de
+     * tipo {@link Integer} con el total de registros eliminados
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Valor de tipo {@link Integer} con el total de registros eliminados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Integer EliminarLecturaIncialAlmacen(String ClaveOperacion){
+        return this.getReadableDatabase().delete(TABLE_LECTURA_INICIAL_ALMACEN,
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+    //endregion
+
+    //region Metodos para las imagenes de la lectura inicial de almacen
+
+    /**
+     * <h3>InsertImagenesLecturaInicialAlamacen</h3>
+     * Permite realizar el registro en la base de datos de las imagenes que se registran en la
+     * lectura , se toma como parametro un objeto de tipo {@link LecturaAlmacenDTO} con los datos
+     * a registrar y en caso de que se realizen correctamente los incerts por cada imagen
+     * se retornara un array de tipo {@link Long} con los id de dicho registros
+     * @param lecturaAlmacenDTO Objeto de tipo {@link LecturaAlmacenDTO} con los valores a registrar
+     * @return Array de tipo {@link Long} con los ids registrados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Long[] InsertImagenesLecturaInicialAlamacen(LecturaAlmacenDTO lecturaAlmacenDTO){
+        SQLiteDatabase db =this.getWritableDatabase();
+        Long[] _inserts = new Long[lecturaAlmacenDTO.getCantidadFotografias()];
+        for (int x=0; x<lecturaAlmacenDTO.getImagenes().size();x++) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ClaveOperacion", lecturaAlmacenDTO.getClaveOperacion());
+            contentValues.put("Imagen", lecturaAlmacenDTO.getImagenes().get(x));
+            contentValues.put("Url", lecturaAlmacenDTO.getImagenesURI().get(x).toString());
+            _inserts[x] = db.insert(TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES,
+                    null,contentValues);
+        }
+        return _inserts;
+    }
+
+    /**
+     * <h3>GetImagenesLecturaInicialAlmacenByClaveOperacion</h3>
+     * Permite obtener los registros de las imagenes de la lectura incial del almacen
+     * se tomara como parametro un {@link String} con la clave de operación y se retornara
+     * un objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Cursor GetImagenesLecturaInicialAlmacenByClaveOperacion(String ClaveOperacion){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+
+                TABLE_LECTURA_FINAL_ALMACEN_IMAGENES+" WHERE ClaveOperacion = "+ClaveOperacion,
+                null);
+    }
+
+    /**
+     * <h3>EliminarImagenesLecturaInicialAlmacen</h3>
+     * Permite realizar la eliminacion de los registros de la lectura inicial del almacen,
+     * se tomara como parametro un {@link String} con la clave de operación y se retornara un
+     * valor de tipo {@link Integer} con el total de registros eliminados.
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Valor de tipo {@link Long} con el total de registros eliminados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Integer EliminarImagenesLecturaInicialAlmacen(String ClaveOperacion){
+        return this.getWritableDatabase().delete(TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES,
+                " ClaveOperacion = "+ClaveOperacion,null);
+    }
+    //endregion
+
+    //region Metodos para la lectura final de almacen
+    /**
+     * <h3>InsertLecturFinalAlmacen</h3>
+     * Permite realizar el registro de una nueva lectura inicial para el almacen en la base de
+     * datos, se envia como parametro un objeto de tipo {@link LecturaAlmacenDTO} con los datos
+     * a registrar tras terminar, el metodo retornara un valor de tipo {@link Long} en caso de
+     * que este se registre correctamente se retornara el id de insercion, en caso de que no
+     * retornara un -1
+     * @param lecturaAlmacenDTO Objeto de tipo {@link LecturaAlmacenDTO} con los valores a registrar
+     * @return Un valor de tipo {@link Long} que reprecenta el id del registro, en caso de que no
+     *          retornara un -1
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Long InsertLecturaFinalAlmacen(LecturaAlmacenDTO lecturaAlmacenDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ClaveOperacion",lecturaAlmacenDTO.getClaveOperacion());
+        contentValues.put("IdAlmacen",lecturaAlmacenDTO.getIdAlmacen());
+        contentValues.put("NombreAlmacen",lecturaAlmacenDTO.getNombreAlmacen());
+        contentValues.put("IdTipoMedidor",lecturaAlmacenDTO.getIdTipoMedior());
+        contentValues.put("NombreTipoMedidor",lecturaAlmacenDTO.getNombreTipoMedidor());
+        contentValues.put("CantidadFotografias",lecturaAlmacenDTO.getCantidadFotografias());
+        contentValues.put("PorcentajeMedidor",lecturaAlmacenDTO.getPorcentajeMedidor());
+        return  db.insert(TABLE_LECTURA_FINAL_ALMACEN,null,contentValues);
+    }
+
+    /**
+     * <h3>GetLecturaFinalAlmacenByClaveOperacion</h3>
+     * Permite obtener un registro de la lectura inicial del almacen, se tomara como parametro un
+     * {@link String} que reprecenta la clave de operación y tras consultar se retornara un objeto
+     * de tipo {@link Cursor} con el resultado de la consulta.
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Cursor GetLecturaFinalAlmacenByClaveOperacion(String ClaveOperacion){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_FINAL_ALMACEN+
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    /**
+     * <h3>EliminarLecturaFinalAlmacen</h3>
+     * Permite eliminar un registro de la lectura inicial del almacen , se envia como parametro
+     * un {@link String} con la clave de operación , tras finalizar se retornara un objeto de
+     * tipo {@link Integer} con el total de registros eliminados
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Valor de tipo {@link Integer} con el total de registros eliminados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Integer EliminarLecturaFinalAlmacen(String ClaveOperacion){
+        return this.getReadableDatabase().delete(TABLE_LECTURA_FINAL_ALMACEN,
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+    //endregion
+
+    //region Metodos para las imagenes de la lectura final de almacen
+    /**
+     * <h3>InsertImagenesLecturaFinalAlamacen</h3>
+     * Permite realizar el registro en la base de datos de las imagenes que se registran en la
+     * lectura  , se toma como parametro un objeto de tipo {@link LecturaAlmacenDTO} con los datos
+     * a registrar y en caso de que se realizen correctamente los incerts por cada imagen
+     * se retornara un array de tipo {@link Long} con los id de dicho registros
+     * @param lecturaAlmacenDTO Objeto de tipo {@link LecturaAlmacenDTO} con los valores a registrar
+     * @return Array de tipo {@link Long} con los ids registrados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Long[] InsertImagenesLecturaFinalAlamacen(LecturaAlmacenDTO lecturaAlmacenDTO){
+        SQLiteDatabase db =this.getWritableDatabase();
+        Long[] _inserts = new Long[lecturaAlmacenDTO.getCantidadFotografias()];
+        for (int x=0; x<lecturaAlmacenDTO.getImagenes().size();x++) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ClaveOperacion", lecturaAlmacenDTO.getClaveOperacion());
+            contentValues.put("Imagen", lecturaAlmacenDTO.getImagenes().get(x));
+            contentValues.put("Url", lecturaAlmacenDTO.getImagenesURI().get(x).toString());
+            _inserts[x] = db.insert(TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES,
+                    null,contentValues);
+        }
+        return _inserts;
+    }
+
+    /**
+     * <h3>GetImagenesLecturaFinalAlmacenByClaveOperacion</h3>
+     * Permite obtener los registros de las imagenes de la lectura final del almacen
+     * se tomara como parametro un {@link String} con la clave de operación y se retornara
+     * un objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Cursor GetImagenesLecturaFinalAlmacenByClaveOperacion(String ClaveOperacion){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+
+                        TABLE_LECTURA_FINAL_ALMACEN_IMAGENES+" WHERE ClaveOperacion = "+ClaveOperacion,
+                null);
+    }
+
+    /**
+     * <h3>EliminarImagenesLecturaFinalAlmacen</h3>
+     * Permite realizar la eliminacion de los registros de la lectura final del almacen,
+     * se tomara como parametro un {@link String} con la clave de operación y se retornara un
+     * valor de tipo {@link Integer} con el total de registros eliminados.
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Valor de tipo {@link Long} con el total de registros eliminados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     */
+    public Integer EliminarImagenesLecturaFinalAlmacen(String ClaveOperacion){
+        return this.getWritableDatabase().delete(TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES,
+                " ClaveOperacion = "+ClaveOperacion,null);
     }
     //endregion
 }

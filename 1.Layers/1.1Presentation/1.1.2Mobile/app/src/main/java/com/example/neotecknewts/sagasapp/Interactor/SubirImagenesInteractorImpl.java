@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
@@ -532,7 +533,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LIP"+s.format(new Date());
-
+        sagasSql.InsertLecturaInicialPipas(lecturaPipaDTO);
+        sagasSql.InsertLecturaInicialPipaP5000(lecturaPipaDTO);
+        sagasSql.InsertImagenesLecturaInicialPipa(lecturaPipaDTO);
         subirImagenesPresenter.onSuccessRegistroAndroid();
 
     }
@@ -556,22 +559,62 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LFP"+s.format(new Date());
+        lecturaPipaDTO.setClaveProceso(clave_unica);
+        sagasSql.InsertLecturaFinalPipas(lecturaPipaDTO);
+        sagasSql.InsertLecturaFinalPipaP5000(lecturaPipaDTO);
+        sagasSql.InsertImagenesLecturaFinalPipa(lecturaPipaDTO);
         subirImagenesPresenter.onSuccessRegistroAndroid();
     }
 
+    /**
+     * <h3>registrarLecturaInicialAlmacen</h3>
+     * Permite realizar el envio de los datos del registro de lectura inicial al almacen,
+     * tomara como parametros un objeto de tipo {@link SAGASSql} con la conexion a base de datos
+     * local, una cadena {@link String} que reprecneta el token de usuario y por ultimo un objeto
+     * de tipo {@link LecturaAlmacenDTO} con los datos a enviar en caso de guardarce , mostrara una
+     * alerta en caso de no estar el servicio disponible se enviara a la base de datos local
+     * @param sagasSql  Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param lecturaAlmacenDTO Objeto de tipo {@link LecturaAlmacenDTO} con los datos a enviar o
+     *                          registrar de la lectura inicial de almacen
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     * @date 04/09/2018
+     */
     @Override
-    public void registrarLecturaInicialAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO) {
+    public void registrarLecturaInicialAlmacen(SAGASSql sagasSql, String token,
+                                               LecturaAlmacenDTO lecturaAlmacenDTO) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LIA"+s.format(new Date());
+        lecturaAlmacenDTO.setClaveOperacion(clave_unica);
+        sagasSql.InsertLecturaInicialAlmacen(lecturaAlmacenDTO);
+        sagasSql.InsertImagenesLecturaInicialAlamacen(lecturaAlmacenDTO);
         subirImagenesPresenter.onSuccessRegistroAndroid();
     }
 
+    /**
+     * <h3>registrarLecturaFinalAlmacen</h3>
+     * Permite realizar el envio de los datos de lectura final de almacen, se enviaran como
+     * parametros un objeto de tipo {@link SAGASSql} con la conexion a base de datos local, un
+     * objeto de tipo {@link String} que reprecenta el token del usuario y un objeto de tipo
+     * {@link LecturaAlmacenDTO} que contiene la información a registrar.- Los datos seran enviados
+     * al servicio web , en caso de que no responda se registraran en local
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param lecturaAlmacenDTO Objeto de tipo {@link LecturaAlmacenDTO} con los datos a enviar o
+     *                          registrar de la lectura inicial de almacen
+     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     * @date 04/09/2018
+     */
     @Override
-    public void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO) {
+    public void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token,
+                                             LecturaAlmacenDTO lecturaAlmacenDTO) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LFA"+s.format(new Date());
+        lecturaAlmacenDTO.setClaveOperacion(clave_unica);
+        sagasSql.InsertLecturaFinalAlmacen(lecturaAlmacenDTO);
+        sagasSql.InsertImagenesLecturaFinalAlamacen(lecturaAlmacenDTO);
         subirImagenesPresenter.onSuccessRegistroAndroid();
     }
 

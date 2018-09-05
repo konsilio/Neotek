@@ -6,6 +6,7 @@ import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
@@ -173,15 +174,17 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
     }
 
     @Override
-    public void registrarLecturaInicialAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO) {
+    public void registrarLecturaInicialAlmacen(SAGASSql sagasSql, String token,
+                                               LecturaAlmacenDTO lecturaAlmacenDTO) {
         subirImagenesView.showProgress(R.string.message_cargando);
-        interactor.registrarLecturaInicialAlmacen(sagasSql,token,lecturaPipaDTO);
+        interactor.registrarLecturaInicialAlmacen(sagasSql,token,lecturaAlmacenDTO);
     }
 
     @Override
-    public void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token, LecturaPipaDTO lecturaPipaDTO) {
+    public void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token,
+                                             LecturaAlmacenDTO lecturaAlmacenDTO) {
         subirImagenesView.showProgress(R.string.message_cargando);
-        interactor.registrarLecturaFinalAlmacen(sagasSql,token,lecturaPipaDTO);
+        interactor.registrarLecturaFinalAlmacen(sagasSql,token,lecturaAlmacenDTO);
     }
 
     //endregion
