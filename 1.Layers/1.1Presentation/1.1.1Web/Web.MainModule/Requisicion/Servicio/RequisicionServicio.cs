@@ -149,6 +149,7 @@ namespace Web.MainModule.Requisicion.Servicio
             return agente._listaCentrosCostos;
         }      
         #endregion
+
         #region Adaptadores
         public Model.RequisicionProductoDTO ToDTO(Model.RequisicionProductoGridDTO _ReqGridDTO)
         {
