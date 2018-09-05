@@ -67,7 +67,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.MainModule", "1.Layers\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mail.MainModule", "1.Layers\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.3Mail\Mail.MainModule.csproj", "{4665E949-2392-4A01-8AF5-3EE83A85B903}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC.Presentacion", "MVC.Presentacion\MVC.Presentacion.csproj", "{1751630E-103C-41AD-A84C-DAE1B576F0A5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC.Presentacion", "1.Layers\1.1Presentation\1.1.1Web\MVC.Presentacion\MVC.Presentacion.csproj", "{1751630E-103C-41AD-A84C-DAE1B576F0A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

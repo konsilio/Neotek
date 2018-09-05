@@ -1,47 +1,45 @@
-﻿@{
-    string rootUrl = Url.Content("~/");
-}
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
-    <title>@ViewBag.Title</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
-    <script src="../../assets/js/pages/forms/basic-form-elements.js"></script>
-    <script src="../../assets/js/pages/forms/advanced-form-elements.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
 
-    <!-- Global vars from server -->
-    <script>
-        var global_baseUrl = "@rootUrl";
-    </script>
 </head>
 <body>
-    <header class="header">
-        @{Html.RenderAction("Menu");}
-    </header>
-    <div class="page-container">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    @RenderBody()
-                </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <footer class="footer">
-        @{ Html.RenderAction("Footer"); }
-    </footer>
-    @{Html.RenderAction("Loading");}
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+        </footer>
+    </div>
 
-
-    @{Html.RenderAction("Dialog");}
-
-
-    @{Html.RenderAction("Confirmation");}
-    <!-- Global vars -->
-    <script>
-        var global_baseUrl = "@Url.Content("~/")";
-    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
