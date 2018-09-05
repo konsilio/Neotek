@@ -22,5 +22,24 @@ namespace MVC.Presentacion.App_Code
             agente.ListaEmpresasLogin();
             return agente._listaEmpresas;
         }
+        public static LoginModel InitIndex(LoginModel model)
+        {            
+            if (model == null)
+                model = new LoginModel
+                {
+                    Empresas = EmpresasLogin(),
+                };
+            else
+                model.Empresas = EmpresasLogin();
+            return model;
+        }
+
+        public static LoginModel InitIndex(RespuestaAutenticacionDto respuesta)
+        {
+            var model = new LoginModel();
+            model = InitIndex(model);
+            model.Respuesta = respuesta;
+            return model;
+        }
     }
 }
