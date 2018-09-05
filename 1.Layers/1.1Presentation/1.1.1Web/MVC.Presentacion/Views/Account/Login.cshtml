@@ -1,63 +1,94 @@
 ﻿@using MVC.Presentacion.Models
-@model LoginViewModel
+@using MVC.Presentacion.Models.Seguridad
+@using MVC.Presentacion.Models.Catalogos
+@model  AutenticacionDTO
+    
 @{
     ViewBag.Title = "Iniciar sesión";
 }
+<link rel="icon" href="favicon.ico" type="image/x-icon">
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Use una cuenta local para iniciar sesión.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
+<link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+<!-- Morris Chart Css-->
+<link rel="stylesheet" href="assets/plugins/morrisjs/morris.css" />
+<!-- Colorpicker Css -->
+<link rel="stylesheet" href="assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
+<!-- Multi Select Css -->
+<link rel="stylesheet" href="assets/plugins/multi-select/css/multi-select.css">
+<!-- Bootstrap Spinner Css -->
+<link rel="stylesheet" href="assets/plugins/jquery-spinner/css/bootstrap-spinner.css">
+<!-- Bootstrap Tagsinput Css -->
+<link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
+<!-- Bootstrap Select Css -->
+<link rel="stylesheet" href="assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+<!-- noUISlider Css -->
+<link rel="stylesheet" href="assets/plugins/nouislider/nouislider.min.css" />
+<!-- Custom Css -->
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/color_skins.css">
+<div class="authentication">
+    <div class="container">
+        <div class="col-md-12 content-center">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="company_detail">
+                        <h4 class="logo">
+                            <img src="assets/images/LogoCorpKonsilio183x183.png" alt="" />
+                            Corporativo Konsilio
+                        </h4>
+                        <h3>SAGAS. Sistema de Administracion de Gas <strong>Ver. 1.0</strong></h3>
+                        <p>
+                        </p>
+                        <div class="footer">
+                            <hr>
+                            <ul></ul>
+                            <ul></ul>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Iniciar sesión" class="btn btn-default" />
+                <div class="col-lg-5 col-md-12 offset-lg-1">
+                    <div class="card-plain">
+                        <div class="header">
+                            <h5>Inicio de Sesion</h5>
+                        </div>
+
+                        <div class="from">
+                            <div>
+                                <select name="slEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" data-show-subtext="true">
+                                    @foreach (var item in )
+                                    {
+                                        <option value=""> </option>
+                                    }
+                                </select>
+                                @*<asp:DropDownList CssClass="form-control selectpicker z-index show-tick" data-live-search="true" data-show-subtext="true" runat="server" ID="ddlRazon"></asp:DropDownList>*@
+                            </div>
+                            <br />
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="usuario" name="Email" />
+                                @*<asp:TextBox runat="server" ID="Email" CssClass="form-control" placeholder="Usuario" />*@
+                                <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" class="form-control" placeholder="Contraseña" name="Password" />
+                                @*<asp:TextBox runat="server" ID="Password" TextMode="Password" class="form-control" placeholder="Contraseña" />*@
+                                <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                            </div>
+
+                        </div>
+                        <div class="footer">
+                            <input id="btnIniciar" type="submit" value="IniciarSesion" class="btn btn-primary btn-round btn-block" />
+                            @*<asp:Button ID="btnIniciar" runat="server" OnClick="btnIniciar_Click" class="btn btn-primary btn-round btn-block" Text="Iniciar" />*@
+
+                        </div>
+                        <div class="alert alert-danger" id="divMensaje" hidden="hidden">
+                            <input ID="lblMensaje" />
+                        </div>
+
                     </div>
                 </div>
-                <p>
-                    @Html.ActionLink("Registrar como nuevo usuario", "Register")
-                </p>
-                @* Habilite esta opción después de habilitar la confirmación de la cuenta para la función de restablecimiento de contraseña
-                    <p>
-                        @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+            </div>
+        </div>
     </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
