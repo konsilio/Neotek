@@ -196,6 +196,20 @@
         <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasTomaLecturaFoto" Width="1.5" PointX="3" PointY="12.875" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasRecarga" Width="1.5" PointX="15.375" PointY="11.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasRecargaCilindro" Width="1.5" PointX="17.625" PointY="14.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasRecargaFoto" Width="1.5" PointX="17.625" PointY="11.125" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasRecargaCilindro_AlmacenGasRecarga" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasRecargaFoto_AlmacenGasRecarga" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasAutoConsumo" Width="1.5" PointX="15.375" PointY="17" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasAutoConsumoFoto" Width="1.5" PointX="17.625" PointY="17.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasCalibracion" Width="1.5" PointX="15.375" PointY="1" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasCalibracionFoto" Width="1.5" PointX="17.625" PointY="1.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasTraspaso" Width="1.5" PointX="10.375" PointY="1" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasTraspasoFoto" Width="1.5" PointX="12.625" PointY="1.5" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasCalibracionFoto_AlmacenGasCalibracion" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
