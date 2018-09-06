@@ -1,4 +1,5 @@
 ﻿using MVC.Presentacion.App_Code;
+using MVC.Presentacion.Controllers.Shared;
 using MVC.Presentacion.Models.Seguridad;
 using Security.MainModule.Criptografia;
 using System;
@@ -11,40 +12,43 @@ using System.Web.Mvc;
 
 namespace MVC.Presentacion.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : MainController
     {        
-        public ActionResult Index()
+        public ActionResult Index(LoginModel model = null)
+        {       
+            return View(AutenticacionServicio.InitIndex(model));
+        }
+
+        public ActionResult IndexError(LoginModel model)
         {
-            ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
-            return View();
+            model.Empresas = AutenticacionServicio.EmpresasLogin();           
+            return View(model);
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
             return View();
-        }
-        [HttpPost]
+        }     
+          
         public ActionResult Inicio(AutenticacionDTO login)
-        {
-    
+        {    
             var respuesta = AutenticacionServicio.Autenticar(login.IdEmpresa, login.Usuario, SHA.GenerateSHA256String(login.Password));
             if (respuesta.Exito)
             {
                 Session["StringToken"] = respuesta.token;
-                Response.Redirect("~/DashBoard/Vista/Dashboard.aspx");
-            }           
-
-            return View();
-            
+                return View();               
+            }
+            else
+            {                
+                return View("Index", AutenticacionServicio.InitIndex(respuesta));               
+            }            
         }
     }
 }

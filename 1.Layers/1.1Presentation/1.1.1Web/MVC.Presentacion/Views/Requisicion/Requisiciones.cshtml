@@ -1,0 +1,112 @@
+﻿@using MVC.Presentacion.Models.Requisicion
+@model RequisicionesModel
+
+<section class="content home">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Compras</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item active">
+                            <label id="lblRuta">Requisición</label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong></strong><small></small></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-sm-4">
+                                    <select id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                        @foreach (var lst in Model.Empresas)
+                                        {
+                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                        }
+                                    </select>
+                                    @*<asp:DropDownList runat="server" ID="ddlEmpresas" data-live-search="true" AutoPostBack="true" CssClass="form-control z-index show-tick" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged">
+                                        </asp:DropDownList>*@
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <input type="text" id="txtNumRequisicion" CssClass="form-control" placeholder="N° de Requisición"  />
+                                        @*<asp:TextBox runat="server" ID="txtNoRequisicion" CssClass="form-control" placeholder="N° de Requisición" AutoPostBack="true" OnTextChanged="txtNoRequisicion_TextChanged" />*@
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input id="btnIniciar" type="submit" value="Nuevaequisicion" CssClass="btn btn-primary btn-round btn-block btn-icon"  />
+                                    @*<asp:Button runat="server" ID="btnNuevaReq" Text="Nueva Requisición" CssClass="btn btn-primary btn-round btn-block btn-icon" OnClick="btnNuevaReq_Click" />*@
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-lg-3">
+                                    <b>Estatus</b>
+                                    <select id="estatus" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                        @foreach (var lst in Model.Empresas)
+                                        {
+                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                        }
+                                    </select>
+                                    @*<asp:DropDownList CssClass="form-control show-tick" runat="server" ID="ddlFiltroEstatus" AutoPostBack="true">
+                                    </asp:DropDownList>*@
+                                </div>
+                                <div class="col-lg-2">
+                                    <b>Fecha de registro</b>
+                                    <dtp:DateTimePicker ID="dtpFechaRegiistrDe" CssClass="dataTxt" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <b>&nbsp; </b>
+                                    <dtp:DateTimePicker ID="dtpFechaRegiistrA" CssClass="dataTxt" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <b>Fecha de requisición</b>
+                                    <dtp:DateTimePicker ID="dtpFechaRequisicionDe" CssClass="dataTxt" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <b>&nbsp; </b>
+                                    <dtp:DateTimePicker ID="dtpFechaRequisicionA" CssClass="dataTxt" />
+                                </div>
+                                <div class="col-lg-1">
+                                    <b>&nbsp; </b>
+
+                                    <input id="buscar" type="submit" value="Inicio" class="btn btn-primary btn-round btn-block" />
+                                    <i class="material-icons">search</i>
+                                    <span class="icon-name"></span>
+                                    @*<div class="input-group">
+                                            <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-danger btn-simple btn-round btn-sm" OnClick="btnBuscar_Click">
+                                                <i class="material-icons">search</i>
+                                                <span class="icon-name"></span>
+                                            </asp:LinkButton>
+                                        </div>*@
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="body table-responsive">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
