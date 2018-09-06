@@ -1,6 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CentrosCosto.aspx.cs" Inherits="Web.MainModule.Catalogos.Vista.CentrosCosto" %>
-
-<asp:Content ID="CentrosCostos" ContentPlaceHolderID="ctCentrosCosto" runat="server">
+﻿
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
@@ -204,4 +202,4 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
-</asp:Content>
+
