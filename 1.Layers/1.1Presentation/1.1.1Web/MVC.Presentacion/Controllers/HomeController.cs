@@ -21,24 +21,19 @@ namespace MVC.Presentacion.Controllers
 
         public ActionResult IndexError(LoginModel model)
         {
-            model.Empresas = AutenticacionServicio.EmpresasLogin();
-            
-
-            //ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
+            model.Empresas = AutenticacionServicio.EmpresasLogin();           
             return View(model);
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }     
           
@@ -48,30 +43,11 @@ namespace MVC.Presentacion.Controllers
             if (respuesta.Exito)
             {
                 Session["StringToken"] = respuesta.token;
-                return View();
-                //return new JsonResult
-                //{
-                //    Data = new { IsCorrect = true, Message = "", IsModelError = false, location = Url.Action("Inicio", "Home") }
-                //};
+                return View();               
             }
             else
-            {
-                
-                return View("Index", AutenticacionServicio.InitIndex(respuesta));
-                //return new JsonResult
-                //{
-                //    Data = new
-                //    {
-                //        IsCorrect = false,
-                //        Message = respuesta.Mensaje,
-                //        IsModelError = true,
-                //        view = RenderRazorViewToString("Index", new LoginModel
-                //        {
-                //            Empresas = AutenticacionServicio.EmpresasLogin(),
-                //            Respuesta = respuesta
-                //        })
-                //    },
-                //};
+            {                
+                return View("Index", AutenticacionServicio.InitIndex(respuesta));               
             }            
         }
     }

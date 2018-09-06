@@ -33,7 +33,6 @@ namespace MVC.Presentacion.App_Code
                 model.Empresas = EmpresasLogin();
             return model;
         }
-
         public static LoginModel InitIndex(RespuestaAutenticacionDto respuesta)
         {
             var model = new LoginModel();
