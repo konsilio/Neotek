@@ -18,25 +18,21 @@ namespace MVC.Presentacion.Controllers
         {       
             return View(AutenticacionServicio.InitIndex(model));
         }
-
         public ActionResult IndexError(LoginModel model)
         {
             model.Empresas = AutenticacionServicio.EmpresasLogin();           
             return View(model);
         }
-
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
             return View();
         }
-
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
             return View();
-        }     
-          
+        }               
         public ActionResult Inicio(AutenticacionDTO login)
         {    
             var respuesta = AutenticacionServicio.Autenticar(login.IdEmpresa, login.Usuario, SHA.GenerateSHA256String(login.Password));
@@ -45,10 +41,8 @@ namespace MVC.Presentacion.Controllers
                 Session["StringToken"] = respuesta.token;
                 return View();               
             }
-            else
-            {                
-                return View("Index", AutenticacionServicio.InitIndex(respuesta));               
-            }            
+            else                           
+                return View("Index", AutenticacionServicio.InitIndex(respuesta));   
         }
     }
 }
