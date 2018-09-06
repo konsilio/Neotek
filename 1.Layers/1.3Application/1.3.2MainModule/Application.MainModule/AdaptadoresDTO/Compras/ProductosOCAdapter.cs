@@ -83,7 +83,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
     }
     public static OrdenCompraProducto FromDTO(OrdenCompraProductoCrearDTO _prod)
     {
-        Producto p = new ProductoDataAccess().BuscarPorducto(_prod.IdProducto);
+        Producto p = new ProductoDataAccess().BuscarProducto(_prod.IdProducto);
         OrdenCompraProducto _prodDTO = new OrdenCompraProducto()
         {
             IdProducto = _prod.IdProducto,
