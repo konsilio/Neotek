@@ -47,12 +47,13 @@
                                     </select>
                                 </div>
                             </div>
+                            <br />
                             <div class="row clearfix">
-                                <div class="col-md-7">
+                                <div class="col-md-8">
                                     @*<asp:Button ID="BtnNuevo" CssClass="btn btn-raised btn-primary float-right" runat="server" Text="Nueva" OnClick="BtnNuevo_Click" />*@
                                     <input id="BtnNuevo" type="submit" value="Nueva" class="btn btn-raised btn-primary float-right" />
                                  </div>
-                            </div>
+                            </div><br />
                             <div class="row clearfix">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
@@ -65,17 +66,19 @@
                                                 <th>Celular</th>
                                                 <th>Telefono</th>
                                                 <th>Correo</th>
+                                                <th>Acciones</th>                                         
 </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var item in @ViewBag.listaEmpresas)
                                             {
                                                 <tr>
-                                                    <th scope="row">UrlLogotipoLogin</th>
+                                                    <th>@item.UrlLogotipoLogin</th>
                                                     <td>@item.RazonSocial</td>
                                                     <td>@item.Rfc</td>
                                                     <td>@item.Persona1</td>
                                                     <td>@item.Celular1</td>
+                                                    <td>@item.Telefono1</td>
                                                     <td>@item.Email1</td>
                                                     <td>
                                                         <a data-value="@item.IdEmpresa"
