@@ -130,4 +130,9 @@
     <string name="Recordatorio_dos">Recuerda que las siguiente pantalla debes contabilizar <u>todos</u> los cilindros <b>llenos.</b></string>
     <string name="Selecciona_la_camioneta">Selecciona la camioneta:</string>
     <string name="Quien_eres">¿Quién toma la lectura? es decir, ¿quién eres?</string>
+    <string name="configuracion_camioneta"><u>Configuracion-camioneta</u></string>
+    <string name="cilindros">Cilindros</string>
+    <string name="cantidad_cilindros">Cantidad</string>
+    <string name="Registra_configuracion">Registra la configuración de salida de la camioneta</string>
+    <string name="Contabiliza">Contabiliza los llenos</string>
 </resources>

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 
@@ -15,7 +16,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
  * @author Jorge Omar Tovar Martínez <jorge.tovar@neothec.com.mx>
  * @companny Neoteck
  * @date 28/08/2018
- * @updated 05/09/2018
+ * @updated 06/09/2018
  */
 public class SAGASSql extends SQLiteOpenHelper {
     //region Variables estaticas
@@ -40,6 +41,13 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_LECTURA_FINAL_ALMACEN = "lectura_final_almacen";
     private static final String TABLE_LECTURA_FINAL_ALMACEN_IMAGENES =
             "lectura_final_almacen_imagenes";
+    private static final String TABLE_LECTURA_INICIAL_CAMIONETA ="lectura_inicial_camioneta";
+    private static final String TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS =
+            "lectura_inicial_camioneta_cilindros";
+    private static final String TABLE_LECTURA_FINAL_CAMIONETA = "lectura_final_camioneta";
+    private static final String TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS =
+            "lectura_final_camiones_cilindros";
+
     //endregion
 
     //region Constructor de clase
@@ -239,6 +247,47 @@ public class SAGASSql extends SQLiteOpenHelper {
                 ")");
         //endregion
 
+        //region Tabla lectura_incial_camioneta
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_INICIAL_CAMIONETA+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT,"+
+                "IdCamioneta INTEGER," +
+                "NombreCamioneta TEXT," +
+                "Falta BOOLEAN DEFAULT 1"+
+                ")");
+        //endregion
+        //region Tabla lectura_inicial_camioneta_cilindros
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT," +
+                "IdCilindro INTEGER," +
+                "CilindroKg TEXT," +
+                "Cantidad INTEGER," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+
+        //region Tabla lectura_final_camioneta
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_FINAL_CAMIONETA+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT,"+
+                "IdCamioneta INTEGER," +
+                "NombreCamioneta TEXT," +
+                "EsEncargadoPuerta BOOLEAN DEFAULT 1,"+
+                "Falta BOOLEAN DEFAULT 1"+
+                ")");
+        //endregion
+        //region Tabla lectura_final_camioneta_cilindros
+        db.execSQL("CREATE TABLE "+TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT," +
+                "IdCilindro INTEGER," +
+                "CilindroKg TEXT," +
+                "Cantidad INTEGER," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+
     }
 
     /**
@@ -275,6 +324,10 @@ public class SAGASSql extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINAL_ALMACEN);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINAL_ALMACEN_IMAGENES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL_CAMIONETA);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINAL_CAMIONETA);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS);
         onCreate(db);
     }
     //endregion
@@ -1164,4 +1217,64 @@ public class SAGASSql extends SQLiteOpenHelper {
                 " ClaveOperacion = "+ClaveOperacion,null);
     }
     //endregion
+
+    //region Metodos para el registro de la lectura inicial de la camioneta
+    public Long InsertsLecturaInicialCamioneta(LecturaCamionetaDTO lecturaCamionetaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ClaveOperacion",lecturaCamionetaDTO.getClaveOperacion());
+        contentValues.put("IdCamioneta",lecturaCamionetaDTO.getIdCamioneta());
+        contentValues.put("NombreCamioneta",lecturaCamionetaDTO.getNombreCamioneta());
+        return db.insert(TABLE_LECTURA_INICIAL_CAMIONETA,null,contentValues);
+    }
+
+    public Cursor GetLecturaInicialCamionetaByClaveOperacion(String ClaveOperacion){
+        return this.getReadableDatabase().rawQuery(
+                "SELECT * FROM "+TABLE_LECTURA_INICIAL_CAMIONETA+
+        " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    public Integer EliminarLecturaInicialCamioneta(String ClaveOperacion){
+        return this.getWritableDatabase().delete(
+                TABLE_LECTURA_INICIAL_CAMIONETA,
+                " ClaveOperacion = "+ClaveOperacion,
+                null
+                );
+    }
+    //endregion
+
+    //region Metodos para el registro de los cilindros para la lectura inicial de la camioneta
+
+    //endregion
+
+    //region Metodos para el registro de la lectura final de la camioneta
+    public Long InsertsLecturaFinalCamioneta(LecturaCamionetaDTO lecturaCamionetaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("ClaveOperacion",lecturaCamionetaDTO.getClaveOperacion());
+        contentValues.put("IdCamioneta",lecturaCamionetaDTO.getIdCamioneta());
+        contentValues.put("EsEncargadoPuerta",lecturaCamionetaDTO.isEsEncargadoPuerta());
+        contentValues.put("NombreCamioneta",lecturaCamionetaDTO.getNombreCamioneta());
+        return db.insert(TABLE_LECTURA_FINAL_CAMIONETA,null,contentValues);
+    }
+
+    public Cursor GetLecturaFinalCamionetaByClaveOperacion(String ClaveOperacion){
+        return this.getReadableDatabase().rawQuery(
+                "SELECT * FROM "+TABLE_LECTURA_FINAL_CAMIONETA+
+                        " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    public Integer EliminarLecturaFinalCamioneta(String ClaveOperacion){
+        return this.getWritableDatabase().delete(
+                TABLE_LECTURA_FINAL_CAMIONETA,
+                " ClaveOperacion = "+ClaveOperacion,
+                null
+        );
+    }
+    //endregion
+
+    //region Metodos para el registro de los cilindros para la lectura final de la camioneta
+
+    //endregion
+
 }

@@ -108,7 +108,13 @@
         <activity
             android:name=".Activity.LecturaAlmacenActivity"
             android:label="@string/Almacen" />
-        <activity android:name=".Activity.LecturaCamionetaActivity"
+        <activity
+            android:name=".Activity.LecturaCamionetaActivity"
+            android:label="@string/Camioneta" />
+        <activity
+            android:name=".Activity.ConfiguracionCamionetaActivity"
+            android:label="@string/Camioneta" />
+        <activity android:name=".Activity.EnviarDartosActivity"
             android:label="@string/Camioneta"/>
     </application>
 
