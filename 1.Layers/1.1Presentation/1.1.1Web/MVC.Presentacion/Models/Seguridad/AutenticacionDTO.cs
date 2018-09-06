@@ -24,5 +24,7 @@ namespace MVC.Presentacion.Models.Seguridad
         [StringLength(250, MinimumLength = 8, ErrorMessage = eTa)]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
+
+
     }
 }
