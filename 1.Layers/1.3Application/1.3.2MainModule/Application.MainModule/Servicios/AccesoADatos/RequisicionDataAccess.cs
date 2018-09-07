@@ -121,5 +121,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<RequisicionProducto>().Get(x => x.IdRequisicion.Equals(idRequ)).ToList();
         }
+        public List<RequisicionEstatus> Estatus()
+        {
+            return uow.Repository<RequisicionEstatus>().GetAll().ToList();
+        }
     }
 }

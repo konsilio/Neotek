@@ -5,9 +5,8 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Requisicion
 {
-    public class RequisicionEstatusDTO
+    public class RequisicionAutPutDTO : RequisicionDTO
     {
-        public byte IdRequisicionEstatus { get; set; }
-        public string Estatus { get; set; }
+             public List<RequisicionProdAutPutDTO> ListaProductos { get; set; }
     }
 }
