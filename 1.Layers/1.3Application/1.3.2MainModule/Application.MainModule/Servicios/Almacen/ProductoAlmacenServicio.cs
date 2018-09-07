@@ -19,7 +19,7 @@ namespace Application.MainModule.Servicios.Almacen
             int x = 0;
             foreach (RequisicionProducto _prod in _requisicion.Productos)
             {
-                var prod = ProductoServicios.ObtenerProdcuto(_prod.IdProducto);
+                var prod = ProductoServicios.ObtenerProducto(_prod.IdProducto);
                 if (prod.EsGas)
                 {
                     _requisicion.Productos.ElementAt(x).CantidadAlmacenActual = AlmacenGasServicio.ObtenerCantidadActualAlmacenGeneral(_requisicion.IdEmpresa);
@@ -36,7 +36,7 @@ namespace Application.MainModule.Servicios.Almacen
                 }
                 _requisicion.Productos.ElementAt(x).EsActivoVenta = prod.EsActivoVenta;
                 _requisicion.Productos.ElementAt(x).EsGas = prod.EsGas;
-                _requisicion.Productos.ElementAt(x).EsTransporteGas = prod.EsTransporteGas != null ? prod.EsTransporteGas.Value : false;
+                _requisicion.Productos.ElementAt(x).EsTransporteGas = prod.EsTransporteGas;
 
                 x++;
             }

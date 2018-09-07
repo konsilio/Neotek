@@ -29,6 +29,7 @@ namespace Sagas.MainModule.Entidades
         public int IdProducto { get; set; }
         public short IdEmpresa { get; set; }
         public short IdProductoServicioTipo { get; set; }
+        public int IdCuentaContable { get; set; }
         public short IdCategoria { get; set; }
         public short IdProductoLinea { get; set; }
         public short IdUnidadMedida { get; set; }
@@ -36,7 +37,7 @@ namespace Sagas.MainModule.Entidades
         public string Descripcion { get; set; }
         public bool EsActivoVenta { get; set; }
         public bool EsGas { get; set; }
-        public Nullable<bool> EsTransporteGas { get; set; }
+        public bool EsTransporteGas { get; set; }
         public Nullable<decimal> Minimos { get; set; }
         public Nullable<decimal> Maximo { get; set; }
         public string UrlImagen { get; set; }
@@ -64,5 +65,6 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<RequisicionProducto> RequisicionProducto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrdenCompraProducto> OrdenCompraProducto { get; set; }
+        public virtual CuentaContable CuentaContable { get; set; }
     }
 }
