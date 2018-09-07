@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MVC.Presentacion.Models.Seguridad;
 
 namespace MVC.Presentacion.App_Code
 {
@@ -61,21 +62,89 @@ namespace MVC.Presentacion.App_Code
         {
             return new RequisicionModel()
             {
-                RequisicionProductos = new List<RequisicionProductoNuevoDTO>(),
-                CentrosCostos = CatalogoServicio.BuscarCentrosCosto(_tkn),
+                FechaRequerida = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
                 Productos = CatalogoServicio.ListaProductos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn),
-                Empresas = CatalogoServicio.Empresas(_tkn),
-                Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(_tkn),_tkn)
+                CentrosCostos = CatalogoServicio.BuscarCentrosCosto(_tkn),
+                RequisicionProductos = new List<RequisicionProductoNuevoDTO>(),
             };
         }
-        public static RequisicionModel AgregarProducto(RequisicionProductoNuevoDTO prod, string _tkn)
+        public static RequisicionModel AgregarProducto(RequisicionModel model, string _tkn)
         {
-            var model = InitRequisicion(_tkn);
+            model.Productos = CatalogoServicio.ListaProductos(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            model.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(_tkn);
             if (model.RequisicionProductos == null)
                 model.RequisicionProductos = new List<RequisicionProductoNuevoDTO>();
-            model.RequisicionProductos.Add(prod);
-          
+            if (ValidarProductoRepetido(model))            
+                foreach (var item in model.RequisicionProductos.Where((x => x.IdProducto.Equals(model.IdProducto)
+                                       && x.IdCentroCosto.Equals(model.IdCentroCosto))))
+                {
+                    item.Cantidad = item.Cantidad + model.Cantidad;
+                    item.Aplicacion = item.Aplicacion + "|" + model.Aplicacion;
+                }            
+            else            
+                model.RequisicionProductos.Add(CrearProductoNuevo(model));
+                  
             return model;
+        }
+        public static  RequisicionProductoNuevoDTO CrearProductoNuevo(RequisicionModel model)
+        {
+            var prod = model.Productos.FirstOrDefault(x => x.IdProducto.Equals(model.IdProducto));
+            var cc = model.CentrosCostos.FirstOrDefault(x => x.IdCentroCosto.Equals(model.IdCentroCosto));
+            return new RequisicionProductoNuevoDTO()
+            {
+                IdTipoProducto = model.IdTipoProducto,
+                TipoProducto = model.IdTipoProducto.Equals(2) ? "Producto" : "Servicio",
+                IdProducto = model.IdProducto,
+                Producto = prod.Descripcion,
+                Cantidad = model.Cantidad,
+                Unidad = prod.UnidadMedida,
+                IdCentroCosto = model.IdCentroCosto,
+                CentroCosto = cc.Descripcion,
+                Aplicacion = model.Aplicacion                
+            };
+        }
+        private static bool ValidarProductoRepetido(RequisicionModel model)
+        {
+            bool resp = false;
+            if (!model.Productos.Equals(0))
+                resp = (model.RequisicionProductos.Exists(x => x.IdProducto.Equals(model.IdProducto) && x.IdCentroCosto.Equals(model.IdCentroCosto)));
+            return resp;
+        }
+        public static RespuestaDTO GuardarRequisicion(RequisicionModel model, string _tkn)
+        {
+            RequisicionEDTO req = new RequisicionEDTO()
+            {
+                IdEmpresa = model.IdEmpresa,
+                FechaRequerida = Convert.ToDateTime(model.FechaRequerida.ToShortDateString()),
+                FechaRegistro = DateTime.Today,
+                IdRequisicionEstatus = RequisicionEstatusEnum.Creada,
+                IdUsuarioSolicitante = model.IdUsuarioSolicitante,
+                MotivoRequisicion = model.MotivoRequisicion,
+                RequeridoEn = model.RequeridoEn,
+                ListaProductos = ToEDTO(model.RequisicionProductos)
+            };
+            return RespuestaRequisicionDTO(req, _tkn);
+        }
+        public static RespuestaDTO RespuestaRequisicionDTO(RequisicionEDTO Req, string tkn)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.GuardarRequisicon(Req, tkn);
+            return respuestaReq._respuestaDTO;
+        }
+        public static List<RequisicionProductoEDTO> ToEDTO(List<RequisicionProductoNuevoDTO> modelPord)
+        {
+            return modelPord.Select(x => ToEDTO(x)).ToList();
+        }
+        public static RequisicionProductoEDTO ToEDTO(RequisicionProductoNuevoDTO modelPord)
+        {
+            return new RequisicionProductoEDTO()
+            {
+                IdProducto = modelPord.IdProducto,
+                IdTipoProducto = modelPord.IdTipoProducto,
+                IdCentroCosto = modelPord.IdCentroCosto,
+                Cantidad = modelPord.Cantidad,
+                Aplicacion = modelPord.Aplicacion
+            };
         }
     }
 }
