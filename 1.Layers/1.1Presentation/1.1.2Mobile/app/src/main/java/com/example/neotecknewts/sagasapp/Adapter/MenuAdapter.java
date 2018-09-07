@@ -17,6 +17,7 @@ import com.example.neotecknewts.sagasapp.Activity.LecturaCamionetaActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaDatosActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaActivity;
+import com.example.neotecknewts.sagasapp.Activity.ReporteActivity;
 import com.example.neotecknewts.sagasapp.Activity.VistaOrdenCompraActivity;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.R;
@@ -88,13 +89,15 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     Intent intent = new Intent(view.getContext() , VistaOrdenCompraActivity.class);
                     view.getContext().startActivity(intent);
                 }
-                else if(menuItem.getName().equals("Estación de carb. (Inicial)")){
+                else if(menuItem.getName().equals("Estación de carb. (Inicial)") &&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext() , LecturaDatosActivity.class);
                     intent.putExtra("EsLecturaInicial",true);
                     intent.putExtra("EsLecturaFinal",false);
                     view.getContext().startActivity(intent);
                 }
-                else if(menuItem.getName().equals("Estación de carb. (Final)")){
+                else if(menuItem.getName().equals("Estación de carb. (Final)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext() , LecturaDatosActivity.class);
                     intent.putExtra("EsLecturaInicial",false);
                     intent.putExtra("EsLecturaFinal",true);
@@ -129,6 +132,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsLecturaInicialCamioneta",false);
                     intent.putExtra("EsLecturaFinalCamioneta",true);
                     view.getContext().startActivity(intent);
+                }else if(menuItem.getName().equals("Reporte del día")){
+                    Intent intent = new Intent(view.getContext(),ReporteActivity.class);
+                    intent.putExtra("EsReporteDelDia",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getName().equals("Estación Carb. (Inicial)") &&
+                        menuItem.getHeaderMenu().equals("Auto-consumo - Gas")){
+
+                }else if(menuItem.getName().equals("Estación Carb. (Inicial)") &&
+                        menuItem.getHeaderMenu().equals("Auto-consumo - Gas")){
+
                 }
 
             }

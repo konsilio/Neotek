@@ -98,6 +98,15 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         MenuDTO m8 = new MenuDTO();
         m8.setHeaderMenu("Toma de lectura");
         m8.setName("Camioneta (Final)");
+        MenuDTO m9 = new MenuDTO();
+        m9.setHeaderMenu("Generar - Reporte");
+        m9.setName("Reporte del día");
+        MenuDTO m10 = new MenuDTO();
+        m10.setHeaderMenu("Auto-consumo - Gas");
+        m10.setName("Estación Carb. (Inicial)");
+        MenuDTO m11 = new MenuDTO();
+        m11.setHeaderMenu("Auto-consumo - Gas");
+        m11.setName("Estación Carb. (Final)");
         //m.setImageRef(R.g);
         menu.add(m);
         menu.add(m2);
@@ -107,6 +116,9 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         menu.add(m6);
         menu.add(m7);
         menu.add(m8);
+        menu.add(m9);
+        menu.add(m10);
+        menu.add(m11);
 
         //se agrega la lista al adapter y se agrega el adapter al recylcer view
         adapter = new MenuAdapter(menu);

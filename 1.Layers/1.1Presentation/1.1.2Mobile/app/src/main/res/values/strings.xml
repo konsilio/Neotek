@@ -135,4 +135,12 @@
     <string name="cantidad_cilindros">Cantidad</string>
     <string name="Registra_configuracion">Registra la configuración de salida de la camioneta</string>
     <string name="Contabiliza">Contabiliza los llenos</string>
+    <string name="Reporte">Reporte</string>
+    <string name="reporte_del_dia">Reporte del dia</string>
+    <string name="selecciona_la_fecha_a_reportar">Selecciona la fecha a reportar:</string>
+    <string name="selecciona_la_unidad">Selecciona la unidad:</string>
+    <string name="generando_reporte">Generando reporte....</string>
+    <string name="Generar_reporte">Generar Reporte</string>
+    <string name="terminar">Terminar</string>
+    <string name="imprimir_reporte">Imprimir Reporte</string>
 </resources>

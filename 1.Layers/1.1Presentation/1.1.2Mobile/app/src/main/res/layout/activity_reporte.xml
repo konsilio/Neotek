@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ReporteActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="564dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TVReporteActivityTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="4"
+                android:paddingBottom="15dp"
+                android:paddingTop="25dp"
+                android:text="@string/reporte_del_dia"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/TVReporteactivitySeleccionaFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="4"
+                android:paddingTop="25dp"
+                android:text="@string/selecciona_la_fecha_a_reportar"
+                android:textSize="24sp" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="4">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/TVReporteActivityFecha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_weight="1"
+                        android:paddingTop="15dp"
+                        android:text="@string/seleccionar_fecha"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <ImageButton
+                        android:id="@+id/IBReporteFechaActivityFecha"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:backgroundTint="@color/colorBackgroundLogin"
+                        android:contentDescription="@string/selecciona_la_fecha_a_reportar"
+                        android:padding="25dp"
+                        app:srcCompat="@drawable/calendar"
+                        tools:ignore="UnusedAttribute"
+                        tools:targetApi="lollipop" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/TVReporteActivitySelecioneUnidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="4"
+                android:paddingBottom="5dp"
+                android:paddingTop="15dp"
+                android:text="@string/selecciona_la_unidad"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/SReporteActivityListUnidades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="4"
+                android:padding="25dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="56sp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="4" />
+
+            <Button
+                android:id="@+id/BtnReporteactivityAceptar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="85dp"
+                android:layout_marginRight="85dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="4"
+                android:backgroundTint="@color/colorButtonLogin"
+                android:padding="15dp"
+                android:text="@string/Generar_reporte"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="24sp"
+                tools:ignore="UnusedAttribute" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
