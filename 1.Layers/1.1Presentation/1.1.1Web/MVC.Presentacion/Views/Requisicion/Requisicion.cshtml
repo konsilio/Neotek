@@ -1,6 +1,6 @@
 ﻿@using MVC.Presentacion.Models.Requisicion
 @model RequisicionModel
-
+<link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 <section class="content home">
     <div class="container-fluid">
         <div class="block-header">
@@ -30,15 +30,13 @@
                                                 <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                             }
                                         </select>
-                                        @*<asp:DropDownList ID="ddlEmpresas" CssClass="form-control show-tick" runat="server" Visible="true" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged" AutoPostBack="true">
-                                        </asp:DropDownList>*@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Número de Requisición:</label>&nbsp;
-                                            <Label ID="lblIdRequisicion" >@ViewBag.NumeroRequisicion</Label>
+                                            <Label ID="lblIdRequisicion">@ViewBag.NumeroRequisicion</Label>
                                         </div>
                                     </div>
                                 </div>
@@ -46,187 +44,184 @@
 
                             <div class="row clearfix z-index" id="divCamposRequi">
                                 <div class="col-lg-3">
-                                    <%--Fecha requerida--%>
+                                   
                                     <b>Fecha requerida:</b>
-                                    <dtp:DateTimePicker ID="txtFechaRequerida" CssClass="dataTxt z-index" runat="server" />
-                                    <asp:Label runat="server" ID="reqFecha" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
+                                    @Html.TextBoxFor(c => c.FechaRequerida, new { id = "datepicker" })
+                                    @*<dtp:DateTimePicker ID="txtFechaRequerida" CssClass="dataTxt z-index" runat="server" />*@
                                 </div>
                                 <div class="col-lg-3">
-                                    <%--Solicitante--%>
+                                   
                                     <b>Solicitante:</b>
-                                    <asp:DropDownList runat="server" ID="ddlSolicitante" CssClass="form-control z-index show-tick" data-live-search="true" data-show-subtext="true" OnSelectedIndexChanged="ddlSolicitante_SelectedIndexChanged">
-                                    </asp:DropDownList>
-                                    <asp:Label runat="server" ID="reqSol" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
+                                    <select id="ddlSoliciante" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                        @foreach (var lst in Model.Usuarios)
+                                        {
+                                            <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1</option>
+                                        }
+                                    </select>
                                 </div>
                                 <div class="col-lg-3">
-                                    <%--Motivo de compra--%>
+                                   
                                     <b>Motivo de compra:</b>
-                                    <asp:TextBox runat="server" ID="txtMotivoCompra" CssClass="form-control" placeholder="Motivo de la compra..." TextMode="MultiLine" OnTextChanged="txtMotivoCompra_TextChanged"></asp:TextBox>
-                                    <asp:Label runat="server" ID="reqMotivo" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
+                                    <input Type="text" name="MotivoCompra" class="form-control" placeholder="Motivo de la compra..." TextMode="MultiLine" />
+                                    @*<asp:Label runat="server" ID="reqMotivo" CssClass="alert-danger" Visible="false" Text="Campo requerido" />*@
                                 </div>
                                 <div class="col-lg-3">
-                                    <%--Se requiere en--%>
+                                  
                                     <b>Se requiere en:</b>
-                                    <asp:TextBox runat="server" ID="txtRequeridoEn" CssClass="form-control" placeholder="Se requiere en..." TextMode="MultiLine" OnTextChanged="txtRequeridoEn_TextChanged"></asp:TextBox>
-                                    <asp:Label runat="server" ID="reqReq" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
+                                    <input type="text" name="RqueridoEn" class="form-control" placeholder="Se requiere en..." TextMode="MultiLine" />
+                                    @*<asp:Label runat="server" ID="reqReq" CssClass="alert-danger" Visible="false" Text="Campo requerido" />*@
                                 </div>
                             </div>
-                            <div class="row clearfix">
-                                <div id="divCampos" runat="server" visible="false" class="container">
-                                    <div class="alert alert-danger">
-                                        <div class="alert-icon">
-                                            <i class="zmdi zmdi-block"></i>
+                            @if (ViewBag.MensajeError != null && !ViewBag.MensajeError.Equal(string.Empty))
+                            {
+                                <div class="row clearfix">
+                                    <div id="divCampos" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                <label>@ViewBag.MensajeError</label>
+                                            </strong>
                                         </div>
-                                        <strong>
-                                            <asp:Label ID="lblErrorCampos" runat="server" Text="" />
-                                        </strong>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row clearfix" runat="server" id="divDatos1">
-                                <div class="col-lg-2">
-                                    <%--Tipo de compra--%>
-                                    <b>Tipo de compra:</b>
-                                    <asp:DropDownList ID="ddlTipoCompra" runat="server" CssClass="form-control z-index show-tick" AutoPostBack="true" OnSelectedIndexChanged="ddlTipoCompra_SelectedIndexChanged">
-                                        <asp:ListItem Value="2" Text="Producto"></asp:ListItem>
-                                        <asp:ListItem Value="3" Text="Servicio"></asp:ListItem>
-                                    </asp:DropDownList>
-                                    <asp:Label runat="server" ID="reqTipo" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
-                                </div>
-                                <div class="col-lg-4">
-                                    <%--Producto--%>
-                                    <b>Producto:</b>
-                                    <asp:DropDownList runat="server" ID="ddlProdcutos" AutoPostBack="true" CssClass="form-control show-tick" data-live-search="true" OnSelectedIndexChanged="ddlProdcutos_SelectedIndexChanged">
-                                    </asp:DropDownList>
-                                    <asp:Label runat="server" ID="reqProd" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
-                                </div>
-                                <div class="col-lg-2">
-                                    <%--Cantidad--%>
-                                    <b>
-                                        <asp:Label ID="lblCantidadUnidad" runat="server" Text="Cantidad: " />
-                                    </b>
-                                    <div class="form-group">
-                                        <asp:TextBox ID="txtCantidad" runat="server" placeholder="0" TextMode="Number" CssClass="form-control" />
+                            }
+                            @using (Html.BeginForm("Agregar", "Requisicion", FormMethod.Post))
+                            {
+                                <div class="row clearfix">
+                                    <div class="col-lg-2">
+                                     
+                                        <b>Tipo de compra:</b>
+                                        <select name="IdTipoProducto" class="form-control z-index show-tick">
+                                            <option value="2">Producto</option>
+                                            <option value="3">Servicio</option>
+                                        </select>     
                                     </div>
-                                    <asp:Label runat="server" ID="reqCant" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
-                                </div>
-                                <div class="col-lg-3">
-                                    <%--Centro de costo--%>
-                                    <b>Centro de costo:</b>
-                                    <asp:DropDownList runat="server" ID="ddlCentroCostos" CssClass="form-control z-index show-tick" data-live-search="true"></asp:DropDownList>
-                                    <asp:Label runat="server" ID="reqCC" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
-                                </div>
-                            </div>
-                            <div class="row clearfix js-sweetalert" id="divDatos2" runat="server">
-                                <div class="col-lg-8">
-                                    <%--Aplicacion--%>
-                                    <b>Aplicación:</b>
-                                    <div class="form-group">
-                                        <asp:TextBox ID="txtDetalle" runat="server" placeholder="Comentarios..." CssClass="form-control" />
+                                    <div class="col-lg-4">
+                                      
+                                        <b>Producto:</b>
+                                        <select id="ddlProductos" class="form-control show-tick" data-live-search="true">
+                                            @foreach (var lst in Model.Productos)
+                                            {
+                                                <option value="@lst.IdProducto">@lst.Descripcion</option>
+                                            }
+                                        </select>
+                                       
                                     </div>
-                                    <asp:Label runat="server" ID="reqApli" CssClass="alert-danger" Visible="false" Text="Campo requerido" />
-                                </div>
-                                <div class="col-lg-2 col-md-6">
-                                    <label>&nbsp; </label>
-                                    <div class="form-group">
-                                        <asp:LinkButton ID="btnAgregar" runat="server" CssClass="btn btn-danger btn-simple btn-round btn-sm" Text="Agregar +" data-type="ajax-loader" OnClick="btnAgregar_Click">
-                                        </asp:LinkButton>
+                                    <div class="col-lg-2">
+                                      
+                                        <b>
+                                            <label> Cantidad: @ViewBag.Unidad </label>
+                                        </b>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" placeholder="Cantidad" name="Cantidad"/>
+                                          </div>
+                                        @*<asp:Label runat="server" ID="reqCant" CssClass="alert-danger" Visible="false" Text="Campo requerido" />*@
                                     </div>
-                                    <%--<asp:Button ID="btnAgregar" CssClass="btn btn-raised btn-primary waves-effect btn-round" data-type="ajax-loader" OnClick="btnAgregar_Click" Text="Agregar" />--%>
-                                </div>
-                            </div>
-                            <div id="DivCamposPord" runat="server" visible="false" class="container">
-                                <div class="alert alert-danger">
-                                    <div class="alert-icon">
-                                        <i class="zmdi zmdi-block"></i>
+                                    <div class="col-lg-3">
+
+                                      
+                                        <b>Centro de costo:</b>
+                                        <select class="form-control selectpicker z-index show-tick" data-live-search="true" name="IdCentroCosto">
+                                            @foreach (var lst in Model.CentrosCostos)
+                                            {
+                                                <option value="@lst.IdCentroCosto">@lst.Descripcion</option>
+                                            }
+                                        </select>                                       
                                     </div>
-                                    <strong>
-                                        <asp:Label ID="lblErrorPord" runat="server" Text="" />
-                                    </strong>
                                 </div>
-                            </div>
+                                <div class="row clearfix js-sweetalert">
+                                    <div class="col-lg-8">
+                                        
+                                        <b>Aplicación:</b>
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Comentarios..." Class="form-control" name="Aplicacion"/>
+                                        </div>
+                                        @*<asp:Label runat="server" ID="reqApli" CssClass="alert-danger" Visible="false" Text="Campo requerido" />*@
+                                    </div>
+                                    <div class="col-lg-2 col-md-6">
+                                        <label>&nbsp; </label>
+                                        <div class="form-group">
+                                            <input id="btnAgregar" class="btn btn-danger btn-simple btn-round btn-sm" value="Agregar"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                if (ViewBag.MensajeError != null)
+                                {
+                                    <div id="DivCamposPord" runat="server" visible="false" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                <label>@ViewBag.MensajeError</label>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                }
+                            }
                             <!--Grid productos agregados nueva requisicion-->
                             <div class="row clearfix">
                                 <div class="table-responsive">
-                                    <asp:GridView CssClass="table table-hover" OnRowCommand="dgListaproductos_RowCommand" OnRowDataBound="dgListaproductos_RowDataBound" runat="server" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" EmptyDataText="No se han agregado productos y/o servicios a la requisicion">
-                                        <Columns>
-                                            <asp:TemplateField>
-                                                <%--0 Tipo de compra--%>
-                                                <HeaderTemplate>
-                                                    <b>Tipo</b>
-                                                </HeaderTemplate>
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto") %>' />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField>
-                                                <%--1 Producto--%>
-                                                <HeaderTemplate>
-                                                    <b>Producto</b>
-                                                </HeaderTemplate>
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Producto") %>' />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField>
-                                                <%--2 Cantidad--%>
-                                                <HeaderTemplate>
-                                                    <b>Cantidad</b>
-                                                </HeaderTemplate>
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("Cantidad") %>' />
-                                                    <asp:label runat="server" ID="lblCantidadNA" Visible="false" Text="NA" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField>
-                                                <%--3 Unidad--%>
-                                                <HeaderTemplate>
-                                                    <b>Unidad</b>
-                                                </HeaderTemplate>
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
-                                                    <asp:label runat="server" ID="lblUnidadNA" Visible="false" Text="NA" />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField>
-                                                <%--4 Aplicacion--%>
-                                                <HeaderTemplate>
-                                                    <b>Aplicación</b>
-                                                </HeaderTemplate>
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField>
-                                                <%--5 Centro de costo--%>
-                                                <HeaderTemplate>
-                                                    <b>Centro de Costo</b>
-                                                </HeaderTemplate>
-                                                <ItemTemplate>
-                                                    <asp:Label ID="lbldgCentroCosto" runat="server" Text='<%# Bind("CentroCosto") %>' />
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                            <asp:TemplateField>
-                                                <%--5 Accion--%>
-                                                <HeaderTemplate>
-                                                    <b>Acción</b>
-                                                </HeaderTemplate>
-                                                <ItemTemplate>
-                                                    <asp:LinkButton runat="server" ID="lbEdit" CommandName="Editar" CommandArgument='<%# Eval("IdProducto")  + "|" + Eval("IdCentroCosto")  %>'>
-                                                        <i class="material-icons">edit</i>
-                                                        <span class="icon-name"></span>
-                                                    </asp:LinkButton>
-                                                    <asp:LinkButton runat="server" ID="lbBorrar" CommandName="Borrar" CommandArgument='<%# Eval("IdProducto") + "|" + Eval("IdCentroCosto") %>'>
-                                                        <i class="material-icons">delete</i>
-                                                        <span class="icon-name"></span>
-                                                    </asp:LinkButton>
-                                                </ItemTemplate>
-                                            </asp:TemplateField>
-                                        </Columns>
-                                    </asp:GridView>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <td>Tipo</td>
+                                                <td>Producto</td>
+                                                <td>Cantidad</td>
+                                                <td>Unidad</td>
+                                                <td>Aplicacion</td>
+                                                <td>Centro de Costo</td>
+                                                <td>Accion</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var prodReq in Model.RequisicionProductos)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        
+                                                        @prodReq.IdTipoProducto
+                                                    </td>
+                                                    <td>
+                                                       
+                                                        @prodReq.Producto
+                                                    </td>
+                                                    <td>
+                                                      
+                                                        @prodReq.Cantidad
+                                                    </td>
+                                                    <td>
+                                                       
+                                                        @prodReq.Unidad
+                                                    </td>
+                                                    <td>
+                                                        
+                                                        @prodReq.Aplicacion
+                                                    </td>
+                                                    <td>
+                                                       
+                                                        @prodReq.CentroCosto
+                                                    </td>
+                                                    <td>
+                                                       
+                                                        <a ID="lbEdit">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                        <a ID="lbBorrar">
+                                                            <i class="material-icons">delete</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <%--Grid productos revision--%>
+                            @*Grid productos revision*@
                             <div class="row clearfix">
                                 <div class="table-responsive">
                                     <asp:GridView runat="server" ID="gvProductosRevision" AutoGenerateColumns="false" CssClass="table table-hover" Visible="false" OnRowCommand="gvProductosRevision_RowCommand">
@@ -522,4 +517,12 @@
         </div>
     </div>
 </div>
+
+
+<script src="~/assets/plugins/momentjs/moment.js"></script> <!-- Moment Plugin Js -->
+<!-- Bootstrap Material Datetime Picker Plugin Js -->
+<script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+<script src="~/assets/js/pages/forms/basic-form-elements.js"></script>
+<script src="~/assets/js/pages/forms/advanced-form-elements.js"></script>
 
