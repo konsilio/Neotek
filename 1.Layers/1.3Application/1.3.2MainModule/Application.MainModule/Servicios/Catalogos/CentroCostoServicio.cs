@@ -27,7 +27,7 @@ namespace Application.MainModule.Servicios.Catalogos
 
         public static List<CentroCosto> Obtener()
         {
-            var empresa = new EmpresaDataAccess().Buscar(TokenServicio.ObtenerIdEmpresa());
+            var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
 
             if (empresa.EsAdministracionCentral)
                 return new CentroCostoDataAccess().BuscarTodos();

@@ -11,9 +11,10 @@ namespace Application.MainModule.Servicios.Catalogos
 {
     public static class ValidarCatalogoServicio
     {
+        #region Centro de costos
         public static RespuestaDto CentroCosto(CentroCostoCrearDto ccDto, bool esModificacion = false)
         {
-            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true };
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
             bool unidadAsignada = false;
             string unidadMensaje = string.Empty;
             // Existencia            
@@ -57,5 +58,71 @@ namespace Application.MainModule.Servicios.Catalogos
 
             return respuesta;
         }
+        #endregion
+
+        #region Productos
+        public static RespuestaDto CategoriaProducto(CategoriaProductoCrearDto cpDto, bool esModificacion = false)
+        {
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
+            // Existencia            
+            if (ProductoServicios.ExisteCategoria(cpDto.Nombre))
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.C0005, "La categoría de producto", string.Empty));
+            }
+
+            return respuesta;
+        }
+
+        public static RespuestaDto LineaProducto(LineaProductoCrearDto lpDto, bool esModificacion = false)
+        {
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
+            // Existencia            
+            if (ProductoServicios.ExisteLinea(lpDto.Linea))
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.C0005, "La línea del productos", "Línea de producto"));
+            }
+
+            return respuesta;
+        }
+
+        public static RespuestaDto UnidadMedida(UnidadMedidaCrearDto uMDto, bool esModificacion = false)
+        {
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
+            // Existencia            
+            if (ProductoServicios.ExisteUnidadMedida(uMDto.Nombre, uMDto.Acronimo))
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.C0005, "El nombre o acrónimo", "unidad de medida"));
+            }
+
+            return respuesta;
+        }
+
+        public static RespuestaDto Producto(ProductoCrearDto pDto, bool esModificacion = false)
+        {
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
+                
+            if (pDto.Minimos.Value > pDto.Maximo.Value)
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.CP0001, pDto.Minimos.Value, pDto.Maximo.Value));
+            }
+
+            if (pDto.EsTransporteGas && (pDto.EsActivoVenta || pDto.EsGas))
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.CP0002, pDto.Minimos.Value, pDto.Maximo.Value));
+            }
+
+            return respuesta;
+        }
+        #endregion
     }
 }

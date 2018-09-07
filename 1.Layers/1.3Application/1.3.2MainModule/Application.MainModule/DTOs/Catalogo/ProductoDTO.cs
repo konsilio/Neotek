@@ -35,6 +35,8 @@ namespace Application.MainModule.DTOs.Catalogo
         [Display(Name = "IdProductoLinea")]
         public short IdProductoLinea { get; set; }
 
+        public int IdCuentaContable { get; set; }
+
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdUnidadMedida")]
         public short IdUnidadMedida { get; set; }

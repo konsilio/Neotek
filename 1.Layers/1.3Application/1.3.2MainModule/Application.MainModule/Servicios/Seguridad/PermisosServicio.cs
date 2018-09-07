@@ -97,6 +97,40 @@ namespace Application.MainModule.Servicios.Seguridad
         }
         #endregion
 
+        #region Producto
+        public static RespuestaDto PuedeRegistrarProducto()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatInsertarProducto);
+
+            return EvaluarPermiso(rol, Error.P0001, "productos y; sus categorías, líneas y unidades de medida");
+        }
+
+        public static RespuestaDto PuedeModificarProducto()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatModificarProducto);
+
+            return EvaluarPermiso(rol, Error.P0002, "productos y; sus categorías, líneas y unidades de medida");
+        }
+
+        public static RespuestaDto PuedeEliminarProducto()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatEliminarProducto);
+
+            return EvaluarPermiso(rol, Error.P0003, "productos y; sus categorías, líneas y unidades de medida");
+        }
+
+        public static RespuestaDto PuedeConsultarProducto()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var rol = usuario.Roles.FirstOrDefault(x => x.CatConsultarProducto);
+
+            return EvaluarPermiso(rol, Error.P0004, "productos y; sus categorías, líneas y unidades de medida");
+        }
+        #endregion
+
         #region Centro Costo
         public static RespuestaDto PuedeRegistrarCentroCosto()
         {
