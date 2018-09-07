@@ -11,6 +11,7 @@ namespace Application.MainModule.Servicios.Catalogos
 {
     public static class ValidarCatalogoServicio
     {
+        #region Centro de costos
         public static RespuestaDto CentroCosto(CentroCostoCrearDto ccDto, bool esModificacion = false)
         {
             var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true };
@@ -57,5 +58,36 @@ namespace Application.MainModule.Servicios.Catalogos
 
             return respuesta;
         }
+        #endregion
+
+        #region Productos
+        public static RespuestaDto CategoriaProducto(CategoriaProductoCrearDto cpDto, bool esModificacion = false)
+        {
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true };
+            // Existencia            
+            if (ProductoServicios.ExisteCategoria(cpDto.Nombre))
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.C0005, "La categoría de producto", string.Empty));
+            }
+
+            return respuesta;
+        }
+
+        public static RespuestaDto LineaProducto(LineaProductoCrearDto lpDto, bool esModificacion = false)
+        {
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true };
+            // Existencia            
+            if (ProductoServicios.ExisteLinea(lpDto.Linea))
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.C0005, "La línea del productos", string.Empty));
+            }
+
+            return respuesta;
+        }
+        #endregion
     }
 }

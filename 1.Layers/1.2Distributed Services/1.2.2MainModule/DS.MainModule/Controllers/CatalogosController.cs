@@ -84,6 +84,71 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Productos
+
+        #region Categoria Productos
+        [Route("registra/categoria/producto")]
+        public HttpResponseMessage PostRegistraCategoriaProducto(CategoriaProductoCrearDto cProdDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraCategoriaProducto(cProdDto), Request);
+        }
+
+        [Route("modifica/categoria/producto")]
+        public HttpResponseMessage PutModificaCategoriaProducto(CategoriaProductoModificarDto cProdDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaCategoriaProducto(cProdDto), Request);
+        }
+
+        [Route("elimina/categoria/producto")]
+        public HttpResponseMessage PutEliminaCategoriaProducto(CategoriaProductoEliminarDto cProdDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaCategoriaProducto(cProdDto), Request);
+        }
+
+        [Route("consulta/categorias/producto")]
+        public HttpResponseMessage GetCategoriasProducto()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaCategoriasProducto(), Request);
+        }
+
+        [Route("consulta/categoria/producto/{idCosto}")]
+        public HttpResponseMessage GetCategoriaProducto(short idCategoria)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCategoriaProducto(idCategoria));
+        }
+        #endregion
+
+        #region Linea Productos
+        [Route("registra/linea/producto")]
+        public HttpResponseMessage PostRegistraLineaProducto(LineaProductoCrearDto lProdDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraLineaProducto(lProdDto), Request);
+        }
+
+        [Route("modifica/linea/producto")]
+        public HttpResponseMessage PutModificalLineaProducto(LineaProductoModificarDto lProdDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaLineaProducto(lProdDto), Request);
+        }
+
+        [Route("elimina/linea/producto")]
+        public HttpResponseMessage PutEliminaLineaProducto(LineaProductoEliminarDto lProdDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaLineaProducto(lProdDto), Request);
+        }
+
+        [Route("consulta/lineas/producto")]
+        public HttpResponseMessage GetlineasProducto()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaLineasProducto(), Request);
+        }
+
+        [Route("consulta/linea/producto/{idCosto}")]
+        public HttpResponseMessage GetlineaProducto(short idlinea)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaLineaProducto(idlinea));
+        }
+        #endregion
+
         [Route("productos/listaproductos/{idEmpresa}")]
         public HttpResponseMessage GetListaProductos(short idEmpresa)
         {
@@ -163,6 +228,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCentroCosto(idCosto));
         }
         #endregion
+
         #region Cuentas Contables
         [Route("registra/cuenta/contable")]
         public HttpResponseMessage PostRegistraCuentaContable(CuentaContableCrearDto cuentaDto)

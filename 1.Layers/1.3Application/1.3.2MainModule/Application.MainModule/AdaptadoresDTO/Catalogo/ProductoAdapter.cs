@@ -10,6 +10,114 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
 {
     public static class ProductoAdapter
     {
+        #region Categoria Producto
+        public static CategoriaProducto FromDto(CategoriaProductoCrearDto cProDto)
+        {
+            return new CategoriaProducto()
+            {
+                IdEmpresa = cProDto.IdEmpresa,
+                Nombre = cProDto.Nombre,
+                Descripcion = cProDto.Descripcion,
+                FechaRegistro = DateTime.Now,
+                Activo = true,
+            };
+        }
+
+        public static CategoriaProducto FromDto(CategoriaProductoModificarDto cProDto)
+        {
+            return new CategoriaProducto()
+            {
+                IdCategoria = cProDto.IdCategoria,
+                IdEmpresa = cProDto.IdEmpresa,
+                Nombre = cProDto.Nombre,
+                Descripcion = cProDto.Descripcion,
+            };
+        }
+
+        public static CategoriaProducto FromEntity(CategoriaProducto antCatProducto)
+        {
+            return new CategoriaProducto()
+            {
+                IdCategoria = antCatProducto.IdCategoria,
+                IdEmpresa = antCatProducto.IdEmpresa,
+                Nombre = antCatProducto.Nombre,
+                Descripcion = antCatProducto.Descripcion,
+                FechaRegistro = antCatProducto.FechaRegistro,
+                Activo = antCatProducto.Activo,
+            };
+        }
+
+        public static CategoriaProductoDto ToDTO(CategoriaProducto _cProd)
+        {
+            return new CategoriaProductoDto()
+            {
+                IdCategoria = _cProd.IdCategoria,
+                IdEmpresa = _cProd.IdEmpresa,
+                Descripcion = _cProd.Descripcion,
+                Nombre = _cProd.Nombre
+            };
+        }
+
+        public static List<CategoriaProductoDto> ToDTO(List<CategoriaProducto> _cProd)
+        {
+            return _cProd.Select(x => ToDTO(x)).ToList();
+        }
+        #endregion
+
+        #region Linea Producto
+        public static LineaProducto FromDto(LineaProductoCrearDto lProDto)
+        {
+            return new LineaProducto()
+            {
+                IdEmpresa = lProDto.IdEmpresa,
+                Linea = lProDto.Linea,
+                Descripcion = lProDto.Descripcion,
+                FechaRegistro = DateTime.Now,
+                Activo = true,
+            };
+        }
+
+        public static LineaProducto FromDto(LineaProductoModificarDto lProDto)
+        {
+            return new LineaProducto()
+            {
+                IdProductoLinea = lProDto.IdProductoLinea,
+                IdEmpresa = lProDto.IdEmpresa,
+                Linea = lProDto.Linea,
+                Descripcion = lProDto.Descripcion,
+            };
+        }
+
+        public static LineaProducto FromEntity(LineaProducto antCatProducto)
+        {
+            return new LineaProducto()
+            {
+                IdProductoLinea = antCatProducto.IdProductoLinea,
+                IdEmpresa = antCatProducto.IdEmpresa,
+                Linea = antCatProducto.Linea,
+                Descripcion = antCatProducto.Descripcion,
+                FechaRegistro = antCatProducto.FechaRegistro,
+                Activo = antCatProducto.Activo,
+            };
+        }
+
+        public static LineaProductoDto ToDTO(LineaProducto _lProd)
+        {
+            return new LineaProductoDto()
+            {
+                IdProductoLinea = _lProd.IdProductoLinea,
+                IdEmpresa = _lProd.IdEmpresa,
+                Descripcion = _lProd.Descripcion,
+                Linea = _lProd.Linea
+            };
+        }
+
+        public static List<LineaProductoDto> ToDTO(List<LineaProducto> _lProd)
+        {
+            return _lProd.Select(x => ToDTO(x)).ToList();
+        }
+        #endregion
+
         public static ProductoDTO ToDTO(Producto _prod)
         {
             ProductoDTO prodDTO = new ProductoDTO();

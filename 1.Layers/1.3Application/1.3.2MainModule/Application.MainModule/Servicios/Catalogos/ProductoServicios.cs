@@ -8,6 +8,8 @@ using Sagas.MainModule.Entidades;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.Servicios.Seguridad;
+using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -50,31 +52,81 @@ namespace Application.MainModule.Servicios.Catalogos
             return new ProductoDataAccess().Actualizar(prod);
         }
 
-        public static List<CentroCosto> Obtener()
+        public static List<CategoriaProducto> ObtenerCategorias()
         {
-            var empresa = new EmpresaDataAccess().Buscar(TokenServicio.ObtenerIdEmpresa());
+            var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
 
             if (empresa.EsAdministracionCentral)
-                return new CentroCostoDataAccess().BuscarTodos();
+                return new ProductoDataAccess().ListaCategorias();
             else
-                return new CentroCostoDataAccess().BuscarTodos(empresa.IdEmpresa);
+                return new ProductoDataAccess().ListaCategorias(empresa.IdEmpresa);
+        }
+        public static List<LineaProducto> ObtenerLineasProducto()
+        {
+            var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
+
+            if (empresa.EsAdministracionCentral)
+                return new ProductoDataAccess().ListaLineaProductos();
+            else
+                return new ProductoDataAccess().ListaLineaProductos(empresa.IdEmpresa);
+        }
+        public static List<UnidadMedida> ObtenerUnidadesMedida()
+        {
+            var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
+
+            if (empresa.EsAdministracionCentral)
+                return new ProductoDataAccess().ListaUnidadesMedida();
+            else
+                return new ProductoDataAccess().ListaUnidadesMedida(empresa.IdEmpresa);
+        }
+        public static List<Producto> Obtener()
+        {
+            var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
+
+            if (empresa.EsAdministracionCentral)
+                return new ProductoDataAccess().ListaProductos();
+            else
+                return new ProductoDataAccess().ListaProductos(empresa.IdEmpresa);
         }
 
-        public static CentroCosto Obtener(int IdCentroCosto)
+        public static CategoriaProducto ObtenerCategoria(short idCategoria)
         {
-            return new CentroCostoDataAccess().Buscar(IdCentroCosto);
+            return new ProductoDataAccess().BuscarCategoria(idCategoria);
         }
 
-        public static bool Existe(string numero, string descripcion)
+        public static LineaProducto ObtenerLineaProducto(short idLineaProducto)
         {
-            var ccDAccess = new CentroCostoDataAccess();
+            return new ProductoDataAccess().BuscarLineaProducto(idLineaProducto);
+        }
+
+        public static UnidadMedida ObtenerUnidadMedida(short idUnidadMedida)
+        {
+            return new ProductoDataAccess().BuscarUnidadMedida(idUnidadMedida);
+        }
+
+        public static Producto ObtenerProducto(int idProducto)
+        {
+            return new ProductoDataAccess().BuscarProducto(idProducto);
+        }
+
+        public static bool ExisteCategoria(string nombre)
+        {
+            var proDAccess = new ProductoDataAccess();
             var idEmpresa = TokenServicio.ObtenerIdEmpresa();
 
-            var centro = ccDAccess.BuscarNumero(idEmpresa, numero);
-            if (centro != null) return true;
+            var categoria = proDAccess.BuscarCategoria(idEmpresa, nombre);
+            if (categoria != null) return true;
 
-            centro = ccDAccess.BuscarDescripcion(idEmpresa, descripcion);
-            if (centro != null) return true;
+            return false;
+        }
+
+        public static bool ExisteLinea(string nombre)
+        {
+            var proDAccess = new ProductoDataAccess();
+            var idEmpresa = TokenServicio.ObtenerIdEmpresa();
+
+            var categoria = proDAccess.BuscarLineaProducto(idEmpresa, nombre);
+            if (categoria != null) return true;
 
             return false;
         }

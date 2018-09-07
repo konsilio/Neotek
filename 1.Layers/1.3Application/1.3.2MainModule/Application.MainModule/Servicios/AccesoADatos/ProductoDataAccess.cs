@@ -220,6 +220,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        public List<Producto> ListaProductos()
+        {
+            return uow.Repository<Producto>().Get(x => x.Activo.Equals(true)).ToList();
+        }
         public List<Producto> ListaProductos(short idEmpresa)
         {
             return uow.Repository<Producto>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -228,22 +232,34 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public Producto BuscarProducto(int idProducto)
         {
             return uow.Repository<Producto>().GetSingle(x => x.IdProducto.Equals(idProducto)
-                                                       );
+                                                          && x.Activo);
         }
         public CategoriaProducto BuscarCategoria(short idCategoria)
         {
             return uow.Repository<CategoriaProducto>().GetSingle(x => x.IdCategoria.Equals(idCategoria)
-                                                       );
+                                                                   && x.Activo);
+        }
+        public CategoriaProducto BuscarCategoria(short idEmpresa, string nombre)
+        {
+            return uow.Repository<CategoriaProducto>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                   && x.Nombre.Equals(nombre)
+                                                                   && x.Activo);
         }
         public LineaProducto BuscarLineaProducto(short idLineaProducto)
         {
             return uow.Repository<LineaProducto>().GetSingle(x => x.IdProductoLinea.Equals(idLineaProducto)
-                                                       );
+                                                               && x.Activo);
+        }
+        public LineaProducto BuscarLineaProducto(short idEmpresa, string nombre)
+        {
+            return uow.Repository<LineaProducto>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                   && x.Linea.Equals(nombre)
+                                                                   && x.Activo);
         }
         public UnidadMedida BuscarUnidadMedida(short idUnidadMedida)
         {
             return uow.Repository<UnidadMedida>().GetSingle(x => x.IdUnidadMedida.Equals(idUnidadMedida)
-                                                       );
+                                                              && x.Activo);
         }
         public List<CategoriaProducto> ListaCategorias()
         {
