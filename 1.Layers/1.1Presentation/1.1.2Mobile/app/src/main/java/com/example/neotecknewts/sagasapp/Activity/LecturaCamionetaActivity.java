@@ -103,7 +103,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                lecturaCamionetaDTO.setEsEncargadoPuerta(true);
             }
         });
     }

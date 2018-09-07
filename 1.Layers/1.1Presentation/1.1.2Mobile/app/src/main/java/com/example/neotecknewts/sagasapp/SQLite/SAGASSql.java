@@ -1219,7 +1219,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     //endregion
 
     //region Metodos para el registro de la lectura inicial de la camioneta
-    public Long InsertsLecturaInicialCamioneta(LecturaCamionetaDTO lecturaCamionetaDTO){
+    public Long InsertLecturaInicialCamioneta(LecturaCamionetaDTO lecturaCamionetaDTO){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("ClaveOperacion",lecturaCamionetaDTO.getClaveOperacion());
@@ -1244,16 +1244,42 @@ public class SAGASSql extends SQLiteOpenHelper {
     //endregion
 
     //region Metodos para el registro de los cilindros para la lectura inicial de la camioneta
+    public Long[] InsertCilindrosLecturaInicialCamioneta(LecturaCamionetaDTO lecturaCamionetaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Long[] inserts = new Long[lecturaCamionetaDTO.getCilindros().size()];
+        for (int x=0; x<lecturaCamionetaDTO.getCilindros().size();x++){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ClaveOperacion",lecturaCamionetaDTO.getClaveOperacion());
+            contentValues.put("IdCilindro",lecturaCamionetaDTO.getCilindros().get(x)
+                    .getIdCilindro());
+            contentValues.put("CilindroKg",lecturaCamionetaDTO.getCilindros().get(x)
+                    .getCilindroKg());
+            contentValues.put("Cantidad",lecturaCamionetaDTO.getCilindros().get(x).getCantidad());
+            inserts[x] = db.insert(TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS,
+                    null,contentValues);
+        }
+        return inserts;
+    }
 
+    public Cursor GetCilindrosLecturaInicialCamioneta(String ClaveOperacion){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+
+                TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS+" WHERE ClaveOperacion = "+ClaveOperacion,
+                null);
+    }
+
+    public Integer EliminarCilindrosLecturaInicialCamioneta(String ClaveOperacion){
+        return this.getWritableDatabase().delete(TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS,
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
     //endregion
 
     //region Metodos para el registro de la lectura final de la camioneta
-    public Long InsertsLecturaFinalCamioneta(LecturaCamionetaDTO lecturaCamionetaDTO){
+    public Long InsertLecturaFinalCamioneta(LecturaCamionetaDTO lecturaCamionetaDTO){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("ClaveOperacion",lecturaCamionetaDTO.getClaveOperacion());
         contentValues.put("IdCamioneta",lecturaCamionetaDTO.getIdCamioneta());
-        contentValues.put("EsEncargadoPuerta",lecturaCamionetaDTO.isEsEncargadoPuerta());
+        contentValues.put("EsEncargadoPuerta",lecturaCamionetaDTO.isEsEncargadoPuerta()?1:0);
         contentValues.put("NombreCamioneta",lecturaCamionetaDTO.getNombreCamioneta());
         return db.insert(TABLE_LECTURA_FINAL_CAMIONETA,null,contentValues);
     }
@@ -1274,7 +1300,34 @@ public class SAGASSql extends SQLiteOpenHelper {
     //endregion
 
     //region Metodos para el registro de los cilindros para la lectura final de la camioneta
+    public Long[] InsertCilindrosLecturaFinalCamioneta(LecturaCamionetaDTO lecturaCamionetaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Long[] inserts = new Long[lecturaCamionetaDTO.getCilindros().size()];
+        for (int x=0; x<lecturaCamionetaDTO.getCilindros().size();x++){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("ClaveOperacion",lecturaCamionetaDTO.getClaveOperacion());
+            contentValues.put("IdCilindro",lecturaCamionetaDTO.getCilindros().get(x)
+                    .getIdCilindro());
+            contentValues.put("CilindroKg",lecturaCamionetaDTO.getCilindros().get(x)
+                    .getCilindroKg());
+            contentValues.put("Cantidad",lecturaCamionetaDTO.getCilindros().get(x).getCantidad());
+            inserts[x] = db.insert(TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS,
+                    null,contentValues);
+        }
+        return inserts;
+    }
 
+    public Cursor GetCilindrosLecturaFinalCamioneta(String ClaveOperacion){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+
+                        TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS+" WHERE ClaveOperacion = "+
+                        ClaveOperacion,
+                null);
+    }
+
+    public Integer EliminarCilindrosLecturaFinalCamioneta(String ClaveOperacion){
+        return this.getWritableDatabase().delete(TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS,
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
     //endregion
 
 }
