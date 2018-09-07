@@ -17,8 +17,8 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UnidadMedida()
         {
-            this.Producto = new HashSet<Producto>();
-            this.Producto1 = new HashSet<Producto>();
+            this.Productos = new HashSet<Producto>();
+            this.ProductosConUnidadAlterna = new HashSet<Producto>();
         }
     
         public short IdUnidadMedida { get; set; }
@@ -30,9 +30,9 @@ namespace Sagas.MainModule.Entidades
         public System.DateTime FechaRegistro { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Producto> Producto { get; set; }
+        public virtual ICollection<Producto> Productos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Producto> Producto1 { get; set; }
+        public virtual ICollection<Producto> ProductosConUnidadAlterna { get; set; }
         public virtual Empresa Empresa { get; set; }
     }
 }

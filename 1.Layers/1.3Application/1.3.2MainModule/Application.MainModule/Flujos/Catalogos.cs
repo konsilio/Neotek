@@ -225,22 +225,129 @@ namespace Application.MainModule.Flujos
         }
         #endregion Linea Productos        
 
-        #region Unidad de Medida
+        #region Unidad de medida
+        public RespuestaDto RegistraUnidadMedida(UnidadMedidaCrearDto uMDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarProducto();
+            if (!resp.Exito) return resp;
 
-        #endregion Unidad de Medida
+            resp = ValidarCatalogoServicio.UnidadMedida(uMDto);
+            if (!resp.Exito) return resp;
+
+            return ProductoServicios.RegistrarUnidadMedida(ProductoAdapter.FromDto(uMDto));
+        }
+
+        public RespuestaDto ModificaUnidadMedida(UnidadMedidaModificarDto uMDto)
+        {
+            var resp = PermisosServicio.PuedeModificarProducto();
+            if (!resp.Exito) return resp;
+
+            resp = ValidarCatalogoServicio.UnidadMedida(uMDto, true);
+            if (!resp.Exito) return resp;
+
+            var catProd = ProductoServicios.ObtenerUnidadMedida(uMDto.IdUnidadMedida);
+            if (catProd == null) return ProductoServicios.NoExiste();
+
+            var Linea = ProductoAdapter.FromDto(uMDto);
+            Linea.FechaRegistro = catProd.FechaRegistro;
+            return ProductoServicios.ModificarUnidadMedida(Linea);
+        }
+
+        public RespuestaDto EliminaUnidadMedida(UnidadMedidaEliminarDto uMDto)
+        {
+            var resp = PermisosServicio.PuedeEliminarProducto();
+            if (!resp.Exito) return resp;
+
+            var catPro = ProductoServicios.ObtenerUnidadMedida(uMDto.IdUnidadMedida);
+            if (catPro == null) return ProductoServicios.NoExiste();
+
+            catPro = ProductoAdapter.FromEntity(catPro);
+            catPro.Activo = false;
+            return ProductoServicios.ModificarUnidadMedida(catPro);
+        }
+        public List<UnidadMedidaDto> ListaUnidadesMedida()
+        {
+            var resp = PermisosServicio.PuedeConsultarProducto();
+            if (!resp.Exito) return null;
+
+            return ProductoAdapter.ToDTO(ProductoServicios.ObtenerUnidadesMedida());
+        }
+        public UnidadMedidaDto ConsultaUnidadMedida(short idLinea)
+        {
+            var resp = PermisosServicio.PuedeConsultarProducto();
+            if (!resp.Exito) return null;
+
+            return ProductoAdapter.ToDTO(ProductoServicios.ObtenerUnidadMedida(idLinea));
+        }
+        #endregion    
 
         #region Producto
+        public RespuestaDto RegistraProducto(ProductoCrearDto pDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarProducto();
+            if (!resp.Exito) return resp;
 
-        #endregion Producto
-        
-        public List<ProductoDTO> ListaProductos(short idEmpresa)
-        {
-            return ProductoServicios.ListaProductos(idEmpresa);
+            resp = ValidarCatalogoServicio.Producto(pDto);
+            if (!resp.Exito) return resp;
+
+            return ProductoServicios.RegistrarProducto(ProductoAdapter.FromDto(pDto));
         }
-        public List<ProductoDTO> ListaPorductosAsociados(int idProdcuto)
+
+        public RespuestaDto ModificaProducto(ProductoModificarDto pDto)
         {
-            return ProductoServicios.ListaProductoAsociados(ProductoServicios.ListaProductoAsociados(idProdcuto));
+            var resp = PermisosServicio.PuedeModificarProducto();
+            if (!resp.Exito) return resp;
+
+            resp = ValidarCatalogoServicio.Producto(pDto, true);
+            if (!resp.Exito) return resp;
+
+            var prod = ProductoServicios.ObtenerProducto(pDto.IdProducto);
+            if (prod == null) return ProductoServicios.NoExiste();
+
+            var producto  = ProductoAdapter.FromDto(pDto);
+            producto.FechaRegistro = prod.FechaRegistro;
+            return ProductoServicios.ModificarProducto(producto);
         }
+
+        public RespuestaDto EliminaProducto(ProductoEliminarDto pDto)
+        {
+            var resp = PermisosServicio.PuedeEliminarProducto();
+            if (!resp.Exito) return resp;
+
+            var pro = ProductoServicios.ObtenerProducto(pDto.IdProducto);
+            if (pro == null) return ProductoServicios.NoExiste();
+
+            pro = ProductoAdapter.FromEntity(pro);
+            pro.Activo = false;
+            return ProductoServicios.ModificarProducto(pro);
+        }
+        public List<ProductoDTO> ListasProducto()
+        {
+            var resp = PermisosServicio.PuedeConsultarProducto();
+            if (!resp.Exito) return null;
+
+            return ProductoAdapter.ToDTO(ProductoServicios.ListaProductos());
+        }
+        public ProductoDTO ConsultaProducto(short id)
+        {
+            var resp = PermisosServicio.PuedeConsultarProducto();
+            if (!resp.Exito) return null;
+
+            return ProductoAdapter.ToDTO(ProductoServicios.ObtenerProducto(id));
+        }
+        public List<ProductoDTO> ListaProductos()
+        {
+            return ProductoAdapter.ToDTO(ProductoServicios.ListaProductos());
+        }
+        public List<ProductoDTO> ListaProductosAsociados(int idProducto)
+        {
+            var proAsociados = ProductoServicios.ListaProductoAsociados(idProducto);
+            var productosAsociados = ProductoServicios.ListaProductoAsociados(proAsociados);
+
+            return ProductoAdapter.ToDTO(productosAsociados);
+        }
+        #endregion
+
         #endregion
 
         #region CentroCosto

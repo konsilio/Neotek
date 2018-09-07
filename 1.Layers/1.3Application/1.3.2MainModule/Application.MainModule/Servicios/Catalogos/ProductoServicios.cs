@@ -107,8 +107,46 @@ namespace Application.MainModule.Servicios.Catalogos
         public static Producto ObtenerProducto(int idProducto)
         {
             return new ProductoDataAccess().BuscarProducto(idProducto);
-        }
+        }        
+        public static List<Producto> ListaProductos()
+        {
+            var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
 
+            if (empresa.EsAdministracionCentral)
+                return new ProductoDataAccess().ListaProductos();
+            else
+                return new ProductoDataAccess().ListaProductos(empresa.IdEmpresa);
+        }
+        public static List<ProductoAsociado> ListaProductoAsociados(int idProducto)
+        {
+            return new ProductoDataAccess().ListaProductosAsociados(idProducto);
+        }
+        public static List<ProductoAsociado> ListaProductoAsociados(Producto producto)
+        {
+            if (producto != null)
+                if (producto.ProductoAsociado != null)
+                    return producto.ProductoAsociado.ToList();
+            
+            return ListaProductoAsociados(producto.IdProducto);
+        }
+        public static Producto ObtenerProductoAsociado(int idproAsociado)
+        {
+            return new ProductoDataAccess().BuscarProducto(idproAsociado);
+        }
+        public static Producto ObtenerProducto(ProductoAsociado proAsociado)
+        {
+            if (proAsociado != null)
+            {
+                if (proAsociado.Producto != null)
+                    return proAsociado.ProdAsociado;
+            }
+
+            return ObtenerProductoAsociado(proAsociado.IdProductoAsociado);
+        }
+        public static List<Producto> ListaProductoAsociados(List<ProductoAsociado> lprdAso)
+        {
+            return lprdAso.Select(x => ObtenerProducto(x)).ToList();
+        }
         public static bool ExisteCategoria(string nombre)
         {
             var proDAccess = new ProductoDataAccess();
@@ -131,6 +169,17 @@ namespace Application.MainModule.Servicios.Catalogos
             return false;
         }
 
+        public static bool ExisteUnidadMedida(string nombre, string acronimo)
+        {
+            var proDAccess = new ProductoDataAccess();
+            var idEmpresa = TokenServicio.ObtenerIdEmpresa();
+
+            var categoria = proDAccess.BuscarUnidadMedida(idEmpresa, nombre, acronimo);
+            if (categoria != null) return true;
+
+            return false;
+        }
+
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El Centro de Costo");
@@ -141,32 +190,6 @@ namespace Application.MainModule.Servicios.Catalogos
                 Mensaje = mensaje,
                 MensajesError = new List<string>() { mensaje },
             };
-        }
-
-
-
-
-
-        public static List<ProductoDTO> ListaProductos(short idEpresa)
-        {
-            return ProductoAdapter.ToDTO(new ProductoDataAccess().ListaProductos(idEpresa));
-        }
-        public static List<ProductoAsociado> ListaProductoAsociados(int idProducto)
-        {
-            return new ProductoDataAccess().ListaProductosAsociados(idProducto);
-        }
-        public static List<ProductoDTO> ListaProductoAsociados(List<ProductoAsociado> lprdAso)
-        {
-            List<ProductoDTO> lp = new List<ProductoDTO>();
-            foreach (var item in lprdAso)
-            {
-                lp.Add(AdaptadoresDTO.Catalogo.ProductoAdapter.ToDTO(new AccesoADatos.ProductoDataAccess().BuscarProducto(item.IdProducto)));
-            }
-            return lp;
-        }
-        public static Producto ObtenerProdcuto(int idPord)
-        {
-            return new ProductoDataAccess().BuscarProducto(idPord);
         }
     }
 }

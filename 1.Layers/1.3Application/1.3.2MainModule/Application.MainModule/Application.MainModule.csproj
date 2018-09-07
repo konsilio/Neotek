@@ -70,7 +70,14 @@
     <Compile Include="DTOs\Catalogo\LineaProductoDto.cs" />
     <Compile Include="DTOs\Catalogo\LineaProductoEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\LineaProductoModificarDto.cs" />
+    <Compile Include="DTOs\Catalogo\ProductoCrearDto.cs" />
+    <Compile Include="DTOs\Catalogo\ProductoEliminarDto.cs" />
+    <Compile Include="DTOs\Catalogo\ProductoModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\TipoCentroCostoEnum.cs" />
+    <Compile Include="DTOs\Catalogo\UnidadMedidaCrearDto.cs" />
+    <Compile Include="DTOs\Catalogo\UnidadMedidaDto.cs" />
+    <Compile Include="DTOs\Catalogo\UnidadMedidaEliminarDto.cs" />
+    <Compile Include="DTOs\Catalogo\UnidadMedidaModificarDto.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraAutorizacionDTO.cs" />
     <Compile Include="AdaptadoresDTO\CorreoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAdapter.cs" />

@@ -118,6 +118,112 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         }
         #endregion
 
+        #region Unidad de Medida
+        public static UnidadMedida FromDto(UnidadMedidaCrearDto uMDto)
+        {
+            return new UnidadMedida()
+            {
+                IdEmpresa = uMDto.IdEmpresa,
+                Nombre = uMDto.Nombre,
+                Acronimo = uMDto.Acronimo,
+                Descripcion = uMDto.Descripcion,
+                FechaRegistro = DateTime.Now,
+                Activo = true,
+            };
+        }
+
+        public static UnidadMedida FromDto(UnidadMedidaModificarDto uMDto)
+        {
+            return new UnidadMedida()
+            {
+                IdUnidadMedida = uMDto.IdUnidadMedida,
+                IdEmpresa = uMDto.IdEmpresa,
+                Nombre = uMDto.Nombre,
+                Acronimo = uMDto.Acronimo,
+                Descripcion = uMDto.Descripcion,                
+            };
+        }
+
+        public static UnidadMedida FromEntity(UnidadMedida uM)
+        {
+            return new UnidadMedida()
+            {
+                IdUnidadMedida = uM.IdUnidadMedida,
+                IdEmpresa = uM.IdEmpresa,
+                Nombre = uM.Nombre,
+                Acronimo = uM.Acronimo,
+                Descripcion = uM.Descripcion,
+                FechaRegistro = uM.FechaRegistro,
+                Activo = uM.Activo,
+            };
+        }
+
+        public static UnidadMedidaDto ToDTO(UnidadMedida uM)
+        {
+            return new UnidadMedidaDto()
+            {
+                IdUnidadMedida = uM.IdUnidadMedida,
+                IdEmpresa = uM.IdEmpresa,
+                Nombre =uM.Nombre,
+                Acronimo = uM.Acronimo,
+                Descripcion = uM.Descripcion,
+            };
+        }
+
+        public static List<UnidadMedidaDto> ToDTO(List<UnidadMedida> usM)
+        {
+            return usM.Select(x => ToDTO(x)).ToList();
+        }
+        #endregion
+
+        #region Producto
+        public static Producto FromDto(ProductoCrearDto proDto)
+        {
+            return new Producto()
+            {
+                IdEmpresa = proDto.IdEmpresa,
+                IdProductoServicioTipo = proDto.IdProductoServicioTipo,
+                IdCuentaContable = proDto.IdCuentaContable,
+                IdCategoria = proDto.IdCategoria,
+                IdProductoLinea = proDto.IdProductoLinea,
+                IdUnidadMedida = proDto.IdUnidadMedida,
+                IdUnidadMedida2 = proDto.IdUnidadMedida2,
+                Descripcion = proDto.Descripcion,
+                EsActivoVenta = proDto.EsActivoVenta,
+                EsGas = proDto.EsGas,
+                EsTransporteGas = proDto.EsTransporteGas,
+                Minimos = proDto.Minimos,
+                Maximo = proDto.Maximo,
+                UrlImagen = null,
+                PathImagen = null,
+                FechaRegistro = DateTime.Now,
+                Activo = true,
+            };
+        }
+
+        public static Producto FromDto(ProductoModificarDto proDto)
+        {
+            return new Producto()
+            {
+                IdProducto = proDto.IdProducto,
+                IdEmpresa = proDto.IdEmpresa,
+                IdProductoServicioTipo = proDto.IdProductoServicioTipo,
+                IdCuentaContable = proDto.IdCuentaContable,
+                IdCategoria = proDto.IdCategoria,
+                IdProductoLinea = proDto.IdProductoLinea,
+                IdUnidadMedida = proDto.IdUnidadMedida,
+                IdUnidadMedida2 = proDto.IdUnidadMedida2,
+                Descripcion = proDto.Descripcion,
+                EsActivoVenta = proDto.EsActivoVenta,
+                EsGas = proDto.EsGas,
+                EsTransporteGas = proDto.EsTransporteGas,
+                Minimos = proDto.Minimos,
+                Maximo = proDto.Maximo,
+                //UrlImagen = null,
+                //PathImagen = null,
+            };
+        }        
+
         public static ProductoDTO ToDTO(Producto _prod)
         {
             ProductoDTO prodDTO = new ProductoDTO();
@@ -153,6 +259,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             _prod.TipoServicioOProducto.Descripcion = prodDTO.TipoProducto;
             _prod.IdCategoria = prodDTO.IdCategoria;
             _prod.IdProductoLinea = prodDTO.IdProductoLinea;
+            _prod.IdCuentaContable = prodDTO.IdCuentaContable;
             _prod.IdUnidadMedida = prodDTO.IdUnidadMedida;
             _prod.UnidadMedida.Descripcion = prodDTO.UnidadMedida;
             _prod.IdUnidadMedida2 = prodDTO.IdUnidadMedida2;
@@ -179,6 +286,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 IdProductoServicioTipo = prodAnterior.IdProductoServicioTipo,
                 IdCategoria = prodAnterior.IdCategoria,
                 IdProductoLinea = prodAnterior.IdProductoLinea,
+                IdCuentaContable = prodAnterior.IdCuentaContable,
                 IdUnidadMedida = prodAnterior.IdUnidadMedida,
                 IdUnidadMedida2 = prodAnterior.IdUnidadMedida2,
                 Descripcion = prodAnterior.Descripcion,
@@ -190,7 +298,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaRegistro = prodAnterior.FechaRegistro,
                 EsActivoVenta = prodAnterior.EsActivoVenta,
                 EsGas = prodAnterior.EsGas,
-                EsTransporteGas = prodAnterior.EsTransporteGas,
+                EsTransporteGas = prodAnterior.EsTransporteGas,                                
             };
         }
 
@@ -198,5 +306,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             return lProdDTO.ToList().Select(x => FromEntity(x)).ToList();
         }
+        #endregion
     }
 }

@@ -261,6 +261,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<UnidadMedida>().GetSingle(x => x.IdUnidadMedida.Equals(idUnidadMedida)
                                                               && x.Activo);
         }
+        public UnidadMedida BuscarUnidadMedida(short idEmpresa, string nombre, string acronimo)
+        {
+            return uow.Repository<UnidadMedida>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)                                                                   
+                                                                && x.Activo
+                                                                && (x.Nombre.Equals(nombre)
+                                                                || x.Acronimo.Equals(acronimo)));
+        }
         public List<CategoriaProducto> ListaCategorias()
         {
             return uow.Repository<CategoriaProducto>().Get(x => x.Activo.Equals(true)).ToList();

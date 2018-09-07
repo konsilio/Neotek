@@ -142,23 +142,89 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.ListaLineasProducto(), Request);
         }
 
-        [Route("consulta/linea/producto/{idCosto}")]
+        [Route("consulta/linea/producto/{idlinea}")]
         public HttpResponseMessage GetlineaProducto(short idlinea)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaLineaProducto(idlinea));
         }
         #endregion
 
-        [Route("productos/listaproductos/{idEmpresa}")]
-        public HttpResponseMessage GetListaProductos(short idEmpresa)
+        #region Unidad de Medida
+        [Route("registra/unidad/medida")]
+        public HttpResponseMessage PostRegistraUnidadMedida(UnidadMedidaCrearDto uMedDto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaProductos(idEmpresa));
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraUnidadMedida(uMedDto), Request);
+        }
+
+        [Route("modifica/unidad/medida")]
+        public HttpResponseMessage PutModificalUnidadMedida(UnidadMedidaModificarDto uMedDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaUnidadMedida(uMedDto), Request);
+        }
+
+        [Route("elimina/unidad/medida")]
+        public HttpResponseMessage PutEliminaUnidadMedida(UnidadMedidaEliminarDto uMedDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaUnidadMedida(uMedDto), Request);
+        }
+
+        [Route("consulta/unidades/medida")]
+        public HttpResponseMessage GetUnidadesMedida()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaUnidadesMedida(), Request);
+        }
+
+        [Route("consulta/unidad/medida/{idUnidad}")]
+        public HttpResponseMessage GetUnidadMedida(short idUnidad)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaUnidadMedida(idUnidad));
+        }
+        #endregion
+
+        #region Producto
+        [Route("registra/producto")]
+        public HttpResponseMessage PostRegistraProducto(ProductoCrearDto lProdDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraProducto(lProdDto), Request);
+        }
+
+        [Route("modifica/producto")]
+        public HttpResponseMessage PutModificalProducto(ProductoModificarDto lProdDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaProducto(lProdDto), Request);
+        }
+
+        [Route("elimina/producto")]
+        public HttpResponseMessage PutEliminaProducto(ProductoEliminarDto lProdDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaProducto(lProdDto), Request);
+        }
+
+        [Route("consulta/producto")]
+        public HttpResponseMessage GetProductos()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListasProducto(), Request);
+        }
+
+        [Route("consulta/producto/{id}")]
+        public HttpResponseMessage GetProducto(short id)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProducto(id));
+        }
+
+        [Route("productos/listaproductos/")]
+        public HttpResponseMessage GetListaProductos()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaProductos());
         }
         [Route("productos/listaproductosasociados/{idProducto}")]
         public HttpResponseMessage GetListaProductosAsociados(int idProducto)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPorductosAsociados(idProducto));
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaProductosAsociados(idProducto));
         }
+        #endregion
+
+
         #endregion
 
         #region Administracion Central

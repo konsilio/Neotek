@@ -83,7 +83,42 @@ namespace Application.MainModule.Servicios.Catalogos
             {
                 respuesta.Exito = false;
                 respuesta.ModeloValido = false;
-                respuesta.MensajesError.Add(string.Format(Error.C0005, "La línea del productos", string.Empty));
+                respuesta.MensajesError.Add(string.Format(Error.C0005, "La línea del productos", "Línea de producto"));
+            }
+
+            return respuesta;
+        }
+
+        public static RespuestaDto UnidadMedida(UnidadMedidaCrearDto uMDto, bool esModificacion = false)
+        {
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true };
+            // Existencia            
+            if (ProductoServicios.ExisteUnidadMedida(uMDto.Nombre, uMDto.Acronimo))
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.C0005, "El nombre o acrónimo", "unidad de medida"));
+            }
+
+            return respuesta;
+        }
+
+        public static RespuestaDto Producto(ProductoCrearDto pDto, bool esModificacion = false)
+        {
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true };
+                
+            if (pDto.Minimos.Value > pDto.Maximo.Value)
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.CP0001, pDto.Minimos.Value, pDto.Maximo.Value));
+            }
+
+            if (pDto.EsTransporteGas && (pDto.EsActivoVenta || pDto.EsGas))
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.CP0002, pDto.Minimos.Value, pDto.Maximo.Value));
             }
 
             return respuesta;
