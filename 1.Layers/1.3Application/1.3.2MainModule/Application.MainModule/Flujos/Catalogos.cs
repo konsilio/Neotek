@@ -134,10 +134,9 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var catProd = ProductoServicios.ObtenerCategoria(cpDto.IdCategoria);
-            if (catProd == null) return ProductoServicios.NoExiste();
+            if (catProd == null) return ProductoServicios.NoExiste("La categoría de producto");
 
-            var categoria = ProductoAdapter.FromDto(cpDto);
-            categoria.FechaRegistro = catProd.FechaRegistro;
+            var categoria = ProductoAdapter.FromDto(cpDto, catProd);
             return ProductoServicios.ModificarCategoriaProducto(categoria);
         }
 
@@ -147,7 +146,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var catPro = ProductoServicios.ObtenerCategoria(cpDto.IdCategoria);
-            if (catPro == null) return ProductoServicios.NoExiste();
+            if (catPro == null) return ProductoServicios.NoExiste("La categoría de producto");
 
             catPro = ProductoAdapter.FromEntity(catPro);
             catPro.Activo = false;
@@ -189,11 +188,10 @@ namespace Application.MainModule.Flujos
             resp = ValidarCatalogoServicio.LineaProducto(lpDto, true);
             if (!resp.Exito) return resp;
 
-            var catProd = ProductoServicios.ObtenerLineaProducto(lpDto.IdProductoLinea);
-            if (catProd == null) return ProductoServicios.NoExiste();
+            var linProd = ProductoServicios.ObtenerLineaProducto(lpDto.IdProductoLinea);
+            if (linProd == null) return ProductoServicios.NoExiste("La línea del producto");
 
-            var Linea = ProductoAdapter.FromDto(lpDto);
-            Linea.FechaRegistro = catProd.FechaRegistro;
+            var Linea = ProductoAdapter.FromDto(lpDto,linProd);     
             return ProductoServicios.ModificarLineaProducto(Linea);
         }
 
@@ -203,7 +201,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var catPro = ProductoServicios.ObtenerLineaProducto(cpDto.IdProductoLinea);
-            if (catPro == null) return ProductoServicios.NoExiste();
+            if (catPro == null) return ProductoServicios.NoExiste("La línea del producto");
 
             catPro = ProductoAdapter.FromEntity(catPro);
             catPro.Activo = false;
@@ -245,12 +243,11 @@ namespace Application.MainModule.Flujos
             resp = ValidarCatalogoServicio.UnidadMedida(uMDto, true);
             if (!resp.Exito) return resp;
 
-            var catProd = ProductoServicios.ObtenerUnidadMedida(uMDto.IdUnidadMedida);
-            if (catProd == null) return ProductoServicios.NoExiste();
+            var uM = ProductoServicios.ObtenerUnidadMedida(uMDto.IdUnidadMedida);
+            if (uM == null) return ProductoServicios.NoExiste("La unidad de medida");
 
-            var Linea = ProductoAdapter.FromDto(uMDto);
-            Linea.FechaRegistro = catProd.FechaRegistro;
-            return ProductoServicios.ModificarUnidadMedida(Linea);
+            var uMedida = ProductoAdapter.FromDto(uMDto,uM);
+            return ProductoServicios.ModificarUnidadMedida(uMedida);
         }
 
         public RespuestaDto EliminaUnidadMedida(UnidadMedidaEliminarDto uMDto)
@@ -259,7 +256,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var catPro = ProductoServicios.ObtenerUnidadMedida(uMDto.IdUnidadMedida);
-            if (catPro == null) return ProductoServicios.NoExiste();
+            if (catPro == null) return ProductoServicios.NoExiste("La unidad de medida");
 
             catPro = ProductoAdapter.FromEntity(catPro);
             catPro.Activo = false;
@@ -302,10 +299,9 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var prod = ProductoServicios.ObtenerProducto(pDto.IdProducto);
-            if (prod == null) return ProductoServicios.NoExiste();
+            if (prod == null) return ProductoServicios.NoExiste("El producto");
 
-            var producto  = ProductoAdapter.FromDto(pDto);
-            producto.FechaRegistro = prod.FechaRegistro;
+            var producto  = ProductoAdapter.FromDto(pDto, prod);
             return ProductoServicios.ModificarProducto(producto);
         }
 
@@ -315,7 +311,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var pro = ProductoServicios.ObtenerProducto(pDto.IdProducto);
-            if (pro == null) return ProductoServicios.NoExiste();
+            if (pro == null) return ProductoServicios.NoExiste("El producto");
 
             pro = ProductoAdapter.FromEntity(pro);
             pro.Activo = false;
@@ -373,8 +369,7 @@ namespace Application.MainModule.Flujos
             var centro = CentroCostoServicio.Obtener(ccDto.IdCentroCosto);
             if (centro == null) return CentroCostoServicio.NoExiste();
 
-            var CentroCosto = CentroCostoAdapter.FromDto(ccDto);
-            CentroCosto.FechaRegistro = centro.FechaRegistro;
+            var CentroCosto = CentroCostoAdapter.FromDto(ccDto, centro);
             return CentroCostoServicio.ModificarCentroCosto(CentroCosto);
         }
 

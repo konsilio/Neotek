@@ -180,9 +180,9 @@ namespace Application.MainModule.Servicios.Catalogos
             return false;
         }
 
-        public static RespuestaDto NoExiste()
+        public static RespuestaDto NoExiste(string paramtro)
         {
-            string mensaje = string.Format(Error.NoExiste, "El Centro de Costo");
+            string mensaje = string.Format(Error.NoExiste, paramtro);
 
             return new RespuestaDto()
             {

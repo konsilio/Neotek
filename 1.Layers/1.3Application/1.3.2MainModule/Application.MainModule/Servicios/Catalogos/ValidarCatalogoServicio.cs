@@ -14,7 +14,7 @@ namespace Application.MainModule.Servicios.Catalogos
         #region Centro de costos
         public static RespuestaDto CentroCosto(CentroCostoCrearDto ccDto, bool esModificacion = false)
         {
-            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true };
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
             bool unidadAsignada = false;
             string unidadMensaje = string.Empty;
             // Existencia            
@@ -63,7 +63,7 @@ namespace Application.MainModule.Servicios.Catalogos
         #region Productos
         public static RespuestaDto CategoriaProducto(CategoriaProductoCrearDto cpDto, bool esModificacion = false)
         {
-            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true };
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
             // Existencia            
             if (ProductoServicios.ExisteCategoria(cpDto.Nombre))
             {
@@ -77,7 +77,7 @@ namespace Application.MainModule.Servicios.Catalogos
 
         public static RespuestaDto LineaProducto(LineaProductoCrearDto lpDto, bool esModificacion = false)
         {
-            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true };
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
             // Existencia            
             if (ProductoServicios.ExisteLinea(lpDto.Linea))
             {
@@ -91,7 +91,7 @@ namespace Application.MainModule.Servicios.Catalogos
 
         public static RespuestaDto UnidadMedida(UnidadMedidaCrearDto uMDto, bool esModificacion = false)
         {
-            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true };
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
             // Existencia            
             if (ProductoServicios.ExisteUnidadMedida(uMDto.Nombre, uMDto.Acronimo))
             {
@@ -105,7 +105,7 @@ namespace Application.MainModule.Servicios.Catalogos
 
         public static RespuestaDto Producto(ProductoCrearDto pDto, bool esModificacion = false)
         {
-            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true };
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
                 
             if (pDto.Minimos.Value > pDto.Maximo.Value)
             {

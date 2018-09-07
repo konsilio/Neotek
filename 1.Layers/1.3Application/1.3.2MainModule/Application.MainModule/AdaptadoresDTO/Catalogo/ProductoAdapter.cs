@@ -23,15 +23,14 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             };
         }
 
-        public static CategoriaProducto FromDto(CategoriaProductoModificarDto cProDto)
+        public static CategoriaProducto FromDto(CategoriaProductoModificarDto cProDto, CategoriaProducto catPro)
         {
-            return new CategoriaProducto()
-            {
-                IdCategoria = cProDto.IdCategoria,
-                IdEmpresa = cProDto.IdEmpresa,
-                Nombre = cProDto.Nombre,
-                Descripcion = cProDto.Descripcion,
-            };
+            var catProducto = FromEntity(catPro);
+            catProducto.IdCategoria = cProDto.IdCategoria;
+            catProducto.IdEmpresa = cProDto.IdEmpresa;
+            catProducto.Nombre = cProDto.Nombre;
+            catProducto.Descripcion = cProDto.Descripcion;
+            return catProducto;
         }
 
         public static CategoriaProducto FromEntity(CategoriaProducto antCatProducto)
@@ -77,15 +76,14 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             };
         }
 
-        public static LineaProducto FromDto(LineaProductoModificarDto lProDto)
+        public static LineaProducto FromDto(LineaProductoModificarDto lProDto, LineaProducto lPro)
         {
-            return new LineaProducto()
-            {
-                IdProductoLinea = lProDto.IdProductoLinea,
-                IdEmpresa = lProDto.IdEmpresa,
-                Linea = lProDto.Linea,
-                Descripcion = lProDto.Descripcion,
-            };
+            var linProducto = FromEntity(lPro);
+            linProducto.IdProductoLinea = lProDto.IdProductoLinea;
+            linProducto.IdEmpresa = lProDto.IdEmpresa;
+            linProducto.Linea = lProDto.Linea;
+            linProducto.Descripcion = lProDto.Descripcion;
+            return linProducto;
         }
 
         public static LineaProducto FromEntity(LineaProducto antCatProducto)
@@ -132,16 +130,15 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             };
         }
 
-        public static UnidadMedida FromDto(UnidadMedidaModificarDto uMDto)
+        public static UnidadMedida FromDto(UnidadMedidaModificarDto uMedDto, UnidadMedida uM)
         {
-            return new UnidadMedida()
-            {
-                IdUnidadMedida = uMDto.IdUnidadMedida,
-                IdEmpresa = uMDto.IdEmpresa,
-                Nombre = uMDto.Nombre,
-                Acronimo = uMDto.Acronimo,
-                Descripcion = uMDto.Descripcion,                
-            };
+            var uMedida = FromEntity(uM);
+            uMedida.IdUnidadMedida = uMedDto.IdUnidadMedida;
+            uMedida.IdEmpresa = uMedDto.IdEmpresa;
+            uMedida.Nombre = uMedDto.Nombre;
+            uMedida.Acronimo = uMedDto.Acronimo;
+            uMedida.Descripcion = uMedDto.Descripcion;
+            return uMedida;
         }
 
         public static UnidadMedida FromEntity(UnidadMedida uM)
@@ -200,29 +197,26 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Activo = true,
             };
         }
-
-        public static Producto FromDto(ProductoModificarDto proDto)
+        
+        public static Producto FromDto(ProductoModificarDto proDto, Producto pro)
         {
-            return new Producto()
-            {
-                IdProducto = proDto.IdProducto,
-                IdEmpresa = proDto.IdEmpresa,
-                IdProductoServicioTipo = proDto.IdProductoServicioTipo,
-                IdCuentaContable = proDto.IdCuentaContable,
-                IdCategoria = proDto.IdCategoria,
-                IdProductoLinea = proDto.IdProductoLinea,
-                IdUnidadMedida = proDto.IdUnidadMedida,
-                IdUnidadMedida2 = proDto.IdUnidadMedida2,
-                Descripcion = proDto.Descripcion,
-                EsActivoVenta = proDto.EsActivoVenta,
-                EsGas = proDto.EsGas,
-                EsTransporteGas = proDto.EsTransporteGas,
-                Minimos = proDto.Minimos,
-                Maximo = proDto.Maximo,
-                //UrlImagen = null,
-                //PathImagen = null,
-            };
-        }        
+            var producto = FromEntity(pro);
+            producto.IdProducto = proDto.IdProducto;
+            producto.IdEmpresa = proDto.IdEmpresa;
+            producto.IdProductoServicioTipo = proDto.IdProductoServicioTipo;
+            producto.IdCuentaContable = proDto.IdCuentaContable;
+            producto.IdCategoria = proDto.IdCategoria;
+            producto.IdProductoLinea = proDto.IdProductoLinea;
+            producto.IdUnidadMedida = proDto.IdUnidadMedida;
+            producto.IdUnidadMedida2 = proDto.IdUnidadMedida2;
+            producto.Descripcion = proDto.Descripcion;
+            producto.EsActivoVenta = proDto.EsActivoVenta;
+            producto.EsGas = proDto.EsGas;
+            producto.EsTransporteGas = proDto.EsTransporteGas;
+            producto.Minimos = proDto.Minimos;
+            producto.Maximo = proDto.Maximo;
+            return producto;
+        }
 
         public static ProductoDTO ToDTO(Producto _prod)
         {
