@@ -42,14 +42,75 @@ namespace Application.MainModule.Servicios.Mobile
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasFinalizarDescarga"]));
                         _AppCompraGasFinalizarDescarga = true;
                     }                    
-
-                    if (rol.AppCompraVerOCompra && !_AppCompraVerOCompra)
+                    //Estación Calibacion
+                    if (rol.AppCompraEntraGas)
                     {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraVerOCompra"]));
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppEstacionCarbInicial"]));
                         _AppCompraVerOCompra = true;
                     }
 
+                    if (rol.AppCompraEntraGas)
+                    {
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppEstacionCarbFinal"]));
+                        _AppCompraVerOCompra = true;
+                    }
+                    //Almacen principal 
+                    if (rol.AppCompraEntraGas)
+                    {
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAlmacenPralInicial"]));
+                        _AppCompraVerOCompra = true;
+                    }
 
+                    if (rol.AppCompraEntraGas)
+                    {
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAlmacenPralFinal"]));
+                        _AppCompraVerOCompra = true;
+                    }
+                    //Pipa
+                    if (rol.AppCompraEntraGas)
+                    {
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppPipaInicial"]));
+                        _AppCompraVerOCompra = true;
+                    }
+
+                    if (rol.AppCompraEntraGas)
+                    {
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppPipaFinal"]));
+                        _AppCompraVerOCompra = true;
+                    }
+                    //Camioneta
+                    if (rol.AppCompraEntraGas)
+                    {
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCamionetaInicial"]));
+                        _AppCompraVerOCompra = true;
+                    }
+
+                    if (rol.AppCompraEntraGas)
+                    {
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCamionetaFinal"]));
+                        _AppCompraVerOCompra = true;
+                    }
+                    //Reporte del día 
+                    if (rol.AppCompraEntraGas)
+                    {
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppReporteDelDia"]));
+                        _AppCompraVerOCompra = true;
+                        
+                    }
+                    //Auto-consumo Estacion Carb.
+                    if (rol.AppCompraEntraGas)
+                    {
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppEstacionCarbInicial"]));
+                        _AppCompraVerOCompra = true;
+
+                    }
+
+                    if (rol.AppCompraEntraGas)
+                    {
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppEstacionCarbFinal"]));
+                        _AppCompraVerOCompra = true;
+
+                    }
                 }
                 setFalse();
                 return lista;

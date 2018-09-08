@@ -63,5 +63,15 @@ namespace Application.MainModule.Flujos
 
             return EntradaGasServicio.Descargar(desDto, true);
         }
+
+        public RespuestaDto InicializarCalibracionEstacion(LecturaAlmacenDto liadto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RespuestaDto FinalizarCalibracionEstacion(LecturaAlmacenDto lfadto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

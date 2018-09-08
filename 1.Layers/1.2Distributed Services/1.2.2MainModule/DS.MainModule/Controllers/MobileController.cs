@@ -82,5 +82,26 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarDescarga(desDto), Request);
         }
+
+        /// <summary>
+        /// Permite realizar el registro de la calibración inicial de la estación,
+        /// tomara como parametro un objeto DescargaDto con los datos a guardar, 
+        /// tras finalizar el api retornara una respuesta de tipo RespuestaHttp
+        /// con el resultado de la operación.
+        /// Author:Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+        /// </summary>
+        /// <param name="desDto">Objeto DescargaDto con los datos a procesar</param>
+        /// <returns>Respuesta del registro </returns>
+        [Route("iniciar/calibracion/estacion")]
+        public HttpResponseMessage PostIniciarCalbracionEstacion(LecturaAlmacenDto liadto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.InicializarCalibracionEstacion(liadto), Request);
+        }
+
+        [Route("finalizar/calibracion/estacion")]
+        public HttpResponseMessage PostFinalizaCalibracionEstacion(LecturaAlmacenDto lfadto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.FinalizarCalibracionEstacion(lfadto), Request);
+        }
     }
 }
