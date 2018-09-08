@@ -38,7 +38,7 @@ namespace Application.MainModule.Flujos
             }
             return resp;     
         }
-        public List<RequisicionDTO> BuscarRequisicionesPorEmpresa(Int16 idEmpresa)
+        public List<RequisicionDTO> BuscarRequisicionesPorEmpresa(short idEmpresa)
         {
             return RequisicionServicio.BuscarRequisicionPorIdEmpresa(idEmpresa);
         }
@@ -85,6 +85,10 @@ namespace Application.MainModule.Flujos
         public RespuestaDto CancelarRequisicion(RequisicionCancelaDTO _req)
         {
             return RequisicionServicio.CancelarRequisicion(_req);
-        }       
+        }
+        public List<RequisicionEstatusDTO> ListaEstatus()
+        {
+            return RequisicionAdapter.ToDTO(RequisicionServicio.RequisiconEstatus());
+        }
     }
 }

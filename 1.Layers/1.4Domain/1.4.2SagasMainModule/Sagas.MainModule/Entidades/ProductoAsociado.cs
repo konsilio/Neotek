@@ -20,6 +20,6 @@ namespace Sagas.MainModule.Entidades
         public System.DateTime FechaRegistro { get; set; }
     
         public virtual Producto Producto { get; set; }
-        public virtual Producto Producto1 { get; set; }
+        public virtual Producto ProdAsociado { get; set; }
     }
 }

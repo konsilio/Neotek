@@ -13,14 +13,14 @@ using System.Web.Mvc;
 namespace MVC.Presentacion.Controllers
 {
     public class HomeController : MainController
-    {        
+    {
         public ActionResult Index(LoginModel model = null)
-        {       
+        {
             return View(AutenticacionServicio.InitIndex(model));
         }
         public ActionResult IndexError(LoginModel model)
         {
-            model.Empresas = AutenticacionServicio.EmpresasLogin();           
+            model.Empresas = AutenticacionServicio.EmpresasLogin();
             return View(model);
         }
         public ActionResult About()
@@ -32,17 +32,31 @@ namespace MVC.Presentacion.Controllers
         {
             ViewBag.Message = "Your contact page.";
             return View();
-        }               
+        }
         public ActionResult Inicio(AutenticacionDTO login)
-        {    
-            var respuesta = AutenticacionServicio.Autenticar(login.IdEmpresa, login.Usuario, SHA.GenerateSHA256String(login.Password));
-            if (respuesta.Exito)
+        {
+            if (Session["StringToken"] == null)
             {
-                Session["StringToken"] = respuesta.token;
-                return View();               
+                var respuesta = AutenticacionServicio.Autenticar(login.IdEmpresa, login.Usuario, SHA.GenerateSHA256String(login.Password));
+                if (respuesta.Exito)
+                {
+                    Session["StringToken"] = respuesta.token;
+                    return View();
+                }
+                else
+                    return View("Index", AutenticacionServicio.InitIndex(respuesta));
             }
-            else                           
-                return View("Index", AutenticacionServicio.InitIndex(respuesta));   
+            else
+                return View();
+        }
+
+        public ActionResult Requisicion()
+        {
+            return View();
+        }
+        public ActionResult Ordenes()
+        {
+            return View();
         }
     }
 }

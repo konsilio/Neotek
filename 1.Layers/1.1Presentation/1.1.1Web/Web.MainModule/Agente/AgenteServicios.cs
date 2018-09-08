@@ -121,9 +121,7 @@ namespace Web.MainModule.Agente
                 }
                 _listaCentrosCostos = emp;
             }
-        }
-
-    
+        }    
         public void BuscarCuentasContables(short idEmpresa, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCuentasContables"];
@@ -560,7 +558,7 @@ namespace Web.MainModule.Agente
         #region Usuarios
         public void BuscarListaUsuarios(short idEmpresa, string tkn)
         {
-            this.ApiUsuarios = ConfigurationManager.AppSettings["GetListaUsuarios"];
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
             GetListaUsuarios(idEmpresa, tkn).Wait();
         }
         private async Task GetListaUsuarios(short IdEmpresa, string Token)

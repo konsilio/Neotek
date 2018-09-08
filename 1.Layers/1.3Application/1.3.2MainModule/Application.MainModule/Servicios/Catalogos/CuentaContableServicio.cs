@@ -22,11 +22,7 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static RespuestaDto ModificarCuentaContable(CuentaContable cc )
         {
-            return new CuentaContableDataAccess().ActualizarCuentaContable(cc);
-        }
-        public static RespuestaDto InsertarCuentaContable(CuentaContable cc)
-        {
-            return new CuentaContableDataAccess().InsertarCuentaContable(cc);
+            return new CuentaContableDataAccess().Actualizar(cc);
         }
         public static RespuestaDto RegistrarCuentaContable(CuentaContable cuenta)
         {

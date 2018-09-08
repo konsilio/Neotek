@@ -19,65 +19,17 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-        public List<CuentaContable> BuscarCuentasContables(int idEmpresa)
-        {
-            return uow.Repository<CuentaContable>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();            
-        }
-       
-        public RespuestaDto InsertarCuentaContable(CuentaContable cc)
-        {
-            RespuestaDto respuesta = new RespuestaDto();
-            try
-            {
-                uow.Repository<CuentaContable>().Insert(cc);
-                uow.SaveChanges();
-                respuesta.Exito = true;
-                respuesta.EsInsercion = true;
-                respuesta.Id = cc.IdCuentaContable;
-                respuesta.Mensaje = Exito.OK;
-            }
-            catch (Exception ex)
-            {
-                respuesta.Exito = false;
-                respuesta.MensajesError.Add(ex.Message);
-                if (ex.InnerException != null)
-                    respuesta.MensajesError.Add(ex.InnerException.Message);
-            }
-            return respuesta;
-        }
-        public RespuestaDto ActualizarCuentaContable(CuentaContable cc)
-        {
-            RespuestaDto respuesta = new RespuestaDto();
-            try
-            {
-                uow.Repository<CuentaContable>().Update(cc);
-                uow.SaveChanges();
-                respuesta.Exito = true;
-                respuesta.Id = cc.IdCuentaContable;
-                respuesta.EsActulizacion = true;
-                respuesta.ModeloValido = true;
-                respuesta.Mensaje = Exito.OK;
-            }
-            catch (Exception ex)
-            {
-                respuesta.Exito = false;
-                respuesta.MensajesError.Add(ex.Message);
-                if (ex.InnerException != null)
-                    respuesta.MensajesError.Add(ex.InnerException.Message);
-            }
-           return respuesta;
-        }
 
-        public RespuestaDto Insertar(CuentaContable _pro)
+        public RespuestaDto Insertar(CuentaContable cc)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<CuentaContable>().Insert(_pro);
+                    uow.Repository<CuentaContable>().Insert(cc);
                     uow.SaveChanges();
-                    _respuesta.Id = _pro.IdCuentaContable;
+                    _respuesta.Id = cc.IdCuentaContable;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
@@ -93,16 +45,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
-        public RespuestaDto Actualizar(CuentaContable _pro)
+        public RespuestaDto Actualizar(CuentaContable cc)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.CuentaContable>().Update(_pro);
+                    uow.Repository<CuentaContable>().Update(cc);
                     uow.SaveChanges();
-                    _respuesta.Id = _pro.IdCuentaContable;
+                    _respuesta.Id = cc.IdCuentaContable;
                     _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;
                     _respuesta.ModeloValido = true;
@@ -135,9 +87,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<CuentaContable>().GetSingle(x => x.IdCuentaContable.Equals(idCuentaContable)
                                                          && x.Activo);
         }
-        //public CuentaContable Buscar(int idCuentaContable)
-        //{
-        //    return uow.Repository<CuentaContable>().GetSingle(x => x.IdCuentaContable.Equals(idCuentaContable));
-        //}
+        public List<CuentaContable> BuscarCuentasContables(int idEmpresa)
+        {
+            return uow.Repository<CuentaContable>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+        }
     }
 }

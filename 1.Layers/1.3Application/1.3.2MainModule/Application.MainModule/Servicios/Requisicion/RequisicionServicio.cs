@@ -18,7 +18,7 @@ namespace Application.MainModule.Servicios.Requisicion
         }
         public static List<RequisicionDTO> BuscarRequisicionPorIdEmpresa(Int16 _IdEmpresa)
         {
-            return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas().Where(x => x.IdEmpresa.Equals(_IdEmpresa)).ToList());
+            return RequisicionAdapter.ToDTO(new RequisicionDataAccess().BuscarTodas().Where(x => x.IdEmpresa.Equals(_IdEmpresa) && !x.Solicitante.EsAdministracionCentral).ToList());
         }
         public static RequisicionRevisionDTO BuscarRequisicion(int _idrequi)
         {
@@ -86,6 +86,10 @@ namespace Application.MainModule.Servicios.Requisicion
                 }
             }            
             return lRequi;
+        }
+        public static List<RequisicionEstatus> RequisiconEstatus()
+        {
+            return new RequisicionDataAccess().Estatus();
         }
     }
 }

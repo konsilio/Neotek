@@ -85,6 +85,10 @@
       <HintPath>..\..\..\..\packages\Microsoft.Owin.Host.SystemWeb.3.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -170,9 +174,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -216,9 +217,10 @@
   <ItemGroup>
     <Compile Include="Agente\AgenteServicio.cs" />
     <Compile Include="App_Code\AutenticacionServicio.cs" />
-    <Content Include="App_Code\OrdenCompraServicio.cs" />
-    <Content Include="App_Code\RequisicionServicio.cs" />
+    <Compile Include="App_Code\OrdenCompraServicio.cs" />
+    <Compile Include="App_Code\RequisicionServicio.cs" />
     <Compile Include="App_Code\CatalogoServicio.cs" />
+    <Compile Include="App_Code\TokenServicio.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -228,6 +230,7 @@
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RequisicionController.cs" />
     <Compile Include="Controllers\Shared\MainController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -236,16 +239,34 @@
     <Compile Include="Models\Catalogos\CatalogoRespuestaDTO.cs" />
     <Compile Include="Models\Catalogos\Empresa.cs" />
     <Compile Include="Models\Catalogos\EmpresaModel.cs" />
+    <Compile Include="Models\Catalogos\CentroCostoDTO.cs" />
     <Compile Include="Models\Catalogos\EmpresasDTO.cs" />
     <Compile Include="Models\Catalogos\PaisModel.cs" />
+    <Compile Include="Models\Catalogos\ProductoDTO.cs" />
     <Compile Include="Models\Catalogos\ProveedorDTO.cs" />
+    <Compile Include="Models\Catalogos\UsuarioDTO.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionAutorizacion.cs" />
+    <Compile Include="Models\Requisicion\RequisicionAutPutDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionCancelaDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionEDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionesModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionEstatusDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionEstatusEnum.cs" />
     <Compile Include="Models\Requisicion\RequisicionModel.cs" />
+    <Compile Include="Models\Requisicion\RequisicionProdAutPutDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionProdReviPutDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionProductoAutorizacionDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionProductoEDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionProductoRevisionDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionProductoDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionProductoNuevoDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionRevisionDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionRevPutDTO.cs" />
+    <Compile Include="Models\Requisicion\RespuestaRequisicionDTO.cs" />
     <Compile Include="Models\Seguridad\AutenticacionDTO.cs" />
     <Compile Include="Models\Seguridad\LoginModel.cs" />
     <Compile Include="Models\Seguridad\RespuestaAutenticacionDto.cs" />
@@ -3700,6 +3721,13 @@
     <Content Include="assets\plugins\waitme\waitMe.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -3917,9 +3945,11 @@
     <Content Include="assets\scss\ui-kit\_typography.scss" />
     <Content Include="assets\scss\ui-kit\_variables.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\DatePickerReady.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -3975,6 +4005,8 @@
     <Content Include="Views\Catalogos\NuevaEmpresa.cshtml" />
     <Content Include="Views\Empresas\Index.cshtml" />
     <Content Include="Views\Empresas\Nueva.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3991,6 +4023,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\Exceptions.MainModule.csproj">
+      <Project>{FB4086F4-8177-4175-BEB6-312FD528ABA2}</Project>
+      <Name>Exceptions.MainModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.5Security\Security.MainModule\Security.MainModule.csproj">
       <Project>{F3BA487D-6FF4-4793-8BBA-79DA05447EC2}</Project>
       <Name>Security.MainModule</Name>

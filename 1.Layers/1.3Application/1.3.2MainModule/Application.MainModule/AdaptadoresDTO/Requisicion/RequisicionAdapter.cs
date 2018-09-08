@@ -4,6 +4,7 @@ using Application.MainModule.DTOs.Requisicion;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
+using Sagas.MainModule.Entidades;
 
 namespace Application.MainModule.AdaptadoresDTO.Requisicion
 {
@@ -66,6 +67,19 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             _requisicionDTO.ListaProductos = RequisicionProductoAdapter.ToAutDTO(_requisicion.Productos.ToList());
             return _requisicionDTO;
         }
+        public static RequisicionEstatusDTO ToDTO(RequisicionEstatus estatus)
+        {
+            return new RequisicionEstatusDTO()
+            {
+                IdRequisicionEstatus = estatus.IdRequisicionEstatus,
+                Estatus = estatus.Estatus
+            };
+        }
+        public static List<RequisicionEstatusDTO> ToDTO(List<RequisicionEstatus> lestatus)
+        {
+            return lestatus.Select(x => ToDTO(x)).ToList();
+        }
+
         #endregion
         #region FromDTO
         public static Sagas.MainModule.Entidades.Requisicion FromDTO(RequisicionCancelaDTO _requisicionDTO, Sagas.MainModule.Entidades.Requisicion entidadAnterior)
