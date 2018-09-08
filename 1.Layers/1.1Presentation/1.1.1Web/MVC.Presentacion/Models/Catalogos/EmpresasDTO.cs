@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace MVC.Presentacion.Models.Catalogos
 {
-    public class EmpresaDTO
+
+    public class EmpresaDTO 
     {
         public short IdEmpresa { get; set; }
         public bool EsAdministracionCentral { get; set; }
@@ -45,5 +47,8 @@ namespace MVC.Presentacion.Models.Catalogos
         public decimal MaxRemaGaseraMensual { get; set; }
         public string UrlLogotipoMenu { get; set; }
         public string UrlLogotipoLogin { get; set; }
+        public string UrlLogotipo180px { get; set; }
+        public string UrlLogotipo500px { get; set; }
+        public string UrlLogotipo1000px { get; set; }
     }
 }

@@ -1,9 +1,17 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Flujos;
+using DS.MainModule.Helpers.MetodosExtension;
 using DS.MainModule.Results;
+using Exceptions.MainModule.Validaciones;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using Utilities.MainModule;
 
 namespace DS.MainModule.Controllers
 {
@@ -17,13 +25,86 @@ namespace DS.MainModule.Controllers
         {
             _catalogos = new Catalogos();
         }
-        #region Empresas
-        [Route("registra/empresa")]
-        
-        public HttpResponseMessage PostRegistraEmpresas(EmpresaCrearDTO empresaDto)
+
+        #region Paises
+        [Route("paises")]
+        public HttpResponseMessage GetListaPaises()
         {
-            return RespuestaHttp.crearRespuesta(_catalogos.RegistraEmpresa(empresaDto), Request);
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPaises());
+        }      
+        #endregion
+
+        #region Empresas
+
+        [Route("registra/empresa")]
+        public async Task<HttpResponseMessage> PostRegistraEmpresas()
+        {
+            string destinationFolderPDF = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
+            string root = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["RutaTemporal"]);
+
+            var provider = new MultipartFormDataStreamProvider(root);
+
+            try
+            {
+                // Read the form data.
+                await Request.Content.ReadAsMultipartAsync(provider);
+                var empresaDto = provider.FormData.AsObject<EmpresaCrearDTO>();
+
+                var resp = ValidadorClases.EnlistaErrores(empresaDto);
+                if(!resp.ModeloValido)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, resp);
+
+                string extension = string.Empty;
+                string fileName = string.Empty;
+                bool existe;
+
+                empresaDto.rutasImagenes = new List<string>();
+
+                // This illustrates how to get the file names.
+                foreach (MultipartFileData file in provider.FileData)
+                {
+                    try
+                    {
+                        extension = new FileInfo(file.Headers.ContentDisposition.FileName.Replace("\"", "")).Extension;
+                        fileName = new FileInfo(file.Headers.ContentDisposition.FileName.Replace("\"", "")).Name;
+                        extension.ToLower();
+                        existe = true;
+                    }
+                    catch
+                    {
+                        extension = string.Empty;
+                        fileName = string.Empty;
+                        existe = false;
+                    }
+
+                    if (extension.Contains(ExpresionRegular.ImagenesExtensiones) && existe)
+                    {
+                        var newFilePath = string.Format(@"{0}\{1}", destinationFolderPDF, fileName);
+
+                        if (!File.Exists(newFilePath))
+                            File.Move(file.LocalFileName, newFilePath);
+                        else
+                        {
+                            File.Delete(newFilePath);
+                            File.Move(file.LocalFileName, newFilePath);
+                        }
+                        // Guardar newFilePath en la propiedad de UrlImage de la entidad
+                        empresaDto.rutasImagenes.Add(newFilePath.ToString());
+                    }
+                }
+                return RespuestaHttp.crearRespuesta(_catalogos.RegistraEmpresa(empresaDto), Request);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
         }
+
+
+        //public HttpResponseMessage PostRegistraEmpresas(EmpresaCrearDTO empresaDto)
+        //{
+        //    return RespuestaHttp.crearRespuesta(_catalogos.RegistraEmpresa(empresaDto), Request);
+        //}
 
         [Route("modifica/empresa")]
         public HttpResponseMessage PutModificaEmpresas(EmpresaModificarDto empresaDto)
@@ -163,6 +244,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCentroCosto(idCosto));
         }
         #endregion
+
         #region Cuentas Contables
         [Route("registra/cuenta/contable")]
         public HttpResponseMessage PostRegistraCuentaContable(CuentaContableCrearDto cuentaDto)
