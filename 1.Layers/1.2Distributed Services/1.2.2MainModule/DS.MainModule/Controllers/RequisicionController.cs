@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.Flujos;
+using DS.MainModule.Results;
 
 namespace DS.MainModule.Controllers
 {
@@ -55,6 +56,11 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PutCancelarRequisicion(RequisicionCancelaDTO req)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.CancelarRequisicion(req));
+        }
+        [Route("buscar/requisicion/estatus")]
+        public HttpResponseMessage GetRequisicionEstatus()
+        {
+            return RespuestaHttp.crearRespuesta(_requisicion.ListaEstatus(), Request);
         }
     }
 }

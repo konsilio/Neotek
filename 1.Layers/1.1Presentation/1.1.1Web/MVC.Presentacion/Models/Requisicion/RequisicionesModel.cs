@@ -8,6 +8,13 @@ namespace MVC.Presentacion.Models.Requisicion
 {
     public class RequisicionesModel
     {
+        public string FechaRequeridaDe { get; set; }
+        public string FechaRequeridaA { get; set; }
+        public string FechaCreacionDe { get; set; }
+        public string FechaCreacionA { get; set; }
+        public int IdEstatus { get; set; }
+        public List<RequisicionDTO> Requisiciones { get; set; }
         public List<EmpresaDTO> Empresas { get; set; }
+        public List<RequisicionEstatusDTO> Estatus { get; set; }
     }
 }

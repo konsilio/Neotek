@@ -29,25 +29,25 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Activo = true,
             };
         }
-        public static CentroCosto FromDto(CentroCostoModificarDto cCostoDto)
+
+        public static CentroCosto FromDto(CentroCostoModificarDto cCostoDto, CentroCosto cc)
         {
-            return new CentroCosto()
-            {
-                IdCentroCosto = cCostoDto.IdCentroCosto,
-                IdEmpresa = cCostoDto.IdEmpresa,
-                IdTipoCentroCosto = cCostoDto.IdTipoCentroCosto,
-                IdCAlmacenGas = cCostoDto.IdCAlmacenGas != null && cCostoDto.IdCAlmacenGas > 0 ? cCostoDto.IdCAlmacenGas : null,
-                IdCamioneta = cCostoDto.IdCamioneta != null && cCostoDto.IdCamioneta > 0 ? cCostoDto.IdCamioneta : null,
-                IdCilindro = cCostoDto.IdCilindro != null && cCostoDto.IdCilindro > 0 ? cCostoDto.IdCilindro : null,
-                IdEquipoTransporte = cCostoDto.IdEquipoTransporte != null && cCostoDto.IdCAlmacenGas > 0 ? cCostoDto.IdCAlmacenGas : null,
-                IdEstacionCarburacion = cCostoDto.IdEstacionCarburacion != null && cCostoDto.IdEstacionCarburacion > 0 ? cCostoDto.IdEstacionCarburacion : null,
-                IdPipa = cCostoDto.IdPipa != null && cCostoDto.IdPipa > 0 ? cCostoDto.IdPipa : null,
-                IdVehiculoUtilitario = cCostoDto.IdVehiculoUtilitario != null && cCostoDto.IdVehiculoUtilitario > 0 ? cCostoDto.IdVehiculoUtilitario : null,
-                Numero = cCostoDto.Numero,
-                Descripcion = cCostoDto.Descripcion,
-                Activo = true,
-            };
+            var centroCosto = FromEntity(cc);
+            centroCosto.IdCentroCosto = cCostoDto.IdCentroCosto;
+            centroCosto.IdEmpresa = cCostoDto.IdEmpresa;
+            centroCosto.IdTipoCentroCosto = cCostoDto.IdTipoCentroCosto;
+            centroCosto.IdCAlmacenGas = cCostoDto.IdCAlmacenGas != null && cCostoDto.IdCAlmacenGas > 0 ? cCostoDto.IdCAlmacenGas : null;
+            centroCosto.IdCamioneta = cCostoDto.IdCamioneta != null && cCostoDto.IdCamioneta > 0 ? cCostoDto.IdCamioneta : null;
+            centroCosto.IdCilindro = cCostoDto.IdCilindro != null && cCostoDto.IdCilindro > 0 ? cCostoDto.IdCilindro : null;
+            centroCosto.IdEquipoTransporte = cCostoDto.IdEquipoTransporte != null && cCostoDto.IdCAlmacenGas > 0 ? cCostoDto.IdCAlmacenGas : null;
+            centroCosto.IdEstacionCarburacion = cCostoDto.IdEstacionCarburacion != null && cCostoDto.IdEstacionCarburacion > 0 ? cCostoDto.IdEstacionCarburacion : null;
+            centroCosto.IdPipa = cCostoDto.IdPipa != null && cCostoDto.IdPipa > 0 ? cCostoDto.IdPipa : null;
+            centroCosto.IdVehiculoUtilitario = cCostoDto.IdVehiculoUtilitario != null && cCostoDto.IdVehiculoUtilitario > 0 ? cCostoDto.IdVehiculoUtilitario : null;
+            centroCosto.Numero = cCostoDto.Numero;
+            centroCosto.Descripcion = cCostoDto.Descripcion;
+            return centroCosto;
         }
+
         public static CentroCosto FromEntity(CentroCosto centro)
         {
             return new CentroCosto()
