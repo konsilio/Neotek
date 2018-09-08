@@ -83,6 +83,38 @@ namespace DS.MainModule.Controllers
 
         #endregion
 
+        #region Clientes
+        [Route("registra/cliente")]
+        public HttpResponseMessage PostRegistraCliente(ClienteCrearDto clienteDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraCliente(clienteDto), Request);
+        }
+
+        [Route("modifica/cliente")]
+        public HttpResponseMessage PutModificaCliente(ClienteModificarDto clienteDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaCliente(clienteDto), Request);
+        }
+
+        [Route("elimina/cliente")]
+        public HttpResponseMessage PutEliminaCliente(ClienteEliminarDto clienteDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaCliente(clienteDto), Request);
+        }
+
+        [Route("consulta/clientes")]
+        public HttpResponseMessage GetCategoriasProducto()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaCategoriasProducto(), Request);
+        }
+
+        [Route("consulta/cliente/{idCliente}")]
+        public HttpResponseMessage GetCliente(short idCliente)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCliente(idCliente));
+        }
+        #endregion       
+
         #region Productos
 
         #region Categoria Productos
@@ -223,10 +255,6 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaProductosAsociados(idProducto));
         }
         #endregion
-
-        #endregion
-
-        #region Administracion Central
 
         #endregion
 

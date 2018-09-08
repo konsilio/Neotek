@@ -425,6 +425,104 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="CCliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="IdTipoPersona" Type="tinyint" />
+          <Property Name="IdRegimenFiscal" Type="smallint" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Apellido1" Type="varchar" MaxLength="80" />
+          <Property Name="Apellido2" Type="varchar" MaxLength="80" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CClienteCondicion">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="PorcentDescuento" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="limiteCreditoMonto" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="limiteCreditoDias" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CClienteContacto">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Telefono1" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono2" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono3" Type="varchar" MaxLength="50" />
+          <Property Name="Celular1" Type="varchar" MaxLength="50" />
+          <Property Name="Celular2" Type="varchar" MaxLength="50" />
+          <Property Name="Celular3" Type="varchar" MaxLength="50" />
+          <Property Name="Email1" Type="varchar" MaxLength="200" />
+          <Property Name="Email2" Type="varchar" MaxLength="200" />
+          <Property Name="Email3" Type="varchar" MaxLength="200" />
+          <Property Name="SitioWeb1" Type="varchar" MaxLength="150" />
+          <Property Name="SitioWeb2" Type="varchar" MaxLength="150" />
+          <Property Name="SitioWeb3" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="CClienteCredencial">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="350" />
+          <Property Name="Password" Type="varchar" MaxLength="250" />
+          <Property Name="AccesoPortal" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CClienteFiscal">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Rfc" Type="varchar" MaxLength="13" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="350" />
+        </EntityType>
+        <EntityType Name="CClienteLegal">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="RepresentanteLegal" Type="varchar" MaxLength="300" />
+          <Property Name="Telefono" Type="varchar" MaxLength="50" />
+          <Property Name="Celular" Type="varchar" MaxLength="50" />
+          <Property Name="CorreoElectronico" Type="varchar" MaxLength="350" />
+          <Property Name="Domicilio" Type="varchar" MaxLength="350" />
+        </EntityType>
+        <EntityType Name="CClienteLocacion">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="IdPais" Type="tinyint" Nullable="false" />
+          <Property Name="IdEstadoRep" Type="tinyint" />
+          <Property Name="EstadoProvincia" Type="varchar" MaxLength="150" />
+          <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CodigoPostal" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Colonia" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Calle" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="NumExt" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumInt" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="CClienteLocacionGoogle">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="formatted_address" Type="varchar" MaxLength="350" Nullable="false" />
+          <Property Name="location_lat" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="location_lng" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="place_id" Type="varchar" MaxLength="350" Nullable="false" />
+        </EntityType>
         <EntityType Name="CCuentaContable">
           <Key>
             <PropertyRef Name="IdCuentaContable" />
@@ -651,6 +749,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdRegimenFiscal" />
           </Key>
           <Property Name="IdRegimenFiscal" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTipoPersona" Type="tinyint" Nullable="false" />
           <Property Name="c_RegimenFiscal" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="AplicaPersonaFisica" Type="bit" Nullable="false" />
@@ -1780,6 +1879,142 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CCliente_CRegimenFiscal">
+          <End Role="CRegimenFiscal" Type="Self.CRegimenFiscal" Multiplicity="0..1" />
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRegimenFiscal">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Principal>
+            <Dependent Role="CCliente">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_CTipoPersona">
+          <End Role="CTipoPersona" Type="Self.CTipoPersona" Multiplicity="0..1" />
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoPersona">
+              <PropertyRef Name="IdTipoPersona" />
+            </Principal>
+            <Dependent Role="CCliente">
+              <PropertyRef Name="IdTipoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CCliente">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteCondicion_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteCondicion" Type="Self.CClienteCondicion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteCondicion">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteContacto_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteContacto" Type="Self.CClienteContacto" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteContacto">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteCredencial_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteCredencial" Type="Self.CClienteCredencial" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteCredencial">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteFiscal_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteFiscal" Type="Self.CClienteFiscal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteFiscal">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteLegal_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteLegal" Type="Self.CClienteLegal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteLegal">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteLocacion_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1" />
+          <End Role="CClienteLocacion" Type="Self.CClienteLocacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteLocacion">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteLocacionGoogle_CClienteLocacion">
+          <End Role="CClienteLocacion" Type="Self.CClienteLocacion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteLocacionGoogle" Type="Self.CClienteLocacionGoogle" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CClienteLocacion">
+              <PropertyRef Name="IdCliente" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="CClienteLocacionGoogle">
+              <PropertyRef Name="IdCliente" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CCuentaContable_Empresa">
           <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
           <End Role="CCuentaContable" Type="Self.CCuentaContable" Multiplicity="*" />
@@ -2133,6 +2368,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="CProveedorFiscal">
               <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRegimenFiscal_CTipoPersona">
+          <End Role="CTipoPersona" Type="Self.CTipoPersona" Multiplicity="1" />
+          <End Role="CRegimenFiscal" Type="Self.CRegimenFiscal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoPersona">
+              <PropertyRef Name="IdTipoPersona" />
+            </Principal>
+            <Dependent Role="CRegimenFiscal">
+              <PropertyRef Name="IdTipoPersona" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2690,6 +2937,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="CBanco" EntityType="Self.CBanco" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCamioneta" EntityType="Self.CCamioneta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCentroCosto" EntityType="Self.CCentroCosto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CCliente" EntityType="Self.CCliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteCondicion" EntityType="Self.CClienteCondicion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteContacto" EntityType="Self.CClienteContacto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteCredencial" EntityType="Self.CClienteCredencial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteFiscal" EntityType="Self.CClienteFiscal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteLegal" EntityType="Self.CClienteLegal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteLocacion" EntityType="Self.CClienteLocacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteLocacionGoogle" EntityType="Self.CClienteLocacionGoogle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCuentaContable" EntityType="Self.CCuentaContable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CEstacionCarburacion" EntityType="Self.CEstacionCarburacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CEstadosRep" EntityType="Self.CEstadosRep" Schema="dbo" store:Type="Tables" />
@@ -3021,6 +3276,46 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CCentroCosto" EntitySet="CCentroCosto" />
           </AssociationSet>
+          <AssociationSet Name="FK_CCliente_CRegimenFiscal" Association="Self.FK_CCliente_CRegimenFiscal">
+            <End Role="CRegimenFiscal" EntitySet="CRegimenFiscal" />
+            <End Role="CCliente" EntitySet="CCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCliente_CTipoPersona" Association="Self.FK_CCliente_CTipoPersona">
+            <End Role="CTipoPersona" EntitySet="CTipoPersona" />
+            <End Role="CCliente" EntitySet="CCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCliente_Empresa" Association="Self.FK_CCliente_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CCliente" EntitySet="CCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteCondicion_CCliente" Association="Self.FK_CClienteCondicion_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteCondicion" EntitySet="CClienteCondicion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteContacto_CCliente" Association="Self.FK_CClienteContacto_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteContacto" EntitySet="CClienteContacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteCredencial_CCliente" Association="Self.FK_CClienteCredencial_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteCredencial" EntitySet="CClienteCredencial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteFiscal_CCliente" Association="Self.FK_CClienteFiscal_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteFiscal" EntitySet="CClienteFiscal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteLegal_CCliente" Association="Self.FK_CClienteLegal_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteLegal" EntitySet="CClienteLegal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteLocacion_CCliente" Association="Self.FK_CClienteLocacion_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteLocacion" EntitySet="CClienteLocacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteLocacionGoogle_CClienteLocacion" Association="Self.FK_CClienteLocacionGoogle_CClienteLocacion">
+            <End Role="CClienteLocacion" EntitySet="CClienteLocacion" />
+            <End Role="CClienteLocacionGoogle" EntitySet="CClienteLocacionGoogle" />
+          </AssociationSet>
           <AssociationSet Name="FK_CCuentaContable_Empresa" Association="Self.FK_CCuentaContable_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CCuentaContable" EntitySet="CCuentaContable" />
@@ -3136,6 +3431,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_CProveedorFiscal_CProveedor" Association="Self.FK_CProveedorFiscal_CProveedor">
             <End Role="CProveedor" EntitySet="CProveedor" />
             <End Role="CProveedorFiscal" EntitySet="CProveedorFiscal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRegimenFiscal_CTipoPersona" Association="Self.FK_CRegimenFiscal_CTipoPersona">
+            <End Role="CTipoPersona" EntitySet="CTipoPersona" />
+            <End Role="CRegimenFiscal" EntitySet="CRegimenFiscal" />
           </AssociationSet>
           <AssociationSet Name="FK_EmpresaConfiguracion_Empresa" Association="Self.FK_EmpresaConfiguracion_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
@@ -3414,6 +3713,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Roles" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Empresa" ToRole="Rol" />
           <NavigationProperty Name="CentrosCosto" Relationship="Sagas.MainModuleModel.FK_CentroCosto_Empresa" FromRole="Empresa" ToRole="CentroCosto" />
           <NavigationProperty Name="CuentasContables" Relationship="Sagas.MainModuleModel.FK_CuentaContable_Empresa" FromRole="Empresa" ToRole="CuentaContable" />
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_Empresa" FromRole="Empresa" ToRole="CCliente" />
           
                     
           <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
@@ -4391,6 +4691,58 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_CProducto_CCuentaContable" Association="Sagas.MainModuleModel.FK_CProducto_CCuentaContable">
             <End Role="CuentaContable" EntitySet="CuentaContable" />
             <End Role="Producto" EntitySet="Producto" />
+          </AssociationSet>
+          <EntitySet Name="CCliente" EntityType="Sagas.MainModuleModel.CCliente" />
+          <!--<EntitySet Name="CClienteCondicion" EntityType="Sagas.MainModuleModel.CClienteCondicion" />
+          <EntitySet Name="CClienteContacto" EntityType="Sagas.MainModuleModel.CClienteContacto" />
+          <EntitySet Name="CClienteCredencial" EntityType="Sagas.MainModuleModel.CClienteCredencial" />
+          <EntitySet Name="CClienteFiscal" EntityType="Sagas.MainModuleModel.CClienteFiscal" />
+          <EntitySet Name="CClienteLegal" EntityType="Sagas.MainModuleModel.CClienteLegal" />-->
+          <EntitySet Name="CClienteLocacion" EntityType="Sagas.MainModuleModel.CClienteLocacion" />
+          <!--<EntitySet Name="CClienteLocacionGoogle" EntityType="Sagas.MainModuleModel.CClienteLocacionGoogle" />-->
+          <AssociationSet Name="FK_CCliente_CRegimenFiscal" Association="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal">
+            <End Role="RegimenFiscal" EntitySet="RegimenFiscal" />
+            <End Role="CCliente" EntitySet="CCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCliente_CTipoPersona" Association="Sagas.MainModuleModel.FK_CCliente_CTipoPersona">
+            <End Role="TipoPersona" EntitySet="TipoPersona" />
+            <End Role="CCliente" EntitySet="CCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCliente_Empresa" Association="Sagas.MainModuleModel.FK_CCliente_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CCliente" EntitySet="CCliente" />
+          </AssociationSet>
+          <!--<AssociationSet Name="FK_CClienteCondicion_CCliente" Association="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteCondicion" EntitySet="CClienteCondicion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteContacto_CCliente" Association="Sagas.MainModuleModel.FK_CClienteContacto_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteContacto" EntitySet="CClienteContacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteCredencial_CCliente" Association="Sagas.MainModuleModel.FK_CClienteCredencial_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteCredencial" EntitySet="CClienteCredencial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteFiscal_CCliente" Association="Sagas.MainModuleModel.FK_CClienteFiscal_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteFiscal" EntitySet="CClienteFiscal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteLegal_CCliente" Association="Sagas.MainModuleModel.FK_CClienteLegal_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteLegal" EntitySet="CClienteLegal" />
+          </AssociationSet>-->
+          <AssociationSet Name="FK_CClienteLocacion_CCliente" Association="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteLocacion" EntitySet="CClienteLocacion" />
+          </AssociationSet>
+          <!--<AssociationSet Name="FK_CClienteLocacionGoogle_CClienteLocacion" Association="Sagas.MainModuleModel.FK_CClienteLocacionGoogle_CClienteLocacion">
+            <End Role="CClienteLocacion" EntitySet="CClienteLocacion" />
+            <End Role="CClienteLocacionGoogle" EntitySet="CClienteLocacionGoogle" />
+          </AssociationSet>-->
+          <AssociationSet Name="FK_CRegimenFiscal_CTipoPersona" Association="Sagas.MainModuleModel.FK_CRegimenFiscal_CTipoPersona">
+            <End Role="TipoPersona" EntitySet="TipoPersona" />
+            <End Role="RegimenFiscal" EntitySet="RegimenFiscal" />
           </AssociationSet>
           <!--<EntitySet Name="RolAccionCatalogo" EntityType="Sagas.MainModuleModel.RolAccionCatalogo" />-->
           <!--<AssociationSet Name="FK_RolAccionCatalogo_Rol" Association="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol">
@@ -6199,14 +6551,17 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdRegimenFiscal" />
           </Key>
           <Property Name="IdRegimenFiscal" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTipoPersona" Type="Byte" Nullable="false"/>
           <Property Name="c_RegimenFiscal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="AplicaPersonaFisica" Type="Boolean" Nullable="false" />
           <Property Name="AplicaPersonaMoral" Type="Boolean" Nullable="false" />
           <Property Name="FechaInicioVigencia" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaFinVigencia" Type="DateTime" Precision="0" />
-          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_RegimenFiscal" FromRole="RegimenFiscal" ToRole="Proveedor" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />          
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_RegimenFiscal" FromRole="RegimenFiscal" ToRole="Proveedor" />          
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal" FromRole="RegimenFiscal" ToRole="CCliente" />
+          <NavigationProperty Name="TipoPersona" Relationship="Sagas.MainModuleModel.FK_CRegimenFiscal_CTipoPersona" FromRole="RegimenFiscal" ToRole="TipoPersona" />
         </EntityType>
         <EntityType Name="TipoPersona">
           <Key>
@@ -6215,7 +6570,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdTipoPersona" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_TipoPersona" FromRole="TipoPersona" ToRole="Proveedor" />
+          <NavigationProperty Name="Proveedores" Relationship="Sagas.MainModuleModel.FK_CProveedor_TipoPersona" FromRole="TipoPersona" ToRole="Proveedor" />
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_CTipoPersona" FromRole="TipoPersona" ToRole="CCliente" />
+          <NavigationProperty Name="RegimenesFiscales" Relationship="Sagas.MainModuleModel.FK_CRegimenFiscal_CTipoPersona" FromRole="TipoPersona" ToRole="RegimenFiscal" />
         </EntityType>
         <Association Name="FK_CProveedor_Banco">
           <End Type="Sagas.MainModuleModel.Banco" Role="Banco" Multiplicity="1" />
@@ -6785,6 +7142,238 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="Producto">
               <PropertyRef Name="IdCuentaContable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CCliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="IdTipoPersona" Type="Byte" />
+          <Property Name="IdRegimenFiscal" Type="Int16" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido1" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido2" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <!--Name="CClienteCondicion-->
+          <Property Name="PorcentDescuento" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="limiteCreditoMonto" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="limiteCreditoDias" Type="Int16" Nullable="false" />
+          <!--Name="CClienteContacto"-->
+          <Property Name="Telefono1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SitioWeb1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="SitioWeb2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="SitioWeb3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <!--Name="CClienteCredencial"-->
+          <Property Name="Usuario" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="AccesoPortal" Type="Boolean" Nullable="false" />
+          <!--Name="CClienteFiscal"-->
+          <Property Name="Rfc" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <!--Name="CClienteLegal"-->
+          <Property Name="RepresentanteLegal" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorreoElectronico" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Domicilio" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+
+          <NavigationProperty Name="RegimenFiscal" Relationship="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal" FromRole="CCliente" ToRole="RegimenFiscal" />
+          <NavigationProperty Name="TipoPersonaFiscal" Relationship="Sagas.MainModuleModel.FK_CCliente_CTipoPersona" FromRole="CCliente" ToRole="TipoPersona" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CCliente_Empresa" FromRole="CCliente" ToRole="Empresa" />
+          <NavigationProperty Name="Locaciones" Relationship="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente" FromRole="CCliente" ToRole="CClienteLocacion" />
+          <!--<NavigationProperty Name="CClienteCondicion" Relationship="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente" FromRole="CCliente" ToRole="CClienteCondicion" />
+          <NavigationProperty Name="CClienteContacto" Relationship="Sagas.MainModuleModel.FK_CClienteContacto_CCliente" FromRole="CCliente" ToRole="CClienteContacto" />
+          <NavigationProperty Name="CClienteCredencial" Relationship="Sagas.MainModuleModel.FK_CClienteCredencial_CCliente" FromRole="CCliente" ToRole="CClienteCredencial" />
+          <NavigationProperty Name="CClienteFiscal" Relationship="Sagas.MainModuleModel.FK_CClienteFiscal_CCliente" FromRole="CCliente" ToRole="CClienteFiscal" />
+          <NavigationProperty Name="CClienteLegal" Relationship="Sagas.MainModuleModel.FK_CClienteLegal_CCliente" FromRole="CCliente" ToRole="CClienteLegal" />-->          
+          <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente" FromRole="CClienteCondicion" ToRole="CCliente" />-->          
+          <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteContacto_CCliente" FromRole="CClienteContacto" ToRole="CCliente" />-->          
+          <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteCredencial_CCliente" FromRole="CClienteCredencial" ToRole="CCliente" />-->          
+          <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteFiscal_CCliente" FromRole="CClienteFiscal" ToRole="CCliente" />-->          
+          <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteLegal_CCliente" FromRole="CClienteLegal" ToRole="CCliente" />-->
+        </EntityType>
+        <EntityType Name="CClienteLocacion">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="Orden" Type="Int16" Nullable="false" />
+          <Property Name="IdPais" Type="Byte" Nullable="false" />
+          <Property Name="IdEstadoRep" Type="Byte" />
+          <Property Name="EstadoProvincia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Municipio" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoPostal" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Colonia" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Calle" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="NumExt" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NumInt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <!--Name="CClienteLocacionGoogle"-->
+          <Property Name="formatted_address" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="location_lat" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="location_lng" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="place_id" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cliente" Relationship="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente" FromRole="CClienteLocacion" ToRole="CCliente" />          
+          <!--<NavigationProperty Name="CClienteLocacionGoogle" Relationship="Sagas.MainModuleModel.FK_CClienteLocacionGoogle_CClienteLocacion" FromRole="CClienteLocacion" ToRole="CClienteLocacionGoogle" />-->          
+          <!--<NavigationProperty Name="CClienteLocacion" Relationship="Sagas.MainModuleModel.FK_CClienteLocacionGoogle_CClienteLocacion" FromRole="CClienteLocacionGoogle" ToRole="CClienteLocacion" />-->
+        </EntityType>
+        <Association Name="FK_CCliente_CRegimenFiscal">
+          <End Type="Sagas.MainModuleModel.RegimenFiscal" Role="RegimenFiscal" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegimenFiscal">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Principal>
+            <Dependent Role="CCliente">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_CTipoPersona">
+          <End Type="Sagas.MainModuleModel.TipoPersona" Role="TipoPersona" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPersona">
+              <PropertyRef Name="IdTipoPersona" />
+            </Principal>
+            <Dependent Role="CCliente">
+              <PropertyRef Name="IdTipoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CCliente">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--<Association Name="FK_CClienteCondicion_CCliente">
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteCondicion" Role="CClienteCondicion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteCondicion">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteContacto_CCliente">
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteContacto" Role="CClienteContacto" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteContacto">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteCredencial_CCliente">
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteCredencial" Role="CClienteCredencial" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteCredencial">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteFiscal_CCliente">
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteFiscal" Role="CClienteFiscal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteFiscal">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteLegal_CCliente">
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteLegal" Role="CClienteLegal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteLegal">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->
+        <Association Name="FK_CClienteLocacion_CCliente">
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.CClienteLocacion" Role="CClienteLocacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteLocacion">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--<Association Name="FK_CClienteLocacionGoogle_CClienteLocacion">
+          <End Type="Sagas.MainModuleModel.CClienteLocacion" Role="CClienteLocacion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteLocacionGoogle" Role="CClienteLocacionGoogle" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CClienteLocacion">
+              <PropertyRef Name="IdCliente" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="CClienteLocacionGoogle">
+              <PropertyRef Name="IdCliente" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->
+        <Association Name="FK_CRegimenFiscal_CTipoPersona">
+          <End Type="Sagas.MainModuleModel.TipoPersona" Role="TipoPersona" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.RegimenFiscal" Role="RegimenFiscal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPersona">
+              <PropertyRef Name="IdTipoPersona" />
+            </Principal>
+            <Dependent Role="RegimenFiscal">
+              <PropertyRef Name="IdTipoPersona" />
             </Dependent>
           </ReferentialConstraint>
         </Association>        
@@ -7620,6 +8209,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="RegimenFiscal">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.RegimenFiscal">
               <MappingFragment StoreEntitySet="CRegimenFiscal">
+                <ScalarProperty Name="IdTipoPersona" ColumnName="IdTipoPersona" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="FechaFinVigencia" ColumnName="FechaFinVigencia" />
                 <ScalarProperty Name="FechaInicioVigencia" ColumnName="FechaInicioVigencia" />
@@ -7808,6 +8398,92 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
                 <ScalarProperty Name="IdCAlmacenGasEntrada" ColumnName="IdCAlmacenGasEntrada" />
                 <ScalarProperty Name="IdCAlmacenGasSalida" ColumnName="IdCAlmacenGasSalida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CCliente">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CCliente">
+              <MappingFragment StoreEntitySet="CCliente">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdRegimenFiscal" ColumnName="IdRegimenFiscal" />
+                <ScalarProperty Name="IdTipoPersona" ColumnName="IdTipoPersona" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteCondicion">
+                <ScalarProperty Name="limiteCreditoDias" ColumnName="limiteCreditoDias" />
+                <ScalarProperty Name="limiteCreditoMonto" ColumnName="limiteCreditoMonto" />
+                <ScalarProperty Name="PorcentDescuento" ColumnName="PorcentDescuento" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteContacto">
+                <ScalarProperty Name="SitioWeb3" ColumnName="SitioWeb3" />
+                <ScalarProperty Name="SitioWeb2" ColumnName="SitioWeb2" />
+                <ScalarProperty Name="SitioWeb1" ColumnName="SitioWeb1" />
+                <ScalarProperty Name="Email3" ColumnName="Email3" />
+                <ScalarProperty Name="Email2" ColumnName="Email2" />
+                <ScalarProperty Name="Email1" ColumnName="Email1" />
+                <ScalarProperty Name="Celular3" ColumnName="Celular3" />
+                <ScalarProperty Name="Celular2" ColumnName="Celular2" />
+                <ScalarProperty Name="Celular1" ColumnName="Celular1" />
+                <ScalarProperty Name="Telefono3" ColumnName="Telefono3" />
+                <ScalarProperty Name="Telefono2" ColumnName="Telefono2" />
+                <ScalarProperty Name="Telefono1" ColumnName="Telefono1" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteCredencial">
+                <ScalarProperty Name="AccesoPortal" ColumnName="AccesoPortal" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteFiscal">
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Rfc" ColumnName="Rfc" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteLegal">
+                <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="RepresentanteLegal" ColumnName="RepresentanteLegal" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CClienteLocacion">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CClienteLocacion">
+              <MappingFragment StoreEntitySet="CClienteLocacion">
+                <ScalarProperty Name="NumInt" ColumnName="NumInt" />
+                <ScalarProperty Name="NumExt" ColumnName="NumExt" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Municipio" ColumnName="Municipio" />
+                <ScalarProperty Name="EstadoProvincia" ColumnName="EstadoProvincia" />
+                <ScalarProperty Name="IdEstadoRep" ColumnName="IdEstadoRep" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteLocacionGoogle">
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="location_lng" ColumnName="location_lng" />
+                <ScalarProperty Name="location_lat" ColumnName="location_lat" />
+                <ScalarProperty Name="formatted_address" ColumnName="formatted_address" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>          
