@@ -15,6 +15,14 @@ namespace Application.MainModule.Flujos
 {
     public class Catalogos
     {
+
+        #region Paises
+        public List<PaisDTO> ListaPaises()
+        {
+            return PaisServicio.ListaPaises();
+        }      
+        #endregion
+
         #region Empresas
         public List<EmpresaDTO> ListaEmpresasLogin()
         {

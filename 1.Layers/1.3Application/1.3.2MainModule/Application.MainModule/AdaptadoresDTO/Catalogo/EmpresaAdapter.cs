@@ -141,10 +141,12 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 SitioWeb2 = empresa.SitioWeb2,
                 SitioWeb3 = empresa.SitioWeb3,
                 Rfc = empresa.Rfc,
-                RazonSocial = empresa.RazonSocial,               
-                UrlLogotipo180px = empresa.UrlLogotipo180px,
-                UrlLogotipo500px = empresa.UrlLogotipo500px,
-                UrlLogotipo1000px = empresa.UrlLogotipo1000px
+                RazonSocial = empresa.RazonSocial,
+                //UrlLogotipo180px = empresa.UrlLogotipo180px,
+                //UrlLogotipo500px = empresa.UrlLogotipo500px,
+                //UrlLogotipo1000px = empresa.UrlLogotipo1000px
+               // UrlLogotipo1000px = empresa.Imagenes
+
             };
         }
         

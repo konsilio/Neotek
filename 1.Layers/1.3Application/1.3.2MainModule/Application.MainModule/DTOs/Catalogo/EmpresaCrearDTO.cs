@@ -21,6 +21,7 @@ namespace Application.MainModule.DTOs.Catalogo
         public string RazonSocial { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
+        [RegularExpression(ExpresionRegular.Rfc, ErrorMessage = Error.C0001)]
         [StringLength(250, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Rfc")]
         public string Rfc { get; set; }
@@ -144,16 +145,15 @@ namespace Application.MainModule.DTOs.Catalogo
         [Display(Name = "Núm Int.")]
         public string NumInt { get; set; }
 
-        [StringLength(250, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Pequeño (180px X 180px")]
-        public string UrlLogotipo180px { get; set; }
+        //[StringLength(250, MinimumLength = 1, ErrorMessage = Error.R0004)]
+        //[Display(Name = "Pequeño (180px X 180px")]
+        //public string UrlLogotipo180px { get; set; }
 
-        [StringLength(250, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Mediano (500px X 500px)")]
-        public string UrlLogotipo500px { get; set; }
-
-        [StringLength(250, MinimumLength = 1, ErrorMessage = Error.R0004)]
-        [Display(Name = "Grande (1000px X 1000px")]
-        public string UrlLogotipo1000px { get; set; }
+        //[StringLength(250, MinimumLength = 1, ErrorMessage = Error.R0004)]
+        //[Display(Name = "Mediano (500px X 500px)")]
+        //public string UrlLogotipo500px { get; set; }
+        
+        [Display(Name = "Imagenes")]
+        public List<string> rutasImagenes { get; set; }
     }
 }

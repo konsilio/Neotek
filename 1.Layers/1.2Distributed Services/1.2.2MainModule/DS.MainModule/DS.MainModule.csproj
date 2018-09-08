@@ -247,6 +247,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\MetodosExtension\NameValueCollectionExtension.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -323,6 +324,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="LogosEmpresa\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -337,9 +339,17 @@
       <Project>{2c5f9775-06cf-466f-9873-3166ede4744c}</Project>
       <Name>Application.MainModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.4Exceptions\Exceptions.MainModule\Exceptions.MainModule.csproj">
+      <Project>{fb4086f4-8177-4175-beb6-312fd528aba2}</Project>
+      <Name>Exceptions.MainModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.5Security\Security.MainModule\Security.MainModule.csproj">
       <Project>{F3BA487D-6FF4-4793-8BBA-79DA05447EC2}</Project>
       <Name>Security.MainModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\Utilities.MainModule.csproj">
+      <Project>{80053147-4263-454b-ba2d-c7ef6a507c0b}</Project>
+      <Name>Utilities.MainModule</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
