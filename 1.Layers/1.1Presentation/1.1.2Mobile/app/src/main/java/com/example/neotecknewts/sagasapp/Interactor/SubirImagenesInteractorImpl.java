@@ -11,6 +11,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
@@ -479,14 +480,121 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     public void registrarLecturaInicial(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
-        String clave_unica = "LI"+s.format(new Date());
+        String clave_unica = "LIEC"+s.format(new Date());
         lecturaDTO.setClaveProceso(clave_unica);
-        sagasSql.InsertLecturaInicial(lecturaDTO);
+        /*sagasSql.InsertLecturaInicial(lecturaDTO);
         sagasSql.InsertLecturaImagenes(lecturaDTO);
-        sagasSql.InsertLecturaP5000(lecturaDTO);
-        subirImagenesPresenter.onSuccessRegistroAndroid();
-        Lisener lisener = new Lisener(sagasSql,token);
-        lisener.CrearRunable(Lisener.LecturaInicial);
+        sagasSql.InsertLecturaP5000(lecturaDTO);*/
+        //region Verifica si el servcio esta disponible
+
+        Gson gsons = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofits =  new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gsons))
+                .build();
+        RestClient restClientS = retrofits.create(RestClient.class);
+
+        int servicio_intentos = 0;
+        esta_disponible= true;
+
+        while (servicio_intentos<3) {
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                    RespuestaServicioDisponibleDTO data = response.body();
+                    esta_disponible = response.isSuccessful() && data.isExito();
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
+                    esta_disponible = false;
+                }
+            });
+            if (esta_disponible) {
+                break;
+            }else {
+                servicio_intentos++;
+            }
+        }
+        //servicio_intentos = 3;
+        if (servicio_intentos == 3) {
+            registrar_local(sagasSql,lecturaDTO,clave_unica);
+            registro_local = true;
+        }
+
+        //endregion
+        //region Realiza el registro de la descarga
+
+        String url = Constantes.BASE_URL;
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        int intentos_post = 0;
+        registra_descarga = true;
+        while(intentos_post<3) {
+            Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(lecturaDTO,
+                    token, "application/json");
+            Log.w(TAG, retrofit.baseUrl().toString());
+            call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaLecturaInicialDTO> call,
+                                       Response<RespuestaLecturaInicialDTO> response) {
+                    RespuestaLecturaInicialDTO data = response.body();
+                    if (response.isSuccessful()) {
+                        Log.w("IniciarDescarga", "Success");
+                        subirImagenesPresenter.onRegistrarIniciarDescarga();
+                    } else {
+                        switch (response.code()) {
+                            case 404:
+                                Log.w("IniciarDescarga", "not found");
+                                break;
+                            case 500:
+                                Log.w("IniciarDescarga", "server broken");
+                                break;
+                            default:
+                                Log.w("IniciarDescarga", "" + response.code());
+                                Log.w(" Error", response.message() + " " +
+                                        response.raw().toString());
+                                break;
+                        }
+                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
+                    Log.e("error", t.toString());
+                }
+            });
+            intentos_post++;
+            if(registra_descarga){
+                break;
+            }else{
+                intentos_post++;
+            }
+        }
+        if(intentos_post==3){
+            registrar_local(sagasSql,lecturaDTO,clave_unica);
+            registro_local = true;
+        }
+        if(registro_local ){
+            subirImagenesPresenter.onSuccessRegistroAndroid();
+            Lisener lisener = new Lisener(sagasSql,token);
+            lisener.CrearRunable(Lisener.LecturaInicial);
+        }
+        //endregion
     }
 
     /**
@@ -505,12 +613,122 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     public void registrarLecturaFinal(SAGASSql sagasSql, String token, LecturaDTO lecturaDTO) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
-        String clave_unica = "LF"+s.format(new Date());
+        String clave_unica = "LFEC"+s.format(new Date());
         lecturaDTO.setClaveProceso(clave_unica);
-        sagasSql.IncertarLecturaFinal(lecturaDTO);
+        //region Verifica si el servcio esta disponible
+
+        Gson gsons = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofits =  new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gsons))
+                .build();
+        RestClient restClientS = retrofits.create(RestClient.class);
+
+        int servicio_intentos = 0;
+        esta_disponible= true;
+
+        while (servicio_intentos<3) {
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                    RespuestaServicioDisponibleDTO data = response.body();
+                    esta_disponible = response.isSuccessful() && data.isExito();
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
+                    esta_disponible = false;
+                }
+            });
+            if (esta_disponible) {
+                break;
+            }else {
+                servicio_intentos++;
+            }
+        }
+        //servicio_intentos = 3;
+        if (servicio_intentos == 3) {
+            registrar_local(sagasSql,lecturaDTO,clave_unica);
+            registro_local = true;
+        }
+
+        //endregion
+        //region Realiza el registro de la descarga
+
+        String url = Constantes.BASE_URL;
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        int intentos_post = 0;
+        registra_descarga = true;
+        while(intentos_post<3) {
+            Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinal(lecturaDTO,
+                    token, "application/json");
+            Log.w(TAG, retrofit.baseUrl().toString());
+            call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaLecturaInicialDTO> call,
+                                       Response<RespuestaLecturaInicialDTO> response) {
+                    RespuestaLecturaInicialDTO data = response.body();
+                    if (response.isSuccessful()) {
+                        Log.w("IniciarDescarga", "Success");
+                        subirImagenesPresenter.onRegistrarIniciarDescarga();
+                    } else {
+                        switch (response.code()) {
+                            case 404:
+                                Log.w("IniciarDescarga", "not found");
+                                break;
+                            case 500:
+                                Log.w("IniciarDescarga", "server broken");
+                                break;
+                            default:
+                                Log.w("IniciarDescarga", "" + response.code());
+                                Log.w(" Error", response.message() + " " +
+                                        response.raw().toString());
+                                break;
+                        }
+                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
+                    Log.e("error", t.toString());
+                }
+            });
+            intentos_post++;
+            if(registra_descarga){
+                break;
+            }else{
+                intentos_post++;
+            }
+        }
+        if(intentos_post==3){
+            registrar_local(sagasSql,lecturaDTO,clave_unica);
+            registro_local = true;
+        }
+        if(registro_local ){
+            subirImagenesPresenter.onSuccessRegistroAndroid();
+            Lisener lisener = new Lisener(sagasSql,token);
+            lisener.CrearRunable(Lisener.LecturaFinal);
+        }
+        //endregion
+        /*sagasSql.IncertarLecturaFinal(lecturaDTO);
         sagasSql.InsertImagenLecturaFinalP5000(lecturaDTO);
         sagasSql.IncertImagenesLecturaFinal(lecturaDTO);
-        subirImagenesPresenter.onSuccessRegistroAndroid();
+        subirImagenesPresenter.onSuccessRegistroAndroid();*/
 
     }
 
@@ -689,6 +907,21 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 finalizarDescargaSQL.InsertarImagenes(finalizarDescargaDTO,clave_unica);
             }
         }
+    }
+
+    private void registrar_local(SAGASSql sagasSql, LecturaDTO lecturaDTO, String clave_unica) {
+        if(sagasSql.GetLecturaByClaveUnica(clave_unica).getCount()==0){
+            sagasSql.InsertLecturaInicial(lecturaDTO);
+            if(sagasSql.GetLecturaImagenesByClaveUnica(clave_unica).getCount()==0){
+                sagasSql.InsertLecturaImagenes(lecturaDTO);
+            }
+            /*if(sagasSql.GetLecturaP5000ByClaveUnica(clave_unica).getCount()==0){
+                sagasSql.InsertLecturaP5000(lecturaDTO);
+            }*/
+        }
+
+
+
     }
     //endregion
 }

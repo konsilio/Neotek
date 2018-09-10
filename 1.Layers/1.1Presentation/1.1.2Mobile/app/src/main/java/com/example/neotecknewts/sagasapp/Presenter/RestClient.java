@@ -134,8 +134,13 @@ public interface RestClient {
     );
 
     @POST(Constantes.POST_LECTURA_INICIAL)
-    Call<RespuestaLecturaInicialDTO> postLecturaInicial(@Body LecturaDTO lecturaDTO,
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicial(@Body LecturaDTO lecturaDTO,
                                                         @Header("Authorization")String token,
                                                         @Header("Content-Type") String contentType
+    );
+    @POST(Constantes.POST_LECTURA_FINAL)
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinal(@Body LecturaDTO lecturaDTO,
+                                                          @Header("Authorization")String token,
+                                                          @Header("Content-Type") String contentType
     );
 }

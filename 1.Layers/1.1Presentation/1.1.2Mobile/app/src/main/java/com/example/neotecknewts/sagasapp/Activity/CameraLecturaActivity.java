@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -26,7 +27,6 @@ import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
-import com.jsibbold.zoomage.ZoomageView;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -40,7 +40,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
     public TableLayout TLCameraLecturaActivityTomarFoto,TLCameraLecturaActivityFotoNitida;
     public Button BtnCameraLecturaTomarFoto,BtnCameraLecturaFotoNitidaSi,BtnCameraLecturaFotoNitidaNo;
     public TextView TVCameraLecturaActivityTitulo,TVCameraLecturaActivityFotoEstacion;
-    public ZoomageView IVZCameraLecturaActivityImagen;
+    public ImageView IVZCameraLecturaActivityImagen;
 
     public boolean EsLecturaInicial,EsLecturaFinal,EsFotoP5000,fotoTomada,
             EsLecturaInicialPipa,EsLecturaFinalPipa;
@@ -123,8 +123,10 @@ public class CameraLecturaActivity extends AppCompatActivity {
     private void verificarBoton() {
         if(EsFotoP5000 && EsLecturaInicial || EsLecturaFinal){
             try {
-                lecturaDTO.setImagenP5000(imageurl);
-                lecturaDTO.setImagenP5000URI(new URI(imageUri.toString()));
+                lecturaDTO.getImagenes().add(imageurl);
+                lecturaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                //lecturaDTO.setImagenP5000(imageurl);
+                //lecturaDTO.setImagenP5000URI(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         CapturaPorcentajeActivity.class);
                 intent.putExtra("lecturaDTO",lecturaDTO);
@@ -137,8 +139,10 @@ public class CameraLecturaActivity extends AppCompatActivity {
 
         }else if (EsFotoP5000 && (EsLecturaInicialPipa || EsLecturaFinalPipa)){
             try {
-                lecturaPipaDTO.setImagenP5000(imageurl);
-                lecturaPipaDTO.setImagenP5000URI(new URI(imageUri.toString()));
+                lecturaPipaDTO.getImagenes().add(imageurl);
+                lecturaPipaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                //lecturaPipaDTO.setImagenP5000(imageurl);
+                //lecturaPipaDTO.setImagenP5000URI(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         CapturaPorcentajeActivity.class);
                 intent.putExtra("lecturaPipaDTO",lecturaPipaDTO);

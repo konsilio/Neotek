@@ -83,12 +83,104 @@ public class Lisener{
     }
 
     private boolean LecturaFinalizarEstacion() {
-        Log.w("Iniciando","Revisando lectura final estación: "+new Date());
+        boolean registrado = false;
+        if(ServicioDisponible()) {
+            Log.w("Iniciando", "Revisando lectura iniciar estación: " + new Date());
+            Cursor cursor = sagasSql.GetLecturasFinales();
+            LecturaDTO lecturaDTO = null;
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    lecturaDTO = new LecturaDTO();
+                    /* Coloco los valores de la base de datos en el DTO */
+                    lecturaDTO.setClaveProceso(cursor.getString(
+                            cursor.getColumnIndex("ClaveProceso")));
+                    lecturaDTO.setIdTipoMedidor(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedidor")));
+                    lecturaDTO.setNombreTipoMedidor(cursor.getString(cursor.getColumnIndex(
+                            "NombreTipoMedidor")));
+                    lecturaDTO.setCantidadFotografias(cursor.getInt(cursor.getColumnIndex(
+                            "CantidadFotografiasMedidor")));
+                    lecturaDTO.setNombreEstacionCarburacion(cursor.getString(cursor.getColumnIndex(
+                            "NombreEstacionCarburacion")));
+                    lecturaDTO.setIdEstacionCarburacion(cursor.getInt(cursor.getColumnIndex(
+                            "IdEstacionCarburacion")));
+                    lecturaDTO.setCantidadP5000(cursor.getInt(cursor.getColumnIndex(
+                            "CantidadP5000")));
+                    lecturaDTO.setPorcentajeMedidor(cursor.getDouble(cursor.getColumnIndex(
+                            "PorcentajeMedidor")));
 
-        return true;
+                   /* Cursor ImagenP5000 = sagasSql.GetLecturaP5000ByClaveUnica(
+                            lecturaDTO.getClaveProceso());*/
+                    /* Coloco los valores de la imagen del P5000 en el DTO */
+                    /*lecturaDTO.setImagenP5000(cursor.getString(cursor.getColumnIndex(
+                            "Imagen")));
+                    String uri = cursor.getString(cursor.getColumnIndex(
+                            "Url"));
+                    try {
+                        lecturaDTO.setImagenP5000URI(new URI(uri));
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }*/
+                    Cursor Imagen = sagasSql.GetImagenesLecturaFinalByClaveOperacion(
+                            lecturaDTO.getClaveProceso());
+                    Imagen.moveToFirst();
+                    while (Imagen.isAfterLast()){
+                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                        try {
+                            lecturaDTO.getImagenesURI().add(new URI(iuri));
+                            lecturaDTO.getImagenes().add(
+                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                            );
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
+                    registrado = RegistrarLecturaFinal(lecturaDTO);
+                    if (registrado){
+                        sagasSql.EliminarLecturaFinal(lecturaDTO.getClaveProceso());
+                        sagasSql.EliminarImagenesLecturaFinal(lecturaDTO.getClaveProceso());
+                        //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return registrado;
+    }
+
+    private boolean RegistrarLecturaFinal(LecturaDTO lecturaDTO) {
+        Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinal(lecturaDTO,token,
+                "application/json");
+        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaLecturaInicialDTO> call,
+                                   Response<RespuestaLecturaInicialDTO> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
+                _registrado);
+        return _registrado;
     }
 
     private boolean LecturaIniciarEstacion() {
+        boolean registrado = false;
         if(ServicioDisponible()) {
             Log.w("Iniciando", "Revisando lectura iniciar estación: " + new Date());
             Cursor cursor = sagasSql.GetLecturasIniciales();
@@ -114,10 +206,10 @@ public class Lisener{
                     lecturaDTO.setPorcentajeMedidor(cursor.getDouble(cursor.getColumnIndex(
                             "PorcentajeMedidor")));
 
-                    Cursor ImagenP5000 = sagasSql.GetLecturaP5000ByClaveUnica(
-                            lecturaDTO.getClaveProceso());
+                   /* Cursor ImagenP5000 = sagasSql.GetLecturaP5000ByClaveUnica(
+                            lecturaDTO.getClaveProceso());*/
                     /* Coloco los valores de la imagen del P5000 en el DTO */
-                    lecturaDTO.setImagenP5000(cursor.getString(cursor.getColumnIndex(
+                    /*lecturaDTO.setImagenP5000(cursor.getString(cursor.getColumnIndex(
                             "Imagen")));
                     String uri = cursor.getString(cursor.getColumnIndex(
                             "Url"));
@@ -125,7 +217,7 @@ public class Lisener{
                         lecturaDTO.setImagenP5000URI(new URI(uri));
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
-                    }
+                    }*/
                     Cursor Imagen = sagasSql.GetLecturaImagenesByClaveUnica(
                             lecturaDTO.getClaveProceso());
                     Imagen.moveToFirst();
@@ -141,17 +233,17 @@ public class Lisener{
                         }
                     }
                     Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
-                    boolean registrado = RegistrarLecturaInicial(lecturaDTO);
+                    registrado = RegistrarLecturaInicial(lecturaDTO);
                     if (registrado){
                         sagasSql.EliminarLectura(lecturaDTO.getClaveProceso());
                         sagasSql.EliminarLecturaImagenes(lecturaDTO.getClaveProceso());
-                        sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
+                        //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
                     }
                     cursor.moveToNext();
                 }
             }
         }
-        return false;
+        return registrado;
     }
 
     private boolean RegistrarLecturaInicial(LecturaDTO lecturaDTO) {
@@ -165,7 +257,7 @@ public class Lisener{
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<RespuestaLecturaInicialDTO> call = restClient.postLecturaInicial(lecturaDTO,token,
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(lecturaDTO,token,
                 "application/json");
         call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
             @Override

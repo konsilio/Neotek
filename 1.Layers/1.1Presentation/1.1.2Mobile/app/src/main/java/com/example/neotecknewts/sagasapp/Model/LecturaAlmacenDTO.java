@@ -17,32 +17,32 @@ import java.util.List;
  * @update 04/09/2018
  */
 public class LecturaAlmacenDTO implements Serializable {
-    @SerializedName("ClaveOperacion")
-    private String ClaveOperacion;
-
-    @SerializedName("IdAlmacen")
-    private int IdAlmacen;
-
-    @SerializedName("NombreAlmacen")
-    private String NombreAlmacen;
-
     @SerializedName("IdTipoMedidor")
     private int IdTipoMedior;
 
     @SerializedName("NombreTipoMedidor")
     private String NombreTipoMedidor;
 
-    @SerializedName("CantidadFotografias")
+    @SerializedName("CantidadFotografiasMedidor")
     private int CantidadFotografias;
 
-    @SerializedName("PorcentajeMedidor")
-    private double PorcentajeMedidor;
+    @SerializedName("Imagenes")
+    private List<String> Imagenes;
 
     @SerializedName("ImagenesURI")
     private List<URI> ImagenesURI;
 
-    @SerializedName("Imagenes")
-    private List<String> Imagenes;
+    @SerializedName("IdCAlmacenGas")
+    private int IdAlmacen;
+
+    @SerializedName("NombreAlmacen")
+    private String NombreAlmacen;
+
+    @SerializedName("PorcentajeMedidor")
+    private double PorcentajeMedidor;
+
+    @SerializedName("ClaveProceso")
+    private String ClaveOperacion;
 
     public LecturaAlmacenDTO(){
         Imagenes = new ArrayList<>();

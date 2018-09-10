@@ -76,10 +76,10 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         }
         MenuDTO m = new MenuDTO();
         m.setHeaderMenu("Toma de lectura");
-        m.setName("Estación de carb. (Inicial)");
+        m.setName("Estación de Carb. (Inicial)");
         MenuDTO m2 = new MenuDTO();
         m2.setHeaderMenu("Toma de lectura");
-        m2.setName("Estación de carb. (Final)");
+        m2.setName("Estación de Carb. (Final)");
         MenuDTO m3 = new MenuDTO();
         m3.setHeaderMenu("Toma de lectura");
         m3.setName("Pipa (Inicial)");

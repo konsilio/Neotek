@@ -18,23 +18,26 @@ import java.util.List;
  */
 public class LecturaPipaDTO implements Serializable {
 
-    @SerializedName("IdPipa")
-    private int IdPipa;
-
-    @SerializedName("ClaveProceso")
-    private String ClaveProceso;
-
-    @SerializedName("NombrePipa")
-    private String NombrePipa;
-
     @SerializedName("IdTipoMedidor")
     private int IdTipoMedidor;
 
-    @SerializedName("TipoMedidor")
+    @SerializedName("NombreTipoMedidor")
     private String TipoMedidor;
 
     @SerializedName("CantidadFotografias")
     private int CantidadFotografias;
+
+    @SerializedName("Imagenes")
+    private List<String> Imagenes;
+
+    @SerializedName("ImagenesURL")
+    private List<URI> ImagenesURI;
+
+    @SerializedName("IdCAlmacenGas")
+    private int IdPipa;
+
+    @SerializedName("NombrePipa")
+    private String NombrePipa;
 
     @SerializedName("CantidadP5000")
     private int CantidadP5000;
@@ -48,12 +51,8 @@ public class LecturaPipaDTO implements Serializable {
     @SerializedName("PorcentajeMedidor")
     private Double PorcentajeMedidor;
 
-    @SerializedName("Imagenes")
-    private List<String> Imagenes;
-
-    @SerializedName("ImagenesURL")
-    private List<URI> ImagenesURI;
-
+    @SerializedName("ClaveProceso")
+    private String ClaveProceso;
     //region Constructores
     public LecturaPipaDTO() {
         Imagenes = new ArrayList<>();

@@ -35,7 +35,7 @@ public class LecturaDTO implements Serializable {
     @SerializedName("NombreEstacionCarburacion")
     private String NombreEstacionCarburacion;
 
-    @SerializedName("IdEstacionCarburacion")
+    @SerializedName("IdCAlmacenGas")
     private int IdEstacionCarburacion;
 
     @SerializedName("ImagenP5000")

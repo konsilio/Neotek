@@ -71,7 +71,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //region Tabla lectura_inicial
+        //region Tabla lectura_inicial Calibacion
         db.execSQL("CREATE TABLE "+TABLE_LECTURA_INICIAL+"(" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "ClaveProceso TEXT," +
@@ -104,7 +104,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                 ")");
         //endregion
 
-        //region Tabla lectura_finalizar
+        //region Tabla lectura_finalizar Calibacion
         db.execSQL("CREATE TABLE "+TABLE_LECTURA_FINALIZAR+"(" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "ClaveProceso TEXT," +
@@ -332,7 +332,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     }
     //endregion
 
-    //region Metodos para lectura inicial
+    //region Metodos para lectura inicial Calibacion
 
     /**
      * <h3>InsertLecturaInicial</h3>
@@ -522,7 +522,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     }
     ///endregion
 
-    //region Metodos para lectura final
+    //region Metodos para lectura final Calibacion
 
     /**
      * IncertarLecturaFinal
@@ -574,6 +574,19 @@ public class SAGASSql extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_LECTURA_FINALIZAR,
                 "WHERE ClaveProceso = "+ClaveProceso,null);
+    }
+
+    /**
+     * <h3>GetLecturasIniciales</h3>
+     * Permite retornar todas la lecturas iniciales que se almacenaron en base de datos,
+     * retornara un objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @return Objeto de tipo {@link Cursor} con los resultados
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+     * @date 31/08/2018
+     */
+    public Cursor GetLecturasFinales() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_FINALIZAR,null);
     }
     //endregion
 

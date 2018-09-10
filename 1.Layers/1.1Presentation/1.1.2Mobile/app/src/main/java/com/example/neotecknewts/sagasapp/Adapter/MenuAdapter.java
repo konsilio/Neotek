@@ -89,14 +89,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     Intent intent = new Intent(view.getContext() , VistaOrdenCompraActivity.class);
                     view.getContext().startActivity(intent);
                 }
-                else if(menuItem.getName().equals("Estación de carb. (Inicial)") &&
+                else if(menuItem.getName().equals("Estación de Carb. (Inicial)") &&
                         menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext() , LecturaDatosActivity.class);
                     intent.putExtra("EsLecturaInicial",true);
                     intent.putExtra("EsLecturaFinal",false);
                     view.getContext().startActivity(intent);
                 }
-                else if(menuItem.getName().equals("Estación de carb. (Final)")&&
+                else if(menuItem.getName().equals("Estación de Carb. (Final)")&&
                         menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext() , LecturaDatosActivity.class);
                     intent.putExtra("EsLecturaInicial",false);
