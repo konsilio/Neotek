@@ -63,5 +63,10 @@ namespace Sagas.MainModule.Entidades
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> ListaUsuarios { get; set; }
+        public bool AppTomaLecturaCamionetaCilindro { get; set; }
+        public bool AppTomaLecturaEstacionCarb { get; set; }
+        public bool AppTomaLecturaPipa { get; set; }
+        public bool AppTomaLecturaReporteDelDia { get; set; }
+        public bool AppAutoconsumoEstacionCarb { get; set; }
     }
 }

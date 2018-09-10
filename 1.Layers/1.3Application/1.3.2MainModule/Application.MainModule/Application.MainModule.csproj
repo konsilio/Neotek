@@ -60,6 +60,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\ComplementoGasAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\AlmacenLecturaAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenCrearEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenDTO.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />
     <Compile Include="DTOs\Compras\RequisicionOCDTO.cs" />
     <Compile Include="DTOs\Mobile\LecturaAlmacenDto.cs" />
+    <Compile Include="DTOs\Mobile\LecturaDTO.cs" />
     <Compile Include="DTOs\Mobile\LoginFbDTO.cs" />
     <Compile Include="DTOs\NotificacionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEstatusDTO.cs" />
@@ -193,6 +195,8 @@
     <Compile Include="Servicios\Catalogos\ValidarCatalogoServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
+    <Compile Include="Servicios\Mobile\GasServicio.cs" />
+    <Compile Include="Servicios\Mobile\LecturaGasServicio.cs" />
     <Compile Include="Servicios\Notificacion\CorreoHtmlServicio.cs" />
     <Compile Include="Servicios\Mobile\EntradaGasServicio.cs" />
     <Compile Include="Servicios\Notificacion\EnviarCorreosServicio.cs" />

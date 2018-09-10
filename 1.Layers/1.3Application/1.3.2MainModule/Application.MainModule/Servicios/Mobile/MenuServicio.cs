@@ -17,6 +17,12 @@ namespace Application.MainModule.Servicios.Mobile
         private static bool _AppCompraGasFinalizarDescarga = false;
         private static bool _AppCompraGasIniciarDescarga = false;
         private static bool _AppCompraVerOCompra = false;
+        private static bool _AppTomaLecturaEstacionCarb = false;
+        private static bool _AppTomaLecturaAlmacenPral = false;
+        private static bool _AppTomaLecturaPipa = false;
+        private static bool _AppTomaLecturaCamionetaCilindro = false;
+        private static bool _AppTomaLecturaReporteDelDia = false;
+        private static bool _AppAutoconsumoEstacionCarb = false;
         public static List<MenuDto> Crear(int idUsuario)
         {
             List<MenuDto> lista = new List<MenuDto>();
@@ -25,7 +31,7 @@ namespace Application.MainModule.Servicios.Mobile
             {
                 foreach (Rol rol in usuario.Roles)
                 {
-                    if (rol.AppCompraEntraGas && !_AppCompraEntraGas)
+                    if (rol.AppTomaLecturaCamionetaCilindro && !_AppCompraEntraGas)
                     {
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraEntraGas"]));
                         _AppCompraEntraGas = true;
@@ -42,73 +48,51 @@ namespace Application.MainModule.Servicios.Mobile
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCompraGasFinalizarDescarga"]));
                         _AppCompraGasFinalizarDescarga = true;
                     }                    
-                    //Estación Calibacion
-                    if (rol.AppCompraEntraGas)
+                    //Estación Calibacion 
+                    if (rol.AppTomaLecturaEstacionCarb && !_AppTomaLecturaEstacionCarb)
                     {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppEstacionCarbInicial"]));
-                        _AppCompraVerOCompra = true;
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaEstacionCarbInicial"]));
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaEstacionCarbFinal"]));
+                        _AppTomaLecturaEstacionCarb = true;
                     }
 
-                    if (rol.AppCompraEntraGas)
-                    {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppEstacionCarbFinal"]));
-                        _AppCompraVerOCompra = true;
-                    }
                     //Almacen principal 
-                    if (rol.AppCompraEntraGas)
+                    if (rol.AppTomaLecturaCamionetaCilindro && !_AppTomaLecturaAlmacenPral)
                     {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAlmacenPralInicial"]));
-                        _AppCompraVerOCompra = true;
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaAlmacenPralInicial"]));
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaAlmacenPralFinal"]));
+                        _AppTomaLecturaAlmacenPral = true;
                     }
 
-                    if (rol.AppCompraEntraGas)
-                    {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAlmacenPralFinal"]));
-                        _AppCompraVerOCompra = true;
-                    }
                     //Pipa
-                    if (rol.AppCompraEntraGas)
+                    if (rol.AppTomaLecturaPipa && !_AppTomaLecturaPipa)
                     {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppPipaInicial"]));
-                        _AppCompraVerOCompra = true;
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaPipaInicial"]));
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaPipaFinal"]));
+                        _AppTomaLecturaPipa = true;
                     }
 
-                    if (rol.AppCompraEntraGas)
-                    {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppPipaFinal"]));
-                        _AppCompraVerOCompra = true;
-                    }
                     //Camioneta
-                    if (rol.AppCompraEntraGas)
+                    if (rol.AppTomaLecturaCamionetaCilindro && _AppTomaLecturaCamionetaCilindro)
                     {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCamionetaInicial"]));
-                        _AppCompraVerOCompra = true;
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaCamionetaCilindroInicial"]));
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaCamionetaCilindroFinal"]));
+                        _AppTomaLecturaCamionetaCilindro = true;
                     }
 
-                    if (rol.AppCompraEntraGas)
-                    {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCamionetaFinal"]));
-                        _AppCompraVerOCompra = true;
-                    }
                     //Reporte del día 
-                    if (rol.AppCompraEntraGas)
+                    if (rol.AppTomaLecturaReporteDelDia && _AppTomaLecturaReporteDelDia)
                     {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppReporteDelDia"]));
-                        _AppCompraVerOCompra = true;
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTomaLecturaReporteDelDia"]));
+                        _AppTomaLecturaReporteDelDia = true;
                         
                     }
                     //Auto-consumo Estacion Carb.
-                    if (rol.AppCompraEntraGas)
+                    if (rol.AppAutoconsumoEstacionCarb && _AppAutoconsumoEstacionCarb)
                     {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppEstacionCarbInicial"]));
-                        _AppCompraVerOCompra = true;
-
-                    }
-
-                    if (rol.AppCompraEntraGas)
-                    {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppEstacionCarbFinal"]));
-                        _AppCompraVerOCompra = true;
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAutoconsumoEstacionCarbInicial"]));
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppAutoconsumoEstacionCarbFinal"]));
+                        _AppAutoconsumoEstacionCarb = true;
 
                     }
                 }
@@ -139,6 +123,12 @@ namespace Application.MainModule.Servicios.Mobile
             _AppCompraGasFinalizarDescarga = false;
             _AppCompraGasIniciarDescarga = false;
             _AppCompraVerOCompra = false;
-    }
+            _AppTomaLecturaEstacionCarb = false;
+            _AppTomaLecturaAlmacenPral = false;
+            _AppTomaLecturaPipa = false;
+            _AppTomaLecturaCamionetaCilindro = false;
+            _AppTomaLecturaReporteDelDia = false;
+            _AppAutoconsumoEstacionCarb = false;
+        }
     }
 }

@@ -64,14 +64,20 @@ namespace Application.MainModule.Flujos
             return EntradaGasServicio.Descargar(desDto, true);
         }
 
-        public RespuestaDto InicializarCalibracionEstacion(LecturaAlmacenDto liadto)
+        public RespuestaDto InicializarTomaDeLectura(LecturaDTO liadto)
         {
-            throw new NotImplementedException();
+            var resp = LecturaGasServicio.EvaluarClaveOperacion(liadto);
+            if (resp.Exito) return resp;
+
+            return LecturaGasServicio.Lectura(liadto);
         }
 
-        public RespuestaDto FinalizarCalibracionEstacion(LecturaAlmacenDto lfadto)
+        public RespuestaDto FinalizarTomaDeLectura(LecturaDTO lfadto)
         {
-            throw new NotImplementedException();
+            var resp = LecturaGasServicio.EvaluarClaveOperacion(lfadto);
+            if (resp.Exito) return resp;
+
+            return LecturaGasServicio.Lectura(lfadto, true);
         }
     }
 }

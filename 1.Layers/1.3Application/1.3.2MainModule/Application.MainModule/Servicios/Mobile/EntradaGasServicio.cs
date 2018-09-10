@@ -36,33 +36,23 @@ namespace Application.MainModule.Servicios.Mobile
 
         public static RespuestaDto EvaluarClaveOperacion(DescargaDto dto)
         {
-            return EvaluarClaveOperacion(dto.ClaveOperacion);
+            return GasServicio.EvaluarClaveOperacion(dto);
         }
 
         public static RespuestaDto EvaluarClaveOperacion(PapeletaDTO dto)
         {
-            return EvaluarClaveOperacion(dto.ClaveOperacion);
+            return GasServicio.EvaluarClaveOperacion(dto);
         }
         
         public static RespuestaDto EvaluarExistenciaRegistro(PapeletaDTO dto)
         {
-            return EvaluarClaveOperacion(dto.ClaveOperacion);
+            return GasServicio.EvaluarClaveOperacion(dto);
         }
 
         public static RespuestaDto EvaluarExistenciaRegistro(DescargaDto dto)
         {
-            return EvaluarClaveOperacion(dto.ClaveOperacion);
-        }
-
-        private static RespuestaDto EvaluarClaveOperacion(string claveOperacion)
-        {
-            var alm = AlmacenGasServicio.ObtenerDescargaPorClaveOperacion(claveOperacion);
-            return new RespuestaDto()
-            {
-                Exito = alm != null ? true : false,
-                Mensaje = alm != null ? Exito.OK : string.Format(Error.M0002, "la clave de operación"),
-            };
-        }
+            return GasServicio.EvaluarClaveOperacion(dto);
+        }       
 
         private static RespuestaDto EvaluarExistenciaRegistro(int idOCompra)
         {
