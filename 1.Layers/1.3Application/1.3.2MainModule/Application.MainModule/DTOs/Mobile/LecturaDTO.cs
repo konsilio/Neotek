@@ -20,7 +20,7 @@ namespace Application.MainModule.DTOs.Mobile
         /// <summary>
         /// Nombre del tipo de medidor
         /// </summary>
-        public String NombreTipoMedidor { get; set; }
+        //public String NombreTipoMedidor { get; set; }
 
         /// <summary>
         /// Número de fotografias del medidor 
@@ -34,12 +34,12 @@ namespace Application.MainModule.DTOs.Mobile
         /// <summary>
         /// Uris de las imagenes 
         /// </summary>
-        public List<String> ImagenesURL { get; set; }
+        //public List<String> ImagenesURL { get; set; }
         
         /// <summary>
         /// Nombre de la estación de carburación 
         /// </summary>
-        public String NombreEstacionCarburacion { get; set; }
+        //public String NombreEstacionCarburacion { get; set; }
         /// <summary>
         /// Id de la estación de carburación
         /// </summary>
@@ -48,7 +48,7 @@ namespace Application.MainModule.DTOs.Mobile
         /// <summary>
         /// Imagen del P5000
         /// </summary>
-        public String ImagenP5000 { get; set; }
+        //public String ImagenP5000 { get; set; }
 
         /// <summary>
         /// Cantidad marcada por el P5000
