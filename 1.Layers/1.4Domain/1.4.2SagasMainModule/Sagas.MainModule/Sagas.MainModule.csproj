@@ -112,6 +112,12 @@
     <Compile Include="Entidades\CentroCosto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\Cliente.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\ClienteLocacion.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\CuentaContable.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -231,6 +237,7 @@
     <Content Include="Entidades\Sagas.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Sagas1.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>

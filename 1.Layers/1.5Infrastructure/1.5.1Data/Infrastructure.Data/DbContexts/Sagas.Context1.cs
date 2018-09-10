@@ -80,5 +80,7 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<AlmacenGasCalibracionFoto> AlmacenGasCalibracionFoto { get; set; }
         public virtual DbSet<AlmacenGasTraspaso> AlmacenGasTraspaso { get; set; }
         public virtual DbSet<AlmacenGasTraspasoFoto> AlmacenGasTraspasoFoto { get; set; }
+        public virtual DbSet<Cliente> Cliente { get; set; }
+        public virtual DbSet<ClienteLocacion> ClienteLocacion { get; set; }
     }
 }
