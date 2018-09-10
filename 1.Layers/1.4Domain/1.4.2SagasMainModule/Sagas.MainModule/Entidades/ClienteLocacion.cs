@@ -12,7 +12,7 @@ namespace Sagas.MainModule.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class CClienteLocacion
+    public partial class ClienteLocacion
     {
         public int IdCliente { get; set; }
         public short Orden { get; set; }
@@ -30,6 +30,6 @@ namespace Sagas.MainModule.Entidades
         public string location_lng { get; set; }
         public string place_id { get; set; }
     
-        public virtual CCliente Cliente { get; set; }
+        public virtual Cliente Cliente { get; set; }
     }
 }

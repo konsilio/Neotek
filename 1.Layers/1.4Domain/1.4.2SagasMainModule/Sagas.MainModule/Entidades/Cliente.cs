@@ -12,18 +12,19 @@ namespace Sagas.MainModule.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class CCliente
+    public partial class Cliente
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CCliente()
+        public Cliente()
         {
-            this.Locaciones = new HashSet<CClienteLocacion>();
+            this.Locaciones = new HashSet<ClienteLocacion>();
         }
     
         public int IdCliente { get; set; }
         public short IdEmpresa { get; set; }
         public Nullable<byte> IdTipoPersona { get; set; }
         public Nullable<short> IdRegimenFiscal { get; set; }
+        public Nullable<int> IdCuentaContable { get; set; }
         public string Nombre { get; set; }
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
@@ -59,6 +60,7 @@ namespace Sagas.MainModule.Entidades
         public virtual TipoPersona TipoPersonaFiscal { get; set; }
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CClienteLocacion> Locaciones { get; set; }
+        public virtual ICollection<ClienteLocacion> Locaciones { get; set; }
+        public virtual CuentaContable CuentaContable { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Sagas.MainModule.Entidades
         public TipoPersona()
         {
             this.Proveedores = new HashSet<Proveedor>();
-            this.Clientes = new HashSet<CCliente>();
+            this.Clientes = new HashSet<Cliente>();
             this.RegimenesFiscales = new HashSet<RegimenFiscal>();
         }
     
@@ -29,7 +29,7 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Proveedor> Proveedores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CCliente> Clientes { get; set; }
+        public virtual ICollection<Cliente> Clientes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RegimenFiscal> RegimenesFiscales { get; set; }
     }

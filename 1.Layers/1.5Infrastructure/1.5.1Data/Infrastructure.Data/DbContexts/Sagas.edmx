@@ -15,7 +15,7 @@
           <Property Name="Cantidad" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="Ubicacion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="FechaActualizacion" Type="smalldatetime" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="AlmacenEntradaGasDescarga">
           <Key>
@@ -31,8 +31,8 @@
           <Property Name="IdCAlmacenGas" Type="smallint" />
           <Property Name="IdTipoMedidorTractor" Type="smallint" />
           <Property Name="IdTipoMedidorAlmacen" Type="smallint" />
-          <Property Name="DatosProcesados" Type="bit" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="DatosProcesados" Type="bit" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
           <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="AlmacenEntradaGasDescargaFinalizar">
@@ -110,7 +110,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto'
           <Property Name="PathDocEntrada" Type="varchar" MaxLength="350" />
           <Property Name="Observaciones " Type="varchar" MaxLength="250" />
           <Property Name="FechaEntrada" Type="smalldatetime" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="AlmacenGas">
           <Key>
@@ -123,8 +123,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto'
           <Property Name="CantidadActualLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="CantidadActualKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="PorcentajeActual" Type="decimal" Precision="18" Scale="4" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="AlmacenGasAutoConsumo">
           <Key>
@@ -136,8 +136,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto'
           <Property Name="IdTipoEvento" Type="tinyint" Nullable="false" />
           <Property Name="P5000Salida" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="DatosProcesados" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="DatosProcesados" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="AlmacenGasAutoConsumoFoto">
           <Key>
@@ -166,8 +166,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto'
           <Property Name="P5000" Type="decimal" Precision="18" Scale="4" />
           <Property Name="Porcentaje" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="DatosProcesados" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="DatosProcesados" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="AlmacenGasCalibracionFoto">
           <Key>
@@ -198,8 +198,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto'
           <Property Name="PorcentajeSalida" Type="decimal" Precision="18" Scale="4" />
           <Property Name="ProcentajeEntrada" Type="decimal" Precision="18" Scale="4" />
           <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="DatosProcesados" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="DatosProcesados" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="AlmacenGasRecargaCilindro">
           <Key>
@@ -234,8 +234,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto'
           <Property Name="P5000" Type="decimal" Precision="18" Scale="4" />
           <Property Name="Porcentaje" Type="decimal" Precision="18" Scale="4" />
           <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="DatosProcesados" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="DatosProcesados" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="AlmacenGasTomaLecturaCilindro">
           <Key>
@@ -275,8 +275,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto'
           <Property Name="P5000Entrada" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="PorcentajeSalida" Type="decimal" Precision="18" Scale="4" />
           <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="DatosProcesados" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="DatosProcesados" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="AlmacenGasTraspasoFoto">
           <Key>
@@ -312,7 +312,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenSalidaProducto' 
           <Property Name="PathDocSalida" Type="varchar" MaxLength="350" />
           <Property Name="Observaciones " Type="varchar" MaxLength="250" />
           <Property Name="FechaEntrada" Type="smalldatetime" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CAlmacenGas">
           <Key>
@@ -334,8 +334,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenSalidaProducto' 
           <Property Name="CantidadActualKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="PorcentajeActual" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="P5000Actual" Type="decimal" Precision="18" Scale="4" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CAlmacenGasCalibracion">
           <Key>
@@ -360,8 +360,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenSalidaProducto' 
           </Key>
           <Property Name="IdTipoAlmacenGas" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CAlmacenGasTipoMedidor">
           <Key>
@@ -370,8 +370,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenSalidaProducto' 
           <Property Name="IdTipoMedidor" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Medidor" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="NumeroFotografias" Type="tinyint" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CBanco">
           <Key>
@@ -381,7 +381,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenSalidaProducto' 
           <Property Name="Clave" Type="varchar" MaxLength="10" />
           <Property Name="NombreCorto" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="NombreRazónSocial" Type="varchar" MaxLength="300" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CCamioneta">
           <Key>
@@ -391,8 +391,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenSalidaProducto' 
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="Numero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -422,8 +422,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="IdCilindro" Type="int" />
           <Property Name="Numero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CCliente">
           <Key>
@@ -433,11 +433,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="IdTipoPersona" Type="tinyint" />
           <Property Name="IdRegimenFiscal" Type="smallint" />
+          <Property Name="IdCuentaContable" Type="int" />
           <Property Name="Nombre" Type="varchar" MaxLength="100" />
           <Property Name="Apellido1" Type="varchar" MaxLength="80" />
           <Property Name="Apellido2" Type="varchar" MaxLength="80" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CClienteCondicion">
           <Key>
@@ -531,8 +532,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="Numero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CEstacionCarburacion">
           <Key>
@@ -542,8 +543,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="Numero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CEstadosRep">
           <Key>
@@ -551,8 +552,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           </Key>
           <Property Name="IdEstadoRep" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Abreviatura" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Abreviatura" Type="varchar" MaxLength="10" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CFormaPago">
           <Key>
@@ -560,8 +561,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           </Key>
           <Property Name="IdFormaPago" Type="tinyint" Nullable="false" />
           <Property Name="FormaPago" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CPais">
           <Key>
@@ -569,7 +570,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           </Key>
           <Property Name="IdPais" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Pais" Type="varchar" MaxLength="100" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CPipa">
           <Key>
@@ -579,8 +580,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="Numero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CProducto">
           <Key>
@@ -602,8 +603,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="Maximo" Type="decimal" Precision="18" Scale="4" />
           <Property Name="UrlImagen" Type="varchar" MaxLength="350" />
           <Property Name="PathImagen" Type="varchar" MaxLength="350" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -616,8 +617,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdProducto" Type="int" Nullable="false" />
           <Property Name="IdProductoAsociado" Type="int" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CProductoCategoria">
           <Key>
@@ -627,8 +628,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="250" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CProductoLinea">
           <Key>
@@ -639,7 +640,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Linea" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="250" />
           <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CProductoServicioTipo">
           <Key>
@@ -650,7 +651,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="250" />
           <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CProductoUnidadMedida">
           <Key>
@@ -662,7 +663,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Acronimo" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="250" />
           <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CProveedor">
           <Key>
@@ -683,7 +684,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="TransportistaProdutoPrinicpal" Type="bit" Nullable="false" />
           <Property Name="Vende" Type="varchar" MaxLength="250" />
           <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CProveedorBancario">
           <Key>
@@ -741,8 +742,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdTipoProveedor" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CRegimenFiscal">
           <Key>
@@ -756,7 +757,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="AplicaPersonaMoral" Type="bit" Nullable="false" />
           <Property Name="FechaInicioVigencia" Type="smalldatetime" Nullable="false" />
           <Property Name="FechaFinVigencia" Type="smalldatetime" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="CTipoCentroCosto">
           <Key>
@@ -771,7 +772,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdTipoPersona" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="Empresa">
           <Key>
@@ -780,7 +781,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdEmpresa" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NombreComercial" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="EsAdministracionCentral" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="EmpresaConfiguracion">
@@ -858,8 +859,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdImagenDe" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ImagenDe" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="OrdenCompra">
           <Key>
@@ -878,8 +879,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="EsActivoVenta" Type="bit" Nullable="false" />
           <Property Name="EsGas" Type="bit" Nullable="false" />
           <Property Name="EsTransporteGas" Type="bit" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
           <Property Name="FechaAutorizacion" Type="smalldatetime" />
         </EntityType>
         <EntityType Name="OrdenCompraEstatus">
@@ -888,8 +889,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdOrdenCompraEstatus" Type="tinyint" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="OrdenCompraImporte">
           <Key>
@@ -938,7 +939,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="RequeridoEn" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="IdRequisicionEstatus" Type="tinyint" Nullable="false" />
           <Property Name="FechaRequerida" Type="datetime" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="RequisicionAlmacen">
           <Key>
@@ -1009,53 +1010,53 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="Rol" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="NombreRol" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="RolAccion">
           <Key>
             <PropertyRef Name="IdRol" />
           </Key>
           <Property Name="IdRol" Type="smallint" Nullable="false" />
-          <Property Name="RequisicionVerRequisiciones" Type="bit" Nullable="false" />
-          <Property Name="RequisicionGenerarNueva" Type="bit" Nullable="false" />
-          <Property Name="RequisicionRevisarExistencia" Type="bit" Nullable="false" />
-          <Property Name="RequisicionAutorizar" Type="bit" Nullable="false" />
-          <Property Name="CompraVerOCompra" Type="bit" Nullable="false" />
-          <Property Name="CompraGenerarOCompra" Type="bit" Nullable="false" />
-          <Property Name="CompraAutorizarOCompra" Type="bit" Nullable="false" />
-          <Property Name="AppCompraVerOCompra" Type="bit" Nullable="false" />
-          <Property Name="CompraEntraProductoOCompra" Type="bit" Nullable="false" />
-          <Property Name="CompraAtiendeServicioOCompra" Type="bit" Nullable="false" />
-          <Property Name="AppCompraEntraGas" Type="bit" Nullable="false" />
-          <Property Name="AppCompraGasIniciarDescarga" Type="bit" Nullable="false" />
-          <Property Name="AppCompraGasFinalizarDescarga" Type="bit" Nullable="false" />
+          <Property Name="RequisicionVerRequisiciones" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="RequisicionGenerarNueva" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="RequisicionRevisarExistencia" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="RequisicionAutorizar" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CompraVerOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CompraGenerarOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CompraAutorizarOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="AppCompraVerOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CompraEntraProductoOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CompraAtiendeServicioOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="AppCompraEntraGas" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="AppCompraGasIniciarDescarga" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppCompraGasFinalizarDescarga" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="RolAccionCatalogo">
           <Key>
             <PropertyRef Name="IdRol" />
           </Key>
           <Property Name="IdRol" Type="smallint" Nullable="false" />
-          <Property Name="CatInsertarUsuario" Type="bit" Nullable="false" />
-          <Property Name="CatModificarUsuario" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarUsuario" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarUsuario" Type="bit" Nullable="false" />
-          <Property Name="CatInsertarProveedor" Type="bit" Nullable="false" />
-          <Property Name="CatModificarProveedor" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarProveedor" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarProveedor" Type="bit" Nullable="false" />
-          <Property Name="CatInsertarProducto" Type="bit" Nullable="false" />
-          <Property Name="CatModificarProducto" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarProducto" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarProducto" Type="bit" Nullable="false" />
-          <Property Name="CatInsertarCentroCosto" Type="bit" Nullable="false" />
-          <Property Name="CatModificarCentroCosto" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarCentroCosto" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarCentroCosto" Type="bit" Nullable="false" />
-          <Property Name="CatInsertarCuentaContable" Type="bit" Nullable="false" />
-          <Property Name="CatModificarCuentaContable" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarCuentaContable" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarCuentaContable" Type="bit" Nullable="false" />
+          <Property Name="CatInsertarUsuario" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatModificarUsuario" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatEliminarUsuario" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatConsultarUsuario" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatInsertarProveedor" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatModificarProveedor" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarProveedor" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatConsultarProveedor" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatInsertarProducto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatModificarProducto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatEliminarProducto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatConsultarProducto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatInsertarCentroCosto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatModificarCentroCosto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatEliminarCentroCosto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatConsultarCentroCosto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatInsertarCuentaContable" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatModificarCuentaContable" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatEliminarCuentaContable" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CatConsultarCuentaContable" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -1078,8 +1079,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Apellido1" Type="varchar" MaxLength="80" Nullable="false" />
           <Property Name="Apellido2" Type="varchar" MaxLength="80" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="UsuarioContacto">
           <Key>
@@ -1876,6 +1877,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="CCentroCosto">
               <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_CCuentaContable">
+          <End Role="CCuentaContable" Type="Self.CCuentaContable" Multiplicity="0..1" />
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCuentaContable">
+              <PropertyRef Name="IdCuentaContable" />
+            </Principal>
+            <Dependent Role="CCliente">
+              <PropertyRef Name="IdCuentaContable" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3276,6 +3289,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CCentroCosto" EntitySet="CCentroCosto" />
           </AssociationSet>
+          <AssociationSet Name="FK_CCliente_CCuentaContable" Association="Self.FK_CCliente_CCuentaContable">
+            <End Role="CCuentaContable" EntitySet="CCuentaContable" />
+            <End Role="CCliente" EntitySet="CCliente" />
+          </AssociationSet>
           <AssociationSet Name="FK_CCliente_CRegimenFiscal" Association="Self.FK_CCliente_CRegimenFiscal">
             <End Role="CRegimenFiscal" EntitySet="CRegimenFiscal" />
             <End Role="CCliente" EntitySet="CCliente" />
@@ -3713,7 +3730,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Roles" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Empresa" ToRole="Rol" />
           <NavigationProperty Name="CentrosCosto" Relationship="Sagas.MainModuleModel.FK_CentroCosto_Empresa" FromRole="Empresa" ToRole="CentroCosto" />
           <NavigationProperty Name="CuentasContables" Relationship="Sagas.MainModuleModel.FK_CuentaContable_Empresa" FromRole="Empresa" ToRole="CuentaContable" />
-          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_Empresa" FromRole="Empresa" ToRole="CCliente" />
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_Empresa" FromRole="Empresa" ToRole="Cliente" />
           
                     
           <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
@@ -4692,25 +4709,25 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="CuentaContable" EntitySet="CuentaContable" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
-          <EntitySet Name="CCliente" EntityType="Sagas.MainModuleModel.CCliente" />
+          <EntitySet Name="Cliente" EntityType="Sagas.MainModuleModel.Cliente" />
           <!--<EntitySet Name="CClienteCondicion" EntityType="Sagas.MainModuleModel.CClienteCondicion" />
           <EntitySet Name="CClienteContacto" EntityType="Sagas.MainModuleModel.CClienteContacto" />
           <EntitySet Name="CClienteCredencial" EntityType="Sagas.MainModuleModel.CClienteCredencial" />
           <EntitySet Name="CClienteFiscal" EntityType="Sagas.MainModuleModel.CClienteFiscal" />
           <EntitySet Name="CClienteLegal" EntityType="Sagas.MainModuleModel.CClienteLegal" />-->
-          <EntitySet Name="CClienteLocacion" EntityType="Sagas.MainModuleModel.CClienteLocacion" />
+          <EntitySet Name="ClienteLocacion" EntityType="Sagas.MainModuleModel.ClienteLocacion" />
           <!--<EntitySet Name="CClienteLocacionGoogle" EntityType="Sagas.MainModuleModel.CClienteLocacionGoogle" />-->
           <AssociationSet Name="FK_CCliente_CRegimenFiscal" Association="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal">
             <End Role="RegimenFiscal" EntitySet="RegimenFiscal" />
-            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
           <AssociationSet Name="FK_CCliente_CTipoPersona" Association="Sagas.MainModuleModel.FK_CCliente_CTipoPersona">
             <End Role="TipoPersona" EntitySet="TipoPersona" />
-            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
           <AssociationSet Name="FK_CCliente_Empresa" Association="Sagas.MainModuleModel.FK_CCliente_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
-            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
           <!--<AssociationSet Name="FK_CClienteCondicion_CCliente" Association="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente">
             <End Role="CCliente" EntitySet="CCliente" />
@@ -4733,8 +4750,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="CClienteLegal" EntitySet="CClienteLegal" />
           </AssociationSet>-->
           <AssociationSet Name="FK_CClienteLocacion_CCliente" Association="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente">
-            <End Role="CCliente" EntitySet="CCliente" />
-            <End Role="CClienteLocacion" EntitySet="CClienteLocacion" />
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="ClienteLocacion" EntitySet="ClienteLocacion" />
           </AssociationSet>
           <!--<AssociationSet Name="FK_CClienteLocacionGoogle_CClienteLocacion" Association="Sagas.MainModuleModel.FK_CClienteLocacionGoogle_CClienteLocacion">
             <End Role="CClienteLocacion" EntitySet="CClienteLocacion" />
@@ -4743,6 +4760,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_CRegimenFiscal_CTipoPersona" Association="Sagas.MainModuleModel.FK_CRegimenFiscal_CTipoPersona">
             <End Role="TipoPersona" EntitySet="TipoPersona" />
             <End Role="RegimenFiscal" EntitySet="RegimenFiscal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCliente_CCuentaContable" Association="Sagas.MainModuleModel.FK_CCliente_CCuentaContable">
+            <End Role="CuentaContable" EntitySet="CuentaContable" />
+            <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
           <!--<EntitySet Name="RolAccionCatalogo" EntityType="Sagas.MainModuleModel.RolAccionCatalogo" />-->
           <!--<AssociationSet Name="FK_RolAccionCatalogo_Rol" Association="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol">
@@ -6545,6 +6566,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_CuentaContable" FromRole="CuentaContable" ToRole="Proveedor" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CuentaContable_Empresa" FromRole="CuentaContable" ToRole="Empresa" />
           <NavigationProperty Name="Productos" Relationship="Sagas.MainModuleModel.FK_CProducto_CCuentaContable" FromRole="CuentaContable" ToRole="Producto" />
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_CCuentaContable" FromRole="CuentaContable" ToRole="Cliente" />
         </EntityType>
         <EntityType Name="RegimenFiscal">
           <Key>
@@ -6560,7 +6582,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="FechaFinVigencia" Type="DateTime" Precision="0" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />          
           <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_RegimenFiscal" FromRole="RegimenFiscal" ToRole="Proveedor" />          
-          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal" FromRole="RegimenFiscal" ToRole="CCliente" />
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal" FromRole="RegimenFiscal" ToRole="Cliente" />
           <NavigationProperty Name="TipoPersona" Relationship="Sagas.MainModuleModel.FK_CRegimenFiscal_CTipoPersona" FromRole="RegimenFiscal" ToRole="TipoPersona" />
         </EntityType>
         <EntityType Name="TipoPersona">
@@ -6571,7 +6593,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Proveedores" Relationship="Sagas.MainModuleModel.FK_CProveedor_TipoPersona" FromRole="TipoPersona" ToRole="Proveedor" />
-          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_CTipoPersona" FromRole="TipoPersona" ToRole="CCliente" />
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_CTipoPersona" FromRole="TipoPersona" ToRole="Cliente" />
           <NavigationProperty Name="RegimenesFiscales" Relationship="Sagas.MainModuleModel.FK_CRegimenFiscal_CTipoPersona" FromRole="TipoPersona" ToRole="RegimenFiscal" />
         </EntityType>
         <Association Name="FK_CProveedor_Banco">
@@ -7145,7 +7167,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="CCliente">
+        <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="IdCliente" />
           </Key>
@@ -7153,6 +7175,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
           <Property Name="IdTipoPersona" Type="Byte" />
           <Property Name="IdRegimenFiscal" Type="Int16" />
+          <Property Name="IdCuentaContable" Type="Int32" />          
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Apellido1" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
           <Property Name="Apellido2" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
@@ -7189,10 +7212,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CorreoElectronico" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="Domicilio" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
 
-          <NavigationProperty Name="RegimenFiscal" Relationship="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal" FromRole="CCliente" ToRole="RegimenFiscal" />
-          <NavigationProperty Name="TipoPersonaFiscal" Relationship="Sagas.MainModuleModel.FK_CCliente_CTipoPersona" FromRole="CCliente" ToRole="TipoPersona" />
-          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CCliente_Empresa" FromRole="CCliente" ToRole="Empresa" />
-          <NavigationProperty Name="Locaciones" Relationship="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente" FromRole="CCliente" ToRole="CClienteLocacion" />
+          <NavigationProperty Name="RegimenFiscal" Relationship="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal" FromRole="Cliente" ToRole="RegimenFiscal" />
+          <NavigationProperty Name="TipoPersonaFiscal" Relationship="Sagas.MainModuleModel.FK_CCliente_CTipoPersona" FromRole="Cliente" ToRole="TipoPersona" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CCliente_Empresa" FromRole="Cliente" ToRole="Empresa" />
+          <NavigationProperty Name="Locaciones" Relationship="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente" FromRole="Cliente" ToRole="ClienteLocacion" />          
+          <NavigationProperty Name="CuentaContable" Relationship="Sagas.MainModuleModel.FK_CCliente_CCuentaContable" FromRole="Cliente" ToRole="CuentaContable" />
           <!--<NavigationProperty Name="CClienteCondicion" Relationship="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente" FromRole="CCliente" ToRole="CClienteCondicion" />
           <NavigationProperty Name="CClienteContacto" Relationship="Sagas.MainModuleModel.FK_CClienteContacto_CCliente" FromRole="CCliente" ToRole="CClienteContacto" />
           <NavigationProperty Name="CClienteCredencial" Relationship="Sagas.MainModuleModel.FK_CClienteCredencial_CCliente" FromRole="CCliente" ToRole="CClienteCredencial" />
@@ -7204,7 +7228,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteFiscal_CCliente" FromRole="CClienteFiscal" ToRole="CCliente" />-->          
           <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteLegal_CCliente" FromRole="CClienteLegal" ToRole="CCliente" />-->
         </EntityType>
-        <EntityType Name="CClienteLocacion">
+        <EntityType Name="ClienteLocacion">
           <Key>
             <PropertyRef Name="IdCliente" />
             <PropertyRef Name="Orden" />
@@ -7225,30 +7249,30 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="location_lat" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="location_lng" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="place_id" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Cliente" Relationship="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente" FromRole="CClienteLocacion" ToRole="CCliente" />          
+          <NavigationProperty Name="Cliente" Relationship="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente" FromRole="ClienteLocacion" ToRole="Cliente" />          
           <!--<NavigationProperty Name="CClienteLocacionGoogle" Relationship="Sagas.MainModuleModel.FK_CClienteLocacionGoogle_CClienteLocacion" FromRole="CClienteLocacion" ToRole="CClienteLocacionGoogle" />-->          
           <!--<NavigationProperty Name="CClienteLocacion" Relationship="Sagas.MainModuleModel.FK_CClienteLocacionGoogle_CClienteLocacion" FromRole="CClienteLocacionGoogle" ToRole="CClienteLocacion" />-->
         </EntityType>
         <Association Name="FK_CCliente_CRegimenFiscal">
           <End Type="Sagas.MainModuleModel.RegimenFiscal" Role="RegimenFiscal" Multiplicity="0..1" />
-          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="*" />
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RegimenFiscal">
               <PropertyRef Name="IdRegimenFiscal" />
             </Principal>
-            <Dependent Role="CCliente">
+            <Dependent Role="Cliente">
               <PropertyRef Name="IdRegimenFiscal" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CCliente_CTipoPersona">
           <End Type="Sagas.MainModuleModel.TipoPersona" Role="TipoPersona" Multiplicity="0..1" />
-          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="*" />
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TipoPersona">
               <PropertyRef Name="IdTipoPersona" />
             </Principal>
-            <Dependent Role="CCliente">
+            <Dependent Role="Cliente">
               <PropertyRef Name="IdTipoPersona" />
             </Dependent>
           </ReferentialConstraint>
@@ -7257,12 +7281,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="*" />
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Empresa">
               <PropertyRef Name="IdEmpresa" />
             </Principal>
-            <Dependent Role="CCliente">
+            <Dependent Role="Cliente">
               <PropertyRef Name="IdEmpresa" />
             </Dependent>
           </ReferentialConstraint>
@@ -7338,13 +7362,13 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </ReferentialConstraint>
         </Association>-->
         <Association Name="FK_CClienteLocacion_CCliente">
-          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1" />
-          <End Type="Sagas.MainModuleModel.CClienteLocacion" Role="CClienteLocacion" Multiplicity="*" />
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.ClienteLocacion" Role="ClienteLocacion" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CCliente">
+            <Principal Role="Cliente">
               <PropertyRef Name="IdCliente" />
             </Principal>
-            <Dependent Role="CClienteLocacion">
+            <Dependent Role="ClienteLocacion">
               <PropertyRef Name="IdCliente" />
             </Dependent>
           </ReferentialConstraint>
@@ -7374,6 +7398,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="RegimenFiscal">
               <PropertyRef Name="IdTipoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_CCuentaContable">
+          <End Type="Sagas.MainModuleModel.CuentaContable" Role="CuentaContable" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuentaContable">
+              <PropertyRef Name="IdCuentaContable" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdCuentaContable" />
             </Dependent>
           </ReferentialConstraint>
         </Association>        
@@ -8401,9 +8437,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CCliente">
-            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CCliente">
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.Cliente">
               <MappingFragment StoreEntitySet="CCliente">
+                <ScalarProperty Name="IdCuentaContable" ColumnName="IdCuentaContable" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
@@ -8461,8 +8498,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CClienteLocacion">
-            <EntityTypeMapping TypeName="Sagas.MainModuleModel.CClienteLocacion">
+          <EntitySetMapping Name="ClienteLocacion">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.ClienteLocacion">
               <MappingFragment StoreEntitySet="CClienteLocacion">
                 <ScalarProperty Name="NumInt" ColumnName="NumInt" />
                 <ScalarProperty Name="NumExt" ColumnName="NumExt" />
