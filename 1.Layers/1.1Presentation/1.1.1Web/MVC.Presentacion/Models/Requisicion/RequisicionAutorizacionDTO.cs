@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Requisicion
 {
-    public class RequisicionAutorizacion: RequisicionDTO
+    public class RequisicionAutorizacionDTO: RequisicionDTO
     {
         public List<RequisicionProductoAutorizacionDTO> ListaProductos { get; set; }
     }

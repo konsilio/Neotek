@@ -248,7 +248,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraDTO.cs" />
-    <Compile Include="Models\Requisicion\RequisicionAutorizacion.cs" />
+    <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutPutDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionCancelaDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionDTO.cs" />

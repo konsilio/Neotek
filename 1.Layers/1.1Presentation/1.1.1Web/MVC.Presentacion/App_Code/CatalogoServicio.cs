@@ -41,14 +41,14 @@ namespace MVC.Presentacion.App_Code
         //    }
         //}
 
-        public RespuestaDTO create(EmpresaModel cc, string tkn)
+        public static RespuestaDTO create(EmpresaModel cc, string tkn)
         {            
             var agente = new AgenteServicio();
             agente.GuardarEmpresaNueva(cc, tkn);
             return agente._respuestaDTO;
         }
 
-        public List<PaisModel> GetPaises(string tkn)
+        public static List<PaisModel> GetPaises(string tkn)
         {
             var agente = new AgenteServicio();
             agente.BuscarPaises(tkn);
@@ -100,10 +100,10 @@ namespace MVC.Presentacion.App_Code
         //}
         #endregion
         #region Porductos
-        public static List<ProductoDTO> ListaProductos(short idEmpresa, string Token)
+        public static List<ProductoDTO> ListaProductos(string Token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarProductos(idEmpresa, Token);
+            agente.BuscarProductos(Token);
             return agente._listProductos;
         }
         #endregion
