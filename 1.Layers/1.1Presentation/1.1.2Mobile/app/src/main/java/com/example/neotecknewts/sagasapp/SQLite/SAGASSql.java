@@ -750,6 +750,17 @@ public class SAGASSql extends SQLiteOpenHelper {
         return db.delete(TABLE_LECTURA_INICIAL_PIPA,
                 "ClaveOperacion = "+ClaveOperacion,null);
     }
+
+    /**
+     * GetLecturasIncialesPipas
+     * Retorna todos los registros en local de las lecturas iniciales de pipa, se retorna
+     * un objeto de tipo {@link Cursor} con los resultados
+     * @return Objeto {@link Cursor} con los resultados de la consulta
+     */
+    public Cursor GetLecturasIncialesPipas(){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_LECTURA_INICIAL_PIPA,
+                null);
+    }
     //endregion
 
     //region Metodos para las imagenes de la lectura inicial de pipas
@@ -913,6 +924,16 @@ public class SAGASSql extends SQLiteOpenHelper {
         return db.delete(TABLE_LECTURA_FINAL_PIPA,
                 "ClaveOperacion = "+ClaveOperacion,null);
     }
+
+    /**
+     * Obtiene todos los registros de las lecturas finales de pipa, retornara un objeto
+     * de tipo {@link Cursor} con los datos resultantes
+     * @return Objeto {@link Cursor} con el resultado de la consulta
+     */
+    public Cursor GetLecturasFinaesPipas(){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_LECTURA_FINAL_PIPA,
+                null);
+    }
     //endregion
 
     //region Metodos para las imagenes de la lectura final de pipas
@@ -1062,6 +1083,16 @@ public class SAGASSql extends SQLiteOpenHelper {
         return this.getReadableDatabase().delete(TABLE_LECTURA_INICIAL_ALMACEN,
                 " WHERE ClaveOperacion = "+ClaveOperacion,null);
     }
+
+    /**
+     * Permite obtener todas las lecturas iniciales de almacenses, retornara
+     * un objeto de tipo {@link Cursor} con los datos obtenidos
+     * @return Objeto de tipo {@link Cursor} con los datos
+     */
+    public Cursor GetLecturasIncialesAlmacen(){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+
+                TABLE_LECTURA_INICIAL_ALMACEN,null);
+    }
     //endregion
 
     //region Metodos para las imagenes de la lectura inicial de almacen
@@ -1174,6 +1205,16 @@ public class SAGASSql extends SQLiteOpenHelper {
         return this.getReadableDatabase().delete(TABLE_LECTURA_FINAL_ALMACEN,
                 " WHERE ClaveOperacion = "+ClaveOperacion,null);
     }
+
+    /**
+     * Permite consultar todos los resultados de las lecturas finales de almacen, se
+     * retornara un objeto de tipo {@link Cursor} con los datos consultados
+     * @return Objeto {@link Cursor} con los resultados de la consulta
+     */
+    public Cursor GetLecturasFinalesAlmacen(){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+
+                TABLE_LECTURA_FINAL_ALMACEN,null);
+    }
     //endregion
 
     //region Metodos para las imagenes de la lectura final de almacen
@@ -1254,6 +1295,16 @@ public class SAGASSql extends SQLiteOpenHelper {
                 null
                 );
     }
+
+    /**
+     * Permite obtener todas las lecturas iniciales del la camioneta , se retornara
+     * un objeto de tipo {@link Cursor} con los datos resultantes de la consulta
+     * @return Objeto {@link Cursor} con los datos de la consulta
+     */
+    public Cursor GetLecturasIncialesCamioneta(){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+
+                TABLE_LECTURA_INICIAL_CAMIONETA,null);
+    }
     //endregion
 
     //region Metodos para el registro de los cilindros para la lectura inicial de la camioneta
@@ -1309,6 +1360,16 @@ public class SAGASSql extends SQLiteOpenHelper {
                 " ClaveOperacion = "+ClaveOperacion,
                 null
         );
+    }
+
+    /**
+     * Permite obtener las lecturas finales de las camionetas , se retornara un
+     * objeto de tipo {@link Cursor} con los resultados del la consulta
+     * @return Objeto de tipo {@link Cursor} con los datos
+     */
+    public Cursor GetLecturaFinalCamionetas(){
+        return  this.getReadableDatabase().rawQuery("SELECT * FROM "+
+                TABLE_LECTURA_FINAL_CAMIONETA,null);
     }
     //endregion
 

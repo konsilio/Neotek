@@ -3,7 +3,11 @@ package com.example.neotecknewts.sagasapp.Util;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
@@ -33,6 +37,13 @@ public class Lisener{
     public static final String Papeleta = "Papeleta";
     public static final String IniciarDescarga = "IniciarDescarga";
     public static final String FinalizarDescarga = "FinalizarDescarga";
+    public static final String LecturaInicialPipas = "LecturaInicialPipas";
+    public static final String LecturaFinalPipas = "LecturaFinalPipas";
+    public static final String LecturaInicialAlmacen = "LecturaInicialAlmacen";
+    public static final String LecturaFinalAlmacen = "LecturaFinalAlmacen";
+    public static final String LecturaInicialCamioneta = "LecturaInicialCamioneta";
+    public static final String LecturaFinalCamioneta = "LecturaFinalCamioneta";
+
     private  String token;
 
     private boolean completo ;
@@ -48,29 +59,44 @@ public class Lisener{
         this.papeletaSQL = papeletaSQL;
         this.token = token;
     }
+
     public void CrearRunable(final String proceso){
-        final Runnable myTask = new Runnable() {
+        final Runnable myTask = () -> {
+            switch (proceso){
+                case Papeleta:
+                    completo = Papeletas();
+                    break;
+                case IniciarDescarga:
+                    completo = IniciarDescargas();
+                    break;
+                case FinalizarDescarga:
+                    completo = FinalizarDescarga();
+                    break;
+                case LecturaInicial:
+                    completo = LecturaIniciarEstacion();
+                    break;
+                case LecturaFinal:
+                    completo = LecturaFinalizarEstacion();
+                    break;
+                case LecturaInicialPipas:
+                    completo = LecturaInicialPipa();
+                    break;
+                case LecturaFinalPipas:
+                    completo = LecturaFinalPipa();
+                    break;
+                case LecturaInicialAlmacen:
+                    completo = LecturaInicialAlmacen();
+                    break;
+                case LecturaFinalAlmacen:
+                    completo = LecturaFinalAlmacen();
+                    break;
+                case LecturaInicialCamioneta:
+                    completo = LecturaInicialCamioneta();
+                    break;
+                case LecturaFinalCamioneta:
+                    completo = LecturaFinalCamioneta();
+                    break;
 
-            @Override
-            public void run() {
-                switch (proceso){
-                    case Papeleta:
-                        completo = Papeletas();
-                        break;
-                    case IniciarDescarga:
-                        completo = IniciarDescargas();
-                        break;
-                    case FinalizarDescarga:
-                        completo = FinalizarDescarga();
-                        break;
-                    case LecturaInicial:
-                        completo = LecturaIniciarEstacion();
-                        break;
-                    case LecturaFinal:
-                        completo = LecturaFinalizarEstacion();
-                        break;
-
-                }
             }
         };
 
@@ -80,6 +106,557 @@ public class Lisener{
         if(completo) {
             scheduledFuture.cancel(false);
         }
+    }
+
+    private boolean LecturaInicialCamioneta(){
+        boolean registrado = false;
+        if(ServicioDisponible()) {
+            Log.w("Iniciando", "Revisando lectura iniciar camioneta: " + new Date());
+            Cursor cursor = sagasSql.GetLecturasIncialesCamioneta();
+            LecturaCamionetaDTO lecturaDTO = null;
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    lecturaDTO = new LecturaCamionetaDTO();
+                    /* Coloco los valores de la base de datos en el DTO */
+                    lecturaDTO.setClaveOperacion(cursor.getString(
+                            cursor.getColumnIndex("ClaveOperacion")));
+                    boolean ban = cursor.getInt(
+                            cursor.getColumnIndex("EsEncargadoPuerta")) == 1;
+                    lecturaDTO.setEsEncargadoPuerta(ban);
+                    /*lecturaDTO.setIdTipoMedior(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedior")));*/
+                    /*lecturaDTO.setCantidadFotografias(cursor.getInt(cursor.getColumnIndex(
+                            "CantidadFotografiasMedidor")));*/
+                    /*lecturaDTO.setNombreEstacionCarburacion(cursor.getString(cursor.getColumnIndex(
+                            "NombreEstacionCarburacion")));*/
+                    lecturaDTO.setIdCamioneta(cursor.getInt(cursor.getColumnIndex(
+                            "IdCamioneta")));
+                    /*lecturaDTO.setPorcentajeMedidor(cursor.getDouble(cursor.getColumnIndex(
+                            "PorcentajeMedidor")));*/
+                    /*Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
+                            lecturaDTO.getClaveOperacion());
+                    Imagen.moveToFirst();
+                    while (Imagen.isAfterLast()){
+                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                        try {
+                            lecturaDTO.getImagenesURI().add(new URI(iuri));
+                            lecturaDTO.getImagenes().add(
+                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                            );
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }*/
+                    Cursor cantidad = sagasSql.GetCilindrosLecturaInicialCamioneta(
+                            lecturaDTO.getClaveOperacion());
+                    cantidad.moveToFirst();
+                    while (!cursor.isAfterLast()) {
+                        CilindrosDTO row = new CilindrosDTO();
+                        row.setCantidad(cursor.getInt(cursor.getColumnIndex(
+                                "Cantidad")));
+                        row.setCilindroKg(cursor.getString(cursor.getColumnIndex(
+                                "CilindroKg")));
+                        row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
+                                "IdCilindro")));
+                        lecturaDTO.getCilindros().add(row);
+                        cantidad.moveToNext();
+                    }
+
+                    Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
+                    registrado = RegistrarLecturaInicialCamioneta(lecturaDTO);
+                    if (registrado){
+                        sagasSql.EliminarLecturaInicialCamioneta(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarCilindrosLecturaInicialCamioneta(
+                                lecturaDTO.getClaveOperacion());
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (sagasSql.GetLecturasIncialesCamioneta().getCount()==0);
+    }
+
+    private boolean RegistrarLecturaInicialCamioneta(LecturaCamionetaDTO lecturaDTO){
+        Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialCamioneta(lecturaDTO,
+                token,"application/json");
+        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaLecturaInicialDTO> call,
+                                   Response<RespuestaLecturaInicialDTO> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
+                _registrado);
+        return _registrado;
+    }
+
+    private boolean LecturaFinalCamioneta(){
+        boolean registrado = false;
+        if(ServicioDisponible()) {
+            Log.w("Iniciando", "Revisando lectura iniciar camioneta: " + new Date());
+            Cursor cursor = sagasSql.GetLecturaFinalCamionetas();
+            LecturaCamionetaDTO lecturaDTO = null;
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    lecturaDTO = new LecturaCamionetaDTO();
+                    /* Coloco los valores de la base de datos en el DTO */
+                    lecturaDTO.setClaveOperacion(cursor.getString(
+                            cursor.getColumnIndex("ClaveOperacion")));
+                    boolean ban = cursor.getInt(
+                            cursor.getColumnIndex("EsEncargadoPuerta")) == 1;
+                    lecturaDTO.setEsEncargadoPuerta(ban);
+                    /*lecturaDTO.setIdTipoMedior(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedior")));*/
+                    /*lecturaDTO.setCantidadFotografias(cursor.getInt(cursor.getColumnIndex(
+                            "CantidadFotografiasMedidor")));*/
+                    /*lecturaDTO.setNombreEstacionCarburacion(cursor.getString(cursor.getColumnIndex(
+                            "NombreEstacionCarburacion")));*/
+                    lecturaDTO.setIdCamioneta(cursor.getInt(cursor.getColumnIndex(
+                            "IdCamioneta")));
+                    /*lecturaDTO.setPorcentajeMedidor(cursor.getDouble(cursor.getColumnIndex(
+                            "PorcentajeMedidor")));*/
+                    /*Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
+                            lecturaDTO.getClaveOperacion());
+                    Imagen.moveToFirst();
+                    while (Imagen.isAfterLast()){
+                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                        try {
+                            lecturaDTO.getImagenesURI().add(new URI(iuri));
+                            lecturaDTO.getImagenes().add(
+                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                            );
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }*/
+                    Cursor cantidad = sagasSql.GetCilindrosLecturaFinalCamioneta(
+                            lecturaDTO.getClaveOperacion());
+                    cantidad.moveToFirst();
+                    while (!cursor.isAfterLast()) {
+                        CilindrosDTO row = new CilindrosDTO();
+                        row.setCantidad(cursor.getInt(cursor.getColumnIndex(
+                                "Cantidad")));
+                        row.setCilindroKg(cursor.getString(cursor.getColumnIndex(
+                                "CilindroKg")));
+                        row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
+                                "IdCilindro")));
+                        lecturaDTO.getCilindros().add(row);
+                        cantidad.moveToNext();
+                    }
+
+                    Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
+                    registrado = RegistrarLecturaFinalCamioneta(lecturaDTO);
+                    if (registrado){
+                        sagasSql.EliminarLecturaFinalCamioneta(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarCilindrosLecturaFinalCamioneta(
+                                lecturaDTO.getClaveOperacion());
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (sagasSql.GetLecturaFinalCamionetas().getCount()==0);
+    }
+
+    private boolean RegistrarLecturaFinalCamioneta(LecturaCamionetaDTO lecturaDTO){
+        Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalCamioneta(lecturaDTO,
+                token,"application/json");
+        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaLecturaInicialDTO> call,
+                                   Response<RespuestaLecturaInicialDTO> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
+                _registrado);
+        return _registrado;
+    }
+
+    private boolean LecturaFinalAlmacen(){
+        boolean registrado = false;
+        if(ServicioDisponible()) {
+            Log.w("Iniciando", "Revisando lectura iniciar pipa: " + new Date());
+            Cursor cursor = sagasSql.GetLecturasFinalesAlmacen();
+            LecturaAlmacenDTO lecturaDTO = null;
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    lecturaDTO = new LecturaAlmacenDTO();
+                    /* Coloco los valores de la base de datos en el DTO */
+                    lecturaDTO.setClaveOperacion(cursor.getString(
+                            cursor.getColumnIndex("ClaveOperacion")));
+                    lecturaDTO.setIdTipoMedior(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedior")));
+                    lecturaDTO.setCantidadFotografias(cursor.getInt(cursor.getColumnIndex(
+                            "CantidadFotografiasMedidor")));
+                    /*lecturaDTO.setNombreEstacionCarburacion(cursor.getString(cursor.getColumnIndex(
+                            "NombreEstacionCarburacion")));*/
+                    lecturaDTO.setIdAlmacen(cursor.getInt(cursor.getColumnIndex(
+                            "IdAlmacen")));
+                    lecturaDTO.setPorcentajeMedidor(cursor.getDouble(cursor.getColumnIndex(
+                            "PorcentajeMedidor")));
+                    Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
+                            lecturaDTO.getClaveOperacion());
+                    Imagen.moveToFirst();
+                    while (Imagen.isAfterLast()){
+                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                        try {
+                            lecturaDTO.getImagenesURI().add(new URI(iuri));
+                            lecturaDTO.getImagenes().add(
+                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                            );
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
+                    registrado = RegistrarLecturaFinalAlmacen(lecturaDTO);
+                    if (registrado){
+                        sagasSql.EliminarLecturaFinalAlmacen(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarImagenesLecturaFinalAlmacen(lecturaDTO.getClaveOperacion());
+                        //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (sagasSql.GetLecturasFinalesAlmacen().getCount()==0);
+    }
+
+    private boolean RegistrarLecturaFinalAlmacen(LecturaAlmacenDTO lecturaDTO) {
+        Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalAlmacen(lecturaDTO,
+                token,"application/json");
+        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaLecturaInicialDTO> call,
+                                   Response<RespuestaLecturaInicialDTO> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
+                _registrado);
+        return _registrado;
+    }
+
+    private boolean LecturaInicialAlmacen(){
+        boolean registrado = false;
+        if(ServicioDisponible()) {
+            Log.w("Iniciando", "Revisando lectura iniciar pipa: " + new Date());
+            Cursor cursor = sagasSql.GetLecturasIncialesAlmacen();
+            LecturaAlmacenDTO lecturaDTO = null;
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    lecturaDTO = new LecturaAlmacenDTO();
+                    /* Coloco los valores de la base de datos en el DTO */
+                    lecturaDTO.setClaveOperacion(cursor.getString(
+                            cursor.getColumnIndex("ClaveOperacion")));
+                    lecturaDTO.setIdTipoMedior(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedior")));
+                    lecturaDTO.setCantidadFotografias(cursor.getInt(cursor.getColumnIndex(
+                            "CantidadFotografiasMedidor")));
+                    /*lecturaDTO.setNombreEstacionCarburacion(cursor.getString(cursor.getColumnIndex(
+                            "NombreEstacionCarburacion")));*/
+                    lecturaDTO.setIdAlmacen(cursor.getInt(cursor.getColumnIndex(
+                            "IdAlmacen")));
+                    lecturaDTO.setPorcentajeMedidor(cursor.getDouble(cursor.getColumnIndex(
+                            "PorcentajeMedidor")));
+                    Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
+                            lecturaDTO.getClaveOperacion());
+                    Imagen.moveToFirst();
+                    while (Imagen.isAfterLast()){
+                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                        try {
+                            lecturaDTO.getImagenesURI().add(new URI(iuri));
+                            lecturaDTO.getImagenes().add(
+                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                            );
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
+                    registrado = RegistrarLecturaInicialAlmacen(lecturaDTO);
+                    if (registrado){
+                        sagasSql.EliminarLecturaIncialAlmacen(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarImagenesLecturaInicialAlmacen(lecturaDTO.getClaveOperacion());
+                        //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (sagasSql.GetLecturasIncialesAlmacen().getCount()==0);
+    }
+
+    private boolean RegistrarLecturaInicialAlmacen(LecturaAlmacenDTO lecturaDTO) {
+        Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialAlmacen(lecturaDTO,
+                token,"application/json");
+        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaLecturaInicialDTO> call,
+                                   Response<RespuestaLecturaInicialDTO> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveOperacion()+": "+
+                _registrado);
+        return _registrado;
+    }
+
+    private boolean LecturaInicialPipa() {
+        boolean registrado = false;
+        if(ServicioDisponible()) {
+            Log.w("Iniciando", "Revisando lectura iniciar pipa: " + new Date());
+            Cursor cursor = sagasSql.GetLecturasIncialesPipas();
+            LecturaPipaDTO lecturaDTO = null;
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    lecturaDTO = new LecturaPipaDTO();
+                    /* Coloco los valores de la base de datos en el DTO */
+                    lecturaDTO.setClaveProceso(cursor.getString(
+                            cursor.getColumnIndex("ClaveProceso")));
+                    lecturaDTO.setIdTipoMedidor(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedidor")));
+                    /*lecturaDTO.setNombreTipoMedidor(cursor.getString(cursor.getColumnIndex(
+                            "NombreTipoMedidor")));*/
+                    lecturaDTO.setCantidadFotografias(cursor.getInt(cursor.getColumnIndex(
+                            "CantidadFotografiasMedidor")));
+                    /*lecturaDTO.setNombreEstacionCarburacion(cursor.getString(cursor.getColumnIndex(
+                            "NombreEstacionCarburacion")));*/
+                    lecturaDTO.setIdPipa(cursor.getInt(cursor.getColumnIndex(
+                            "IdPipa")));
+                    lecturaDTO.setCantidadP5000(cursor.getInt(cursor.getColumnIndex(
+                            "CantidadP5000")));
+                    lecturaDTO.setPorcentajeMedidor(cursor.getDouble(cursor.getColumnIndex(
+                            "PorcentajeMedidor")));
+
+                   /* Cursor ImagenP5000 = sagasSql.GetLecturaP5000ByClaveUnica(
+                            lecturaDTO.getClaveProceso());*/
+                    /* Coloco los valores de la imagen del P5000 en el DTO */
+                    /*lecturaDTO.setImagenP5000(cursor.getString(cursor.getColumnIndex(
+                            "Imagen")));
+                    String uri = cursor.getString(cursor.getColumnIndex(
+                            "Url"));
+                    try {
+                        lecturaDTO.setImagenP5000URI(new URI(uri));
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }*/
+                    Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
+                            lecturaDTO.getClaveProceso());
+                    Imagen.moveToFirst();
+                    while (Imagen.isAfterLast()){
+                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                        try {
+                            lecturaDTO.getImagenesURI().add(new URI(iuri));
+                            lecturaDTO.getImagenes().add(
+                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                            );
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
+                    registrado = RegistrarLecturaInicialPipa(lecturaDTO);
+                    if (registrado){
+                        sagasSql.EliminarLecturaInicialPipa(lecturaDTO.getClaveProceso());
+                        sagasSql.EliminarImagenesLecturaInicialPipas(lecturaDTO.getClaveProceso());
+                        //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (sagasSql.GetLecturasIncialesPipas().getCount()==0);
+    }
+
+    private boolean RegistrarLecturaInicialPipa(LecturaPipaDTO lecturaDTO) {
+        Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialPipa(lecturaDTO,
+                token,"application/json");
+        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaLecturaInicialDTO> call,
+                                   Response<RespuestaLecturaInicialDTO> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
+                _registrado);
+        return _registrado;
+    }
+
+    private boolean LecturaFinalPipa() {
+        boolean registrado = false;
+        if(ServicioDisponible()) {
+            Log.w("Iniciando", "Revisando lectura final pipa: " + new Date());
+            Cursor cursor = sagasSql.GetLecturasFinaesPipas();
+            LecturaPipaDTO lecturaDTO = null;
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    lecturaDTO = new LecturaPipaDTO();
+                    /* Coloco los valores de la base de datos en el DTO */
+                    lecturaDTO.setClaveProceso(cursor.getString(
+                            cursor.getColumnIndex("ClaveProceso")));
+                    lecturaDTO.setIdTipoMedidor(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedidor")));
+                    /*lecturaDTO.setNombreTipoMedidor(cursor.getString(cursor.getColumnIndex(
+                            "NombreTipoMedidor")));*/
+                    lecturaDTO.setCantidadFotografias(cursor.getInt(cursor.getColumnIndex(
+                            "CantidadFotografiasMedidor")));
+                    /*lecturaDTO.setNombreEstacionCarburacion(cursor.getString(cursor.getColumnIndex(
+                            "NombreEstacionCarburacion")));*/
+                    lecturaDTO.setIdPipa(cursor.getInt(cursor.getColumnIndex(
+                            "IdPipa")));
+                    lecturaDTO.setCantidadP5000(cursor.getInt(cursor.getColumnIndex(
+                            "CantidadP5000")));
+                    lecturaDTO.setPorcentajeMedidor(cursor.getDouble(cursor.getColumnIndex(
+                            "PorcentajeMedidor")));
+
+                   /* Cursor ImagenP5000 = sagasSql.GetLecturaP5000ByClaveUnica(
+                            lecturaDTO.getClaveProceso());*/
+                    /* Coloco los valores de la imagen del P5000 en el DTO */
+                    /*lecturaDTO.setImagenP5000(cursor.getString(cursor.getColumnIndex(
+                            "Imagen")));
+                    String uri = cursor.getString(cursor.getColumnIndex(
+                            "Url"));
+                    try {
+                        lecturaDTO.setImagenP5000URI(new URI(uri));
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }*/
+                    Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
+                            lecturaDTO.getClaveProceso());
+                    Imagen.moveToFirst();
+                    while (Imagen.isAfterLast()){
+                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
+                        try {
+                            lecturaDTO.getImagenesURI().add(new URI(iuri));
+                            lecturaDTO.getImagenes().add(
+                                    cursor.getString(cursor.getColumnIndex("Imagen"))
+                            );
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Log.w("ClaveProceso", lecturaDTO.getClaveProceso());
+                    registrado = RegistrarLecturaFinalPipa(lecturaDTO);
+                    if (registrado){
+                        sagasSql.EliminarLecturaFinalPipa(lecturaDTO.getClaveProceso());
+                        sagasSql.EliminarImagenesLecturaFinalPipas(lecturaDTO.getClaveProceso());
+                        //sagasSql.EliminarLecturaP5000(lecturaDTO.getClaveProceso());
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }
+
+        return sagasSql.GetLecturasFinaesPipas().getCount() == 0;
+    }
+
+    private boolean RegistrarLecturaFinalPipa(LecturaPipaDTO lecturaDTO) {
+        Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalPipa(lecturaDTO,
+                token,"application/json");
+        call.enqueue(new Callback<RespuestaLecturaInicialDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaLecturaInicialDTO> call,
+                                   Response<RespuestaLecturaInicialDTO> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        Log.w("Registro","Registro en servicio "+lecturaDTO.getClaveProceso()+": "+
+                _registrado);
+        return _registrado;
     }
 
     private boolean LecturaFinalizarEstacion() {
@@ -146,7 +723,7 @@ public class Lisener{
                 }
             }
         }
-        return registrado;
+        return (sagasSql.GetLecturasFinales().getCount()==0);
     }
 
     private boolean RegistrarLecturaFinal(LecturaDTO lecturaDTO) {
@@ -243,7 +820,7 @@ public class Lisener{
                 }
             }
         }
-        return registrado;
+        return (sagasSql.GetLecturasIniciales().getCount()==0);
     }
 
     private boolean RegistrarLecturaInicial(LecturaDTO lecturaDTO) {

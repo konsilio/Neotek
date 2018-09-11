@@ -24,9 +24,9 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LIC"+s.format(new Date());
         lecturaCamionetaDTO.setClaveOperacion(clave_unica);
-        sagasSql.InsertLecturaInicialCamioneta(lecturaCamionetaDTO);
+       /* sagasSql.InsertLecturaInicialCamioneta(lecturaCamionetaDTO);
         sagasSql.InsertCilindrosLecturaInicialCamioneta(lecturaCamionetaDTO);
-        enviarDatosPresenter.onSuccessServicio();
+        enviarDatosPresenter.onSuccessServicio();*/
     }
 
     @Override
@@ -36,8 +36,8 @@ public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LFC"+s.format(new Date());
         lecturaCamionetaDTO.setClaveOperacion(clave_unica);
-        sagasSql.InsertLecturaFinalCamioneta(lecturaCamionetaDTO);
+        /*sagasSql.InsertLecturaFinalCamioneta(lecturaCamionetaDTO);
         sagasSql.InsertCilindrosLecturaFinalCamioneta(lecturaCamionetaDTO);
-        enviarDatosPresenter.onSuccessAndroid();
+        enviarDatosPresenter.onSuccessAndroid();*/
     }
 }
