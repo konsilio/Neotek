@@ -159,6 +159,10 @@ public class Lisener{
                         row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
                                 "IdCilindro")));
                         lecturaDTO.getCilindros().add(row);
+                        lecturaDTO.getIdCilindro().add(cursor.getInt(cursor.getColumnIndex(
+                                "IdCilindro")));
+                        lecturaDTO.getCilindroCantidad().add(cursor.getInt(cursor.getColumnIndex(
+                                "Cantidad")));
                         cantidad.moveToNext();
                     }
 
@@ -257,6 +261,10 @@ public class Lisener{
                         row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
                                 "IdCilindro")));
                         lecturaDTO.getCilindros().add(row);
+                        lecturaDTO.getIdCilindro().add(cursor.getInt(cursor.getColumnIndex(
+                                "IdCilindro")));
+                        lecturaDTO.getCilindroCantidad().add(cursor.getInt(cursor.getColumnIndex(
+                                "Cantidad")));
                         cantidad.moveToNext();
                     }
 
