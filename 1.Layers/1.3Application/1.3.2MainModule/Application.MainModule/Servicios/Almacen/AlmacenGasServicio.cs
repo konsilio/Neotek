@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs.Mobile;
 
 namespace Application.MainModule.Servicios.Almacen
 {
@@ -24,10 +25,27 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa);
         }
+
+        public static List<AlmacenGasTomaLectura> ObtenerLecturas(short idCAlmacenGas)
+        {
+            return new AlmacenGasDataAccess().BuscarLecturas(idCAlmacenGas);
+        }
+
+        public static RespuestaDto InsertarLectura(AlmacenGasTomaLectura lia)
+        {
+            return new AlmacenGasDataAccess().Insertar(lia);
+        }
+
         public static List<UnidadAlmacenGas> ObtenerAlmacenGeneral(short idEmpresa)
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa, true);
         }
+
+        public static AlmacenGasTomaLectura ObtenerLecturaEstacionPorClaveOperacion(string claveProceso)
+        {
+            return new AlmacenGasDataAccess().BuscarClaveOperacion(claveProceso);
+        }
+
         public static AlmacenGas Obtener(short idAlmacenGas)
         {
             return new AlmacenGasDataAccess().Buscar(idAlmacenGas);

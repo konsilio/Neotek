@@ -82,5 +82,43 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarDescarga(desDto), Request);
         }
+
+        /// <summary>
+        /// Permite realizar el registro de la toma de lectura,
+        /// tomara como parametro un objeto LecturaAlmacenDto con los datos a guardar, 
+        /// tras finalizar el api retornara una respuesta de tipo RespuestaHttp
+        /// con el resultado de la operación.
+        /// Author:Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+        /// </summary>
+        /// <param name="desDto">Objeto DescargaDto con los datos a procesar</param>
+        /// <returns>Respuesta del registro de la lectura inicial de la estacion de calibración</returns>
+        [Route("iniciar/toma-de-lectura")]
+        public HttpResponseMessage PostIniciarTomaDeLectura(LecturaDTO liadto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.InicializarTomaDeLectura(liadto), Request);
+        }
+        /// <summary>
+        /// Permite realizar el registro de la finalizacion de la toma de lectura, 
+        /// se tomara como paramtro un objeto de tipo LecturaAlmacenDto con los datos a guardar
+        /// tras finalizar el api retorana una respuesta de tipo RespuestaHttp con el resultado 
+        /// Author:Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
+        /// </summary>
+        /// <param name="lfadto">Objeto DescargaDto con los datos a procesar</param>
+        /// <returns>Respuesta del registro de la lectura inicial de la estacion de calibración </returns>
+        [Route("finalizar/toma-de-lectura")]
+        public HttpResponseMessage PostFinalizarTomaDeLectura(LecturaDTO lfadto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.FinalizarTomaDeLectura(lfadto), Request);
+        }
+        [Route("iniciar/toma-lectura-camioneta")]
+        public HttpResponseMessage PostIniciarTomaDeLecturaCamioneta(LecturaCamionetaDTO licdto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.IniciarTomaDeLecturaCamioneta(licdto), Request);
+        }
+        [Route("finalizar/toma-lectura-camioneta")]
+        public HttpResponseMessage PostFinalizarTomaDeLecturaCamioneta(LecturaCamionetaDTO lfcdto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.FinalizarTomaDeLecturaCamioneta(lfcdto), Request);
+        }
     }
 }
