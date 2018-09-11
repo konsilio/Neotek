@@ -1,0 +1,144 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model  UsuarioDTO
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@*<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">*@
+
+<!-- Custom Css -->
+@*<link rel="stylesheet" href="~/assets/css/main.css">
+    <link rel="stylesheet" href="~/assets/css/color_skins.css">
+    <link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">*@
+<!-- Bootstrap Select Css -->
+<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+@*<script src="~/assets/bundles/libscripts.bundle.js"></script>
+    <script src="~/assets/bundles/vendorscripts.bundle.js"></script>*@ <!-- Lib Scripts Plugin Js -->
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
+@using (Html.BeginForm("Nuevo", "Usuarios", FormMethod.Post)) //
+{
+    <section class="content home">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-7 col-md-7 col-sm-12">
+                        <h3>&nbsp;Catálogo /  Usuarios </h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-sm-3">
+                                <b>Gasera</b>
+                                <select id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                    @foreach (var lst in ViewBag.listaEmpresas)
+                                    {
+                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-primary float-right" />
+                            </div>
+                        </div>
+
+                        <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <div class="row clearfix">
+                                    <div class="col-sm-3">
+                                        <b>Nombre</b>
+                                        <select id="ddlUser" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                            @foreach (var lst in ViewBag.Usuarios)
+                                            {
+                                                <option value="@lst.IdUsuario">@lst.Nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <b>Correo Elect. (Acceso)</b>
+                                        <select id="ddlUser" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                            @foreach (var lst in ViewBag.Usuarios)
+                                            {
+                                                <option value="@lst.IdUsuario">@lst.Email1</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="submit" value="Buscar" formaction="Buscar" class="btn btn-raised btn-primary float-left" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive">
+                                    @*<table class="table table-bordered" id="editableTable">*@
+                                    <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
+                                        <thead>
+                                            <tr>
+                                                <th>Gasera</th>
+                                                <th>Nombre</th>
+                                                <th>Correo Elect. (Acceso)</th>
+                                                <th>Celular</th>
+                                                <th>Telefono</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in @ViewBag.Usuarios)
+                                            {
+                                                <tr>
+                                                    <th>@item.Nombre</th>
+                                                    <td>@item.Nombre @item.Apellido1 @item.Apellido2 </td>
+                                                    <td>@item.Email1</td>
+                                                    <td>@item.Celular1</td>
+                                                    <td>@item.Telefono1</td>
+                                                    <td>
+                                                        <a ID="lbEdit" href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                        @*<a ID="lbBorrar" href="@Url.Action("Borrar", "Empresa", new {  id=item.IdEmpresa } )">
+                                                                <i class="material-icons">delete</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>*@
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>
+

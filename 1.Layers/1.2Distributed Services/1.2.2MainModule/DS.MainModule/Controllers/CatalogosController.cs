@@ -31,12 +31,20 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaPaises()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPaises());
-        }      
+        }
+        #endregion
+
+        #region Estados Republica
+        [Route("estadosr")]
+        public HttpResponseMessage GetListaEstados()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEstados());
+        }
         #endregion
 
         #region Empresas
 
-        [Route("registra/empresa")]
+       // [Route("registra/empresa")]
         public async Task<HttpResponseMessage> PostRegistraEmpresas()
         {
             string destinationFolderPDF = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
@@ -58,7 +66,7 @@ namespace DS.MainModule.Controllers
                 string fileName = string.Empty;
                 bool existe;
 
-                empresaDto.rutasImagenes = new List<string>();
+               // empresaDto.rutasImagenes = new List<string>();
 
                 // This illustrates how to get the file names.
                 foreach (MultipartFileData file in provider.FileData)
@@ -89,7 +97,7 @@ namespace DS.MainModule.Controllers
                             File.Move(file.LocalFileName, newFilePath);
                         }
                         // Guardar newFilePath en la propiedad de UrlImage de la entidad
-                        empresaDto.rutasImagenes.Add(newFilePath.ToString());
+                      //  empresaDto.rutasImagenes.Add(newFilePath.ToString());
                     }
                 }
                 return RespuestaHttp.crearRespuesta(_catalogos.RegistraEmpresa(empresaDto), Request);
@@ -100,16 +108,22 @@ namespace DS.MainModule.Controllers
             }
         }
 
-
-        //public HttpResponseMessage PostRegistraEmpresas(EmpresaCrearDTO empresaDto)
-        //{
-        //    return RespuestaHttp.crearRespuesta(_catalogos.RegistraEmpresa(empresaDto), Request);
-        //}
+        [Route("registra/empresa")]
+        public HttpResponseMessage PostRegistraEmpresas(EmpresaCrearDTO empresaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraEmpresa(empresaDto), Request);
+        }
 
         [Route("modifica/empresa")]
         public HttpResponseMessage PutModificaEmpresas(EmpresaModificarDto empresaDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ModificaEmpresa(empresaDto), Request);
+        }
+
+        [Route("modifica/empresaconfiguracion")]
+        public HttpResponseMessage PutModificaEmpresaConfig(EmpresaModificaConfig empresaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ActualizaEmpresaConfig(empresaDto), Request);
         }
 
         [Route("elimina/empresa")]
@@ -134,6 +148,12 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaEmpresascad(bool conAdminCent)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresas(conAdminCent));
+        }
+
+        [Route("usuarios/listausuarios")]
+        public HttpResponseMessage GetAllUsuarios()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.AllUers());
         }
         #endregion
 

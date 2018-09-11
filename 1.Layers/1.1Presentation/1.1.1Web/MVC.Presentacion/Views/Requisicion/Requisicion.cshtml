@@ -230,28 +230,28 @@
                                                 </thead>
                                                 <tbody>
                                                     @if (Model.RequisicionRevicion.ListaProductos != null)
-                                                    {                                                        
+                                                    {
                                                         @foreach (var item in Model.RequisicionRevicion.ListaProductos)
-                                                        {
-                                                            <tr>
-                                                                <td><b>@item.TipoProducto</b></td>
-                                                                <td><b>@item.Producto</b></td>
-                                                                <td><b>@item.Cantidad</b></td>
-                                                                <td><b>@item.Unidad</b></td>
-                                                                <td><b>@item.Aplicacion</b></td>
-                                                                <td><b>@item.CentroCosto</b></td>
-                                                                <td><b>@item.CantidadAlmacenActual</b></td>
-                                                                <td>
-                                                                    @Html.CheckBoxFor(x => x.RequisicionRevicion.ListaProductos[item.IdProducto].RevisionFisica)
-                                                                    @*<div class="checkbox">
-                                                                        <input id="cbRevision" name="checkResp" type="checkbox">
-                                                                        <label for="cbRevision">
-                                                                            Unchecked
-                                                                        </label>
-                                                                    </div>*@
+                                                            {
+                                                                <tr>
+                                                                    <td><b>@item.TipoProducto</b></td>
+                                                                    <td><b>@item.Producto</b></td>
+                                                                    <td><b>@item.Cantidad</b></td>
+                                                                    <td><b>@item.Unidad</b></td>
+                                                                    <td><b>@item.Aplicacion</b></td>
+                                                                    <td><b>@item.CentroCosto</b></td>
+                                                                    <td><b>@item.CantidadAlmacenActual</b></td>
+                                                                    <td>
+                                                                        @Html.CheckBoxFor(x => x.RequisicionRevicion.ListaProductos[item.IdProducto].RevisionFisica)
+                                                                        <div class="checkbox">
+                                                                            <input id="cbRevision" name="checkResp" type="checkbox">
+                                                                            <label for="cbRevision">
+                                                                                Unchecked
+                                                                            </label>
+                                                                        </div>
                                                                 </td>
                                                             </tr>
-                                                        }
+                                                    }
                                                     }
                                                 </tbody>
                                             </table>

@@ -40,11 +40,11 @@ namespace Application.MainModule.DTOs.Catalogo
         public string RazonSocial { get; set; }
         public bool Activo { get; set; }
        // public System.DateTime FechaRegistro { get; set; }
-        public decimal FactorLitrosAKilos { get; set; }
-        public System.DateTime CierreInventario { get; set; }
-        public byte InventarioSano { get; set; }
-        public byte InventarioCrítico { get; set; }
-        public decimal MaxRemaGaseraMensual { get; set; }
+        //public decimal FactorLitrosAKilos { get; set; }
+        //public System.DateTime CierreInventario { get; set; }
+        //public byte InventarioSano { get; set; }
+        //public byte InventarioCrítico { get; set; }
+        //public decimal MaxRemaGaseraMensual { get; set; }
         public string UrlLogotipoMenu { get; set; }
         public string UrlLogotipoLogin { get; set; }
         public string UrlLogotipo180px { get; set; }

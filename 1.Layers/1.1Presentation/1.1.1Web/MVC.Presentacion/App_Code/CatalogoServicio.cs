@@ -6,16 +6,32 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.Serialization.Json;
+//using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web;
-using System.Web.Script.Serialization;
+//using System.Web.Script.Serialization;
 
 namespace MVC.Presentacion.App_Code
 {
     public static class CatalogoServicio
     {
-      
+   
+        #region Paises
+        public static List<PaisModel> GetPaises(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarPaises(tkn);
+            return agente._listaPaises;
+        }
+        #endregion
+        #region Estados
+        public static List<EstadosRepModel> GetEstados(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarEstados(tkn);
+            return agente._listaEstados;
+        }
+        #endregion
         #region Empresas
         //public bool create(EmpresaDTO Objemp)
         //{
@@ -41,31 +57,74 @@ namespace MVC.Presentacion.App_Code
         //    }
         //}
 
-        public RespuestaDTO create(EmpresaModel cc, string tkn)
+        public static RespuestaDTO create(EmpresaModel cc, string tkn)
         {            
             var agente = new AgenteServicio();
             agente.GuardarEmpresaNueva(cc, tkn);
             return agente._respuestaDTO;
         }
 
-        public List<PaisModel> GetPaises(string tkn)
+        public static RespuestaDTO ActualizaConfigEmpresa(EmpresaConfiguracion cc, string tkn)
         {
             var agente = new AgenteServicio();
-            agente.BuscarPaises(tkn);
-            return agente._listaPaises;
+            agente.GuardarEmpresaConfiguracion(cc, tkn);
+            return agente._respuestaDTO;
         }
-        
-
-        #endregion
-        #region Empresas
         public static List<EmpresaDTO> Empresas(string tkn)
         {
             var agente = new AgenteServicio();
             agente.ListaEmpresasLogin(tkn);
             return agente._listaEmpresas;
         }
+
+        //public static List<EmpresaConfiguracion> EmpresasC(string tkn)
+        //{
+        //    var agente = new AgenteServicio();
+        //    agente.ListaEmpresasLogin(tkn);
+        //    return agente._listaEmpresas;
+        //}
+
+        public static Empresa FiltrarEmpresa(Empresa model, int id, string tkn)
+        {
+            List<EmpresaDTO> newList = Empresas(tkn).Where(x => x.IdEmpresa == id).ToList();//model.Empresas;
+                             
+
+            if (newList.Count != 0)
+                model.Empresas = newList;
+
+            return model;
+        }
         #endregion
         #region Usuarios
+
+        public static List<UsuarioDTO> ObtenerTodosUsuarios(string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarTodosUsuarios(token);
+            return agente._listaUsuarios;
+        }
+        //public static UsuariosModel UsuarioEmpresa(int id, string tkn)
+        //{
+        //    ////List<UsuarioDTO> newList = ListaUsuarios(tkn).Where(x => x.IdEmpresa == id).ToList();//model.Empresas;
+
+
+        //    ////if (newList.Count != 0)
+        //    ////    model.Empresas = newList;
+
+        //    ////return model;
+        //}
+
+
+        //public static UsuarioDTO FiltrarUsuarios(int id, string tkn)
+        //{
+        //    List<UsuarioDTO> newList = ListaUsuarios(tkn).Where(x => x.IdEmpresa == id).ToList();//model.Empresas;
+
+
+        //    if (newList.Count != 0)
+        //        model.Empresas = newList;
+
+        //    return model;
+        //}
         public static List<UsuarioDTO> ListaUsuarios(short idEmpresa, string token)
         {
             var agente = new AgenteServicio();

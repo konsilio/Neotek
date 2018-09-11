@@ -232,19 +232,24 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RequisicionController.cs" />
     <Compile Include="Controllers\Shared\MainController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Catalogos\CatalogoRespuestaDTO.cs" />
+    <Compile Include="Models\Catalogos\EmpDto.cs" />
     <Compile Include="Models\Catalogos\Empresa.cs" />
+    <Compile Include="Models\Catalogos\EmpresaConfiguracion.cs" />
     <Compile Include="Models\Catalogos\EmpresaModel.cs" />
     <Compile Include="Models\Catalogos\CentroCostoDTO.cs" />
-    <Compile Include="Models\Catalogos\EmpresasDTO.cs" />
+    <Compile Include="Models\Catalogos\EmpresaDTO.cs" />
+    <Compile Include="Models\Catalogos\EstadosRepModel.cs" />
     <Compile Include="Models\Catalogos\PaisModel.cs" />
     <Compile Include="Models\Catalogos\ProductoDTO.cs" />
     <Compile Include="Models\Catalogos\ProveedorDTO.cs" />
     <Compile Include="Models\Catalogos\UsuarioDTO.cs" />
+    <Compile Include="Models\Catalogos\UsuariosModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraDTO.cs" />
@@ -3732,6 +3737,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Resources\js\shared\jCatalogo.js" />
+    <Content Include="Resources\js\shared\jLayout.js" />
+    <Content Include="Resources\js\shared\jServices.js" />
+    <Content Include="Resources\js\shared\jUserSearcher.js" />
+    <Content Include="Resources\js\shared\jUtils.js" />
+    <Content Include="Resources\js\shared\jValidator.js" />
+    <Content Include="Resources\js\shared\TreeView.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -4007,6 +4019,10 @@
     <Content Include="Views\Empresas\Nueva.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Empresas\ActualizaParametros.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\Usuarios\Nuevo.cshtml" />
+    <Content Include="Views\Usuarios\ActualizaCredenciales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

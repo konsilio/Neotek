@@ -31,8 +31,10 @@ namespace MVC.Presentacion.Agente
 
         public List<RequisicionDTO> _listaRequisicion;
         public List<EmpresaDTO> _listaEmpresas;
-        public List<PaisModel> _listaPaises;
-        public RespuestaAutenticacionDto _respuestaAutenticacion;
+        public List<EmpresaConfiguracion> _EmpresasConfiguracion;
+        public List<PaisModel> _listaPaises; 
+        public List<EstadosRepModel> _listaEstados; 
+        // public RespuestaAutenticacionDto _respuestaAutenticacion;
         public CatalogoRespuestaDTO _respuestaCatalogos;
 
         public List<RequisicionEstatusDTO> _listaRequisicionEstatus;
@@ -47,6 +49,7 @@ namespace MVC.Presentacion.Agente
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
         }
+
         #region Paises
         public void BuscarPaises(string tkn)
         {
@@ -86,8 +89,46 @@ namespace MVC.Presentacion.Agente
 
         #endregion
       
+        #region Estados
+        public void BuscarEstados(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaEstadosR"];
+            ListaEstados(this.ApiCatalgos, tkn).Wait();
+        }
 
-        #region Catalogos
+        private async Task ListaEstados(string api, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<EstadosRepModel> emp = new List<EstadosRepModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    //HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<EstadosRepModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<EstadosRepModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaEstados = emp;
+            }
+        }
+
+        #endregion
+
+        #region Catalogos 
 
         public void ListaEmpresasLogin()
         {
@@ -128,7 +169,7 @@ namespace MVC.Presentacion.Agente
                 _listaEmpresas = emp;
             }
         }
-        
+
         public void GuardarEmpresaNueva(EmpresaModel dto, string tkn)
         {               
             this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraEmpresas"];
@@ -163,6 +204,78 @@ namespace MVC.Presentacion.Agente
                     client.Dispose();
                 }
                 _respuestaDTO = resp;
+            }
+        }
+
+        public void GuardarEmpresaConfiguracion(EmpresaConfiguracion dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutEmpresaConfig"];
+            GuardarEmpresaConfig(dto, tkn).Wait();
+        }
+        private async Task GuardarEmpresaConfig(EmpresaConfiguracion _pcDTO, string token)
+        {
+
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {//PostAsJsonAsync
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
+            }
+        }
+
+        public void BuscarTodosUsuarios(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
+            GetListaTodosUsuarios(tkn).Wait();
+        }
+
+        private async Task GetListaTodosUsuarios(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<UsuarioDTO> lus = new List<UsuarioDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<UsuarioDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<UsuarioDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaUsuarios = lus;
             }
         }
         public void BuscarListaUsuarios(short idEmpresa, string tkn)

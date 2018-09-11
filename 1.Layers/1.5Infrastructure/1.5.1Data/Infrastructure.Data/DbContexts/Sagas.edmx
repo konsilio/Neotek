@@ -681,7 +681,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdEmpresa" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NombreComercial" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="EsAdministracionCentral" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="EmpresaConfiguracion">
@@ -689,14 +689,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdEmpresa" />
           </Key>
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
-          <Property Name="FactorLitrosAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" />
-          <Property Name="FactorGalonALitros" Type="decimal" Precision="8" Scale="5" Nullable="false" />
-          <Property Name="FactorCompraLitroAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" />
-          <Property Name="FactorFleteGas" Type="decimal" Precision="8" Scale="5" Nullable="false" />
-          <Property Name="CierreInventario" Type="smalldatetime" Nullable="false" />
-          <Property Name="InventarioSano" Type="tinyint" Nullable="false" />
-          <Property Name="InventarioCrítico" Type="tinyint" Nullable="false" />
-          <Property Name="MaxRemaGaseraMensual" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="FactorLitrosAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false"  StoreGeneratedPattern="Computed"/>
+          <Property Name="FactorGalonALitros" Type="decimal" Precision="8" Scale="5" Nullable="false"  StoreGeneratedPattern="Computed"/>
+          <Property Name="FactorCompraLitroAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FactorFleteGas" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="CierreInventario" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="InventarioSano" Type="tinyint" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="InventarioCrítico" Type="tinyint" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="MaxRemaGaseraMensual" Type="decimal" Precision="18" Scale="4" Nullable="false" StoreGeneratedPattern="Computed"/>
         </EntityType>
         <EntityType Name="EmpresaContacto">
           <Key>

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -22,32 +23,49 @@ namespace MVC.Presentacion.Controllers
 
             return View();
         }
-
-        // [HttpPost]
+               
         public ActionResult Nueva()
         {
-            //Se obtienen los paises
+            EmpresaModel em = new EmpresaModel();
             _tok = Session["StringToken"].ToString();
-            CatalogoServicio pais = new CatalogoServicio();
-            pais.GetPaises(_tok);                       
-         
-            //Session["ListaRoles"] = getSelectList<Roles>(ListObject, "Clave", "IdRol");
-            TempData["ListaPaises"] = pais.GetPaises(_tok);
-
-            EmpresaModel Objemp = new EmpresaModel();
-            return View(new EmpresaModel());
+            //Se obtienen los paises         
+            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tok);
+            //Se obtienen los estados 
+            ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
+            
+            return View(em);
         }
 
+        [HttpPost]
         public ActionResult Crear(EmpresaModel Objemp)
         {
             _tok = Session["StringToken"].ToString();
             if (ModelState.IsValid)
-            {
-                CatalogoServicio lst = new CatalogoServicio();
-                lst.create(Objemp, _tok);
+            {                
+                CatalogoServicio.create(Objemp, _tok);            
             }
             //return View(Objemp);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", Objemp);
+        }
+
+        public ActionResult ActualizaParametros(int id)
+        {
+            Empresa em = new Empresa();
+            string _tkn = Session["StringToken"].ToString();
+            ViewBag.Empresas = CatalogoServicio.FiltrarEmpresa(em, id, _tkn).Empresas.ToList();          
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Actualiza(EmpresaConfiguracion _Obj)
+        {
+            _tok = Session["StringToken"].ToString();
+            if (ModelState.IsValid)
+            {
+                CatalogoServicio.ActualizaConfigEmpresa(_Obj, _tok);
+            }
+            //return View(Objemp);
+            return RedirectToAction("Index", _Obj);
         }
     }
 }

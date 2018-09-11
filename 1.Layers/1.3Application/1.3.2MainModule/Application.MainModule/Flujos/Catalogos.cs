@@ -19,8 +19,15 @@ namespace Application.MainModule.Flujos
         #region Paises
         public List<PaisDTO> ListaPaises()
         {
-            return PaisServicio.ListaPaises();
-        }      
+            return PaisServicio.ListaPaises().ToList();
+        }
+        #endregion
+
+        #region Estados Rep
+        public List<EstadosRepDTO> ListaEstados()
+        {
+            return EstadosrepServicio.ListaEstadosR().ToList();
+        }
         #endregion
 
         #region Empresas
@@ -73,9 +80,31 @@ namespace Application.MainModule.Flujos
             empresas.Activo = false;
             return EmpresaServicio.ModificarEmpresa(empresas);
         }
+
+        public RespuestaDto ActualizaEmpresaConfig(EmpresaModificaConfig empDto)
+        {
+            var resp = PermisosServicio.PuedeModificarEmpresa();
+            if (!resp.Exito) return resp;
+
+            var empresaaMod = EmpresaServicio.Obtener(empDto.IdEmpresa);
+            if (empresaaMod == null) return EmpresaServicio.NoExiste();
+
+            var emp = EmpresaAdapter.FromDtoConfig(empDto,empresaaMod);
+            emp.FechaRegistro = emp.FechaRegistro;
+            return EmpresaServicio.ModificarEmpresa(emp);
+        }
+
         #endregion
 
         #region Usuarios
+        public List<UsuarioDTO> AllUers()
+        {
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return UsuarioServicio.ListaUsuarios().ToList();
+            else
+                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+        }
+
         public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
@@ -130,7 +159,7 @@ namespace Application.MainModule.Flujos
             resp = ValidarCatalogoServicio.CategoriaProducto(cpDto);
             if (!resp.Exito) return resp;
 
-            return ProductoServicios.RegistrarCategoriaProducto(ProductoAdapter.FromDto(cpDto));
+            return ProductoServicios.RegistrarCategoriaProducto(ProductoAdapter.CategoriaProducto(cpDto));
         }
 
         public RespuestaDto ModificaCategoriaProducto(CategoriaProductoModificarDto cpDto)

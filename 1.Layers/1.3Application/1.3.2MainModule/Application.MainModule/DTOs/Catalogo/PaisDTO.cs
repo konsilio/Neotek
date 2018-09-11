@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Catalogo
 {
-    [Serializable]
+
     public class PaisDTO
     {
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdPais")]
+        //[Required(ErrorMessage = Error.R0002)]
+        //[Display(Name = "IdPais")]
         public byte IdPais { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Pais")]
+        //[Required(ErrorMessage = Error.R0002)]
+        //[Display(Name = "Pais")]
         public string Pais { get; set; }
     }
 }

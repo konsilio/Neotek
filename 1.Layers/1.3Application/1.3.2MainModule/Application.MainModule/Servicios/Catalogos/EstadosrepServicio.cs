@@ -6,15 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Application.MainModule.Servicios.Catalogos
 {
-    public static class PaisServicio
+   public static class EstadosrepServicio
     {
-        public static List<PaisDTO> ListaPaises()
+        public static List<EstadosRepDTO> ListaEstadosR()
         {
-            List<PaisDTO> lpaises = AdaptadoresDTO.Catalogo.PaisAdapter.ToDTO(new PaisDataAccess().ListaPaises());
-            return lpaises;
+            List<EstadosRepDTO> ledos = AdaptadoresDTO.Catalogo.EstadoRepAdapter.ToDTO(new EstadoRDataAccess().ListaEstadosR());
+            return ledos;
         }
     }
 }

@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
-    public class PaisDataAccess
+   public class EstadoRDataAccess
     {
         private SagasDataUow uow;
 
-        public PaisDataAccess()
+        public EstadoRDataAccess()
         {
             uow = new SagasDataUow();
         }
 
-        public List<Pais> ListaPaises()
+        public List<EstadosRepublica> ListaEstadosR()
         {
-            return uow.Repository<Pais>().GetAll().ToList();
+            return uow.Repository<EstadosRepublica>().GetAll().ToList();
         }
     }
 }

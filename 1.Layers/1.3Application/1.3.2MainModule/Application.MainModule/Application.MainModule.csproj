@@ -56,6 +56,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\CentroCostoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CuentaContableAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\EstadoRepAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
@@ -63,6 +64,8 @@
     <Compile Include="DTOs\Almacen\AlmacenCrearEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenDTO.cs" />
+    <Compile Include="DTOs\Catalogo\EmpresaModificaConfig.cs" />
+    <Compile Include="DTOs\Catalogo\EstadosRepDTO.cs" />
     <Compile Include="DTOs\Catalogo\PaisDTO.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoDto.cs" />
@@ -165,9 +168,11 @@
     <Compile Include="Servicios\AccesoADatos\CentroCostoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenGasDescargaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CuentaContableDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\EmpresaConfiguracionDA.cs" />
     <Compile Include="Servicios\AccesoADatos\EmpresaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EquipoTransporteDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EstacionCarburacionDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\EstadoRDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PaisDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\RequisicionDataAccess.cs" />
@@ -184,6 +189,7 @@
     <Compile Include="Servicios\Catalogos\EmpresaServicio.cs" />
     <Compile Include="Servicios\Catalogos\EquipoTransporteServicio.cs" />
     <Compile Include="Servicios\Catalogos\EstacionCarburacionServicio.cs" />
+    <Compile Include="Servicios\Catalogos\EstadosrepServicio.cs" />
     <Compile Include="Servicios\Catalogos\PaisServicio.cs" />
     <Compile Include="Servicios\Catalogos\ProductoServicios.cs" />
     <Compile Include="Servicios\Catalogos\ProveedorServicio.cs" />

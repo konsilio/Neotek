@@ -12,7 +12,7 @@ using Exceptions.MainModule.Validaciones;
 namespace Application.MainModule.Servicios.Catalogos
 {
     public static class UsuarioServicio
-    {
+    {      
         public static List<UsuarioDTO> ListaUsuarios(short idEmpresa)
         {
             List<UsuarioDTO> lUsuarios = AdaptadoresDTO.Catalogo.UsuarioAdapter.ToDTO(new UsuarioDataAccess().Buscar(idEmpresa));
