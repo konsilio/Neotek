@@ -3,7 +3,6 @@ package com.example.neotecknewts.sagasapp.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,13 +21,6 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.OrdenCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
@@ -37,6 +29,12 @@ import com.example.neotecknewts.sagasapp.Presenter.RegistrarPapeletaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RegistrarPapeletaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by neotecknewts on 03/08/18.
@@ -466,7 +464,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public void messageError(int mensaje) {
         Log.w("Mensaje",getResources().getString(mensaje));
         //showDialog(getResources().getString(mensaje));
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(RegistrarPapeletaActivity.this);
         builder1.setMessage(mensaje);
         builder1.setCancelable(true);
 
@@ -478,8 +476,10 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
                     }
                 });
 
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
+        //AlertDialog alert11 = builder1.create();
+        //alert11.show();
+        builder1.create();
+        builder1.show();
     }
 
     //metodo que se ejecuta al obtener las ordenes de compra del expedidor y llena el sppiner con los numeros de orden de compra

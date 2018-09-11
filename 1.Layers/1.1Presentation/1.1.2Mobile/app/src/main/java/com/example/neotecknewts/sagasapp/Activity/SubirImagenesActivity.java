@@ -17,6 +17,9 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenterImpl;
@@ -24,9 +27,11 @@ import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
+import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 /**
  * Created by neotecknewts on 14/08/18.
@@ -41,10 +46,16 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public PrecargaPapeletaDTO papeletaDTO;
     public IniciarDescargaDTO iniciarDescarga;
     public FinalizarDescargaDTO finalizarDescarga;
+    public LecturaDTO lecturaDTO;
+    public LecturaPipaDTO lecturaPipaDTO;
+    public LecturaAlmacenDTO lecturaAlmacenDTO;
+
     //banderas para indicar el objeto a utlizar
     public boolean papeleta;
     public boolean iniciar;
     public boolean finalizar;
+    public boolean EsLecturaInicial,EsLecturaFinal,EsLecturaInicialPipa,EsLecturaFinalPipa;
+    public boolean EsLecturaInicialAlmacen,EsLecturaFinalAlamacen;
 
     public SubirImagenesPresenter presenter;
     public ProgressDialog progressDialog;
@@ -52,6 +63,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public PapeletaSQL papeletaSQL;
     public IniciarDescargaSQL iniciarDescargaSQL;
     public FinalizarDescargaSQL finalizarDescargaSQL;
+    public SAGASSql sagasSql;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +86,12 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 papeleta=true;
                 iniciar=false;
                 finalizar=false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
             }
             else if(extras.getBoolean("EsDescargaIniciar")){
                 Log.w("SUBIR","EsDescargaIniciar");
@@ -81,6 +99,12 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 papeleta=false;
                 iniciar=true;
                 finalizar=false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
             }
             else if(extras.getBoolean("EsDescargaFinalizar")){
                 Log.w("SUBIR","EsDescargaFinalizar");
@@ -88,6 +112,61 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 papeleta=false;
                 iniciar=false;
                 finalizar=true;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
+            }else if (extras.getBoolean("EsLecturaInicial")){
+                Log.w("Subir","LecturaInicial");
+                lecturaDTO= (LecturaDTO) extras.getSerializable("lecturaDTO");
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
+                EsLecturaFinal = extras.getBoolean("EsLecturaFinal");
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
+            }else if (extras.getBoolean("EsLecturaFinal")){
+                Log.w("Subir","LecturaFinal");
+                lecturaDTO= (LecturaDTO) extras.getSerializable("lecturaDTO");
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                EsLecturaInicial = extras.getBoolean("EsLecturaInicial");
+                EsLecturaFinal = extras.getBoolean("EsLecturaFinal");
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
+            }else  if(extras.getBoolean("EsLecturaInicialPipa") ||
+                    extras.getBoolean("EsLecturaFinalPipa")){
+                lecturaPipaDTO = (LecturaPipaDTO) extras.getSerializable("lecturaPipaDTO");
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = (boolean) extras.get("EsLecturaInicialPipa");
+                EsLecturaFinalPipa = (boolean) extras.get("EsLecturaFinalPipa");
+                EsLecturaInicialAlmacen = false ;
+                EsLecturaFinalAlamacen = false;
+            }else if(extras.getBoolean("EsLecturaInicialAlmacen")||
+                    extras.getBoolean("EsLecturaFinalAlmacen")){
+                lecturaAlmacenDTO = (LecturaAlmacenDTO) extras.
+                        getSerializable("lecturaAlmacenDTO");
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = (boolean) extras.get("EsLecturaInicialAlmacen") ;
+                EsLecturaFinalAlamacen = (boolean)extras.get("EsLecturaFinalAlmacen");
             }
 
         }
@@ -97,6 +176,12 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             iniciarDescargaSQL = new IniciarDescargaSQL(getApplicationContext());
         }else if(finalizar){
             finalizarDescargaSQL = new FinalizarDescargaSQL(getApplicationContext());
+        }else if (EsLecturaInicial || EsLecturaFinal){
+            sagasSql = new SAGASSql(getApplicationContext());
+        }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+            sagasSql = new SAGASSql(getApplicationContext());
+        }else if(EsLecturaInicialAlmacen || EsLecturaFinalAlamacen){
+            sagasSql = new SAGASSql(getApplicationContext());
         }
         //se ejecuta la tarea asincrona para procesar las imagenes
         new AsyncTaskRunner().execute();
@@ -163,6 +248,121 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Log.w("Imagenes"+i,""+uri.toString());
                 }catch (Exception e){
 
+                }
+            }
+        }else if(EsLecturaInicial){//LecturaInicial
+            for (int i=0; i<lecturaDTO.getImagenesURI().size();i++){
+                try {
+                    Uri uri = Uri.parse(lecturaDTO.getImagenesURI().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(), uri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    lecturaDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            Uri uri = Uri.parse(lecturaDTO.getImagenP5000URI().toString());
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), uri);
+                bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                byte[] b = bs.toByteArray();
+                String image = Base64.encodeToString(b, Base64.DEFAULT);
+                lecturaDTO.setImagenP5000(image.trim());
+                Log.w("Imagen P5000",""+uri.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else if(EsLecturaFinal){//LecturaFinal
+            for (int i=0; i<lecturaDTO.getImagenesURI().size();i++){
+                try {
+                    Uri uri = Uri.parse(lecturaDTO.getImagenesURI().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(), uri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    lecturaDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            Uri uri = Uri.parse(lecturaDTO.getImagenP5000URI().toString());
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), uri);
+                bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                byte[] b = bs.toByteArray();
+                String image = Base64.encodeToString(b, Base64.DEFAULT);
+                lecturaDTO.setImagenP5000(image.trim());
+                Log.w("Imagen P5000",""+uri.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){//Lectura pipa
+            for (int i=0; i<lecturaPipaDTO.getImagenesURI().size();i++){
+                try {
+                    Uri uri = Uri.parse(lecturaPipaDTO.getImagenesURI().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(), uri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    lecturaPipaDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            Uri uri = Uri.parse(lecturaPipaDTO.getImagenP5000URI().toString());
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), uri);
+                bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                byte[] b = bs.toByteArray();
+                String image = Base64.encodeToString(b, Base64.DEFAULT);
+                lecturaPipaDTO.setImagenP5000(image.trim());
+                Log.w("Imagen P5000",""+uri.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if(EsLecturaInicialAlmacen || EsLecturaFinalAlamacen){
+            for (int i=0; i<lecturaAlmacenDTO.getImagenesURI().size();i++){
+                try {
+                    Uri uri = Uri.parse(lecturaAlmacenDTO.getImagenesURI().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(), uri);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    lecturaAlmacenDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
         }
@@ -255,7 +455,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                Intent intent = new Intent(SubirImagenesActivity.this, MenuActivity.class);
+                Intent intent = new Intent(SubirImagenesActivity.this,
+                        MenuActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
@@ -321,6 +522,18 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 presenter.registrarIniciarDescarga(iniciarDescarga,session.getToken(),iniciarDescargaSQL);
             }else if (finalizar){
                 presenter.registrarFinalizarDescarga(finalizarDescarga,session.getToken(),finalizarDescargaSQL);
+            }else if (EsLecturaInicial){
+                presenter.registrarLecturaInicial(sagasSql,session.getToken(),lecturaDTO);
+            }else if (EsLecturaFinal){
+                presenter.registrarLecturaFinal(sagasSql,session.getToken(),lecturaDTO);
+            }else if (EsLecturaInicialPipa){
+                presenter.registrarLecturaInicialPipa(sagasSql,session.getToken(),lecturaPipaDTO);
+            }else if (EsLecturaFinalPipa){
+                presenter.registrarLecturaFinalalPipa(sagasSql,session.getToken(),lecturaPipaDTO);
+            }else if(EsLecturaInicialAlmacen){
+                presenter.registrarLecturaInicialAlmacen(sagasSql,session.getToken(),lecturaAlmacenDTO);
+            }else if (EsLecturaFinalAlamacen){
+                presenter.registrarLecturaFinalAlmacen(sagasSql,session.getToken(),lecturaAlmacenDTO);
             }
             textView.setText(R.string.cargando_imagenes_fin);
             //progressDialog.hide();

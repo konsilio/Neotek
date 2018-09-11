@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,7 +14,8 @@
         android:text="@string/title_medidor_almacen"
         android:textColor="@color/colorTextLogin"
         android:textSize="20dp"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        tools:ignore="SpUsage" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +25,8 @@
         android:text="@string/porcentaje_medidor"
         android:textColor="@color/colorTextLogin"
         android:textSize="45dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="SpUsage" />
     <TextView
         android:id="@+id/textViewCapturaText"
         android:layout_width="match_parent"
@@ -33,7 +36,8 @@
         android:gravity="center"
         android:text="@string/porcentaje_medidor_almacen_message"
         android:textColor="@color/colorTextLogin"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        tools:ignore="SpUsage" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +65,8 @@
             android:textSize="30dp"
             android:layout_weight="1"
             android:textStyle="bold"
-            android:text="@string/punto"/>
+            android:text="@string/punto"
+            tools:ignore="SpUsage" />
         <NumberPicker
             android:id="@+id/number_picker_decimal"
             android:layout_width="60dp"
@@ -92,7 +97,8 @@
         android:background="@color/colorButtonLogin"
         android:text="@string/message_acept"
         android:textColor="@color/colorTextButtonLogin"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        tools:ignore="SpUsage" />
 
 
 </LinearLayout>

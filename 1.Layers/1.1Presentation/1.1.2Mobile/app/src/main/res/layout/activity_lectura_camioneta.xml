@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.LecturaCamionetaActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TVLecturaCamionetaActivityTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="15dp"
+                android:paddingTop="25dp"
+                android:text="@string/toma_de_lectura"
+                android:textAlignment="center"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/TVLecturaCamionetaActivityCamioneta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingTop="25dp"
+                android:text="@string/Selecciona_la_camioneta"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/SLecturaCamionetaActivityListaCamioneta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="20dp" />
+
+            <TextView
+                android:id="@+id/TVLecturaCamionetaAcitvityQuien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingTop="20dp"
+                android:text="@string/Quien_eres"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/SLecturaCamionetaActivityListaQuien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="20dp" />
+
+            <TextView
+                android:id="@+id/TVLecturaCamionetaActivotyRecordatorioUno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="15dp"
+                android:text="@string/Recordatorio_uno"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/TVLecturaCamionetaActivityRecordatorioDos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="15dp"
+                android:text="@string/Recordatorio_dos"
+                android:textSize="24sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <Button
+                android:id="@+id/BtnLecturaCamionetaActivityAceptar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="85dp"
+                android:layout_marginRight="85dp"
+                android:backgroundTint="@color/colorButtonLogin"
+                android:text="@string/message_acept"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="25sp"
+                tools:ignore="UnusedAttribute" />
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

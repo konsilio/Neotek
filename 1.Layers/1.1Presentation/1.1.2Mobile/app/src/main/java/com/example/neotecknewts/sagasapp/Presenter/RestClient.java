@@ -4,11 +4,16 @@ import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
@@ -20,9 +25,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.HEAD;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -131,5 +134,53 @@ public interface RestClient {
                                                                    finalizarDescargaDTO,
                                                               @Header("Authorization")String token,
                                                               @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_LECTURA_INICIAL)
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicial(@Body LecturaDTO lecturaDTO,
+                                                        @Header("Authorization")String token,
+                                                        @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_LECTURA_FINAL)
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinal(@Body LecturaDTO lecturaDTO,
+                                                          @Header("Authorization")String token,
+                                                          @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_LECTURA_INICIAL)
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialPipa(@Body LecturaPipaDTO lecturaDTO,
+                                                            @Header("Authorization")String token,
+                                                            @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_LECTURA_FINAL)
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalPipa(@Body LecturaPipaDTO lecturaDTO,
+                                                                @Header("Authorization")String token,
+                                                                @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_LECTURA_INICIAL)
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialAlmacen(LecturaAlmacenDTO lecturaAlmacenDTO,
+                                                                   @Header("Authorization")String token,
+                                                                   @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_LECTURA_FINAL)
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalAlmacen(LecturaAlmacenDTO lecturaAlmacenDTO,
+                                                                 @Header("Authorization")String token,
+                                                                 @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_LECTURA_INICIAL)
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialCamioneta(LecturaCamionetaDTO lecturaAlmacenDTO,
+                                                                   @Header("Authorization")String token,
+                                                                   @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_LECTURA_FINAL)
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalCamioneta(LecturaCamionetaDTO  lecturaAlmacenDTO,
+                                                                 @Header("Authorization")String token,
+                                                                 @Header("Content-Type") String contentType
     );
 }

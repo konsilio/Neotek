@@ -6,18 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.MenuItem;
-
-import java.util.ArrayList;
-
-
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.neotecknewts.sagasapp.Adapter.MenuAdapter;
@@ -28,7 +20,6 @@ import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -83,7 +74,51 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         }else{
             presenter.getMenu(session.getTokenWithBearer());
         }
-
+        MenuDTO m = new MenuDTO();
+        m.setHeaderMenu("Toma de lectura");
+        m.setName("Estación de Carb. (Inicial)");
+        MenuDTO m2 = new MenuDTO();
+        m2.setHeaderMenu("Toma de lectura");
+        m2.setName("Estación de Carb. (Final)");
+        MenuDTO m3 = new MenuDTO();
+        m3.setHeaderMenu("Toma de lectura");
+        m3.setName("Pipa (Inicial)");
+        MenuDTO m4 = new MenuDTO();
+        m4.setHeaderMenu("Toma de lectura");
+        m4.setName("Pipa (Final)");
+        MenuDTO m5 = new MenuDTO();
+        m5.setHeaderMenu("Toma de lectura");
+        m5.setName("Almacén Pral. (Inicial)");
+        MenuDTO m6 = new MenuDTO();
+        m6.setHeaderMenu("Toma de lectura");
+        m6.setName("Almacén Pral. (Final)");
+        MenuDTO m7 = new MenuDTO();
+        m7.setHeaderMenu("Toma de lectura");
+        m7.setName("Camioneta (Inicial)");
+        MenuDTO m8 = new MenuDTO();
+        m8.setHeaderMenu("Toma de lectura");
+        m8.setName("Camioneta (Final)");
+        MenuDTO m9 = new MenuDTO();
+        m9.setHeaderMenu("Generar - Reporte");
+        m9.setName("Reporte del día");
+        MenuDTO m10 = new MenuDTO();
+        m10.setHeaderMenu("Auto-consumo - Gas");
+        m10.setName("Estación Carb. (Inicial)");
+        MenuDTO m11 = new MenuDTO();
+        m11.setHeaderMenu("Auto-consumo - Gas");
+        m11.setName("Estación Carb. (Final)");
+        //m.setImageRef(R.g);
+        menu.add(m);
+        menu.add(m2);
+        menu.add(m3);
+        menu.add(m4);
+        menu.add(m5);
+        menu.add(m6);
+        menu.add(m7);
+        menu.add(m8);
+        menu.add(m9);
+        menu.add(m10);
+        menu.add(m11);
 
         //se agrega la lista al adapter y se agrega el adapter al recylcer view
         adapter = new MenuAdapter(menu);
