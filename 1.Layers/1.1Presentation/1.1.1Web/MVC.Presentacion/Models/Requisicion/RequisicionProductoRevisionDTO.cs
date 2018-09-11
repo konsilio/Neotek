@@ -7,6 +7,7 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Requisicion
 {
+    [Serializable]
     public class RequisicionProductoRevisionDTO : RequisicionProductoNuevoDTO
     {     
         [Required(ErrorMessage = Error.R0002)]

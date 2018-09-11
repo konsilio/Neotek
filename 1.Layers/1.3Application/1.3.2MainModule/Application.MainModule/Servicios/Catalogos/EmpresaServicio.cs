@@ -29,7 +29,7 @@ namespace Application.MainModule.Servicios.Catalogos
             return BuscarEmpresas();
         }
 
-        public static Empresa Obtener(int IdEmpresa)
+        public static Empresa Obtener(short IdEmpresa)
         {
             return new EmpresaDataAccess().Buscar(IdEmpresa);
         }

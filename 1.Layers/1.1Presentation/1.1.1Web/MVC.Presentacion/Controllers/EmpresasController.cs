@@ -28,11 +28,11 @@ namespace MVC.Presentacion.Controllers
         {
             //Se obtienen los paises
             _tok = Session["StringToken"].ToString();
-            CatalogoServicio pais = new CatalogoServicio();
-            pais.GetPaises(_tok);                       
+            //CatalogoServicio pais = new CatalogoServicio();
+            //pais.GetPaises(_tok);                       
          
-            //Session["ListaRoles"] = getSelectList<Roles>(ListObject, "Clave", "IdRol");
-            TempData["ListaPaises"] = pais.GetPaises(_tok);
+            ////Session["ListaRoles"] = getSelectList<Roles>(ListObject, "Clave", "IdRol");
+            //TempData["ListaPaises"] = pais.GetPaises(_tok);
 
             EmpresaModel Objemp = new EmpresaModel();
             return View(new EmpresaModel());
@@ -43,8 +43,8 @@ namespace MVC.Presentacion.Controllers
             _tok = Session["StringToken"].ToString();
             if (ModelState.IsValid)
             {
-                CatalogoServicio lst = new CatalogoServicio();
-                lst.create(Objemp, _tok);
+                //CatalogoServicio lst = new CatalogoServicio();
+                //lst.create(Objemp, _tok);
             }
             //return View(Objemp);
             return RedirectToAction("Index");
