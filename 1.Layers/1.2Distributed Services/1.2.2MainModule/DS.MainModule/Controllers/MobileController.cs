@@ -110,5 +110,15 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarTomaDeLectura(lfadto), Request);
         }
+        [Route("iniciar/toma-lectura-camioneta")]
+        public HttpResponseMessage PostIniciarTomaDeLecturaCamioneta(LecturaCamionetaDTO licdto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.IniciarTomaDeLecturaCamioneta(licdto), Request);
+        }
+        [Route("finalizar/toma-lectura-camioneta")]
+        public HttpResponseMessage PostFinalizarTomaDeLecturaCamioneta(LecturaCamionetaDTO lfcdto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.FinalizarTomaDeLecturaCamioneta(lfcdto), Request);
+        }
     }
 }

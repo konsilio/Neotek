@@ -1,9 +1,9 @@
 ﻿/***
- * Clase para la lectura inicial de Estación de carburación 
+ * Clase para la lectura inicial de Estación de carburación,Pipas y tanques 
  * Developer: Jorge Omar Tovar Martínez
  * Commpany: Neoteck
  * Date: 10/09/2018
- * Updated: 10/09/2018
+ * Updated: 11/09/2018
  */
 using System;
 using System.Collections.Generic;

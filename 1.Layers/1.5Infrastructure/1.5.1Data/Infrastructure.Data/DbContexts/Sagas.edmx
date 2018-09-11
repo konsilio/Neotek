@@ -229,7 +229,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto'
           </Key>
           <Property Name="IdCAlmacenGas" Type="smallint" Nullable="false" />
           <Property Name="IdOrden" Type="int" Nullable="false" />
-          <Property Name="IdTipoMedidor" Type="smallint" Nullable="false" />
+          <Property Name="IdTipoMedidor" Type="smallint" />
           <Property Name="IdTipoEvento" Type="tinyint" Nullable="false" />
           <Property Name="P5000" Type="decimal" Precision="18" Scale="4" />
           <Property Name="Porcentaje" Type="decimal" Precision="18" Scale="4" />
@@ -844,14 +844,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdEmpresa" />
           </Key>
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
-          <Property Name="FactorLitrosAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" />
-          <Property Name="FactorGalonALitros" Type="decimal" Precision="8" Scale="5" Nullable="false" />
-          <Property Name="FactorCompraLitroAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" />
-          <Property Name="FactorFleteGas" Type="decimal" Precision="8" Scale="5" Nullable="false" />
-          <Property Name="CierreInventario" Type="smalldatetime" Nullable="false" />
-          <Property Name="InventarioSano" Type="tinyint" Nullable="false" />
-          <Property Name="InventarioCrítico" Type="tinyint" Nullable="false" />
-          <Property Name="MaxRemaGaseraMensual" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="FactorLitrosAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="FactorGalonALitros" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="FactorCompraLitroAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="FactorFleteGas" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CierreInventario" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="InventarioSano" Type="tinyint" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="InventarioCrítico" Type="tinyint" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="MaxRemaGaseraMensual" Type="decimal" Precision="18" Scale="4" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="EmpresaContacto">
           <Key>
@@ -902,11 +902,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdEmpresa" />
           </Key>
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
-          <Property Name="UrlLogotipo180px" Type="varchar" MaxLength="350" />
-          <Property Name="UrlLogotipo500px" Type="varchar" MaxLength="350" />
-          <Property Name="UrlLogotipo1000px" Type="varchar" MaxLength="350" />
-          <Property Name="UrlLogotipoMenu" Type="varchar" MaxLength="350" />
-          <Property Name="UrlLogotipoLogin" Type="varchar" MaxLength="350" />
+          <Property Name="UrlLogotipo180px" Type="varchar" MaxLength="350" StoreGeneratedPattern="Computed" />
+          <Property Name="UrlLogotipo500px" Type="varchar" MaxLength="350" StoreGeneratedPattern="Computed" />
+          <Property Name="UrlLogotipo1000px" Type="varchar" MaxLength="350" StoreGeneratedPattern="Computed" />
+          <Property Name="UrlLogotipoMenu" Type="varchar" MaxLength="350" StoreGeneratedPattern="Computed" />
+          <Property Name="UrlLogotipoLogin" Type="varchar" MaxLength="350" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="ImagenDe">
           <Key>
@@ -1065,86 +1065,86 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="Rol" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="NombreRol" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Activo" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="RolAccion">
           <Key>
             <PropertyRef Name="IdRol" />
           </Key>
           <Property Name="IdRol" Type="smallint" Nullable="false" />
-          <Property Name="RequisicionVerRequisiciones" Type="bit" Nullable="false" />
-          <Property Name="RequisicionGenerarNueva" Type="bit" Nullable="false" />
-          <Property Name="RequisicionRevisarExistencia" Type="bit" Nullable="false" />
-          <Property Name="RequisicionAutorizar" Type="bit" Nullable="false" />
-          <Property Name="CompraVerOCompra" Type="bit" Nullable="false" />
-          <Property Name="CompraGenerarOCompra" Type="bit" Nullable="false" />
-          <Property Name="CompraAutorizarOCompra" Type="bit" Nullable="false" />
-          <Property Name="CompraEntraProductoOCompra" Type="bit" Nullable="false" />
-          <Property Name="CompraAtiendeServicioOCompra" Type="bit" Nullable="false" />
+          <Property Name="RequisicionVerRequisiciones" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="RequisicionGenerarNueva" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="RequisicionRevisarExistencia" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="RequisicionAutorizar" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CompraVerOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CompraGenerarOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CompraAutorizarOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CompraEntraProductoOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CompraAtiendeServicioOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="RolAccionCatalogo">
           <Key>
             <PropertyRef Name="IdRol" />
           </Key>
           <Property Name="IdRol" Type="smallint" Nullable="false" />
-          <Property Name="CatInsertarUsuario" Type="bit" Nullable="false" />
-          <Property Name="CatModificarUsuario" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarUsuario" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarUsuario" Type="bit" Nullable="false" />
-          <Property Name="CatInsertarProveedor" Type="bit" Nullable="false" />
-          <Property Name="CatModificarProveedor" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarProveedor" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarProveedor" Type="bit" Nullable="false" />
-          <Property Name="CatInsertarProducto" Type="bit" Nullable="false" />
-          <Property Name="CatModificarProducto" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarProducto" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarProducto" Type="bit" Nullable="false" />
-          <Property Name="CatInsertarCentroCosto" Type="bit" Nullable="false" />
-          <Property Name="CatModificarCentroCosto" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarCentroCosto" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarCentroCosto" Type="bit" Nullable="false" />
-          <Property Name="CatInsertarCuentaContable" Type="bit" Nullable="false" />
-          <Property Name="CatModificarCuentaContable" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarCuentaContable" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarCuentaContable" Type="bit" Nullable="false" />
-          <Property Name="CatInsertarCliente" Type="bit" Nullable="false" />
-          <Property Name="CatModificarCliente" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarCliente" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarCliente" Type="bit" Nullable="false" />
-          <Property Name="CatAsignarChoferPuntoVenta" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarPuntoVenta" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarPuntoVenta" Type="bit" Nullable="false" />
-          <Property Name="CatAsignarEquipoTransporte" Type="bit" Nullable="false" />
-          <Property Name="CatModificarEquipoTransporte" Type="bit" Nullable="false" />
-          <Property Name="CatEliminarEquipoTransporte" Type="bit" Nullable="false" />
-          <Property Name="CatConsultarEquipoTransporte" Type="bit" Nullable="false" />
+          <Property Name="CatInsertarUsuario" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarUsuario" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarUsuario" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarUsuario" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarProveedor" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarProveedor" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarProveedor" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarProveedor" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarProducto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarProducto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarProducto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarProducto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarCentroCosto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarCentroCosto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarCentroCosto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarCentroCosto" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarCuentaContable" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarCuentaContable" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarCuentaContable" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarCuentaContable" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarCliente" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarCliente" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarCliente" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarCliente" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatAsignarChoferPuntoVenta" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarPuntoVenta" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarPuntoVenta" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatAsignarEquipoTransporte" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarEquipoTransporte" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarEquipoTransporte" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarEquipoTransporte" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="RolAccionMovil">
           <Key>
             <PropertyRef Name="IdRol" />
           </Key>
           <Property Name="IdRol" Type="smallint" Nullable="false" />
-          <Property Name="AppCompraVerOCompra" Type="bit" Nullable="false" />
-          <Property Name="AppCompraEntraGas" Type="bit" Nullable="false" />
-          <Property Name="AppCompraGasIniciarDescarga" Type="bit" Nullable="false" />
-          <Property Name="AppCompraGasFinalizarDescarga" Type="bit" Nullable="false" />
-          <Property Name="AppAutoconsumoInventarioGral" Type="bit" Nullable="false" />
-          <Property Name="AppAutoconsumoEstacionCarb" Type="bit" Nullable="false" />
-          <Property Name="AppAutoconsumoPipa" Type="bit" Nullable="false" />
-          <Property Name="AppCalibracionEstacionCarb" Type="bit" Nullable="false" />
-          <Property Name="AppCalibracionPipa" Type="bit" Nullable="false" />
-          <Property Name="AppCalibracionCamionetaCilindro" Type="bit" Nullable="false" />
-          <Property Name="AppRecargaEstacionCarb" Type="bit" Nullable="false" />
-          <Property Name="AppRecargaPipa" Type="bit" Nullable="false" />
-          <Property Name="AppRecargaCamionetaCilindro" Type="bit" Nullable="false" />
-          <Property Name="AppTomaLecturaAlmacenPral" Type="bit" Nullable="false" />
-          <Property Name="AppTomaLecturaEstacionCarb" Type="bit" Nullable="false" />
-          <Property Name="AppTomaLecturaPipa" Type="bit" Nullable="false" />
-          <Property Name="AppTomaLecturaCamionetaCilindro" Type="bit" Nullable="false" />
-          <Property Name="AppTomaLecturaReporteDelDia" Type="bit" Nullable="false" />
-          <Property Name="AppTraspasoEstacionCarb" Type="bit" Nullable="false" />
-          <Property Name="AppTraspasoPipa" Type="bit" Nullable="false" />
+          <Property Name="AppCompraVerOCompra" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppCompraEntraGas" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppCompraGasIniciarDescarga" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppCompraGasFinalizarDescarga" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppAutoconsumoInventarioGral" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppAutoconsumoEstacionCarb" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppAutoconsumoPipa" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppCalibracionEstacionCarb" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppCalibracionPipa" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppCalibracionCamionetaCilindro" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppRecargaEstacionCarb" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppRecargaPipa" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppRecargaCamionetaCilindro" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppTomaLecturaAlmacenPral" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppTomaLecturaEstacionCarb" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppTomaLecturaPipa" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppTomaLecturaCamionetaCilindro" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppTomaLecturaReporteDelDia" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppTraspasoEstacionCarb" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="AppTraspasoPipa" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -2582,18 +2582,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CPuntoVenta_CAlmacenGas">
-          <End Role="CAlmacenGas" Type="Self.CAlmacenGas" Multiplicity="1" />
-          <End Role="CPuntoVenta" Type="Self.CPuntoVenta" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CAlmacenGas">
-              <PropertyRef Name="IdCAlmacenGas" />
-            </Principal>
-            <Dependent Role="CPuntoVenta">
-              <PropertyRef Name="IdCAlmacenGas" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CPuntoVenta_COperadorChofer">
           <End Role="COperadorChofer" Type="Self.COperadorChofer" Multiplicity="1" />
           <End Role="CPuntoVenta" Type="Self.CPuntoVenta" Multiplicity="*" />
@@ -3738,10 +3726,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_CProveedorFiscal_CProveedor" Association="Self.FK_CProveedorFiscal_CProveedor">
             <End Role="CProveedor" EntitySet="CProveedor" />
             <End Role="CProveedorFiscal" EntitySet="CProveedorFiscal" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CPuntoVenta_CAlmacenGas" Association="Self.FK_CPuntoVenta_CAlmacenGas">
-            <End Role="CAlmacenGas" EntitySet="CAlmacenGas" />
-            <End Role="CPuntoVenta" EntitySet="CPuntoVenta" />
           </AssociationSet>
           <AssociationSet Name="FK_CPuntoVenta_COperadorChofer" Association="Self.FK_CPuntoVenta_COperadorChofer">
             <End Role="COperadorChofer" EntitySet="COperadorChofer" />
@@ -7178,7 +7162,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdCAlmacenGas" Type="Int16" Nullable="false" />
           <Property Name="IdOrden" Type="Int32" Nullable="false" />
-          <Property Name="IdTipoMedidor" Type="Int16" Nullable="false" />
+          <Property Name="IdTipoMedidor" Type="Int16" />
           <Property Name="IdTipoEvento" Type="Byte" Nullable="false" />
           <Property Name="P5000" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="Porcentaje" Type="Decimal" Precision="18" Scale="4" />

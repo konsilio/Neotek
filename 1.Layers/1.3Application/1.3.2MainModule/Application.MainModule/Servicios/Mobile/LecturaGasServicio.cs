@@ -47,5 +47,26 @@ namespace Application.MainModule.Servicios.Mobile
             else
                 return 1;
         }
+
+        internal static RespuestaDto EvaluarClaveOperacion(LecturaCamionetaDTO lcdto)
+        {
+            return GasServicio.EvaluarClaveOperacion(lcdto);
+        }
+
+        public static RespuestaDto Lectura(LecturaCamionetaDTO lcdto,bool finalizar = false)
+        {
+            var adapter = AlmacenLecturaAdapter.FromDTO(lcdto);
+            var al = AlmacenGasServicio.ObtenerLecturas(lcdto.IdCAlmacenGas);
+
+            adapter.IdOrden = Orden(al);
+            adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final : TipoEventoEnum.Inicial;
+            
+            adapter.Cilindros = AlmacenLecturaAdapter.FromDTO(lcdto.CilindroCantidad,lcdto.IdCilindro, adapter.IdCAlmacenGas, adapter.IdOrden);
+
+            adapter.DatosProcesados = false;
+            adapter.FechaRegistro = DateTime.Now;
+
+            return AlmacenGasServicio.InsertarLectura(adapter);
+        }
     }
 }

@@ -79,5 +79,21 @@ namespace Application.MainModule.Flujos
 
             return LecturaGasServicio.Lectura(lfadto, true);
         }
+
+        public RespuestaDto IniciarTomaDeLecturaCamioneta(LecturaCamionetaDTO lcdto)
+        {
+            var resp = LecturaGasServicio.EvaluarClaveOperacion(lcdto);
+            if (resp.Exito) return resp;
+
+            return LecturaGasServicio.Lectura(lcdto);
+        }
+
+        public RespuestaDto FinalizarTomaDeLecturaCamioneta(LecturaCamionetaDTO lcdto)
+        {
+            var resp = LecturaGasServicio.EvaluarClaveOperacion(lcdto);
+            if (resp.Exito) return resp;
+
+            return LecturaGasServicio.Lectura(lcdto,true);
+        }
     }
 }

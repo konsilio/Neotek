@@ -38,5 +38,11 @@ namespace Application.MainModule.Servicios.Mobile
                 Mensaje = entidad != null ? Exito.OK : string.Format(Error.M0002, "la clave de operación"),
             };
         }
+
+        public static RespuestaDto EvaluarClaveOperacion(LecturaCamionetaDTO lcdto)
+        {
+            var alm = AlmacenGasServicio.ObtenerLecturaEstacionPorClaveOperacion(lcdto.ClaveProceso);
+            return EvaluarClaveOperacion(alm);
+        }
     }
 }
