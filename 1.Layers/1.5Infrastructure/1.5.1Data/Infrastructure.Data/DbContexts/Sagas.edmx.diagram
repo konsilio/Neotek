@@ -210,6 +210,38 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasCalibracionFoto_AlmacenGasCalibracion" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CCliente" Width="1.5" PointX="5.25" PointY="49.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CClienteCondicion" Width="1.5" PointX="7.5" PointY="59.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CClienteContacto" Width="1.5" PointX="7.5" PointY="54.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CClienteCredencial" Width="1.5" PointX="7.5" PointY="46.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CClienteFiscal" Width="1.5" PointX="7.5" PointY="52.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CClienteLegal" Width="1.5" PointX="7.5" PointY="49" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CClienteLocacion" Width="1.5" PointX="7.5" PointY="42" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CClienteLocacionGoogle" Width="1.5" PointX="9.75" PointY="42.625" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CCliente_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CClienteContacto_CCliente" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CClienteCredencial_CCliente" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CClienteFiscal_CCliente" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CClienteLegal_CCliente" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CClienteLocacionGoogle_CClienteLocacion" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CEquipoTransporte" Width="1.5" PointX="5.25" PointY="39.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.COperadorChofer" Width="1.5" PointX="10.5" PointY="34.875" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CPuntoVenta" Width="1.5" PointX="12.75" PointY="41.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CTipoEvento" Width="1.5" PointX="1.125" PointY="6.25" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CTipoOperadorChofer" Width="1.5" PointX="8.25" PointY="42.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.RolAccionMovil" Width="1.5" PointX="6" PointY="21.875" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumo_CTipoEvento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasCalibracion_CTipoEvento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CTipoEvento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CTipoEvento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CEquipoTransporte_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_COperadorChofer_CTipoOperadorChofer" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_COperadorChofer_Usuario" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CPuntoVenta_COperadorChofer" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CPuntoVenta_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
