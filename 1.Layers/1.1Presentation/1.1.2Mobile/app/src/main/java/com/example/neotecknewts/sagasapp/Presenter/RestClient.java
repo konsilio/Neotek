@@ -172,13 +172,13 @@ public interface RestClient {
                                                                  @Header("Content-Type") String contentType
     );
 
-    @POST(Constantes.POST_LECTURA_INICIAL)
+    @POST(Constantes.POST_LECTURA_INICIAL_CAMIONETA)
     Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialCamioneta(LecturaCamionetaDTO lecturaAlmacenDTO,
                                                                    @Header("Authorization")String token,
                                                                    @Header("Content-Type") String contentType
     );
 
-    @POST(Constantes.POST_LECTURA_FINAL)
+    @POST(Constantes.POST_LECTURA_FINAL_CAMIONETA)
     Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalCamioneta(LecturaCamionetaDTO  lecturaAlmacenDTO,
                                                                  @Header("Authorization")String token,
                                                                  @Header("Content-Type") String contentType

@@ -12,7 +12,7 @@ import java.util.List;
  * @author Jorge Omar Tovar Martínez
  */
 public class LecturaCamionetaDTO implements Serializable {
-    @SerializedName("IdCamioneta")
+    @SerializedName("IdCAlmacenGas")
     private int IdCamioneta;
 
     @SerializedName("NombreCamioneta")

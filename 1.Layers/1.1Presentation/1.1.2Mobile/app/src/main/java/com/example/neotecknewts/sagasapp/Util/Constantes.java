@@ -21,4 +21,6 @@ public class Constantes {
     public static final String POST_FINALIZAR_DESCARGA = "mobile/finalizar/descarga";
     public static final String POST_LECTURA_INICIAL = "mobile/iniciar/toma-de-lectura";
     public static final String POST_LECTURA_FINAL = "mobile/final/toma-de-lectura";
+    public static final String POST_LECTURA_INICIAL_CAMIONETA = "mobile/iniciar/toma-lectura-camioneta";
+    public static final String POST_LECTURA_FINAL_CAMIONETA = "mobile/final/toma-lectura-camioneta";
 }
