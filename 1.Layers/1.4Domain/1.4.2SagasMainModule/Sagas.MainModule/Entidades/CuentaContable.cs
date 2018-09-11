@@ -19,6 +19,7 @@ namespace Sagas.MainModule.Entidades
         {
             this.CProveedor = new HashSet<Proveedor>();
             this.Productos = new HashSet<Producto>();
+            this.Clientes = new HashSet<Cliente>();
         }
     
         public int IdCuentaContable { get; set; }
@@ -33,5 +34,7 @@ namespace Sagas.MainModule.Entidades
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Producto> Productos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cliente> Clientes { get; set; }
     }
 }

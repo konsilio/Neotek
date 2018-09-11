@@ -17,7 +17,9 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TipoPersona()
         {
-            this.CProveedor = new HashSet<Proveedor>();
+            this.Proveedores = new HashSet<Proveedor>();
+            this.Clientes = new HashSet<Cliente>();
+            this.RegimenesFiscales = new HashSet<RegimenFiscal>();
         }
     
         public byte IdTipoPersona { get; set; }
@@ -25,6 +27,10 @@ namespace Sagas.MainModule.Entidades
         public System.DateTime FechaRegistro { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Proveedor> CProveedor { get; set; }
+        public virtual ICollection<Proveedor> Proveedores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cliente> Clientes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RegimenFiscal> RegimenesFiscales { get; set; }
     }
 }

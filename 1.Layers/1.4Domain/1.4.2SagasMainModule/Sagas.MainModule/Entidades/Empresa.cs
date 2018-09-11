@@ -36,6 +36,9 @@ namespace Sagas.MainModule.Entidades
             this.Roles = new HashSet<Rol>();
             this.CentrosCosto = new HashSet<CentroCosto>();
             this.CuentasContables = new HashSet<CuentaContable>();
+            this.Clientes = new HashSet<Cliente>();
+            this.EquiposTransporte = new HashSet<EquipoTransporte>();
+            this.PuntosVenta = new HashSet<PuntoVenta>();
         }
     
         public short IdEmpresa { get; set; }
@@ -123,5 +126,11 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<CentroCosto> CentrosCosto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CuentaContable> CuentasContables { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cliente> Clientes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EquipoTransporte> EquiposTransporte { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PuntoVenta> PuntosVenta { get; set; }
     }
 }
