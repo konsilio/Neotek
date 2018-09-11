@@ -46,7 +46,7 @@ namespace MVC.Presentacion.Controllers
                 {
                     ViewBag.reqOpinion = model.RequisicionRevision.OpinionAlmacen;
                     ViewBag.btnCrear = "Finalizar";
-                    ViewBag.formactionBtnCrear("Revicion");
+                    ViewBag.formactionBtnCrear = "Revicion";
                 }
                 else
                 {
