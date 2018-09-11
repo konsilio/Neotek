@@ -28,5 +28,6 @@ namespace Sagas.MainModule.Entidades
         public virtual UnidadAlmacenGas UnidadSalida { get; set; }
         public virtual UnidadAlmacenGas UnidadEntrada { get; set; }
         public virtual AlmacenGasTraspasoFoto Fotografias { get; set; }
+        public virtual TipoEvento TipoEvento { get; set; }
     }
 }

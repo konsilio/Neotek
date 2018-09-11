@@ -20,6 +20,7 @@ namespace Sagas.MainModule.Entidades
             this.UnidadAlmacenGas = new HashSet<UnidadAlmacenGas>();
             this.CamionetaCilindro = new HashSet<CamionetaCilindro>();
             this.CCentroCosto = new HashSet<CentroCosto>();
+            this.EquipoTransporte = new HashSet<EquipoTransporte>();
         }
     
         public int IdCamioneta { get; set; }
@@ -36,5 +37,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<CamionetaCilindro> CamionetaCilindro { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CentroCosto> CCentroCosto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EquipoTransporte> EquipoTransporte { get; set; }
     }
 }

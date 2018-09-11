@@ -29,6 +29,7 @@ namespace Sagas.MainModule.Entidades
         public string location_lat { get; set; }
         public string location_lng { get; set; }
         public string place_id { get; set; }
+        public string TipoLocacion { get; set; }
     
         public virtual Cliente Cliente { get; set; }
     }
