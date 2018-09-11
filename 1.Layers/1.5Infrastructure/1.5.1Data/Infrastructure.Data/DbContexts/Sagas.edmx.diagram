@@ -226,6 +226,22 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CClienteLegal_CCliente" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CClienteLocacionGoogle_CClienteLocacion" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CEquipoTransporte" Width="1.5" PointX="5.25" PointY="39.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.COperadorChofer" Width="1.5" PointX="10.5" PointY="34.875" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CPuntoVenta" Width="1.5" PointX="12.75" PointY="41.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CTipoEvento" Width="1.5" PointX="1.125" PointY="6.25" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CTipoOperadorChofer" Width="1.5" PointX="8.25" PointY="42.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.RolAccionMovil" Width="1.5" PointX="6" PointY="21.875" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumo_CTipoEvento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasCalibracion_CTipoEvento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CTipoEvento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CTipoEvento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CEquipoTransporte_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_COperadorChofer_CTipoOperadorChofer" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_COperadorChofer_Usuario" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CPuntoVenta_COperadorChofer" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CPuntoVenta_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
