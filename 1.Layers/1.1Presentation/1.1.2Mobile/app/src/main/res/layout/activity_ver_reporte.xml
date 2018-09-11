@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".Activity.VerReporteActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="ScrollViewSize,WebViewLayout">
+
+            <WebView
+                android:id="@+id/WVVerReporteActivityReporte"
+                android:layout_width="match_parent"
+                android:layout_height="750sp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
+            </WebView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/BtnVerReporteActivityTerminar"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:backgroundTint="@color/colorButtonLogin"
+                    android:drawableStart="@drawable/ic_go_back_dark"
+                    android:text="@string/terminar"
+                    android:textColor="@color/colorTextButtonLogin"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/BtnReporteActivityImprimir"
+                    android:layout_width="0sp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:backgroundTint="@color/colorButtonLogin"
+                    android:textColor="@color/colorTextButtonLogin"
+                    android:text="@string/imprimir_reporte"
+                    tools:ignore="UnusedAttribute" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

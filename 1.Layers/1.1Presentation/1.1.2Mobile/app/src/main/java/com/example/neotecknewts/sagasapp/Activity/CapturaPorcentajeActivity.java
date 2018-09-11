@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
+import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
@@ -38,6 +42,9 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     PrecargaPapeletaDTO papeletaDTO;
     IniciarDescargaDTO iniciarDescargaDTO;
     FinalizarDescargaDTO finalizarDescargaDTO;
+    LecturaDTO lecturaDTO;
+    LecturaPipaDTO lecturaPipaDTO;
+    LecturaAlmacenDTO lecturaAlmacenDTO;
 
     //banderas para saber que objeto utilizar
     public boolean papeleta;
@@ -45,8 +52,13 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean finalizar;
     public boolean almacen;
     public boolean es_tanque_prestado;
+    public boolean EsLecturaInicial;
+    public boolean EsLecturaFinal;
+    public boolean EsLecturaInicialPipa,EsLecturaFinalPipa;
+    public boolean EsLecturaInicialAlmacen,EsLecturaFinalAlmacen;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +83,10 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 iniciar=false;
                 finalizar=false;
                 almacen=false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
                 textViewTitulo.setText(papeletaDTO.getNombreTipoMedidorTractor()+" - Tractor");
                 textView.setText(R.string.porcentaje_medidor_tractor_message);
                 //si es Iniciar descarga se cambian los textos y se obtiene el objeto del activity anterior
@@ -81,6 +97,10 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                     finalizar = false;
                     almacen = extras.getBoolean("Almacen");
                     es_tanque_prestado = extras.getBoolean("TanquePrestado");
+                    EsLecturaInicial = false;
+                    EsLecturaFinal = false;
+                    EsLecturaInicialPipa = false;
+                    EsLecturaFinalPipa = false;
                 if (almacen) {
                     textViewTitulo.setText(iniciarDescargaDTO.getNombreTipoMedidorTractor()+" - Almacen");
                     textView.setText(R.string.porcentaje_medidor_almacen_message);
@@ -96,6 +116,10 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 iniciar=false;
                 finalizar=true;
                 almacen = extras.getBoolean("Almacen");
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
                 if (almacen) {
                     textViewTitulo.setText(finalizarDescargaDTO.getNombreTipoMedidorTractor()+" - Almacen");
                     textView.setText(R.string.porcentaje_medidor_almacen_message);
@@ -103,6 +127,52 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                     textViewTitulo.setText(finalizarDescargaDTO.getNombreTipoMedidorTractor()+" - Tractor");
                     textView.setText(R.string.porcentaje_medidor_tractor_message);
                 }
+            }else if(extras.getBoolean("EsLecturaInicial") || extras.getBoolean("EsLecturaFinal")){
+                lecturaDTO = (LecturaDTO) extras.getSerializable("lecturaDTO");
+                textViewTitulo.setText(lecturaDTO.getNombreTipoMedidor()+
+                        " - Estación ");
+                textView.setText(getString(R.string.registra_porcentaje_estacion)+" "+
+                        lecturaDTO.getNombreTipoMedidor()+" de la estación");
+                EsLecturaInicial = (boolean) extras.get("EsLecturaInicial");
+                EsLecturaFinal = (boolean) extras.get("EsLecturaFinal");
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                almacen=false;
+
+            }else if (extras.getBoolean("EsLecturaInicialPipa") ||
+                    extras.getBoolean("EsLecturaFinalPipa")){
+                lecturaPipaDTO = (LecturaPipaDTO) extras.getSerializable("lecturaPipaDTO");
+                textViewTitulo.setText(lecturaPipaDTO.getTipoMedidor()+
+                        " - "+getString(R.string.Pipa));
+                textView.setText(getString(R.string.registra_porcentaje_estacion)+" "+
+                        lecturaPipaDTO.getTipoMedidor()+" de la "+getString(R.string.Pipa));
+                EsLecturaInicial = (boolean) extras.get("EsLecturaInicial");
+                EsLecturaFinal = (boolean) extras.get("EsLecturaFinal");
+                EsLecturaInicialPipa = (boolean) extras.get("EsLecturaInicialPipa");
+                EsLecturaFinalPipa = (boolean) extras.get("EsLecturaFinalPipa");
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                almacen=false;
+            }else if(extras.getBoolean("EsLecturaInicialAlmacen")||
+                    extras.getBoolean("EsLecturaFinalAlmacen")){
+                lecturaAlmacenDTO = (LecturaAlmacenDTO) extras
+                        .getSerializable("lecturaAlmacenDTO");
+                EsLecturaInicialAlmacen = extras.getBoolean("EsLecturaInicialAlmacen");
+                EsLecturaFinalAlmacen = extras.getBoolean("EsLecturaFinalAlmacen");
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                almacen=false;
+                textViewTitulo.setText(EsLecturaInicial? "Toma de lectura inicial":
+                        "Toma de lectura final");
+                textView.setText("Registra el porcentaje del "+
+                        lecturaAlmacenDTO.getNombreTipoMedidor()+"del almacén pral.");
             }
         }
 
@@ -153,6 +223,12 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             iniciarDescargaDTO.setPorcentajeMedidorTractor(porcentaje);
         }else if(finalizar&&!almacen){
             finalizarDescargaDTO.setPorcentajeMedidorTractor(porcentaje);
+        }else if(EsLecturaInicial || EsLecturaFinal){
+            lecturaDTO.setPorcentajeMedidor(porcentaje);
+        }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+            lecturaPipaDTO.setPorcentajeMedidor(porcentaje);
+        }else if (EsLecturaInicialAlmacen ||EsLecturaFinalAlmacen){
+            lecturaAlmacenDTO.setPorcentajeMedidor(porcentaje);
         }
         startActivity();
     }
@@ -166,13 +242,50 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         }else if(iniciar) {
             intent.putExtra("IniciarDescarga",iniciarDescargaDTO);
             intent.putExtra("TanquePrestado",es_tanque_prestado);
+            intent.putExtra("EsLecturaInicial",false);
+            intent.putExtra("EsLecturaFinal",false);
+            intent.putExtra("EsLecturaInicialPipa",false);
+            intent.putExtra("EsLecturaFinalPipa",false);
+            intent.putExtra("EsLecturaInicialAlmacen",false);
+            intent.putExtra("EsLecturaFinalAlmacen",false);
         }else if(finalizar){
             intent.putExtra("FinalizarDescarga",finalizarDescargaDTO);
+            intent.putExtra("EsLecturaInicial",false);
+            intent.putExtra("EsLecturaFinal",false);
+            intent.putExtra("EsLecturaInicialPipa",false);
+            intent.putExtra("EsLecturaFinalPipa",false);
+            intent.putExtra("EsLecturaInicialAlmacen",false);
+            intent.putExtra("EsLecturaFinalAlmacen",false);
+        }else if(EsLecturaInicial || EsLecturaFinal){
+            intent.putExtra("lecturaDTO",lecturaDTO);
+            intent.putExtra("EsLecturaInicial",EsLecturaInicial);
+            intent.putExtra("EsLecturaFinal",EsLecturaFinal);
+            intent.putExtra("EsLecturaInicialPipa",false);
+            intent.putExtra("EsLecturaFinalPipa",false);
+            intent.putExtra("EsLecturaInicialAlmacen",false);
+            intent.putExtra("EsLecturaFinalAlmacen",false);
+        }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
+            intent.putExtra("lecturaPipaDTO",lecturaPipaDTO);
+            intent.putExtra("EsLecturaInicial",EsLecturaInicial);
+            intent.putExtra("EsLecturaFinal",EsLecturaFinal);
+            intent.putExtra("EsLecturaInicialPipa",EsLecturaInicialPipa);
+            intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
+            intent.putExtra("EsLecturaInicialAlmacen",false);
+            intent.putExtra("EsLecturaFinalAlmacen",false);
+        }else if (EsLecturaInicialAlmacen ||EsLecturaFinalAlmacen){
+            intent.putExtra("lecturaAlmacenDTO",lecturaAlmacenDTO);
+            intent.putExtra("EsLecturaInicial",EsLecturaInicial);
+            intent.putExtra("EsLecturaFinal",EsLecturaFinal);
+            intent.putExtra("EsLecturaInicialPipa",false);
+            intent.putExtra("EsLecturaFinalPipa",false);
+            intent.putExtra("EsLecturaInicialAlmacen",EsLecturaInicialAlmacen);
+            intent.putExtra("EsLecturaFinalAlmacen",EsLecturaFinalAlmacen);
         }
         intent.putExtra("EsPapeleta",papeleta);
         intent.putExtra("EsDescargaIniciar",iniciar);
         intent.putExtra("EsDescargaFinalizar",finalizar);
         intent.putExtra("Almacen",almacen);
+
         startActivity(intent);
     }
 

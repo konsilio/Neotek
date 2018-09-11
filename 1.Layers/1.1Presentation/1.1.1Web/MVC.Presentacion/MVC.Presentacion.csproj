@@ -218,6 +218,7 @@
     <Compile Include="Agente\AgenteServicio.cs" />
     <Compile Include="App_Code\AutenticacionServicio.cs" />
     <Compile Include="App_Code\OrdenCompraServicio.cs" />
+    <Content Include="App_Code\OrdenesComprasModel.cs" />
     <Compile Include="App_Code\RequisicionServicio.cs" />
     <Compile Include="App_Code\CatalogoServicio.cs" />
     <Compile Include="App_Code\TokenServicio.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrdenCompraController.cs" />
     <Compile Include="Controllers\RequisicionController.cs" />
     <Compile Include="Controllers\Shared\MainController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
@@ -253,7 +255,12 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraDTO.cs" />
-    <Compile Include="Models\Requisicion\RequisicionAutorizacion.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraEstatusDTO.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraEstatusEnum.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraModel.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraPorductoDTO.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenesCompraModel.cs" />
+    <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutPutDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionCancelaDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionDTO.cs" />
@@ -4046,6 +4053,10 @@
     <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.5Security\Security.MainModule\Security.MainModule.csproj">
       <Project>{F3BA487D-6FF4-4793-8BBA-79DA05447EC2}</Project>
       <Name>Security.MainModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\Utilities.MainModule.csproj">
+      <Project>{80053147-4263-454b-ba2d-c7ef6a507c0b}</Project>
+      <Name>Utilities.MainModule</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

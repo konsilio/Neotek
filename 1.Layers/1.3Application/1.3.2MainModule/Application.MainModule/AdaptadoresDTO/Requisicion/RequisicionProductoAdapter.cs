@@ -76,7 +76,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 IdCentroCosto = _reqProducto.IdCentroCosto,
                 Cantidad = _reqProducto.Cantidad,
                 Aplicacion = _reqProducto.Aplicacion,
-                RevisionFisica = _reqProducto.RevisionFisica.Value,
+                RevisionFisica = _reqProducto.RevisionFisica.HasValue ? _reqProducto.RevisionFisica.Value : false,
                 CantidadAlmacenActual = _reqProducto.CantidadAlmacenActual.Value,
                 CantidadAComprar = _reqProducto.Cantidad - _reqProducto.CantidadAlmacenActual.Value
             };

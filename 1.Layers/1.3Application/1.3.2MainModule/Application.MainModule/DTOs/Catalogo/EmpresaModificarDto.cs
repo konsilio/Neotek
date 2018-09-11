@@ -14,6 +14,6 @@ namespace Application.MainModule.DTOs.Catalogo
         [Required(ErrorMessage = Error.R0002)]
         [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = Error.R0002)]
         [Display(Name = "Empresa")]
-        public int IdEmpresa { get; set; }
+        public short IdEmpresa { get; set; }
     }
 }

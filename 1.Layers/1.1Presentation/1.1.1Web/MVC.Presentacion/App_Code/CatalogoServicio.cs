@@ -159,10 +159,10 @@ namespace MVC.Presentacion.App_Code
         //}
         #endregion
         #region Porductos
-        public static List<ProductoDTO> ListaProductos(short idEmpresa, string Token)
+        public static List<ProductoDTO> ListaProductos(string Token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarProductos(idEmpresa, Token);
+            agente.BuscarProductos(Token);
             return agente._listProductos;
         }
         #endregion

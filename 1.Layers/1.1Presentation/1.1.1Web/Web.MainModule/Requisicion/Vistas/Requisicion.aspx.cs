@@ -310,8 +310,8 @@ namespace Web.MainModule.Requisicion.Vista
         }
         private void ActivarRevisarExistencias()
         {
-            Model.RequisicionRevisionDTO _reqEDTO = new Model.RequisicionRevisionDTO();
-            _reqEDTO = new Servicio.RequisicionServicio().BuscarRequisicionByNumRequiRevi(int.Parse(Request.QueryString["nr"].ToString()), _tok);
+            RequisicionRevisionDTO _reqEDTO = new RequisicionRevisionDTO();
+            _reqEDTO = new RequisicionServicio().BuscarRequisicionByNumRequiRevi(int.Parse(Request.QueryString["nr"].ToString()), _tok);
             ViewState["idRequisicion"] = _reqEDTO.IdRequisicion;
             CargarUsuariosSolicitante(_reqEDTO.IdEmpresa);
             divDatos1.Visible = false;
@@ -345,8 +345,7 @@ namespace Web.MainModule.Requisicion.Vista
             if (!prod.Count.Equals(0))            
                 EsGas = true;            
             return EsGas;
-        }
-        
+        }        
         private void ActivarRevisarAutorizacion()
         {
             Model.RequisicionAutorizacion _reqEDTO = new Model.RequisicionAutorizacion();

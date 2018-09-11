@@ -16,6 +16,7 @@ namespace MVC.Presentacion.Controllers
     {
         public ActionResult Index(LoginModel model = null)
         {
+            Session["StringToken"] = null;
             return View(AutenticacionServicio.InitIndex(model));
         }
         public ActionResult IndexError(LoginModel model)
