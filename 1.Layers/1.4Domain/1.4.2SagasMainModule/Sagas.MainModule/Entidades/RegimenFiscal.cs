@@ -18,9 +18,11 @@ namespace Sagas.MainModule.Entidades
         public RegimenFiscal()
         {
             this.CProveedor = new HashSet<Proveedor>();
+            this.Clientes = new HashSet<Cliente>();
         }
     
         public short IdRegimenFiscal { get; set; }
+        public byte IdTipoPersona { get; set; }
         public string c_RegimenFiscal { get; set; }
         public string Descripcion { get; set; }
         public bool AplicaPersonaFisica { get; set; }
@@ -31,5 +33,8 @@ namespace Sagas.MainModule.Entidades
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Proveedor> CProveedor { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cliente> Clientes { get; set; }
+        public virtual TipoPersona TipoPersona { get; set; }
     }
 }

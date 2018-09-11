@@ -35,5 +35,6 @@ namespace Sagas.MainModule.Entidades
         public virtual UnidadAlmacenGas UnidadAlmacenGas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasCalibracionFoto> Fotografias { get; set; }
+        public virtual TipoEvento TipoEvento { get; set; }
     }
 }

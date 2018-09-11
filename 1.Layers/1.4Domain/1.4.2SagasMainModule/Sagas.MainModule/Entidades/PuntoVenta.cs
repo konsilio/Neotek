@@ -12,19 +12,18 @@ namespace Sagas.MainModule.Entidades
     using System;
     using System.Collections.Generic;
     
-    public partial class AlmacenGasAutoConsumo
+    public partial class PuntoVenta
     {
-        public short IdCAlmacenGasSalida { get; set; }
-        public short IdCAlmacenGasEntrada { get; set; }
-        public byte IdTipoEvento { get; set; }
-        public decimal P5000Salida { get; set; }
-        public string ClaveOperacion { get; set; }
-        public bool DatosProcesados { get; set; }
+        public int IdPuntoVenta { get; set; }
+        public short IdEmpresa { get; set; }
+        public short IdCAlmacenGas { get; set; }
+        public int IdOperadorChofer { get; set; }
+        public System.DateTime FechaModificacion { get; set; }
+        public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
     
-        public virtual UnidadAlmacenGas UnidadSalida { get; set; }
-        public virtual UnidadAlmacenGas UnidadEntrada { get; set; }
-        public virtual AlmacenGasAutoConsumoFoto Fotografias { get; set; }
-        public virtual TipoEvento TipoEvento { get; set; }
+        public virtual UnidadAlmacenGas UnidadesAlmacen { get; set; }
+        public virtual OperadorChofer OperadorChofer { get; set; }
+        public virtual Empresa Empresa { get; set; }
     }
 }

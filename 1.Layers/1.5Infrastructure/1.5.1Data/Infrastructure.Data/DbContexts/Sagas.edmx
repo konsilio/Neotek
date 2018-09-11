@@ -425,6 +425,106 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="CCliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="IdTipoPersona" Type="tinyint" />
+          <Property Name="IdRegimenFiscal" Type="smallint" />
+          <Property Name="IdCuentaContable" Type="int" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Apellido1" Type="varchar" MaxLength="80" />
+          <Property Name="Apellido2" Type="varchar" MaxLength="80" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CClienteCondicion">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="PorcentDescuento" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="limiteCreditoMonto" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="limiteCreditoDias" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CClienteContacto">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Telefono1" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono2" Type="varchar" MaxLength="50" />
+          <Property Name="Telefono3" Type="varchar" MaxLength="50" />
+          <Property Name="Celular1" Type="varchar" MaxLength="50" />
+          <Property Name="Celular2" Type="varchar" MaxLength="50" />
+          <Property Name="Celular3" Type="varchar" MaxLength="50" />
+          <Property Name="Email1" Type="varchar" MaxLength="200" />
+          <Property Name="Email2" Type="varchar" MaxLength="200" />
+          <Property Name="Email3" Type="varchar" MaxLength="200" />
+          <Property Name="SitioWeb1" Type="varchar" MaxLength="150" />
+          <Property Name="SitioWeb2" Type="varchar" MaxLength="150" />
+          <Property Name="SitioWeb3" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="CClienteCredencial">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="350" />
+          <Property Name="Password" Type="varchar" MaxLength="250" />
+          <Property Name="AccesoPortal" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CClienteFiscal">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Rfc" Type="varchar" MaxLength="13" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="350" />
+        </EntityType>
+        <EntityType Name="CClienteLegal">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="RepresentanteLegal" Type="varchar" MaxLength="300" />
+          <Property Name="Telefono" Type="varchar" MaxLength="50" />
+          <Property Name="Celular" Type="varchar" MaxLength="50" />
+          <Property Name="CorreoElectronico" Type="varchar" MaxLength="350" />
+          <Property Name="Domicilio" Type="varchar" MaxLength="350" />
+        </EntityType>
+        <EntityType Name="CClienteLocacion">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="IdPais" Type="tinyint" Nullable="false" />
+          <Property Name="IdEstadoRep" Type="tinyint" />
+          <Property Name="EstadoProvincia" Type="varchar" MaxLength="150" />
+          <Property Name="TipoLocacion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CodigoPostal" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Colonia" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Calle" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="NumExt" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NumInt" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="CClienteLocacionGoogle">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="formatted_address" Type="varchar" MaxLength="350" Nullable="false" />
+          <Property Name="location_lat" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="location_lng" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="place_id" Type="varchar" MaxLength="350" Nullable="false" />
+        </EntityType>
         <EntityType Name="CCuentaContable">
           <Key>
             <PropertyRef Name="IdCuentaContable" />
@@ -433,6 +533,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
           <Property Name="Numero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CEquipoTransporte">
+          <Key>
+            <PropertyRef Name="IdEquipoTransporte" />
+          </Key>
+          <Property Name="IdEquipoTransporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="IdVehiculoUtilitario" Type="int" />
+          <Property Name="IdCamioneta" Type="int" />
+          <Property Name="IdPipa" Type="int" />
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
@@ -464,6 +576,16 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="FormaPago" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="COperadorChofer">
+          <Key>
+            <PropertyRef Name="IdOperadorChofer" />
+          </Key>
+          <Property Name="IdOperadorChofer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTipoOperadorChofer" Type="tinyint" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="CPais">
           <Key>
@@ -646,11 +768,24 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="CPuntoVenta">
+          <Key>
+            <PropertyRef Name="IdPuntoVenta" />
+          </Key>
+          <Property Name="IdPuntoVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="IdCAlmacenGas" Type="smallint" Nullable="false" />
+          <Property Name="IdOperadorChofer" Type="int" Nullable="false" />
+          <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CRegimenFiscal">
           <Key>
             <PropertyRef Name="IdRegimenFiscal" />
           </Key>
           <Property Name="IdRegimenFiscal" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTipoPersona" Type="tinyint" Nullable="false" />
           <Property Name="c_RegimenFiscal" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="AplicaPersonaFisica" Type="bit" Nullable="false" />
@@ -665,6 +800,26 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdTipoCentroCosto" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CTipoEvento">
+          <Key>
+            <PropertyRef Name="IdTipoEvento" />
+          </Key>
+          <Property Name="IdTipoEvento" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Evento" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CTipoOperadorChofer">
+          <Key>
+            <PropertyRef Name="IdTipoOperadorChofer" />
+          </Key>
+          <Property Name="IdTipoOperadorChofer" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EsOperador" Type="bit" Nullable="false" />
+          <Property Name="EsChofer" Type="bit" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="CTipoPersona">
           <Key>
@@ -925,12 +1080,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CompraVerOCompra" Type="bit" Nullable="false" />
           <Property Name="CompraGenerarOCompra" Type="bit" Nullable="false" />
           <Property Name="CompraAutorizarOCompra" Type="bit" Nullable="false" />
-          <Property Name="AppCompraVerOCompra" Type="bit" Nullable="false" />
           <Property Name="CompraEntraProductoOCompra" Type="bit" Nullable="false" />
           <Property Name="CompraAtiendeServicioOCompra" Type="bit" Nullable="false" />
-          <Property Name="AppCompraEntraGas" Type="bit" Nullable="false" />
-          <Property Name="AppCompraGasIniciarDescarga" Type="bit" Nullable="false" />
-          <Property Name="AppCompraGasFinalizarDescarga" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="RolAccionCatalogo">
           <Key>
@@ -957,6 +1108,43 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CatModificarCuentaContable" Type="bit" Nullable="false" />
           <Property Name="CatEliminarCuentaContable" Type="bit" Nullable="false" />
           <Property Name="CatConsultarCuentaContable" Type="bit" Nullable="false" />
+          <Property Name="CatInsertarCliente" Type="bit" Nullable="false" />
+          <Property Name="CatModificarCliente" Type="bit" Nullable="false" />
+          <Property Name="CatEliminarCliente" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarCliente" Type="bit" Nullable="false" />
+          <Property Name="CatAsignarChoferPuntoVenta" Type="bit" Nullable="false" />
+          <Property Name="CatEliminarPuntoVenta" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarPuntoVenta" Type="bit" Nullable="false" />
+          <Property Name="CatAsignarEquipoTransporte" Type="bit" Nullable="false" />
+          <Property Name="CatModificarEquipoTransporte" Type="bit" Nullable="false" />
+          <Property Name="CatEliminarEquipoTransporte" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarEquipoTransporte" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RolAccionMovil">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="smallint" Nullable="false" />
+          <Property Name="AppCompraVerOCompra" Type="bit" Nullable="false" />
+          <Property Name="AppCompraEntraGas" Type="bit" Nullable="false" />
+          <Property Name="AppCompraGasIniciarDescarga" Type="bit" Nullable="false" />
+          <Property Name="AppCompraGasFinalizarDescarga" Type="bit" Nullable="false" />
+          <Property Name="AppAutoconsumoInventarioGral" Type="bit" Nullable="false" />
+          <Property Name="AppAutoconsumoEstacionCarb" Type="bit" Nullable="false" />
+          <Property Name="AppAutoconsumoPipa" Type="bit" Nullable="false" />
+          <Property Name="AppCalibracionEstacionCarb" Type="bit" Nullable="false" />
+          <Property Name="AppCalibracionPipa" Type="bit" Nullable="false" />
+          <Property Name="AppCalibracionCamionetaCilindro" Type="bit" Nullable="false" />
+          <Property Name="AppRecargaEstacionCarb" Type="bit" Nullable="false" />
+          <Property Name="AppRecargaPipa" Type="bit" Nullable="false" />
+          <Property Name="AppRecargaCamionetaCilindro" Type="bit" Nullable="false" />
+          <Property Name="AppTomaLecturaAlmacenPral" Type="bit" Nullable="false" />
+          <Property Name="AppTomaLecturaEstacionCarb" Type="bit" Nullable="false" />
+          <Property Name="AppTomaLecturaPipa" Type="bit" Nullable="false" />
+          <Property Name="AppTomaLecturaCamionetaCilindro" Type="bit" Nullable="false" />
+          <Property Name="AppTomaLecturaReporteDelDia" Type="bit" Nullable="false" />
+          <Property Name="AppTraspasoEstacionCarb" Type="bit" Nullable="false" />
+          <Property Name="AppTraspasoPipa" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -1330,6 +1518,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AlmacenGasAutoConsumo_CTipoEvento">
+          <End Role="CTipoEvento" Type="Self.CTipoEvento" Multiplicity="1" />
+          <End Role="AlmacenGasAutoConsumo" Type="Self.AlmacenGasAutoConsumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoEvento">
+              <PropertyRef Name="IdTipoEvento" />
+            </Principal>
+            <Dependent Role="AlmacenGasAutoConsumo">
+              <PropertyRef Name="IdTipoEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo">
           <End Role="AlmacenGasAutoConsumo" Type="Self.AlmacenGasAutoConsumo" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1355,6 +1555,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="AlmacenGasCalibracion">
               <PropertyRef Name="IdCAlmacenGas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasCalibracion_CTipoEvento">
+          <End Role="CTipoEvento" Type="Self.CTipoEvento" Multiplicity="0..1" />
+          <End Role="AlmacenGasCalibracion" Type="Self.AlmacenGasCalibracion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoEvento">
+              <PropertyRef Name="IdTipoEvento" />
+            </Principal>
+            <Dependent Role="AlmacenGasCalibracion">
+              <PropertyRef Name="IdTipoEvento" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1395,6 +1607,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="AlmacenGasRecarga">
               <PropertyRef Name="IdCAlmacenGasEntrada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasRecarga_CTipoEvento">
+          <End Role="CTipoEvento" Type="Self.CTipoEvento" Multiplicity="1" />
+          <End Role="AlmacenGasRecarga" Type="Self.AlmacenGasRecarga" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoEvento">
+              <PropertyRef Name="IdTipoEvento" />
+            </Principal>
+            <Dependent Role="AlmacenGasRecarga">
+              <PropertyRef Name="IdTipoEvento" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1483,6 +1707,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="AlmacenGasTraspaso">
               <PropertyRef Name="IdCAlmacenGasEntrada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasTraspaso_CTipoEvento">
+          <End Role="CTipoEvento" Type="Self.CTipoEvento" Multiplicity="1" />
+          <End Role="AlmacenGasTraspaso" Type="Self.AlmacenGasTraspaso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoEvento">
+              <PropertyRef Name="IdTipoEvento" />
+            </Principal>
+            <Dependent Role="AlmacenGasTraspaso">
+              <PropertyRef Name="IdTipoEvento" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1780,6 +2016,154 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CCliente_CCuentaContable">
+          <End Role="CCuentaContable" Type="Self.CCuentaContable" Multiplicity="0..1" />
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCuentaContable">
+              <PropertyRef Name="IdCuentaContable" />
+            </Principal>
+            <Dependent Role="CCliente">
+              <PropertyRef Name="IdCuentaContable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_CRegimenFiscal">
+          <End Role="CRegimenFiscal" Type="Self.CRegimenFiscal" Multiplicity="0..1" />
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CRegimenFiscal">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Principal>
+            <Dependent Role="CCliente">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_CTipoPersona">
+          <End Role="CTipoPersona" Type="Self.CTipoPersona" Multiplicity="0..1" />
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoPersona">
+              <PropertyRef Name="IdTipoPersona" />
+            </Principal>
+            <Dependent Role="CCliente">
+              <PropertyRef Name="IdTipoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CCliente">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteCondicion_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteCondicion" Type="Self.CClienteCondicion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteCondicion">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteContacto_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteContacto" Type="Self.CClienteContacto" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteContacto">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteCredencial_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteCredencial" Type="Self.CClienteCredencial" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteCredencial">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteFiscal_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteFiscal" Type="Self.CClienteFiscal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteFiscal">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteLegal_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteLegal" Type="Self.CClienteLegal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteLegal">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteLocacion_CCliente">
+          <End Role="CCliente" Type="Self.CCliente" Multiplicity="1" />
+          <End Role="CClienteLocacion" Type="Self.CClienteLocacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteLocacion">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteLocacionGoogle_CClienteLocacion">
+          <End Role="CClienteLocacion" Type="Self.CClienteLocacion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CClienteLocacionGoogle" Type="Self.CClienteLocacionGoogle" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CClienteLocacion">
+              <PropertyRef Name="IdCliente" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="CClienteLocacionGoogle">
+              <PropertyRef Name="IdCliente" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CCuentaContable_Empresa">
           <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
           <End Role="CCuentaContable" Type="Self.CCuentaContable" Multiplicity="*" />
@@ -1788,6 +2172,44 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="IdEmpresa" />
             </Principal>
             <Dependent Role="CCuentaContable">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CEquipoTransporte_CCamioneta">
+          <End Role="CCamioneta" Type="Self.CCamioneta" Multiplicity="0..1" />
+          <End Role="CEquipoTransporte" Type="Self.CEquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CCamioneta">
+              <PropertyRef Name="IdCamioneta" />
+            </Principal>
+            <Dependent Role="CEquipoTransporte">
+              <PropertyRef Name="IdCamioneta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CEquipoTransporte_CPipa">
+          <End Role="CPipa" Type="Self.CPipa" Multiplicity="0..1" />
+          <End Role="CEquipoTransporte" Type="Self.CEquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CPipa">
+              <PropertyRef Name="IdPipa" />
+            </Principal>
+            <Dependent Role="CEquipoTransporte">
+              <PropertyRef Name="IdPipa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CEquipoTransporte_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CEquipoTransporte" Type="Self.CEquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CEquipoTransporte">
               <PropertyRef Name="IdEmpresa" />
             </Dependent>
           </ReferentialConstraint>
@@ -1801,6 +2223,30 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="CEstacionCarburacion">
               <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COperadorChofer_CTipoOperadorChofer">
+          <End Role="CTipoOperadorChofer" Type="Self.CTipoOperadorChofer" Multiplicity="1" />
+          <End Role="COperadorChofer" Type="Self.COperadorChofer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoOperadorChofer">
+              <PropertyRef Name="IdTipoOperadorChofer" />
+            </Principal>
+            <Dependent Role="COperadorChofer">
+              <PropertyRef Name="IdTipoOperadorChofer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COperadorChofer_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="COperadorChofer" Type="Self.COperadorChofer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="COperadorChofer">
+              <PropertyRef Name="IdUsuario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2133,6 +2579,54 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="CProveedorFiscal">
               <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPuntoVenta_CAlmacenGas">
+          <End Role="CAlmacenGas" Type="Self.CAlmacenGas" Multiplicity="1" />
+          <End Role="CPuntoVenta" Type="Self.CPuntoVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAlmacenGas">
+              <PropertyRef Name="IdCAlmacenGas" />
+            </Principal>
+            <Dependent Role="CPuntoVenta">
+              <PropertyRef Name="IdCAlmacenGas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPuntoVenta_COperadorChofer">
+          <End Role="COperadorChofer" Type="Self.COperadorChofer" Multiplicity="1" />
+          <End Role="CPuntoVenta" Type="Self.CPuntoVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COperadorChofer">
+              <PropertyRef Name="IdOperadorChofer" />
+            </Principal>
+            <Dependent Role="CPuntoVenta">
+              <PropertyRef Name="IdOperadorChofer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPuntoVenta_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="CPuntoVenta" Type="Self.CPuntoVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CPuntoVenta">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CRegimenFiscal_CTipoPersona">
+          <End Role="CTipoPersona" Type="Self.CTipoPersona" Multiplicity="1" />
+          <End Role="CRegimenFiscal" Type="Self.CRegimenFiscal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CTipoPersona">
+              <PropertyRef Name="IdTipoPersona" />
+            </Principal>
+            <Dependent Role="CRegimenFiscal">
+              <PropertyRef Name="IdTipoPersona" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2558,6 +3052,20 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RolAccionMovil_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RolAccionMovil" Type="Self.RolAccionMovil" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="RolAccionMovil">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Usuario_Empresa">
           <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2690,10 +3198,20 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="CBanco" EntityType="Self.CBanco" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCamioneta" EntityType="Self.CCamioneta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCentroCosto" EntityType="Self.CCentroCosto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CCliente" EntityType="Self.CCliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteCondicion" EntityType="Self.CClienteCondicion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteContacto" EntityType="Self.CClienteContacto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteCredencial" EntityType="Self.CClienteCredencial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteFiscal" EntityType="Self.CClienteFiscal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteLegal" EntityType="Self.CClienteLegal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteLocacion" EntityType="Self.CClienteLocacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CClienteLocacionGoogle" EntityType="Self.CClienteLocacionGoogle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCuentaContable" EntityType="Self.CCuentaContable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CEquipoTransporte" EntityType="Self.CEquipoTransporte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CEstacionCarburacion" EntityType="Self.CEstacionCarburacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CEstadosRep" EntityType="Self.CEstadosRep" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CFormaPago" EntityType="Self.CFormaPago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="COperadorChofer" EntityType="Self.COperadorChofer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CPais" EntityType="Self.CPais" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CPipa" EntityType="Self.CPipa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CProducto" EntityType="Self.CProducto" Schema="dbo" store:Type="Tables" />
@@ -2707,8 +3225,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="CProveedorDireccion" EntityType="Self.CProveedorDireccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CProveedorFiscal" EntityType="Self.CProveedorFiscal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CProveedorTipoProveedor" EntityType="Self.CProveedorTipoProveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CPuntoVenta" EntityType="Self.CPuntoVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CRegimenFiscal" EntityType="Self.CRegimenFiscal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTipoCentroCosto" EntityType="Self.CTipoCentroCosto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CTipoEvento" EntityType="Self.CTipoEvento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CTipoOperadorChofer" EntityType="Self.CTipoOperadorChofer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CTipoPersona" EntityType="Self.CTipoPersona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpresaConfiguracion" EntityType="Self.EmpresaConfiguracion" Schema="dbo" store:Type="Tables" />
@@ -2731,6 +3252,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolAccion" EntityType="Self.RolAccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolAccionCatalogo" EntityType="Self.RolAccionCatalogo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RolAccionMovil" EntityType="Self.RolAccionMovil" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioContacto" EntityType="Self.UsuarioContacto" Schema="dbo" store:Type="Tables" />
@@ -2877,12 +3399,20 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="CAlmacenGas" EntitySet="CAlmacenGas" />
             <End Role="AlmacenGasAutoConsumo" EntitySet="AlmacenGasAutoConsumo" />
           </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasAutoConsumo_CTipoEvento" Association="Self.FK_AlmacenGasAutoConsumo_CTipoEvento">
+            <End Role="CTipoEvento" EntitySet="CTipoEvento" />
+            <End Role="AlmacenGasAutoConsumo" EntitySet="AlmacenGasAutoConsumo" />
+          </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo" Association="Self.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo">
             <End Role="AlmacenGasAutoConsumo" EntitySet="AlmacenGasAutoConsumo" />
             <End Role="AlmacenGasAutoConsumoFoto" EntitySet="AlmacenGasAutoConsumoFoto" />
           </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasCalibracion_CAlmacenGas" Association="Self.FK_AlmacenGasCalibracion_CAlmacenGas">
             <End Role="CAlmacenGas" EntitySet="CAlmacenGas" />
+            <End Role="AlmacenGasCalibracion" EntitySet="AlmacenGasCalibracion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasCalibracion_CTipoEvento" Association="Self.FK_AlmacenGasCalibracion_CTipoEvento">
+            <End Role="CTipoEvento" EntitySet="CTipoEvento" />
             <End Role="AlmacenGasCalibracion" EntitySet="AlmacenGasCalibracion" />
           </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasCalibracionFoto_AlmacenGasCalibracion" Association="Self.FK_AlmacenGasCalibracionFoto_AlmacenGasCalibracion">
@@ -2895,6 +3425,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasRecarga_CAlmacenGas1" Association="Self.FK_AlmacenGasRecarga_CAlmacenGas1">
             <End Role="CAlmacenGas" EntitySet="CAlmacenGas" />
+            <End Role="AlmacenGasRecarga" EntitySet="AlmacenGasRecarga" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasRecarga_CTipoEvento" Association="Self.FK_AlmacenGasRecarga_CTipoEvento">
+            <End Role="CTipoEvento" EntitySet="CTipoEvento" />
             <End Role="AlmacenGasRecarga" EntitySet="AlmacenGasRecarga" />
           </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasRecargaCilindro_AlmacenGasRecarga" Association="Self.FK_AlmacenGasRecargaCilindro_AlmacenGasRecarga">
@@ -2923,6 +3457,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasTraspaso_CAlmacenGas1" Association="Self.FK_AlmacenGasTraspaso_CAlmacenGas1">
             <End Role="CAlmacenGas" EntitySet="CAlmacenGas" />
+            <End Role="AlmacenGasTraspaso" EntitySet="AlmacenGasTraspaso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasTraspaso_CTipoEvento" Association="Self.FK_AlmacenGasTraspaso_CTipoEvento">
+            <End Role="CTipoEvento" EntitySet="CTipoEvento" />
             <End Role="AlmacenGasTraspaso" EntitySet="AlmacenGasTraspaso" />
           </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso" Association="Self.FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso">
@@ -3021,13 +3559,77 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CCentroCosto" EntitySet="CCentroCosto" />
           </AssociationSet>
+          <AssociationSet Name="FK_CCliente_CCuentaContable" Association="Self.FK_CCliente_CCuentaContable">
+            <End Role="CCuentaContable" EntitySet="CCuentaContable" />
+            <End Role="CCliente" EntitySet="CCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCliente_CRegimenFiscal" Association="Self.FK_CCliente_CRegimenFiscal">
+            <End Role="CRegimenFiscal" EntitySet="CRegimenFiscal" />
+            <End Role="CCliente" EntitySet="CCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCliente_CTipoPersona" Association="Self.FK_CCliente_CTipoPersona">
+            <End Role="CTipoPersona" EntitySet="CTipoPersona" />
+            <End Role="CCliente" EntitySet="CCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCliente_Empresa" Association="Self.FK_CCliente_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CCliente" EntitySet="CCliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteCondicion_CCliente" Association="Self.FK_CClienteCondicion_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteCondicion" EntitySet="CClienteCondicion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteContacto_CCliente" Association="Self.FK_CClienteContacto_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteContacto" EntitySet="CClienteContacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteCredencial_CCliente" Association="Self.FK_CClienteCredencial_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteCredencial" EntitySet="CClienteCredencial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteFiscal_CCliente" Association="Self.FK_CClienteFiscal_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteFiscal" EntitySet="CClienteFiscal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteLegal_CCliente" Association="Self.FK_CClienteLegal_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteLegal" EntitySet="CClienteLegal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteLocacion_CCliente" Association="Self.FK_CClienteLocacion_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteLocacion" EntitySet="CClienteLocacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteLocacionGoogle_CClienteLocacion" Association="Self.FK_CClienteLocacionGoogle_CClienteLocacion">
+            <End Role="CClienteLocacion" EntitySet="CClienteLocacion" />
+            <End Role="CClienteLocacionGoogle" EntitySet="CClienteLocacionGoogle" />
+          </AssociationSet>
           <AssociationSet Name="FK_CCuentaContable_Empresa" Association="Self.FK_CCuentaContable_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CCuentaContable" EntitySet="CCuentaContable" />
           </AssociationSet>
+          <AssociationSet Name="FK_CEquipoTransporte_CCamioneta" Association="Self.FK_CEquipoTransporte_CCamioneta">
+            <End Role="CCamioneta" EntitySet="CCamioneta" />
+            <End Role="CEquipoTransporte" EntitySet="CEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CEquipoTransporte_CPipa" Association="Self.FK_CEquipoTransporte_CPipa">
+            <End Role="CPipa" EntitySet="CPipa" />
+            <End Role="CEquipoTransporte" EntitySet="CEquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CEquipoTransporte_Empresa" Association="Self.FK_CEquipoTransporte_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CEquipoTransporte" EntitySet="CEquipoTransporte" />
+          </AssociationSet>
           <AssociationSet Name="FK_CEstacionCarburacion_Empresa" Association="Self.FK_CEstacionCarburacion_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CEstacionCarburacion" EntitySet="CEstacionCarburacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COperadorChofer_CTipoOperadorChofer" Association="Self.FK_COperadorChofer_CTipoOperadorChofer">
+            <End Role="CTipoOperadorChofer" EntitySet="CTipoOperadorChofer" />
+            <End Role="COperadorChofer" EntitySet="COperadorChofer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COperadorChofer_Usuario" Association="Self.FK_COperadorChofer_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="COperadorChofer" EntitySet="COperadorChofer" />
           </AssociationSet>
           <AssociationSet Name="FK_CPipa_Empresa" Association="Self.FK_CPipa_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
@@ -3136,6 +3738,22 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_CProveedorFiscal_CProveedor" Association="Self.FK_CProveedorFiscal_CProveedor">
             <End Role="CProveedor" EntitySet="CProveedor" />
             <End Role="CProveedorFiscal" EntitySet="CProveedorFiscal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPuntoVenta_CAlmacenGas" Association="Self.FK_CPuntoVenta_CAlmacenGas">
+            <End Role="CAlmacenGas" EntitySet="CAlmacenGas" />
+            <End Role="CPuntoVenta" EntitySet="CPuntoVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPuntoVenta_COperadorChofer" Association="Self.FK_CPuntoVenta_COperadorChofer">
+            <End Role="COperadorChofer" EntitySet="COperadorChofer" />
+            <End Role="CPuntoVenta" EntitySet="CPuntoVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPuntoVenta_Empresa" Association="Self.FK_CPuntoVenta_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CPuntoVenta" EntitySet="CPuntoVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CRegimenFiscal_CTipoPersona" Association="Self.FK_CRegimenFiscal_CTipoPersona">
+            <End Role="CTipoPersona" EntitySet="CTipoPersona" />
+            <End Role="CRegimenFiscal" EntitySet="CRegimenFiscal" />
           </AssociationSet>
           <AssociationSet Name="FK_EmpresaConfiguracion_Empresa" Association="Self.FK_EmpresaConfiguracion_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
@@ -3265,6 +3883,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Rol" EntitySet="Rol" />
             <End Role="RolAccionCatalogo" EntitySet="RolAccionCatalogo" />
           </AssociationSet>
+          <AssociationSet Name="FK_RolAccionMovil_Rol" Association="Self.FK_RolAccionMovil_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="RolAccionMovil" EntitySet="RolAccionMovil" />
+          </AssociationSet>
           <AssociationSet Name="FK_Usuario_Empresa" Association="Self.FK_Usuario_Empresa">
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Usuario" EntitySet="Usuario" />
@@ -3368,22 +3990,22 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="RazonSocial" Type="String" MaxLength="350" FixedLength="false" Unicode="false" Nullable="false" />          
           <!--"EmpresaConfiguracion">
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />-->
-          <Property Name="FactorLitrosAKilos" Type="Decimal" Precision="8" Scale="5" Nullable="false" />
-          <Property Name="CierreInventario" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="InventarioSano" Type="Byte" Nullable="false" />
-          <Property Name="InventarioCrítico" Type="Byte" Nullable="false" />
-          <Property Name="MaxRemaGaseraMensual" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
-          <Property Name="FactorGalonALitros" Type="Decimal" Nullable="false" Precision="8" Scale="5" />
-          <Property Name="FactorCompraLitroAKilos" Type="Decimal" Nullable="false" Precision="8" Scale="5" />
-          <Property Name="FactorFleteGas" Type="Decimal" Nullable="false" Precision="8" Scale="5" />          
+          <Property Name="FactorLitrosAKilos" Type="Decimal" Precision="8" Scale="5" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CierreInventario" Type="DateTime" Nullable="false" Precision="0" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="InventarioSano" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="InventarioCrítico" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="MaxRemaGaseraMensual" Type="Decimal" Precision="18" Scale="4" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="FactorGalonALitros" Type="Decimal" Nullable="false" Precision="8" Scale="5" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="FactorCompraLitroAKilos" Type="Decimal" Nullable="false" Precision="8" Scale="5" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="FactorFleteGas" Type="Decimal" Nullable="false" Precision="8" Scale="5" annotation:StoreGeneratedPattern="Computed" />          
           
           <!--"EmpresaImagen">
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />-->
-          <Property Name="UrlLogotipoMenu" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="UrlLogotipoLogin" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="UrlLogotipo180px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="UrlLogotipo500px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="UrlLogotipo1000px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="UrlLogotipoMenu" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UrlLogotipoLogin" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UrlLogotipo180px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UrlLogotipo500px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UrlLogotipo1000px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           
                    
           <!--<NavigationProperty Name="EmpresaConfiguracion" Relationship="Self.FK_EmpresaConfiguracion_Empresa" FromRole="Empresa" ToRole="EmpresaConfiguracion" />
@@ -3414,6 +4036,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Roles" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Empresa" ToRole="Rol" />
           <NavigationProperty Name="CentrosCosto" Relationship="Sagas.MainModuleModel.FK_CentroCosto_Empresa" FromRole="Empresa" ToRole="CentroCosto" />
           <NavigationProperty Name="CuentasContables" Relationship="Sagas.MainModuleModel.FK_CuentaContable_Empresa" FromRole="Empresa" ToRole="CuentaContable" />
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_Empresa" FromRole="Empresa" ToRole="Cliente" />
+          <NavigationProperty Name="EquiposTransporte" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_Empresa" FromRole="Empresa" ToRole="EquipoTransporte" />
+          <NavigationProperty Name="PuntosVenta" Relationship="Sagas.MainModuleModel.FK_CPuntoVenta_Empresa" FromRole="Empresa" ToRole="PuntoVenta" />
           
                     
           <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
@@ -3428,53 +4053,82 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
           <Property Name="Rol1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="NombreRol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Activo" Type="Boolean" Nullable="false" />
-          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" annotation:StoreGeneratedPattern="Computed" />
           <!--"RolAccion">
           <Property Name="IdRol" Type="Int16" Nullable="false" />-->          
-          <Property Name="RequisicionVerRequisiciones" Type="Boolean" Nullable="false" />
-          <Property Name="RequisicionGenerarNueva" Type="Boolean" Nullable="false" />
-          <Property Name="RequisicionRevisarExistencia" Type="Boolean" Nullable="false" />
-          <Property Name="RequisicionAutorizar" Type="Boolean" Nullable="false" />
-          <Property Name="CompraVerOCompra" Type="Boolean" Nullable="false" />
-          <Property Name="CompraGenerarOCompra" Type="Boolean" Nullable="false" />
-          <Property Name="CompraAutorizarOCompra" Type="Boolean" Nullable="false" />
-          <Property Name="AppCompraVerOCompra" Type="Boolean" Nullable="false" />
-          <Property Name="CompraEntraProductoOCompra" Type="Boolean" Nullable="false" />
-          <Property Name="CompraAtiendeServicioOCompra" Type="Boolean" Nullable="false" />
-          <Property Name="AppCompraEntraGas" Type="Boolean" Nullable="false" />
-          <Property Name="AppCompraGasIniciarDescarga" Type="Boolean" Nullable="false" />
-          <Property Name="AppCompraGasFinalizarDescarga" Type="Boolean" Nullable="false" />          
+          <Property Name="RequisicionVerRequisiciones" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="RequisicionGenerarNueva" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="RequisicionRevisarExistencia" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="RequisicionAutorizar" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CompraVerOCompra" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CompraGenerarOCompra" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CompraAutorizarOCompra" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CompraEntraProductoOCompra" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CompraAtiendeServicioOCompra" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
           <!--"RolAccionCatalogo">
           <Property Name="IdRol" Type="Int16" Nullable="false" />-->
-          <Property Name="CatInsertarUsuario" Type="Boolean" Nullable="false" />
-          <Property Name="CatModificarUsuario" Type="Boolean" Nullable="false" />
-          <Property Name="CatEliminarUsuario" Type="Boolean" Nullable="false" />
-          <Property Name="CatConsultarUsuario" Type="Boolean" Nullable="false" />
-          <Property Name="CatInsertarProveedor" Type="Boolean" Nullable="false" />
-          <Property Name="CatModificarProveedor" Type="Boolean" Nullable="false" />
-          <Property Name="CatEliminarProveedor" Type="Boolean" Nullable="false" />
-          <Property Name="CatConsultarProveedor" Type="Boolean" Nullable="false" />
-          <Property Name="CatInsertarProducto" Type="Boolean" Nullable="false" />
-          <Property Name="CatModificarProducto" Type="Boolean" Nullable="false" />
-          <Property Name="CatEliminarProducto" Type="Boolean" Nullable="false" />
-          <Property Name="CatConsultarProducto" Type="Boolean" Nullable="false" />
-          <Property Name="CatInsertarCentroCosto" Type="Boolean" Nullable="false" />
-          <Property Name="CatModificarCentroCosto" Type="Boolean" Nullable="false" />
-          <Property Name="CatEliminarCentroCosto" Type="Boolean" Nullable="false" />
-          <Property Name="CatConsultarCentroCosto" Type="Boolean" Nullable="false" />
-          <Property Name="CatInsertarCuentaContable" Type="Boolean" Nullable="false" />
-          <Property Name="CatModificarCuentaContable" Type="Boolean" Nullable="false" />
-          <Property Name="CatEliminarCuentaContable" Type="Boolean" Nullable="false" />
-          <Property Name="CatConsultarCuentaContable" Type="Boolean" Nullable="false" />
+          <Property Name="CatInsertarUsuario" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed"/>
+          <Property Name="CatModificarUsuario" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarUsuario" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarUsuario" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarProveedor" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarProveedor" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarProveedor" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarProveedor" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarProducto" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarProducto" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarProducto" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarProducto" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarCentroCosto" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarCentroCosto" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarCentroCosto" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarCentroCosto" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarCuentaContable" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarCuentaContable" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarCuentaContable" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarCuentaContable" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarCliente" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarCliente" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarCliente" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarCliente" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatAsignarChoferPuntoVenta" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarPuntoVenta" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarPuntoVenta" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatAsignarEquipoTransporte" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatModificarEquipoTransporte" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatEliminarEquipoTransporte" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="CatConsultarEquipoTransporte" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <!--"RolAccionMovil"-->
+          <Property Name="AppCompraVerOCompra" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppCompraEntraGas" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppCompraGasIniciarDescarga" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppCompraGasFinalizarDescarga" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppAutoconsumoInventarioGral" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppAutoconsumoEstacionCarb" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppAutoconsumoPipa" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppCalibracionEstacionCarb" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppCalibracionPipa" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppCalibracionCamionetaCilindro" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppRecargaEstacionCarb" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppRecargaPipa" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppRecargaCamionetaCilindro" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppTomaLecturaAlmacenPral" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppTomaLecturaEstacionCarb" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppTomaLecturaPipa" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppTomaLecturaCamionetaCilindro" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppTomaLecturaReporteDelDia" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppTraspasoEstacionCarb" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="AppTraspasoPipa" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
+          <NavigationProperty Name="ListaUsuarios" Relationship="Sagas.MainModuleModel.UsuarioRol" FromRole="Rol" ToRole="Usuario" />          
+          <!--<NavigationProperty Name="RolAccionMovil" Relationship="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" FromRole="Rol" ToRole="RolAccionMovil" />-->
           
+          <!--<NavigationProperty Name="Rol" Relationship="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" FromRole="RolAccionMovil" ToRole="Rol" />-->
           <!--<NavigationProperty Name="RolAccion" Relationship="Self.FK_RolAccion_Rol" FromRole="Rol" ToRole="RolAccion" />-->
           <!--<NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />-->
           <!--<NavigationProperty Name="UsuarioAC" Relationship="Self.FK_UsuarioAC_Rol" FromRole="Rol" ToRole="UsuarioAC" />-->
-          
-          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
-          <NavigationProperty Name="ListaUsuarios" Relationship="Sagas.MainModuleModel.UsuarioRol" FromRole="Rol" ToRole="Usuario" />
-          
           <!--<NavigationProperty Name="RolAccionCatalogo" Relationship="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol" FromRole="Rol" ToRole="RolAccionCatalogo" />          
           <NavigationProperty Name="Rol" Relationship="Self.FK_RolAccion_Rol" FromRole="RolAccion" ToRole="Rol" />
           <NavigationProperty Name="Rol" Relationship="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol" FromRole="RolAccionCatalogo" ToRole="Rol" />
@@ -3544,6 +4198,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Roles" Relationship="Sagas.MainModuleModel.UsuarioRol" FromRole="Usuario" ToRole="Rol" />
           <NavigationProperty Name="OrdenesCompraAutorizadas" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_UsuarioAutorizador" FromRole="Usuario" ToRole="OrdenCompra" />
           <NavigationProperty Name="OrdenesCompraGeneradas" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_UsuarioGenerador" FromRole="Usuario" ToRole="OrdenCompra" />
+          <NavigationProperty Name="OperadoresChoferes" Relationship="Sagas.MainModuleModel.FK_COperadorChofer_Usuario" FromRole="Usuario" ToRole="OperadorChofer" />
                     
           <!--<NavigationProperty Name="Requisiciones" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario" FromRole="Usuario" ToRole="Requisicion" />
           <NavigationProperty Name="RequisicionAutorizacion" Relationship="Sagas.MainModuleModel.FK_RequisicionAutorizacion_Usuario" FromRole="Usuario" ToRole="RequisicionAutorizacion" />-->
@@ -4392,6 +5047,120 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="CuentaContable" EntitySet="CuentaContable" />
             <End Role="Producto" EntitySet="Producto" />
           </AssociationSet>
+          <EntitySet Name="Cliente" EntityType="Sagas.MainModuleModel.Cliente" />
+          <!--<EntitySet Name="CClienteCondicion" EntityType="Sagas.MainModuleModel.CClienteCondicion" />
+          <EntitySet Name="CClienteContacto" EntityType="Sagas.MainModuleModel.CClienteContacto" />
+          <EntitySet Name="CClienteCredencial" EntityType="Sagas.MainModuleModel.CClienteCredencial" />
+          <EntitySet Name="CClienteFiscal" EntityType="Sagas.MainModuleModel.CClienteFiscal" />
+          <EntitySet Name="CClienteLegal" EntityType="Sagas.MainModuleModel.CClienteLegal" />-->
+          <EntitySet Name="ClienteLocacion" EntityType="Sagas.MainModuleModel.ClienteLocacion" />
+          <!--<EntitySet Name="CClienteLocacionGoogle" EntityType="Sagas.MainModuleModel.CClienteLocacionGoogle" />-->
+          <AssociationSet Name="FK_CCliente_CRegimenFiscal" Association="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal">
+            <End Role="RegimenFiscal" EntitySet="RegimenFiscal" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCliente_CTipoPersona" Association="Sagas.MainModuleModel.FK_CCliente_CTipoPersona">
+            <End Role="TipoPersona" EntitySet="TipoPersona" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCliente_Empresa" Association="Sagas.MainModuleModel.FK_CCliente_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <!--<AssociationSet Name="FK_CClienteCondicion_CCliente" Association="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteCondicion" EntitySet="CClienteCondicion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteContacto_CCliente" Association="Sagas.MainModuleModel.FK_CClienteContacto_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteContacto" EntitySet="CClienteContacto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteCredencial_CCliente" Association="Sagas.MainModuleModel.FK_CClienteCredencial_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteCredencial" EntitySet="CClienteCredencial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteFiscal_CCliente" Association="Sagas.MainModuleModel.FK_CClienteFiscal_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteFiscal" EntitySet="CClienteFiscal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CClienteLegal_CCliente" Association="Sagas.MainModuleModel.FK_CClienteLegal_CCliente">
+            <End Role="CCliente" EntitySet="CCliente" />
+            <End Role="CClienteLegal" EntitySet="CClienteLegal" />
+          </AssociationSet>-->
+          <AssociationSet Name="FK_CClienteLocacion_CCliente" Association="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="ClienteLocacion" EntitySet="ClienteLocacion" />
+          </AssociationSet>
+          <!--<AssociationSet Name="FK_CClienteLocacionGoogle_CClienteLocacion" Association="Sagas.MainModuleModel.FK_CClienteLocacionGoogle_CClienteLocacion">
+            <End Role="CClienteLocacion" EntitySet="CClienteLocacion" />
+            <End Role="CClienteLocacionGoogle" EntitySet="CClienteLocacionGoogle" />
+          </AssociationSet>-->
+          <AssociationSet Name="FK_CRegimenFiscal_CTipoPersona" Association="Sagas.MainModuleModel.FK_CRegimenFiscal_CTipoPersona">
+            <End Role="TipoPersona" EntitySet="TipoPersona" />
+            <End Role="RegimenFiscal" EntitySet="RegimenFiscal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CCliente_CCuentaContable" Association="Sagas.MainModuleModel.FK_CCliente_CCuentaContable">
+            <End Role="CuentaContable" EntitySet="CuentaContable" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <EntitySet Name="EquipoTransporte" EntityType="Sagas.MainModuleModel.EquipoTransporte" />
+          <EntitySet Name="OperadorChofer" EntityType="Sagas.MainModuleModel.OperadorChofer" />
+          <EntitySet Name="PuntoVenta" EntityType="Sagas.MainModuleModel.PuntoVenta" />
+          <EntitySet Name="TipoEvento" EntityType="Sagas.MainModuleModel.TipoEvento" />
+          <EntitySet Name="TipoOperadorChofer" EntityType="Sagas.MainModuleModel.TipoOperadorChofer" />
+          <!--<EntitySet Name="RolAccionMovil" EntityType="Sagas.MainModuleModel.RolAccionMovil" />-->
+          <AssociationSet Name="FK_AlmacenGasAutoConsumo_CTipoEvento" Association="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumo_CTipoEvento">
+            <End Role="TipoEvento" EntitySet="TipoEvento" />
+            <End Role="AlmacenGasAutoConsumo" EntitySet="AlmacenGasAutoConsumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasCalibracion_CTipoEvento" Association="Sagas.MainModuleModel.FK_AlmacenGasCalibracion_CTipoEvento">
+            <End Role="TipoEvento" EntitySet="TipoEvento" />
+            <End Role="AlmacenGasCalibracion" EntitySet="AlmacenGasCalibracion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasRecarga_CTipoEvento" Association="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CTipoEvento">
+            <End Role="TipoEvento" EntitySet="TipoEvento" />
+            <End Role="AlmacenGasRecarga" EntitySet="AlmacenGasRecarga" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasTraspaso_CTipoEvento" Association="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CTipoEvento">
+            <End Role="TipoEvento" EntitySet="TipoEvento" />
+            <End Role="AlmacenGasTraspaso" EntitySet="AlmacenGasTraspaso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPuntoVenta_CAlmacenGas" Association="Sagas.MainModuleModel.FK_CPuntoVenta_CAlmacenGas">
+            <End Role="UnidadAlmacenGas" EntitySet="UnidadAlmacenGas" />
+            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CEquipoTransporte_CCamioneta" Association="Sagas.MainModuleModel.FK_CEquipoTransporte_CCamioneta">
+            <End Role="Camioneta" EntitySet="Camioneta" />
+            <End Role="EquipoTransporte" EntitySet="EquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CEquipoTransporte_CPipa" Association="Sagas.MainModuleModel.FK_CEquipoTransporte_CPipa">
+            <End Role="Pipa" EntitySet="Pipa" />
+            <End Role="EquipoTransporte" EntitySet="EquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CEquipoTransporte_Empresa" Association="Sagas.MainModuleModel.FK_CEquipoTransporte_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="EquipoTransporte" EntitySet="EquipoTransporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COperadorChofer_CTipoOperadorChofer" Association="Sagas.MainModuleModel.FK_COperadorChofer_CTipoOperadorChofer">
+            <End Role="TipoOperadorChofer" EntitySet="TipoOperadorChofer" />
+            <End Role="OperadorChofer" EntitySet="OperadorChofer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_COperadorChofer_Usuario" Association="Sagas.MainModuleModel.FK_COperadorChofer_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="OperadorChofer" EntitySet="OperadorChofer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPuntoVenta_COperadorChofer" Association="Sagas.MainModuleModel.FK_CPuntoVenta_COperadorChofer">
+            <End Role="OperadorChofer" EntitySet="OperadorChofer" />
+            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPuntoVenta_Empresa" Association="Sagas.MainModuleModel.FK_CPuntoVenta_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="PuntoVenta" EntitySet="PuntoVenta" />
+          </AssociationSet>
+          <!--<AssociationSet Name="FK_RolAccionMovil_Rol" Association="Sagas.MainModuleModel.FK_RolAccionMovil_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="RolAccionMovil" EntitySet="RolAccionMovil" />
+          </AssociationSet>-->
           <!--<EntitySet Name="RolAccionCatalogo" EntityType="Sagas.MainModuleModel.RolAccionCatalogo" />-->
           <!--<AssociationSet Name="FK_RolAccionCatalogo_Rol" Association="Sagas.MainModuleModel.FK_RolAccionCatalogo_Rol">
             <End Role="Rol" EntitySet="Rol" />
@@ -5363,6 +6132,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Calibraciones" Relationship="Sagas.MainModuleModel.FK_AlmacenGasCalibracion_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="AlmacenGasCalibracion" />
           <NavigationProperty Name="TraspasosSalida" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="AlmacenGasTraspaso" />
           <NavigationProperty Name="TraspasosEntrada" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CAlmacenGas1" FromRole="UnidadAlmacenGas" ToRole="AlmacenGasTraspaso" />
+          <NavigationProperty Name="PuntosVenta" Relationship="Sagas.MainModuleModel.FK_CPuntoVenta_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="PuntoVenta" />
           
           
           <!--<NavigationProperty Name="CAlmacenGasCalibracion" Relationship="Sagas.MainModuleModel.FK_CAlmacenGasCalibracion_CAlmacenGas" FromRole="CAlmacenGas" ToRole="CAlmacenGasCalibracion" />
@@ -5417,6 +6187,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Camioneta_Empresa" FromRole="Camioneta" ToRole="Empresa" />
           <NavigationProperty Name="CamionetaCilindro" Relationship="Sagas.MainModuleModel.FK_CamionetaCilindro_Camioneta" FromRole="Camioneta" ToRole="CamionetaCilindro" />
           <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CCamioneta" FromRole="Camioneta" ToRole="CentroCosto" />
+          <NavigationProperty Name="EquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_CCamioneta" FromRole="Camioneta" ToRole="EquipoTransporte" />
         </EntityType>
         <EntityType Name="EstacionCarburacion">
           <Key>
@@ -5455,6 +6226,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="UnidadAlmacenGas" Relationship="Sagas.MainModuleModel.FK_UnidadAlmacenGas_Pipa" FromRole="Pipa" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Pipa_Empresa" FromRole="Pipa" ToRole="Empresa" />
           <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CPipa" FromRole="Pipa" ToRole="CentroCosto" />
+          <NavigationProperty Name="EquipoTransporte" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_CPipa" FromRole="Pipa" ToRole="EquipoTransporte" />
         </EntityType>
         <EntityType Name="ImagenDe">
           <Key>
@@ -6193,20 +6965,24 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_CuentaContable" FromRole="CuentaContable" ToRole="Proveedor" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CuentaContable_Empresa" FromRole="CuentaContable" ToRole="Empresa" />
           <NavigationProperty Name="Productos" Relationship="Sagas.MainModuleModel.FK_CProducto_CCuentaContable" FromRole="CuentaContable" ToRole="Producto" />
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_CCuentaContable" FromRole="CuentaContable" ToRole="Cliente" />
         </EntityType>
         <EntityType Name="RegimenFiscal">
           <Key>
             <PropertyRef Name="IdRegimenFiscal" />
           </Key>
           <Property Name="IdRegimenFiscal" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTipoPersona" Type="Byte" Nullable="false"/>
           <Property Name="c_RegimenFiscal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="AplicaPersonaFisica" Type="Boolean" Nullable="false" />
           <Property Name="AplicaPersonaMoral" Type="Boolean" Nullable="false" />
           <Property Name="FechaInicioVigencia" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaFinVigencia" Type="DateTime" Precision="0" />
-          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_RegimenFiscal" FromRole="RegimenFiscal" ToRole="Proveedor" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />          
+          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_RegimenFiscal" FromRole="RegimenFiscal" ToRole="Proveedor" />          
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal" FromRole="RegimenFiscal" ToRole="Cliente" />
+          <NavigationProperty Name="TipoPersona" Relationship="Sagas.MainModuleModel.FK_CRegimenFiscal_CTipoPersona" FromRole="RegimenFiscal" ToRole="TipoPersona" />
         </EntityType>
         <EntityType Name="TipoPersona">
           <Key>
@@ -6215,7 +6991,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdTipoPersona" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="CProveedor" Relationship="Sagas.MainModuleModel.FK_CProveedor_TipoPersona" FromRole="TipoPersona" ToRole="Proveedor" />
+          <NavigationProperty Name="Proveedores" Relationship="Sagas.MainModuleModel.FK_CProveedor_TipoPersona" FromRole="TipoPersona" ToRole="Proveedor" />
+          <NavigationProperty Name="Clientes" Relationship="Sagas.MainModuleModel.FK_CCliente_CTipoPersona" FromRole="TipoPersona" ToRole="Cliente" />
+          <NavigationProperty Name="RegimenesFiscales" Relationship="Sagas.MainModuleModel.FK_CRegimenFiscal_CTipoPersona" FromRole="TipoPersona" ToRole="RegimenFiscal" />
         </EntityType>
         <Association Name="FK_CProveedor_Banco">
           <End Type="Sagas.MainModuleModel.Banco" Role="Banco" Multiplicity="1" />
@@ -6499,6 +7277,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="CAlmacenGas1" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CAlmacenGas1" FromRole="AlmacenGasRecarga" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Cilindros" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecargaCilindro_AlmacenGasRecarga" FromRole="AlmacenGasRecarga" ToRole="AlmacenGasRecargaCilindro" />
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecargaFoto_AlmacenGasRecarga" FromRole="AlmacenGasRecarga" ToRole="AlmacenGasRecargaFoto" />
+          <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CTipoEvento" FromRole="AlmacenGasRecarga" ToRole="TipoEvento" />
         </EntityType>
         <EntityType Name="AlmacenGasRecargaCilindro">
           <Key>
@@ -6586,6 +7365,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="UnidadSalida" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumo_CAlmacenGas" FromRole="AlmacenGasAutoConsumo" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="UnidadEntrada" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumo_CAlmacenGas1" FromRole="AlmacenGasAutoConsumo" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo" FromRole="AlmacenGasAutoConsumo" ToRole="AlmacenGasAutoConsumoFoto" />
+          <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumo_CTipoEvento" FromRole="AlmacenGasAutoConsumo" ToRole="TipoEvento" />
         </EntityType>
         <EntityType Name="AlmacenGasAutoConsumoFoto">
           <Key>
@@ -6619,6 +7399,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="UnidadAlmacenGas" Relationship="Sagas.MainModuleModel.FK_AlmacenGasCalibracion_CAlmacenGas" FromRole="AlmacenGasCalibracion" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasCalibracionFoto_AlmacenGasCalibracion" FromRole="AlmacenGasCalibracion" ToRole="AlmacenGasCalibracionFoto" />
+          <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasCalibracion_CTipoEvento" FromRole="AlmacenGasCalibracion" ToRole="TipoEvento" />
         </EntityType>
         <EntityType Name="AlmacenGasCalibracionFoto">
           <Key>
@@ -6653,6 +7434,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="UnidadSalida" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CAlmacenGas" FromRole="AlmacenGasTraspaso" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="UnidadEntrada" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CAlmacenGas1" FromRole="AlmacenGasTraspaso" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso" FromRole="AlmacenGasTraspaso" ToRole="AlmacenGasTraspasoFoto" />
+          <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CTipoEvento" FromRole="AlmacenGasTraspaso" ToRole="TipoEvento" />
         </EntityType>
         <EntityType Name="AlmacenGasTraspasoFoto">
           <Key>
@@ -6787,7 +7569,482 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="IdCuentaContable" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>        
+        </Association>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="IdTipoPersona" Type="Byte" />
+          <Property Name="IdRegimenFiscal" Type="Int16" />
+          <Property Name="IdCuentaContable" Type="Int32" />          
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido1" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido2" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <!--Name="CClienteCondicion-->
+          <Property Name="PorcentDescuento" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="limiteCreditoMonto" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="limiteCreditoDias" Type="Int16" Nullable="false" />
+          <!--Name="CClienteContacto"-->
+          <Property Name="Telefono1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SitioWeb1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="SitioWeb2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="SitioWeb3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <!--Name="CClienteCredencial"-->
+          <Property Name="Usuario" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="AccesoPortal" Type="Boolean" Nullable="false" />
+          <!--Name="CClienteFiscal"-->
+          <Property Name="Rfc" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <!--Name="CClienteLegal"-->
+          <Property Name="RepresentanteLegal" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorreoElectronico" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Domicilio" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+
+          <NavigationProperty Name="RegimenFiscal" Relationship="Sagas.MainModuleModel.FK_CCliente_CRegimenFiscal" FromRole="Cliente" ToRole="RegimenFiscal" />
+          <NavigationProperty Name="TipoPersonaFiscal" Relationship="Sagas.MainModuleModel.FK_CCliente_CTipoPersona" FromRole="Cliente" ToRole="TipoPersona" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CCliente_Empresa" FromRole="Cliente" ToRole="Empresa" />
+          <NavigationProperty Name="Locaciones" Relationship="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente" FromRole="Cliente" ToRole="ClienteLocacion" />          
+          <NavigationProperty Name="CuentaContable" Relationship="Sagas.MainModuleModel.FK_CCliente_CCuentaContable" FromRole="Cliente" ToRole="CuentaContable" />
+          <!--<NavigationProperty Name="CClienteCondicion" Relationship="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente" FromRole="CCliente" ToRole="CClienteCondicion" />
+          <NavigationProperty Name="CClienteContacto" Relationship="Sagas.MainModuleModel.FK_CClienteContacto_CCliente" FromRole="CCliente" ToRole="CClienteContacto" />
+          <NavigationProperty Name="CClienteCredencial" Relationship="Sagas.MainModuleModel.FK_CClienteCredencial_CCliente" FromRole="CCliente" ToRole="CClienteCredencial" />
+          <NavigationProperty Name="CClienteFiscal" Relationship="Sagas.MainModuleModel.FK_CClienteFiscal_CCliente" FromRole="CCliente" ToRole="CClienteFiscal" />
+          <NavigationProperty Name="CClienteLegal" Relationship="Sagas.MainModuleModel.FK_CClienteLegal_CCliente" FromRole="CCliente" ToRole="CClienteLegal" />-->          
+          <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente" FromRole="CClienteCondicion" ToRole="CCliente" />-->          
+          <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteContacto_CCliente" FromRole="CClienteContacto" ToRole="CCliente" />-->          
+          <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteCredencial_CCliente" FromRole="CClienteCredencial" ToRole="CCliente" />-->          
+          <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteFiscal_CCliente" FromRole="CClienteFiscal" ToRole="CCliente" />-->          
+          <!--<NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_CClienteLegal_CCliente" FromRole="CClienteLegal" ToRole="CCliente" />-->
+        </EntityType>
+        <EntityType Name="ClienteLocacion">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="Orden" Type="Int16" Nullable="false" />
+          <Property Name="IdPais" Type="Byte" Nullable="false" />
+          <Property Name="IdEstadoRep" Type="Byte" />
+          <Property Name="EstadoProvincia" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Municipio" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CodigoPostal" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Colonia" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Calle" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="NumExt" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NumInt" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <!--Name="CClienteLocacionGoogle"-->
+          <Property Name="formatted_address" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="location_lat" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="location_lng" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="place_id" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cliente" Relationship="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente" FromRole="ClienteLocacion" ToRole="Cliente" />
+          <Property Name="TipoLocacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />          
+          <!--<NavigationProperty Name="CClienteLocacionGoogle" Relationship="Sagas.MainModuleModel.FK_CClienteLocacionGoogle_CClienteLocacion" FromRole="CClienteLocacion" ToRole="CClienteLocacionGoogle" />-->          
+          <!--<NavigationProperty Name="CClienteLocacion" Relationship="Sagas.MainModuleModel.FK_CClienteLocacionGoogle_CClienteLocacion" FromRole="CClienteLocacionGoogle" ToRole="CClienteLocacion" />-->
+        </EntityType>
+        <Association Name="FK_CCliente_CRegimenFiscal">
+          <End Type="Sagas.MainModuleModel.RegimenFiscal" Role="RegimenFiscal" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegimenFiscal">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdRegimenFiscal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_CTipoPersona">
+          <End Type="Sagas.MainModuleModel.TipoPersona" Role="TipoPersona" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPersona">
+              <PropertyRef Name="IdTipoPersona" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdTipoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--<Association Name="FK_CClienteCondicion_CCliente">
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteCondicion" Role="CClienteCondicion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteCondicion">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteContacto_CCliente">
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteContacto" Role="CClienteContacto" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteContacto">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteCredencial_CCliente">
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteCredencial" Role="CClienteCredencial" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteCredencial">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteFiscal_CCliente">
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteFiscal" Role="CClienteFiscal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteFiscal">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CClienteLegal_CCliente">
+          <End Type="Sagas.MainModuleModel.CCliente" Role="CCliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteLegal" Role="CClienteLegal" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CCliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CClienteLegal">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->
+        <Association Name="FK_CClienteLocacion_CCliente">
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.ClienteLocacion" Role="ClienteLocacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="ClienteLocacion">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--<Association Name="FK_CClienteLocacionGoogle_CClienteLocacion">
+          <End Type="Sagas.MainModuleModel.CClienteLocacion" Role="CClienteLocacion" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.CClienteLocacionGoogle" Role="CClienteLocacionGoogle" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CClienteLocacion">
+              <PropertyRef Name="IdCliente" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="CClienteLocacionGoogle">
+              <PropertyRef Name="IdCliente" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->
+        <Association Name="FK_CRegimenFiscal_CTipoPersona">
+          <End Type="Sagas.MainModuleModel.TipoPersona" Role="TipoPersona" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.RegimenFiscal" Role="RegimenFiscal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoPersona">
+              <PropertyRef Name="IdTipoPersona" />
+            </Principal>
+            <Dependent Role="RegimenFiscal">
+              <PropertyRef Name="IdTipoPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CCliente_CCuentaContable">
+          <End Type="Sagas.MainModuleModel.CuentaContable" Role="CuentaContable" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CuentaContable">
+              <PropertyRef Name="IdCuentaContable" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdCuentaContable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EquipoTransporte">
+          <Key>
+            <PropertyRef Name="IdEquipoTransporte" />
+          </Key>
+          <Property Name="IdEquipoTransporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="IdVehiculoUtilitario" Type="Int32" />
+          <Property Name="IdCamioneta" Type="Int32" />
+          <Property Name="IdPipa" Type="Int32" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Camionetas" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_CCamioneta" FromRole="EquipoTransporte" ToRole="Camioneta" />
+          <NavigationProperty Name="Pipas" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_CPipa" FromRole="EquipoTransporte" ToRole="Pipa" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_Empresa" FromRole="EquipoTransporte" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="OperadorChofer">
+          <Key>
+            <PropertyRef Name="IdOperadorChofer" />
+          </Key>
+          <Property Name="IdOperadorChofer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTipoOperadorChofer" Type="Byte" Nullable="false" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TipoOperadorChofer" Relationship="Sagas.MainModuleModel.FK_COperadorChofer_CTipoOperadorChofer" FromRole="OperadorChofer" ToRole="TipoOperadorChofer" />
+          <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_COperadorChofer_Usuario" FromRole="OperadorChofer" ToRole="Usuario" />
+          <NavigationProperty Name="PuntosVenta" Relationship="Sagas.MainModuleModel.FK_CPuntoVenta_COperadorChofer" FromRole="OperadorChofer" ToRole="PuntoVenta" />
+        </EntityType>
+        <EntityType Name="PuntoVenta">
+          <Key>
+            <PropertyRef Name="IdPuntoVenta" />
+          </Key>
+          <Property Name="IdPuntoVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="IdCAlmacenGas" Type="Int16" Nullable="false" />
+          <Property Name="IdOperadorChofer" Type="Int32" Nullable="false" />
+          <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UnidadesAlmacen" Relationship="Sagas.MainModuleModel.FK_CPuntoVenta_CAlmacenGas" FromRole="PuntoVenta" ToRole="UnidadAlmacenGas" />
+          <NavigationProperty Name="OperadorChofer" Relationship="Sagas.MainModuleModel.FK_CPuntoVenta_COperadorChofer" FromRole="PuntoVenta" ToRole="OperadorChofer" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CPuntoVenta_Empresa" FromRole="PuntoVenta" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="TipoEvento">
+          <Key>
+            <PropertyRef Name="IdTipoEvento" />
+          </Key>
+          <Property Name="IdTipoEvento" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Evento" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AlmacenGasAutoConsumo" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumo_CTipoEvento" FromRole="TipoEvento" ToRole="AlmacenGasAutoConsumo" />
+          <NavigationProperty Name="AlmacenGasCalibracion" Relationship="Sagas.MainModuleModel.FK_AlmacenGasCalibracion_CTipoEvento" FromRole="TipoEvento" ToRole="AlmacenGasCalibracion" />
+          <NavigationProperty Name="AlmacenGasRecarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CTipoEvento" FromRole="TipoEvento" ToRole="AlmacenGasRecarga" />
+          <NavigationProperty Name="AlmacenGasTraspaso" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CTipoEvento" FromRole="TipoEvento" ToRole="AlmacenGasTraspaso" />
+        </EntityType>
+        <EntityType Name="TipoOperadorChofer">
+          <Key>
+            <PropertyRef Name="IdTipoOperadorChofer" />
+          </Key>
+          <Property Name="IdTipoOperadorChofer" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />          
+          <Property Name="EsOperador" Type="Boolean" Nullable="false" />
+          <Property Name="EsChofer" Type="Boolean" Nullable="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="OperadoresChoferes" Relationship="Sagas.MainModuleModel.FK_COperadorChofer_CTipoOperadorChofer" FromRole="TipoOperadorChofer" ToRole="OperadorChofer" />          
+        </EntityType>        
+        <Association Name="FK_AlmacenGasAutoConsumo_CTipoEvento">
+          <End Type="Sagas.MainModuleModel.TipoEvento" Role="TipoEvento" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasAutoConsumo" Role="AlmacenGasAutoConsumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEvento">
+              <PropertyRef Name="IdTipoEvento" />
+            </Principal>
+            <Dependent Role="AlmacenGasAutoConsumo">
+              <PropertyRef Name="IdTipoEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasCalibracion_CTipoEvento">
+          <End Type="Sagas.MainModuleModel.TipoEvento" Role="TipoEvento" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasCalibracion" Role="AlmacenGasCalibracion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEvento">
+              <PropertyRef Name="IdTipoEvento" />
+            </Principal>
+            <Dependent Role="AlmacenGasCalibracion">
+              <PropertyRef Name="IdTipoEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasRecarga_CTipoEvento">
+          <End Type="Sagas.MainModuleModel.TipoEvento" Role="TipoEvento" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasRecarga" Role="AlmacenGasRecarga" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEvento">
+              <PropertyRef Name="IdTipoEvento" />
+            </Principal>
+            <Dependent Role="AlmacenGasRecarga">
+              <PropertyRef Name="IdTipoEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasTraspaso_CTipoEvento">
+          <End Type="Sagas.MainModuleModel.TipoEvento" Role="TipoEvento" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasTraspaso" Role="AlmacenGasTraspaso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEvento">
+              <PropertyRef Name="IdTipoEvento" />
+            </Principal>
+            <Dependent Role="AlmacenGasTraspaso">
+              <PropertyRef Name="IdTipoEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPuntoVenta_CAlmacenGas">
+          <End Type="Sagas.MainModuleModel.UnidadAlmacenGas" Role="UnidadAlmacenGas" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.PuntoVenta" Role="PuntoVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnidadAlmacenGas">
+              <PropertyRef Name="IdCAlmacenGas" />
+            </Principal>
+            <Dependent Role="PuntoVenta">
+              <PropertyRef Name="IdCAlmacenGas" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CEquipoTransporte_CCamioneta">
+          <End Type="Sagas.MainModuleModel.Camioneta" Role="Camioneta" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.EquipoTransporte" Role="EquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Camioneta">
+              <PropertyRef Name="IdCamioneta" />
+            </Principal>
+            <Dependent Role="EquipoTransporte">
+              <PropertyRef Name="IdCamioneta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CEquipoTransporte_CPipa">
+          <End Type="Sagas.MainModuleModel.Pipa" Role="Pipa" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.EquipoTransporte" Role="EquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pipa">
+              <PropertyRef Name="IdPipa" />
+            </Principal>
+            <Dependent Role="EquipoTransporte">
+              <PropertyRef Name="IdPipa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CEquipoTransporte_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.EquipoTransporte" Role="EquipoTransporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="EquipoTransporte">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COperadorChofer_CTipoOperadorChofer">
+          <End Type="Sagas.MainModuleModel.TipoOperadorChofer" Role="TipoOperadorChofer" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.OperadorChofer" Role="OperadorChofer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoOperadorChofer">
+              <PropertyRef Name="IdTipoOperadorChofer" />
+            </Principal>
+            <Dependent Role="OperadorChofer">
+              <PropertyRef Name="IdTipoOperadorChofer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_COperadorChofer_Usuario">
+          <End Type="Sagas.MainModuleModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.OperadorChofer" Role="OperadorChofer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="OperadorChofer">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPuntoVenta_COperadorChofer">
+          <End Type="Sagas.MainModuleModel.OperadorChofer" Role="OperadorChofer" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.PuntoVenta" Role="PuntoVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OperadorChofer">
+              <PropertyRef Name="IdOperadorChofer" />
+            </Principal>
+            <Dependent Role="PuntoVenta">
+              <PropertyRef Name="IdOperadorChofer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPuntoVenta_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.PuntoVenta" Role="PuntoVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="PuntoVenta">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--<Association Name="FK_RolAccionMovil_Rol">
+          <End Type="Sagas.MainModuleModel.Rol" Role="Rol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.RolAccionMovil" Role="RolAccionMovil" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="RolAccionMovil">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->        
         <!--<Association Name="FK_RolAccionCatalogo_Rol">
           <End Type="Sagas.MainModuleModel.Rol" Role="Rol" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -6909,12 +8166,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
             
               <MappingFragment StoreEntitySet="RolAccion">
-                <ScalarProperty Name="AppCompraGasFinalizarDescarga" ColumnName="AppCompraGasFinalizarDescarga" />
-                <ScalarProperty Name="AppCompraGasIniciarDescarga" ColumnName="AppCompraGasIniciarDescarga" />
-                <ScalarProperty Name="AppCompraEntraGas" ColumnName="AppCompraEntraGas" />
                 <ScalarProperty Name="CompraAtiendeServicioOCompra" ColumnName="CompraAtiendeServicioOCompra" />
                 <ScalarProperty Name="CompraEntraProductoOCompra" ColumnName="CompraEntraProductoOCompra" />
-                <ScalarProperty Name="AppCompraVerOCompra" ColumnName="AppCompraVerOCompra" />
                 <ScalarProperty Name="CompraAutorizarOCompra" ColumnName="CompraAutorizarOCompra" />
                 <ScalarProperty Name="CompraGenerarOCompra" ColumnName="CompraGenerarOCompra" />
                 <ScalarProperty Name="CompraVerOCompra" ColumnName="CompraVerOCompra" />
@@ -6926,11 +8179,22 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 </MappingFragment>
               
                 <MappingFragment StoreEntitySet="RolAccionCatalogo">
-                  <ScalarProperty Name="CatConsultarCentroCosto" ColumnName="CatConsultarCentroCosto" />
-                <ScalarProperty Name="CatEliminarCentroCosto" ColumnName="CatEliminarCentroCosto" />
-                <ScalarProperty Name="CatModificarCentroCosto" ColumnName="CatModificarCentroCosto" />
-                <ScalarProperty Name="CatInsertarCentroCosto" ColumnName="CatInsertarCentroCosto" />
-                <ScalarProperty Name="CatConsultarCuentaContable" ColumnName="CatConsultarCuentaContable" />
+                  <ScalarProperty Name="CatConsultarEquipoTransporte" ColumnName="CatConsultarEquipoTransporte" />
+                <ScalarProperty Name="CatEliminarEquipoTransporte" ColumnName="CatEliminarEquipoTransporte" />
+                <ScalarProperty Name="CatModificarEquipoTransporte" ColumnName="CatModificarEquipoTransporte" />
+                <ScalarProperty Name="CatAsignarEquipoTransporte" ColumnName="CatAsignarEquipoTransporte" />
+                <ScalarProperty Name="CatConsultarPuntoVenta" ColumnName="CatConsultarPuntoVenta" />
+                <ScalarProperty Name="CatEliminarPuntoVenta" ColumnName="CatEliminarPuntoVenta" />
+                <ScalarProperty Name="CatAsignarChoferPuntoVenta" ColumnName="CatAsignarChoferPuntoVenta" />
+                <ScalarProperty Name="CatConsultarCliente" ColumnName="CatConsultarCliente" />
+                <ScalarProperty Name="CatEliminarCliente" ColumnName="CatEliminarCliente" />
+                <ScalarProperty Name="CatModificarCliente" ColumnName="CatModificarCliente" />
+                <ScalarProperty Name="CatInsertarCliente" ColumnName="CatInsertarCliente" />
+                <ScalarProperty Name="CatConsultarCentroCosto" ColumnName="CatConsultarCentroCosto" />
+                  <ScalarProperty Name="CatEliminarCentroCosto" ColumnName="CatEliminarCentroCosto" />
+                  <ScalarProperty Name="CatModificarCentroCosto" ColumnName="CatModificarCentroCosto" />
+                  <ScalarProperty Name="CatInsertarCentroCosto" ColumnName="CatInsertarCentroCosto" />
+                  <ScalarProperty Name="CatConsultarCuentaContable" ColumnName="CatConsultarCuentaContable" />
                   <ScalarProperty Name="CatEliminarCuentaContable" ColumnName="CatEliminarCuentaContable" />
                   <ScalarProperty Name="CatModificarCuentaContable" ColumnName="CatModificarCuentaContable" />
                   <ScalarProperty Name="CatInsertarCuentaContable" ColumnName="CatInsertarCuentaContable" />
@@ -6946,6 +8210,30 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                   <ScalarProperty Name="CatEliminarUsuario" ColumnName="CatEliminarUsuario" />
                   <ScalarProperty Name="CatModificarUsuario" ColumnName="CatModificarUsuario" />
                   <ScalarProperty Name="CatInsertarUsuario" ColumnName="CatInsertarUsuario" />
+                  <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                </MappingFragment>
+              
+                <MappingFragment StoreEntitySet="RolAccionMovil">
+                  <ScalarProperty Name="AppTraspasoPipa" ColumnName="AppTraspasoPipa" />
+                  <ScalarProperty Name="AppTraspasoEstacionCarb" ColumnName="AppTraspasoEstacionCarb" />
+                  <ScalarProperty Name="AppTomaLecturaReporteDelDia" ColumnName="AppTomaLecturaReporteDelDia" />
+                  <ScalarProperty Name="AppTomaLecturaCamionetaCilindro" ColumnName="AppTomaLecturaCamionetaCilindro" />
+                  <ScalarProperty Name="AppTomaLecturaPipa" ColumnName="AppTomaLecturaPipa" />
+                  <ScalarProperty Name="AppTomaLecturaEstacionCarb" ColumnName="AppTomaLecturaEstacionCarb" />
+                  <ScalarProperty Name="AppTomaLecturaAlmacenPral" ColumnName="AppTomaLecturaAlmacenPral" />
+                  <ScalarProperty Name="AppRecargaCamionetaCilindro" ColumnName="AppRecargaCamionetaCilindro" />
+                  <ScalarProperty Name="AppRecargaPipa" ColumnName="AppRecargaPipa" />
+                  <ScalarProperty Name="AppRecargaEstacionCarb" ColumnName="AppRecargaEstacionCarb" />
+                  <ScalarProperty Name="AppCalibracionCamionetaCilindro" ColumnName="AppCalibracionCamionetaCilindro" />
+                  <ScalarProperty Name="AppCalibracionPipa" ColumnName="AppCalibracionPipa" />
+                  <ScalarProperty Name="AppCalibracionEstacionCarb" ColumnName="AppCalibracionEstacionCarb" />
+                  <ScalarProperty Name="AppAutoconsumoPipa" ColumnName="AppAutoconsumoPipa" />
+                  <ScalarProperty Name="AppAutoconsumoEstacionCarb" ColumnName="AppAutoconsumoEstacionCarb" />
+                  <ScalarProperty Name="AppAutoconsumoInventarioGral" ColumnName="AppAutoconsumoInventarioGral" />
+                  <ScalarProperty Name="AppCompraGasFinalizarDescarga" ColumnName="AppCompraGasFinalizarDescarga" />
+                  <ScalarProperty Name="AppCompraGasIniciarDescarga" ColumnName="AppCompraGasIniciarDescarga" />
+                  <ScalarProperty Name="AppCompraEntraGas" ColumnName="AppCompraEntraGas" />
+                  <ScalarProperty Name="AppCompraVerOCompra" ColumnName="AppCompraVerOCompra" />
                   <ScalarProperty Name="IdRol" ColumnName="IdRol" />
                 </MappingFragment>
             </EntityTypeMapping>
@@ -7620,6 +8908,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="RegimenFiscal">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.RegimenFiscal">
               <MappingFragment StoreEntitySet="CRegimenFiscal">
+                <ScalarProperty Name="IdTipoPersona" ColumnName="IdTipoPersona" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="FechaFinVigencia" ColumnName="FechaFinVigencia" />
                 <ScalarProperty Name="FechaInicioVigencia" ColumnName="FechaInicioVigencia" />
@@ -7808,6 +9097,153 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
                 <ScalarProperty Name="IdCAlmacenGasEntrada" ColumnName="IdCAlmacenGasEntrada" />
                 <ScalarProperty Name="IdCAlmacenGasSalida" ColumnName="IdCAlmacenGasSalida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.Cliente">
+              <MappingFragment StoreEntitySet="CCliente">
+                <ScalarProperty Name="IdCuentaContable" ColumnName="IdCuentaContable" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Apellido2" ColumnName="Apellido2" />
+                <ScalarProperty Name="Apellido1" ColumnName="Apellido1" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdRegimenFiscal" ColumnName="IdRegimenFiscal" />
+                <ScalarProperty Name="IdTipoPersona" ColumnName="IdTipoPersona" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteCondicion">
+                <ScalarProperty Name="limiteCreditoDias" ColumnName="limiteCreditoDias" />
+                <ScalarProperty Name="limiteCreditoMonto" ColumnName="limiteCreditoMonto" />
+                <ScalarProperty Name="PorcentDescuento" ColumnName="PorcentDescuento" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteContacto">
+                <ScalarProperty Name="SitioWeb3" ColumnName="SitioWeb3" />
+                <ScalarProperty Name="SitioWeb2" ColumnName="SitioWeb2" />
+                <ScalarProperty Name="SitioWeb1" ColumnName="SitioWeb1" />
+                <ScalarProperty Name="Email3" ColumnName="Email3" />
+                <ScalarProperty Name="Email2" ColumnName="Email2" />
+                <ScalarProperty Name="Email1" ColumnName="Email1" />
+                <ScalarProperty Name="Celular3" ColumnName="Celular3" />
+                <ScalarProperty Name="Celular2" ColumnName="Celular2" />
+                <ScalarProperty Name="Celular1" ColumnName="Celular1" />
+                <ScalarProperty Name="Telefono3" ColumnName="Telefono3" />
+                <ScalarProperty Name="Telefono2" ColumnName="Telefono2" />
+                <ScalarProperty Name="Telefono1" ColumnName="Telefono1" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteCredencial">
+                <ScalarProperty Name="AccesoPortal" ColumnName="AccesoPortal" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteFiscal">
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Rfc" ColumnName="Rfc" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteLegal">
+                <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="RepresentanteLegal" ColumnName="RepresentanteLegal" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClienteLocacion">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.ClienteLocacion">
+              <MappingFragment StoreEntitySet="CClienteLocacion">
+                <ScalarProperty Name="TipoLocacion" ColumnName="TipoLocacion" />
+                <ScalarProperty Name="NumInt" ColumnName="NumInt" />
+                <ScalarProperty Name="NumExt" ColumnName="NumExt" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Colonia" ColumnName="Colonia" />
+                <ScalarProperty Name="CodigoPostal" ColumnName="CodigoPostal" />
+                <ScalarProperty Name="Municipio" ColumnName="Municipio" />
+                <ScalarProperty Name="EstadoProvincia" ColumnName="EstadoProvincia" />
+                <ScalarProperty Name="IdEstadoRep" ColumnName="IdEstadoRep" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            
+              <MappingFragment StoreEntitySet="CClienteLocacionGoogle">
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="location_lng" ColumnName="location_lng" />
+                <ScalarProperty Name="location_lat" ColumnName="location_lat" />
+                <ScalarProperty Name="formatted_address" ColumnName="formatted_address" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EquipoTransporte">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.EquipoTransporte">
+              <MappingFragment StoreEntitySet="CEquipoTransporte">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdPipa" ColumnName="IdPipa" />
+                <ScalarProperty Name="IdCamioneta" ColumnName="IdCamioneta" />
+                <ScalarProperty Name="IdVehiculoUtilitario" ColumnName="IdVehiculoUtilitario" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdEquipoTransporte" ColumnName="IdEquipoTransporte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OperadorChofer">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.OperadorChofer">
+              <MappingFragment StoreEntitySet="COperadorChofer">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdTipoOperadorChofer" ColumnName="IdTipoOperadorChofer" />
+                <ScalarProperty Name="IdOperadorChofer" ColumnName="IdOperadorChofer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PuntoVenta">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.PuntoVenta">
+              <MappingFragment StoreEntitySet="CPuntoVenta">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdOperadorChofer" ColumnName="IdOperadorChofer" />
+                <ScalarProperty Name="IdCAlmacenGas" ColumnName="IdCAlmacenGas" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdPuntoVenta" ColumnName="IdPuntoVenta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoEvento">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.TipoEvento">
+              <MappingFragment StoreEntitySet="CTipoEvento">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Evento" ColumnName="Evento" />
+                <ScalarProperty Name="IdTipoEvento" ColumnName="IdTipoEvento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoOperadorChofer">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.TipoOperadorChofer">
+              <MappingFragment StoreEntitySet="CTipoOperadorChofer">
+                <ScalarProperty Name="EsChofer" ColumnName="EsChofer" />
+                <ScalarProperty Name="EsOperador" ColumnName="EsOperador" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdTipoOperadorChofer" ColumnName="IdTipoOperadorChofer" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>          

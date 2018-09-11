@@ -33,12 +33,8 @@ namespace Sagas.MainModule.Entidades
         public bool CompraVerOCompra { get; set; }
         public bool CompraGenerarOCompra { get; set; }
         public bool CompraAutorizarOCompra { get; set; }
-        public bool AppCompraVerOCompra { get; set; }
         public bool CompraEntraProductoOCompra { get; set; }
         public bool CompraAtiendeServicioOCompra { get; set; }
-        public bool AppCompraEntraGas { get; set; }
-        public bool AppCompraGasIniciarDescarga { get; set; }
-        public bool AppCompraGasFinalizarDescarga { get; set; }
         public bool CatInsertarUsuario { get; set; }
         public bool CatModificarUsuario { get; set; }
         public bool CatEliminarUsuario { get; set; }
@@ -59,6 +55,37 @@ namespace Sagas.MainModule.Entidades
         public bool CatModificarCuentaContable { get; set; }
         public bool CatEliminarCuentaContable { get; set; }
         public bool CatConsultarCuentaContable { get; set; }
+        public bool CatInsertarCliente { get; set; }
+        public bool CatModificarCliente { get; set; }
+        public bool CatEliminarCliente { get; set; }
+        public bool CatConsultarCliente { get; set; }
+        public bool CatAsignarChoferPuntoVenta { get; set; }
+        public bool CatEliminarPuntoVenta { get; set; }
+        public bool CatConsultarPuntoVenta { get; set; }
+        public bool CatAsignarEquipoTransporte { get; set; }
+        public bool CatModificarEquipoTransporte { get; set; }
+        public bool CatEliminarEquipoTransporte { get; set; }
+        public bool CatConsultarEquipoTransporte { get; set; }
+        public bool AppCompraVerOCompra { get; set; }
+        public bool AppCompraEntraGas { get; set; }
+        public bool AppCompraGasIniciarDescarga { get; set; }
+        public bool AppCompraGasFinalizarDescarga { get; set; }
+        public bool AppAutoconsumoInventarioGral { get; set; }
+        public bool AppAutoconsumoEstacionCarb { get; set; }
+        public bool AppAutoconsumoPipa { get; set; }
+        public bool AppCalibracionEstacionCarb { get; set; }
+        public bool AppCalibracionPipa { get; set; }
+        public bool AppCalibracionCamionetaCilindro { get; set; }
+        public bool AppRecargaEstacionCarb { get; set; }
+        public bool AppRecargaPipa { get; set; }
+        public bool AppRecargaCamionetaCilindro { get; set; }
+        public bool AppTomaLecturaAlmacenPral { get; set; }
+        public bool AppTomaLecturaEstacionCarb { get; set; }
+        public bool AppTomaLecturaPipa { get; set; }
+        public bool AppTomaLecturaCamionetaCilindro { get; set; }
+        public bool AppTomaLecturaReporteDelDia { get; set; }
+        public bool AppTraspasoEstacionCarb { get; set; }
+        public bool AppTraspasoPipa { get; set; }
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

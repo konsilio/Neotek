@@ -27,6 +27,7 @@ namespace Sagas.MainModule.Entidades
             this.Calibraciones = new HashSet<AlmacenGasCalibracion>();
             this.TraspasosSalida = new HashSet<AlmacenGasTraspaso>();
             this.TraspasosEntrada = new HashSet<AlmacenGasTraspaso>();
+            this.PuntosVenta = new HashSet<PuntoVenta>();
         }
     
         public short IdCAlmacenGas { get; set; }
@@ -76,5 +77,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<AlmacenGasTraspaso> TraspasosSalida { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasTraspaso> TraspasosEntrada { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PuntoVenta> PuntosVenta { get; set; }
     }
 }
