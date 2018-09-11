@@ -21,7 +21,9 @@ namespace Sagas.MainModule.Entidades
         }
     
         public byte IdTipoOperadorChofer { get; set; }
-        public int Descripcion { get; set; }
+        public string Descripcion { get; set; }
+        public bool EsOperador { get; set; }
+        public bool EsChofer { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
     
