@@ -122,9 +122,12 @@
         <activity
             android:name=".Activity.ReporteActivity"
             android:label="@string/Reporte" />
-        <activity android:name=".Activity.VerReporteActivity"
-            android:label="@string/Reporte"
-        />
+        <activity
+            android:name=".Activity.VerReporteActivity"
+            android:label="@string/Reporte" />
+        <activity android:name=".Activity.RecargaCamionetaActivity"
+            android:label="@string/Recarga_camioneta"
+            />
     </application>
 
 </manifest>
