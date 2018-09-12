@@ -27,10 +27,13 @@ namespace Application.MainModule.Servicios.Mobile
         {
             var adapter = AlmacenLecturaAdapter.FromDTO(liadto);
             var al = AlmacenGasServicio.ObtenerLecturas(liadto.IdCAlmacenGas);
+
             adapter.IdOrden = Orden(al);
             adapter.Fotografias = AlmacenLecturaAdapter.FromDTO(liadto.Imagenes,adapter.IdCAlmacenGas,adapter.IdOrden);
             
             adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final: TipoEventoEnum.Inicial;
+            adapter.EsEncargadoAnden = false;
+            adapter.EsEncargadoPuerta = false;
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;
             
@@ -59,15 +62,22 @@ namespace Application.MainModule.Servicios.Mobile
             var al = AlmacenGasServicio.ObtenerLecturas(lcdto.IdCAlmacenGas);
             int idOrden = Orden(al);
             var adapter = AlmacenLecturaAdapter.FromDTO(lcdto,idOrden);
-            //adapter.IdOrden = Orden(al);
-            adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final : TipoEventoEnum.Inicial;
-            
-            //adapter.Cilindros = AlmacenLecturaAdapter.FromDTO(lcdto.CilindroCantidad,lcdto.IdCilindro, adapter.IdCAlmacenGas, adapter.IdOrden);
 
+            adapter = EvaluarEsEncargadoPuerta(adapter, lcdto);
+
+            adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final : TipoEventoEnum.Inicial;            
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;
 
             return AlmacenGasServicio.InsertarLectura(adapter);
+        }
+
+        private static AlmacenGasTomaLectura EvaluarEsEncargadoPuerta(AlmacenGasTomaLectura alm, LecturaCamionetaDTO lcDto)
+        {
+            alm.EsEncargadoPuerta = lcDto.EsEncargadoPuerta;
+            alm.EsEncargadoAnden = !lcDto.EsEncargadoPuerta;
+
+            return alm;
         }
     }
 }
