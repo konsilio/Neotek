@@ -318,7 +318,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
 
                         "Importe credito: "+
                         "\t $ [{importe-credito}]\n";
-                
+
                 String formato_reporte_camioneta_html = "<body>" +
                         "<h4>Reporte-[{Elemento}]</h4>" +
                         "<div>" +
