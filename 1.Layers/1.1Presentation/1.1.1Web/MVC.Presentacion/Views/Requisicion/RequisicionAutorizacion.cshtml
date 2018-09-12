@@ -1,9 +1,4 @@
-﻿@using MVC.Presentacion.Models.Requisicion;
-@model RequisicionModel
-@{
-
-}
-
+﻿@model MVC.Presentacion.Models.Requisicion.RequisicionAutorizacionModel
 <!DOCTYPE html>
 
 <html>
@@ -12,75 +7,91 @@
     <title>RequisicionAutorizacion</title>
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
     <link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnFinalizar").click(function () {
+                var form = $(this).parent("form");
+                form.attr('action', '<%= Url.RouteUrl(new { Controller = "Requisicion", Action = "Autorizacion" }) %>');
+                form.attr('method', 'post');
+            });
+        });
+    </script>
 </head>
-<body>
-  @using (Html.BeginForm("Autorizacion", "Requisicion", FormMethod.Post))
-  {
-    <section class="content home">
-        <div class="container-fluid">
-            <div class="block-header">
-                <div class="row clearfix">
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>Compras</h2>
-                        <ul class="breadcrumb padding-0">
-                            <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item active">
-                                <label id="lblRuta">Requisición / Nueva </label>
-                            </li>
-                        </ul>
+<body style="padding-top:10px">
+    @using (Html.BeginForm("Autorizacion", "Requisicion", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.IdRequisicion)
+        @Html.HiddenFor(m => m.IdUsuarioSolicitante)
+        @Html.HiddenFor(m => m.RequisicionEstatus)
+        @Html.HiddenFor(m => m.IdEmpresa)
+        @Html.HiddenFor(m => m.MotivoRequisicion)
+        @Html.HiddenFor(m => m.RequeridoEn)
+        @Html.HiddenFor(m => m.NumeroRequisicion)
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Compras</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item active">
+                                    <label id="lblRuta">Requisición / Nueva </label>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="header">
-                            </div>
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick disabled" data-live-search="true">
-                                                @foreach (var lst in ViewBag.Empresas)
-                                                {
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="card">
+                                <div class="header">
+                                </div>
+                                <div class="body">
+                                    <div class="row clearfix">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" disabled data-live-search="true">
+                                                    @foreach (var lst in ViewBag.Empresas)
+                                                    {
                                                     <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                                }
-                                            </select>
+                                                    }
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <label>Número de Requisición:</label>&nbsp;
-                                                <Label ID="lblIdRequisicion">@Model.NumeroRequisicion</Label>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <label>Número de Requisición:</label>&nbsp;
+                                                    <Label>@Model.NumeroRequisicion</Label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row clearfix z-index" id="divCamposRequi">
-                                    <div class="col-lg-3">
-                                        <b>Fecha requerida:</b>
-                                        <input type="text" value="@Model.FechaRequerida" class="form-control" />
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <b>Solicitante:</b>
-                                        <select id="ddlSoliciante" name="IdUsuarioSolicitante" class="form-control show-tick disabled" data-live-search="true">
-                                            @foreach (var lst in ViewBag.Usuarios)
-                                            {
+                                    <div class="row clearfix z-index" id="divCamposRequi">
+                                        <div class="col-lg-3">
+                                            <b>Fecha requerida:</b>
+                                            <input type="text" value="@Model.FechaRequerida" class="form-control" disabled />
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <b>Solicitante:</b>
+                                            <select id="ddlSoliciante" name="IdUsuarioSolicitante" class="form-control show-tick" disabled data-live-search="true">
+                                                @foreach (var lst in ViewBag.Usuarios)
+                                                {
                                                 <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1</option>
-                                            }
-                                        </select>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <b>Motivo de compra:</b>
+                                            <textarea name="MotivoRequisicion" class="form-control  no-resize" disabled placeholder="Motivo de la compra..." rows="4">@Model.MotivoRequisicion</textarea>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <b>Se requiere en:</b>
+                                            <textarea name="RequeridoEn" class="form-control no-resize" disabled placeholder="Se requiere en..." rows="4">@Model.RequeridoEn</textarea>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-3">
-                                        <b>Motivo de compra:</b>
-                                        <textarea name="MotivoRequisicion" class="form-control  no-resize disabled" placeholder="Motivo de la compra..." rows="4">@Model.MotivoRequisicion</textarea>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <b>Se requiere en:</b>
-                                        <textarea name="RequeridoEn" class="form-control no-resize disabled" placeholder="Se requiere en..." rows="4">@Model.RequeridoEn</textarea>
-                                    </div>
-                                </div>
-                                @if (ViewBag.MensajeError != null && !ViewBag.MensajeError.Equal(string.Empty))
-                                {
+                                    @if (ViewBag.MensajeError != null && !ViewBag.MensajeError.Equal(string.Empty))
+                                    {
                                     <div class="row clearfix">
                                         <div id="divCampos" class="container">
                                             <div class="alert alert-danger">
@@ -93,47 +104,102 @@
                                             </div>
                                         </div>
                                     </div>
-                                }
+                                    }
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12">
+                                            <h2 class="card-inside-title">Opinión de Almacen</h2>
+                                            <div class="row clearfix">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            @*<textarea Rows="4" name="OpinionAlmacen" class="form-control no-resize" placeholder="Porfavor escriba su opinion">@Model.OpinionAlmacen</textarea>*@
+                                                            @Html.TextAreaFor(m => m.OpinionAlmacen, new { @class = "form-control no-resize", @Rows = 4, @disabled = true })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="table-responsive">
+                                            <table id="ListaProductos" cass="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <td><b>Tipo</b></td>
+                                                        <td><b>Producto</b></td>
+                                                        <td><b>Cantidad</b></td>
+                                                        <td><b>Unidad</b></td>
+                                                        <td><b>Aplicación</b></td>
+                                                        <td><b>Centro de Costo</b></td>
+                                                        <td><b>Existencias</b></td>
+                                                        <td><b>Autoriza entrega</b></td>
+                                                        <td><b>Requiere comprar</b></td>
+                                                        <td><b>Autoriza Compra</b></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @Html.EditorFor(x => x.Productos)
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-lg-4 col-md-8 text-center">
+                                            <a href="@Url.Action("Requisiciones", "Requisicion")" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
+                                                Regresar
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-4 col-md-8 text-center">
+                                            <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
+                                                Cancelar
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-4 col-md-8 text-center">
+                                            <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round @Convert.ToBoolean(ViewBag.EsNueva) ? 'disabled' : ''">
+                                                Finalizar
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="body">
-                        <div class="col-sm-12">
-                            <textarea name="MotivoCancela" class="form-control" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></textarea>
+        </section>
+        <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="body">
+                            <div class="col-sm-12">
+                                <textarea name="MotivoCancela" class="form-control" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></textarea>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" class="btn btn-raised btn-primary btn-round" value="Cancelar" formaction="Cancelar" />
-                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm margin-0" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" value="Si" formaction="Revision" class="btn btn-raised btn-primary btn-round waves-effect" />
-                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-raised btn-primary btn-round" value="Cancelar" formaction="Cancelar" />
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-  }
+        <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm margin-0" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Si" id="btnFinalizar" class="btn btn-raised btn-primary btn-round waves-effect" />
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </body>
 </html>

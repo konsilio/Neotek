@@ -278,55 +278,11 @@
                                             </div>
                                         </div>
                                     }
-                                    @if (Model.RequisicionAutorizacion != null)
-                                    {
-                                        <div class="row clearfix">
-                                            <div class="table-responsive">
-                                                <table cass="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <td><b>Tipo</b></td>
-                                                            <td><b>Producto</b></td>
-                                                            <td><b>Cantidad</b></td>
-                                                            <td><b>Unidad</b></td>
-                                                            <td><b>Aplicación</b></td>
-                                                            <td><b>Centro de Costo</b></td>
-                                                            <td><b>Existencias</b></td>
-                                                            <td><b>Autoriza entrega</b></td>
-                                                            <td><b>Requiere comprar</b></td>
-                                                            <td><b>Autoriza Compra</b></td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var prod in Model.RequisicionAutorizacion.ListaProductos)
-                                                        {
-                                                            <tr>
-                                                                <td>@prod.TipoProducto</td>
-                                                                <td>@prod.Producto</td>
-                                                                <td>@prod.Cantidad</td>
-                                                                <td>@prod.Unidad</td>
-                                                                <td>@prod.Aplicacion</td>
-                                                                <td>@prod.CentroCosto</td>
-                                                                <td>@prod.CantidadAlmacenActual</td>
-                                                                <td>@Html.CheckBoxFor(x => x.RequisicionAutorizacion.ListaProductos[prod.IdProducto].AutorizaEntrega)</td>
-                                                                <td>@prod.CantidadAComprar</td>
-                                                                <td>@Html.CheckBoxFor(x => x.RequisicionAutorizacion.ListaProductos[prod.IdProducto].AutorizaCompra)</td>
-                                                            </tr>
-                                                        }
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    }
+                                   
                                     @if (ViewBag.reqGrid != null)
                                     {
                                         <Label id="reqGrid" class="alert-danger">ViewBag.reqGrid</Label>
-                                    }
-                                    @if (Model.RequisicionEstatus.Equals(RequisicionEstatusEnum.Creada))
-                                    {
-                                      
-                                    }
+                                    }                                   
                                     <div class="row clearfix">
                                         <div class="col-lg-4 col-md-8 text-center">
                                             <a href="@Url.Action("Requisiciones", "Requisicion")" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">

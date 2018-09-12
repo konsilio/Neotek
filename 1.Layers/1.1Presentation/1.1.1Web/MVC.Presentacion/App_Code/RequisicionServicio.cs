@@ -233,31 +233,41 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
         #region Autorizar Requisicion
-        public static RespuestaDTO FinalizarAutorizacion(RequisicionModel model, string _tok)
+        public static RequisicionAutorizacionModel RequisicionAutorizacion(int idReq, byte estatus, string tkn)
         {
-
-            if (ValidarAutorizacion(model.RequisicionAutorizacion))
+            var _reqRev = BuscarRequisicionByIdRequiAuto(idReq, tkn);
+            return new RequisicionAutorizacionModel()
             {
-                var _resp = ActualizarRequisicionAutorizacion(CrearAut(model.RequisicionAutorizacion, _tok), _tok);
-                if (_resp.Exito)
-                {
-                    return new RespuestaDTO { Exito = true, Id = _resp.IdRequisicion };
-                }
-                else
-                {
-                    return new RespuestaDTO { Exito = false, Mensaje = _resp.Mensaje };
-                }
-            }
-            else
-            {
-                return new RespuestaDTO { Exito = false, Mensaje = Error.R0012 };
-            }
+                IdEmpresa = _reqRev.IdEmpresa,
+                IdRequisicion = _reqRev.IdRequisicion,
+                NumeroRequisicion = _reqRev.NumeroRequisicion,
+                MotivoRequisicion = _reqRev.MotivoRequisicion,
+                RequeridoEn = _reqRev.RequeridoEn,
+                FechaRequerida = _reqRev.FechaRequerida,
+                IdUsuarioSolicitante = _reqRev.IdUsuarioSolicitante,
+                RequisicionEstatus = _reqRev.IdRequisicionEstatus,
+                Productos = _reqRev.ListaProductos,
+                OpinionAlmacen = _reqRev.OpinionAlmacen
+            };
         }
-        private static List<RequisicionProdAutPutDTO> GenerarAutorizados(RequisicionAutorizacionDTO dto)
+        public static RespuestaDTO FinalizarAutorizacion(RequisicionAutorizacionModel model, string _tok)
         {
-            //int definirStatus = 0;
+            if (ValidarAutorizacion(model.Productos))
+            {
+                var _resp = ActualizarRequisicionAutorizacion(CrearAut(model, _tok), _tok);
+                if (_resp.Exito)                
+                    return new RespuestaDTO { Exito = true, Id = _resp.IdRequisicion };                
+                else                
+                    return new RespuestaDTO { Exito = false, Mensaje = _resp.Mensaje };              
+            }
+            else            
+                return new RespuestaDTO { Exito = false, Mensaje = Error.R0012 };
+            
+        }
+        private static List<RequisicionProdAutPutDTO> GenerarAutorizados(RequisicionAutorizacionModel model)
+        {            
             List<RequisicionProdAutPutDTO> lProd = new List<RequisicionProdAutPutDTO>();
-            foreach (var _row in dto.ListaProductos)
+            foreach (var _row in model.Productos)
             {
                 lProd.Add(new RequisicionProdAutPutDTO
                 {
@@ -270,10 +280,10 @@ namespace MVC.Presentacion.App_Code
             }
             return lProd;
         }
-        private static bool ValidarAutorizacion(RequisicionAutorizacionDTO dto)
+        private static bool ValidarAutorizacion(List<RequisicionProductoAutorizacionDTO> list)
         {
             bool correcto = true;
-            foreach (var _row in dto.ListaProductos)
+            foreach (var _row in list)
             {
                 if (_row.AutorizaCompra)
                     if (_row.CantidadAComprar > _row.Cantidad)
@@ -281,15 +291,15 @@ namespace MVC.Presentacion.App_Code
             }
             return correcto;
         }
-        private static RequisicionAutPutDTO CrearAut(RequisicionAutorizacionDTO dto, string tkn)
+        private static RequisicionAutPutDTO CrearAut(RequisicionAutorizacionModel model, string tkn)
         {
             RequisicionAutPutDTO _aut = new RequisicionAutPutDTO();
-            _aut.IdRequisicion = dto.IdRequisicion;
-            _aut.NumeroRequisicion = dto.NumeroRequisicion;
+            _aut.IdRequisicion = model.IdRequisicion;
+            _aut.NumeroRequisicion = model.NumeroRequisicion;
             _aut.FechaAutorizacion = DateTime.Today;
-            _aut.IdUsuarioAutorizacion = dto.IdUsuarioSolicitante;
+            _aut.IdUsuarioAutorizacion = model.IdUsuarioSolicitante;
             _aut.IdRequisicionEstatus = RequisicionEstatusEnum.Autorizacion_finalizada;
-            _aut.ListaProductos = GenerarAutorizados(dto);
+            _aut.ListaProductos = GenerarAutorizados(model);
             return _aut;
         }
         private static RespuestaRequisicionDTO ActualizarRequisicionAutorizacion(RequisicionAutPutDTO Req, string tkn)
@@ -297,6 +307,12 @@ namespace MVC.Presentacion.App_Code
             var respuestaReq = new AgenteServicio();
             respuestaReq.ActualizarRequisicionAutorizacion(Req, tkn);
             return respuestaReq._respuestaRequisicion;
+        }
+        public static RequisicionAutorizacionDTO BuscarRequisicionByNumRequiAuto(int numreq, string token)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.BuscarRequisicioAuto(numreq, token);
+            return respuestaReq._requsicionAutorizacion;
         }
         #endregion
         public static RequisicionRevisionModel RequisicionRevision(int idReq, byte estatus, string tkn)

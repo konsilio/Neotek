@@ -15,11 +15,6 @@
                 form.attr('action', '<%= Url.RouteUrl(new { Controller = "Requisicion", Action = "Revisar" }) %>');
                 form.attr('method', 'post');
             });
-            $("#btnGetNextRow").click(function () {
-                var form = $(this).parent("form");
-                form.attr('action', '<%= Url.RouteUrl(new { Controller = "Home", Action = "GetNextRow" }) %>');
-                form.attr('method', 'get');
-            });
         });
     </script>
 </head>
@@ -68,7 +63,7 @@
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <label>Número de Requisición:</label>&nbsp;
-                                                   <label>@Model.NumeroRequisicion</label>
+                                                    <label>@Model.NumeroRequisicion</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -89,7 +84,7 @@
                                         </div>
                                         <div class="col-lg-3">
                                             <b>Motivo de compra:</b>
-                                            <textarea name="MotivoRequisicion" class="form-control  no-resize" disabled placeholder="Motivo de la compra..." rows="4">@Model.MotivoRequisicion</textarea>
+                                            <textarea name="MotivoRequisicion" class="form-control no-resize" disabled placeholder="Motivo de la compra..." rows="4">@Model.MotivoRequisicion</textarea>
                                         </div>
                                         <div class="col-lg-3">
                                             <b>Se requiere en:</b>

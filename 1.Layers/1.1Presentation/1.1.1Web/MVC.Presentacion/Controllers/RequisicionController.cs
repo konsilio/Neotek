@@ -66,22 +66,31 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] != null)
             {
                 string _tkn = Session["StringToken"].ToString();
-                var model = RequisicionServicio.RequisicionRevision(id.Value, estatus.Value, _tkn);              
+                var model = RequisicionServicio.RequisicionRevision(id.Value, estatus.Value, _tkn);
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);               
+                ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
                 return View("RequisicionRevision", model);
             }
             else
                 return View("Index", "Home");
         }
-        public ActionResult RequisicionAutorizacion()
+        public ActionResult RequisicionAutorizacion(int? id, byte? estatus)
         {
-            return View();
+            if (Session["StringToken"] != null)
+            {
+                string _tkn = Session["StringToken"].ToString();
+                var model = RequisicionServicio.RequisicionAutorizacion(id.Value, estatus.Value, _tkn);
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+                ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                return View("RequisicionAutorizacion", model);
+            }
+            else
+                return View("Index", "Home");
         }
         public ActionResult Revision(RequisicionRevisionModel model = null)
         {
             if (Session["StringToken"] != null)
-            {                
+            {
                 string _tkn = Session["StringToken"].ToString();
                 var respuesta = RequisicionServicio.FinalizarRevision(model, _tkn);
                 if (respuesta.Exito)
@@ -92,6 +101,24 @@ namespace MVC.Presentacion.Controllers
                     ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
                     ViewBag.MensajeError = respuesta.MensajesError[0];
                     return View("RequisicionRevision", model);
+                }
+            }
+            else
+                return View("Index", "Home");
+        }
+        public ActionResult Autorizacion(RequisicionAutorizacionModel model = null)
+        {
+            if (Session["StringToken"] != null)
+            {
+                string _tkn = Session["StringToken"].ToString();
+                var respuesta = RequisicionServicio.FinalizarAutorizacion(model, _tkn);
+                if (respuesta.Exito)
+                    return View("Requisiciones", RequisicionServicio.InitRequisiciones(_tkn));
+                else {
+                    ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+                    ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                    ViewBag.MensajeError = respuesta.MensajesError[0];
+                    return View("RequisicionAutorizacion", model);
                 }
             }
             else
@@ -171,6 +198,6 @@ namespace MVC.Presentacion.Controllers
 
             return View("Requisicion", model);
         }
-     
+
     }
 }

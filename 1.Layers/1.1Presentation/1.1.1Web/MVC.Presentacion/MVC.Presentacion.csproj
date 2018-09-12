@@ -255,6 +255,7 @@
     <Compile Include="Models\Requisicion\OrdenCompra\OrdenCompraPorductoDTO.cs" />
     <Compile Include="Models\Requisicion\OrdenCompra\OrdenesCompraModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionAutorizacionModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutPutDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionCancelaDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionDTO.cs" />
@@ -4018,6 +4019,7 @@
     <Content Include="Views\Requisicion\RequisicionAutorizacion.cshtml" />
     <Content Include="Views\OrdenCompra\OrdenCompraAutorizacion.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RequisicionProductoRevisionDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RequisicionProductoAutorizacionDTO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

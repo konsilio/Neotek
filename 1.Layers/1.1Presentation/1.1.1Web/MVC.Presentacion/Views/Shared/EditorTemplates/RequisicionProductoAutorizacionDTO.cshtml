@@ -1,0 +1,17 @@
+﻿@model MVC.Presentacion.Models.Requisicion.RequisicionProductoAutorizacionDTO
+@Html.HiddenFor(m => m.IdProducto)
+@Html.HiddenFor(m => m.CantidadAComprar)
+@Html.HiddenFor(m => m.Cantidad)
+
+<tr>
+    <td>@Model.TipoProducto</td>
+    <td>@Model.Producto</td>
+    <td>@Model.Cantidad</td>
+    <td>@Model.Unidad</td>
+    <td>@Model.Aplicacion</td>
+    <td>@Model.CentroCosto</td>
+    <td>@Model.CantidadAlmacenActual</td>
+    <td>@Html.CheckBoxFor(x => x.AutorizaEntrega, new { @width = "30px",  @height = "30px" })</td>
+    <td>@Html.EditorFor(x => x.CantidadAComprar, new { @class = "form-control" }) </td>
+    <td>@Html.CheckBoxFor(x => x.AutorizaCompra, new { @class = "width: 30px; height: 30px;" })</td>
+</tr>
