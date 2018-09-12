@@ -248,5 +248,20 @@ public class PapeletaSQL extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_IMAGES_PAPELETAS+" WHERE CalveUnica ='"+ClaveOperacion+"'",null);
     }
+
+    /**
+     * Permite retornar todos los registros de la papeleta,
+     * retornara un objeto {@link Cursor} con los resultados de la consulta
+     * @return Objeto {@link Cursor} con las papeletas
+     */
+    public Cursor GetPapeletas(){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_PAPELETAS,
+                null);
+    }
+
+    public Integer EliminarImagenes(String ClaveOperacion){
+        return  this.getWritableDatabase().delete(TABLE_IMAGES_PAPELETAS,
+                "CalveUnica = "+ClaveOperacion,null);
+    }
     //endregion
 }

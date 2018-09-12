@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Presenter;
 import com.example.neotecknewts.sagasapp.Activity.LecturaDatosView;
 import com.example.neotecknewts.sagasapp.Interactor.LecturaDatosInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.LecturaDatosInteractorImpl;
+import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.R;
 
@@ -31,5 +32,17 @@ public class LecturaDatosPresenterImpl implements LecturaDatosPresenter {
     public void onError() {
         lecturaDatosView.hiddeLoadingProgress();
         lecturaDatosView.ErrorMedidores();
+    }
+
+    @Override
+    public void getEstacionesCarburacion(String token) {
+        lecturaDatosView.showLoadingProgress(R.string.message_cargando);
+        lecturaDatosInteractor.getEstacionesCarburacion(token);
+    }
+
+    @Override
+    public void onSuccessGetEstacionesCarburacion(List<EstacionCarburacionDTO> data) {
+        lecturaDatosView.hiddeLoadingProgress();
+        lecturaDatosView.onSuccessEstacionesCarburacion(data);
     }
 }
