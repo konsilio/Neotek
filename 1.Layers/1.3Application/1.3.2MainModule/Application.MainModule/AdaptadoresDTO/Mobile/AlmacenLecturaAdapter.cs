@@ -41,37 +41,22 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return imagenes.ToList().Select(x => FromDTO(x, idAlmEntrGasLec, IdOrden, num++)).ToList();
         }
 
-        public static AlmacenGasTomaLectura FromDTO(LecturaCamionetaDTO lcdto)
+        public static AlmacenGasTomaLectura FromDTO(LecturaCamionetaDTO lcdto,int idOrden)
         {
             return new AlmacenGasTomaLectura()
             {
                 ClaveOperacion = lcdto.ClaveProceso,
                 IdCAlmacenGas = lcdto.IdCAlmacenGas,
-                
+                Cilindros = FromDTO(lcdto.CilindroCantidad, lcdto.IdCilindro,lcdto.IdCAlmacenGas,idOrden)
             };
         }
 
         public static List<AlmacenGasTomaLecturaCilindro> FromDTO(List<decimal> cilindroCantidades,List<short> IdCilindros, short idCAlmacenGas, int idOrden)
         {
-            short num = 0;
+            short num = 1;
             int x = 0;
             List<AlmacenGasTomaLecturaCilindro> list = new List<AlmacenGasTomaLecturaCilindro>();
-            /*for( x = 0; x < IdCilindros.Count; x++)
-            {
-                list.Add(FromDTO(cilindroCantidades[x], IdCilindros[x], idCAlmacenGas,idOrden, num));
-                num++;
-            }*/
-
-            /*x = 0;
-            foreach (var idCilindro in IdCilindros)
-            {
-                list.Add(FromDTO(cilindroCantidades.ElementAt(x), idCilindro, idCAlmacenGas, idOrden, num));
-            }*/
-
-            x = -1;
-            cilindroCantidades.ForEach(y=> list.Add(FromDTO(y, IdCilindros.ElementAt(x++), idCAlmacenGas, idOrden, num)));
-
-            //return cilindroCantidad.ToList().Select(x => FromDTO(x, idCAlmacenGas, idOrden, num++)).ToList();
+            cilindroCantidades.ForEach(y=> list.Add(FromDTO(y, IdCilindros.ElementAt(x++), idCAlmacenGas, idOrden, num++)));
             return list;
         }
 
@@ -83,8 +68,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdCAlmacenGas = idAlmEntrGasLec,
                 IdOrden = IdOrden,
                 IdOrdenCilindro = numOrden,
+                IdCilindro = idCilindro,
                 Cantidad = cantidad,
-                
             };
         }
     }

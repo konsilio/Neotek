@@ -20,6 +20,6 @@ namespace Sagas.MainModule.Entidades
         public int IdCilindro { get; set; }
     
         public virtual AlmacenGasRecarga Recarga { get; set; }
-        public virtual CAlmacenGasCilindro CAlmacenGasCilindro { get; set; }
+        public virtual UnidadAlmacenGasCilindro UnidadAlmacenGasCilindro { get; set; }
     }
 }

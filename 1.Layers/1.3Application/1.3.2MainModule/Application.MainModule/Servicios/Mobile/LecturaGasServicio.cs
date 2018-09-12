@@ -55,13 +55,14 @@ namespace Application.MainModule.Servicios.Mobile
 
         public static RespuestaDto Lectura(LecturaCamionetaDTO lcdto,bool finalizar = false)
         {
-            var adapter = AlmacenLecturaAdapter.FromDTO(lcdto);
+            
             var al = AlmacenGasServicio.ObtenerLecturas(lcdto.IdCAlmacenGas);
-
-            adapter.IdOrden = Orden(al);
+            int idOrden = Orden(al);
+            var adapter = AlmacenLecturaAdapter.FromDTO(lcdto,idOrden);
+            //adapter.IdOrden = Orden(al);
             adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final : TipoEventoEnum.Inicial;
             
-            adapter.Cilindros = AlmacenLecturaAdapter.FromDTO(lcdto.CilindroCantidad,lcdto.IdCilindro, adapter.IdCAlmacenGas, adapter.IdOrden);
+            //adapter.Cilindros = AlmacenLecturaAdapter.FromDTO(lcdto.CilindroCantidad,lcdto.IdCilindro, adapter.IdCAlmacenGas, adapter.IdOrden);
 
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;

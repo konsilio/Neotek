@@ -22,6 +22,6 @@ namespace Sagas.MainModule.Entidades
         public bool EsPuerta { get; set; }
     
         public virtual AlmacenGasTomaLectura TomaLectura { get; set; }
-        public virtual CAlmacenGasCilindro Cilindro { get; set; }
+        public virtual UnidadAlmacenGasCilindro Cilindro { get; set; }
     }
 }

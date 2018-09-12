@@ -147,9 +147,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         /// Enlista todos los Almacenes de gas cilindro
         /// </summary>
         /// <returns></returns>
-        public List<CAlmacenGasCilindro> ListaAlmacenCilindro()
+        public List<UnidadAlmacenGasCilindro> ListaAlmacenCilindro()
         {
-            return uow.Repository<CAlmacenGasCilindro>().GetAll().ToList();
+            return uow.Repository<UnidadAlmacenGasCilindro>().GetAll().ToList();
         }
     }
 }
