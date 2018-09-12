@@ -38,5 +38,6 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<AlmacenGasRecargaCilindro> Recargas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasTomaLecturaCilindro> TomasLectura { get; set; }
+        public virtual Empresa Empresa { get; set; }
     }
 }
