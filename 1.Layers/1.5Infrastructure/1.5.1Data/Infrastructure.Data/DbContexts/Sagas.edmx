@@ -208,6 +208,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto'
           </Key>
           <Property Name="IdAlmacenGasRecarga" Type="int" Nullable="false" />
           <Property Name="IdOrden" Type="int" Nullable="false" />
+          <Property Name="IdCilindro" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="decimal" Precision="18" Scale="4" Nullable="false" />
         </EntityType>
         <EntityType Name="AlmacenGasRecargaFoto">
@@ -246,7 +247,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto'
           <Property Name="IdCAlmacenGas" Type="smallint" Nullable="false" />
           <Property Name="IdOrden" Type="int" Nullable="false" />
           <Property Name="IdOrdenCilindro" Type="smallint" Nullable="false" />
+          <Property Name="IdCilindro" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="EsPuerta" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="AlmacenGasTomaLecturaFoto">
           <Key>
@@ -445,7 +448,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
             <PropertyRef Name="IdCliente" />
           </Key>
           <Property Name="IdCliente" Type="int" Nullable="false" />
-          <Property Name="PorcentDescuento" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="DescuentoXKilo" Type="decimal" Precision="8" Scale="4" Nullable="false" />
           <Property Name="limiteCreditoMonto" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="limiteCreditoDias" Type="smallint" Nullable="false" />
         </EntityType>
@@ -1634,6 +1637,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AlmacenGasRecargaCilindro_CAlmacenGasCilindro">
+          <End Role="CAlmacenGasCilindro" Type="Self.CAlmacenGasCilindro" Multiplicity="1" />
+          <End Role="AlmacenGasRecargaCilindro" Type="Self.AlmacenGasRecargaCilindro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAlmacenGasCilindro">
+              <PropertyRef Name="IdCilindro" />
+            </Principal>
+            <Dependent Role="AlmacenGasRecargaCilindro">
+              <PropertyRef Name="IdCilindro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AlmacenGasRecargaFoto_AlmacenGasRecarga">
           <End Role="AlmacenGasRecarga" Type="Self.AlmacenGasRecarga" Multiplicity="1" />
           <End Role="AlmacenGasRecargaFoto" Type="Self.AlmacenGasRecargaFoto" Multiplicity="*" />
@@ -1669,6 +1684,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <Dependent Role="AlmacenGasTomaLecturaCilindro">
               <PropertyRef Name="IdCAlmacenGas" />
               <PropertyRef Name="IdOrden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasTomaLecturaCilindro_CAlmacenGasCilindro">
+          <End Role="CAlmacenGasCilindro" Type="Self.CAlmacenGasCilindro" Multiplicity="1" />
+          <End Role="AlmacenGasTomaLecturaCilindro" Type="Self.AlmacenGasTomaLecturaCilindro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAlmacenGasCilindro">
+              <PropertyRef Name="IdCilindro" />
+            </Principal>
+            <Dependent Role="AlmacenGasTomaLecturaCilindro">
+              <PropertyRef Name="IdCilindro" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3423,6 +3450,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="AlmacenGasRecarga" EntitySet="AlmacenGasRecarga" />
             <End Role="AlmacenGasRecargaCilindro" EntitySet="AlmacenGasRecargaCilindro" />
           </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasRecargaCilindro_CAlmacenGasCilindro" Association="Self.FK_AlmacenGasRecargaCilindro_CAlmacenGasCilindro">
+            <End Role="CAlmacenGasCilindro" EntitySet="CAlmacenGasCilindro" />
+            <End Role="AlmacenGasRecargaCilindro" EntitySet="AlmacenGasRecargaCilindro" />
+          </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasRecargaFoto_AlmacenGasRecarga" Association="Self.FK_AlmacenGasRecargaFoto_AlmacenGasRecarga">
             <End Role="AlmacenGasRecarga" EntitySet="AlmacenGasRecarga" />
             <End Role="AlmacenGasRecargaFoto" EntitySet="AlmacenGasRecargaFoto" />
@@ -3433,6 +3464,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura" Association="Self.FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura">
             <End Role="AlmacenGasTomaLectura" EntitySet="AlmacenGasTomaLectura" />
+            <End Role="AlmacenGasTomaLecturaCilindro" EntitySet="AlmacenGasTomaLecturaCilindro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasTomaLecturaCilindro_CAlmacenGasCilindro" Association="Self.FK_AlmacenGasTomaLecturaCilindro_CAlmacenGasCilindro">
+            <End Role="CAlmacenGasCilindro" EntitySet="CAlmacenGasCilindro" />
             <End Role="AlmacenGasTomaLecturaCilindro" EntitySet="AlmacenGasTomaLecturaCilindro" />
           </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura" Association="Self.FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura">
@@ -5141,6 +5176,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="PuntoVenta" EntitySet="PuntoVenta" />
           </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasRecargaCilindro_CAlmacenGasCilindro" Association="Sagas.MainModuleModel.FK_AlmacenGasRecargaCilindro_CAlmacenGasCilindro">
+            <End Role="CAlmacenGasCilindro" EntitySet="CAlmacenGasCilindro" />
+            <End Role="AlmacenGasRecargaCilindro" EntitySet="AlmacenGasRecargaCilindro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasTomaLecturaCilindro_CAlmacenGasCilindro" Association="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_CAlmacenGasCilindro">
+            <End Role="CAlmacenGasCilindro" EntitySet="CAlmacenGasCilindro" />
+            <End Role="AlmacenGasTomaLecturaCilindro" EntitySet="AlmacenGasTomaLecturaCilindro" />
+          </AssociationSet>
           <!--<AssociationSet Name="FK_RolAccionMovil_Rol" Association="Sagas.MainModuleModel.FK_RolAccionMovil_Rol">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="RolAccionMovil" EntitySet="RolAccionMovil" />
@@ -6106,7 +6149,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="EstacionCarburacion" Relationship="Sagas.MainModuleModel.FK_UnidadAlmacenGas_EstacionCarburacion" FromRole="UnidadAlmacenGas" ToRole="EstacionCarburacion" />
           <NavigationProperty Name="Pipa" Relationship="Sagas.MainModuleModel.FK_UnidadAlmacenGas_Pipa" FromRole="UnidadAlmacenGas" ToRole="Pipa" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_UnidadAlmacenGas_Empresa" FromRole="UnidadAlmacenGas" ToRole="Empresa" />
-          <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="CentroCosto" />
+          <NavigationProperty Name="CentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="CentroCosto" />
           <NavigationProperty Name="AlmacenGas" Relationship="Sagas.MainModuleModel.FK_CAlmacenGas_AlmacenGas" FromRole="UnidadAlmacenGas" ToRole="AlmacenGas" />
           <NavigationProperty Name="TomasLectura" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLectura_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="AlmacenGasTomaLectura" />
           <NavigationProperty Name="RecargasSalida" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="AlmacenGasRecarga" />
@@ -6132,7 +6175,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CapacidadKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="Precio" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <NavigationProperty Name="CamionetaCilindro" Relationship="Sagas.MainModuleModel.FK_CamionetaCilindro_CAlmacenGasCilindro" FromRole="CAlmacenGasCilindro" ToRole="CamionetaCilindro" />
-          <NavigationProperty Name="CCentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CAlmacenGasCilindro" FromRole="CAlmacenGasCilindro" ToRole="CentroCosto" />
+          <NavigationProperty Name="CentroCosto" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CAlmacenGasCilindro" FromRole="CAlmacenGasCilindro" ToRole="CentroCosto" />
+          <NavigationProperty Name="Recargas" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecargaCilindro_CAlmacenGasCilindro" FromRole="CAlmacenGasCilindro" ToRole="AlmacenGasRecargaCilindro" />
+          <NavigationProperty Name="TomasLectura" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_CAlmacenGasCilindro" FromRole="CAlmacenGasCilindro" ToRole="AlmacenGasTomaLecturaCilindro" />
         </EntityType>
         <EntityType Name="TipoUnidadAlmacenGas">
           <Key>
@@ -7182,8 +7227,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdCAlmacenGas" Type="Int16" Nullable="false" />
           <Property Name="IdOrden" Type="Int32" Nullable="false" />
           <Property Name="IdOrdenCilindro" Type="Int16" Nullable="false" />
+          <Property Name="IdCilindro" Type="Int32" Nullable="false" />          
           <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="EsPuerta" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="TomaLectura" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura" FromRole="AlmacenGasTomaLecturaCilindro" ToRole="AlmacenGasTomaLectura" />
+          <NavigationProperty Name="Cilindro" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_CAlmacenGasCilindro" FromRole="AlmacenGasTomaLecturaCilindro" ToRole="CAlmacenGasCilindro" />
         </EntityType>
         <EntityType Name="AlmacenGasTomaLecturaFoto">
           <Key>
@@ -7272,6 +7320,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdOrden" Type="Int32" Nullable="false" />
           <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <NavigationProperty Name="Recarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecargaCilindro_AlmacenGasRecarga" FromRole="AlmacenGasRecargaCilindro" ToRole="AlmacenGasRecarga" />
+          <Property Name="IdCilindro" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CAlmacenGasCilindro" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecargaCilindro_CAlmacenGasCilindro" FromRole="AlmacenGasRecargaCilindro" ToRole="CAlmacenGasCilindro" />
         </EntityType>
         <EntityType Name="AlmacenGasRecargaFoto">
           <Key>
@@ -7569,7 +7619,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
           <!--Name="CClienteCondicion-->
-          <Property Name="PorcentDescuento" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="DescuentoXKilo" Type="Decimal" Nullable="false" Precision="8" Scale="4" />
           <Property Name="limiteCreditoMonto" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="limiteCreditoDias" Type="Int16" Nullable="false" />
           <!--Name="CClienteContacto"-->
@@ -7603,7 +7653,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="TipoPersonaFiscal" Relationship="Sagas.MainModuleModel.FK_CCliente_CTipoPersona" FromRole="Cliente" ToRole="TipoPersona" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CCliente_Empresa" FromRole="Cliente" ToRole="Empresa" />
           <NavigationProperty Name="Locaciones" Relationship="Sagas.MainModuleModel.FK_CClienteLocacion_CCliente" FromRole="Cliente" ToRole="ClienteLocacion" />          
-          <NavigationProperty Name="CuentaContable" Relationship="Sagas.MainModuleModel.FK_CCliente_CCuentaContable" FromRole="Cliente" ToRole="CuentaContable" />
+          <NavigationProperty Name="CuentaContable" Relationship="Sagas.MainModuleModel.FK_CCliente_CCuentaContable" FromRole="Cliente" ToRole="CuentaContable" />          
           <!--<NavigationProperty Name="CClienteCondicion" Relationship="Sagas.MainModuleModel.FK_CClienteCondicion_CCliente" FromRole="CCliente" ToRole="CClienteCondicion" />
           <NavigationProperty Name="CClienteContacto" Relationship="Sagas.MainModuleModel.FK_CClienteContacto_CCliente" FromRole="CCliente" ToRole="CClienteContacto" />
           <NavigationProperty Name="CClienteCredencial" Relationship="Sagas.MainModuleModel.FK_CClienteCredencial_CCliente" FromRole="CCliente" ToRole="CClienteCredencial" />
@@ -8012,6 +8062,30 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="PuntoVenta">
               <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasRecargaCilindro_CAlmacenGasCilindro">
+          <End Type="Sagas.MainModuleModel.CAlmacenGasCilindro" Role="CAlmacenGasCilindro" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasRecargaCilindro" Role="AlmacenGasRecargaCilindro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAlmacenGasCilindro">
+              <PropertyRef Name="IdCilindro" />
+            </Principal>
+            <Dependent Role="AlmacenGasRecargaCilindro">
+              <PropertyRef Name="IdCilindro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasTomaLecturaCilindro_CAlmacenGasCilindro">
+          <End Type="Sagas.MainModuleModel.CAlmacenGasCilindro" Role="CAlmacenGasCilindro" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasTomaLecturaCilindro" Role="AlmacenGasTomaLecturaCilindro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAlmacenGasCilindro">
+              <PropertyRef Name="IdCilindro" />
+            </Principal>
+            <Dependent Role="AlmacenGasTomaLecturaCilindro">
+              <PropertyRef Name="IdCilindro" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8939,6 +9013,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasTomaLecturaCilindro">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasTomaLecturaCilindro">
               <MappingFragment StoreEntitySet="AlmacenGasTomaLecturaCilindro">
+                <ScalarProperty Name="EsPuerta" ColumnName="EsPuerta" />
+                <ScalarProperty Name="IdCilindro" ColumnName="IdCilindro" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="IdOrdenCilindro" ColumnName="IdOrdenCilindro" />
                 <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
@@ -8981,6 +9057,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasRecargaCilindro">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasRecargaCilindro">
               <MappingFragment StoreEntitySet="AlmacenGasRecargaCilindro">
+                <ScalarProperty Name="IdCilindro" ColumnName="IdCilindro" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
                 <ScalarProperty Name="IdAlmacenGasRecarga" ColumnName="IdAlmacenGasRecarga" />
@@ -9100,9 +9177,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
             
               <MappingFragment StoreEntitySet="CClienteCondicion">
+                <ScalarProperty Name="DescuentoXKilo" ColumnName="DescuentoXKilo" />
                 <ScalarProperty Name="limiteCreditoDias" ColumnName="limiteCreditoDias" />
                 <ScalarProperty Name="limiteCreditoMonto" ColumnName="limiteCreditoMonto" />
-                <ScalarProperty Name="PorcentDescuento" ColumnName="PorcentDescuento" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
               </MappingFragment>
             

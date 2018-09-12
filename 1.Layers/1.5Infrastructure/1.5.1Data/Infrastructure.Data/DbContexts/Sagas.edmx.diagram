@@ -242,6 +242,8 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CPuntoVenta_COperadorChofer" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CPuntoVenta_Empresa" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasRecargaCilindro_CAlmacenGasCilindro" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_CAlmacenGasCilindro" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
