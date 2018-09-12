@@ -101,6 +101,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        public List<UnidadAlmacenGas> BuscarTodosEstacionCarburacion(short idEmpresa)
+        {
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                       && x.Activo && x.IdEstacionCarburacion!=null).ToList();
+        }
+
         public List<AlmacenGas> BuscarTodos(short idEmpresa)
         {
             return uow.Repository<AlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)

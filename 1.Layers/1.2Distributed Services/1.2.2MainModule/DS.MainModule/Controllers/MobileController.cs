@@ -120,5 +120,18 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarTomaDeLecturaCamioneta(lfcdto), Request);
         }
+        /// <summary>
+        /// Permite obtener el catalogo de eestaciones filtrando por el tipo 
+        /// </summary>
+        /// <param name="EsEstacion">Es una estacion</param>
+        /// <param name="EsAlmacen">Es un almacen</param>
+        /// <param name="EsPipa">Es una pipa</param>
+        /// <param name="EsCamioneta">Es una camioneta</param>
+        /// <returns></returns>
+        [Route("catalogos/almacenes/{esEstacion}/{esAlmacen}/{esPipa}/{esCamioneta}")]
+        public HttpResponseMessage GetCatalogosAlmacenes(bool esEstacion,bool esAlmacen,bool esPipa,bool esCamioneta)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.ConsultaAlmacenes( esEstacion,  esAlmacen,  esPipa,  esCamioneta),Request);
+        }
     }
 }
