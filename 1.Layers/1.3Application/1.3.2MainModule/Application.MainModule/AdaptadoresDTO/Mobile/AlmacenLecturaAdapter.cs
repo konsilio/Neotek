@@ -72,5 +72,17 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Cantidad = cantidad,
             };
         }
+        
+        public static DatosTomaLecturaDto ToDto(int? P5000, decimal PorcentMedidor, List<UnidadAlmacenGas> alms, List<TipoMedidorUnidadAlmacenGas> meds, List<UnidadAlmacenGasCilindro> cils)
+        {
+            return new DatosTomaLecturaDto()
+            {   
+                CantidadP5000 = P5000,
+                PorcentajeMedidor = PorcentMedidor,
+                Almacenes = AlmacenAdapter.ToDto(alms),
+                Medidores = TipoMedidorAdapter.ToDto(meds),
+                Cilindros = AlmacenAdapter.ToDto(cils),
+            };
+        }
     }
 }

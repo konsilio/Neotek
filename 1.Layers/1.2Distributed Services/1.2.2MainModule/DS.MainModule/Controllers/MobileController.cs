@@ -128,10 +128,10 @@ namespace DS.MainModule.Controllers
         /// <param name="EsPipa">Es una pipa</param>
         /// <param name="EsCamioneta">Es una camioneta</param>
         /// <returns></returns>
-        [Route("catalogos/almacenes/{esEstacion}/{esAlmacen}/{esPipa}/{esCamioneta}")]
-        public HttpResponseMessage GetCatalogosAlmacenes(bool esEstacion,bool esAlmacen,bool esPipa,bool esCamioneta)
+        [Route("catalogos/almacenes/{esAlmacen}/{esEstacion}/{esPipa}/{esCamioneta}/{esFinalizar}")]
+        public HttpResponseMessage GetDatosTomaLectura(bool esAlmacen, bool esEstacion, bool esPipa,bool esCamioneta, bool esFinalizar = false)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.ConsultaAlmacenes( esEstacion,  esAlmacen,  esPipa,  esCamioneta),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.ConsultaDatosTomaLectura(esAlmacen, esEstacion, esPipa, esCamioneta, esFinalizar),Request);
         }
     }
 }

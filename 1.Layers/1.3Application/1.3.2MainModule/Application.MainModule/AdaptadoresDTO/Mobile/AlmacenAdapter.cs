@@ -204,12 +204,30 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new AlmacenDto()
             {
                 IdAlmacenGas = alm.IdCAlmacenGas,
+                IdTipoMedidor = alm.IdTipoMedidor,
                 NombreAlmacen= AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(alm),
+                CantidadP5000 = alm.P5000Actual,
+                PorcentajeMedidor = alm.PorcentajeActual,
+                Cilindros = alm.Camioneta != null ?  : null,
             };
         }
         public static List<AlmacenDto> ToDto(List<UnidadAlmacenGas> alm)
         {
             return alm.ToList().Select(x => ToDto(x)).ToList();
+        }
+
+        public static CilindroDto ToDto(UnidadAlmacenGasCilindro alm)
+        {
+            return new CilindroDto()
+            {
+                IdCilindro = alm.IdCilindro,
+                CapacidadKg = alm.CapacidadKg.ToString(),
+                Cantidad = alm.Cantidad,
+            };
+        }
+        public static List<CilindroDto> ToDto(List<UnidadAlmacenGasCilindro> alms)
+        {
+            return alms.ToList().Select(x => ToDto(x)).ToList();
         }
     }
 }

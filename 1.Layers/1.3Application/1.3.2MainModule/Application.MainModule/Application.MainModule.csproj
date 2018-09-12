@@ -119,6 +119,8 @@
     <Compile Include="DTOs\Compras\OrdenCompraProductoDTO.cs" />
     <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />
     <Compile Include="DTOs\Compras\RequisicionOCDTO.cs" />
+    <Compile Include="DTOs\Mobile\CilindroDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosTomaLecturaDto.cs" />
     <Compile Include="DTOs\Mobile\LecturaAlmacenDto.cs" />
     <Compile Include="DTOs\Mobile\LecturaCamionetaDTO.cs" />
     <Compile Include="DTOs\Mobile\LecturaDTO.cs" />
