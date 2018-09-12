@@ -63,7 +63,7 @@
         }
     }
 </script>
-<body onload='filtrarProd()'>
+<body style="padding-top:10px" onload='filtrarProd()'>
     @using (Html.BeginForm("CrearRequisicion", "Requisicion", FormMethod.Post))
     {
         <section class="content home">
@@ -109,8 +109,11 @@
                                     <div class="row clearfix z-index" id="divCamposRequi">
                                         <div class="col-lg-3">
                                             <b>Fecha requerida:</b>
-                                            @Html.TextBoxFor(c => c.FechaRequerida, new { id = "datepicker" });
-                                        </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+                                                @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })
+                                                </div>
+                                            </div>
                                         <div class="col-lg-3">
                                             <b>Solicitante:</b>
                                             <select id="ddlSoliciante" name="IdUsuarioSolicitante" class="form-control show-tick" @EnabledAdminCentral data-live-search="true">
@@ -371,7 +374,6 @@
 <!-- Bootstrap Material Datetime Picker Plugin Js -->
 <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 <script src="~/assets/plugins/bootstrap-select/css/bootstrap-select.css"></script>
-
 <script src="~/assets/js/pages/forms/basic-form-elements.js"></script>
 <script src="~/assets/js/pages/forms/advanced-form-elements.js"></script>
 

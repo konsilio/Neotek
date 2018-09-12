@@ -3,7 +3,7 @@
 @{
     string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdminCentral).Equals(false) ? "disabled" : "";
 }
-@using (Html.BeginForm("OrdenCompra", "OrdenCompra", FormMethod.Post))
+@using (Html.BeginForm("Ordenes", "OrdenCompra", FormMethod.Post))
 {
     <section class="content home">
         <div class="container-fluid">

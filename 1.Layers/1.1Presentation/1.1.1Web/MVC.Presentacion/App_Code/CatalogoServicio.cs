@@ -16,31 +16,7 @@ namespace MVC.Presentacion.App_Code
     public static class CatalogoServicio
     {
       
-        #region Empresas
-        //public bool create(EmpresaDTO Objemp)
-        //{
-        //    try
-        //    {
-        //        //DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(EmpresaDTO));
-        //        //MemoryStream mem = new MemoryStream();
-        //        //ser.WriteObject(mem, Objemp);
-        //        //string data = Encoding.UTF8.GetString(mem.ToArray(), 0, (int)mem.Length);
-        //        //WebClient webClient = new WebClient();
-        //        //webClient.Headers["Content-type"] = "application/json";
-        //        //webClient.Encoding = Encoding.UTF8;
-        //        //webClient.UploadString(_URL + "create", "POST", data);
-
-        //        //return true;
-        //        var agente = new AgenteServicio();
-        //        agente.GuardarEmpresaNueva(Objemp);
-
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
-
+        #region Empresas    
         public static RespuestaDTO create(EmpresaModel cc, string tkn)
         {            
             var agente = new AgenteServicio();
@@ -54,10 +30,7 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarPaises(tkn);
             return agente._listaPaises;
         }
-        
-
-        #endregion
-        #region Empresas
+       
         public static List<EmpresaDTO> Empresas(string tkn)
         {
             var agente = new AgenteServicio();
@@ -106,6 +79,9 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarProductos(Token);
             return agente._listProductos;
         }
+        #endregion
+        #region Proveedores
+
         #endregion
     }
 }

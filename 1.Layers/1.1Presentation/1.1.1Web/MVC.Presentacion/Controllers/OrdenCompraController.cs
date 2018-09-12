@@ -14,7 +14,7 @@ namespace MVC.Presentacion.Controllers
     {
         public ActionResult OrdenCompra(int id)
         {
-            if (Session["SringToken"] != null)
+            if (Session["StringToken"] != null)
             {
                 string tkn = Session["SringToken"].ToString();
                 return View();
@@ -24,14 +24,15 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult Ordenes()
         {
-            if (Session["SringToken"] != null)
+            if (Session["StringToken"] != null)
             {
-                string tkn = Session["SringToken"].ToString();
+                string tkn = Session["StringToken"].ToString();
                 ViewBag.EsAdminCentral = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
                 return View(OrdenCompraServicio.InitOrdenesCompra(tkn));
             }
             else
-                return View("Index", "Home");
+                return View("Inicio", "Home");
         }
     }
 }

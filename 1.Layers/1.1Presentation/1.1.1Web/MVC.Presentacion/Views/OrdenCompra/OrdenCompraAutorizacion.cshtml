@@ -1,16 +1,11 @@
-﻿
-@{
-}
-
-<!DOCTYPE html>
-
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>OrdenCompraAutorizacion</title>
 </head>
 <body>
-    
+
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
@@ -72,36 +67,33 @@
                             </div>
                         </div>
                     </div>
-                  
-                        <div class="row clearfix">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <b>Proveedor:</b>&nbsp;
-                                        <label>@ViewBag.NombrePorvedor</label>
-                                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <b>Proveedor:</b>&nbsp;
+                                    <label>@ViewBag.NombrePorvedor</label>
                                 </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <dtp:DateTimePicker ID="dtpFechaEntrada" />
                             </div>
                         </div>
-                    
-                   
-                        <div class="row clearfix">
-                            <div id="divMensajeError" class="container">
-                                <div class="alert alert-danger">
-                                    <div class="alert-icon">
-                                        <i class="zmdi zmdi-block"></i>
-                                    </div>
-                                    <strong>
-                                        <label>@ViewBag.MensajeError</label>
-                                    </strong>
+                        <div class="col-sm-6">
+                            <dtp:DateTimePicker ID="dtpFechaEntrada" />
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
                                 </div>
+                                <strong>
+                                    <label>@ViewBag.MensajeError</label>
+                                </strong>
                             </div>
-                        </div>                    
-                                </div>
-
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
