@@ -481,7 +481,7 @@ namespace MVC.Presentacion.Agente
         {
             using (var client = new HttpClient())
             {
-                RespuestaRequisicionDTO resp = new RespuestaRequisicionDTO();
+                RespuestaDTO resp = new RespuestaDTO();
 
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Clear();
@@ -491,7 +491,7 @@ namespace MVC.Presentacion.Agente
                 {
                     HttpResponseMessage response = await client.PutAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        resp = await response.Content.ReadAsAsync<RespuestaRequisicionDTO>();
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -504,7 +504,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaRequisicion = resp;
+                _respuestaDTO = resp;
             }
         }
         public void RequisicionRevision(int IdRequisicion, string tkn)

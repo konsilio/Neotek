@@ -1,5 +1,5 @@
 ﻿@using MVC.Presentacion.Models.OrdenCompra;
-@model OrdenesCompraModel 
+@model OrdenCompraModel
 <section class="content home">
     <div class="container-fluid">
         <div class="block-header">
@@ -9,7 +9,7 @@
                     <ul class="breadcrumb padding-0">
                         <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                         <li class="breadcrumb-item active">
-                            <asp:Label runat="server" ID="lblRuta" Text="Compras / Ordern de Compra / Nueva "></asp:Label>
+                            <label>Compras / Ordern de Compra / Nueva "</label>
                         </li>
                     </ul>
                 </div>
@@ -18,18 +18,18 @@
                 <div class="row clearfix">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <asp:Label ID="lblNombreEmpresa" runat="server" Text="Nombre de la empresa"></asp:Label>
+                            <label> @Model.NombreEmpresa</label>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <div class="input-group">
                                 <b>Número de Requisición:</b>&nbsp;
-                                <asp:Label runat="server" ID="lblNumRequisicion" Text="R000000000"></asp:Label>
+                                <label> @Model.NumRequisicion</label>
                             </div>
                             <div class="input-group">
                                 <b>Número de Orden de Compra:</b>&nbsp;
-                                <asp:Label runat="server" ID="lblNunOrdenCompra" Text="OC00000000" Visible="false"></asp:Label>
+                                <label>@Model.NumOrdenCompra</label>
                             </div>
                         </div>
                     </div>
@@ -37,919 +37,738 @@
                 <div class="row clearfix">
                     <div class="col-lg-3 col-md-12">
                         <div class="form-group form-float">
-                            <%--Fecha requerida--%>
                             <b>Fecha requerida:</b>
-                            <dtp:DateTimePicker ID="txtFechaRequerida" CssClass="dataTxt" runat="server" Enabled="false" />
+                            <dtp:DateTimePicker ID="txtFechaRequerida" CssClass="dataTxt" Enabled="false" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12">
                         <div class="form-group form-float">
-                            <%--Solicitante--%>
                             <b>Solicitante:</b>
-                            <asp:TextBox runat="server" ID="TxtSolicitante" CssClass="form-control" data-live-search="true" Enabled="false" />
-
+                            <input name="Solicitante" value="@Model.Solicitante" class="form-control disabled" />
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12 form-float">
                         <div class="form-group">
-                            <%--Motivo de compra--%>
                             <b>Motivo de compra:</b>
-                            <asp:TextBox runat="server" ID="txtMotivoCompra" CssClass="form-control" placeholder="Motivo de la compra..." TextMode="MultiLine" Enabled="false"></asp:TextBox>
+                            <textarea name="MotivoCompra" class="form-control  no-resize disabled" placeholder="Error de carga" rows="4">@Model.MotivoCompra</textarea>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-12">
                         <div class="form-group form-float">
                             <%--Se requiere en--%>
                             <b>Se requiere en:</b>
-                            <asp:TextBox runat="server" ID="txtRequeridoEn" CssClass="form-control" placeholder="Se requiere en..." TextMode="MultiLine" Enabled="false"></asp:TextBox>
+                            <textarea name="RequeridoEn" class="form-control  no-resize disabled" placeholder="Error de carga" rows="4">@Model.RequeridoEn</textarea>
                         </div>
                     </div>
                 </div>
-                <div class="row clearfix" runat="server" id="divProveedor">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <b>Proveedor:</b>&nbsp;
-                                <asp:Label runat="server" ID="lblProveedor" Text="Nombre Proveedor"></asp:Label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <dtp:DateTimePicker ID="dtpFechaEntrada" runat="server" Visible="false" />
-                    </div>
-                </div>
-                <div class="row clearfix">
-                    <div id="divMensajeError" runat="server" visible="false" class="container">
-                        <div class="alert alert-danger">
-                            <div class="alert-icon">
-                                <i class="zmdi zmdi-block"></i>
-                            </div>
-                            <strong>
-                                <asp:Label ID="lblErrorCampos" runat="server" Text="" />
-                            </strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="body">
-                    <div class="row clearfix" runat="server" id="divCrearOC">
-                        <div class="table-responsive">
-                            <asp:GridView CssClass="table table-hover" runat="server" OnRowEditing="dgListaproductos_RowEditing" ID="dgListaproductos" Width="100%" AutoGenerateColumns="false" OnRowDataBound="dgListaproductos_RowDataBound">
-                                <Columns>
-                                    <asp:TemplateField>
-                                        <%--0 Tipo de compra--%>
-                                        <HeaderTemplate>
-                                            <b>Tipo</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto") %>' />
-                                        </ItemTemplate>
-                                        <ItemStyle CssClass="text-sm-center" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--1 Producto--%>
-                                        <HeaderTemplate>
-                                            <b>Producto</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Producto") %>' />
-                                            <asp:Label ID="lblidProducto" runat="server" Text='<%# Bind("IdProducto") %>' Visible="false" />
-                                        </ItemTemplate>
-                                        <ItemStyle CssClass="text-sm-center" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--2 Cantidad--%>
-                                        <HeaderTemplate>
-                                            <b>Cantidad</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("CantidadAComprar") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--3 Unidad--%>
-                                        <HeaderTemplate>
-                                            <b>Unidad</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
-                                        </ItemTemplate>
-                                        <ItemStyle CssClass="text-sm-center" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--4 Aplicacion--%>
-                                        <HeaderTemplate>
-                                            <b>Aplicación</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
-                                        </ItemTemplate>
-                                        <ItemStyle CssClass="text-sm-center" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--5 Centro costo--%>
-                                        <HeaderTemplate>
-                                            <b>Centro de costo</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgCentroCosto" runat="server" Text='<%# Bind("CentroCosto") %>' />
-                                            <asp:Label ID="lbldgidCentroCosto" runat="server" Text='<%# Bind("IdCentroCosto") %>' Visible="false" />
-                                        </ItemTemplate>
-                                        <ItemStyle CssClass="text-sm-center" />
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--6 Proveedor--%>
-                                        <HeaderTemplate>
-                                            Proveedor
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-control show-tick" data-live-search="true" data-show-subtext="true"></asp:DropDownList>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--7 Cuenta contable--%>
-                                        <HeaderTemplate>
-                                            Cuenta Contable
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:DropDownList ID="ddlCuentaContable" runat="server" CssClass="form-control show-tick" data-live-search="true" data-show-subtext="true"></asp:DropDownList>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--8 Precio--%>
-                                        <HeaderTemplate>
-                                            Precio
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <%--<input type="number" name="txtgvPrecio" runat="server" id="txtgvPrecio" class="form-control" onchange="CalcularImporte(<%=dgListaproductos.ClientID%>, this.id)" />--%>
-                                            <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control calculaPrecio" Width="100px" TextMode="Number" onkeyup="javascript: CalcularImporte();" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--9 Descuento--%>
-                                        <HeaderTemplate>
-                                            %Desc
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:TextBox ID="txtgvDescuento" runat="server" Width="100px" placeholder="%" type="number" CssClass="form-control calculaPrecio" onkeyup="javascript: CalcularImporte();" />
-                                            <%--<input type="number" name="txtgvDescuento" class="form-control" Width="100px" placeholder="%" />--%>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--10 IVA--%>
-                                        <HeaderTemplate>
-                                            %IVA
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:DropDownList ID="ddlGvIVA" runat="server" Width="100px" placeholder="%" CssClass="form-control calculaPrecio" CommandName="ddl_IVA" onchange="javascript: CalcularImporte();" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--11 IEPS--%>
-                                        <HeaderTemplate>
-                                            %IEPS
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:DropDownList ID="ddlGvIEPS" runat="server" Width="100px" placeholder="%" CssClass="form-control calculaPrecio" onchange="javascript: CalcularImporte();" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--12 Importe--%>
-                                        <HeaderTemplate>
-                                            <b>Importe</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <label>
-                                                $ </b>
-                                                <asp:Label ID="lbldgImporte" runat="server" CssClass="text-right" Text="0.00" />
-                                        </ItemTemplate>
-                                        <ItemStyle CssClass="text-sm-right" HorizontalAlign="Right" />
-                                    </asp:TemplateField>
-                                </Columns>
-                            </asp:GridView>
-                        </div>
-                    </div>
-                    <div class="row clearfix" runat="server" id="divAutorizarOC" visible="false">
-                        <div class="body table-responsive">
-                            <asp:GridView CssClass="table table-hover" runat="server" ID="gvProdcutosOrdenCompra" Width="100%" AutoGenerateColumns="false">
-                                <Columns>
-                                    <asp:TemplateField>
-                                        <%--0 Tipo de compra--%>
-                                        <HeaderTemplate>
-                                            <b>Tipo</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--1 Producto--%>
-                                        <HeaderTemplate>
-                                            <b>Producto</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Producto") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--2 Requeridos--%>
-                                        <HeaderTemplate>
-                                            <b>Requeridos</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("CantidadRequerida") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--3 Unidad--%>
-                                        <HeaderTemplate>
-                                            <b>Unidad</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("UnidadMedida") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--4 Detalle--%>
-                                        <HeaderTemplate>
-                                            <b>Detalle</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Descripcion") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--5 Centro costo--%>
-                                        <HeaderTemplate>
-                                            <b>Centro de costo</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgCentroCosto" runat="server" Text='<%# Bind("CentroCosto") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--6 Cuenta contable--%>
-                                        <HeaderTemplate>
-                                            Cuenta Contable
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblCuentaContable" runat="server" Text='<%# Bind("CuentaContable") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--7 Cantidad--%>
-                                        <HeaderTemplate>
-                                            Cantidad
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label runat="server" ID="lblgvAutoCantidad" Text='<%# Bind("Cantidad") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--8 Precio--%>
-                                        <HeaderTemplate>
-                                            Precio
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label runat="server" ID="lblgvAutoPrecio" Text='<%# Bind("Precio") %>'></asp:Label>
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--9 Descuento--%>
-                                        <HeaderTemplate>
-                                            %Desc
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblgvAutoDescuento" runat="server" Text='<%# Bind("Descuento") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--10 IVA--%>
-                                        <HeaderTemplate>
-                                            %IVA
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblgvAutoIVA" runat="server" Text='<%# Bind("IVA") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--11 IEPS--%>
-                                        <HeaderTemplate>
-                                            %IEPS
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lblgvAutoIEPS" runat="server" Text='<%# Bind("IEPS") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--12 Importe--%>
-                                        <HeaderTemplate>
-                                            <b>Importe</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgImporte" runat="server" Text='<%# Bind("Importe") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                            </asp:GridView>
-                        </div>
-                    </div>
-                    <div class="row clearfix" runat="server" id="divEntrada" visible="false">
-                        <div class="body table-responsive">
-                            <asp:GridView CssClass="table table-hover" runat="server" ID="gvEntrada" Width="100%" AutoGenerateColumns="false">
-                                <Columns>
-                                    <asp:TemplateField>
-                                        <%--0 Tipo de compra--%>
-                                        <HeaderTemplate>
-                                            <b>Tipo</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--1 Producto--%>
-                                        <HeaderTemplate>
-                                            <b>Producto</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Producto") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--2 Cantidad--%>
-                                        <HeaderTemplate>
-                                            <b>Requeridos</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("CantidadAComprar") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--3 Unidad--%>
-                                        <HeaderTemplate>
-                                            <b>Unidad</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <asp:TemplateField>
-                                        <%--4 Aplicacion--%>
-                                        <HeaderTemplate>
-                                            <b>Aplicación</b>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <%--5 Cantidad --%>
-                                    <asp:TemplateField>
-                                        <HeaderTemplate>
-                                            Cantidad
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:TextBox ID="txtCantidadaMercancia" runat="server" type="number" CssClass="form-control" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                    <%--6 Justificacion --%>
-                                    <asp:TemplateField>
-                                        <HeaderTemplate>
-                                            Justificación
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <asp:TextBox ID="txtJustifica" runat="server" type="number" CssClass="form-control" />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>
-                                </Columns>
-                            </asp:GridView>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card" id="divGvvComplementoGas" runat="server" visible="false">
-                <div class="body">
+                @if (ViewBag.NombrePorvedor != null)
+                {
                     <div class="row clearfix">
-                        <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <b>Proveedor:</b>&nbsp;
+                                    <label>@ViewBag.NombrePorvedor</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <dtp:DateTimePicker ID="dtpFechaEntrada" />
+                        </div>
+                    </div>
+                }
+                @if (ViewBag.MensajeError != null)
+                {
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MensajeError</label>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model.IdOrdenCompraEstatus.Equals(0))
+                {
+                    <div class="body">
+                        <div class="row clearfix" id="divCrearOC">
                             <div class="table-responsive">
-                                <asp:GridView CssClass="table table-hover" runat="server" OnRowEditing="dgListaproductos_RowEditing" ID="gvComplementoGas" Width="100%" AutoGenerateColumns="false" OnRowDataBound="dgListaproductos_RowDataBound">
-                                    <Columns>
-                                        <asp:TemplateField>
-                                            <%--0 Tipo de compra--%>
-                                            <HeaderTemplate>
-                                                <b>Tipo</b>
-                                            </HeaderTemplate>
-                                            <ItemTemplate>
-                                                <asp:Label ID="lbldgTipo" runat="server" Text='<%# Bind("TipoProducto") %>' />
-                                            </ItemTemplate>
-                                            <ItemStyle CssClass="text-sm-center" />
-                                        </asp:TemplateField>
-                                        <asp:TemplateField>
-                                            <%--1 Producto--%>
-                                            <HeaderTemplate>
-                                                <b>Producto</b>
-                                            </HeaderTemplate>
-                                            <ItemTemplate>
-                                                <asp:Label ID="lbldgProducto" runat="server" Text='<%# Bind("Producto") %>' />
-                                                <asp:Label ID="lblidProducto" runat="server" Text='<%# Bind("IdProducto") %>' Visible="false" />
-                                            </ItemTemplate>
-                                            <ItemStyle CssClass="text-sm-center" />
-                                        </asp:TemplateField>
-                                        <asp:TemplateField>
-                                            <%--2 Cantidad--%>
-                                            <HeaderTemplate>
-                                                <b>Cantidad</b>
-                                            </HeaderTemplate>
-                                            <ItemTemplate>
-                                                <asp:Label ID="lbldgCantidad" runat="server" Text='<%# Bind("CantidadAComprar") %>' />
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField>
-                                            <%--3 Unidad--%>
-                                            <HeaderTemplate>
-                                                <b>Unidad</b>
-                                            </HeaderTemplate>
-                                            <ItemTemplate>
-                                                <asp:Label ID="lbldgUnidad" runat="server" Text='<%# Bind("Unidad") %>' />
-                                            </ItemTemplate>
-                                            <ItemStyle CssClass="text-sm-center" />
-                                        </asp:TemplateField>
-                                        <asp:TemplateField>
-                                            <%--4 Aplicacion--%>
-                                            <HeaderTemplate>
-                                                <b>Aplicación</b>
-                                            </HeaderTemplate>
-                                            <ItemTemplate>
-                                                <asp:Label ID="lbldgAplicacion" runat="server" Text='<%# Bind("Aplicacion") %>' />
-                                            </ItemTemplate>
-                                            <ItemStyle CssClass="text-sm-center" />
-                                        </asp:TemplateField>
-                                        <asp:TemplateField>
-                                            <%--5 Centro costo--%>
-                                            <HeaderTemplate>
-                                                <b>Centro de costo</b>
-                                            </HeaderTemplate>
-                                            <ItemTemplate>
-                                                <asp:Label ID="lbldgCentroCosto" runat="server" Text='<%# Bind("CentroCosto") %>' />
-                                                <asp:Label ID="lbldgidCentroCosto" runat="server" Text='<%# Bind("IdCentroCosto") %>' Visible="false" />
-                                            </ItemTemplate>
-                                            <ItemStyle CssClass="text-sm-center" />
-                                        </asp:TemplateField>
-                                        <asp:TemplateField>
-                                            <%--6 Proveedor--%>
-                                            <HeaderTemplate>
-                                                Proveedor
-                                            </HeaderTemplate>
-                                            <ItemTemplate>
-                                                <asp:DropDownList ID="ddlProveedor" runat="server"></asp:DropDownList>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                        <asp:TemplateField>
-                                            <%--7 Cuenta contable--%>
-                                            <HeaderTemplate>
-                                                Cuenta Contable
-                                            </HeaderTemplate>
-                                            <ItemTemplate>
-                                                <asp:DropDownList ID="ddlCuentaContable" runat="server"></asp:DropDownList>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                    </Columns>
-                                </asp:GridView>
+                                <table CssClass="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td><b>Tipo</b></td>
+                                            <td><b>Producto</b></td>
+                                            <td><b>Cantidad</b></td>
+                                            <td><b>Unidad</b></td>
+                                            <td><b>Aplicación</b></td>
+                                            <td><b>Centro de costo</b></td>
+                                            <td><b>Proveedor</b></td>
+                                            <td><b>Cuenta Contable</b></td>
+                                            <td><b>Precio</b></td>
+                                            <td><b>%Desc</b></td>
+                                            <td><b>%IVA</b></td>
+                                            <td><b>%IEPS</b></td>
+                                            <td><b>Importe</b></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var _pord in Model.OrdenCompraProductos)
+                                        {
+                                            <tr>
+                                                <td>@_pord.TipoProducto</td>
+                                                <td>@_pord.Producto</td>
+                                                <td>@_pord.Cantidad</td>
+                                                <td>@_pord.Unidad</td>
+                                                <td>@_pord.Aplicacion</td>
+                                                <td>@_pord.CentroCosto</td>
+                                                <td>
+                                                    <select class="form-control z-index">
+                                                        @foreach (var prov in ViewBag.Proveedores)
+                                                        {
+                                                            <option value="@prov.IdProveedor">@prov.Descripcion</option>
+                                                        }
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control z-index">
+                                                        @foreach (var cc in ViewBag.CuentasContables)
+                                                        {
+                                                            <option value="@cc.IdCuentaContable">@cc.Descripcion</option>
+                                                        }
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" id="Precio" class="form-control" /></td>
+                                                <td><input type="text" id="Descuento" class="form-control" /></td>
+                                                <td>
+                                                    <select class="form-control z-index">
+                                                        @foreach (var prov in ViewBag.IVAs)
+                                                        {
+                                                            <option value="@prov.IdIva">@prov.Descripcion</option>
+                                                        }
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control z-index">
+                                                        @foreach (var prov in ViewBag.IEPSs)
+                                                        {
+                                                            <option value="@prov.IdIeps">@prov.Descripcion</option>
+                                                        }
+                                                    </select>
+                                                </td>
+                                                <td><label id="Importe" /></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row clearfix" id="divAutorizarOC">
+                            <div class="body table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td><b>Tipo</b></td>
+                                            <td><b>Producto</b></td>
+                                            <td><b>Requeridos</b></td>
+                                            <td><b>Unidad</b></td>
+                                            <td><b>Detalle</b></td>
+                                            <td><b>Centro de costo</b></td>
+                                            <td><b>Cuenta Contable</b></td>
+                                            <td><b>Cantidad</b></td>
+                                            <td><b>Precio</b></td>
+                                            <td><b>%Desc</b></td>
+                                            <td><b>%IVA</b></td>
+                                            <td><b>%IEPS</b></td>
+                                            <td><b>Importe</b></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var prod in Model.OrdenCompraProductos)
+                                        {
+                                            <tr>
+                                                <td>@prod.TipoProducto</td>
+                                                <td>@prod.Producto</td>
+                                                <td>@prod.Cantidad</td>
+                                                <td>@prod.Unidad</td>
+                                                <td>@prod.Aplicacion</td>
+                                                <td>@prod.CentroCosto</td>
+                                                <td>@prod.IdCuentaContable</td>
+                                                <td>@prod.CantidadAComprar</td>
+                                                <td>@prod.Precio</td>
+                                                <td>@prod.Descuento</td>
+                                                <td>@prod.IVA</td>
+                                                <td>@prod.IEPS</td>
+                                                <td>@prod.Importe</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row clearfix" id="divEntrada">
+                            <div class="body table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td><b>Tipo</b></td>
+                                            <td><b>Producto</b></td>
+                                            <td><b>Requeridos</b></td>
+                                            <td><b>Unidad</b></td>
+                                            <td><b>Aplicación</b></td>
+                                            <td><b>Cantidad</b></td>
+                                            <td hidden><b>Justificación</b></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var prod in Model.OrdenCompraProductos)
+                                        {
+                                            <tr>
+                                                <td>@prod.TipoProducto</td>
+                                                <td>@prod.Producto</td>
+                                                <td>@prod.Cantidad</td>
+                                                <td>@prod.Unidad</td>
+                                                <td>@prod.Aplicacion</td>
+                                                <td>@prod.Importe</td>
+                                                <td hidden><input id="Cantidad" type="text" class="form-control" /></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            @if (ViewBag.Complementogas != null)
+            {
+
+                <div class="card" id="divGvvComplementoGas">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="row clearfix">
+                                <div class="table-responsive">
+                                    <asp:GridView CssClass="table table-hover" OnRowEditing="dgListaproductos_RowEditing" ID="gvComplementoGas" Width="100%" AutoGenerateColumns="false" OnRowDataBound="dgListaproductos_RowDataBound">
+                                        <Columns>
+                                            <asp:TemplateField>
+
+                                                <HeaderTemplate>
+                                                    <b>Tipo</b>
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lbldgTipo" Text='<%# Bind("TipoProducto") %>' />
+                                                </ItemTemplate>
+                                                <ItemStyle CssClass="text-sm-center" />
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+
+                                                <HeaderTemplate>
+                                                    <b>Producto</b>
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lbldgProducto" Text='<%# Bind("Producto") %>' />
+                                                    <asp:Label ID="lblidProducto" Text='<%# Bind("IdProducto") %>' />
+                                                </ItemTemplate>
+                                                <ItemStyle CssClass="text-sm-center" />
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+
+                                                <HeaderTemplate>
+                                                    <b>Cantidad</b>
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lbldgCantidad" Text='<%# Bind("CantidadAComprar") %>' />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+
+                                                <HeaderTemplate>
+                                                    <b>Unidad</b>
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lbldgUnidad" Text='<%# Bind("Unidad") %>' />
+                                                </ItemTemplate>
+                                                <ItemStyle CssClass="text-sm-center" />
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+
+                                                <HeaderTemplate>
+                                                    <b>Aplicación</b>
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lbldgAplicacion" Text='<%# Bind("Aplicacion") %>' />
+                                                </ItemTemplate>
+                                                <ItemStyle CssClass="text-sm-center" />
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+
+                                                <HeaderTemplate>
+                                                    <b>Centro de costo</b>
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lbldgCentroCosto" Text='<%# Bind("CentroCosto") %>' />
+                                                    <asp:Label ID="lbldgidCentroCosto" Text='<%# Bind("IdCentroCosto") %>' />
+                                                </ItemTemplate>
+                                                <ItemStyle CssClass="text-sm-center" />
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+
+                                                <HeaderTemplate>
+                                                    Proveedor
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:DropDownList ID="ddlProveedor"></asp:DropDownList>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+
+                                                <HeaderTemplate>
+                                                    Cuenta Contable
+                                                </HeaderTemplate>
+                                                <ItemTemplate>
+                                                    <asp:DropDownList ID="ddlCuentaContable"></asp:DropDownList>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card" runat="server" id="divDatosComplementoGas" visible="false">
-                <div class="body">
-                    <%--Campos para complemento de gas--%>
-                    <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
-                        <%--Papeleta--%>
-                        <div class="panel panel-primary">
-                            <div class="panel-heading" role="tab" id="heading_Papeleta">
-                                <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapse_Papeleta" aria-expanded="true" aria-controls="collapse_Papeleta">Papeleta</a></h4>
-                            </div>
-                            <div id="collapse_Papeleta" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_Papeleta">
-                                <div class="panel-body">
-                                    <div class="row clearfix">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="dtpFechaPapeleta">Fecha papeleta:</label>
-                                                <dtp:DateTimePicker ID="dtpFechaPapeleta" CssClass="dataTxt form-control-sm" runat="server" Enabled="True" />
+                <div class="card" id="divDatosComplementoGas">
+                    <div class="body">
+                        <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" role="tab" id="heading_Papeleta">
+                                    <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapse_Papeleta" aria-expanded="true" aria-controls="collapse_Papeleta">Papeleta</a></h4>
+                                </div>
+                                <div id="collapse_Papeleta" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_Papeleta">
+                                    <div class="panel-body">
+                                        <div class="row clearfix">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="dtpFechaPapeleta">Fecha papeleta:</label>
+                                                    <dtp:DateTimePicker ID="dtpFechaPapeleta" CssClass="dataTxt form-control-sm" Enabled="True" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="dtpFechaEmbarque">Fecha embarque:</label>
+                                                    <dtp:DateTimePicker ID="dtpFechaEmbarque" CssClass="dataTxt form-control-sm" Enabled="True" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Número embarque</label>
+                                                    <asp:TextBox ID="txtNumEmbarque" CssClass="form-control" />
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="dtpFechaEmbarque">Fecha embarque:</label>
-                                                <dtp:DateTimePicker ID="dtpFechaEmbarque" CssClass="dataTxt form-control-sm" runat="server" Enabled="True" />
+                                        <div class="row clearfix">
+                                            <div class="col-md-4">
+                                                <label>% Magnatel tractor (papeleta)</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <asp:TextBox ID="txtPorcentajeMagnatelPapeleta" CssClass="form-control" />
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Número embarque</label>
-                                                <asp:TextBox ID="txtNumEmbarque" CssClass="form-control" runat="server" />
-                                            </div>
+                                        <hr>
+                                        <div class="row clearfix">
+                                            <h6>Tractor</h6>
                                         </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-4">
-                                            <label>% Magnatel tractor (papeleta)</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <asp:TextBox ID="txtPorcentajeMagnatelPapeleta" runat="server" CssClass="form-control" />
+                                        <div class="row clearfix">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Placa tractor:</label>
+                                                    <asp:TextBox ID="txtPlacaTractor" CssClass="form-control" />
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row clearfix">
-                                        <h6>Tractor</h6>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Placa tractor:</label>
-                                                <asp:TextBox ID="txtPlacaTractor" runat="server" CssClass="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Nombre operador:</label>
-                                                <asp:TextBox ID="txtNombreOperador" runat="server" CssClass="form-control" />
-                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Nombre operador:</label>
+                                                    <asp:TextBox ID="txtNombreOperador" CssClass="form-control" />
+                                                </div>
 
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Presión tanque tractor:</label>
-                                                <asp:TextBox ID="txtPrecsionTantqueTractor" runat="server" CssClass="form-control" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Presión tanque tractor:</label>
+                                                    <asp:TextBox ID="txtPrecsionTantqueTractor" CssClass="form-control" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Número tanque tractor:</label>
-                                                <asp:TextBox ID="txtNumeroTanqueTractor" runat="server" CssClass="form-control" />
+                                        <div class="row clearfix">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Número tanque tractor:</label>
+                                                    <asp:TextBox ID="txtNumeroTanqueTractor" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Capasidad (Ltr) tanque tractor:</label>
+                                                    <asp:TextBox ID="txtCapasidadLtrTanqueTractor" CssClass="form-control " />
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>Capasidad (Ltr) tanque tractor:</label>
-                                                <asp:TextBox ID="txtCapasidadLtrTanqueTractor" runat="server" CssClass="form-control " />
+                                        <div class="row clearfix">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>% Magnatel tractor (Ocultar)</label>
+                                                    <asp:TextBox ID="txtPorcentajeMagnatelTractorOcultar" CssClass="form-control" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>% Magnatel tractor (Ocultar)</label>
-                                                <asp:TextBox ID="txtPorcentajeMagnatelTractorOcultar" runat="server" CssClass="form-control" />
+                                        <hr>
+                                        <div class="row clearfix">
+                                            <h6>Descarga</h6>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Fecha descarga:</label>
+                                                    <dtp:DateTimePicker ID="dtpFechaDescarga" CssClass="dataTxt" Enabled="True" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row clearfix">
-                                        <h6>Descarga</h6>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Fecha descarga:</label>
-                                                <dtp:DateTimePicker ID="dtpFechaDescarga" CssClass="dataTxt" runat="server" Enabled="True" />
+                                        <div class="row clearfix">
+                                            <div class="col-md-3 content-center">
+                                                <div class="form-group">
+                                                    <label>% Magnatel Tractor</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Inicial</label>
+                                                    <asp:TextBox ID="txtMagnatelTractorInicial" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Final</label>
+                                                    <asp:TextBox ID="txtMagnatelTractorFinal" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 content-center">
+                                                <div class="checkbox">
+                                                    <input id="chBoxAlmacenPrestado" type="checkbox">
+                                                    <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-3 content-center">
-                                            <div class="form-group">
-                                                <label>% Magnatel Tractor</label>
+                                        <div class="row clearfix">
+                                            <div class="col-md-3 content-center">
+                                                <div class="form-group">
+                                                    <label>% Magnatel Almacen</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Inicial</label>
+                                                    <asp:TextBox ID="txtMagnatelAlmacenInicial" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Final</label>
+                                                    <asp:TextBox ID="txtMagnatelAlmacenFinal" CssClass="form-control" />
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Inicial</label>
-                                                <asp:TextBox ID="txtMagnatelTractorInicial" runat="server" CssClass="form-control" />
+                                        <hr>
+                                        <div class="row clearfix">
+                                            <h6>Kilos Finales</h6>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Papeleta</label>
+                                                    <asp:TextBox ID="txtKFinalesPapeleta" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Descargados</label>
+                                                    <asp:TextBox ID="txtKFinalesDescargados" CssClass="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Diferencia</label>
+                                                    <asp:TextBox ID="txtKFinalesDiferencia" CssClass="form-control" />
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Final</label>
-                                                <asp:TextBox ID="txtMagnatelTractorFinal" runat="server" CssClass="form-control" />
+                                        <hr>
+                                        <div class="row clearfix">
+                                            <div class="col-md-2">
+                                                <asp:Button ID="btnGuardarDatosPapeleta" CssClass="btn btn-raised btn-primary btn-round" Text="Guardar" OnClick="btnGuardarDatosPapeleta_Click" />
                                             </div>
-                                        </div>
-                                        <div class="col-md-3 content-center">
-                                            <div class="checkbox">
-                                                <input id="chBoxAlmacenPrestado" runat="server" type="checkbox">
-                                                <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-3 content-center">
-                                            <div class="form-group">
-                                                <label>% Magnatel Almacen</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Inicial</label>
-                                                <asp:TextBox ID="txtMagnatelAlmacenInicial" runat="server" CssClass="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Final</label>
-                                                <asp:TextBox ID="txtMagnatelAlmacenFinal" runat="server" CssClass="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row clearfix">
-                                        <h6>Kilos Finales</h6>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Papeleta</label>
-                                                <asp:TextBox ID="txtKFinalesPapeleta" runat="server" CssClass="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Descargados</label>
-                                                <asp:TextBox ID="txtKFinalesDescargados" runat="server" CssClass="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Diferencia</label>
-                                                <asp:TextBox ID="txtKFinalesDiferencia" runat="server" CssClass="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row clearfix">
-                                        <div class="col-md-2">
-                                            <asp:Button ID="btnGuardarDatosPapeleta" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Guardar" OnClick="btnGuardarDatosPapeleta_Click" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <%--Costos--%>
-                        <div class="panel panel-primary">
-                            <div class="panel-heading" role="tab" id="headingCostos">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseCostos" aria-expanded="false"
-                                       aria-controls="collapseCostos">Costos</a>
-                                </h4>
-                            </div>
-                            <div id="collapseCostos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCostos">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <%--Pago al expedidor de gas--%>
-                                        <div class="col-md-6 blockquote blockquote-info">
-                                            <div class="row clearfix">
-                                                <b>Pago al expedidor de gas </b>
-                                            </div>
-                                            <hr>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtReferenciaPormedioMensualGallon">Referencia promedio mensual MB Non Tet Propano Gallon</label>
+
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" role="tab" id="headingCostos">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseCostos" aria-expanded="false"
+                                           aria-controls="collapseCostos">Costos</a>
+                                    </h4>
+                                </div>
+                                <div id="collapseCostos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCostos">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <%--Pago al expedidor de gas--%>
+                                            <div class="col-md-6 blockquote blockquote-info">
+                                                <div class="row clearfix">
+                                                    <b>Pago al expedidor de gas </b>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <asp:TextBox ID="txtReferenciaPormedioMensualGallon" runat="server" CssClass="form-control" />
+                                                <hr>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtReferenciaPormedioMensualGallon">Referencia promedio mensual MB Non Tet Propano Gallon</label>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="txtReferenciaPormedioMensualGallon">(En dolares)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtTarifaServicioGallon">Tarifa de Servicio por gallon</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <asp:TextBox ID="txtTarifaServicioGallon" runat="server" CssClass="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="txtTarifaServicioGallon">(En dolares)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtTipoCambioDOF">Tipo de cambio DOF:</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <asp:TextBox ID="txtTipoCambioDOF" runat="server" CssClass="form-control" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="form-control-label">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="lbPlPrecioPorGalon">Precio por galon</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
-                                                    <div class="form-group">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <asp:Label ID="lbPlPrecioPorGalon" runat="server" Text="$ 0.00" />
+                                                            <asp:TextBox ID="txtReferenciaPormedioMensualGallon" CssClass="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="txtReferenciaPormedioMensualGallon">(En dolares)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtTarifaServicioGallon">Tarifa de Servicio por gallon</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <asp:TextBox ID="txtTarifaServicioGallon" CssClass="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="txtTarifaServicioGallon">(En dolares)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtTipoCambioDOF">Tipo de cambio DOF:</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <asp:TextBox ID="txtTipoCambioDOF" CssClass="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="form-control-label">(En pesos)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="lbPlPrecioPorGalon">Precio por galon</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            <div class="form-group">
+                                                                <asp:Label ID="lbPlPrecioPorGalon" Text="$ 0.00" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="lbPlPrecioPorGalon">(En pesos)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-4 form-control-label">
+                                                        <label for="txtFactorConvercionGaL">Factor de convercion Galones a litros:</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <asp:TextBox ID="txtFactorConvercionGaL" CssClass="form-control" />
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="lbPlPrecioPorGalon">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-4 form-control-label">
-                                                    <label for="txtFactorConvercionGaL">Factor de convercion Galones a litros:</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <asp:TextBox ID="txtFactorConvercionGaL" runat="server" CssClass="form-control" />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="lblImporteLitros">Importe en Litros</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            <asp:Label ID="lblImporteLitros" Text="$ 0.00" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="lblImporteLitros">(En pesos)</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="lblImporteLitros">Importe en Litros</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
-                                                    <div class="form-group">
-                                                        <asp:Label ID="lblImporteLitros" runat="server" Text="$ 0.00" />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-4 form-control-label">
+                                                        <label for="txtFactorConvercionaKg">Factor de conversion a Kilogramos:</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <asp:TextBox ID="txtFactorConvercionaKg" CssClass="form-control" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="lblImporteLitros">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-4 form-control-label">
-                                                    <label for="txtFactorConvercionaKg">Factor de conversion a Kilogramos:</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <asp:TextBox ID="txtFactorConvercionaKg" runat="server" CssClass="form-control" />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtPVMP">PVPM($/Kg) CON DESCUENTO:</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            <asp:Label ID="txtPVMP" Text="$ 0.00" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="txtPVMP">(En pesos)</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtPVMP">PVPM($/Kg) CON DESCUENTO:</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
-                                                    <div class="form-group">
-                                                        <asp:Label ID="txtPVMP" runat="server" Text="$ 0.00" />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-4 form-control-label">
+                                                        <label for="ddlIVACostos">IVA</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <asp:DropDownList ID="ddlIVACostos" CssClass="form-control z-index">
+                                                            </asp:DropDownList>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="txtPVMP">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-4 form-control-label">
-                                                    <label for="ddlIVACostos">IVA</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <asp:DropDownList ID="ddlIVACostos" runat="server" CssClass="form-control z-index">
-                                                        </asp:DropDownList>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtPrecioConIVA">PRECIO DE VENTA CON IVA:</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            <asp:Label ID="txtPrecioConIVA" Text="$ 0.00" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="txtPrecioConIVA">(En pesos)</label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtPrecioConIVA">PRECIO DE VENTA CON IVA:</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
-                                                    <div class="form-group">
-                                                        <asp:Label ID="txtPrecioConIVA" runat="server" Text="$ 0.00" />
+                                                <hr>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="btnSolicitarPagoExpedidor">IMPORTE A PAGAR</label>
+                                                    </div>
+                                                    <div class="col-md-4 form-control-label text-right">
+                                                        <asp:Label ID="lblImporteAPagar" Text="$ 0.00" />
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="lblImporteAPagar">(En pesos)</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="txtPrecioConIVA">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="btnSolicitarPagoExpedidor">IMPORTE A PAGAR</label>
-                                                </div>
-                                                <div class="col-md-4 form-control-label text-right">
-                                                    <asp:Label ID="lblImporteAPagar" runat="server" Text="$ 0.00" />
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="lblImporteAPagar">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <asp:Button ID="btnguardarDatosExpedidor" CssClass="btn btn-raised btn-primary btn-round" Text="Guardar" runat="server" />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <asp:Button ID="btnguardarDatosExpedidor" CssClass="btn btn-raised btn-primary btn-round" Text="Guardar" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <asp:Button ID="btnSolicitarPagoExpedidor" CssClass="btn btn-raised btn-primary btn-round" Text="Solisitar pago" OnClick="btnSolicitarPagoExpedidor_Click" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <asp:Button ID="btnSolicitarPagoExpedidor" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Solisitar pago" OnClick="btnSolicitarPagoExpedidor_Click" />
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                        </div>
-                                        <%--pago al porteador--%>
-                                        <div class="col-md-6 blockquote blockquote-info">
-                                            <div class="row clearfix">
-                                                <b>Pago al porteador de gas</b>
                                             </div>
-                                            <hr>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtFactorConversion">Factor de conversión</label>
+                                            <%--pago al porteador--%>
+                                            <div class="col-md-6 blockquote blockquote-info">
+                                                <div class="row clearfix">
+                                                    <b>Pago al porteador de gas</b>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <asp:TextBox ID="txtFactorConversion" runat="server" CssClass="form-control" />
+                                                <hr>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtFactorConversion">Factor de conversión</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <asp:TextBox ID="txtFactorConversion" CssClass="form-control" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="lblPrecioTransporte">Precio del transporte:</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
-                                                    <div class="form-group">
-                                                        <asp:Label ID="lblPrecioTransporte" runat="server" Text="$ 0.00" />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="lblPrecioTransporte">Precio del transporte:</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            <asp:Label ID="lblPrecioTransporte" Text="$ 0.00" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3  form-control-label">
+                                                        <label for="lblPrecioTransporte">(En pesos)</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3  form-control-label">
-                                                    <label for="lblPrecioTransporte">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtCasetas">Casetas:</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <asp:TextBox ID="txtCasetas" runat="server" CssClass="form-control" />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtCasetas">Casetas:</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <asp:TextBox ID="txtCasetas" CssClass="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="txtCasetas">(En pesos)</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="txtCasetas">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="lblSubtotal">Subtotal:</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
-                                                    <div class="form-group">
-                                                        <asp:Label ID="lblSubtotal" runat="server" Text="$ 0.00" />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="lblSubtotal">Subtotal:</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            <asp:Label ID="lblSubtotal" Text="$ 0.00" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="lblSubtotal">(En pesos)</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="lblSubtotal">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-4 form-control-label">
-                                                    <label for="ddlIvaPorteador">IVA</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <asp:DropDownList ID="ddlIvaPorteador" runat="server" CssClass="form-control z-index">
-                                                        </asp:DropDownList>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-4 form-control-label">
+                                                        <label for="ddlIvaPorteador">IVA</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <asp:DropDownList ID="ddlIvaPorteador" CssClass="form-control z-index">
+                                                            </asp:DropDownList>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="btnSolicitarPaogPorteador">IMPORTE A PAGAR</label>
-                                                </div>
-                                                <div class="col-md-4 form-control-label text-right">
-                                                    <asp:Label ID="ImportePagarPorteador" runat="server" Text="$ 00.0" />
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="btnSolicitarPaogPorteador">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <asp:Button ID="btnGuardarDatosPorteador" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Guardar" OnClick="btnSolicitarPaogPorteador_Click" />
+                                                <hr>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="btnSolicitarPaogPorteador">IMPORTE A PAGAR</label>
+                                                    </div>
+                                                    <div class="col-md-4 form-control-label text-right">
+                                                        <asp:Label ID="ImportePagarPorteador" Text="$ 00.0" />
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="btnSolicitarPaogPorteador">(En pesos)</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <asp:Button ID="btnSolicitarPaogPorteador" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Solicitar Pago" OnClick="btnSolicitarPaogPorteador_Click" />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <asp:Button ID="btnGuardarDatosPorteador" CssClass="btn btn-raised btn-primary btn-round" Text="Guardar" OnClick="btnSolicitarPaogPorteador_Click" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <asp:Button ID="btnSolicitarPaogPorteador" CssClass="btn btn-raised btn-primary btn-round" Text="Solicitar Pago" OnClick="btnSolicitarPaogPorteador_Click" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -960,54 +779,52 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card" runat="server" id="divImagenes" visible="false">
-                <div class="body">
-                    <div id="aniimated-thumbnials" class="list-unstyled row clearfix">
-                        <!-- Imagenes -->
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
-                            <a href="../../assets/images/image-gallery/1.jpg">
-                                <img class="img-fluid img-thumbnail" src="../../assets/images/image-gallery/1.jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
-                            <a href="../../assets/images/image-gallery/2.jpg">
-                                <img class="img-fluid img-thumbnail" src="../../assets/images/image-gallery/2.jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
-                            <a href="../../assets/images/image-gallery/3.jpg">
-                                <img class="img-fluid img-thumbnail" src="../../assets/images/image-gallery/3.jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
-                            <a href="../../assets/images/image-gallery/4.jpg">
-                                <img class="img-fluid img-thumbnail" src="../../assets/images/image-gallery/4.jpg" alt="">
-                            </a>
+                <div class="card" id="divImagenes">
+                    <div class="body">
+                        <div id="aniimated-thumbnials" class="list-unstyled row clearfix">
+                            <!-- Imagenes -->
+                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
+                                <a href="../../assets/images/image-gallery/1.jpg">
+                                    <img class="img-fluid img-thumbnail" src="../../assets/images/image-gallery/1.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
+                                <a href="../../assets/images/image-gallery/2.jpg">
+                                    <img class="img-fluid img-thumbnail" src="../../assets/images/image-gallery/2.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
+                                <a href="../../assets/images/image-gallery/3.jpg">
+                                    <img class="img-fluid img-thumbnail" src="../../assets/images/image-gallery/3.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
+                                <a href="../../assets/images/image-gallery/4.jpg">
+                                    <img class="img-fluid img-thumbnail" src="../../assets/images/image-gallery/4.jpg" alt="">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
             <div class="row clearfix">
                 <div class="col-sm-4 center">
-                    <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Regresar" OnClick="btnRegresar_Click" />
-                    <%--<a href="#ModalMensaje" data-toggle="modal" id="btnMensaje" runat="server" data-target="#ModalMensaje" class="btn btn-raised btn-primary btn-round">Ver</a>--%>
+                    <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
                 </div>
                 <div class="col-sm-4 center">
-                    <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" runat="server" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
+                    <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
                         Cancelar
                     </a>
                 </div>
                 <div class="col-sm-4 center">
-                    <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" runat="server" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
-                        <asp:Label ID="lblbtnCrear" runat="server" Text="Crear" />
+                    <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
+                        <asp:Label ID="lblbtnCrear" Text="Crear" />
                     </a>
                 </div>
             </div>
         </div>
     </div>
 </section>
-    <%--Modal confirmacion--%>
 <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -1015,14 +832,13 @@
                 <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
             </div>
             <div class="modal-footer">
-                <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Si" OnClick="BtnCrear_Click" />
+                <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" Text="Si" OnClick="BtnCrear_Click" />
 
                 <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
     </div>
 </div>
-    <%--Modal de cancelar--%>
 <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -1032,18 +848,17 @@
             <div class="modal-body">
                 <div class="body">
                     <div class="col-sm-12">
-                        <asp:TextBox ID="txtMotivoCancela" TextMode="MultiLine" CssClass="form-control tex" runat="server" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></asp:TextBox>
+                        <asp:TextBox ID="txtMotivoCancela" TextMode="MultiLine" CssClass="form-control tex" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></asp:TextBox>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" Enabled="false" />
+                <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" Text="Cancelar" OnClick="btnCancelar_Click" Enabled="false" />
                 <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
             </div>
         </div>
     </div>
 </div>
-    <%--Modal de mensaje--%>
 <div class="modal fade" id="ModalMensaje" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -1053,12 +868,12 @@
             <div class="modal-body">
                 <div class="body">
                     <div class="col-sm-12">
-                        <asp:Label ID="lblMensajeOrdenCompra" runat="server" TextMode="MultiLine" />
+                        <asp:Label ID="lblMensajeOrdenCompra" TextMode="MultiLine" />
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <asp:Button ID="Button1" CssClass="btn btn-raised btn-primary btn-round" runat="server" Text="Crear" OnClick="BtnCrear_Click" />
+                <asp:Button ID="Button1" CssClass="btn btn-raised btn-primary btn-round" Text="Crear" OnClick="BtnCrear_Click" />
                 <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
             </div>
         </div>

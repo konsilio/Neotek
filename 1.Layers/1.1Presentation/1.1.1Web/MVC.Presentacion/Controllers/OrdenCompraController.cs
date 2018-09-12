@@ -1,4 +1,5 @@
-﻿using MVC.Presentacion.Controllers.Shared;
+﻿using MVC.Presentacion.App_Code;
+using MVC.Presentacion.Controllers.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,26 @@ namespace MVC.Presentacion.Controllers
 {
     public class OrdenCompraController : MainController
     {
-        public ActionResult OrdenCompra()
+        public ActionResult OrdenCompra(int id)
         {
-            return View();
+            if (Session["SringToken"] != null)
+            {
+                string tkn = Session["SringToken"].ToString();
+                return View();
+            }
+            else
+                return View("Index", "Home");
+        }
+        public ActionResult Ordenes()
+        {
+            if (Session["SringToken"] != null)
+            {
+                string tkn = Session["SringToken"].ToString();
+                ViewBag.EsAdminCentral = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+                return View(OrdenCompraServicio.InitOrdenesCompra(tkn));
+            }
+            else
+                return View("Index", "Home");
         }
     }
 }

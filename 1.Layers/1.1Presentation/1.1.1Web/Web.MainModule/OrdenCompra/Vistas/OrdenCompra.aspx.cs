@@ -62,7 +62,6 @@ namespace Web.MainModule.OrdenCompra.Vistas
                 dgListaproductos.Columns[10].Visible = false;
                 dgListaproductos.Columns[11].Visible = false;
                 dgListaproductos.Columns[12].Visible = false;
-
             }
         }
         private bool ValidarRequisiconGas()

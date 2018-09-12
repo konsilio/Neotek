@@ -26,6 +26,8 @@ namespace Exceptions.MainModule.Validaciones
         public const string R0010 = "La busqueda no arrojo resultados";
         public const string R0011 = "La fecha de requisición no puede ser menor o igual a la fehca actual";
         public const string R0012 = "Verifique que los datos esten completos";
+        public const string R0013 = "Debes revisar todos los productos en el almacen";
+        public const string R0014 = "Falta la opionion de almacen";
 
         public const string OC0001 = "La orden de compra no se actualizo correctamente";
 
