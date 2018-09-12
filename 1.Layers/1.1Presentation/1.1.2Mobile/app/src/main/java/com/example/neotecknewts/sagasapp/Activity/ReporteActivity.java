@@ -178,7 +178,224 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
     }
 
     @SuppressLint("StaticFieldLeak")
-    public class HiloReporte extends AsyncTask<Void,Integer,String>{
+    public class HiloReporte extends AsyncTask<String,Integer,String[]>{
+        @Override
+        protected String[] doInBackground(String... strings) {
+            String[] text = new String[2];
+            if(EsReporteDelDia){
+                String formato_reporte_pipa_text ="Reporte-[{Elemento}] \n" +
+                        "\n" +
+                        "Clave Reporte:[{ClaveReporte}] \n" +
+                        "Fecha:[{Fecha}] \n" +
+                        "\n" +
+                        "-------------------------------\n" +
+                        "Porcentajes(%)\n" +
+                        "\n" +
+                        "Salida: "+
+                        "\tRegreso:\n"+
+
+                        "[{Porcentaje-salida}] "+
+                        "\t [{Porcentaje-regreso}]\n"+
+                        "-------------------------------\n" +
+                        "\nLectura medidor\n" +
+                        "Inicial: "+
+                        "\tFinal:\n"+
+                        "[{Lectura-inicial}]"+
+                        "\t [{Lectura-final}] \n"+
+                        "-------------------------------\n" +
+                        "Litros de venta: "+
+                        "\t $ [{litros-venta}] \n"+
+                        "Precio:"+
+                        "\t $ [{Precio}]\n"+
+                        "Importe contado:"+
+                        "\t $ [{Importe-contado}] \n"+
+                        "Importe credito:"+
+                        "\t $ [{Importe-credito}]";
+                String formato_reporte_pipa_html = "<body>" +
+                        "<h4>Reporte-[{Elemento}]</h4>" +
+                        "<div>" +
+                        "<p>Clave Reporte:[{ClaveReporte}]</p>" +
+                        "<p>Fecha:[{Fecha}]</p>" +
+                        "</div>" +
+                        "<hr>" +
+                        "<h4>Porcentajes(%)</h4>" +
+                        "<div>" +
+                        "<table>" +
+                        "<theader>" +
+                        "<tr>" +
+                        "<th>Salida: </th>"+
+                        "<th>Regreso:</th>"+
+                        "</tr>"+
+                        "</theader>" +
+                        "<tbody>" +
+                        "<tr>" +
+                        "<td>[{Porcentaje-salida}]</td>"+
+                        "<td>[{Porcentaje-regreso}]</td>"+
+                        "</tr>"+
+                        "</tbody>"+
+                        "</table>"+
+                        "</div>"+
+                        "<hr>" +
+                        "<h4>Lectura medidor</h4>" +
+                        "<div>" +
+                        "<table>" +
+                        "<theader>" +
+                        "<tr>" +
+                        "<th>Inicial: </th>"+
+                        "<th>Final:</th>"+
+                        "</tr>"+
+                        "</theader>" +
+                        "<tbody>" +
+                        "<tr>" +
+                        "<td>[{Lectura-inicial}]</td>"+
+                        "<td>[{Lectura-final}]</td>"+
+                        "</tr>"+
+                        "</tbody>"+
+                        "</table>"+
+                        "</div>"+
+                        "<hr>" +
+                        "<div>" +
+                        "<table>" +
+                        "<tbody>" +
+                        "<tr>" +
+                        "<td>Litros de venta: </td>"+
+                        "<td>$ [{litros-venta}]</td>"+
+                        "</tr>"+
+                        "<tr>" +
+                        "<td>Precio: </td>"+
+                        "<td>$ [{Precio}]</td>"+
+                        "</tr>"+
+                        "<tr>" +
+                        "<td>Importe contado: </td>"+
+                        "<td>$ [{Importe-contado}]</td>"+
+                        "</tr>"+
+                        "<tr>" +
+                        "<td>Importe credito: </td>"+
+                        "<td>$ [{Importe-credito}]</td>"+
+                        "</tr>"+
+                        "</tbody>"+
+                        "</table>"+
+                        "</div>"+
+                        "</body>";
+                String formato_reporte_camioneta_text =
+                        "Reporte-[{Elemento}]\n" +
+                        "\n" +
+                        "Clave Reporte:[{ClaveReporte}]\n" +
+                        "Fecha:[{Fecha}]\n" +
+                        "---------------------------------\n" +
+                        "Porcentajes(%)\n" +
+                        "<div>" +
+                        "<table>" +
+                        "<theader>" +
+                        "<tr>" +
+                        "Tanques de: "+
+                        "\tNormal:"+
+                        "\tVenta:\n"+
+
+                        "[{Tanque-de}]"+
+                        "\t[{Normal}]"+
+                        "\t[{Venta}]\n"+
+
+                        "---------------------------------\n" +
+                        "Otras ventas\n" +
+
+                        "[{Tipo}]\t"+
+                        "[{Cantidad}]\n"+
+                        "---------------------------------\n" +
+
+                        "Carburación: "+
+                        "\t $ [{Carburacion}]\n"+
+                        "Kilos de venta: "+
+                        "\t $ [{Kilos-de-venta}]"+
+                        "Precio: "+
+                        "\t $ [{Precio}]\n"+
+
+                        "Otras ventas: "+
+                        "\t$ [{Otras-ventas}]\n"+
+
+                        "Importe contado: "+
+                        "\t $ [{importe-contado}]\n"+
+
+                        "Importe credito: "+
+                        "\t $ [{importe-credito}]\n";
+                
+                String formato_reporte_camioneta_html = "<body>" +
+                        "<h4>Reporte-[{Elemento}]</h4>" +
+                        "<div>" +
+                        "<p>Clave Reporte:[{ClaveReporte}]</p>" +
+                        "<p>Fecha:[{Fecha}]</p>" +
+                        "</div>" +
+                        "<hr>" +
+                        "<h4>Porcentajes(%)</h4>" +
+                        "<div>" +
+                        "<table>" +
+                        "<theader>" +
+                        "<tr>" +
+                        "<th>Tanques de: </th>"+
+                        "<th>Normal:</th>"+
+                        "<th>Venta:</th>"+
+                        "</tr>"+
+                        "</theader>" +
+                        "<tbody>" +
+                        "<tr>" +
+                        "<td>[{Tanque-de}]</td>"+
+                        "<td>[{Normal}]</td>"+
+                        "<td>[{Venta}]</td>"+
+                        "</tr>"+
+                        "</tbody>"+
+                        "</table>"+
+
+                        "<hr>" +
+                        "<h4>Otras ventas</h4>" +
+                        "<table>" +
+                        "<tbody>" +
+                        "<tr>" +
+                        "<td>[{Tipo}]</td>"+
+                        "<td>[{Cantidad}]</td>"+
+                        "</tr>"+
+                        "</tbody>"+
+                        "</table>"+
+
+                        "</div>"+
+                        "<hr>" +
+                        "<div>" +
+                        "<table>" +
+                        "<tbody>" +
+                        "<tr>" +
+                        "<td>Carburación: </td>"+
+                        "<td>$ [{Carburacion}]</td>"+
+                        "</tr>"+
+                        "<tr>" +
+                        "<td>Kilos de venta: </td>"+
+                        "<td>$ [{Kilos-de-venta}]</td>"+
+                        "</tr>"+
+                        "<tr>" +
+                        "<td>Precio: </td>"+
+                        "<td>$ [{Precio}]</td>"+
+                        "</tr>"+
+                        "<tr>" +
+                        "<td>Otras ventas: </td>"+
+                        "<td>$ [{Otras-ventas}]</td>"+
+                        "</tr>"+
+                        "<tr>" +
+                        "<td>Importe contado: </td>"+
+                        "<td>$ [{importe-contado}]</td>"+
+                        "</tr>"+
+                        "<tr>" +
+                        "<td>Importe credito: </td>"+
+                        "<td>$ [{importe-credito}]</td>"+
+                        "</tr>"+
+                        "</tbody>"+
+                        "</table>"+
+                        "</div>"+
+                        "</body>";
+                text[0] = formato_reporte_pipa_text;
+                text[0] = formato_reporte_pipa_html;
+
+            }
+            return text;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -186,7 +403,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
         }
 
         @Override
-        protected void onPostExecute(String data) {
+        protected void onPostExecute(String data[]) {
             super.onPostExecute(data);
             hiddeProgress();
             if(EsReporteDelDia) {
@@ -195,7 +412,8 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
                 intent.putExtra("EsReporteDelDia",EsReporteDelDia);
                 intent.putExtra("FechaReporte",fecha);
 
-                intent.putExtra("StringReporte",data);
+                intent.putExtra("StringReporte",data[0]);
+                intent.putExtra("HtmlReporte",data[1]);
 
                 startActivity(intent);
             }
@@ -207,9 +425,5 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
             Log.w("Progress", Arrays.toString(values));
         }
 
-        @Override
-        protected String doInBackground(Void... voids) {
-            return "Reporte ";
-        }
     }
 }

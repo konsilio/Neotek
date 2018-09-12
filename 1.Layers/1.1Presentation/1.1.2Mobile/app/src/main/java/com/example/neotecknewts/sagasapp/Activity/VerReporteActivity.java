@@ -9,8 +9,6 @@ import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -27,7 +25,7 @@ import java.util.UUID;
 
 public class VerReporteActivity extends AppCompatActivity {
     private boolean EsReporteDelDia;
-    private String StringReporte;
+    private String StringReporte,HtmlReporte;
 
     // android built in classes for bluetooth operations
     BluetoothAdapter mBluetoothAdapter;
@@ -51,18 +49,16 @@ public class VerReporteActivity extends AppCompatActivity {
         if(bundle!=null){
             EsReporteDelDia = (boolean)bundle.get("EsReporteDelDia");
             StringReporte = (String) bundle.get("StringReporte");
+            HtmlReporte = (String) bundle.get("HtmlReporte");
         }
         WebView WVVerReporteActivityReporte = findViewById(R.id.WVVerReporteActivityReporte);
          Button btnVerReporteActivityTerminar= findViewById(R.id.BtnVerReporteActivityTerminar);
         Button btnReporteActivityImprimir = findViewById(R.id.BtnReporteActivityImprimir);
-        btnVerReporteActivityTerminar.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(VerReporteActivity.this, MenuActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
+        btnVerReporteActivityTerminar.setOnClickListener(v -> {
+            Intent intent = new Intent(VerReporteActivity.this, MenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         });
         btnReporteActivityImprimir.setOnClickListener(v -> listDevices());
         if (EsReporteDelDia){
@@ -75,7 +71,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 public void onPageFinished(WebView view, String url) {
                 }
             });
-            WVVerReporteActivityReporte.loadDataWithBaseURL(null, StringReporte,
+            WVVerReporteActivityReporte.loadDataWithBaseURL(null, HtmlReporte,
                     "text/HTML", "UTF-8", null);
         }
 
