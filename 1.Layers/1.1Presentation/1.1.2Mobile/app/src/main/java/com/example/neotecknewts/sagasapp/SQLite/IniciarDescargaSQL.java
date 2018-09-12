@@ -252,5 +252,10 @@ public class IniciarDescargaSQL extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_DESCARGAS_IMAGENES,"WHERE ClaveUnica = '"+ClaveUnica+"'",null);
     }
+
+    public Cursor GetIniciarDescargas() {
+        return  this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_DESCARGAS,
+                null);
+    }
     //endregion
 }

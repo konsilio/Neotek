@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 
 import java.util.ArrayList;
@@ -17,4 +18,6 @@ public interface LecturaDatosView {
     void onSuccessMedidores(List<MedidorDTO> data);
 
     void ErrorMedidores();
+
+    void onSuccessEstacionesCarburacion(List<EstacionCarburacionDTO> data);
 }

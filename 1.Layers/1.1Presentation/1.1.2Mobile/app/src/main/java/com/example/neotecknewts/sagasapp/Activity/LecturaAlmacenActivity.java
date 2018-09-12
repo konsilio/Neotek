@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaAlmacenPresenter;
@@ -36,6 +37,7 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
     public Session session;
     public LecturaAlmacenPresenter lecturaAlmacenPresenter;
     public ProgressDialog progressDialog;
+    public List<EstacionCarburacionDTO> EstacionesCarburacionDTOlist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +92,7 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
                 lecturaAlmacenDTO.setCantidadFotografias(0);
             }
         });
-
+        lecturaAlmacenPresenter.getAlmacenes(session.getToken());
         SLecturaAlmacenActivityListaAlmacen.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
@@ -154,8 +156,15 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
     }
 
     @Override
-    public void onSuccessAlmacenes() {
-
+    public void onSuccessAlmacenes(List<EstacionCarburacionDTO> data) {
+        EstacionesCarburacionDTOlist = data;
+        lista_almacenes = new String[data.size()+1];
+        lista_almacenes[0]= "Seleccióne";
+        for (int x = 0; x<data.size();x++){
+            lista_almacenes[x+1] = data.get(x).getNombreEstacionCarburacion();
+        }
+        SLecturaAlmacenActivityListaAlmacen.setAdapter(new ArrayAdapter<>(this,
+                R.layout.custom_spinner,lista_medidores));
     }
 
     @Override

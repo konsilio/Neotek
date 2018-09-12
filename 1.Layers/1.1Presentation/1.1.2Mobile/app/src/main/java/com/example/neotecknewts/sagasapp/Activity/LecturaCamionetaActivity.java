@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,11 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
+import com.example.neotecknewts.sagasapp.Presenter.LecturaCamionetaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,10 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
     public Button BtnLecturaCamionetaActivityAceptar;
     public String[] list_camionetas,list_quien;
     public LecturaCamionetaDTO lecturaCamionetaDTO;
+    public LecturaCamionetaPresenterImpl lecturaCamionetaPresenter;
+    public ProgressDialog progressDialog;
+    public Session session;
+    public List<EstacionCarburacionDTO> estacionCarburacionDTOList;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
             EsLecturaInicialCamioneta = (boolean) bundle.get("EsLecturaInicialCamioneta");
             EsLecturaFinalCamioneta = (boolean) bundle.get("EsLecturaFinalCamioneta");
         }
+        session = new Session(LecturaCamionetaActivity.this);
         TVLecturaCamionetaActivityTitulo = findViewById(R.id.TVLecturaCamionetaActivityTitulo);
         TVLecturaCamionetaAcitvityQuien = findViewById(R.id.TVLecturaCamionetaAcitvityQuien);
         TVLecturaCamionetaActivotyRecordatorioUno = findViewById(
@@ -63,6 +72,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
             TVLecturaCamionetaActivityRecordatorioDos.setVisibility(View.GONE);
             SLecturaCamionetaActivityListaQuien.setVisibility(View.VISIBLE);
         }
+        lecturaCamionetaPresenter = new LecturaCamionetaPresenterImpl(this);
         BtnLecturaCamionetaActivityAceptar.setOnClickListener(v -> verificarForm());
         list_camionetas = new String[]{"Seleccione","Camioneta Ford","Camioneta Chevy"};
         list_quien = new String[]{"Seleccione","Encargado de Puerta","Encargado del Andén"};
@@ -70,6 +80,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
                 R.layout.custom_spinner,list_camionetas));
         SLecturaCamionetaActivityListaQuien.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,list_quien));
+        lecturaCamionetaPresenter.GetListCamionetas(session.getToken());
         SLecturaCamionetaActivityListaCamioneta.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
@@ -85,6 +96,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
                 lecturaCamionetaDTO.setNombreCamioneta("");
             }
         });
+
         SLecturaCamionetaActivityListaQuien.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
@@ -126,18 +138,25 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
     }
 
     @Override
-    public void getCamionetas() {
-
-    }
-
-    @Override
-    public void onSuccessCamionetas() {
-
+    public void onSuccessCamionetas(List<EstacionCarburacionDTO> data) {
+        estacionCarburacionDTOList = data;
+        list_camionetas = new String[estacionCarburacionDTOList.size()+1];
+        list_camionetas[0] = "Seleccióne";
+        for (int x=0; x<estacionCarburacionDTOList.size();x++){
+            list_camionetas[x+1] = estacionCarburacionDTOList.get(x).getNombreEstacionCarburacion();
+        }
+        SLecturaCamionetaActivityListaCamioneta.setAdapter(new ArrayAdapter<>(this,
+                R.layout.custom_spinner,list_camionetas));
     }
 
     @Override
     public void onErrorCamionetas() {
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaCamionetaActivity.this);
+        builder.setTitle(getString(R.string.error_titulo));
+        builder.setMessage(R.string.error_conexion);
+        builder.setPositiveButton(R.string.message_acept, (dialog, which) -> dialog.dismiss());
+        builder.create();
+        builder.show();
     }
     @Override
     public void mensajeError(List<String> mensaje_error){
@@ -170,5 +189,21 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
         builder.setNegativeButton(R.string.message_cancel,((dialog, which) -> dialog.dismiss()));
         builder.create();
         builder.show();
+    }
+
+    @Override
+    public void onShowProgressDialog(int message_cargando) {
+        progressDialog = new ProgressDialog(LecturaCamionetaActivity.this);
+        progressDialog.setMessage(getString(message_cargando));
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle(R.string.project_id);
+        progressDialog.show();
+    }
+
+    @Override
+    public void hideProgress() {
+        if(progressDialog!=null && progressDialog.isShowing()){
+            progressDialog.hide();
+        }
     }
 }

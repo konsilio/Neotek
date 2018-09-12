@@ -16,6 +16,7 @@ import com.example.neotecknewts.sagasapp.Activity.LecturaAlmacenActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaCamionetaActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaDatosActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaPipaActivity;
+import com.example.neotecknewts.sagasapp.Activity.RecargaCamionetaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaActivity;
 import com.example.neotecknewts.sagasapp.Activity.ReporteActivity;
 import com.example.neotecknewts.sagasapp.Activity.VistaOrdenCompraActivity;
@@ -126,16 +127,22 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     Intent intent = new Intent(view.getContext(),LecturaCamionetaActivity.class);
                     intent.putExtra("EsLecturaInicialCamioneta",true);
                     intent.putExtra("EsLecturaFinalCamioneta",false);
+                    intent.putExtra("EsRecargaCamioneta",false);
                     view.getContext().startActivity(intent);
                 }else if(menuItem.getName().equals("Camioneta (Final)")){
                     Intent intent = new Intent(view.getContext(),LecturaCamionetaActivity.class);
                     intent.putExtra("EsLecturaInicialCamioneta",false);
                     intent.putExtra("EsLecturaFinalCamioneta",true);
+                    intent.putExtra("EsRecargaCamioneta",false);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Reporte del día")){
-                    Intent intent = new Intent(view.getContext(),ReporteActivity.class);
-                    intent.putExtra("EsReporteDelDia",true);
+                }else if(menuItem.getName().equals("Reporte del día")) {
+                    Intent intent = new Intent(view.getContext(), ReporteActivity.class);
+                    intent.putExtra("EsReporteDelDia", true);
                     view.getContext().startActivity(intent);
+                }else if(menuItem.getName().equals("Camioneta") &&
+                        menuItem.getHeaderMenu().equals("Recarga")){
+                    Intent intent = new Intent(view.getContext(),RecargaCamionetaActivity.class);
+                    intent.putExtra("EsRecargaCamioneta",true);
                 }else if(menuItem.getName().equals("Estación Carb. (Inicial)") &&
                         menuItem.getHeaderMenu().equals("Auto-consumo - Gas")){
 

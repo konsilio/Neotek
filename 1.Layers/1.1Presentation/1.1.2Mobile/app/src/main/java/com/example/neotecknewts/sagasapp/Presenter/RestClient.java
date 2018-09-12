@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
+import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -182,5 +183,13 @@ public interface RestClient {
     Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalCamioneta(LecturaCamionetaDTO  lecturaAlmacenDTO,
                                                                  @Header("Authorization")String token,
                                                                  @Header("Content-Type") String contentType
+    );
+    @GET(Constantes.LISTA_TIPO_ALMACEN)
+    Call<List<EstacionCarburacionDTO>> getEstacionesCarburacion(
+            @Query("EsEstacion") boolean EsEstacion,
+            @Query("EsAlmacen") boolean EsAlmacen,
+            @Query("EsPipa") boolean EsPipa,
+            @Query("EsCamioneta") boolean EsCamioneta,
+            @Header("Authorization")String token
     );
 }

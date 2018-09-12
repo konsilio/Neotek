@@ -1,84 +1,69 @@
-package com.example.neotecknewts.sagasapp.Activity;
+package com.example.neotecknewts.sagasapp.Util;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.neotecknewts.sagasapp.R;
-import com.example.neotecknewts.sagasapp.Util.Imprimir;
 
-public class VerReporteActivity extends AppCompatActivity {
-    private boolean EsReporteDelDia;
-    private String StringReporte,HtmlReporte;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.UUID;
 
-    // android built in classes for bluetooth operations
-    /*BluetoothAdapter mBluetoothAdapter;
-    BluetoothSocket mmSocket;
-    BluetoothDevice mmDevice;
+public class Imprimir {
+    private BluetoothAdapter mBluetoothAdapter;
+    private BluetoothDevice mmDevice;
+    private BluetoothSocket mmSocket;
+    private Context context;
+    private String device_select;
+    private OutputStream mmOutputStream;
+    private InputStream mmInputStream;
+    private Thread workerThread;
 
-    OutputStream mmOutputStream;
-    InputStream mmInputStream;
-    Thread workerThread;
+    private byte[] readBuffer;
+    private int readBufferPosition;
+    private volatile boolean stopWorker;
+    private String cadena_impresion;
+    private Activity activity;
 
-    byte[] readBuffer;
-    int readBufferPosition;
-    volatile boolean stopWorker;
-    String device_select;*/
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ver_reporte);
-        Bundle bundle = getIntent().getExtras();
-        if(bundle!=null){
-            EsReporteDelDia = (boolean)bundle.get("EsReporteDelDia");
-            StringReporte = (String) bundle.get("StringReporte");
-            HtmlReporte = (String) bundle.get("HtmlReporte");
-        }
-        WebView WVVerReporteActivityReporte = findViewById(R.id.WVVerReporteActivityReporte);
-        Button btnVerReporteActivityTerminar= findViewById(R.id.BtnVerReporteActivityTerminar);
-        Button btnReporteActivityImprimir = findViewById(R.id.BtnReporteActivityImprimir);
-        btnVerReporteActivityTerminar.setOnClickListener(v -> {
-            Intent intent = new Intent(VerReporteActivity.this, MenuActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-        });
-        btnReporteActivityImprimir.setOnClickListener(v -> /*listDevices()*/
-                new Imprimir(this).starPrint(StringReporte));
-        if (EsReporteDelDia){
-            WVVerReporteActivityReporte.setWebViewClient(new WebViewClient(){
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    return true;
-                }
-
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                }
-            });
-            WVVerReporteActivityReporte.loadDataWithBaseURL(null, HtmlReporte,
-                    "text/HTML", "UTF-8", null);
-        }
-
-
+    public Imprimir(Activity activity){
+        this.context = activity.getApplicationContext();
+        this.activity = activity;
     }
 
-    /*void listDevices(){
+    /**
+     * <h3>starPrint</h3>
+     * Inicializa la conexion Bluetooth con las impresoras
+     * mostrara en un dialogo el listado de impresoras disponibles,
+     * despues de seleccionarce una se iniciara el proceso de impresion tomando
+     * como texto de impresion el {@link String} enviado de parametro
+     * @param cadena_impresion Cadena {@link String} con el texto a imprimir
+     */
+    public void starPrint(String cadena_impresion){
         try {
+            this.cadena_impresion = cadena_impresion;
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
             if (mBluetoothAdapter == null) {
-                Toast.makeText(this, "El dispositivo no cuenta con Bluetooth", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "El dispositivo no cuenta con Bluetooth",
+                        Toast.LENGTH_SHORT).show();
                 //myLabel.setText("No bluetooth adapter available");
             }
 
             if (!mBluetoothAdapter.isEnabled()) {
                 Intent enableBluetooth = new Intent(
                         BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBluetooth, 0);
+                activity.startActivityForResult(enableBluetooth, 0);
             }
 
             Set<BluetoothDevice> pairedDevices = mBluetoothAdapter
@@ -92,7 +77,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 for (int x = 0;x<adevices.size();x++){
                     lista[x] = adevices.get(x);
                 }
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context.getApplicationContext());
                 builder.setTitle("Seleccione un dispositivo de la lista");
                 builder.setItems(lista,(dialog, which) -> {
                     device_select = lista[which].toString();
@@ -120,16 +105,16 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     // This will find a bluetooth printer device
-    /*void findBT(CharSequence charSequence) {
+    private void findBT(CharSequence charSequence) {
 
         try {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
             if (mBluetoothAdapter == null) {
-                Toast.makeText(this, "El dispositivo no cuenta con Bluetooth",
+                Toast.makeText(context, "El dispositivo no cuenta con Bluetooth",
                         Toast.LENGTH_SHORT).show();
                 //myLabel.setText("No bluetooth adapter available");
             }
@@ -137,18 +122,15 @@ public class VerReporteActivity extends AppCompatActivity {
             if (!mBluetoothAdapter.isEnabled()) {
                 Intent enableBluetooth = new Intent(
                         BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBluetooth, 0);
+                activity.startActivityForResult(enableBluetooth, 0);
             }
 
             Set<BluetoothDevice> pairedDevices = mBluetoothAdapter
                     .getBondedDevices();
             if (pairedDevices.size() > 0) {
                 for (BluetoothDevice device : pairedDevices) {
-
-                    // MP300 is the name of the bluetooth printer device
-                    //if (device.getName().equals("EC MP-2")) {
                     if (device.getName().equals(charSequence)) {
-                            mmDevice = device;
+                        mmDevice = device;
                         break;
                     }
                 }
@@ -159,10 +141,10 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     // Tries to open a connection to the bluetooth printer device
-    /*void openBT() throws IOException {
+    private void openBT() throws IOException {
         try {
             // Standard SerialPortService ID
             UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
@@ -179,11 +161,11 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     // After opening a connection to bluetooth printer device,
     // we have to listen and check if a data were sent to be printed.
-    /*void beginListenForData() {
+    void beginListenForData() {
         try {
             final Handler handler = new Handler();
 
@@ -194,45 +176,41 @@ public class VerReporteActivity extends AppCompatActivity {
             readBufferPosition = 0;
             readBuffer = new byte[1024];
 
-            workerThread = new Thread(new Runnable() {
-                public void run() {
-                    while (!Thread.currentThread().isInterrupted()
-                            && !stopWorker) {
+            workerThread = new Thread(() -> {
+                while (!Thread.currentThread().isInterrupted()
+                        && !stopWorker) {
 
-                        try {
+                    try {
 
-                            int bytesAvailable = mmInputStream.available();
-                            if (bytesAvailable > 0) {
-                                byte[] packetBytes = new byte[bytesAvailable];
-                                mmInputStream.read(packetBytes);
-                                for (int i = 0; i < bytesAvailable; i++) {
-                                    byte b = packetBytes[i];
-                                    if (b == delimiter) {
-                                        byte[] encodedBytes = new byte[readBufferPosition];
-                                        System.arraycopy(readBuffer, 0,
-                                                encodedBytes, 0,
-                                                encodedBytes.length);
-                                        final String data = new String(
-                                                encodedBytes, "US-ASCII");
-                                        readBufferPosition = 0;
+                        int bytesAvailable = mmInputStream.available();
+                        if (bytesAvailable > 0) {
+                            byte[] packetBytes = new byte[bytesAvailable];
+                            mmInputStream.read(packetBytes);
+                            for (int i = 0; i < bytesAvailable; i++) {
+                                byte b = packetBytes[i];
+                                if (b == delimiter) {
+                                    byte[] encodedBytes = new byte[readBufferPosition];
+                                    System.arraycopy(readBuffer, 0,
+                                            encodedBytes, 0,
+                                            encodedBytes.length);
+                                    final String data = new String(
+                                            encodedBytes, "US-ASCII");
+                                    readBufferPosition = 0;
 
-                                        handler.post(new Runnable() {
-                                            public void run() {
-                                                //myLabel.setText(data);
-                                                Log.w("data",data);
-                                            }
-                                        });
-                                    } else {
-                                        readBuffer[readBufferPosition++] = b;
-                                    }
+                                    handler.post(() -> {
+                                        //myLabel.setText(data);
+                                        Log.w("data",data);
+                                    });
+                                } else {
+                                    readBuffer[readBufferPosition++] = b;
                                 }
                             }
-
-                        } catch (IOException ex) {
-                            stopWorker = true;
                         }
 
+                    } catch (IOException ex) {
+                        stopWorker = true;
                     }
+
                 }
             });
 
@@ -242,16 +220,16 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     /*
      * This will send data to be printed by the bluetooth printer
      */
-    /*void sendData() throws IOException {
+    private void sendData() throws IOException {
         try {
 
             // the text typed by the user
-            String msg = StringReporte;
+            String msg = cadena_impresion;
             msg += "\n";
             mmOutputStream.write(msg.getBytes());
             Log.w("Activo","Data Sent");
@@ -261,10 +239,10 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     // Close the connection to bluetooth printer.
-    /*void closeBT() throws IOException {
+    private void closeBT() throws IOException {
         try {
             stopWorker = true;
             mmOutputStream.close();
@@ -276,7 +254,5 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
-
-
+    }
 }

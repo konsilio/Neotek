@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaAlmacenPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaAlmacenPresenterImpl;
@@ -77,5 +78,64 @@ public class LecturaAlmacenInteractorImpl implements LecturaAlmacenInteractor {
             }
         });
 
+    }
+
+    @Override
+    public void getAlmacenes(String token) {
+        String url = Constantes.BASE_URL;
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<List<EstacionCarburacionDTO>> call = restClient.getEstacionesCarburacion(
+                false,
+                true,
+                false,
+                false,
+                token
+        );
+        Log.w("Url base",retrofit.baseUrl().toString());
+
+        call.enqueue(new Callback<List<EstacionCarburacionDTO>>() {
+            @Override
+            public void onResponse(Call<List<EstacionCarburacionDTO>> call, Response<List<EstacionCarburacionDTO>> response) {
+                if (response.isSuccessful()) {
+                    List<EstacionCarburacionDTO> data = response.body();
+                    Log.w("Estatus","Success");
+                    lecturaAlmacenPresenter.onSuccessGetAlmacen(data);
+                }
+                else {
+                    switch (response.code()) {
+                        case 404:
+                            Log.w("Error","not found");
+
+                            break;
+                        case 500:
+                            Log.w("Error", "server broken");
+
+                            break;
+                        default:
+                            Log.w("Error", "Error desconocido: "+response.code());
+
+                            break;
+                    }
+                    lecturaAlmacenPresenter.onError();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<EstacionCarburacionDTO>> call, Throwable t) {
+                Log.e("error", "Error desconocido: "+t.toString());
+                lecturaAlmacenPresenter.onError();
+            }
+        });
     }
 }

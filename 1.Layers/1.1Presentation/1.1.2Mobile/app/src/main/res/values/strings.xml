@@ -143,4 +143,6 @@
     <string name="Generar_reporte">Generar Reporte</string>
     <string name="terminar">Terminar</string>
     <string name="imprimir_reporte">Imprimir Reporte</string>
+    <string name="Recarga_camioneta">Recarga camioneta</string>
+    <string name="Recarga_de_gas">Recarga de gas</string>
 </resources>

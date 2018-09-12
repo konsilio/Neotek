@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaDatosPresenter;
@@ -45,7 +46,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
     public List<MedidorDTO> listaDTO;
 
     public LecturaDTO lecturaDTO;
-
+    public List<EstacionCarburacionDTO> estacionesCarburacionDTOlist;
 
 
     @Override
@@ -87,8 +88,8 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
 
         ListaCarburacion = new String[]{"Seleccione","Tipo 1","Tipo 2"};
         ListaTipoMedidor = getResources().getStringArray(R.array.tipos_medidor);
-        SLecturaDatosActivityListaCarburacion.setAdapter(new ArrayAdapter<>(this,
-                R.layout.custom_spinner, ListaCarburacion ));
+        /*SLecturaDatosActivityListaCarburacion.setAdapter(new ArrayAdapter<>(this,
+                R.layout.custom_spinner, ListaCarburacion ));*/
         SLecturaDatosActivityTipoMedidor.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner, ListaTipoMedidor));
 
@@ -122,12 +123,18 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                 lecturaDTO.setNombreTipoMedidor("");
             }
         });
-
+        lecturaDatosPresenter.getEstacionesCarburacion(session.getToken());
         SLecturaDatosActivityListaCarburacion.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getItemAtPosition(position).toString().equals("Tipo 1")){
+                for (EstacionCarburacionDTO estacion:estacionesCarburacionDTOlist){
+                    if(estacion.getNombreEstacionCarburacion().equals(parent.getItemAtPosition(position).toString())){
+                        lecturaDTO.setNombreEstacionCarburacion(estacion.getNombreEstacionCarburacion());
+                        lecturaDTO.setIdEstacionCarburacion(estacion.getIdEstacionCarburacion());
+                    }
+                }
+                /*if(parent.getItemAtPosition(position).toString().equals("Tipo 1")){
                     lecturaDTO.setNombreEstacionCarburacion(parent.getItemAtPosition(position)
                             .toString());
                     lecturaDTO.setIdEstacionCarburacion(1);
@@ -135,7 +142,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                     lecturaDTO.setNombreEstacionCarburacion(parent.getItemAtPosition(position)
                             .toString());
                     lecturaDTO.setIdEstacionCarburacion(1);
-                }
+                }*/
             }
 
             @Override
@@ -263,6 +270,18 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
         });
         //builder.create();
         builder.show();
+    }
+
+    @Override
+    public void onSuccessEstacionesCarburacion(List<EstacionCarburacionDTO> data) {
+        estacionesCarburacionDTOlist = data;
+        ListaCarburacion = new String[estacionesCarburacionDTOlist.size()+1];
+        ListaCarburacion[0] = "Seleccione";
+        for (int x = 0;x<data.size();x++){
+            ListaCarburacion[x+1]=data.get(x).getNombreEstacionCarburacion();
+        }
+        SLecturaDatosActivityListaCarburacion.setAdapter(new ArrayAdapter<>(this,
+                R.layout.custom_spinner,ListaCarburacion));
     }
 
     private AlertDialog.Builder CrearAlerta(int titulo,String mensaje){
