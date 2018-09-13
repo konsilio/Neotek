@@ -96,20 +96,18 @@ namespace Application.MainModule.Flujos
             return LecturaGasServicio.Lectura(lcdto,true);
         }
 
-        public DatosTomaLecturaDto ConsultaDatosTomaLectura(bool esAlmacen, bool esEstacion, bool esPipa, bool esCamioneta, bool esFinalizar)
+        public DatosTomaLecturaDto ConsultaDatosTomaLectura(bool esEstacion, bool esPipa, bool esCamioneta, bool esFinalizar)
         {
-            var idEmpresa = TokenServicio.ObtenerIdEmpresa();           
+            if(esEstacion)
+                return LecturaGasServicio.ConsultaDatosTomaLecturaEstacionCarburacion(esFinalizar);
 
-            if (esAlmacen)
-            {
-                // Falta considerar el alamcen alterno
-                var almacenes = ObtenerAlmacenesGas();
-                var medidores = ObtenerMedidores();
-                var porcentMedidor = 
-                return AlmacenLecturaAdapter.ToDto();
-            }
+            if (esPipa)
+                return LecturaGasServicio.ConsultaDatosTomaLecturaPipa(esFinalizar);
 
-            throw new NotImplementedException();
+            if (esCamioneta)
+                return LecturaGasServicio.ConsultaDatosTomaLecturaCamioneta(esFinalizar);
+
+            return LecturaGasServicio.ConsultaDatosTomaLecturaAlmacenGeneral(esFinalizar);
         }
     }
 }

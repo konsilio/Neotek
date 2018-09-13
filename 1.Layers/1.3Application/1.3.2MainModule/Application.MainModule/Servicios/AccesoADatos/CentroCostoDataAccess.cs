@@ -94,62 +94,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<CentroCosto>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
                                                              && x.Descripcion.Equals(descripcion)
                                                              && x.Activo);
-        }
-        /// <summary>
-        /// Enlista todos los tipos de centro de costos
-        /// </summary>
-        /// <returns></returns>
-        public List<TipoCentroCosto> ListaTiposCentrosCostos()
-        {
-            return uow.Repository<TipoCentroCosto>().GetAll().ToList();
-        }
-        /// <summary>
-        /// Enlista todas las unidades de almacen de gas
-        /// </summary>
-        /// <returns></returns>
-        public List<UnidadAlmacenGas> ListaUnidadesAlmacenGas()
-        {
-            return uow.Repository<UnidadAlmacenGas>().Get(x => x.Activo).ToList();
-        }
-        /// <summary>
-        /// Enlista todas las estaciones de Carburacion 
-        /// </summary>
-        /// <returns></returns>
-        public List<EstacionCarburacion> ListaEstacionesCarburacion()
-        {
-            return uow.Repository<EstacionCarburacion>().Get(x => x.Activo ).ToList();
-        }
-        /// <summary>
-        /// Enlista todas las camionetas
-        /// </summary>
-        /// <returns></returns>
-        public List<Camioneta> ListaCamionetas()
-        {
-            return uow.Repository<Camioneta>().Get(x => x.Activo).ToList();
-        }
-        /// <summary>
-        /// Enlista todas las pipas
-        /// </summary>
-        /// <returns></returns>
-        public List<Pipa> ListaPipas()
-        {
-            return uow.Repository<Pipa>().Get(x => x.Activo).ToList();
-        }
-        /// <summary>
-        /// Enlista todos las camionestas Cilindro
-        /// </summary>
-        /// <returns></returns>
-        public List<CamionetaCilindro> ListaCilindro()
-        {
-            return uow.Repository<CamionetaCilindro>().GetAll().ToList();
-        }
-        /// <summary>
-        /// Enlista todos los Almacenes de gas cilindro
-        /// </summary>
-        /// <returns></returns>
-        public List<UnidadAlmacenGasCilindro> ListaAlmacenCilindro()
-        {
-            return uow.Repository<UnidadAlmacenGasCilindro>().GetAll().ToList();
-        }
+        }        
     }
 }

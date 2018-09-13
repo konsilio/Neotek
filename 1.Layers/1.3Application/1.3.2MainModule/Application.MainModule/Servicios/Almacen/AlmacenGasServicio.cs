@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.Servicios.Almacen
 {
@@ -41,9 +42,39 @@ namespace Application.MainModule.Servicios.Almacen
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa, true);
         }
 
-        public static AlmacenGasTomaLectura ObtenerLecturaEstacionPorClaveOperacion(string claveProceso)
+        public static List<UnidadAlmacenGas> ObtenerEstaciones(short idEmpresa)
+        {
+            var alms = new AlmacenGasDataAccess().BuscarTodosEstacionCarburacion(idEmpresa);
+            alms = alms.Where(x=>x.IdEstacionCarburacion != null).ToList();
+            return alms;
+        }
+
+        public static List<UnidadAlmacenGas> ObtenerPipas(short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().BuscarTodosPipas(idEmpresa);
+        }
+
+        public static List<UnidadAlmacenGas> ObtenerCamionetas(short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().BuscarTodosCamionetas(idEmpresa);
+        }
+
+        public static AlmacenGasTomaLectura ObtenerLecturaPorClaveOperacion(string claveProceso)
         {
             return new AlmacenGasDataAccess().BuscarClaveOperacion(claveProceso);
+        }
+
+        public static AlmacenGasTomaLectura ObtenerUltimaLectura(UnidadAlmacenGas uniAlm, bool final = false)
+        {
+            if (uniAlm != null)
+                if (uniAlm.TomasLectura != null)
+                    if (uniAlm.TomasLectura.Count > 0)
+                            return !final
+                                ? uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final))
+                                : uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
+            return !final
+                ? ObtenerLecturas(uniAlm.IdCAlmacenGas).Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final))
+                : ObtenerLecturas(uniAlm.IdCAlmacenGas).Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));                
         }
 
         public static AlmacenGas Obtener(short idAlmacenGas)

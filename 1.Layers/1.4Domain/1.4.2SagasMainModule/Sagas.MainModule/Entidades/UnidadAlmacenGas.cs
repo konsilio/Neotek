@@ -34,7 +34,7 @@ namespace Sagas.MainModule.Entidades
         public Nullable<short> IdAlmacenGas { get; set; }
         public short IdEmpresa { get; set; }
         public byte IdTipoAlmacen { get; set; }
-        public short IdTipoMedidor { get; set; }
+        public Nullable<short> IdTipoMedidor { get; set; }
         public Nullable<int> IdEstacionCarburacion { get; set; }
         public Nullable<int> IdCamioneta { get; set; }
         public Nullable<int> IdPipa { get; set; }

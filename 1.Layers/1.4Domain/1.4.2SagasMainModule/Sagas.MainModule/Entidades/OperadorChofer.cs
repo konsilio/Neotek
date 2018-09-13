@@ -22,6 +22,7 @@ namespace Sagas.MainModule.Entidades
     
         public int IdOperadorChofer { get; set; }
         public byte IdTipoOperadorChofer { get; set; }
+        public short IdEmpresa { get; set; }
         public int IdUsuario { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
@@ -30,5 +31,6 @@ namespace Sagas.MainModule.Entidades
         public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PuntoVenta> PuntosVenta { get; set; }
+        public virtual Empresa Empresa { get; set; }
     }
 }
