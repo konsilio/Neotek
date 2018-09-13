@@ -105,6 +105,7 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
                         if (almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
                             lecturaAlmacenDTO.setIdAlmacen(almacenDTO.getIdAlmacenGas());
                             lecturaAlmacenDTO.setNombreAlmacen(almacenDTO.getNombreAlmacen());
+                            lecturaAlmacenDTO.setPorcentajeMedidor(almacenDTO.getPorcentajeMedidor());
                         }
                     }
                 }

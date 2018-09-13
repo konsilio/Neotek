@@ -20,7 +20,7 @@ public class AlmacenDTO {
     private double PorcentajeMedidor;
 
     @SerializedName("CantidadP5000")
-    private double CantidadP5000;
+    private int CantidadP5000;
 
     @SerializedName("IdTipoMedidor")
     private int IdTipoMedidor;
@@ -56,11 +56,11 @@ public class AlmacenDTO {
         PorcentajeMedidor = porcentajeMedidor;
     }
 
-    public double getCantidadP5000() {
+    public int getCantidadP5000() {
         return CantidadP5000;
     }
 
-    public void setCantidadP5000(double cantidadP5000) {
+    public void setCantidadP5000(int cantidadP5000) {
         CantidadP5000 = cantidadP5000;
     }
 

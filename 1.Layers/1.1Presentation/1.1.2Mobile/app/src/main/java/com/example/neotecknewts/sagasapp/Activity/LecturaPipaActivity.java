@@ -90,6 +90,8 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
                         if (almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
                             lecturaPipaDTO.setIdPipa(almacenDTO.getIdAlmacenGas());
                             lecturaPipaDTO.setNombrePipa(almacenDTO.getNombreAlmacen());
+                            lecturaPipaDTO.setPorcentajeMedidor(almacenDTO.getPorcentajeMedidor());
+                            lecturaPipaDTO.setCantidadP5000(almacenDTO.getCantidadP5000());
                         }
                     }
                     /*for (String m : ListaPipas) {
@@ -105,6 +107,8 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
             public void onNothingSelected(AdapterView<?> parent) {
                 lecturaPipaDTO.setIdPipa(0);
                 lecturaPipaDTO.setNombrePipa("");
+                lecturaPipaDTO.setPorcentajeMedidor(0.0);
+                lecturaPipaDTO.setCantidadP5000(0);
             }
         });
 

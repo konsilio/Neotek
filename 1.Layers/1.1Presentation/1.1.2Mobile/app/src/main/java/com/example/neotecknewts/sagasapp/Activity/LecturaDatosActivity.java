@@ -133,6 +133,8 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                     if(estacion.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())){
                         lecturaDTO.setNombreEstacionCarburacion(estacion.getNombreAlmacen());
                         lecturaDTO.setIdEstacionCarburacion(estacion.getIdAlmacenGas());
+                        lecturaDTO.setCantidadP5000(estacion.getCantidadP5000());
+                        lecturaDTO.setPorcentajeMedidor(estacion.getPorcentajeMedidor());
                     }
                 }
                 /*if(parent.getItemAtPosition(position).toString().equals("Tipo 1")){
@@ -150,6 +152,8 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
             public void onNothingSelected(AdapterView<?> parent) {
                 lecturaDTO.setNombreEstacionCarburacion("");
                 lecturaDTO.setIdEstacionCarburacion(0);
+                lecturaDTO.setCantidadP5000(0);
+                lecturaDTO.setPorcentajeMedidor(0.0);
             }
         });
 
