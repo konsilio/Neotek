@@ -11,7 +11,7 @@ import java.util.List;
 
 public class LecturaDatosPresenterImpl implements LecturaDatosPresenter {
     private LecturaDatosView lecturaDatosView;
-    LecturaDatosInteractor lecturaDatosInteractor;
+    private LecturaDatosInteractor lecturaDatosInteractor;
     public LecturaDatosPresenterImpl(LecturaDatosView lecturaDatosView){
         this.lecturaDatosView = lecturaDatosView;
         lecturaDatosInteractor = new LecturaDatosInteractorImpl(this);
@@ -42,7 +42,8 @@ public class LecturaDatosPresenterImpl implements LecturaDatosPresenter {
 
     @Override
     public void onSuccessGetEstacionesCarburacion(DatosTomaLecturaDto data) {
-        lecturaDatosView.hiddeLoadingProgress();
         lecturaDatosView.onSuccessEstacionesCarburacion(data);
+        lecturaDatosView.onSuccessMedidores(data.getMedidores());
+        lecturaDatosView.hiddeLoadingProgress();
     }
 }

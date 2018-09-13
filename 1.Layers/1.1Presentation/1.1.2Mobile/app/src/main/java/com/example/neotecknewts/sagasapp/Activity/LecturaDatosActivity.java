@@ -94,7 +94,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
         SLecturaDatosActivityTipoMedidor.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner, ListaTipoMedidor));
 
-        lecturaDatosPresenter.getMedidores(session.getToken());
+        /*lecturaDatosPresenter.getMedidores(session.getToken());*/
 
         SLecturaDatosActivityTipoMedidor.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {

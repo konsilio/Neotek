@@ -66,7 +66,8 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
         SLecturaAlmacenActivityListaMedidor.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,lista_medidores));
         lista_almacenes = new String[]{"Seleccióne","Almacen 1","Almacen 2"};
-        lecturaAlmacenPresenter.getMedidores(session.getToken());
+        /*lecturaAlmacenPresenter.getMedidores(session.getToken());*/
+        lecturaAlmacenPresenter.getAlmacenes(session.getToken(),banlist);
         SLecturaAlmacenActivityListaAlmacen.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,lista_almacenes));
         SLecturaAlmacenActivityListaMedidor.setOnItemSelectedListener(
@@ -95,7 +96,6 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
                 lecturaAlmacenDTO.setCantidadFotografias(0);
             }
         });
-        lecturaAlmacenPresenter.getAlmacenes(session.getToken(),banlist);
         SLecturaAlmacenActivityListaAlmacen.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override

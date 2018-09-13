@@ -14,12 +14,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaCamionetaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
     public ProgressDialog progressDialog;
     public Session session;
     public DatosTomaLecturaDto DatosTomaLecturaDto;
+    public List<CilindrosDTO> cilindrosDTOS;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +92,12 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position>0) {
                  for (AlmacenDTO almacenDTO:DatosTomaLecturaDto.getAlmacenes()) {
-                     lecturaCamionetaDTO.setIdCamioneta(almacenDTO.getIdAlmacenGas());
-                     lecturaCamionetaDTO.setNombreCamioneta(SLecturaCamionetaActivityListaCamioneta
-                             .getItemAtPosition(position).toString());
+                     if(almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
+                         lecturaCamionetaDTO.setIdCamioneta(almacenDTO.getIdAlmacenGas());
+                         lecturaCamionetaDTO.setNombreCamioneta(SLecturaCamionetaActivityListaCamioneta
+                                 .getItemAtPosition(position).toString());
+                         cilindrosDTOS = almacenDTO.getCilindros();
+                     }
                  }
                 }
             }
@@ -189,6 +195,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
             intent.putExtra("EsLecturaInicialCamioneta",EsLecturaInicialCamioneta);
             intent.putExtra("EsLecturaFinalCamioneta",EsLecturaFinalCamioneta);
             intent.putExtra("lecturaCamionetaDTO",lecturaCamionetaDTO);
+            intent.putExtra("cilindrosDTOS",(Serializable) cilindrosDTOS);
             dialog.dismiss();
             startActivity(intent);
         });

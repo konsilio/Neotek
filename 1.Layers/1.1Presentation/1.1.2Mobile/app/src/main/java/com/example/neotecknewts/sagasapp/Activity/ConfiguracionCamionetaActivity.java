@@ -36,6 +36,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracion_camioneta);
         Bundle bundle = getIntent().getExtras();
+        cilindrosDTOS = new ArrayList<>();
         if(bundle!=null){
             EsLecturaInicialCamioneta = (boolean)bundle.get("EsLecturaInicialCamioneta");
             EsLecturaFinalCamioneta = (boolean) bundle.get("EsLecturaFinalCamioneta");
@@ -43,9 +44,9 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
             lecturaCamionetaDTO = (LecturaCamionetaDTO) bundle.
                     getSerializable("lecturaCamionetaDTO");
             recargaDTO = (RecargaDTO) bundle.getSerializable("recargaDTO");
+            cilindrosDTOS = (ArrayList<CilindrosDTO>) bundle.getSerializable("cilindrosDTOS");
         }
-        cilindrosDTOS = new ArrayList<>();
-        CilindrosDTO valor = new CilindrosDTO();
+        /*CilindrosDTO valor = new CilindrosDTO();
         valor.setCilindroKg("20kg.");
         valor.setCantidad(4);
         valor.setIdCilindro(1);
@@ -56,7 +57,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         CilindrosDTO valor3 = new CilindrosDTO();
         valor3.setCilindroKg("45kg.");
         valor3.setCantidad(99);
-        valor.setIdCilindro(3);
+        valor.setIdCilindro(3);*/
 
         RVConfiguracionCamionetasCilindros = findViewById(R.id.RVConfiguracionCamionetasCilindros);
         RVConfiguracionCamionetasCilindros.setHasFixedSize(true);
@@ -85,9 +86,9 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         RVConfiguracionCamionetasCilindros.setLayoutManager(layoutManager);
 
-        cilindrosDTOS.add(valor);
-        cilindrosDTOS.add(valor2);
-        cilindrosDTOS.add(valor3);
+        //cilindrosDTOS.add(valor);
+        //cilindrosDTOS.add(valor2);
+        //cilindrosDTOS.add(valor3);
 
         adapter = new CamionetasAdapter(cilindrosDTOS);
         RVConfiguracionCamionetasCilindros.setAdapter(adapter);

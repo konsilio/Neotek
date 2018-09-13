@@ -11,8 +11,8 @@ import java.util.List;
 
 public class LecturaPipaPresenterImpl implements LecturaPipaPresenter {
 
-    LecturaPipaView lecturaPipaView;
-    LecturaPipaInteractor lecturaPipaInteractor;
+    private LecturaPipaView lecturaPipaView;
+    private LecturaPipaInteractor lecturaPipaInteractor;
 
     public LecturaPipaPresenterImpl(LecturaPipaView lecturaPipaView) {
         this.lecturaPipaView = lecturaPipaView;
@@ -44,8 +44,8 @@ public class LecturaPipaPresenterImpl implements LecturaPipaPresenter {
 
     @Override
     public void onSuccessGetPipas(DatosTomaLecturaDto data) {
-        lecturaPipaView.hiddeLoadingProgress();
         lecturaPipaView.onSuccessPipas(data);
         lecturaPipaView.onSuccessMedidores(data.getMedidores());
+        lecturaPipaView.hiddeLoadingProgress();
     }
 }

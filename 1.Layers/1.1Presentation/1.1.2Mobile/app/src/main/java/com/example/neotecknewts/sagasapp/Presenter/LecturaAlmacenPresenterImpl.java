@@ -48,7 +48,8 @@ public class LecturaAlmacenPresenterImpl implements LecturaAlmacenPresenter {
 
     @Override
     public void onSuccessGetAlmacen(DatosTomaLecturaDto data) {
-        lecturaAlmacenView.hiddeProgress();
         lecturaAlmacenView.onSuccessAlmacenes(data);
+        lecturaAlmacenView.onSuccessMedidores(data.getMedidores());
+        lecturaAlmacenView.hiddeProgress();
     }
 }
