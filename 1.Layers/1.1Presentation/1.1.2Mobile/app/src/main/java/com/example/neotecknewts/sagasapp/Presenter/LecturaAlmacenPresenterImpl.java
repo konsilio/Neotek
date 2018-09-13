@@ -3,7 +3,7 @@ package com.example.neotecknewts.sagasapp.Presenter;
 import com.example.neotecknewts.sagasapp.Activity.LecturaAlmacenView;
 import com.example.neotecknewts.sagasapp.Interactor.LecturaAlmacenInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.LecturaAlmacenInteractorImpl;
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.R;
 
@@ -41,14 +41,15 @@ public class LecturaAlmacenPresenterImpl implements LecturaAlmacenPresenter {
     }
 
     @Override
-    public void getAlmacenes(String token) {
+    public void getAlmacenes(String token,boolean esFinalizar) {
         lecturaAlmacenView.showProgress(R.string.message_cargando);
-        lecturaAlmacenInteractor.getAlmacenes(token);
+        lecturaAlmacenInteractor.getAlmacenes(token,esFinalizar);
     }
 
     @Override
-    public void onSuccessGetAlmacen(List<EstacionCarburacionDTO> data) {
-        lecturaAlmacenView.hiddeProgress();
+    public void onSuccessGetAlmacen(DatosTomaLecturaDto data) {
         lecturaAlmacenView.onSuccessAlmacenes(data);
+        lecturaAlmacenView.onSuccessMedidores(data.getMedidores());
+        lecturaAlmacenView.hiddeProgress();
     }
 }

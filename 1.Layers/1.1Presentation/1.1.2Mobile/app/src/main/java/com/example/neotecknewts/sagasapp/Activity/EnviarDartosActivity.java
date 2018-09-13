@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.EnviarDatosPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.EnviarDatosPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
@@ -15,12 +16,13 @@ import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 import com.example.neotecknewts.sagasapp.Util.Session;
 
 public class EnviarDartosActivity extends AppCompatActivity  implements EnviarDatosView{
-    public boolean EsLecturaInicialCamioneta,EsLecturaFinalCamioneta;
+    public boolean EsLecturaInicialCamioneta,EsLecturaFinalCamioneta,EsRecargaCamioneta;
     public LecturaCamionetaDTO lecturaCamionetaDTO;
     public ProgressDialog progressDialog;
     public EnviarDatosPresenter enviarDatosPresenter;
     public Session session;
     public SAGASSql sagasSql;
+    public RecargaDTO recargaDTO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +31,10 @@ public class EnviarDartosActivity extends AppCompatActivity  implements EnviarDa
         if(bundle!= null){
             EsLecturaInicialCamioneta = (boolean) bundle.get("EsLecturaInicialCamioneta");
             EsLecturaFinalCamioneta = (boolean) bundle.get("EsLecturaFinalCamioneta");
+            EsRecargaCamioneta = bundle.getBoolean("EsRecargaCamioneta",false);
             lecturaCamionetaDTO = (LecturaCamionetaDTO) bundle.
                     getSerializable("lecturaCamionetaDTO");
+            recargaDTO = (RecargaDTO) bundle.getSerializable("recargaDTO");
         }
         enviarDatosPresenter = new EnviarDatosPresenterImpl(this);
         sagasSql = new SAGASSql(EnviarDartosActivity.this);
@@ -119,6 +123,9 @@ public class EnviarDartosActivity extends AppCompatActivity  implements EnviarDa
             }else  if (EsLecturaFinalCamioneta){
                 enviarDatosPresenter.RegistrarLecturaFinalCamioneta(sagasSql,session.getToken(),
                         lecturaCamionetaDTO);
+            }if (EsRecargaCamioneta){
+                enviarDatosPresenter.RegistrarRecargaCamioneta(recargaDTO,session.getToken(),
+                        sagasSql);
             }
         }
     }

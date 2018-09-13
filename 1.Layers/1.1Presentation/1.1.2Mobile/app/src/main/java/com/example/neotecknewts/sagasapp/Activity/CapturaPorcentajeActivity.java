@@ -31,6 +31,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
 
     //variable que guarda el porcentaje capturado
     public Double porcentaje;
+    public Double porcentaje_inicial;
 
     //variables relacionadas con la vista
     public NumberPicker numberPickerProcentaje;
@@ -135,6 +136,12 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                         lecturaDTO.getNombreTipoMedidor()+" de la estación");
                 EsLecturaInicial = (boolean) extras.get("EsLecturaInicial");
                 EsLecturaFinal = (boolean) extras.get("EsLecturaFinal");
+                porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
+                if(porcentaje_inicial>0) {
+                    String val_per = porcentaje_inicial.toString();
+                    numberPickerProcentaje.setValue(Integer.parseInt(val_per.split(".")[0]));
+                    numberPickerDecimal.setValue(Integer.parseInt(val_per.split(".")[1]));
+                }
                 papeleta=false;
                 iniciar=false;
                 finalizar=false;
@@ -151,6 +158,13 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 EsLecturaFinal = (boolean) extras.get("EsLecturaFinal");
                 EsLecturaInicialPipa = (boolean) extras.get("EsLecturaInicialPipa");
                 EsLecturaFinalPipa = (boolean) extras.get("EsLecturaFinalPipa");
+                porcentaje_inicial = lecturaPipaDTO.getPorcentajeMedidor();
+                porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
+                if(porcentaje_inicial>0) {
+                    String val_per = porcentaje_inicial.toString();
+                    numberPickerProcentaje.setValue(Integer.parseInt(val_per.split(".")[0]));
+                    numberPickerDecimal.setValue(Integer.parseInt(val_per.split(".")[1]));
+                }
                 papeleta=false;
                 iniciar=false;
                 finalizar=false;
@@ -161,6 +175,13 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                         .getSerializable("lecturaAlmacenDTO");
                 EsLecturaInicialAlmacen = extras.getBoolean("EsLecturaInicialAlmacen");
                 EsLecturaFinalAlmacen = extras.getBoolean("EsLecturaFinalAlmacen");
+                porcentaje_inicial = lecturaAlmacenDTO.getPorcentajeMedidor();
+                porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
+                if(porcentaje_inicial>0) {
+                    String val_per = porcentaje_inicial.toString();
+                    numberPickerProcentaje.setValue(Integer.parseInt(val_per.split(".")[0]));
+                    numberPickerDecimal.setValue(Integer.parseInt(val_per.split(".")[1]));
+                }
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
                 EsLecturaInicialPipa = false;

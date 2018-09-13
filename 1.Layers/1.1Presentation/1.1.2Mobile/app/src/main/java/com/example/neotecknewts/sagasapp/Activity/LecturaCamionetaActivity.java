@@ -13,17 +13,20 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
+import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaCamionetaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LecturaCamionetaActivity extends AppCompatActivity implements LecturaCamionetaView{
-    public boolean EsLecturaInicialCamioneta,EsLecturaFinalCamioneta,error;
+    public boolean EsLecturaInicialCamioneta,EsLecturaFinalCamioneta,error,esFinal;
     public TextView TVLecturaCamionetaActivityTitulo,TVLecturaCamionetaActivotyRecordatorioUno,
             TVLecturaCamionetaActivityRecordatorioDos,TVLecturaCamionetaAcitvityQuien;
     public Spinner SLecturaCamionetaActivityListaCamioneta,SLecturaCamionetaActivityListaQuien;
@@ -33,7 +36,8 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
     public LecturaCamionetaPresenterImpl lecturaCamionetaPresenter;
     public ProgressDialog progressDialog;
     public Session session;
-    public List<EstacionCarburacionDTO> estacionCarburacionDTOList;
+    public DatosTomaLecturaDto DatosTomaLecturaDto;
+    public List<CilindrosDTO> cilindrosDTOS;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
         if(bundle!=null){
             EsLecturaInicialCamioneta = (boolean) bundle.get("EsLecturaInicialCamioneta");
             EsLecturaFinalCamioneta = (boolean) bundle.get("EsLecturaFinalCamioneta");
+            esFinal = bundle.getBoolean("EsLecturaInicialCamioneta",false);
         }
         session = new Session(LecturaCamionetaActivity.this);
         TVLecturaCamionetaActivityTitulo = findViewById(R.id.TVLecturaCamionetaActivityTitulo);
@@ -80,14 +85,21 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
                 R.layout.custom_spinner,list_camionetas));
         SLecturaCamionetaActivityListaQuien.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,list_quien));
-        lecturaCamionetaPresenter.GetListCamionetas(session.getToken());
+        lecturaCamionetaPresenter.GetListCamionetas(session.getToken(),esFinal);
         SLecturaCamionetaActivityListaCamioneta.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                lecturaCamionetaDTO.setIdCamioneta(1);
-                lecturaCamionetaDTO.setNombreCamioneta(SLecturaCamionetaActivityListaCamioneta
-                        .getItemAtPosition(position).toString());
+                if(position>0) {
+                 for (AlmacenDTO almacenDTO:DatosTomaLecturaDto.getAlmacenes()) {
+                     if(almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
+                         lecturaCamionetaDTO.setIdCamioneta(almacenDTO.getIdAlmacenGas());
+                         lecturaCamionetaDTO.setNombreCamioneta(SLecturaCamionetaActivityListaCamioneta
+                                 .getItemAtPosition(position).toString());
+                         cilindrosDTOS = almacenDTO.getCilindros();
+                     }
+                 }
+                }
             }
 
             @Override
@@ -138,12 +150,12 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
     }
 
     @Override
-    public void onSuccessCamionetas(List<EstacionCarburacionDTO> data) {
-        estacionCarburacionDTOList = data;
-        list_camionetas = new String[estacionCarburacionDTOList.size()+1];
+    public void onSuccessCamionetas(DatosTomaLecturaDto data) {
+        DatosTomaLecturaDto = data;
+        list_camionetas = new String[DatosTomaLecturaDto.getAlmacenes().size()+1];
         list_camionetas[0] = "Seleccióne";
-        for (int x=0; x<estacionCarburacionDTOList.size();x++){
-            list_camionetas[x+1] = estacionCarburacionDTOList.get(x).getNombreEstacionCarburacion();
+        for (int x=0; x<DatosTomaLecturaDto.getAlmacenes().size();x++){
+            list_camionetas[x+1] = DatosTomaLecturaDto.getAlmacenes().get(x).getNombreAlmacen();
         }
         SLecturaCamionetaActivityListaCamioneta.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,list_camionetas));
@@ -183,6 +195,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
             intent.putExtra("EsLecturaInicialCamioneta",EsLecturaInicialCamioneta);
             intent.putExtra("EsLecturaFinalCamioneta",EsLecturaFinalCamioneta);
             intent.putExtra("lecturaCamionetaDTO",lecturaCamionetaDTO);
+            intent.putExtra("cilindrosDTOS",(Serializable) cilindrosDTOS);
             dialog.dismiss();
             startActivity(intent);
         });

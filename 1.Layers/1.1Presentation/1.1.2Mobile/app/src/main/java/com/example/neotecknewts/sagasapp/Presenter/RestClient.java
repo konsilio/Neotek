@@ -1,8 +1,8 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -12,11 +12,13 @@ import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
@@ -185,11 +187,13 @@ public interface RestClient {
                                                                  @Header("Content-Type") String contentType
     );
     @GET(Constantes.LISTA_TIPO_ALMACEN)
-    Call<List<EstacionCarburacionDTO>> getEstacionesCarburacion(
-            @Query("EsEstacion") boolean EsEstacion,
-            @Query("EsAlmacen") boolean EsAlmacen,
-            @Query("EsPipa") boolean EsPipa,
-            @Query("EsCamioneta") boolean EsCamioneta,
+    Call<DatosTomaLecturaDto> getEstacionesCarburacion(
+            @Query("esEstacion") boolean esEstacion,
+            @Query("esPipa") boolean esPipa,
+            @Query("esCamioneta") boolean esCamioneta,
+            @Query("esFinalizar") boolean esFinalizar,
             @Header("Authorization")String token
     );
+    @POST(Constantes.POST_RECARGA)
+    Call<RespuestaRecargaDTO> postRecarga(RecargaDTO recargaDTO, String token, String s);
 }
