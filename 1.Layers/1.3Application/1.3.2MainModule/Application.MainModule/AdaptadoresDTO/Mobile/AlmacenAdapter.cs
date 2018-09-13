@@ -212,10 +212,13 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static AlmacenDto ToDto(UnidadAlmacenGas alm, List<AlmacenGasTomaLectura> lect = null)
+        public static AlmacenDto ToDto(UnidadAlmacenGas alm, AlmacenGasTomaLectura lect)
         {
             var almDto = ToDto(alm);
-            //almDto.Cilindros = lect != null ? ToDto(lect) : null;
+            if (lect == null || lect.Cilindros == null)
+                almDto.Cilindros = ToDto(AlmacenGasServicio.AdaptarCilindro(0));            
+            else
+                almDto.Cilindros = ToDto(AlmacenGasServicio.AdaptarCilindro(lect.Cilindros.ToList()));
 
             return almDto;
         }
@@ -223,6 +226,17 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         public static List<AlmacenDto> ToDto(List<UnidadAlmacenGas> alm)
         {
             return alm.ToList().Select(x => ToDto(x)).ToList();
+        }
+
+        public static List<AlmacenDto> ToDto(List<UnidadAlmacenGas> alms, List<AlmacenGasTomaLectura> lects)
+        {
+            var almacenDto = new List<AlmacenDto>();
+            int i = 0;
+            foreach (var alm in alms)
+            {
+                almacenDto.Add(ToDto(alm, lects.ElementAt(i)));
+            }
+            return almacenDto;
         }
 
         public static CilindroDto ToDto(UnidadAlmacenGasCilindro cil)

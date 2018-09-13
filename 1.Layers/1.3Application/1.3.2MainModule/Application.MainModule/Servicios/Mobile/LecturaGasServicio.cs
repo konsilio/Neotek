@@ -82,9 +82,12 @@ namespace Application.MainModule.Servicios.Mobile
             if (puntoVenta != null)
             {
                 var almUsuario = alms.SingleOrDefault(x => x.IdCAlmacenGas.Equals(puntoVenta.IdCAlmacenGas));
-                var i = alms.FindIndex(x => x.IdCAlmacenGas.Equals(puntoVenta.IdCAlmacenGas));
-                alms.RemoveAt(i);
-                almacenes.Add(almUsuario);
+                if (almUsuario != null)
+                {
+                    var i = alms.FindIndex(x => x.IdCAlmacenGas.Equals(puntoVenta.IdCAlmacenGas));
+                    alms.RemoveAt(i);
+                    almacenes.Add(almUsuario);
+                }
             }
 
             almacenes.AddRange(alms);
@@ -110,8 +113,6 @@ namespace Application.MainModule.Servicios.Mobile
         public static List<AlmacenGasTomaLectura> AcomodarUltimaLecturaCamioneta(List<UnidadAlmacenGas> alms, bool esFinalizar)
         {
             var lecturas = new List<AlmacenGasTomaLectura>();
-
-            int i = 0;
             foreach (var alm in alms)
             {
                 lecturas.Add(AlmacenGasServicio.ObtenerUltimaLectura(alm, esFinalizar));
@@ -122,7 +123,7 @@ namespace Application.MainModule.Servicios.Mobile
 
         public static List<UnidadAlmacenGas> ObtenerAlamcenesGeneralConUltimaLectura(bool esFinalizar)
         {
-            var alms = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa());
+            var alms = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa(), true);
 
             return AcomodarUltimaLectura(alms, esFinalizar);
         }
@@ -173,12 +174,10 @@ namespace Application.MainModule.Servicios.Mobile
 
         public static DatosTomaLecturaDto ConsultaDatosTomaLecturaCamioneta(bool esFinalizar)
         {
-            //var medidores = TipoMedidorGasServicio.Obtener();
-            //var alms = ObtenerCamionetaConUltimaLectura(esFinalizar);
-            //var lecturas = AcomodarUltimaLecturaCamioneta(alms, esFinalizar);
-            //return AlmacenAdapter.ToDto(alms, lecturas);
-
-            return null;
+            var medidores = TipoMedidorGasServicio.Obtener();
+            var alms = ObtenerCamionetaConUltimaLectura(esFinalizar);
+            var lecturas = AcomodarUltimaLecturaCamioneta(alms, esFinalizar);
+            return AlmacenLecturaAdapter.ToDto(alms, lecturas, medidores);
         }
 
         private static AlmacenGasTomaLectura EvaluarEsEncargadoPuerta(AlmacenGasTomaLectura alm, LecturaCamionetaDTO lcDto)
