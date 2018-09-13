@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.neotecknewts.sagasapp.Adapter.CamionetasAdapter;
 import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         ConfiguracionCamionetaView{
     private RecyclerView RVConfiguracionCamionetasCilindros;
     private CamionetasAdapter adapter;
-    private boolean EsLecturaInicialCamioneta,EsLecturaFinalCamioneta;
+    private boolean EsLecturaInicialCamioneta,EsLecturaFinalCamioneta,EsRecargaCamioneta;
     private LecturaCamionetaDTO lecturaCamionetaDTO;
+    public RecargaDTO recargaDTO;
 
     ArrayList<String> lista_errores;
     ArrayList<CilindrosDTO> cilindrosDTOS;
@@ -37,8 +39,10 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         if(bundle!=null){
             EsLecturaInicialCamioneta = (boolean)bundle.get("EsLecturaInicialCamioneta");
             EsLecturaFinalCamioneta = (boolean) bundle.get("EsLecturaFinalCamioneta");
+            EsRecargaCamioneta = bundle.getBoolean("EsRecargaCamioneta",false);
             lecturaCamionetaDTO = (LecturaCamionetaDTO) bundle.
                     getSerializable("lecturaCamionetaDTO");
+            recargaDTO = (RecargaDTO) bundle.getSerializable("recargaDTO");
         }
         cilindrosDTOS = new ArrayList<>();
         CilindrosDTO valor = new CilindrosDTO();
@@ -59,11 +63,18 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
 
         Button btnCamposCamionetasFooterGuardar = findViewById(R.id.BtnCamposCamionetasFooterGuardar);
         TextView TVCamposCamionetasHeaderTitulo = findViewById(R.id.TVCamposCamionetasHeaderTitulo);
+        TextView TVCamposCamionetasHeaderInstrucciones = findViewById(R.id.
+                TVCamposCamionetasHeaderInstrucciones);
+        TextView TVCamposCamionetaHader = findViewById(R.id.TVCamposCamionetaHader);
 
         if(EsLecturaInicialCamioneta){
             TVCamposCamionetasHeaderTitulo.setText(getString(R.string.toma_de_lectura)+" inicial");
         }else if (EsLecturaFinalCamioneta){
             TVCamposCamionetasHeaderTitulo.setText(getString(R.string.toma_de_lectura)+" final");
+        }else if(EsRecargaCamioneta){
+            TVCamposCamionetasHeaderTitulo.setText(R.string.recarga+" - Camioneta");
+            TVCamposCamionetasHeaderInstrucciones.setText(R.string.registra_configuracion_recarga);
+            TVCamposCamionetaHader.setVisibility(View.GONE);
         }
 
         btnCamposCamionetasFooterGuardar.setOnClickListener(v -> {
@@ -111,27 +122,48 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         if (error) {
             DialogoError(lista_errores);
         } else {
-            for (int x = 0; x < adapter.getItemCount(); x++) {
-                CilindrosDTO cilindrosDTO = adapter.getCilindro(x);
-                View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
-                EditText editText = view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
-                TextView textView = view.findViewById(R.id.TVLecturaAlmacenActivityTitulo);
-                cilindrosDTO.setCantidad(Integer.parseInt(editText.getText().toString()));
-                lecturaCamionetaDTO.getCilindros().add(cilindrosDTO);
-                lecturaCamionetaDTO.getCilindroCantidad().add(cilindrosDTO.getCantidad());
-                lecturaCamionetaDTO.getIdCilindro().add(cilindrosDTO.getIdCilindro());
+            if(EsLecturaInicialCamioneta || EsLecturaFinalCamioneta) {
+                for (int x = 0; x < adapter.getItemCount(); x++) {
+                    CilindrosDTO cilindrosDTO = adapter.getCilindro(x);
+                    View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
+                    EditText editText = view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
+                    TextView textView = view.findViewById(R.id.TVLecturaAlmacenActivityTitulo);
+                    cilindrosDTO.setCantidad(Integer.parseInt(editText.getText().toString()));
+                    lecturaCamionetaDTO.getCilindros().add(cilindrosDTO);
+                    lecturaCamionetaDTO.getCilindroCantidad().add(cilindrosDTO.getCantidad());
+                    lecturaCamionetaDTO.getIdCilindro().add(cilindrosDTO.getIdCilindro());
+                }
+
+            }else if(EsRecargaCamioneta){
+                for (int x =0; x<adapter.getItemCount();x++){
+                    View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
+                    EditText editText = view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
+                    int[] datos = new int[2];
+                    datos[0] = adapter.getCilindro(x).getIdCilindro();
+                    datos[1] = Integer.parseInt(editText.getText().toString());
+                    recargaDTO.getCilindros().add(datos);
+                }
             }
-            RegistrarLectura();
+            Registrar();
         }
     }
 
-    public void RegistrarLectura(){
-        Intent intent = new Intent(ConfiguracionCamionetaActivity.this,
-                EnviarDartosActivity.class);
-        intent.putExtra("EsLecturaInicialCamioneta",EsLecturaInicialCamioneta);
-        intent.putExtra("EsLecturaFinalCamioneta",EsLecturaFinalCamioneta);
-        intent.putExtra("lecturaCamionetaDTO",lecturaCamionetaDTO);
-        startActivity(intent);
+    public void Registrar(){
+        if(EsLecturaInicialCamioneta || EsLecturaFinalCamioneta) {
+            Intent intent = new Intent(ConfiguracionCamionetaActivity.this,
+                    EnviarDartosActivity.class);
+            intent.putExtra("EsLecturaInicialCamioneta", EsLecturaInicialCamioneta);
+            intent.putExtra("EsLecturaFinalCamioneta", EsLecturaFinalCamioneta);
+            intent.putExtra("lecturaCamionetaDTO", lecturaCamionetaDTO);
+            startActivity(intent);
+        }else if (EsRecargaCamioneta){
+            Intent intent = new Intent(ConfiguracionCamionetaActivity.this,
+                    EnviarDartosActivity.class);
+            intent.putExtra("EsLecturaInicialCamioneta", EsLecturaInicialCamioneta);
+            intent.putExtra("EsLecturaFinalCamioneta", EsLecturaFinalCamioneta);
+            intent.putExtra("EsRecargaCamioneta",EsRecargaCamioneta);
+            intent.putExtra("recargaDTO", recargaDTO);
+        }
     }
 
     public void DialogoError(ArrayList<String> mensajes){

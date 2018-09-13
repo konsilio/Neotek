@@ -14,7 +14,7 @@ public interface LecturaAlmacenPresenter {
 
     void onError();
 
-    void getAlmacenes(String token);
+    void getAlmacenes(String token,boolean esFinalizar);
 
     void onSuccessGetAlmacen(List<EstacionCarburacionDTO> data);
 }

@@ -12,7 +12,7 @@ public interface LecturaDatosPresenter {
 
     void onError();
 
-    void getEstacionesCarburacion(String token);
+    void getEstacionesCarburacion(String token,boolean esFinalizar);
 
     void onSuccessGetEstacionesCarburacion(List<EstacionCarburacionDTO> data);
 }

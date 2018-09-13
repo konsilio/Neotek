@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LecturaCamionetaActivity extends AppCompatActivity implements LecturaCamionetaView{
-    public boolean EsLecturaInicialCamioneta,EsLecturaFinalCamioneta,error;
+    public boolean EsLecturaInicialCamioneta,EsLecturaFinalCamioneta,error,esFinal;
     public TextView TVLecturaCamionetaActivityTitulo,TVLecturaCamionetaActivotyRecordatorioUno,
             TVLecturaCamionetaActivityRecordatorioDos,TVLecturaCamionetaAcitvityQuien;
     public Spinner SLecturaCamionetaActivityListaCamioneta,SLecturaCamionetaActivityListaQuien;
@@ -43,6 +43,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
         if(bundle!=null){
             EsLecturaInicialCamioneta = (boolean) bundle.get("EsLecturaInicialCamioneta");
             EsLecturaFinalCamioneta = (boolean) bundle.get("EsLecturaFinalCamioneta");
+            esFinal = bundle.getBoolean("EsLecturaInicialCamioneta",false);
         }
         session = new Session(LecturaCamionetaActivity.this);
         TVLecturaCamionetaActivityTitulo = findViewById(R.id.TVLecturaCamionetaActivityTitulo);
@@ -80,7 +81,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
                 R.layout.custom_spinner,list_camionetas));
         SLecturaCamionetaActivityListaQuien.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,list_quien));
-        lecturaCamionetaPresenter.GetListCamionetas(session.getToken());
+        lecturaCamionetaPresenter.GetListCamionetas(session.getToken(),esFinal);
         SLecturaCamionetaActivityListaCamioneta.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override

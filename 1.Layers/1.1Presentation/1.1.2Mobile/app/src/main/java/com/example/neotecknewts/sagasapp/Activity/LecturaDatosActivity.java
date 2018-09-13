@@ -36,7 +36,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
 
     public Button BLecturaDatosActivityAceptar;
 
-    public boolean EsLecturaInicial, EsLecturaFinal;
+    public boolean EsLecturaInicial, EsLecturaFinal,esFinalizar;
     public ProgressDialog dialog_progres;
 
     public String[]ListaCarburacion,ListaTipoMedidor;
@@ -79,7 +79,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
             EsLecturaInicial = true;
             EsLecturaFinal = false;
         }
-
+        esFinalizar = b.getBoolean("EsLecturaInicial",false);
         lecturaDTO = new LecturaDTO();
 
         TVLecturaDatosActivityTitulo.setText(
@@ -123,7 +123,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                 lecturaDTO.setNombreTipoMedidor("");
             }
         });
-        lecturaDatosPresenter.getEstacionesCarburacion(session.getToken());
+        lecturaDatosPresenter.getEstacionesCarburacion(session.getToken(),esFinalizar);
         SLecturaDatosActivityListaCarburacion.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override

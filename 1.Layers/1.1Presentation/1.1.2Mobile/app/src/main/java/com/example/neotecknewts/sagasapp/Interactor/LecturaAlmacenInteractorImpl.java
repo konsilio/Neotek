@@ -81,7 +81,7 @@ public class LecturaAlmacenInteractorImpl implements LecturaAlmacenInteractor {
     }
 
     @Override
-    public void getAlmacenes(String token) {
+    public void getAlmacenes(String token,boolean esFinalizar ) {
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
@@ -96,9 +96,9 @@ public class LecturaAlmacenInteractorImpl implements LecturaAlmacenInteractor {
         RestClient restClient = retrofit.create(RestClient.class);
         Call<List<EstacionCarburacionDTO>> call = restClient.getEstacionesCarburacion(
                 false,
-                true,
                 false,
                 false,
+                esFinalizar,
                 token
         );
         Log.w("Url base",retrofit.baseUrl().toString());

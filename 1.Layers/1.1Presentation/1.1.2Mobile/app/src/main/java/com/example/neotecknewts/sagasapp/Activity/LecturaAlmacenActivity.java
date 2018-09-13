@@ -38,6 +38,7 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
     public LecturaAlmacenPresenter lecturaAlmacenPresenter;
     public ProgressDialog progressDialog;
     public List<EstacionCarburacionDTO> EstacionesCarburacionDTOlist;
+    public boolean banlist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,7 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
         if(bundle!= null){
             EsLecturaInicialAlmacen = (boolean)bundle.get("EsLecturaInicialAlmacen");
             EsLecturaFinalAlmacen = (boolean) bundle.get("EsLecturaFinalAlmacen");
+            banlist = bundle.getBoolean("EsLecturaFinalAlmacen", false);
         }
         session = new Session(LecturaAlmacenActivity.this);
         lecturaAlmacenDTO = new LecturaAlmacenDTO();
@@ -92,7 +94,7 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
                 lecturaAlmacenDTO.setCantidadFotografias(0);
             }
         });
-        lecturaAlmacenPresenter.getAlmacenes(session.getToken());
+        lecturaAlmacenPresenter.getAlmacenes(session.getToken(),banlist);
         SLecturaAlmacenActivityListaAlmacen.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override

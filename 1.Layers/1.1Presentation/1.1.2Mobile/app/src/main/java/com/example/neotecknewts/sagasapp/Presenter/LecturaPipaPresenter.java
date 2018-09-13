@@ -1,7 +1,7 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
+import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
-import com.example.neotecknewts.sagasapp.Model.PipaDTO;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface LecturaPipaPresenter {
 
     void onError();
 
-    void getPipas(String token);
+    void getPipas(String token,boolean EsFinal);
 
-    void onSuccessGetPipas(List<PipaDTO> pipaDTOList);
+    void onSuccessGetPipas(List<EstacionCarburacionDTO> data);
 }

@@ -16,9 +16,9 @@ public class LecturaCamionetaPresenterImpl implements LecturaCamionetaPresenter 
     }
 
     @Override
-    public void GetListCamionetas(String token) {
+    public void GetListCamionetas(String token,boolean esFinalizar) {
         this.lecturaCamionetaView.onShowProgressDialog(R.string.message_cargando);
-        lecturaCamionetaInteractor.GetListCamionetas(token);
+        lecturaCamionetaInteractor.GetListCamionetas(token,esFinalizar);
     }
 
     @Override

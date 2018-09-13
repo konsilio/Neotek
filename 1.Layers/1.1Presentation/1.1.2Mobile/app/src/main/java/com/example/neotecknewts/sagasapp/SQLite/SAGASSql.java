@@ -10,6 +10,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 
 /**
  * Clase SAGASSql para el manejo de base de datos local
@@ -47,7 +48,13 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_LECTURA_FINAL_CAMIONETA = "lectura_final_camioneta";
     private static final String TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS =
             "lectura_final_camiones_cilindros";
+    private static final String TABLE_RECARGAS = "recargas";
+    private static final String TABLE_RECARGAS_IMAGENES = "recargas_imagenes";
+    private static final String TABLE_RECARGAS_CILINDROS = "recargas_images_cilindros";
 
+    public static final String TIPO_RECARGA_CAMIONETA = "C";
+    public static final String TIPO_RECARGA_ESTACION_CARBURACION =  "EC";
+    public static final String TIPO_RECARGA_PIPA = "P";
     //endregion
 
     //region Constructor de clase
@@ -288,6 +295,39 @@ public class SAGASSql extends SQLiteOpenHelper {
                 ")");
         //endregion
 
+        //region Tabla de recargas
+        db.execSQL("CREATE TABLE "+TABLE_RECARGAS+" (" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "IdCAlmacenGasSalida INTEGER," +
+                "IdCAlmacenGasEntrada INTEGER," +
+                "IdTipoMedidorSalida INTEGER," +
+                "IdTipoMedidorEntrada INTEGER," +
+                "IdTipoEvento INTEGER," +
+                "P5000Salida DOUBLE," +
+                "P5000Entrada DOUBLE," +
+                "ClaveOperacion TEXT," +
+                "Falta BOOLEAN DEFAULT 1," +
+                "EsTipo TEXT"+
+                ")");
+        //endregion
+        //region Tabla de recargas_imagenes
+        db.execSQL("CREATE TABLE "+TABLE_RECARGAS_IMAGENES+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Imagen TEXT," +
+                "Url TEXT," +
+                "ClaveOperacion TEXT," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+        //region Tabla de recargas_cilindros
+        db.execSQL("CREATE TABLE "+TABLE_RECARGAS_CILINDROS+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "IdCilindro INTEGER," +
+                "Cantidad INTEGER," +
+                "ClaveOperacion TEXT," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
     }
 
     /**
@@ -328,6 +368,9 @@ public class SAGASSql extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINAL_CAMIONETA);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_RECARGAS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_RECARGAS_CILINDROS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_RECARGAS_IMAGENES);
         onCreate(db);
     }
     //endregion
@@ -1404,4 +1447,162 @@ public class SAGASSql extends SQLiteOpenHelper {
     }
     //endregion
 
+    //region Metodos para el registro de la recarga
+
+    /**
+     * <h3>InsertRecarga</h3>
+     * <i>Permite realizar el registro de una recarga , tomara como
+     * parametro un objeto de tipo {@link RecargaDTO} el cual contendra los datos de dicha
+     * recarga cabe destacar, que algunos de los datos puede que no este al ser de camioneta, pipa
+     * o estación de carburación.</i>
+     * <p>Ejemplo:</p>
+     * <pre>
+     *     Long IdRecarga = SAGASsql.InsertRecarga(recargaDTO);
+     * </pre>
+     * @param recargaDTO Objeto de tipo {@link RecargaDTO} con los valores a registrar
+     * @return Valor de tipo {@link Long} que reprecenta el id en la base de datos
+     */
+    public Long InsertRecarga(RecargaDTO recargaDTO,String tipo){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("IdCAlmacenGasSalida",recargaDTO.getIdCAlmacenGasSalida());
+        values.put("IdCAlmacenGasEntrada",recargaDTO.getIdCAlmacenGasEntrada());
+        values.put("IdTipoMedidorSalida",recargaDTO.getIdTipoMedidorSalida());
+        values.put("IdTipoMedidorEntrada",recargaDTO.getIdTipoMedidorEntrada());
+        values.put("IdTipoEvento",recargaDTO.getIdTipoEvento());
+        values.put("P5000Salida",recargaDTO.getP5000Salida());
+        values.put("P5000Entrada",recargaDTO.getP5000Entrada());
+        values.put("ClaveOperacion",recargaDTO.getClaveOperacion());
+        values.put("Tipo",tipo);
+        return db.insert(TABLE_RECARGAS,null,values);
+    }
+
+    /**
+     * <h3>GetRecargaByClaveOperacion</h3>
+     * Permite realizar la consulta de la recarga por medio de una clave única la cual
+     * se enviara como parametro de tipo {@link String} , al final el metodo retornara un
+     * objeto de tipo {@link Cursor} con los resultados de la consulta.
+     * <p>Ejemplo:</p>
+     * <pre>
+     *     Cursor cursor = SAGASsql.GetRecargaByClaveOperacion("RC20180911083602");
+     * </pre>
+     * @param ClaveOperacion  Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Objeto de tipo {@link Cursor} con la consulta resultante 
+     */
+    public Cursor GetRecargaByClaveOperacion(String ClaveOperacion){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_RECARGAS+
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    /**
+     * Permite realizar la elimicación de una recarga, se envia como parametro
+     * una cadena {@link String} con la clave de operacion, al final se retorna
+     * un objeto de tipo {@link Integer} con el total de registros afectados.
+     *
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Objeto de tipo {@link Integer} con el total de registros eliminados
+     */
+    public Integer EliminarRecarga(String ClaveOperacion){
+        return this.getWritableDatabase().delete(TABLE_RECARGAS,
+                "ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Cursor GetRecargas(String tipo) {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_RECARGAS_CILINDROS+
+                " WHERE Tipo = "+tipo,null);
+    }
+    //endregion
+
+    //region Metodos para el registro de las imagenes de la recarga
+
+    /**
+     * <h3>InsertarImagesRecarga<h3/>
+     * Permite el registro de la recarga, se envia como parametro
+     * un objeto de tipo {@link RecargaDTO} con los valores a registrar
+     * y tras finalizar retornara un array de tipo {@link Long} con los
+     * ids registrados.
+     * @param recargaDTO  Objeto de tipo {@link RecargaDTO} con los valores a registrar
+     * @return Array de tipo {@link Long} con los id registrados, en caso de ser menor
+     *          no se pudo registrar
+     */
+    public Long[] InsertarImagesRecarga(RecargaDTO recargaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Long[] _inserts = new Long[recargaDTO.getImagenes().size()];
+        for (int x =0; x<recargaDTO.getImagenes().size();x++){
+            ContentValues values = new ContentValues();
+            values.put("ClaveOperacion",recargaDTO.getClaveOperacion());
+            values.put("Imagen",recargaDTO.getImagenes().get(x));
+            values.put("Url",recargaDTO.getImagenesUri().get(x).toString());
+            _inserts[x] = db.insert(TABLE_RECARGAS_IMAGENES,null,values);
+        }
+        return _inserts;
+    }
+
+    /**
+     *
+     * @param ClaveOperacion
+     * @return
+     */
+    public Cursor GetImagenesRecarga(String ClaveOperacion){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+
+                TABLE_RECARGAS_IMAGENES+" WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    /**
+     *
+     * @param ClaveOperacion
+     * @return
+     */
+    public Integer EliminarImagenesRecarga(String ClaveOperacion){
+        return this.getWritableDatabase().delete(TABLE_RECARGAS_IMAGENES,
+                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+    }
+    //endregion
+
+    //region Metodos para el registro de los cilindros de la recarga
+
+    /**
+     *
+     * @param recargaDTO
+     * @return
+     */
+    public Long[] InsertarCilindrosRecarga(RecargaDTO recargaDTO){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Long[] _inserts = new Long[recargaDTO.getCilindros().size()];
+        for (int x =0; x<recargaDTO.getCilindros().size();x++){
+            ContentValues values = new ContentValues();
+            values.put("ClaveOperacion",recargaDTO.getClaveOperacion());
+            values.put("IdCilindro",recargaDTO.getCilindros().get(x)[0]);
+            values.put("Cantidad",recargaDTO.getCilindros().get(x)[1]);
+            _inserts[x] = db.insert(TABLE_RECARGAS_CILINDROS,null,values);
+        }
+        return _inserts;
+    }
+
+    /**
+     *
+     * @param ClaveOperacion
+     * @return
+     */
+    public Cursor GetCilindrosRecarga(String ClaveOperacion){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "
+                +TABLE_RECARGAS_CILINDROS+" WHERE  ClaveOperacion = "+ClaveOperacion,
+                null);
+    }
+
+    /**
+     *
+     * @param ClaveOperacion
+     * @return
+     */
+    public Integer EliminarCilindrosRecarga(String ClaveOperacion){
+        return this.getWritableDatabase().delete(TABLE_RECARGAS_CILINDROS,
+                " WHERE  ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    //endregion
 }

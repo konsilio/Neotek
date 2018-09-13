@@ -80,7 +80,7 @@ public class LecturaDatosInteractorImpl implements LecturaDatosInteractor {
     }
 
     @Override
-    public void getEstacionesCarburacion(String token) {
+    public void getEstacionesCarburacion(String token,boolean esFinalizar) {
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
@@ -97,7 +97,7 @@ public class LecturaDatosInteractorImpl implements LecturaDatosInteractor {
                 true,
                 false,
                 false,
-                false,
+                esFinalizar,
                 token);
         Log.w("Url base",retrofit.baseUrl().toString());
 

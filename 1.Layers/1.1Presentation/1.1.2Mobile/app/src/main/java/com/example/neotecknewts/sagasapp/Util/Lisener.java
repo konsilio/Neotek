@@ -11,6 +11,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
@@ -51,6 +52,7 @@ public class Lisener{
     public static final String LecturaFinalAlmacen = "LecturaFinalAlmacen";
     public static final String LecturaInicialCamioneta = "LecturaInicialCamioneta";
     public static final String LecturaFinalCamioneta = "LecturaFinalCamioneta";
+    public static final String RecargaCamioneta = "RecargaCamioneta";
 
     private  String token;
 
@@ -115,6 +117,9 @@ public class Lisener{
                 case LecturaFinalCamioneta:
                     completo = LecturaFinalCamioneta();
                     break;
+                case RecargaCamioneta:
+                    completo = RecargaCamioneta();
+                    break;
 
             }
         };
@@ -125,6 +130,71 @@ public class Lisener{
         if(completo) {
             scheduledFuture.cancel(false);
         }
+    }
+    private boolean RecargaCamioneta(){
+        boolean registrado = false;
+        if(ServicioDisponible()) {
+            Log.w("Iniciando", "Revisando lectura iniciar camioneta: " + new Date());
+            Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_CAMIONETA);
+            RecargaDTO recargaDTO = null;
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    recargaDTO = new RecargaDTO();
+                    /* Coloco los valores de la base de datos en el DTO */
+                    recargaDTO.setClaveOperacion(cursor.getString(
+                            cursor.getColumnIndex("ClaveOperacion")));
+                    recargaDTO.setIdCAlmacenGasSalida(cursor.getInt(
+                            cursor.getColumnIndex("IdCAlmacenGasSalida")));
+                    recargaDTO.setIdCAlmacenGasEntrada(cursor.getInt(
+                            cursor.getColumnIndex("IdCAlmacenGasEntrada")));
+                    recargaDTO.setIdTipoMedidorSalida(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedidorSalida")));
+                    recargaDTO.setIdTipoMedidorEntrada(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedidorEntrada")));
+                    recargaDTO.setIdTipoEvento(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoEvento")));
+                    recargaDTO.setP5000Salida(cursor.getDouble(
+                            cursor.getColumnIndex("P5000Salida")));
+                    recargaDTO.setP5000Entrada(cursor.getDouble(
+                            cursor.getColumnIndex("P5000Entrada")));
+
+                    String tipo = cursor.getString(
+                            cursor.getColumnIndex("Tipo"));
+                    if(tipo.equals(SAGASSql.TIPO_RECARGA_CAMIONETA)){
+
+                    }else{
+
+                    }
+                    Cursor cantidad = sagasSql.GetCilindrosRecarga(recargaDTO.getClaveOperacion());
+                    /*cantidad.moveToFirst();
+                    while (!cantidad.isAfterLast()) {
+                        CilindrosDTO row = new CilindrosDTO();
+                        row.setCantidad(cursor.getInt(cursor.getColumnIndex(
+                                "Cantidad")));
+                        row.setCilindroKg(cursor.getString(cursor.getColumnIndex(
+                                "CilindroKg")));
+                        row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
+                                "IdCilindro")));
+                        lecturaDTO.getCilindros().add(row);
+                        lecturaDTO.getIdCilindro().add(cursor.getInt(cursor.getColumnIndex(
+                                "IdCilindro")));
+                        lecturaDTO.getCilindroCantidad().add(cursor.getInt(cursor.getColumnIndex(
+                                "Cantidad")));
+                        cantidad.moveToNext();
+                    }
+
+                    Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
+                    registrado = RegistrarLecturaInicialCamioneta(lecturaDTO);
+                    if (registrado){
+                        sagasSql.EliminarLecturaInicialCamioneta(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarCilindrosLecturaInicialCamioneta(
+                                lecturaDTO.getClaveOperacion());
+                    }*/
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_CAMIONETA).getCount()==0);
     }
 
     private boolean LecturaInicialCamioneta(){
@@ -1161,7 +1231,7 @@ public class Lisener{
         return (papeletaSQL.GetPapeletas().getCount()==0);
     }
 
-    public boolean RegistrarPapeleta(PrecargaPapeletaDTO lecturaDTO){
+    private boolean RegistrarPapeleta(PrecargaPapeletaDTO lecturaDTO){
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)

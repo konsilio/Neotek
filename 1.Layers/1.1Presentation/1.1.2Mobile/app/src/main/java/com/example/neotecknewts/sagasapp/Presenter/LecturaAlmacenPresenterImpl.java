@@ -41,9 +41,9 @@ public class LecturaAlmacenPresenterImpl implements LecturaAlmacenPresenter {
     }
 
     @Override
-    public void getAlmacenes(String token) {
+    public void getAlmacenes(String token,boolean esFinalizar) {
         lecturaAlmacenView.showProgress(R.string.message_cargando);
-        lecturaAlmacenInteractor.getAlmacenes(token);
+        lecturaAlmacenInteractor.getAlmacenes(token,esFinalizar);
     }
 
     @Override

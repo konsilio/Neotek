@@ -15,9 +15,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
-import com.example.neotecknewts.sagasapp.Model.PipaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaPipaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
@@ -36,11 +36,11 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
     ProgressDialog progressDialog;
     String []ListaMedidores,ListaPipas;
     List<MedidorDTO> MedidorDTOList;
-    List<PipaDTO> PipaDTOList;
+    List<EstacionCarburacionDTO> EstacionCarburacionDTOList;
     LecturaPipaPresenterImpl lecturaPipaPresenter;
     Session session;
     LecturaPipaDTO lecturaPipaDTO;
-    Boolean EsLecturaInicialPipa,EsLecturaFinalPipa;
+    Boolean EsLecturaInicialPipa,EsLecturaFinalPipa,EsFinal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +49,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
         if(b!=null) {
             EsLecturaInicialPipa = (boolean)b.get("EsLecturaInicialPipa");
             EsLecturaFinalPipa = (boolean) b.get("EsLecturaFinalPipa");
+            EsFinal = b.getBoolean("EsLecturaFinalPipa",false);
         }
         TVLecturaPipaActivityTitulo = findViewById(R.id.TVLecturaPipaActivityTitulo);
         if(EsLecturaInicialPipa){
@@ -77,7 +78,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
         SLecturaPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaPipas));
         lecturaPipaPresenter.getMedidores(session.getToken());
-        //lecturaPipaPresenter.getPipas(session.getToken());
+        lecturaPipaPresenter.getPipas(session.getToken(),EsFinal);
 
         SLecturaPipaActivityListaPipa.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
@@ -252,12 +253,12 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onSuccessPipas(List<PipaDTO> pipaDTOList) {
-        ListaPipas = new String[pipaDTOList.size()+1];
-        PipaDTOList = pipaDTOList;
+    public void onSuccessPipas(List<EstacionCarburacionDTO> data) {
+        ListaPipas = new String[data.size()+1];
+        EstacionCarburacionDTOList = data;
         ListaPipas[0]= "Seleccione";
-        for (int x =0; x< pipaDTOList.size();x++){
-            ListaPipas[x+1] = pipaDTOList.get(x).getNombrePipa();
+        for (int x =0; x< data.size();x++){
+            ListaPipas[x+1] = data.get(x).getNombreEstacionCarburacion();
         }
         SLecturaPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaPipas));

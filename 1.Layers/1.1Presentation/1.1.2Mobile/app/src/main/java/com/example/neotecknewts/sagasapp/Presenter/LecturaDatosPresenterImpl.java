@@ -35,9 +35,9 @@ public class LecturaDatosPresenterImpl implements LecturaDatosPresenter {
     }
 
     @Override
-    public void getEstacionesCarburacion(String token) {
+    public void getEstacionesCarburacion(String token,boolean esFinalizar) {
         lecturaDatosView.showLoadingProgress(R.string.message_cargando);
-        lecturaDatosInteractor.getEstacionesCarburacion(token);
+        lecturaDatosInteractor.getEstacionesCarburacion(token,esFinalizar);
     }
 
     @Override

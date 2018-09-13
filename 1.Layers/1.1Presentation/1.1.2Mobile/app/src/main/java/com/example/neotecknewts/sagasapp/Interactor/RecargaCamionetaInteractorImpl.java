@@ -3,8 +3,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
-import com.example.neotecknewts.sagasapp.Presenter.LecturaCamionetaPresenter;
-import com.example.neotecknewts.sagasapp.Presenter.LecturaCamionetaPresenterImpl;
+import com.example.neotecknewts.sagasapp.Presenter.RecargaCamionetaPresenterImpl;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
@@ -19,14 +18,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteractor {
-    private LecturaCamionetaPresenter lecturaCamionetaPresenter;
-    public LecturaCamionetaInteractorImpl(LecturaCamionetaPresenterImpl lecturaCamionetaPresenter) {
-        this.lecturaCamionetaPresenter = lecturaCamionetaPresenter;
+public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteractor {
+    private RecargaCamionetaPresenterImpl recargaCamionetaPresenter;
+    public RecargaCamionetaInteractorImpl(RecargaCamionetaPresenterImpl recargaCamionetaPresenter) {
+        this.recargaCamionetaPresenter = recargaCamionetaPresenter;
     }
 
     @Override
-    public void GetListCamionetas(String token,boolean esFinalizar) {
+    public void getCamionetas(String token) {
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
@@ -42,8 +41,8 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
         Call<List<EstacionCarburacionDTO>> call = restClient.getEstacionesCarburacion(
                 false,
                 true,
-                true,
-                esFinalizar,
+                false,
+                false,
                 token
         );
         Log.w("Url base",retrofit.baseUrl().toString());
@@ -54,7 +53,7 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
                 if (response.isSuccessful()) {
                     List<EstacionCarburacionDTO> data = response.body();
                     Log.w("Estatus","Success");
-                    lecturaCamionetaPresenter.onSuccessCamionetas(data);
+                    recargaCamionetaPresenter.onSuccessCamionetas(data);
                 }
                 else {
                     switch (response.code()) {
@@ -71,7 +70,7 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
 
                             break;
                     }
-                    lecturaCamionetaPresenter.onError();
+                    recargaCamionetaPresenter.onError();
                 }
 
             }
@@ -79,7 +78,7 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
             @Override
             public void onFailure(Call<List<EstacionCarburacionDTO>> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
-                lecturaCamionetaPresenter.onError();
+                recargaCamionetaPresenter.onError();
             }
         });
     }
