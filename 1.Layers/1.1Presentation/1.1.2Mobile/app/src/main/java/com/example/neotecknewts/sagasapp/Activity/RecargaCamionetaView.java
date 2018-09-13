@@ -1,8 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
-
-import java.util.List;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 
 public interface RecargaCamionetaView {
     void ValidarForm();
@@ -12,7 +10,7 @@ public interface RecargaCamionetaView {
 
     void hideProgress();
 
-    void onSuccessCamionetas(List<EstacionCarburacionDTO> data);
+    void onSuccessCamionetas(DatosTomaLecturaDto data);
 
     void onError();
 }

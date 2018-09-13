@@ -15,7 +15,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
+import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaPipaPresenterImpl;
@@ -36,7 +37,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
     ProgressDialog progressDialog;
     String []ListaMedidores,ListaPipas;
     List<MedidorDTO> MedidorDTOList;
-    List<EstacionCarburacionDTO> EstacionCarburacionDTOList;
+    DatosTomaLecturaDto DatosTomaLecturaDto;
     LecturaPipaPresenterImpl lecturaPipaPresenter;
     Session session;
     LecturaPipaDTO lecturaPipaDTO;
@@ -77,7 +78,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
                 R.layout.custom_spinner,ListaMedidores));
         SLecturaPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaPipas));
-        lecturaPipaPresenter.getMedidores(session.getToken());
+        //lecturaPipaPresenter.getMedidores(session.getToken());
         lecturaPipaPresenter.getPipas(session.getToken(),EsFinal);
 
         SLecturaPipaActivityListaPipa.setOnItemSelectedListener(
@@ -85,12 +86,18 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position>0) {
-                    for (String m : ListaPipas) {
+                    for (AlmacenDTO almacenDTO :DatosTomaLecturaDto.getAlmacenes()){
+                        if (almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
+                            lecturaPipaDTO.setIdPipa(almacenDTO.getIdAlmacenGas());
+                            lecturaPipaDTO.setNombrePipa(almacenDTO.getNombreAlmacen());
+                        }
+                    }
+                    /*for (String m : ListaPipas) {
                         if (m.equals(parent.getItemAtPosition(position).toString())) {
                             lecturaPipaDTO.setNombrePipa(m);
                             lecturaPipaDTO.setIdPipa(1);
                         }
-                    }
+                    }*/
                 }
             }
 
@@ -253,12 +260,12 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onSuccessPipas(List<EstacionCarburacionDTO> data) {
-        ListaPipas = new String[data.size()+1];
-        EstacionCarburacionDTOList = data;
+    public void onSuccessPipas(DatosTomaLecturaDto data) {
+        ListaPipas = new String[data.getAlmacenes().size()+1];
+        DatosTomaLecturaDto = data;
         ListaPipas[0]= "Seleccione";
-        for (int x =0; x< data.size();x++){
-            ListaPipas[x+1] = data.get(x).getNombreEstacionCarburacion();
+        for (int x =0; x< data.getAlmacenes().size();x++){
+            ListaPipas[x+1] = data.getAlmacenes().get(x).getNombreAlmacen();
         }
         SLecturaPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaPipas));

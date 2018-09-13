@@ -9,18 +9,18 @@ public class CilindrosDTO implements Serializable {
     @SerializedName("IdCilindro")
     private int IdCilindro;
 
-    @SerializedName("CilindroKg")
-    private String CilindroKg;
+    @SerializedName("CapacidadKg")
+    private String CapacidadKg;
 
     @SerializedName("Cantidad")
     private int Cantidad;
 
     public String getCilindroKg() {
-        return CilindroKg;
+        return CapacidadKg;
     }
 
     public void setCilindroKg(String cilindroKg) {
-        CilindroKg = cilindroKg;
+        CapacidadKg = cilindroKg;
     }
 
     public int getCantidad() {

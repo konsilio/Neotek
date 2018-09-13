@@ -2,7 +2,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.PipaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaPipaPresenterImpl;
@@ -116,7 +116,7 @@ public class LecturaPipaInteractorImpl implements LecturaPipaInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<List<EstacionCarburacionDTO>> call = restClient.getEstacionesCarburacion(
+        Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
                 true,
                 false,
                 false,
@@ -124,11 +124,11 @@ public class LecturaPipaInteractorImpl implements LecturaPipaInteractor {
                 token);
         Log.w("Url base",retrofit.baseUrl().toString());
 
-        call.enqueue(new Callback<List<EstacionCarburacionDTO>>() {
+        call.enqueue(new Callback<DatosTomaLecturaDto>() {
             @Override
-            public void onResponse(Call<List<EstacionCarburacionDTO>> call, Response<List<EstacionCarburacionDTO>> response) {
+            public void onResponse(Call<DatosTomaLecturaDto> call, Response<DatosTomaLecturaDto> response) {
                 if (response.isSuccessful()) {
-                    List<EstacionCarburacionDTO> data = response.body();
+                    DatosTomaLecturaDto data = response.body();
                     Log.w("Estatus","Success");
                     lecturaPipaPresenter.onSuccessGetPipas(data);
                 }
@@ -154,7 +154,7 @@ public class LecturaPipaInteractorImpl implements LecturaPipaInteractor {
             }
 
             @Override
-            public void onFailure(Call<List<EstacionCarburacionDTO>> call, Throwable t) {
+            public void onFailure(Call<DatosTomaLecturaDto> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
                 lecturaPipaPresenter.onError();
             }

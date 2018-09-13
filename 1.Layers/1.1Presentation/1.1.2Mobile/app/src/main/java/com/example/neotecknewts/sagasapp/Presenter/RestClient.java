@@ -1,8 +1,8 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -187,7 +187,7 @@ public interface RestClient {
                                                                  @Header("Content-Type") String contentType
     );
     @GET(Constantes.LISTA_TIPO_ALMACEN)
-    Call<List<EstacionCarburacionDTO>> getEstacionesCarburacion(
+    Call<DatosTomaLecturaDto> getEstacionesCarburacion(
             @Query("esEstacion") boolean esEstacion,
             @Query("esPipa") boolean esPipa,
             @Query("esCamioneta") boolean esCamioneta,

@@ -2,7 +2,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaAlmacenPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaAlmacenPresenterImpl;
@@ -94,7 +94,7 @@ public class LecturaAlmacenInteractorImpl implements LecturaAlmacenInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<List<EstacionCarburacionDTO>> call = restClient.getEstacionesCarburacion(
+        Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
                 false,
                 false,
                 false,
@@ -103,11 +103,11 @@ public class LecturaAlmacenInteractorImpl implements LecturaAlmacenInteractor {
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 
-        call.enqueue(new Callback<List<EstacionCarburacionDTO>>() {
+        call.enqueue(new Callback<DatosTomaLecturaDto>() {
             @Override
-            public void onResponse(Call<List<EstacionCarburacionDTO>> call, Response<List<EstacionCarburacionDTO>> response) {
+            public void onResponse(Call<DatosTomaLecturaDto> call, Response<DatosTomaLecturaDto> response) {
                 if (response.isSuccessful()) {
-                    List<EstacionCarburacionDTO> data = response.body();
+                    DatosTomaLecturaDto data = response.body();
                     Log.w("Estatus","Success");
                     lecturaAlmacenPresenter.onSuccessGetAlmacen(data);
                 }
@@ -132,7 +132,7 @@ public class LecturaAlmacenInteractorImpl implements LecturaAlmacenInteractor {
             }
 
             @Override
-            public void onFailure(Call<List<EstacionCarburacionDTO>> call, Throwable t) {
+            public void onFailure(Call<DatosTomaLecturaDto> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
                 lecturaAlmacenPresenter.onError();
             }

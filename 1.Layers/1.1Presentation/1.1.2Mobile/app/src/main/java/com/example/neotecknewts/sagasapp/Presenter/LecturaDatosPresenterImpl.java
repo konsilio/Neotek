@@ -3,7 +3,7 @@ package com.example.neotecknewts.sagasapp.Presenter;
 import com.example.neotecknewts.sagasapp.Activity.LecturaDatosView;
 import com.example.neotecknewts.sagasapp.Interactor.LecturaDatosInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.LecturaDatosInteractorImpl;
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.R;
 
@@ -41,7 +41,7 @@ public class LecturaDatosPresenterImpl implements LecturaDatosPresenter {
     }
 
     @Override
-    public void onSuccessGetEstacionesCarburacion(List<EstacionCarburacionDTO> data) {
+    public void onSuccessGetEstacionesCarburacion(DatosTomaLecturaDto data) {
         lecturaDatosView.hiddeLoadingProgress();
         lecturaDatosView.onSuccessEstacionesCarburacion(data);
     }

@@ -2,7 +2,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaCamionetaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaCamionetaPresenterImpl;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
@@ -10,8 +10,6 @@ import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +37,7 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<List<EstacionCarburacionDTO>> call = restClient.getEstacionesCarburacion(
+        Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
                 false,
                 true,
                 true,
@@ -48,11 +46,11 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 
-        call.enqueue(new Callback<List<EstacionCarburacionDTO>>() {
+        call.enqueue(new Callback<DatosTomaLecturaDto>() {
             @Override
-            public void onResponse(Call<List<EstacionCarburacionDTO>> call, Response<List<EstacionCarburacionDTO>> response) {
+            public void onResponse(Call<DatosTomaLecturaDto> call, Response<DatosTomaLecturaDto> response) {
                 if (response.isSuccessful()) {
-                    List<EstacionCarburacionDTO> data = response.body();
+                    DatosTomaLecturaDto data = response.body();
                     Log.w("Estatus","Success");
                     lecturaCamionetaPresenter.onSuccessCamionetas(data);
                 }
@@ -77,7 +75,7 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
             }
 
             @Override
-            public void onFailure(Call<List<EstacionCarburacionDTO>> call, Throwable t) {
+            public void onFailure(Call<DatosTomaLecturaDto> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
                 lecturaCamionetaPresenter.onError();
             }

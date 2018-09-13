@@ -1,6 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 
 import java.util.ArrayList;
@@ -17,5 +17,5 @@ public interface LecturaPipaView {
 
     void onError();
 
-    void onSuccessPipas(List<EstacionCarburacionDTO> data);
+    void onSuccessPipas(DatosTomaLecturaDto data);
 }

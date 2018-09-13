@@ -3,9 +3,8 @@ package com.example.neotecknewts.sagasapp.Presenter;
 import com.example.neotecknewts.sagasapp.Activity.LecturaPipaView;
 import com.example.neotecknewts.sagasapp.Interactor.LecturaPipaInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.LecturaPipaInteractorImpl;
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
-import com.example.neotecknewts.sagasapp.Model.PipaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.util.List;
@@ -44,7 +43,9 @@ public class LecturaPipaPresenterImpl implements LecturaPipaPresenter {
     }
 
     @Override
-    public void onSuccessGetPipas(List<EstacionCarburacionDTO> data) {
+    public void onSuccessGetPipas(DatosTomaLecturaDto data) {
+        lecturaPipaView.hiddeLoadingProgress();
         lecturaPipaView.onSuccessPipas(data);
+        lecturaPipaView.onSuccessMedidores(data.getMedidores());
     }
 }

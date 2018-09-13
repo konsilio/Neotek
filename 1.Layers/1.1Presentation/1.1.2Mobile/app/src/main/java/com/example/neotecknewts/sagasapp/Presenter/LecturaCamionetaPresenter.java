@@ -1,8 +1,6 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
-
-import java.util.List;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 
 public interface LecturaCamionetaPresenter {
 
@@ -10,5 +8,5 @@ public interface LecturaCamionetaPresenter {
 
     void onError();
 
-    void onSuccessCamionetas(List<EstacionCarburacionDTO> data);
+    void onSuccessCamionetas(DatosTomaLecturaDto data);
 }

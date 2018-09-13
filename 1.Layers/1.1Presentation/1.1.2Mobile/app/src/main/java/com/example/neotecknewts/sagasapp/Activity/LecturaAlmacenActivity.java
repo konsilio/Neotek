@@ -13,7 +13,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
+import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaAlmacenPresenter;
@@ -37,7 +38,7 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
     public Session session;
     public LecturaAlmacenPresenter lecturaAlmacenPresenter;
     public ProgressDialog progressDialog;
-    public List<EstacionCarburacionDTO> EstacionesCarburacionDTOlist;
+    public DatosTomaLecturaDto DatosTomaLecturaDtoList;
     public boolean banlist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,15 +101,11 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position>0){
-                    lecturaAlmacenDTO.setIdAlmacen(1);
-                    lecturaAlmacenDTO.setNombreAlmacen(
-                            SLecturaAlmacenActivityListaAlmacen.getItemAtPosition(position).
-                                    toString()
-                    );
-                    if(position == 1) {
-                        SLecturaAlmacenActivityListaMedidor.setSelection(2);
-                    }else{
-                        SLecturaAlmacenActivityListaMedidor.setSelection(1);
+                    for (AlmacenDTO almacenDTO :DatosTomaLecturaDtoList.getAlmacenes()){
+                        if (almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
+                            lecturaAlmacenDTO.setIdAlmacen(almacenDTO.getIdAlmacenGas());
+                            lecturaAlmacenDTO.setNombreAlmacen(almacenDTO.getNombreAlmacen());
+                        }
                     }
                 }
             }
@@ -158,12 +155,12 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
     }
 
     @Override
-    public void onSuccessAlmacenes(List<EstacionCarburacionDTO> data) {
-        EstacionesCarburacionDTOlist = data;
-        lista_almacenes = new String[data.size()+1];
+    public void onSuccessAlmacenes(DatosTomaLecturaDto data) {
+        DatosTomaLecturaDtoList = data;
+        lista_almacenes = new String[data.getAlmacenes().size()+1];
         lista_almacenes[0]= "Seleccióne";
-        for (int x = 0; x<data.size();x++){
-            lista_almacenes[x+1] = data.get(x).getNombreEstacionCarburacion();
+        for (int x = 0; x<data.getAlmacenes().size();x++){
+            lista_almacenes[x+1] = data.getAlmacenes().get(x).getNombreAlmacen();
         }
         SLecturaAlmacenActivityListaAlmacen.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,lista_medidores));

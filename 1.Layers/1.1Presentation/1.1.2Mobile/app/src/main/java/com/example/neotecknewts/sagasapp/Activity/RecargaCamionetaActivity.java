@@ -12,13 +12,13 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RecargaCamionetaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
-
-import java.util.List;
 
 public class RecargaCamionetaActivity extends AppCompatActivity implements RecargaCamionetaView{
     public TextView TVRecargaCamionetaActivityTitulo;
@@ -28,7 +28,7 @@ public class RecargaCamionetaActivity extends AppCompatActivity implements Recar
     public RecargaCamionetaPresenterImpl presenter;
     public ProgressDialog dialog;
     public Session session;
-    public List<EstacionCarburacionDTO> EstacionesCarburacionDTO;
+    public DatosTomaLecturaDto DatosTomaLecturaDto;
     public EstacionCarburacionDTO estacionCarburacionDTO;
     public String[] list_camionetas;
     public RecargaDTO recargaDTO;
@@ -57,10 +57,10 @@ public class RecargaCamionetaActivity extends AppCompatActivity implements Recar
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                for (EstacionCarburacionDTO estacion: EstacionesCarburacionDTO){
-                    if(estacion.getNombreEstacionCarburacion().
+                for (AlmacenDTO estacion: DatosTomaLecturaDto.getAlmacenes()){
+                    if(estacion.getNombreAlmacen().
                             equals(parent.getItemAtPosition(position).toString())){
-                        recargaDTO.setIdCAlmacenGasSalida(estacion.getIdEstacionCarburacion());
+                        recargaDTO.setIdCAlmacenGasSalida(estacion.getIdAlmacenGas());
                     }
                 }
             }
@@ -120,12 +120,12 @@ public class RecargaCamionetaActivity extends AppCompatActivity implements Recar
     }
 
     @Override
-    public void onSuccessCamionetas(List<EstacionCarburacionDTO> data) {
-        EstacionesCarburacionDTO = data;
-        list_camionetas = new String[data.size()+1];
+    public void onSuccessCamionetas(DatosTomaLecturaDto data) {
+        DatosTomaLecturaDto = data;
+        list_camionetas = new String[data.getAlmacenes().size()+1];
         list_camionetas[0] = "Seleccione";
-        for (int x=1;x<data.size();x++){
-            list_camionetas[x] = data.get(x).getNombreEstacionCarburacion();
+        for (int x=1;x<data.getAlmacenes().size();x++){
+            list_camionetas[x] = data.getAlmacenes().get(x).getNombreAlmacen();
         }
         SRecargaCamionetaActivityListaCamionetas.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,list_camionetas));

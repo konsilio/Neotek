@@ -1,6 +1,6 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
-import com.example.neotecknewts.sagasapp.Model.EstacionCarburacionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 
 import java.util.List;
@@ -14,5 +14,5 @@ public interface LecturaDatosPresenter {
 
     void getEstacionesCarburacion(String token,boolean esFinalizar);
 
-    void onSuccessGetEstacionesCarburacion(List<EstacionCarburacionDTO> data);
+    void onSuccessGetEstacionesCarburacion(DatosTomaLecturaDto data);
 }
