@@ -3,6 +3,7 @@
 
 }
 @Html.HiddenFor(m => m.IdProducto)
+@Html.HiddenFor(m => m.IdCentroCosto)
 <tr>
     <td>@Model.TipoProducto</td>
     <td>@Model.Producto</td>
@@ -14,7 +15,7 @@
     <td>@Model.Aplicacion</td>
     <td>@Model.CentroCosto</td>
     <td>@Html.DropDownListFor(model => model.IdProdveedor, ViewBag.Proveedores as IEnumerable<SelectListItem>)</td>
-    <td>@Html.DropDownListFor(model => model.IdCentroCosto, ViewBag.CuentasContables as IEnumerable<SelectListItem>)</td>
+    <td>@Html.DropDownListFor(model => model.IdCuentaContable, ViewBag.CuentasContables as IEnumerable<SelectListItem>)</td>
     <td>@Html.TextBoxFor(m => m.Precio, new { @class = "form-control calculaPrecio ", @type = "number", @onkeyup = "javascript: CalcularImporte();", @style = "width:100px;" })</td>
     <td>@Html.TextBoxFor(m => m.Descuento, new { @type = "number", @class = "form-control calculaPrecio", @onkeyup = "javascript: CalcularImporte();", @style = "width:100px;" }) </td>
     <td>@Html.DropDownListFor(model => model.IVA, ViewBag.IVAs as IEnumerable<SelectListItem>, new { @class = "form-control calculaPrecio", @onchange = "javascript: CalcularImporte();" }) </td>

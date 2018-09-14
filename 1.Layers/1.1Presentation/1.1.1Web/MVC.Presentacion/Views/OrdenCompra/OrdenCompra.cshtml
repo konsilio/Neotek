@@ -28,7 +28,7 @@
             var subtotal;
             var id = $(".calculaPrecio").prevObject[0].activeElement.id;
             if (id == "")
-                 id = $(".calculaPrecio").prevObject[0].activeElement.dataset.id;
+                id = $(".calculaPrecio").prevObject[0].activeElement.dataset.id;
 
             if (id.includes("Precio")) {
                 index = id.replace("OrdenCompraProductos_", "").replace("__Precio", "");
@@ -59,11 +59,25 @@
             total = subtotal + iva + ieps;
             $("label[for = '" + idTotlaImporte + "']").text(total.toFixed(2));
         }
+        
+        $(document).ready(function () {
+            $("#btnCrear").click(function () {
+                var form = $(this).parent("form");
+                form.attr('action', '<%= Url.RouteUrl(new { Controller = "OrdenCompra", Action = "CrearOrdenCompra" }) %>');
+                form.attr('method', 'post');
+            });
+        });
+
     </script>
 </head>
 <body style="padding-top:10px;padding-bottom:0px;height:100%">
-    @using (Html.BeginForm("OrdenCompra", "OrdenCompra", FormMethod.Post))
+    @using (Html.BeginForm("CrearOrdenCompra", "OrdenCompra", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.IdEmpresa)
+        @Html.HiddenFor(m => m.IdSolicitante)
+        @Html.HiddenFor(m => m.IdEmpresa)
+        @Html.HiddenFor(m => m.FechaRequisicion)
+        @Html.HiddenFor(m => m.IdRequisicion)
         <section class="content home" style="height:100%">
             <div class="container-fluid" style="height:100%">
                 <div class="block-header" style="height:100%">
@@ -836,7 +850,7 @@
                                 </div>
                                 <div class="col-sm-4 center">
                                     <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
-                                        <asp:Label ID="lblbtnCrear" Text="Crear" />
+                                        Crear
                                     </a>
                                 </div>
                             </div>
@@ -846,13 +860,13 @@
             </div>
         </section>
         <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-dialog modal-sm margin-0" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
                     </div>
                     <div class="modal-footer">
-                        <asp:Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" Text="Si" OnClick="BtnCrear_Click" />
+                        <input type="submit" value="Si" id="btnCrear" class="btn btn-raised btn-primary btn-round" />
 
                         <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
                     </div>
@@ -893,7 +907,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <asp:Button ID="Button1" CssClass="btn btn-raised btn-primary btn-round" Text="Crear" OnClick="BtnCrear_Click" />
+                        <asp:Button ID="btnCrear12" CssClass="btn btn-raised btn-primary btn-round" Text="Crear" OnClick="BtnCrear_Click" />
                         <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
                     </div>
                 </div>
