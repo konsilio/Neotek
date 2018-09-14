@@ -17,8 +17,11 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
         public static RequisicionOCDTO ToDTO(Sagas.MainModule.Entidades.Requisicion _req)
         {
             RequisicionOCDTO Req = new RequisicionOCDTO();
+            Req.IdRequisicion = _req.IdRequisicion;
             Req.NumeroRequisicion = _req.NumeroRequisicion;
+            Req.IdUsuarioSolicitante = _req.IdUsuarioSolicitante;
             Req.UsuarioSolicitante = _req.Solicitante.NombreUsuario;
+            Req.IdEmpresa = _req.IdEmpresa;
             Req.NombreComercial = _req.Empresa.NombreComercial;
             Req.MotivoRequisicion = _req.MotivoRequisicion;
             Req.RequeridoEn = _req.RequeridoEn;

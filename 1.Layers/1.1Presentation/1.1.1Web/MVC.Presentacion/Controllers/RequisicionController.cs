@@ -182,7 +182,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.EsNueva = true;
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
                 ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
-                ViewBag.MensajeError(respuesta.MensajesError[0]);
+                ViewBag.MensajeError = respuesta.MensajesError[0];
                 TempData["ListProductosRequisicion"] = model.Productos;
                 return View("Requisicion", model);
             }

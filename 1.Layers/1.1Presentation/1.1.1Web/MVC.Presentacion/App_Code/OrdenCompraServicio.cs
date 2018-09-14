@@ -2,6 +2,7 @@
 using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.OrdenCompra;
 using MVC.Presentacion.Models.Requisicion;
+using MVC.Presentacion.Models.Seguridad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,8 +61,46 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarRequisicionOC(idReq, Tkn);
             return agente._requisicionOrdenCompra;
         }
+        private static RespuestaDTO GenerarOrdenesCompra(OrdenCompraCrearDTO ocDTO, string Tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.GuardarOrdenesCompra(ocDTO, Tkn);
+            return agente._respuestaDTO;
+        }
+        public static RespuestaDTO GenerarOrdenCompra(OrdenCompraModel model, string Tkn)
+        {
+            OrdenCompraCrearDTO oc = new OrdenCompraCrearDTO();
+            oc.IdRequisicion = model.IdRequisicion;
+            oc.Productos = ObtenerProductosGrid(model.OrdenCompraProductos);
+            oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Espera_autorizacion;
+            return GenerarOrdenesCompra(oc, Tkn);
+        }
+        private static List<OrdenCompraProductoCrearDTO> ObtenerProductosGrid(List<ProductoOCDTO> Prods)
+        {
+            List<OrdenCompraProductoCrearDTO> lp = new List<OrdenCompraProductoCrearDTO>();
+            foreach (var _prd in Prods)
+            {               
+                OrdenCompraProductoCrearDTO p = new OrdenCompraProductoCrearDTO();
+                p.IdProducto = _prd.IdProducto;
+                p.IdCentroCosto = _prd.IdCentroCosto;
+                p.IdCuentaContable = _prd.IdCuentaContable;
+                p.IdProveedor = _prd.IdProdveedor;
+                p.Precio = _prd.Precio;
+                p.Descuento = _prd.Descuento;
+                p.IVA = _prd.IVA;
+                p.IEPS = _prd.IEPS;
+                p.Cantidad = _prd.IEPS;
+                decimal _descuento = ((p.Precio * p.Cantidad) * (p.Descuento / 100));
+                decimal subtotal = (p.Precio * p.Cantidad) - (_descuento);
+                decimal iva = ((subtotal) * (p.IVA / 100));
+                decimal ieps = ((subtotal) * (p.IEPS / 100));
+                p.Importe = subtotal + iva + ieps;              
+                lp.Add(p);
+            }
+            return lp;
+        }
         #region Adaptadores
-        
+
         #endregion
 
     }
