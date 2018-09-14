@@ -133,5 +133,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.ConsultaDatosTomaLectura(esEstacion, esPipa, esCamioneta, esFinalizar),Request);
         }
+
+        [Route("recarga/camioneta")]
+        public HttpResponseMessage PostRecargaCamioneta(RecargaDTO rdto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.IniciarRecargaCamioneta(rdto),Request);
+        }
     }
 }

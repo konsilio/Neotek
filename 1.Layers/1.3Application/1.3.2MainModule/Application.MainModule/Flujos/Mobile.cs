@@ -109,5 +109,10 @@ namespace Application.MainModule.Flujos
 
             return LecturaGasServicio.ConsultaDatosTomaLecturaAlmacenGeneral(esFinalizar);
         }
+
+        public RespuestaDto IniciarRecargaCamioneta(RecargaDTO rdto)
+        {
+            return null;
+        }
     }
 }
