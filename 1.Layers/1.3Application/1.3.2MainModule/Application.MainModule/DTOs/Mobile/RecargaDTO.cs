@@ -4,8 +4,9 @@
  * Commpany: Neoteck
  * Date: 13/09/2018
  * Update: 13/09/2018
- */ 
+ */
 using System;
+using System.Collections.Generic;
 
 namespace Application.MainModule.DTOs.Mobile
 {
@@ -14,7 +15,7 @@ namespace Application.MainModule.DTOs.Mobile
         /// <summary>
         /// Id del almacen de recarga
         /// </summary>
-        public int IdAlmacenGasRecarga { get; set; }
+        //public int IdAlmacenGasRecarga { get; set; }
         /// <summary>
         /// Id del almacen de Gas de salida 
         /// </summary>
@@ -50,10 +51,20 @@ namespace Application.MainModule.DTOs.Mobile
         /// <summary>
         /// Los datos fuero prosesados
         /// </summary>
-        public bool DatosProcesados { get; set; }
+        //public bool DatosProcesados { get; set; }
         /// <summary>
         /// Fecha de registro 
         /// </summary>
-        public DateTime FechaRegistro { get; set; }
+        //public DateTime FechaRegistro { get; set; }
+        /// <summary>
+        /// Lista que contiene los cilindros de 
+        /// la recarga de camioneta
+        /// </summary>
+        public List<CilindroDto> Cilindros { get; set; }
+        /// <summary>
+        /// Lista de imagenes que se toman 
+        /// en la recarga de pipa y de estación carburación
+        /// </summary>
+        public List<String> Imagenes { get; set; }
     }
 }

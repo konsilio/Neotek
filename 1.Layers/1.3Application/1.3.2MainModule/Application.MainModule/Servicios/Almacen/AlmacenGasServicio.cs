@@ -28,6 +28,11 @@ namespace Application.MainModule.Servicios.Almacen
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa);
         }
 
+        internal static RespuestaDto InsertarRecargaGas(AlmacenGasRecarga adapter)
+        {
+            return new AlmacenGasDataAccess().Insertar(adapter);
+        }
+
         public static AlmacenGasTomaLectura BuscarUltimaLectura(short idCAlmacenGas, byte idTipoEvento)
         {
             return new AlmacenGasDataAccess().BuscarUltimaLectura(idCAlmacenGas, idTipoEvento);
@@ -46,6 +51,11 @@ namespace Application.MainModule.Servicios.Almacen
         public static List<UnidadAlmacenGas> ObtenerAlmacenGeneral(short idEmpresa, bool incluyeAlterno = false)
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa, true, incluyeAlterno);
+        }
+
+        public static AlmacenGasRecarga ObtenerRecargaPorClaveOperacion(string claveOperacion)
+        {
+            return new AlmacenGasDataAccess().BuscarRecargaClaveOperacion(claveOperacion);
         }
 
         public static List<UnidadAlmacenGas> ObtenerEstaciones(short idEmpresa)

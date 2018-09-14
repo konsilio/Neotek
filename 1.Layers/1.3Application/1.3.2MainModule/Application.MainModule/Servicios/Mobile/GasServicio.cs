@@ -44,5 +44,12 @@ namespace Application.MainModule.Servicios.Mobile
             var alm = AlmacenGasServicio.ObtenerLecturaPorClaveOperacion(lcdto.ClaveProceso);
             return EvaluarClaveOperacion(alm);
         }
+
+        public static RespuestaDto EvaluarClaveOperacion(RecargaDTO rdto)
+        {
+            var alm = AlmacenGasServicio.ObtenerRecargaPorClaveOperacion(rdto.ClaveOperacion);
+
+            return EvaluarClaveOperacion(alm);
+        }
     }
 }

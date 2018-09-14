@@ -133,11 +133,36 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.ConsultaDatosTomaLectura(esEstacion, esPipa, esCamioneta, esFinalizar),Request);
         }
-
+        /// <summary>
+        /// Permite realizar el registro de la recarga para la 
+        /// camioneta 
+        /// </summary>
+        /// <param name="rdto">Objeto con los datos de la camioneta</param>
+        /// <returns></returns>
         [Route("recarga/camioneta")]
         public HttpResponseMessage PostRecargaCamioneta(RecargaDTO rdto)
         {
             return RespuestaHttp.crearRespuesta(_mobile.IniciarRecargaCamioneta(rdto),Request);
+        }
+        /// <summary>
+        /// Permite realizar el registro de la recarga inicial de pipa y estación
+        /// </summary>
+        /// <param name="ridto">Objeto con los datos de la recarga inicial de pipa/estación</param>
+        /// <returns></returns>
+        [Route("recarga/inicial")]
+        public HttpResponseMessage PostRecargaInicial(RecargaDTO ridto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.IniciarRecarga(ridto), Request);
+        }
+        /// <summary>
+        /// Permite realizar el registro de la recarga final de pipa y estación
+        /// </summary>
+        /// <param name="rfdto">Objeto con los datos de la recarga final de pipa/estación</param>
+        /// <returns></returns>
+        [Route("recarga/final")]
+        public HttpResponseMessage PostRecargaFinal(RecargaDTO rfdto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.FinalizarRecarga(rfdto), Request);
         }
     }
 }
