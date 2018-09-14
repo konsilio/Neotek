@@ -16,8 +16,12 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] != null)
             {
-                string tkn = Session["SringToken"].ToString();
-                return View();
+                string tkn = Session["StringToken"].ToString();
+                ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
+                ViewBag.Proveedores = CatalogoServicio.CargarProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
+                ViewBag.IVAs = "";
+                ViewBag.IEPs = "";                
+                return View(OrdenCompraServicio.InitOrdenCompra(id, tkn));
             }
             else
                 return View("Index", "Home");
@@ -29,6 +33,8 @@ namespace MVC.Presentacion.Controllers
                 string tkn = Session["StringToken"].ToString();
                 ViewBag.EsAdminCentral = TokenServicio.ObtenerEsAdministracionCentral(tkn);
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
+                ViewBag.Proveedores = CatalogoServicio.CargarProveedores(tkn);
+                ViewBag.Estatus = OrdenCompraServicio.ListaEstatus(tkn);
                 return View(OrdenCompraServicio.InitOrdenesCompra(tkn));
             }
             else

@@ -5,6 +5,7 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.OrdenCompra
 {
+    [Serializable]
     public class OrdenCompraDTO
     {
         public int IdOrdenCompra { get; set; }
