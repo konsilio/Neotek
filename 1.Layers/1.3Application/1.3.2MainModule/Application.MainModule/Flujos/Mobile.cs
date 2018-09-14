@@ -112,7 +112,26 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto IniciarRecargaCamioneta(RecargaDTO rdto)
         {
-            return null;
+            var resp = RecargaGasServicio.EvaluarClaveOperacion(rdto);
+            if (resp.Exito) return resp;
+
+            return RecargaGasServicio.Recarga(rdto);
+        }
+
+        public RespuestaDto IniciarRecarga(RecargaDTO ridto)
+        {
+            var resp = RecargaGasServicio.EvaluarClaveOperacion(ridto);
+            if (resp.Exito) return resp;
+
+            return RecargaGasServicio.Recarga(ridto,true);
+        }
+
+        public RespuestaDto FinalizarRecarga(RecargaDTO rfdto)
+        {
+            var resp = RecargaGasServicio.EvaluarClaveOperacion(rfdto);
+            if (resp.Exito) return resp;
+
+            return RecargaGasServicio.Recarga(rfdto, true);
         }
     }
 }
