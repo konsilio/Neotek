@@ -30,7 +30,7 @@ namespace Sagas.MainModule.Entidades
         public string Apellido2 { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
-        public decimal PorcentDescuento { get; set; }
+        public decimal DescuentoXKilo { get; set; }
         public decimal limiteCreditoMonto { get; set; }
         public short limiteCreditoDias { get; set; }
         public string Telefono1 { get; set; }

@@ -119,10 +119,13 @@
     <Compile Include="DTOs\Compras\OrdenCompraProductoDTO.cs" />
     <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />
     <Compile Include="DTOs\Compras\RequisicionOCDTO.cs" />
+    <Compile Include="DTOs\Mobile\CilindroDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosTomaLecturaDto.cs" />
     <Compile Include="DTOs\Mobile\LecturaAlmacenDto.cs" />
     <Compile Include="DTOs\Mobile\LecturaCamionetaDTO.cs" />
     <Compile Include="DTOs\Mobile\LecturaDTO.cs" />
     <Compile Include="DTOs\Mobile\LoginFbDTO.cs" />
+    <Compile Include="DTOs\Mobile\RecargaDTO.cs" />
     <Compile Include="DTOs\NotificacionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEstatusDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />
@@ -172,8 +175,10 @@
     <Compile Include="Servicios\AccesoADatos\EmpresaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EquipoTransporteDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EstacionCarburacionDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\OperadorChoferDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PaisDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ProductoDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\PuntoVentaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\RequisicionDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ProveedorDataAccess.cs" />
@@ -188,9 +193,11 @@
     <Compile Include="Servicios\Catalogos\EmpresaServicio.cs" />
     <Compile Include="Servicios\Catalogos\EquipoTransporteServicio.cs" />
     <Compile Include="Servicios\Catalogos\EstacionCarburacionServicio.cs" />
+    <Compile Include="Servicios\Catalogos\OperadorChoferServicio.cs" />
     <Compile Include="Servicios\Catalogos\PaisServicio.cs" />
     <Compile Include="Servicios\Catalogos\ProductoServicios.cs" />
     <Compile Include="Servicios\Catalogos\ProveedorServicio.cs" />
+    <Compile Include="Servicios\Catalogos\PuntoVentaServicio.cs" />
     <Compile Include="Servicios\Catalogos\TipoMedidorGasServicio.cs" />
     <Compile Include="Servicios\Catalogos\UsuarioServicio.cs" />
     <Compile Include="Servicios\Catalogos\ValidarCatalogoServicio.cs" />

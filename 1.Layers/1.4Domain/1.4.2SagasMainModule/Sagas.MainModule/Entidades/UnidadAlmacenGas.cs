@@ -18,7 +18,7 @@ namespace Sagas.MainModule.Entidades
         public UnidadAlmacenGas()
         {
             this.DescargasGas = new HashSet<AlmacenGasDescarga>();
-            this.CCentroCosto = new HashSet<CentroCosto>();
+            this.CentroCosto = new HashSet<CentroCosto>();
             this.TomasLectura = new HashSet<AlmacenGasTomaLectura>();
             this.RecargasSalida = new HashSet<AlmacenGasRecarga>();
             this.RecargasEntrada = new HashSet<AlmacenGasRecarga>();
@@ -34,11 +34,12 @@ namespace Sagas.MainModule.Entidades
         public Nullable<short> IdAlmacenGas { get; set; }
         public short IdEmpresa { get; set; }
         public byte IdTipoAlmacen { get; set; }
-        public short IdTipoMedidor { get; set; }
+        public Nullable<short> IdTipoMedidor { get; set; }
         public Nullable<int> IdEstacionCarburacion { get; set; }
         public Nullable<int> IdCamioneta { get; set; }
         public Nullable<int> IdPipa { get; set; }
         public bool EsGeneral { get; set; }
+        public bool EsAlterno { get; set; }
         public string Numero { get; set; }
         public Nullable<decimal> CapacidadTanqueLt { get; set; }
         public Nullable<decimal> CapacidadTanqueKg { get; set; }
@@ -59,7 +60,7 @@ namespace Sagas.MainModule.Entidades
         public virtual Pipa Pipa { get; set; }
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CentroCosto> CCentroCosto { get; set; }
+        public virtual ICollection<CentroCosto> CentroCosto { get; set; }
         public virtual AlmacenGas AlmacenGas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasTomaLectura> TomasLectura { get; set; }

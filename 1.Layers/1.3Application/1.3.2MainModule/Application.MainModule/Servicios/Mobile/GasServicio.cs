@@ -26,7 +26,7 @@ namespace Application.MainModule.Servicios.Mobile
 
         public static RespuestaDto EvaluarClaveOperacion(LecturaDTO lectura)
         {
-            var alm = AlmacenGasServicio.ObtenerLecturaEstacionPorClaveOperacion(lectura.ClaveProceso);
+            var alm = AlmacenGasServicio.ObtenerLecturaPorClaveOperacion(lectura.ClaveProceso);
             return EvaluarClaveOperacion(alm);
         }
         
@@ -41,7 +41,7 @@ namespace Application.MainModule.Servicios.Mobile
 
         public static RespuestaDto EvaluarClaveOperacion(LecturaCamionetaDTO lcdto)
         {
-            var alm = AlmacenGasServicio.ObtenerLecturaEstacionPorClaveOperacion(lcdto.ClaveProceso);
+            var alm = AlmacenGasServicio.ObtenerLecturaPorClaveOperacion(lcdto.ClaveProceso);
             return EvaluarClaveOperacion(alm);
         }
     }

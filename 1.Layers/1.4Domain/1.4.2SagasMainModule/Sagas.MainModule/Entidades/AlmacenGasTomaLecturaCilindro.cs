@@ -17,8 +17,10 @@ namespace Sagas.MainModule.Entidades
         public short IdCAlmacenGas { get; set; }
         public int IdOrden { get; set; }
         public short IdOrdenCilindro { get; set; }
+        public int IdCilindro { get; set; }
         public decimal Cantidad { get; set; }
     
         public virtual AlmacenGasTomaLectura TomaLectura { get; set; }
+        public virtual UnidadAlmacenGasCilindro Cilindro { get; set; }
     }
 }

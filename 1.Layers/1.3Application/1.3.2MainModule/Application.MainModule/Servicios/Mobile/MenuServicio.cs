@@ -161,8 +161,7 @@ namespace Application.MainModule.Servicios.Mobile
                     //Recarga - camioneta cilindro
                     if (rol.AppRecargaCamionetaCilindro && !_AppRecargaCamionetaCilindro)
                     {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppRecargaCamionetaCilindroInicial"]));
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppRecargaCamionetaCilindroFinal"]));
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppRecargaCamionetaCilindro"]));
                         _AppRecargaCamionetaCilindro = true;
                     }
                     //Traspaso - Gas Estacion Carb.
