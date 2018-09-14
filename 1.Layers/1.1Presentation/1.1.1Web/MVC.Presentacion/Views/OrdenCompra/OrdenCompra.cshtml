@@ -1,70 +1,66 @@
 ﻿@using MVC.Presentacion.Models.OrdenCompra;
 @model OrdenCompraModel
+<!DOCTYPE html>
 
-<link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
-<link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
-<style>
-    .calculaPrecio {
-    }
-</style>
-<script type="text/javascript">
-    var CalcularImporte = function () {
-        var index;
-        var idtxtPrec;
-        var idtxtDesc;
-        var idddlIVA;
-        var idddlIEPS;
-        var precio = 0;
-        var descuento = 0;
-        var cantidad = 0;
-        var iva;
-        var ieps;
-        var total;
-        var subtotal;
-        var id = $(".calculaPrecio").context.activeElement.id;
-        if (id == "") {
-            id = $(".calculaPrecio").context.activeElement.dataset.id;
-        }
+<html>
+<head>
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
+    <link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
-        if (id.includes("txtPrecio")) {
-            idtxtPrec = "#" + id;
-            index = id.replace("ctOrdenCompra_dgListaproductos_txtPrecio_", "");
-            idtxtDesc = "#ctOrdenCompra_dgListaproductos_txtgvDescuento_" + index;
-            idddlIVA = "#ctOrdenCompra_dgListaproductos_ddlGvIVA_" + index;
-            idddlIEPS = "#ctOrdenCompra_dgListaproductos_ddlGvIEPS_" + index;
+    <style>
+        .calculaPrecio {
         }
-        if (id.includes("txtgvDescuento")) {
-            idtxtDesc = "#" + id;
-            index = id.replace("ctOrdenCompra_dgListaproductos_txtgvDescuento_", "");
-            idtxtPrec = "#ctOrdenCompra_dgListaproductos_txtPrecio_" + index;
-            idddlIVA = "#ctOrdenCompra_dgListaproductos_ddlGvIVA_" + index;
-            idddlIEPS = "#ctOrdenCompra_dgListaproductos_ddlGvIEPS_" + index;
-        }
-        if (id.includes("ddlGvIVA")) {
-            idddlIVA = "#" + id;
-            index = id.replace("ctOrdenCompra_dgListaproductos_ddlGvIVA_", "");
-            idtxtPrec = "#ctOrdenCompra_dgListaproductos_txtPrecio_" + index;
-            idtxtDesc = "#ctOrdenCompra_dgListaproductos_txtgvDescuento_" + index;
-            idddlIEPS = "#ctOrdenCompra_dgListaproductos_ddlGvIEPS_" + index;
-        }
-        if (id.includes("ddlGvIEPS")) {
-            idddlIEPS = "#" + id;
-            index = id.replace("ctOrdenCompra_dgListaproductos_ddlGvIEPS_", "");
-            idtxtPrec = "#ctOrdenCompra_dgListaproductos_txtPrecio_" + index;
-            idtxtDesc = "#ctOrdenCompra_dgListaproductos_txtgvDescuento_" + index;
-            idddlIVA = "#ctOrdenCompra_dgListaproductos_ddlGvIVA_" + index;
-        }
-        precio = $(idtxtPrec).val();
-        cantidad = $("#ctOrdenCompra_dgListaproductos_lbldgCantidad_" + index).html();
-        descuento = ((precio * cantidad) * ($(idtxtDesc).val() / 100));
-        subtotal = (precio * cantidad) - (descuento);
-        iva = ((subtotal) * ($(idddlIVA + " option:selected").val().replace("IVA", "") / 100));
-        ieps = ((subtotal) * ($(idddlIEPS + " option:selected").val().replace("IEPS", "") / 100));
-        total = subtotal + iva + ieps;
-        $("#ctOrdenCompra_dgListaproductos_lbldgImporte_" + index).html(total.format("N2"));
-    }
-</script>
+    </style>
+    <script type="text/javascript">
+        var CalcularImporte = function () {
 
+            var index;
+            var idtxtPrec;
+            var idtxtDesc;
+            var idddlIVA;
+            var idddlIEPS;
+            var precio = 0;
+            var descuento = 0;
+            var cantidad = 0;
+            var iva;
+            var ieps;
+            var total;
+            var subtotal;
+            var id = $(".calculaPrecio").prevObject[0].activeElement.id;
+            if (id == "")
+                 id = $(".calculaPrecio").prevObject[0].activeElement.dataset.id;
+
+            if (id.includes("Precio")) {
+                index = id.replace("OrdenCompraProductos_", "").replace("__Precio", "");
+            }
+            if (id.includes("Descuento")) {
+                index = id.replace("OrdenCompraProductos_", "").replace("__Descuento", "");
+            }
+            if (id.includes("IVA")) {
+                index = id.replace("OrdenCompraProductos_", "").replace("__IVA", "");
+            }
+            if (id.includes("IEPS")) {
+                index = id.replace("OrdenCompraProductos_", "").replace("__IEPS", "");
+            }
+
+            idtxtPrec = "#OrdenCompraProductos_" + index + "__Precio";
+            idtxtDesc = "#OrdenCompraProductos_" + index + "__Descuento";
+            idddlIVA = "#OrdenCompraProductos_" + index + "__IVA";
+            idddlIEPS = "#OrdenCompraProductos_" + index + "__IEPS";
+            idCantidad = "OrdenCompraProductos_" + index + "__CantidadAComprar";
+            idTotlaImporte = "OrdenCompraProductos_" + index + "__Importe";
+
+            precio = parseFloat($(idtxtPrec).val());
+            cantidad = parseFloat($("label[for = '" + idCantidad + "']").text());
+            descuento = ((precio * cantidad) * ($(idtxtDesc).val() / 100));
+            subtotal = (precio * cantidad) - (descuento);
+            iva = ((subtotal) * ($(idddlIVA + " option:selected").val().replace("IVA", "") / 100));
+            ieps = ((subtotal) * ($(idddlIEPS + " option:selected").val().replace("IEPS", "") / 100));
+            total = subtotal + iva + ieps;
+            $("label[for = '" + idTotlaImporte + "']").text(total.toFixed(2));
+        }
+    </script>
+</head>
 <body style="padding-top:10px;padding-bottom:0px;height:100%">
     @using (Html.BeginForm("OrdenCompra", "OrdenCompra", FormMethod.Post))
     {
@@ -162,7 +158,6 @@
                                     </div>
                                 </div>
                             }
-
                             <div class="row clearfix" id="divCrearOC">
                                 <div class="table-responsive">
                                     <table class="table table-hover" style="height:100%">
@@ -182,13 +177,12 @@
                                                 <td><b>%IEPS</b></td>
                                                 <td><b>Importe</b></td>
                                             </tr>
-                                        </thead>                               
-                                            @*@for (var i = 0; i < Model.OrdenCompraProductos.Count; i++)
-                                            {
-                                                Html.EditorFor(m => Model.OrdenCompraProductos[i]);
-                                            }*@
-                                          @Html.EditorFor(m => m.OrdenCompraProductos);
-                                        </table>
+                                        </thead>
+                                        <tbody>
+                                            @Html.EditorFor(m => m.OrdenCompraProductos)
+                                        </tbody>
+
+                                    </table>
                                 </div>
                             </div>
                             @*<div class="row clearfix" id="divAutorizarOC">
@@ -907,11 +901,6 @@
         </div>
     }
 </body>
-<script src="../js/OrdenCompraJS.js"></script>
-<script src="~/assets/plugins/momentjs/moment.js"></script> <!-- Moment Plugin Js -->
-<!-- Bootstrap Material Datetime Picker Plugin Js -->
-<script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-<script src="~/assets/plugins/bootstrap-select/css/bootstrap-select.css"></script>
-<script src="~/assets/js/pages/forms/basic-form-elements.js"></script>
-<script src="~/assets/js/pages/forms/advanced-form-elements.js"></script>
-
+@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+@Scripts.Render("~/Scripts/jquery-ui.js")
+</html>

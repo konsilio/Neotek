@@ -125,5 +125,24 @@ namespace MVC.Presentacion.App_Code
         //    return agente._respuestaDTO;
         //}
         #endregion
+        #region Impuestos
+        public static List<SelectListItem> ListaIVA()
+        {
+            List<SelectListItem> Ivas = new List<SelectListItem>();
+            Ivas.Add(new SelectListItem { Value = "0", Text = "0%" });
+            Ivas.Add(new SelectListItem { Value = "10", Text = "10%" });
+            Ivas.Add(new SelectListItem { Value = "16", Text = "16%" });
+            return Ivas;
+        }
+        public static List<SelectListItem> ListaIEPS()
+        {
+            List<SelectListItem> Ieps = new List<SelectListItem>();
+            Ieps.Add(new SelectListItem { Value = "0", Text = "0%" });
+            Ieps.Add(new SelectListItem { Value = "4", Text = "4%" });
+            Ieps.Add(new SelectListItem { Value = "11", Text = "11%" });
+
+            return Ieps;
+        }
+        #endregion
     }
 }

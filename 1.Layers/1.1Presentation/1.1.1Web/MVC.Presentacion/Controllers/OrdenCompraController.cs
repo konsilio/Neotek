@@ -19,8 +19,8 @@ namespace MVC.Presentacion.Controllers
                 string tkn = Session["StringToken"].ToString();
                 ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
                 ViewBag.Proveedores = CatalogoServicio.CargarProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
-                ViewBag.IVAs = "";
-                ViewBag.IEPs = "";                
+                ViewBag.IVAs = CatalogoServicio.ListaIVA();
+                ViewBag.IEPs = CatalogoServicio.ListaIEPS();
                 return View(OrdenCompraServicio.InitOrdenCompra(id, tkn));
             }
             else
