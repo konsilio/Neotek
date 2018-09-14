@@ -110,8 +110,8 @@ namespace MVC.Presentacion.App_Code
             newModel.FechaRequerida = model.FechaRequerida;
             newModel.RequisicionProductos = Prodcutos.Where(x => !x.IdProducto.Equals(id)).ToList();
             newModel.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(_tkn);
-            newModel.Productos = CatalogoServicio.ListaProductos(_tkn);                       
-        
+            newModel.Productos = CatalogoServicio.ListaProductos(_tkn);
+
             return newModel;
         }
         public static RequisicionProductoNuevoDTO CrearProductoNuevo(RequisicionModel model)
@@ -161,48 +161,36 @@ namespace MVC.Presentacion.App_Code
             return respuestaReq._respuestaDTO;
         }
         #region Revicion Requisicion
-        public static RespuestaDTO FinalizarRevision(RequisicionModel model, string _tok)
+        public static RespuestaDTO FinalizarRevision(RequisicionRevisionModel model, string _tok)
         {
             List<RequisicionProdReviPutDTO> lProd = new List<RequisicionProdReviPutDTO>();
-            if (ValidarRevisionAlmacen(model.RequisicionRevision, out lProd))
+            var valid = ValidarRevisionAlmacen(model, out lProd);
+            if (valid.Exito)
             {
                 RequisicionRevPutDTO dto = RequisicionRevisionDTO(model, _tok, lProd);
-                var validacion = ValidadorClases.EnlistaErrores<RequisicionRevPutDTO>(dto);
-                if (validacion.ModeloValido)
-                {
-                    //LimpiarMensajesProd();
-                    RespuestaDTO resp = new RespuestaDTO();
-                    return ActualizarRequisicionRevision(dto, _tok);
-                }
-                else
-                {
-                    return new RespuestaDTO()
-                    {
-                        Exito = false,
-                        MensajesError = validacion.MensajesError.Select(x => x.MensajeError).ToList()
-                    };
-                }
+                RespuestaDTO resp = new RespuestaDTO();
+                return ActualizarRequisicionRevision(dto, _tok);
             }
             else
-                return new RespuestaDTO()
-                {
-                    Exito = false,
-                    Mensaje = Error.R0009
-                };
+            {
+                return valid;
+            }
         }
-        private static RequisicionRevPutDTO RequisicionRevisionDTO(RequisicionModel model, string _tok, List<RequisicionProdReviPutDTO> lprods)
+        private static RequisicionRevPutDTO RequisicionRevisionDTO(RequisicionRevisionModel model, string _tok, List<RequisicionProdReviPutDTO> lprods)
         {
-            RequisicionRevPutDTO requRevision = new RequisicionRevPutDTO();
-            requRevision.IdRequisicion = model.RequisicionRevision.IdRequisicion;
-            requRevision.NumeroRequisicion = model.NumeroRequisicion;
+            var requRevision = new RequisicionRevPutDTO()
+            {
+                IdRequisicion = model.IdRequisicion,
+                NumeroRequisicion = model.NumeroRequisicion,
+                OpinionAlmacen = model.OpinionAlmacen,
+                FechaRevision = DateTime.Today,
+                ListaProductos = lprods,
+                IdRequisicionEstatus = RequisicionEstatusEnum.Revision_exitosa
+            };
             if (TokenServicio.ObtenerEsAdministracionCentral(_tok))
                 requRevision.IdUsuarioRevision = model.IdUsuarioSolicitante;
             else
                 requRevision.IdUsuarioRevision = TokenServicio.ObtenerIdUsuario(_tok);
-            requRevision.OpinionAlmacen = model.RequisicionRevision.OpinionAlmacen;
-            requRevision.FechaRevision = DateTime.Today;
-            requRevision.ListaProductos = lprods;
-            requRevision.IdRequisicionEstatus = RequisicionEstatusEnum.Revision_exitosa;
             return requRevision;
         }
         public static RespuestaDTO ActualizarRequisicionRevision(RequisicionRevPutDTO Req, string tkn)
@@ -211,17 +199,20 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.ActualizarRequisicionRevision(Req, tkn);
             return respuestaReq._respuestaDTO;
         }
-        private static bool ValidarRevisionAlmacen(RequisicionRevisionDTO dto, out List<RequisicionProdReviPutDTO> lProd)
+        private static RespuestaDTO ValidarRevisionAlmacen(RequisicionRevisionModel dto, out List<RequisicionProdReviPutDTO> lProd)
         {
-            bool resp = true;
+            RespuestaDTO resp = new RespuestaDTO();
+            resp.Exito = true;
+            resp.MensajesError = new List<string>();
             List<RequisicionProdReviPutDTO> LProdPutDTO = new List<RequisicionProdReviPutDTO>();
-            if (dto.OpinionAlmacen.Equals(string.Empty))
+            if (!string.IsNullOrEmpty(dto.OpinionAlmacen))
             {
-                foreach (var _row in dto.ListaProductos)
+                foreach (var _row in dto.Productos)
                 {
-                    if (_row.RevisionFisica)
+                    if (!_row.RevisionFisica)
                     {
-                        resp = false;
+                        resp.MensajesError.Add(Error.R0013);
+                        resp.Exito = false;
                         break;
                     }
                     else
@@ -229,48 +220,54 @@ namespace MVC.Presentacion.App_Code
                         {
                             IdProducto = _row.IdProducto,
                             RevisionFisica = true,
-                            IdCentroCosto = _row.IdCentroCosto,
-                            Aplicacion = _row.Aplicacion,
-                            Cantidad = _row.Cantidad,
-                            CantidadAComprar = _row.CantidadAComprar,
-                            CantidadAlmacenActual = _row.CantidadAlmacenActual,
-                            IdRequisicion = dto.IdRequisicion,
-                            IdTipoProducto = _row.IdTipoProducto
                         });
                 }
             }
             else
-                resp = false;
+            {
+                resp.Exito = false;
+                resp.MensajesError.Add(Error.R0014);
+            }
             lProd = LProdPutDTO;
             return resp;
         }
         #endregion
         #region Autorizar Requisicion
-        public static RespuestaDTO FinalizarAutorizacion(RequisicionModel model, string _tok)
+        public static RequisicionAutorizacionModel RequisicionAutorizacion(int idReq, byte estatus, string tkn)
         {
-
-            if (ValidarAutorizacion(model.RequisicionAutorizacion))
+            var _reqRev = BuscarRequisicionByIdRequiAuto(idReq, tkn);
+            return new RequisicionAutorizacionModel()
             {
-                var _resp = ActualizarRequisicionAutorizacion(CrearAut(model.RequisicionAutorizacion, _tok), _tok);
-                if (_resp.Exito)
-                {
-                    return new RespuestaDTO { Exito = true, Id = _resp.IdRequisicion };
-                }
-                else
-                {
-                    return new RespuestaDTO { Exito = false, Mensaje = _resp.Mensaje };
-                }
-            }
-            else
-            {
-                return new RespuestaDTO { Exito = false, Mensaje = Error.R0012 };
-            }
+                IdEmpresa = _reqRev.IdEmpresa,
+                IdRequisicion = _reqRev.IdRequisicion,
+                NumeroRequisicion = _reqRev.NumeroRequisicion,
+                MotivoRequisicion = _reqRev.MotivoRequisicion,
+                RequeridoEn = _reqRev.RequeridoEn,
+                FechaRequerida = _reqRev.FechaRequerida,
+                IdUsuarioSolicitante = _reqRev.IdUsuarioSolicitante,
+                RequisicionEstatus = _reqRev.IdRequisicionEstatus,
+                Productos = _reqRev.ListaProductos,
+                OpinionAlmacen = _reqRev.OpinionAlmacen
+            };
         }
-        private static List<RequisicionProdAutPutDTO>  GenerarAutorizados(RequisicionAutorizacionDTO dto)
+        public static RespuestaDTO FinalizarAutorizacion(RequisicionAutorizacionModel model, string _tok)
         {
-            //int definirStatus = 0;
+            if (ValidarAutorizacion(model.Productos))
+            {
+                var _resp = ActualizarRequisicionAutorizacion(CrearAut(model, _tok), _tok);
+                if (_resp.Exito)                
+                    return new RespuestaDTO { Exito = true, Id = _resp.IdRequisicion };                
+                else                
+                    return new RespuestaDTO { Exito = false, Mensaje = _resp.Mensaje };              
+            }
+            else            
+                return new RespuestaDTO { Exito = false, Mensaje = Error.R0012 };
+            
+        }
+        private static List<RequisicionProdAutPutDTO> GenerarAutorizados(RequisicionAutorizacionModel model)
+        {            
             List<RequisicionProdAutPutDTO> lProd = new List<RequisicionProdAutPutDTO>();
-            foreach (var _row in dto.ListaProductos)
+            foreach (var _row in model.Productos)
             {
                 lProd.Add(new RequisicionProdAutPutDTO
                 {
@@ -279,30 +276,30 @@ namespace MVC.Presentacion.App_Code
                     AutorizaEntrega = _row.AutorizaEntrega,
                     CantidadAComprar = _row.CantidadAComprar,
                     CantidadRequerida = _row.Cantidad
-                });        
+                });
             }
-          return  lProd;
+            return lProd;
         }
-        private static bool ValidarAutorizacion(RequisicionAutorizacionDTO dto)
+        private static bool ValidarAutorizacion(List<RequisicionProductoAutorizacionDTO> list)
         {
-            bool correcto = true;          
-            foreach (var _row in dto.ListaProductos)
+            bool correcto = true;
+            foreach (var _row in list)
             {
                 if (_row.AutorizaCompra)
                     if (_row.CantidadAComprar > _row.Cantidad)
-                        correcto = false;     
-            }           
+                        correcto = false;
+            }
             return correcto;
         }
-        private static RequisicionAutPutDTO CrearAut(RequisicionAutorizacionDTO dto, string tkn)
+        private static RequisicionAutPutDTO CrearAut(RequisicionAutorizacionModel model, string tkn)
         {
             RequisicionAutPutDTO _aut = new RequisicionAutPutDTO();
-            _aut.IdRequisicion = dto.IdRequisicion;
-            _aut.NumeroRequisicion = dto.NumeroRequisicion;
+            _aut.IdRequisicion = model.IdRequisicion;
+            _aut.NumeroRequisicion = model.NumeroRequisicion;
             _aut.FechaAutorizacion = DateTime.Today;
-            _aut.IdUsuarioAutorizacion = dto.IdUsuarioSolicitante;
+            _aut.IdUsuarioAutorizacion = model.IdUsuarioSolicitante;
             _aut.IdRequisicionEstatus = RequisicionEstatusEnum.Autorizacion_finalizada;
-            _aut.ListaProductos = GenerarAutorizados(dto);
+            _aut.ListaProductos = GenerarAutorizados(model);
             return _aut;
         }
         private static RespuestaRequisicionDTO ActualizarRequisicionAutorizacion(RequisicionAutPutDTO Req, string tkn)
@@ -311,24 +308,33 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.ActualizarRequisicionAutorizacion(Req, tkn);
             return respuestaReq._respuestaRequisicion;
         }
+        public static RequisicionAutorizacionDTO BuscarRequisicionByNumRequiAuto(int numreq, string token)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.BuscarRequisicioAuto(numreq, token);
+            return respuestaReq._requsicionAutorizacion;
+        }
         #endregion
+        public static RequisicionRevisionModel RequisicionRevision(int idReq, byte estatus, string tkn)
+        {
+            var _reqRev = BuscarRequisicionByIdRequiRevi(idReq, tkn);
+            return new RequisicionRevisionModel()
+            {
+                IdEmpresa = _reqRev.IdEmpresa,
+                IdRequisicion = _reqRev.IdRequisicion,
+                NumeroRequisicion = _reqRev.NumeroRequisicion,
+                MotivoRequisicion = _reqRev.MotivoRequisicion,
+                RequeridoEn = _reqRev.RequeridoEn,
+                FechaRequerida = _reqRev.FechaRequerida,
+                IdUsuarioSolicitante = _reqRev.IdUsuarioSolicitante,
+                RequisicionEstatus = _reqRev.IdRequisicionEstatus,
+                Productos = _reqRev.ListaProductos,
+                OpinionAlmacen = string.Empty
+            };
+        }
         public static RequisicionModel RquisicionAlternativa(int idReq, byte estatus, string tkn)
         {
             RequisicionModel newModel = new RequisicionModel();
-            if (estatus.Equals(RequisicionEstatusEnum.Creada))
-            {
-                var _reqRev = BuscarRequisicionByIdRequiRevi(idReq, tkn);
-                newModel = new RequisicionModel()
-                {
-                    RequisicionRevision = _reqRev,
-                    NumeroRequisicion = _reqRev.NumeroRequisicion,
-                    MotivoRequisicion = _reqRev.MotivoRequisicion,
-                    RequeridoEn = _reqRev.RequeridoEn,
-                    FechaRequerida = _reqRev.FechaRequerida,
-                    IdUsuarioSolicitante = _reqRev.IdUsuarioSolicitante,
-                    RequisicionEstatus = _reqRev.IdRequisicionEstatus
-                };
-            }
             if (estatus.Equals(RequisicionEstatusEnum.En_revision))
             {
                 var _reqAuto = BuscarRequisicionByIdRequiAuto(idReq, tkn);

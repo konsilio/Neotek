@@ -1,0 +1,33 @@
+﻿@model MVC.Presentacion.Models.OrdenCompra.ProductoOCDTO
+@{
+    var oIds = ViewData["id"] ?? 0;
+    int idnew = int.Parse(oIds.ToString());
+}
+@Html.HiddenFor(m => m.IdProducto)
+<tr>
+    <td>@Model.TipoProducto</td>
+    <td>@Model.Producto</td>
+    <td>@Html.Label(Model.CantidadAComprar.ToString())</td>
+    <td>@Model.Unidad</td>
+    <td>@Model.Aplicacion</td>
+    <td>@Model.CentroCosto</td>
+    <td>@Html.DropDownListFor(model => model.IdProdveedor, ViewBag.Proveedores as IEnumerable<SelectListItem>)</td>
+    <td>@Html.DropDownListFor(model => model.IdCentroCosto, ViewBag.CuentasContables as IEnumerable<SelectListItem>)</td>
+    <td>@Html.TextBoxFor(m => m.Precio, new { @id = "txtPrecio", @class = "form-control", @type = "number" })</td>
+    <td>@Html.TextBoxFor(m => m.Descuento, new { @type = "number", @id = "txtgvDescuento", @class = "form-control" }) </td>
+    <td>
+        <select id="ddlGvIVA" name="IEPS" class="form-control">
+            <option value="0">0%</option>
+            <option value="10">10%</option>
+            <option value="16">16%</option>
+        </select>
+    </td>
+    <td>
+        <select id="ddlGvIEPS" name="IEPS" class="form-control">
+            <option value="0">0%</option>
+            <option value="4">4%</option>
+            <option value="11">11%</option>
+        </select>
+    </td>
+    <td><label id="Importe" /></td>
+</tr>

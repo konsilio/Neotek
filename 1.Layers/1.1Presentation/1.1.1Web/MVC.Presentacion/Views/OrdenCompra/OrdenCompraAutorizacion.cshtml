@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OrdenCompraAutorizacion</title>
+</head>
+<body>
+    <section class="content home">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Compras</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item active">
+                                <label>Compras / Ordern de Compra / Nueva "</label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="row clearfix">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label> @Model.NombreEmpresa</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <b>Número de Requisición:</b>&nbsp;
+                                    <label> @Model.NumRequisicion</label>
+                                </div>
+                                <div class="input-group">
+                                    <b>Número de Orden de Compra:</b>&nbsp;
+                                    <label>@Model.NumOrdenCompra</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-12">
+                            <div class="form-group form-float">
+                                <b>Fecha requerida:</b>
+                                <dtp:DateTimePicker ID="txtFechaRequerida" CssClass="dataTxt" Enabled="false" />
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12">
+                            <div class="form-group form-float">
+                                <b>Solicitante:</b>
+                                <input name="Solicitante" value="@Model.Solicitante" class="form-control disabled" />
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 form-float">
+                            <div class="form-group">
+                                <b>Motivo de compra:</b>
+                                <textarea name="MotivoCompra" class="form-control  no-resize disabled" placeholder="Error de carga" rows="4">@Model.MotivoCompra</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12">
+                            <div class="form-group form-float">
+                                <%--Se requiere en--%>
+                                <b>Se requiere en:</b>
+                                <textarea name="RequeridoEn" class="form-control  no-resize disabled" placeholder="Error de carga" rows="4">@Model.RequeridoEn</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row clearfix">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <b>Proveedor:</b>&nbsp;
+                                    <label>@ViewBag.NombrePorvedor</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <dtp:DateTimePicker ID="dtpFechaEntrada" />
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MensajeError</label>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

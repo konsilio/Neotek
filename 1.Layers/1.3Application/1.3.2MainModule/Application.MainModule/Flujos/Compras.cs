@@ -2,6 +2,7 @@
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
+using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.AccesoADatos;
@@ -44,7 +45,7 @@ namespace Application.MainModule.Flujos
             //Retornamos el objeto con los productos filtrados
             return Req;
 
-        }
+        }      
         /// <summary>
         /// Generamos la(s) ordene(s) de compra segun los provedores de la lista de productos.
         /// </summary>

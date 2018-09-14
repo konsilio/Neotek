@@ -39,8 +39,8 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 Aplicacion = _reqProducto.Aplicacion,
                 CantidadAlmacenActual = _reqProducto.CantidadAlmacenActual.Value,
                 CantidadAComprar = _reqProducto.CantidadAComprar.Value,
-                AutorizaEntrega = _reqProducto.AutorizaEntrega.Value,
-                AutorizaCompra = _reqProducto.AutorizaCompra.Value,
+                //AutorizaEntrega = _reqProducto.AutorizaEntrega.Value,
+                //AutorizaCompra = _reqProducto.AutorizaCompra.Value,
                 EsActivoVenta = _reqProducto.EsActivoVenta,
                 EsGas = _reqProducto.EsGas,
                 EsTransporteGas = _reqProducto.EsTransporteGas

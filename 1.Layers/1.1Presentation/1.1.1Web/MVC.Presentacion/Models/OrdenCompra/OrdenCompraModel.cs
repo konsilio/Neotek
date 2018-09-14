@@ -7,16 +7,15 @@ namespace MVC.Presentacion.Models.OrdenCompra
 {
     public class OrdenCompraModel
     {
-        public int IdOrdenCompra { get; set;}
         public int IdRequisicion { get; set; }
-        public int IdSolicitante { get; set; }
-        public int IdProveedor { get; set; }
-        public DateTime FechaRequerida { get; set;}
-        public DateTime FechaEntrada { get; set; }
+        public string NumRequisicion { get; set; }
+        public int IdSolicitante{ get; set; }
+        public string Solicitante { get; set; }   
+        public short IdEmpresa { get; set; } 
+        public string NombreEmpresa { get; set; }           
         public string MotivoCompra { get; set; }
-        public string RequeridoEn { get; set; }
-        public string btn { get; set; }
-        public List<OrdenCompraPorductoDTO> OrdenCompraProductos { get; set; }
-
-    }
+        public string RequeridoEn { get; set; }     
+        public DateTime FechaRequisicion { get; set; }
+        public List<ProductoOCDTO> OrdenCompraProductos { get; set; }
+     }
 }

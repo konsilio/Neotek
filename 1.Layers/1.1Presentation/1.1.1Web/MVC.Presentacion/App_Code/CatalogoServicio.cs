@@ -9,40 +9,17 @@ using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
 namespace MVC.Presentacion.App_Code
 {
     public static class CatalogoServicio
     {
-      
-        #region Empresas
-        //public bool create(EmpresaDTO Objemp)
-        //{
-        //    try
-        //    {
-        //        //DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(EmpresaDTO));
-        //        //MemoryStream mem = new MemoryStream();
-        //        //ser.WriteObject(mem, Objemp);
-        //        //string data = Encoding.UTF8.GetString(mem.ToArray(), 0, (int)mem.Length);
-        //        //WebClient webClient = new WebClient();
-        //        //webClient.Headers["Content-type"] = "application/json";
-        //        //webClient.Encoding = Encoding.UTF8;
-        //        //webClient.UploadString(_URL + "create", "POST", data);
 
-        //        //return true;
-        //        var agente = new AgenteServicio();
-        //        agente.GuardarEmpresaNueva(Objemp);
-
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
-
+        #region Empresas    
         public static RespuestaDTO create(EmpresaModel cc, string tkn)
-        {            
+        {
             var agente = new AgenteServicio();
             agente.GuardarEmpresaNueva(cc, tkn);
             return agente._respuestaDTO;
@@ -54,10 +31,7 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarPaises(tkn);
             return agente._listaPaises;
         }
-        
 
-        #endregion
-        #region Empresas
         public static List<EmpresaDTO> Empresas(string tkn)
         {
             var agente = new AgenteServicio();
@@ -106,6 +80,50 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarProductos(Token);
             return agente._listProductos;
         }
+        #endregion
+        #region Proveedores
+        public static List<ProveedorDTO> CargarProveedores(string Tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarProveedores(Tkn);
+            return agente._listaProveedores;
+        }
+        public static List<SelectListItem> ProveedoresSelectList(List<ProveedorDTO> lprov)
+        {
+            List<SelectListItem> nlprov = new List<SelectListItem>();
+            foreach (var prov in lprov)
+            {
+                nlprov.ToList().Add(new SelectListItem { Value = prov.IdProveedor.ToString(), Text = prov.NombreComercial });
+            }
+            return nlprov;
+        }
+        #endregion
+        #region Cuentas contables      
+        //public static RespuestaDTO GuardarCtaCtble(CuentaContableCrearDto cc, string tkn)
+        //{
+        //    var agente = new AgenteServicio();
+        //    agente.GuardarCuentaContable(cc, tkn);
+        //    return agente._respuestaDTO;
+        //}
+
+        public static List<CuentaContableDTO> ListaCtaCtble(short idEmpresa, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarCuentasContables(idEmpresa, tkn);
+            return agente._listaCuentasContables;
+        }
+        //public static RespuestaDTO EliminarCtaContable(CuentaContableEliminarDto cc, string tkn)
+        //{
+        //    var agente = new AgenteServicio();
+        //    agente.EliminarCtaCtble(cc, tkn);
+        //    return agente._respuestaDTO;
+        //}
+        //public static RespuestaDTO ModificarCtaContable(CuentaContableModificarDto cc, string tkn)
+        //{
+        //    var agente = new AgenteServicio();
+        //    agente.ModificarCtaCtble(cc, tkn);
+        //    return agente._respuestaDTO;
+        //}
         #endregion
     }
 }

@@ -1,13 +1,11 @@
 ﻿@using MVC.Presentacion.Models.Requisicion
 @model RequisicionModel
-
 @{
     string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdminCentral).Equals(false) ? "disabled" : "";
     string EnabledEsNueva = Convert.ToBoolean(ViewBag.EsNueva).Equals(true) ? "" : "disabled";
     string txtbutton = ViewBag.BtnCrear == null ? "Crear" : ViewBag.BtnCrear;
     int index = 0;
 }
-
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
 <link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 <div class="page-loader-wrapper">
@@ -25,7 +23,7 @@
         @if (Model.Productos != null) {
             foreach (var p in Model.Productos) {
             @:ArrProd.push({ id: "@p.IdProducto", unidad: "@p.UnidadMedida" });
-            }
+                                    }
         }
         for (var i = 0; i < ArrProd.length; i += 1) {
             if (ArrProd[i].id == idProd) {
@@ -44,7 +42,7 @@
         @if (Model.Productos != null) {
             foreach (var p in Model.Productos) {
             @:ArrProd.push({ IdProducto: "@p.IdProducto", Descripcion: "@p.Descripcion", IdTipoServicio: "@p.IdProductoServicioTipo" });
-            }
+                                    }
         }
 
         for (var p = 0; p < ArrProd.length; p++) {
@@ -65,7 +63,7 @@
         }
     }
 </script>
-<body onload='filtrarProd()'>
+<body style="padding-top:10px" onload='filtrarProd()'>
     @using (Html.BeginForm("CrearRequisicion", "Requisicion", FormMethod.Post))
     {
         <section class="content home">
@@ -108,12 +106,14 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="row clearfix z-index" id="divCamposRequi">
                                         <div class="col-lg-3">
                                             <b>Fecha requerida:</b>
-                                            @Html.TextBoxFor(c => c.FechaRequerida, new { id = "datepicker" })
-                                        </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+                                                @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })
+                                                </div>
+                                            </div>
                                         <div class="col-lg-3">
                                             <b>Solicitante:</b>
                                             <select id="ddlSoliciante" name="IdUsuarioSolicitante" class="form-control show-tick" @EnabledAdminCentral data-live-search="true">
@@ -197,9 +197,9 @@
                                                         {
                                                             <option value="@lst.IdCentroCosto" selected>@lst.Descripcion</option>
                                                         }
-                                                        else 
+                                                        else
                                                         {
-                                                        <option value="@lst.IdCentroCosto">@lst.Descripcion</option>
+                                                            <option value="@lst.IdCentroCosto">@lst.Descripcion</option>
                                                         }
                                                     }
                                                 </select>
@@ -281,119 +281,11 @@
                                             </div>
                                         </div>
                                     }
-
-                                    @*Grid productos revision*@
-                                    @if (Model.RequisicionRevision != null)
-                                    {
-                                        <div class="row clearfix">
-                                            <div class="table-responsive">
-                                                <table id="ProductosRevision" class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <td><b>Tipo</b></td>
-                                                            <td><b>Producto</b></td>
-                                                            <td><b>Cantidad</b></td>
-                                                            <td><b>Unidad</b></td>
-                                                            <td><b>Aplicación</b></td>
-                                                            <td><b>Centro de Costo</b></td>
-                                                            <td><b>Almacen</b></td>
-                                                            <td><b>Revision Fisica</b></td>
-
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @if (Model.RequisicionRevision.ListaProductos != null)
-                                                        {
-                                                            index = 0;
-                                                            foreach (var item in Model.RequisicionRevision.ListaProductos)
-                                                            {
-                                                                <tr>
-                                                                    <td>@item.TipoProducto</td>
-                                                                    <td>@item.Producto</td>
-                                                                    <td>@item.Cantidad</td>
-                                                                    <td>@item.Unidad</td>
-                                                                    <td>@item.Aplicacion</td>
-                                                                    <td>@item.CentroCosto</td>
-                                                                    <td>@item.CantidadAlmacenActual</td>
-                                                                    <td>@Html.CheckBoxFor(x => x.RequisicionRevision.ListaProductos.ElementAt(index).RevisionFisica)</td>
-                                                                </tr>
-
-                                                                index++;
-                                                            }
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    }
-                                    @if (Model.RequisicionAutorizacion != null)
-                                    {
-                                        <div class="row clearfix">
-                                            <div class="table-responsive">
-                                                <table cass="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <td><b>Tipo</b></td>
-                                                            <td><b>Producto</b></td>
-                                                            <td><b>Cantidad</b></td>
-                                                            <td><b>Unidad</b></td>
-                                                            <td><b>Aplicación</b></td>
-                                                            <td><b>Centro de Costo</b></td>
-                                                            <td><b>Existencias</b></td>
-                                                            <td><b>Autoriza entrega</b></td>
-                                                            <td><b>Requiere comprar</b></td>
-                                                            <td><b>Autoriza Compra</b></td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var prod in Model.RequisicionAutorizacion.ListaProductos)
-                                                        {
-                                                            <tr>
-                                                                <td>@prod.TipoProducto</td>
-                                                                <td>@prod.Producto</td>
-                                                                <td>@prod.Cantidad</td>
-                                                                <td>@prod.Unidad</td>
-                                                                <td>@prod.Aplicacion</td>
-                                                                <td>@prod.CentroCosto</td>
-                                                                <td>@prod.CantidadAlmacenActual</td>
-                                                                <td>@Html.CheckBoxFor(x => x.RequisicionAutorizacion.ListaProductos[prod.IdProducto].AutorizaEntrega)</td>
-                                                                <td>@prod.CantidadAComprar</td>
-                                                                <td>@Html.CheckBoxFor(x => x.RequisicionAutorizacion.ListaProductos[prod.IdProducto].AutorizaCompra)</td>
-                                                            </tr>
-                                                        }
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    }
+                                   
                                     @if (ViewBag.reqGrid != null)
                                     {
                                         <Label id="reqGrid" class="alert-danger">ViewBag.reqGrid</Label>
-                                    }
-                                    @if (Model.RequisicionEstatus.Equals(RequisicionEstatusEnum.Creada))
-                                    {
-                                        <div class="row clearfix">
-                                            <div class="col-lg-12">
-                                                <h2 class="card-inside-title">Opinión de Almacen</h2>
-                                                <div class="row clearfix">
-                                                    <div class="col-sm-12">
-                                                        <div class="form-group">
-                                                            <div class="form-line">
-                                                                <textarea Rows="4" name="OpinionAlmacen" class="form-control no-resize" placeholder="Porfavor escriba su opinion">
-                                                                    @if (ViewBag.reqOpinion != null)
-                                                                    {
-                                                                        @ViewBag.reqOpinion;
-                                                                    }
-                                                                </textarea>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
+                                    }                                   
                                     <div class="row clearfix">
                                         <div class="col-lg-4 col-md-8 text-center">
                                             <a href="@Url.Action("Requisiciones", "Requisicion")" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
@@ -410,8 +302,6 @@
                                             <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round @Convert.ToBoolean(ViewBag.EsNueva) ? 'disabled' : ''">
                                                 @txtbutton
                                             </a>
-
-
                                         </div>
                                     </div>
                                     <div>
@@ -454,7 +344,25 @@
                         <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" value="Si" formaction="CrearRequisicion" class="btn btn-raised btn-primary btn-round waves-effect" />
+                        @if (ViewBag.OtraAccion == null)
+                        {
+                            <input type="submit" value="Si" formaction="CrearRequisicion" class="btn btn-raised btn-primary btn-round waves-effect" />
+                        }
+                        else
+                        {
+                            if (ViewBag.OtraAccion == "R")
+                            {                                
+                                <input type="submit" value="Si" formaction="Revision" class="btn btn-raised btn-primary btn-round waves-effect" />
+                            }
+                            else
+                            {
+                                @*<a href="@Url.Action("Revision", "Requisicion")"  class="btn btn-raised btn-primary btn-round" >
+                                    Si
+                                </a>*@
+                                @*<input type="submit" value="Si" formaction='@Url.Action("Revision", "Requisicion")' class="btn btn-raised btn-primary btn-round waves-effect" />*@
+                                @*<input type="submit" value="Si" formaction="CrearRequisicion" class="btn btn-raised btn-primary btn-round waves-effect" />*@
+                            }
+                        }
                         <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
@@ -466,7 +374,6 @@
 <!-- Bootstrap Material Datetime Picker Plugin Js -->
 <script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 <script src="~/assets/plugins/bootstrap-select/css/bootstrap-select.css"></script>
-
 <script src="~/assets/js/pages/forms/basic-form-elements.js"></script>
 <script src="~/assets/js/pages/forms/advanced-form-elements.js"></script>
 
