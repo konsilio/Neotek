@@ -97,9 +97,6 @@
     <Compile Include="Entidades\Banco.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\CAlmacenGasCilindro.cs">
-      <DependentUpon>Sagas.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entidades\Camioneta.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -220,6 +217,9 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\UnidadAlmacenGas.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\UnidadAlmacenGasCilindro.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\UnidadMedida.cs">

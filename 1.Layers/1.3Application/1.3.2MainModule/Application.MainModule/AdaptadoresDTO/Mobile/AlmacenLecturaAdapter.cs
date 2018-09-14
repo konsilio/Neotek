@@ -41,50 +41,53 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return imagenes.ToList().Select(x => FromDTO(x, idAlmEntrGasLec, IdOrden, num++)).ToList();
         }
 
-        public static AlmacenGasTomaLectura FromDTO(LecturaCamionetaDTO lcdto)
+        public static AlmacenGasTomaLectura FromDTO(LecturaCamionetaDTO lcdto, int idOrden)
         {
             return new AlmacenGasTomaLectura()
             {
                 ClaveOperacion = lcdto.ClaveProceso,
                 IdCAlmacenGas = lcdto.IdCAlmacenGas,
-                
+                IdOrden = idOrden,                
+                Cilindros = FromDTOCilindro(lcdto, idOrden)
             };
         }
 
-        public static List<AlmacenGasTomaLecturaCilindro> FromDTO(List<decimal> cilindroCantidades,List<short> IdCilindros, short idCAlmacenGas, int idOrden)
+        public static List<AlmacenGasTomaLecturaCilindro> FromDTOCilindro(LecturaCamionetaDTO lcdto, int idOrden)
         {
-            short num = 0;
+            short num = 1;
             int x = 0;
             List<AlmacenGasTomaLecturaCilindro> list = new List<AlmacenGasTomaLecturaCilindro>();
-            /*for( x = 0; x < IdCilindros.Count; x++)
-            {
-                list.Add(FromDTO(cilindroCantidades[x], IdCilindros[x], idCAlmacenGas,idOrden, num));
-                num++;
-            }*/
-
-            /*x = 0;
-            foreach (var idCilindro in IdCilindros)
-            {
-                list.Add(FromDTO(cilindroCantidades.ElementAt(x), idCilindro, idCAlmacenGas, idOrden, num));
-            }*/
-
-            x = -1;
-            cilindroCantidades.ForEach(y=> list.Add(FromDTO(y, IdCilindros.ElementAt(x++), idCAlmacenGas, idOrden, num)));
-
-            //return cilindroCantidad.ToList().Select(x => FromDTO(x, idCAlmacenGas, idOrden, num++)).ToList();
+            lcdto.CilindroCantidad.ForEach(y=> list.Add(FromDTOCilindro(y, lcdto.IdCilindro.ElementAt(x++), lcdto.IdCAlmacenGas, idOrden, num++)));
             return list;
         }
 
-        public static AlmacenGasTomaLecturaCilindro FromDTO(decimal cantidad,short idCilindro, short idAlmEntrGasLec, int IdOrden, short numOrden)
+        public static AlmacenGasTomaLecturaCilindro FromDTOCilindro(decimal cantidad,short idCilindro, short idAlmEntrGasLec, int IdOrden, short numOrden)
         {
             return new AlmacenGasTomaLecturaCilindro()
-            {
-               
+            {  
                 IdCAlmacenGas = idAlmEntrGasLec,
                 IdOrden = IdOrden,
                 IdOrdenCilindro = numOrden,
+                IdCilindro = idCilindro,
                 Cantidad = cantidad,
-                
+            };
+        }
+        
+        public static DatosTomaLecturaDto ToDto(List<UnidadAlmacenGas> alms, List<TipoMedidorUnidadAlmacenGas> meds)
+        {
+            return new DatosTomaLecturaDto()
+            {
+                Almacenes = AlmacenAdapter.ToDto(alms),
+                Medidores = TipoMedidorAdapter.ToDto(meds),
+            };
+        }
+
+        public static DatosTomaLecturaDto ToDto(List<UnidadAlmacenGas> alms, List<AlmacenGasTomaLectura> lects, List<TipoMedidorUnidadAlmacenGas> meds)
+        {
+            return new DatosTomaLecturaDto()
+            {   
+                Almacenes = AlmacenAdapter.ToDto(alms, lects),
+                Medidores = TipoMedidorAdapter.ToDto(meds),
             };
         }
     }

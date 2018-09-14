@@ -51,7 +51,7 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<AlmacenGasDescargaFoto> AlmacenGasDescargaFoto { get; set; }
         public virtual DbSet<AlmacenGas> AlmacenGas { get; set; }
         public virtual DbSet<UnidadAlmacenGas> UnidadAlmacenGas { get; set; }
-        public virtual DbSet<CAlmacenGasCilindro> CAlmacenGasCilindro { get; set; }
+        public virtual DbSet<UnidadAlmacenGasCilindro> UnidadAlmacenGasCilindro { get; set; }
         public virtual DbSet<TipoUnidadAlmacenGas> TipoUnidadAlmacenGas { get; set; }
         public virtual DbSet<TipoMedidorUnidadAlmacenGas> TipoMedidorUnidadAlmacenGas { get; set; }
         public virtual DbSet<Camioneta> Camioneta { get; set; }

@@ -120,5 +120,24 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarTomaDeLecturaCamioneta(lfcdto), Request);
         }
+        /// <summary>
+        /// Permite obtener el catalogo de eestaciones filtrando por el tipo 
+        /// </summary>
+        /// <param name="EsEstacion">Es una estacion</param>
+        /// <param name="EsAlmacen">Es un almacen</param>
+        /// <param name="EsPipa">Es una pipa</param>
+        /// <param name="EsCamioneta">Es una camioneta</param>
+        /// <returns></returns>
+        [Route("catalogos/almacenes/{esEstacion}/{esPipa}/{esCamioneta}/{esFinalizar}")]
+        public HttpResponseMessage GetDatosTomaLectura(bool esEstacion, bool esPipa,bool esCamioneta, bool esFinalizar = false)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.ConsultaDatosTomaLectura(esEstacion, esPipa, esCamioneta, esFinalizar),Request);
+        }
+
+        [Route("recarga/camioneta")]
+        public HttpResponseMessage PostRecargaCamioneta(RecargaDTO rdto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.IniciarRecargaCamioneta(rdto),Request);
+        }
     }
 }

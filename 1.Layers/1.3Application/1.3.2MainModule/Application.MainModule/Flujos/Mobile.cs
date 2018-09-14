@@ -34,7 +34,7 @@ namespace Application.MainModule.Flujos
 
         public List<AlmacenDto> ObtenerAlmacenesGas()
         {
-            return AlmacenAdapter.ToDto(AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa()));
+            return AlmacenAdapter.ToDto(AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa(), true));
         }
 
         public RespuestaDto RegistrarPapeleta(PapeletaDTO papeletaDto)
@@ -94,6 +94,25 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
             return LecturaGasServicio.Lectura(lcdto,true);
+        }
+
+        public DatosTomaLecturaDto ConsultaDatosTomaLectura(bool esEstacion, bool esPipa, bool esCamioneta, bool esFinalizar)
+        {
+            if(esEstacion)
+                return LecturaGasServicio.ConsultaDatosTomaLecturaEstacionCarburacion(esFinalizar);
+
+            if (esPipa)
+                return LecturaGasServicio.ConsultaDatosTomaLecturaPipa(esFinalizar);
+
+            if (esCamioneta)
+                return LecturaGasServicio.ConsultaDatosTomaLecturaCamioneta(esFinalizar);
+
+            return LecturaGasServicio.ConsultaDatosTomaLecturaAlmacenGeneral(esFinalizar);
+        }
+
+        public RespuestaDto IniciarRecargaCamioneta(RecargaDTO rdto)
+        {
+            return null;
         }
     }
 }
