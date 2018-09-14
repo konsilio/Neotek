@@ -1,21 +1,35 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.neotecknewts.sagasapp.R;
-import com.example.neotecknewts.sagasapp.Util.Imprimir;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.UUID;
 
 public class VerReporteActivity extends AppCompatActivity {
     private boolean EsReporteDelDia;
     private String StringReporte,HtmlReporte;
 
     // android built in classes for bluetooth operations
-    /*BluetoothAdapter mBluetoothAdapter;
+    BluetoothAdapter mBluetoothAdapter;
     BluetoothSocket mmSocket;
     BluetoothDevice mmDevice;
 
@@ -26,7 +40,7 @@ public class VerReporteActivity extends AppCompatActivity {
     byte[] readBuffer;
     int readBufferPosition;
     volatile boolean stopWorker;
-    String device_select;*/
+    String device_select;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +61,11 @@ public class VerReporteActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-        btnReporteActivityImprimir.setOnClickListener(v -> /*listDevices()*/
-                new Imprimir(this).starPrint(StringReporte));
+        btnReporteActivityImprimir.setOnClickListener(v -> {
+            listDevices();
+            btnVerReporteActivityTerminar.setVisibility(View.VISIBLE);
+            /*new Imprimir(this,this).starPrint(StringReporte)*/
+        });
         if (EsReporteDelDia){
             WVVerReporteActivityReporte.setWebViewClient(new WebViewClient(){
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -66,7 +83,7 @@ public class VerReporteActivity extends AppCompatActivity {
 
     }
 
-    /*void listDevices(){
+    void listDevices(){
         try {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -120,10 +137,10 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     // This will find a bluetooth printer device
-    /*void findBT(CharSequence charSequence) {
+    void findBT(CharSequence charSequence) {
 
         try {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -159,10 +176,10 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     // Tries to open a connection to the bluetooth printer device
-    /*void openBT() throws IOException {
+    void openBT() throws IOException {
         try {
             // Standard SerialPortService ID
             UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
@@ -179,11 +196,11 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     // After opening a connection to bluetooth printer device,
     // we have to listen and check if a data were sent to be printed.
-    /*void beginListenForData() {
+    void beginListenForData() {
         try {
             final Handler handler = new Handler();
 
@@ -242,12 +259,12 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     /*
      * This will send data to be printed by the bluetooth printer
      */
-    /*void sendData() throws IOException {
+    void sendData() throws IOException {
         try {
 
             // the text typed by the user
@@ -261,10 +278,10 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     // Close the connection to bluetooth printer.
-    /*void closeBT() throws IOException {
+    void closeBT() throws IOException {
         try {
             stopWorker = true;
             mmOutputStream.close();
@@ -276,7 +293,7 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
 
 }

@@ -31,6 +31,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -188,10 +189,10 @@ public interface RestClient {
     );
     @GET(Constantes.LISTA_TIPO_ALMACEN)
     Call<DatosTomaLecturaDto> getEstacionesCarburacion(
-            @Query("esEstacion") boolean esEstacion,
-            @Query("esPipa") boolean esPipa,
-            @Query("esCamioneta") boolean esCamioneta,
-            @Query("esFinalizar") boolean esFinalizar,
+            @Path(value = "esEstacion", encoded=true) boolean esEstacion,
+            @Path(value = "esPipa", encoded=true) boolean esPipa,
+            @Path(value = "esCamioneta", encoded=true) boolean esCamioneta,
+            @Path(value = "esFinalizar", encoded=true) boolean esFinalizar,
             @Header("Authorization")String token
     );
     @POST(Constantes.POST_RECARGA)

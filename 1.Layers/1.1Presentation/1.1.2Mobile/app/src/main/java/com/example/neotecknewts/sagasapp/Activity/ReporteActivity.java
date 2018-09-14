@@ -390,7 +390,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
                         "</div>"+
                         "</body>";
                 text[0] = formato_reporte_pipa_text;
-                text[0] = formato_reporte_pipa_html;
+                text[1] = formato_reporte_pipa_html;
 
             }
             return text;
