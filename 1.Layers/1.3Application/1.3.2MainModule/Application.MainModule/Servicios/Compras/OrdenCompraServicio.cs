@@ -88,7 +88,6 @@ namespace Application.MainModule.Servicios.Compras
                     if (oc.SubtotalSinIeps == null) oc.SubtotalSinIeps = 0;
                     if (oc.SubtotalSinIva == null) oc.SubtotalSinIva = 0;
                     if (oc.Total == null) oc.Total = 0;
-
                     oc.Iva += (prod.Precio * (prod.IVA / 100));
                     oc.Ieps += (prod.Precio * (prod.IEPS / 100));
                     oc.SubtotalSinIeps = prod.Importe - oc.Ieps;

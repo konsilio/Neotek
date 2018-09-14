@@ -248,10 +248,12 @@
     <Compile Include="Models\Catalogos\UsuarioDTO.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraCrearDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraEstatusDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraEstatusEnum.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraModel.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraProductoDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenesCompraModel.cs" />
     <Compile Include="Models\OrdenCompra\ProductoOCDTO.cs" />
