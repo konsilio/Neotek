@@ -121,7 +121,9 @@ public class LecturaPipaInteractorImpl implements LecturaPipaInteractor {
                 true,
                 false,
                 esFinalizar,
-                token);
+                token,
+                "application/json"
+                );
         Log.w("Url base",retrofit.baseUrl().toString());
 
         call.enqueue(new Callback<DatosTomaLecturaDto>() {

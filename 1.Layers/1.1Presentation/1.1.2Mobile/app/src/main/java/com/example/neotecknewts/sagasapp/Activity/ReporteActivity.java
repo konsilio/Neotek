@@ -68,6 +68,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
         session = new Session(ReporteActivity.this);
+        presenter = new ReportePresenterImpl(this);
 
         TextView TVReporteActivityTitulo = findViewById(R.id.TVLecturaAlmacenActivityTitulo);
         TextView TVReporteactivitySeleccionaFecha = findViewById(R.id.TVReporteactivitySeleccionaFecha);
@@ -82,23 +83,25 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
         });
         String[] list_unidades = new String[]{"Seleccione", "Pipa No. 1", "Camioneta No. 1", "Estación No. 1",
                 "Pipa No. 2", "Camioneta No. 2", "Estación No. 2"};
-        presenter.GetUnidades(session.getToken());
+        //presenter.GetUnidades(session.getToken());
         SReporteActivityListUnidades.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner, list_unidades));
         SReporteActivityListUnidades.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                for (UnidadesDTO unidad: unidadesDTOS){
-                    if(unidad.getNombre().equals(parent.getItemAtPosition(position).toString())){
-                        unidadesDTO = unidad;
+                if(unidadesDTOS!= null && unidadesDTOS.size()>0) {
+                    for (UnidadesDTO unidad : unidadesDTOS) {
+                        if (unidad.getNombre().equals(parent.getItemAtPosition(position).toString())) {
+                            unidadesDTO = unidad;
+                        }
                     }
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                unidadesDTO = null;
             }
         });
         TVReporteActivityFecha.setOnClickListener(v->{
@@ -145,7 +148,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
         unidadesDTOS = data;
         list_unidades = new String[data.size()];
         for (int x =0;x<data.size();x++){
-            list_unidades[x] = data.get(x).getNombre();
+            list_unidades[x] = data.get(x).getNombreAlmacen();
         }
         SReporteActivityListUnidades.setAdapter(new ArrayAdapter<>(
                 this,
@@ -210,7 +213,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
         protected String[] doInBackground(String... strings) {
             String[] text = new String[2];
             if(EsReporteDelDia){
-                presenter.Reporte(unidadesDTO.getId(),fecha,session.getToken());
+                //presenter.Reporte(unidadesDTO.getIdAlmacenGas(),fecha,session.getToken());
                 String formato_reporte_pipa_text ="Reporte-[{Elemento}] \n" +
                         "\n" +
                         "Clave Reporte:[{ClaveReporte}] \n" +
@@ -439,7 +442,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
                         VerReporteActivity.class);
                 intent.putExtra("EsReporteDelDia",EsReporteDelDia);
                 intent.putExtra("FechaReporte",fecha);
-
+                intent.putExtra("unidadDTO",unidadesDTO);
                 intent.putExtra("StringReporte",data[0]);
                 intent.putExtra("HtmlReporte",data[1]);
 

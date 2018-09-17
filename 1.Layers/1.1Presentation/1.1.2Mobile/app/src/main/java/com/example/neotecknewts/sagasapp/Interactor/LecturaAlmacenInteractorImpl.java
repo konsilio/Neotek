@@ -99,7 +99,8 @@ public class LecturaAlmacenInteractorImpl implements LecturaAlmacenInteractor {
                 false,
                 false,
                 esFinalizar,
-                token
+                token,
+                "application/json"
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 

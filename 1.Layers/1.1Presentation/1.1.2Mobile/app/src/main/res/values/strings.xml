@@ -147,4 +147,5 @@
     <string name="Recarga_de_gas">Recarga de gas</string>
     <string name="recarga">Recarga</string>
     <string name="registra_configuracion_recarga">Registra la configuración de recarga de la camioneta</string>
+    <string name="Recarga_de_estacion">Recarga estación</string>
 </resources>

@@ -41,7 +41,8 @@ public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteracto
                 true,
                 false,
                 false,
-                token
+                token,
+                "application/json"
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 

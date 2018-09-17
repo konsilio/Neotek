@@ -42,7 +42,8 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
                 false,
                 true,
                 esFinalizar,
-                token
+                token,
+                "application/json"
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 

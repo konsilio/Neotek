@@ -6,25 +6,63 @@ import java.io.Serializable;
 
 public class UnidadesDTO implements Serializable {
 
-    @SerializedName("Id")
-    private  int Id;
+    @SerializedName("IdAlmacenGas")
+    private  int IdAlmacenGas;
 
-    @SerializedName("Nombre")
-    private String Nombre;
+    @SerializedName("NombreAlmacen")
+    private String NombreAlmacen;
 
-    public int getId() {
-        return Id;
+    @SerializedName("PorcentajeMedidor")
+    private double PorcentajeMedidor;
+
+    @SerializedName("CantidadP5000")
+    private double CantidadP5000;
+
+    @SerializedName("IdTipoMedidor")
+    private int IdTipoMedidor;
+
+    public int getIdAlmacenGas() {
+        return IdAlmacenGas;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public void setIdAlmacenGas(int IdAlmacenGas) {
+        IdAlmacenGas = IdAlmacenGas;
     }
 
     public String getNombre() {
-        return Nombre;
+        return NombreAlmacen;
     }
 
-    public void setNombre(String nombre) {
-        Nombre = nombre;
+
+    public String getNombreAlmacen() {
+        return NombreAlmacen;
+    }
+
+    public void setNombreAlmacen(String nombreAlmacen) {
+        NombreAlmacen = nombreAlmacen;
+    }
+
+    public double getPorcentajeMedidor() {
+        return PorcentajeMedidor;
+    }
+
+    public void setPorcentajeMedidor(double porcentajeMedidor) {
+        PorcentajeMedidor = porcentajeMedidor;
+    }
+
+    public double getCantidadP5000() {
+        return CantidadP5000;
+    }
+
+    public void setCantidadP5000(double cantidadP5000) {
+        CantidadP5000 = cantidadP5000;
+    }
+
+    public int getIdTipoMedidor() {
+        return IdTipoMedidor;
+    }
+
+    public void setIdTipoMedidor(int idTipoMedidor) {
+        IdTipoMedidor = idTipoMedidor;
     }
 }

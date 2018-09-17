@@ -20,6 +20,7 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
+import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
@@ -193,8 +194,16 @@ public interface RestClient {
             @Path(value = "esPipa", encoded=true) boolean esPipa,
             @Path(value = "esCamioneta", encoded=true) boolean esCamioneta,
             @Path(value = "esFinalizar", encoded=true) boolean esFinalizar,
-            @Header("Authorization")String token
+            @Header("Authorization")String token,
+            @Header("Content-Type") String contentType
     );
     @POST(Constantes.POST_RECARGA)
-    Call<RespuestaRecargaDTO> postRecarga(RecargaDTO recargaDTO, String token, String s);
+    Call<RespuestaRecargaDTO> postRecarga(RecargaDTO recargaDTO,
+                                          @Header("Authorization") String token,
+                                          @Header("Content-Type") String contentType
+    );
+
+    @GET(Constantes.GET_UNIDADES)
+    Call<List<UnidadesDTO>> getUnidades(@Header("Authorization") String token,
+                                        @Header("Content-Type") String contentType);
 }

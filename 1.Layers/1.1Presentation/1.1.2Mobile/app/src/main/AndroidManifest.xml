@@ -125,9 +125,11 @@
         <activity
             android:name=".Activity.VerReporteActivity"
             android:label="@string/Reporte" />
-        <activity android:name=".Activity.RecargaCamionetaActivity"
-            android:label="@string/Recarga_camioneta"
-            />
+        <activity
+            android:name=".Activity.RecargaCamionetaActivity"
+            android:label="@string/Recarga_camioneta" />
+        <activity android:name=".Activity.RecargaEstacionCarburacionActivity"
+            android:label="@string/Recarga_de_estacion"/>
     </application>
 
 </manifest>

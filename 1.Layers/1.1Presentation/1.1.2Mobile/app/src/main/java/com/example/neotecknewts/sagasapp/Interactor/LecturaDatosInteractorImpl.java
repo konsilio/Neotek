@@ -98,7 +98,9 @@ public class LecturaDatosInteractorImpl implements LecturaDatosInteractor {
                 false,
                 false,
                 esFinalizar,
-                token);
+                token,
+                "application/json"
+                );
         Log.w("Url base",call.request().url().toString());
 
         call.enqueue(new Callback<DatosTomaLecturaDto>() {

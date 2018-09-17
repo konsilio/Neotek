@@ -17,6 +17,7 @@ import com.example.neotecknewts.sagasapp.Activity.LecturaCamionetaActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaDatosActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RecargaCamionetaActivity;
+import com.example.neotecknewts.sagasapp.Activity.RecargaEstacionCarburacionActivity;
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaActivity;
 import com.example.neotecknewts.sagasapp.Activity.ReporteActivity;
 import com.example.neotecknewts.sagasapp.Activity.VistaOrdenCompraActivity;
@@ -145,11 +146,21 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsRecargaCamioneta",true);
                     view.getContext().startActivity(intent);
                 }else if(menuItem.getName().equals("Estación Carb. (Inicial)") &&
-                        menuItem.getHeaderMenu().equals("Auto-consumo - Gas")){
+                        menuItem.getHeaderMenu().equals("Recarga gas")){
+                    Intent intent = new Intent(view.getContext(),
+                            RecargaEstacionCarburacionActivity.class);
+                    intent.putExtra("EsRecargaEstacionInicial",true);
 
-                }else if(menuItem.getName().equals("Estación Carb. (Inicial)") &&
-                        menuItem.getHeaderMenu().equals("Auto-consumo - Gas")){
-
+                }else if(menuItem.getName().equals("Estación Carb. (Final)") &&
+                        menuItem.getHeaderMenu().equals("Recarga gas")){
+                    Intent intent = new Intent(view.getContext(),
+                            RecargaEstacionCarburacionActivity.class);
+                    intent.putExtra("EsRecargaEstacionFinal",true);
+                }else if(menuItem.getHeaderMenu().equals("Recarga gas") &&
+                        menuItem.getName().equals("Camioneta")){
+                    Intent intent = new Intent(view.getContext(),RecargaCamionetaActivity.class);
+                    intent.putExtra("EsRecargaCamioneta",true);
+                    view.getContext().startActivity(intent);
                 }
 
             }
