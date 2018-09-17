@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Web.MainModule.Seguridad.Servicio
 {
-    public class TokenServicio
+    public class TokenServicios
     {
         public static List<Claim> ObtenerClaims(string token)        {
            

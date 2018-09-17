@@ -98,12 +98,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new ProductoDataAccess().BuscarLineaProducto(idLineaProducto);
         }
-
         public static UnidadMedida ObtenerUnidadMedida(short idUnidadMedida)
         {
             return new ProductoDataAccess().BuscarUnidadMedida(idUnidadMedida);
         }
-
         public static Producto ObtenerProducto(int idProducto)
         {
             return new ProductoDataAccess().BuscarProducto(idProducto);

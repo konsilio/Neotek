@@ -27,47 +27,38 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa);
         }
-
         public static AlmacenGasTomaLectura BuscarUltimaLectura(short idCAlmacenGas, byte idTipoEvento)
         {
             return new AlmacenGasDataAccess().BuscarUltimaLectura(idCAlmacenGas, idTipoEvento);
         }
-
         public static List<AlmacenGasTomaLectura> ObtenerLecturas(short idCAlmacenGas)
         {            
             return new AlmacenGasDataAccess().BuscarLecturas(idCAlmacenGas); 
         }
-
         public static RespuestaDto InsertarLectura(AlmacenGasTomaLectura lia)
         {
             return new AlmacenGasDataAccess().Insertar(lia);
         }
-
         public static List<UnidadAlmacenGas> ObtenerAlmacenGeneral(short idEmpresa, bool incluyeAlterno = false)
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa, true, incluyeAlterno);
         }
-
         public static List<UnidadAlmacenGas> ObtenerEstaciones(short idEmpresa)
         {            
             return new AlmacenGasDataAccess().BuscarTodosEstacionCarburacion(idEmpresa);
         }
-
         public static List<UnidadAlmacenGas> ObtenerPipas(short idEmpresa)
         {
             return new AlmacenGasDataAccess().BuscarTodosPipas(idEmpresa);
         }
-
         public static List<UnidadAlmacenGas> ObtenerCamionetas(short idEmpresa)
         {
             return new AlmacenGasDataAccess().BuscarTodosCamionetas(idEmpresa);
         }
-
         public static AlmacenGasTomaLectura ObtenerLecturaPorClaveOperacion(string claveProceso)
         {
             return new AlmacenGasDataAccess().BuscarClaveOperacion(claveProceso);
         }
-
         public static AlmacenGasTomaLectura ObtenerUltimaLectura(UnidadAlmacenGas uniAlm, bool final = false)
         {
             if (uniAlm != null)
@@ -80,7 +71,6 @@ namespace Application.MainModule.Servicios.Almacen
                 ? BuscarUltimaLectura(uniAlm.IdCAlmacenGas, TipoEventoEnum.Final)
                 : BuscarUltimaLectura(uniAlm.IdCAlmacenGas, TipoEventoEnum.Inicial);
         }
-
         public static AlmacenGas Obtener(short idAlmacenGas)
         {
             return new AlmacenGasDataAccess().Buscar(idAlmacenGas);
@@ -112,17 +102,14 @@ namespace Application.MainModule.Servicios.Almacen
                 return almacenGas.UnidadesAlmacenGas.Where(z => z.EsGeneral).Sum(x => x.CantidadActualKg);
 
         }
-
         public static UnidadAlmacenGasCilindro ObtenerCilindro(int idCilindro)
         {
             return new AlmacenGasDataAccess().BuscarCilindro(idCilindro);
         }
-
         public static List<UnidadAlmacenGasCilindro> ObtenerCilindros()
         {
             return new AlmacenGasDataAccess().BuscarTodosCilindros(TokenServicio.ObtenerIdEmpresa());
         }
-
         /// <summary>
         /// Adaptamos una entidad AlmacenGasTomaLEcturaCilindro en una UnidadAlmacenGasCilindro.
         /// Solo en la cantidad de cilindros, y este método es especial ya que se hizo para la toma
@@ -138,7 +125,6 @@ namespace Application.MainModule.Servicios.Almacen
 
             return cil;
         }
-
         public static UnidadAlmacenGasCilindro AdaptarCilindro(UnidadAlmacenGasCilindro cil, decimal cantidad)
         {
             if (cil != null)
@@ -146,12 +132,10 @@ namespace Application.MainModule.Servicios.Almacen
 
             return cil;
         }
-
         public static List<UnidadAlmacenGasCilindro> AdaptarCilindro(List<AlmacenGasTomaLecturaCilindro> tmCil)
         {            
             return tmCil.Select(x=> AdaptarCilindro(x)).ToList();
         }
-
         public static List<UnidadAlmacenGasCilindro> AdaptarCilindro(decimal cantidad)
         {
             var cilindros = new List<UnidadAlmacenGasCilindro>();

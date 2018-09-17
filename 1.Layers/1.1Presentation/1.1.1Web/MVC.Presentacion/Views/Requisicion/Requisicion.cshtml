@@ -132,7 +132,7 @@
                                             <textarea name="RequeridoEn" class="form-control no-resize" @EnabledEsNueva placeholder="Se requiere en..." rows="4">@Model.RequeridoEn</textarea>
                                         </div>
                                     </div>
-                                    @if (ViewBag.MensajeError != null && !ViewBag.MensajeError.Equal(string.Empty))
+                                    @if (!string.IsNullOrEmpty(ViewBag.MensajeError))
                                     {
                                         <div class="row clearfix">
                                             <div id="divCampos" class="container">

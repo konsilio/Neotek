@@ -23,7 +23,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
                 _token = Session["StringToken"].ToString();
                 if (!IsPostBack)
                 {
-                    if (TokenServicio.ObtenerAutenticado(_token))
+                    if (TokenServicios.ObtenerAutenticado(_token))
                     {
                         if (Request.QueryString["nr"] != null)
                             CargarDatosRequisicon(int.Parse(Request.QueryString["nr"].ToString()));
@@ -153,7 +153,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
         }
         private void Autorizar()
         {
-            var resp = new OrdenCompraServicio().AutorizarOrdenCompra(new OrdenCompraAutorizacionDTO { IdOrdenCompra = ((OrdenCompraCrearDTO)ViewState["OrdenCompraCrearDTO"]).IdOrdenCompra, UsuarioAutoriza = TokenServicio.ObtenerIdUsuario(_token) }, _token);
+            var resp = new OrdenCompraServicio().AutorizarOrdenCompra(new OrdenCompraAutorizacionDTO { IdOrdenCompra = ((OrdenCompraCrearDTO)ViewState["OrdenCompraCrearDTO"]).IdOrdenCompra, UsuarioAutoriza = TokenServicios.ObtenerIdUsuario(_token) }, _token);
             if (resp.Exito)
             {
                 btnok.Attributes.Remove("class");
@@ -300,7 +300,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
             DropDownList ddlCtaContable = e.Row.Cells[0].FindControl("ddlCuentaContable") as DropDownList;
             if (ddlCtaContable != null)
             {
-                ddlCtaContable.DataSource = new OrdenCompraServicio().ListaCuentasContables(TokenServicio.ObtenerIdEmpresa(_token) , _token);
+                ddlCtaContable.DataSource = new OrdenCompraServicio().ListaCuentasContables(TokenServicios.ObtenerIdEmpresa(_token) , _token);
                 ddlCtaContable.DataTextField = "Descripcion";
                 ddlCtaContable.DataValueField = "IdCuentaContable";
                 //ddlCtaContable.Items.Add(new ListItem("CuentaContable1", "1"));

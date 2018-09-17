@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC.Presentacion.Models.Requisicion;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,15 +7,12 @@ using System.Web;
 namespace MVC.Presentacion.Models.OrdenCompra
 {
     [Serializable]
-    public class OrdenCompraDTO
+    public class OrdenCompraDTO : RequisicionDTO
     {
-        public int IdOrdenCompra { get; set; }
-        public short IdEmpresa { get; set; }
+        public int IdOrdenCompra { get; set; }       
         public string Empresa { get; set; }
         public byte IdOrdenCompraEstatus { get; set; }
-        public string OrdenCompraEstatus { get; set; }
-        public int IdRequisicion { get; set; }
-        public string NumeroRequisicion { get; set; }
+        public string OrdenCompraEstatus { get; set; }     
         public string usuarioSolicitante { get; set; }
         public int IdProveedor { get; set; }
         public string Proveedor { get; set; }
@@ -26,10 +24,7 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public bool EsActivoVenta { get; set; }
         public bool EsGas { get; set; }
         public bool EsTransporteGas { get; set; }
-        public bool Activo { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-        public Nullable<System.DateTime> FechaAutorizacion { get; set; }
-        public DateTime FechaRequerida { get; set; }
+        public bool Activo { get; set; }       
         public Nullable<decimal> SubtotalSinIva { get; set; }
         public Nullable<decimal> SubtotalSinIeps { get; set; }
         public Nullable<decimal> Iva { get; set; }

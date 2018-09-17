@@ -22,9 +22,9 @@ namespace Web.MainModule.Catalogos
                 _tok = Session["StringToken"].ToString();
                 if (!IsPostBack)
                 {
-                    if (TokenServicio.ObtenerAutenticado(_tok))
+                    if (TokenServicios.ObtenerAutenticado(_tok))
                     {
-                        CargarGaseras(TokenServicio.ObtenerIdEmpresa(_tok));
+                        CargarGaseras(TokenServicios.ObtenerIdEmpresa(_tok));
                     }
                     else
                         Salir();
@@ -41,7 +41,7 @@ namespace Web.MainModule.Catalogos
             ddlEmpresas.DataTextField = "NombreComercial";
             ddlEmpresas.DataValueField = "IdEmpresa";
             ddlEmpresas.DataBind();
-            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (!TokenServicios.ObtenerEsAdministracionCentral(_tok))
                 ddlEmpresas.Enabled = false;
             CargarCtasCtbles(short.Parse(ddlEmpresas.SelectedValue));
         }
@@ -49,13 +49,13 @@ namespace Web.MainModule.Catalogos
         {
             gvCuentasContables.DataSource = ViewState["List<CuentaContableDTO>"] = new CuentaContableServicio().ListaCtaCtble(idEmpresa , _tok);
             gvCuentasContables.DataBind();
-            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (!TokenServicios.ObtenerEsAdministracionCentral(_tok))
                 gvCuentasContables.Columns[0].Visible = false;
         }
         private CuentaContableCrearDto GenerarCtaCtble()
         {
             CuentaContableCrearDto cc = new CuentaContableCrearDto();
-            cc.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tok);
+            cc.IdEmpresa = TokenServicios.ObtenerIdEmpresa(_tok);
             cc.Numero = txtNumero.Text;
             cc.Descripcion = txtDesc.Text;
             return cc;
@@ -195,7 +195,7 @@ namespace Web.MainModule.Catalogos
                 List<CuentaContableDTO> lcc = ((List<CuentaContableDTO>)ViewState["List<CuentaContableDTO>"]).ToList().Where(x => x.Numero.Equals(txtNumeroCtaCtble.Text)).ToList();
                 gvCuentasContables.DataSource = lcc;
                 gvCuentasContables.DataBind();
-                if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+                if (!TokenServicios.ObtenerEsAdministracionCentral(_tok))
                     gvCuentasContables.Columns[0].Visible = false;
             }
         }

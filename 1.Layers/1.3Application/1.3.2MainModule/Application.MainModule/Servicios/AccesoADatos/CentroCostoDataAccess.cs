@@ -19,7 +19,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-
         public RespuestaDto Insertar(CentroCosto _cc)
         {
             RespuestaDto _respuesta = new RespuestaDto();

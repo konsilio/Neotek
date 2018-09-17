@@ -56,14 +56,19 @@
     <Compile Include="AdaptadoresDTO\Catalogo\CentroCostoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CuentaContableAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EmpresaAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\EquipoTransporteAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\EstacionCarburacionAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\TipoCentroCostoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\UnidadAlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\ComplementoGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenLecturaAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenCrearEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenDTO.cs" />
+    <Compile Include="DTOs\Catalogo\EstacionCarburacionDTO.cs" />
     <Compile Include="DTOs\Catalogo\PaisDTO.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoDto.cs" />
@@ -76,7 +81,8 @@
     <Compile Include="DTOs\Catalogo\ProductoCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoModificarDto.cs" />
-    <Compile Include="DTOs\Catalogo\TipoCentroCostoEnum.cs" />
+    <Compile Include="DTOs\Catalogo\TipoCentroCostoDto.cs" />
+    <Compile Include="DTOs\Catalogo\UnidadAlmacenGasDTO.cs" />
     <Compile Include="DTOs\Catalogo\UnidadMedidaCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\UnidadMedidaDto.cs" />
     <Compile Include="DTOs\Catalogo\UnidadMedidaEliminarDto.cs" />
@@ -119,6 +125,7 @@
     <Compile Include="DTOs\Compras\OrdenCompraProductoDTO.cs" />
     <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />
     <Compile Include="DTOs\Compras\RequisicionOCDTO.cs" />
+    <Compile Include="DTOs\Catalogo\EquipoTransporteDTO.cs" />
     <Compile Include="DTOs\Mobile\CilindroDto.cs" />
     <Compile Include="DTOs\Mobile\DatosTomaLecturaDto.cs" />
     <Compile Include="DTOs\Mobile\LecturaAlmacenDto.cs" />
@@ -183,6 +190,7 @@
     <Compile Include="Servicios\AccesoADatos\OrdenCompraDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ProveedorDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\RolDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\TipoCentroCostoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\TipoMedidorGasDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
     <Compile Include="Servicios\Almacen\ProductoAlmacenServicio.cs" />

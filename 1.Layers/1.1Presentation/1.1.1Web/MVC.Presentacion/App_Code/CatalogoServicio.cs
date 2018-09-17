@@ -22,7 +22,7 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.GuardarEmpresaNueva(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static List<PaisModel> GetPaises(string tkn)
@@ -48,30 +48,43 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
         #region Centro de Costo
+        public static CentroCostoModel InitCentroCosto(string Tkn)
+        {
+            return new CentroCostoModel()
+            {
+                CentrosCostos = BuscarCentrosCosto(Tkn)
+            };
+        }
         public static List<CentroCostoDTO> BuscarCentrosCosto(string Tkn)
         {
             var agente = new AgenteServicio();
             agente.BuscarCentrosCostos(Tkn);
             return agente._listaCentroCosto;
         }
-        //public static RespuestaDTO ModificarCentroCosto(CentroCostoModificarDto dto, string Tkn)
-        //{
-        //    var agente = new AgenteServicio();
-        //    agente.ModificarCtroCosto(dto, Tkn);
-        //    return agente._respuestaDTO;
-        //}
-        //public static RespuestaDTO EliminarCentroCosto(CentroCostoEliminarDto dto, string Tkn)
-        //{
-        //    var agente = new AgenteServicio();
-        //    agente.EliminarCtroCosto(dto, Tkn);
-        //    return agente._respuestaDTO;
-        //}
-        //public static RespuestaDTO NuevoCentroCosto(CentroCostoCrearDto dto, string Tkn)
-        //{
-        //    var agente = new AgenteServicio();
-        //    agente.GuardarCentroCosto(dto, Tkn);
-        //    return agente._respuestaDTO;
-        //}
+        public static List<TipoCentroCostoDTO> BuscarTipoCentrosCosto(string Tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaTipoCentroCosto(Tkn);
+            return agente._listaTipoCentroCosto;
+        }
+        public static RespuestaDTO ModificarCentroCosto(CentroCostoModificarDTO dto, string Tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ModificarCtroCosto(dto, Tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO EliminarCentroCosto(CentroCostoEliminarDTO dto, string Tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarCtroCosto(dto, Tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO NuevoCentroCosto(CentroCostoCrearDTO dto, string Tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarCentroCosto(dto, Tkn);
+            return agente._RespuestaDTO;
+        }
         #endregion
         #region Porductos
         public static List<ProductoDTO> ListaProductos(string Token)
@@ -99,31 +112,47 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
         #region Cuentas contables      
-        //public static RespuestaDTO GuardarCtaCtble(CuentaContableCrearDto cc, string tkn)
-        //{
-        //    var agente = new AgenteServicio();
-        //    agente.GuardarCuentaContable(cc, tkn);
-        //    return agente._respuestaDTO;
-        //}
-
+        public static RespuestaDTO GuardarCtaCtble(CuentaContableCrearDTO cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarCuentaContable(cc, tkn);
+            return agente._RespuestaDTO;
+        }
         public static List<CuentaContableDTO> ListaCtaCtble(short idEmpresa, string tkn)
         {
             var agente = new AgenteServicio();
             agente.BuscarCuentasContables(idEmpresa, tkn);
             return agente._listaCuentasContables;
         }
-        //public static RespuestaDTO EliminarCtaContable(CuentaContableEliminarDto cc, string tkn)
-        //{
-        //    var agente = new AgenteServicio();
-        //    agente.EliminarCtaCtble(cc, tkn);
-        //    return agente._respuestaDTO;
-        //}
-        //public static RespuestaDTO ModificarCtaContable(CuentaContableModificarDto cc, string tkn)
-        //{
-        //    var agente = new AgenteServicio();
-        //    agente.ModificarCtaCtble(cc, tkn);
-        //    return agente._respuestaDTO;
-        //}
+        public static RespuestaDTO EliminarCtaContable(CuentaContableEliminarDTO cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarCtaCtble(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarCtaContable(CuentaContableModificarDTO cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ModificarCtaCtble(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static CuentaContableModel InitCtaContable(string tkn)
+        {
+            return new CuentaContableModel()
+            { CuentasContables = ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn), tkn) };
+        }
+        public static CuentaContableModel ActivarModifiarCuentaContable(int idcc, CuentaContableModel model)
+        {
+            foreach (var cc in model.CuentasContables)
+            {
+                if (cc.IdCuentaContable.Equals(idcc))
+                {
+                    model.Numero = cc.Numero;
+                    model.Descripcion = cc.Descripcion;
+                }
+            }
+            return model;
+        }
         #endregion
         #region Impuestos
         public static List<SelectListItem> ListaIVA()
@@ -142,6 +171,33 @@ namespace MVC.Presentacion.App_Code
             Ieps.Add(new SelectListItem { Value = "11", Text = "11%" });
 
             return Ieps;
+        }
+        #endregion
+        #region Estación de Carburación
+       
+        public static List<EstacionCarburacionDTO> GetListaEstacionCarburacion(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaEstacionCarburacion(tkn);
+            return agente._listaEstacionCarburacion;
+        }
+        #endregion
+        #region Unidad Almacen Gas
+        
+        public static List<UnidadAlmacenGasDTO> GetListaUnidadAlmcenGas(short IdEmpresa, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaUnidadAlmacenGas(IdEmpresa, tkn);
+            return agente._listaUnidadAlmacenGas;
+        }
+        #endregion
+        #region Equipo de transporte
+       
+        public static List<EquipoTransporteDTO> GetListaEquiposTransporte(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaEquipoTransporte(tkn);
+            return agente._listaEquipoTransporte;
         }
         #endregion
     }

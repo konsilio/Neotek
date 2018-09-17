@@ -4038,7 +4038,7 @@
     <Compile Include="Seguridad\Model\RespuestaDto.cs" />
     <Compile Include="Seguridad\Servicio\AutenticacionServicio.cs" />
     <Compile Include="Compras\Servicio\ComprasServicio.cs" />
-    <Compile Include="Seguridad\Servicio\TokenServicio.cs" />
+    <Compile Include="Seguridad\Servicio\TokenServicios.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4077,6 +4077,10 @@
     <ProjectReference Include="..\..\..\1.5Infrastructure\1.5.2Cross Cutting\1.5.2.6Utilities\Utilities.MainModule\Utilities.MainModule.csproj">
       <Project>{80053147-4263-454b-ba2d-c7ef6a507c0b}</Project>
       <Name>Utilities.MainModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MVC.Presentacion\MVC.Presentacion.csproj">
+      <Project>{1751630E-103C-41AD-A84C-DAE1B576F0A5}</Project>
+      <Name>MVC.Presentacion</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

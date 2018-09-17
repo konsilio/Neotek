@@ -16,5 +16,13 @@ namespace Application.MainModule.Servicios.Catalogos
                 return new EstacionCarburacionDataAccess().BuscarEstacionCarburacion(uAG).Nombre;
             return null;
         }
+        public static List<EstacionCarburacion> ObtenerTodas()
+        {
+            return new EstacionCarburacionDataAccess().BuscarTodos();
+        }
+        public static List<EstacionCarburacion> ObtenerTodas(short IdEmpresa)
+        {
+            return new EstacionCarburacionDataAccess().BuscarTodos(IdEmpresa);
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace Web.MainModule.OrdenCompra.Vistas
 
             if (!IsPostBack)
             {
-                if (TokenServicio.ObtenerAutenticado(_token))
+                if (TokenServicios.ObtenerAutenticado(_token))
                 {
                     CargarEmpresas();
                     CargarEstatus();

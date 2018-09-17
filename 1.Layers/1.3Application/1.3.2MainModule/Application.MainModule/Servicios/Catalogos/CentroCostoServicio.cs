@@ -65,5 +65,9 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
+        public static List<TipoCentroCosto> ListaTipoCentroCostos()
+        {
+            return new TipoCentroCostoDataAccess().BuscarTodos();
+        }
     }
 }

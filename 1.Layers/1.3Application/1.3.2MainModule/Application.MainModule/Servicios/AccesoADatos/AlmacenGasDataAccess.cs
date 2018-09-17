@@ -19,7 +19,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-
         public RespuestaDto Insertar(AlmacenGas _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -44,13 +43,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, int idOrden)
         {
             return uow.Repository<AlmacenGasTomaLectura>().GetSingle(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                                                                         && x.IdOrden.Equals(idOrden));
         }
-
         public AlmacenGasTomaLectura BuscarUltimaLectura(short idCAlmacenGas, byte idTipoEvento)
         {
             var lecturas = uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
@@ -61,13 +58,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
             return null;
         }
-
         public List<AlmacenGasTomaLectura> BuscarLecturas(short idCAlmacenGas)
         {
             return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                                                     ).ToList();
         }
-
         public RespuestaDto Insertar(AlmacenGasTomaLectura _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -92,7 +87,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Actualizar(AlmacenGas _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -117,20 +111,17 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public List<UnidadAlmacenGas> BuscarTodosEstacionCarburacion(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                             && x.IdEstacionCarburacion != null
                                                             && x.Activo).ToList();
         }
-
         public List<UnidadAlmacenGas> BuscarTodosPipas(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                        && x.Activo && x.IdPipa != null).ToList();
         }
-
         public List<UnidadAlmacenGas> BuscarTodosCamionetas(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)

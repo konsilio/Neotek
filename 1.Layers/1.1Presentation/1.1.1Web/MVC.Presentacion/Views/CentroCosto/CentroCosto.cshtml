@@ -1,0 +1,257 @@
+﻿@model MVC.Presentacion.Models.Catalogos.CentroCostoModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CentroCosto</title>
+</head>
+<body>
+    <section class="content home">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>&nbsp;Cuentas contables</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item active">
+                                <Label ID="lblRuta" Text="Catalogos / Centros de costo "></Label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Centro de costo</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-md-3 form-control-label">
+                                        <label>Numero</label>
+                                        <div class="form-group">
+                                            @Html.EditorFor(m => m.Numero, new { @class = "form-control", @placeholder = "Numero de centro de costo" })
+                                            <Label class="alert-danger" hidden> Campo requerido</Label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 form-control-label">
+                                        <label for="txtDescripcion">Descripción</label>
+                                        <div class="form-group">
+                                            @Html.EditorFor(m => m.Descripcion, new { @class = "form-control", @placeholder = "Descripción" })
+                                            <Label class="alert-danger" hidden>Text="Campo requerido" </Label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 form-control-label">
+                                        <label for="ddlTipoCentroCosto">Tipo centro de costo</label>
+                                        <div class="form-group">
+                                            <select name=IdTipoCentroCosto class="form-control z-index show-tick" data-live-search="true">
+                                                <option id="0">Seleccione uno</option>
+                                                @foreach (var tp in ViewBag.TipoProductos)
+                                                {
+                                                    <option id="@tp.IdTipoProducto">@tp.Descripcion</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <Label ID="reqTipoCC" class="alert-danger" hidden Text="Campo requerido" />
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-3 form-control-label">
+                                        <label for="ddlEquipoTransporte">Equipo Transporte</label>
+                                        <div class="form-group">
+                                            <select id="IdEquipoTransporte" class="form-control z-index show-tick" data-live-search="true">
+                                                <option id="0">Seleccione uno</option>
+                                                @foreach (var tp in ViewBag.EquipoTransporte)
+                                                {
+                                                    <option id="@tp.IdEquipoTransporte">@tp.Descripcion</option>
+                                                }
+                                            </select>
+                                        </div>                                       
+                                        <Label id="reqEquipoTrasnporte" class="alert-danger" hidden="hidden">Campo requerido </Label>
+                                    </div>
+                                    <div class="col-md-3 form-control-label">
+                                        <label for="ddlVehiculo">Vehiculo</label>
+                                        <div class="form-group">
+                                            <select id="IdVehiculo" class="form-control z-index show-tick" data-live-search="true">
+                                                <option id="0">Seleccione uno</option>
+                                                @foreach (var tp in ViewBag.Vehiculo)
+                                                {
+                                                    <option id="@tp.IdVehiculo">@tp.Descripcion</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <Label ID="reqVehiculo" class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                    </div>
+                                    <div class="col-md-3 form-control-label">
+                                        <label for="ddlUnidadAlmacenGas">Unidad de almacen de gas</label>
+                                        <div class="form-group">
+                                            <select id="IdVehiculo" class="form-control z-index show-tick" data-live-search="true">
+                                                <option id="0">Seleccione uno</option>
+                                                @foreach (var tp in ViewBag.UnidadAlmacenGas)
+                                                {
+                                                    <option id="@tp.IdUnidadAlmacenGas">@tp.Descripcion</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <Label ID="reqUnidad" class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                    </div>
+                                    <div class="col-md-3 form-control-label">
+                                        <label for="ddlEstacionCarburacion">Estacion de carburación</label>
+                                        <div class="form-group">
+                                            <select id="IdEstacionCarburacion" class="form-control z-index show-tick" data-live-search="true">
+                                                <option id="0">Seleccione uno</option>
+                                                @foreach (var tp in ViewBag.EstacionCarburacion)
+                                                {
+                                                    <option id="@tp.IdEstacionCarburacion">@tp.Descripcion</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <Label ID="reqEstacion" class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-3 form-control-label">
+                                        <label for="ddlCamioneta">Camioneta</label>
+                                        <div class="form-group">
+                                            <select id="IdCamioneta" class="form-control z-index show-tick" data-live-search="true">
+                                                <option id="0">Seleccione uno</option>
+                                                @foreach (var tp in ViewBag.Camioneta)
+                                                {
+                                                    <option id="@tp.IdCamioneta">@tp.Descripcion</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <Label ID="reqCamnioneta" class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                    </div>
+                                    <div class="col-md-3 form-control-label">
+                                        <label for="ddlPipa">Pipa</label>
+                                        <div class="form-group">
+                                            <select id="IdPipa" class="form-control z-index show-tick" data-live-search="true">
+                                                <option id="0">Seleccione uno</option>
+                                                @foreach (var tp in ViewBag.Pipa)
+                                                {
+                                                    <option id="@tp.IdPipa">@tp.Descripcion</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <Label ID="reqPipa" class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                    </div>
+                                    <div class="col-md-3 form-control-label">
+                                        <label for="ddlCilindroGas">Cilindro de Gas</label>
+                                        <div class="form-group">
+                                            <select id="IdCilindroGas" class="form-control z-index show-tick" data-live-search="true">
+                                                <option id="0">Seleccione uno</option>
+                                                @foreach (var tp in ViewBag.CilindroGas)
+                                                {
+                                                    <option id="@tp.IdCilindroGas">@tp.Descripcion</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <Label ID="reqCilindro" CssClass="alert-danger" hidden="hidden">Campo requerido</Label>
+                                    </div>
+                                    <div class="col-md-3 form-control-label">
+                                        <b>&nbsp; </b>
+                                        <div class="form-group">
+                                            <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round btn-sm">
+                                                <i class="zmdi zmdi-plus" id="iSimboloBoton"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-md-4 form-control-label">
+                                        <label for="ddlFiltroGasera">Gasera</label>
+                                        <div class="form-group">
+                                            <DropDownList ID="ddlFiltroGasera" CssClass="form-control" placeholder="Descripción">
+                                            </DropDownList>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-control-label">
+                                        <label for="txtFiltroNumero">Numero</label>
+                                        <div class="form-group">
+                                            <TextBox ID="txtFiltroNumero" CssClass="form-control" placeholder="Numero" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 form-control-label">
+                                        <label for="ddlFiltroCentroCosto">Tipo centro de costo</label>
+                                        <div class="form-group">
+                                            <DropDownList ID="ddlFiltroCentroCosto" CssClass="form-control" placeholder="Descripción">
+                                            </DropDownList>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="DivAlerta" visible="false" class="container">
+                                    <div class="alert alert-danger">
+                                        <div class="alert-icon">
+                                            <i class="zmdi zmdi-block"></i>
+                                        </div>
+                                        <strong>
+                                            <Label ID="lblMensajeError" Text="" />
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="table-responsive">
+                                        <GridView ID="gvCentroCosto" CssClass="table table-bordered" AutoGenerateColumns="false" OnRowCommand="gvCentroCosto_RowCommand" Width="100%">
+                                            <Columns>
+                                                <BoundField HeaderText="Gasera" DataField="Empresa" />
+                                                <BoundField HeaderText="Número" DataField="Numero" />
+                                                <BoundField HeaderText="Descripción" DataField="Descripcion" />
+                                                <BoundField HeaderText="Tipo" DataField="TipoCentroCosto" />
+                                                <TemplateField>
+                                                    <HeaderTemplate>
+                                                        Acción
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <LinkButton ID="lbEdit" CommandName="Editar" CommandArgument='<%# Eval("IdCentroCosto") %>'>
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </LinkButton>
+                                                        <LinkButton ID="lbBorrar" CommandName="Borrar" CommandArgument='<%# Eval("IdCentroCosto") %>'>
+                                                            <i class="material-icons">delete</i>
+                                                            <span class="icon-name"></span>
+                                                        </LinkButton>
+                                                    </ItemTemplate>
+                                                </TemplateField>
+                                            </Columns>
+                                        </GridView>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
+                </div>
+                <div class="modal-footer">
+                    <Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" Text="Si" OnClick="BtnCrear_Click" />
+                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
+</body>
+</html>

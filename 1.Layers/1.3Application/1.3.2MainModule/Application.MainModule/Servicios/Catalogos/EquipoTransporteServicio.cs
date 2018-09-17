@@ -19,5 +19,13 @@ namespace Application.MainModule.Servicios.Catalogos
             
             return null;
         }
+        public static List<EquipoTransporte> BuscarEquipoTransporte()
+        {
+            return new EquipoTransporteDataAccess().BuscarEquipoTransporte();
+        }
+        public static List<EquipoTransporte> BuscarEquipoTransporte(short IdEmpresa)
+        {
+            return new EquipoTransporteDataAccess().BuscarEquipoTransporte(IdEmpresa);
+        }
     }
 }

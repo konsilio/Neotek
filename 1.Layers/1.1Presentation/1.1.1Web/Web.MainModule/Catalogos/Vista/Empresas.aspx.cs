@@ -22,7 +22,7 @@ namespace Web.MainModule.Catalogos
                 _tok = Session["StringToken"].ToString();
                 if (!IsPostBack)
                 {
-                    if (TokenServicio.ObtenerAutenticado(_tok))
+                    if (TokenServicios.ObtenerAutenticado(_tok))
                     {
                         CargarEmpresas();
                         CargarGvEmpresas();
@@ -38,7 +38,7 @@ namespace Web.MainModule.Catalogos
             ddlEmpresas.DataTextField = "NombreComercial";
             ddlEmpresas.DataValueField = "IdEmpresa";
             ddlEmpresas.DataBind();
-            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (!TokenServicios.ObtenerEsAdministracionCentral(_tok))
                 ddlEmpresas.Enabled = false;
 
             ddlEmpresas.Items.Insert(0, new ListItem("Seleccione...", ""));
