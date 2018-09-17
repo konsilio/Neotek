@@ -15,16 +15,20 @@ namespace MVC.Presentacion.Controllers
         string tkn = string.Empty;
         public ActionResult CentroCosto()
         {
-            
+
             if (Session["StringToken"] != null)
             {
                 tkn = Session["StringToken"].ToString();
                 ViewBag.TiposCentrosCosto = CatalogoServicio.BuscarTipoCentrosCosto(tkn);
                 ViewBag.EstacionesCarburacion = CatalogoServicio.GetListaEstacionCarburacion(tkn);
-                ViewBag.UnidadAlmacen = CatalogoServicio.GetListaUnidadAlmcenGas(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+                ViewBag.UnidadAlmacenGas = CatalogoServicio.GetListaUnidadAlmcenGas(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
                 ViewBag.EquipoTransporte = CatalogoServicio.GetListaEquiposTransporte(tkn);
-            }        
-            return View();
+                return View(CatalogoServicio.InitCentroCosto(tkn));
+            }
+            else
+            {
+                return View();
+            }
         }
         public ActionResult Crear()
         {

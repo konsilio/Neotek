@@ -348,7 +348,7 @@ namespace MVC.Presentacion.Agente
         }
         public void BuscarListaTipoCentroCosto( string tkn)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetTipoCentroCostos"];
             GetListaTipoCentroCosto(tkn).Wait();
         }
         private async Task GetListaTipoCentroCosto(string Token)
@@ -361,7 +361,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + IdEmpresa.ToString()).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         list = await response.Content.ReadAsAsync<List<TipoCentroCostoDTO>>();
                     else

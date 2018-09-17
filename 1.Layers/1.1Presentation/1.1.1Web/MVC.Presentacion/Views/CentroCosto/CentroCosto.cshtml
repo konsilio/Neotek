@@ -1,24 +1,25 @@
 ﻿@model MVC.Presentacion.Models.Catalogos.CentroCostoModel
 @{
-    Layout = null;
+
 }
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>CentroCosto</title>
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 </head>
-<body>
+<body style="padding-top:10px">
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>&nbsp;Cuentas contables</h2>
+
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                             <li class="breadcrumb-item active">
-                                <Label ID="lblRuta" Text="Catalogos / Centros de costo "></Label>
+                                <Label> Catalogos / Centros de costo</Label>
                             </li>
                         </ul>
                     </div>
@@ -27,21 +28,21 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="header">
-                                <h2><strong>Centro de costo</strong></h2>
+
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
                                     <div class="col-md-3 form-control-label">
                                         <label>Numero</label>
                                         <div class="form-group">
-                                            @Html.EditorFor(m => m.Numero, new { @class = "form-control", @placeholder = "Numero de centro de costo" })
+                                            @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", @placeholder = "Numero de centro de costo" })
                                             <Label class="alert-danger" hidden> Campo requerido</Label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 form-control-label">
                                         <label for="txtDescripcion">Descripción</label>
                                         <div class="form-group">
-                                            @Html.EditorFor(m => m.Descripcion, new { @class = "form-control", @placeholder = "Descripción" })
+                                            @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", placeholder = "Descripción", @style = "max-width:initial" })
                                             <Label class="alert-danger" hidden>Text="Campo requerido" </Label>
                                         </div>
                                     </div>
@@ -50,9 +51,9 @@
                                         <div class="form-group">
                                             <select name=IdTipoCentroCosto class="form-control z-index show-tick" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
-                                                @foreach (var tp in ViewBag.TipoProductos)
+                                                @foreach (var tp in ViewBag.TiposCentrosCosto)
                                                 {
-                                                    <option id="@tp.IdTipoProducto">@tp.Descripcion</option>
+                                                    <option id="@tp.IdTipoCentroCosto">@tp.Descripcion</option>
                                                 }
                                             </select>
                                         </div>
@@ -67,21 +68,17 @@
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.EquipoTransporte)
                                                 {
-                                                    <option id="@tp.IdEquipoTransporte">@tp.Descripcion</option>
+                                                    <option id="@tp.IdEquipoTransporte">@tp.IdEquipoTransporte</option>
                                                 }
                                             </select>
-                                        </div>                                       
+                                        </div>
                                         <Label id="reqEquipoTrasnporte" class="alert-danger" hidden="hidden">Campo requerido </Label>
                                     </div>
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlVehiculo">Vehiculo</label>
                                         <div class="form-group">
-                                            <select id="IdVehiculo" class="form-control z-index show-tick" data-live-search="true">
+                                            <select id="IdVehiculo" class="form-control z-index show-tick" disabled data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
-                                                @foreach (var tp in ViewBag.Vehiculo)
-                                                {
-                                                    <option id="@tp.IdVehiculo">@tp.Descripcion</option>
-                                                }
                                             </select>
                                         </div>
                                         <Label ID="reqVehiculo" class="alert-danger" hidden="hidden">Campo requerido</Label>
@@ -93,7 +90,7 @@
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.UnidadAlmacenGas)
                                                 {
-                                                    <option id="@tp.IdUnidadAlmacenGas">@tp.Descripcion</option>
+                                                    <option id="@tp.IdCAlmacenGas">@tp.Numero</option>
                                                 }
                                             </select>
                                         </div>
@@ -104,9 +101,9 @@
                                         <div class="form-group">
                                             <select id="IdEstacionCarburacion" class="form-control z-index show-tick" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
-                                                @foreach (var tp in ViewBag.EstacionCarburacion)
+                                                @foreach (var tp in ViewBag.EstacionesCarburacion)
                                                 {
-                                                    <option id="@tp.IdEstacionCarburacion">@tp.Descripcion</option>
+                                                    <option id="@tp.IdEstacionCarburacion">@tp.Nombre</option>
                                                 }
                                             </select>
                                         </div>
@@ -117,12 +114,8 @@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlCamioneta">Camioneta</label>
                                         <div class="form-group">
-                                            <select id="IdCamioneta" class="form-control z-index show-tick" data-live-search="true">
+                                            <select id="IdCamioneta" class="form-control z-index show-tick" disabled data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
-                                                @foreach (var tp in ViewBag.Camioneta)
-                                                {
-                                                    <option id="@tp.IdCamioneta">@tp.Descripcion</option>
-                                                }
                                             </select>
                                         </div>
                                         <Label ID="reqCamnioneta" class="alert-danger" hidden="hidden">Campo requerido</Label>
@@ -130,12 +123,9 @@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlPipa">Pipa</label>
                                         <div class="form-group">
-                                            <select id="IdPipa" class="form-control z-index show-tick" data-live-search="true">
+                                            <select id="IdPipa" class="form-control z-index show-tick" disabled data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
-                                                @foreach (var tp in ViewBag.Pipa)
-                                                {
-                                                    <option id="@tp.IdPipa">@tp.Descripcion</option>
-                                                }
+
                                             </select>
                                         </div>
                                         <Label ID="reqPipa" class="alert-danger" hidden="hidden">Campo requerido</Label>
@@ -143,12 +133,8 @@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlCilindroGas">Cilindro de Gas</label>
                                         <div class="form-group">
-                                            <select id="IdCilindroGas" class="form-control z-index show-tick" data-live-search="true">
+                                            <select id="IdCilindroGas" class="form-control z-index show-tick" disabled data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
-                                                @foreach (var tp in ViewBag.CilindroGas)
-                                                {
-                                                    <option id="@tp.IdCilindroGas">@tp.Descripcion</option>
-                                                }
                                             </select>
                                         </div>
                                         <Label ID="reqCilindro" CssClass="alert-danger" hidden="hidden">Campo requerido</Label>
@@ -194,7 +180,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="DivAlerta" visible="false" class="container">
+                                <div id="DivAlerta" hidden="hidden" class="container">
                                     <div class="alert alert-danger">
                                         <div class="alert-icon">
                                             <i class="zmdi zmdi-block"></i>
@@ -206,29 +192,41 @@
                                 </div>
                                 <div class="row clearfix">
                                     <div class="table-responsive">
-                                        <GridView ID="gvCentroCosto" CssClass="table table-bordered" AutoGenerateColumns="false" OnRowCommand="gvCentroCosto_RowCommand" Width="100%">
-                                            <Columns>
-                                                <BoundField HeaderText="Gasera" DataField="Empresa" />
-                                                <BoundField HeaderText="Número" DataField="Numero" />
-                                                <BoundField HeaderText="Descripción" DataField="Descripcion" />
-                                                <BoundField HeaderText="Tipo" DataField="TipoCentroCosto" />
-                                                <TemplateField>
-                                                    <HeaderTemplate>
-                                                        Acción
-                                                    </HeaderTemplate>
-                                                    <ItemTemplate>
-                                                        <LinkButton ID="lbEdit" CommandName="Editar" CommandArgument='<%# Eval("IdCentroCosto") %>'>
-                                                            <i class="material-icons">edit</i>
-                                                            <span class="icon-name"></span>
-                                                        </LinkButton>
-                                                        <LinkButton ID="lbBorrar" CommandName="Borrar" CommandArgument='<%# Eval("IdCentroCosto") %>'>
-                                                            <i class="material-icons">delete</i>
-                                                            <span class="icon-name"></span>
-                                                        </LinkButton>
-                                                    </ItemTemplate>
-                                                </TemplateField>
-                                            </Columns>
-                                        </GridView>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <td><b>Gasera</b></td>
+                                                    <td><b>Número</b></td>
+                                                    <td><b>Descripción</b></td>
+                                                    <td><b>Tipo</b></td>
+                                                    <td><b>Acción</b></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.CentrosCostos)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Empresa</td>
+                                                        <td>@item.Numero</td>
+                                                        <td>@item.Descripcion</td>
+                                                        <td>@item.TipoCentroCosto</td>
+                                                        <td>
+                                                            <a data-value="@item.IdEmpresa"
+                                                               href="javascript:void(0)" class="btnEdit">
+                                                                <i class="material-icons">edit</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                            <a data-value="@item.IdEmpresa"
+                                                               href="javascript:void(0)" class="btnEdit">
+                                                                <i class="material-icons">delete</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

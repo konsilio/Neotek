@@ -32,7 +32,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         }
         public static List<TipoCentroCosto> FromDTO(List<TipoCentroCostoDto> tccs)
         {
-            return tccs.Select(x => ToDTO(x)).ToList();
+            return tccs.Select(x => FromDTO(x)).ToList();
         }
     }
 }
