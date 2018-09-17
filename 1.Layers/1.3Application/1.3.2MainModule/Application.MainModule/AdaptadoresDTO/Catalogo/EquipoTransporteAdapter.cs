@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs;
+using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 IdPipa = ec.IdPipa,
                 IdVehiculoUtilitario = ec.IdVehiculoUtilitario,
                 FechaRegistro = ec.FechaRegistro,
-                Activo = ec.Activo
+                Activo = ec.Activo,
+                Descripcion = EquipoTransporteServicio.ObtenerNombre(ec),
             };
         }
         public static List<EquipoTransporteDTO> toDTO(List<EquipoTransporte> ecs)

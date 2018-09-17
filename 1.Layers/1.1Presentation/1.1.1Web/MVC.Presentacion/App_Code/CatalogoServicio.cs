@@ -124,11 +124,15 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarCuentasContables(idEmpresa, tkn);
             return agente._listaCuentasContables;
         }
-        public static RespuestaDTO EliminarCtaContable(CuentaContableEliminarDTO cc, string tkn)
+        private static RespuestaDTO EliminarCtaContable(CuentaContableEliminarDTO cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.EliminarCtaCtble(cc, tkn);
             return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO BorrarCuentaContable(int idCC, string tkn)
+        {
+            return EliminarCentroCosto(new CentroCostoEliminarDTO { IdCentroCosto = idCC }, tkn);
         }
         public static RespuestaDTO ModificarCtaContable(CuentaContableModificarDTO cc, string tkn)
         {
@@ -141,16 +145,14 @@ namespace MVC.Presentacion.App_Code
             return new CuentaContableModel()
             { CuentasContables = ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn), tkn) };
         }
-        public static CuentaContableModel ActivarModifiarCuentaContable(int idcc, CuentaContableModel model)
+        public static CuentaContableModel ActivarModifiarCuentaContable(int idcc, CuentaContableModel model, string tkn)
         {
-            foreach (var cc in model.CuentasContables)
-            {
-                if (cc.IdCuentaContable.Equals(idcc))
-                {
-                    model.Numero = cc.Numero;
-                    model.Descripcion = cc.Descripcion;
-                }
-            }
+            if (model.CuentasContables == null)
+                model = InitCtaContable(tkn);
+            var cc = model.CuentasContables.SingleOrDefault(x => x.IdCuentaContable.Equals(idcc));
+            model.IdCuentaContable = cc.IdCuentaContable;
+            model.Numero = cc.Numero;
+            model.Descripcion = cc.Descripcion;
             return model;
         }
         #endregion
@@ -174,7 +176,7 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
         #region Estación de Carburación
-       
+
         public static List<EstacionCarburacionDTO> GetListaEstacionCarburacion(string tkn)
         {
             var agente = new AgenteServicio();
@@ -183,7 +185,7 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
         #region Unidad Almacen Gas
-        
+
         public static List<UnidadAlmacenGasDTO> GetListaUnidadAlmcenGas(short IdEmpresa, string tkn)
         {
             var agente = new AgenteServicio();
@@ -192,7 +194,7 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
         #region Equipo de transporte
-       
+
         public static List<EquipoTransporteDTO> GetListaEquiposTransporte(string tkn)
         {
             var agente = new AgenteServicio();

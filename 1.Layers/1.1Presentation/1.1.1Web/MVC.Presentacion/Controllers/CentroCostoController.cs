@@ -1,5 +1,6 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Controllers.Shared;
+using MVC.Presentacion.Models.Catalogos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,9 @@ namespace MVC.Presentacion.Controllers
                 return View();
             }
         }
-        public ActionResult Crear()
+        public ActionResult Crear(CentroCostoModel model)
         {
+
             return View();
         }
         public ActionResult Modificar()

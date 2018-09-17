@@ -68,21 +68,21 @@
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.EquipoTransporte)
                                                 {
-                                                    <option id="@tp.IdEquipoTransporte">@tp.IdEquipoTransporte</option>
+                                                    <option id="@tp.IdEquipoTransporte">@tp.Descripcion</option>
                                                 }
                                             </select>
                                         </div>
                                         <Label id="reqEquipoTrasnporte" class="alert-danger" hidden="hidden">Campo requerido </Label>
                                     </div>
-                                    <div class="col-md-3 form-control-label">
+                                    @*<div class="col-md-3 form-control-label">
                                         <label for="ddlVehiculo">Vehiculo</label>
                                         <div class="form-group">
                                             <select id="IdVehiculo" class="form-control z-index show-tick" disabled data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                             </select>
-                                        </div>
-                                        <Label ID="reqVehiculo" class="alert-danger" hidden="hidden">Campo requerido</Label>
-                                    </div>
+                                        </div>*@
+                                    <Label ID="reqVehiculo" class="alert-danger" hidden="hidden">Campo requerido</Label>
+
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlUnidadAlmacenGas">Unidad de almacen de gas</label>
                                         <div class="form-group">
@@ -109,36 +109,6 @@
                                         </div>
                                         <Label ID="reqEstacion" class="alert-danger" hidden="hidden">Campo requerido</Label>
                                     </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3 form-control-label">
-                                        <label for="ddlCamioneta">Camioneta</label>
-                                        <div class="form-group">
-                                            <select id="IdCamioneta" class="form-control z-index show-tick" disabled data-live-search="true">
-                                                <option id="0">Seleccione uno</option>
-                                            </select>
-                                        </div>
-                                        <Label ID="reqCamnioneta" class="alert-danger" hidden="hidden">Campo requerido</Label>
-                                    </div>
-                                    <div class="col-md-3 form-control-label">
-                                        <label for="ddlPipa">Pipa</label>
-                                        <div class="form-group">
-                                            <select id="IdPipa" class="form-control z-index show-tick" disabled data-live-search="true">
-                                                <option id="0">Seleccione uno</option>
-
-                                            </select>
-                                        </div>
-                                        <Label ID="reqPipa" class="alert-danger" hidden="hidden">Campo requerido</Label>
-                                    </div>
-                                    <div class="col-md-3 form-control-label">
-                                        <label for="ddlCilindroGas">Cilindro de Gas</label>
-                                        <div class="form-group">
-                                            <select id="IdCilindroGas" class="form-control z-index show-tick" disabled data-live-search="true">
-                                                <option id="0">Seleccione uno</option>
-                                            </select>
-                                        </div>
-                                        <Label ID="reqCilindro" CssClass="alert-danger" hidden="hidden">Campo requerido</Label>
-                                    </div>
                                     <div class="col-md-3 form-control-label">
                                         <b>&nbsp; </b>
                                         <div class="form-group">
@@ -147,6 +117,37 @@
                                             </a>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row clearfix">
+                                    @*<div class="col-md-3 form-control-label">
+                                            <label for="ddlCamioneta">Camioneta</label>
+                                            <div class="form-group">
+                                                <select id="IdCamioneta" class="form-control z-index show-tick" disabled data-live-search="true">
+                                                    <option id="0">Seleccione uno</option>
+                                                </select>
+                                            </div>
+                                            <Label ID="reqCamnioneta" class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                        </div>*@
+                                    @*<div class="col-md-3 form-control-label">
+                                            <label for="ddlPipa">Pipa</label>
+                                            <div class="form-group">
+                                                <select id="IdPipa" class="form-control z-index show-tick" disabled data-live-search="true">
+                                                    <option id="0">Seleccione uno</option>
+
+                                                </select>
+                                            </div>
+                                            <Label ID="reqPipa" class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                        </div>*@
+                                    @*<div class="col-md-3 form-control-label">
+                                            <label for="ddlCilindroGas">Cilindro de Gas</label>
+                                            <div class="form-group">
+                                                <select id="IdCilindroGas" class="form-control z-index show-tick" disabled data-live-search="true">
+                                                    <option id="0">Seleccione uno</option>
+                                                </select>
+                                            </div>
+                                            <Label ID="reqCilindro" CssClass="alert-danger" hidden="hidden">Campo requerido</Label>
+                                        </div>*@
+
                                 </div>
                             </div>
                         </div>

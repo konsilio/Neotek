@@ -140,6 +140,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<AlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                       && x.Activo).ToList();
         }
+        public List<UnidadAlmacenGas> BuscarTodas(short idEmpresa)
+        {
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                      && x.Activo).ToList();
+        }
         public List<UnidadAlmacenGas> BuscarTodos(short idEmpresa, bool almacenGral, bool almacenAlterno)
         {
             if (almacenGral && almacenAlterno)

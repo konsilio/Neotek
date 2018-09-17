@@ -15,5 +15,6 @@ namespace Application.MainModule.DTOs
         public Nullable<int> IdPipa { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
+        public string Descripcion { get; set; }
     }
 }

@@ -43,6 +43,10 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa, true, incluyeAlterno);
         }
+        public static List<UnidadAlmacenGas> ObtenerAlmacenGeneral(short idEmpresa)
+        {
+            return new AlmacenGasDataAccess().BuscarTodas(idEmpresa);
+        }
         public static List<UnidadAlmacenGas> ObtenerEstaciones(short idEmpresa)
         {            
             return new AlmacenGasDataAccess().BuscarTodosEstacionCarburacion(idEmpresa);

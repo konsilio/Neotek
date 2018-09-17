@@ -3,34 +3,17 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>CuentaContable</title>
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">
-    <!-- Custom Css -->
-    <link rel="stylesheet" href="~/assets/css/main.css">
-    <link rel="stylesheet" href="~/assets/css/color_skins.css">
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
-    <!-- Bootstrap Select Css -->
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-    <script src="~/assets/bundles/libscripts.bundle.js"></script>
-    <script src="~/assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#btnModificar").click(function () {
-                var form = $(this).parent("form");
-                form.attr('action', '<%= Url.RouteUrl(new { Controller = "CuentaContable", Action = "Modificar" }) %>');
-                form.attr('method', 'post');
-            });
-        });
-    </script>
 </head>
-<body>
-    <div>
+<body style="padding-top:10px;">
+    @using (Html.BeginForm("Crear", "CuentaContable", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.IdCuentaContable)
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
-                            <h2>&nbsp;Cuentas contables</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item active">
@@ -49,23 +32,32 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <b>Número</b>
-                                            @Html.TextBoxFor(m => m.Numero, new { @class = "form-control" , placeholder = "N° de cuenta contable"})
+                                            @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", placeholder = "N° de cuenta contable" })
                                         </div>
                                         <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <b>Descripción</b>
-                                            @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", placeholder = "Descripción"  })
+                                            @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", placeholder = "Descripción" })
                                         </div>
                                         <Label class="alert-danger" hidden="hidden">Campo requerido</Label>
                                     </div>
                                     <div class="col-md-1">
                                         <b>&nbsp; </b>
                                         <div class="form-group">
-                                            <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round btn-sm">
-                                                <i class="zmdi zmdi-plus" id="iSimboloBoton"></i>
-                                            </a>
+                                            @if (ViewBag.EsEdicion == null)
+                                            {
+                                                <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round btn-sm">
+                                                    <i class="zmdi zmdi-plus" id="iSimboloBoton"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <button btn id="btnUpDate" formaction="Modificar" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                                    <i class="zmdi zmdi-swap"></i>
+                                                </button>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -114,28 +106,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach (var cc in Model.CuentasContables)
-                                                {
-                                                    <tr>
-                                                        <td>@cc.Empresa</td>
-                                                        <td>@cc.Numero</td>
-                                                        <td>@cc.Descripcion</td>
-                                                        <td>
-                                                            <a data-value="@cc.IdCuentaContable"
-                                                               href="javascript:void(0)" id="btnModificar" class="btnEdit">
-                                                                <i class="material-icons">edit</i>
-                                                                <span class="icon-name"></span>
-                                                            </a>
-                                                            <a data-value="@cc.IdCuentaContable"
-                                                               href="javascript:void(0)" class="btnEdit">
-                                                                <i class="material-icons">delete</i>
-                                                                <span class="icon-name"></span>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                }
+                                                @Html.EditorFor(m => m.CuentasContables)
                                             </tbody>
-                                        </table>                                        
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -151,16 +124,22 @@
                         <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
                     </div>
                     <div class="modal-footer">
-
-                        <Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" Text="Si" OnClick="BtnCrear_Click" />
+                        <input ID="BtnCrear" type="submit" value="Si" />
                         <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
+    }
 </body>
 </html>
-<link rel="stylesheet" href="~/assets/css/main.css">
-<link rel="stylesheet" href="~/assets/css/color_skins.css">
+<script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnUpDate").click(function () {
+                var form = $(this).parent("form");
+                form.attr('action', '<%= Url.RouteUrl(new { Controller = "CuentaContable", Action = "Modificar" }) %>');
+                form.attr('method', 'post');
+            });
+        });
+</script>
