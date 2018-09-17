@@ -108,7 +108,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsLecturaInicialPipa",true);
                     intent.putExtra("EsLecturaFinalPipa",false);
                     view.getContext().startActivity(intent);
-                }else if (menuItem.getName().equals("Pipa (Final)")){
+                }else if (menuItem.getName().equals("Pipa. (Final)")){
                     Intent intent = new Intent(view.getContext(),LecturaPipaActivity.class);
                     intent.putExtra("EsLecturaInicialPipa",false);
                     intent.putExtra("EsLecturaFinalPipa",true);

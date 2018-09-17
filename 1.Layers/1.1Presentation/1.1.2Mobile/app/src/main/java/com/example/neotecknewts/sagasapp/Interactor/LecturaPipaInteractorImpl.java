@@ -117,8 +117,8 @@ public class LecturaPipaInteractorImpl implements LecturaPipaInteractor {
 
         RestClient restClient = retrofit.create(RestClient.class);
         Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
-                true,
                 false,
+                true,
                 false,
                 esFinalizar,
                 token);
