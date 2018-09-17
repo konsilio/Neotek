@@ -119,6 +119,7 @@ public class LoginInteractorImpl implements LoginInteractor {
 
                 }
                 else {
+                    UsuarioDTO data = response.body();
                     switch (response.code()) {
                         case 404:
                             Log.w(TAG,"not found");
@@ -141,6 +142,7 @@ public class LoginInteractorImpl implements LoginInteractor {
             @Override
             public void onFailure(Call<UsuarioDTO> call, Throwable t) {
                 Log.e("error", t.toString());
+                Log.e("error", t.getLocalizedMessage());
                 loginPresenter.onError();
             }
         });
