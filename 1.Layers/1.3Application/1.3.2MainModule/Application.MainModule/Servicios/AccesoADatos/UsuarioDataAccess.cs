@@ -69,14 +69,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public  RespuestaDto ActualizarUsuarioRol(Usuario usuario, List<Rol> _roluser)
+        public  RespuestaDto ActualizarUsuarioRol(Sagas.MainModule.Usuario usuario, List<Rol> _roluser)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.Usuario>().Update(usuario);
+                    uow.Repository< Sagas.MainModule.Usuario>().Update(usuario);
                     //foreach (Rol _rol in _roluser)
                     //    uow.Repository<Rol>().Update(_rol);
                     uow.SaveChanges();
@@ -135,6 +135,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Usuario>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
                                                          && x.Activo);
+        }
+
+        public Sagas.MainModule.Usuario BuscarUser(int idUsuario)
+        {
+            return uow.Repository<Sagas.MainModule.Usuario>().GetSingle(x => x.IdUsuario.Equals(idUsuario));
         }
     }
 }

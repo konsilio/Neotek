@@ -54,7 +54,7 @@ namespace Application.MainModule.Flujos
 
             return EmpresaServicio.RegistrarEmpresa(EmpresaAdapter.FromDto(empDto));
         }
-        
+
         public RespuestaDto ModificaEmpresa(EmpresaDTO empDto)
         {
             var resp = PermisosServicio.PuedeModificarEmpresa();
@@ -89,7 +89,7 @@ namespace Application.MainModule.Flujos
             var empresaaMod = EmpresaServicio.Obtener(empDto.IdEmpresa);
             if (empresaaMod == null) return EmpresaServicio.NoExiste();
 
-            var emp = EmpresaAdapter.FromDtoConfig(empDto,empresaaMod);
+            var emp = EmpresaAdapter.FromDtoConfig(empDto, empresaaMod);
             return EmpresaServicio.ModificarEmpresa(emp);
         }
 
@@ -142,13 +142,13 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeModificarUsuario();
             if (!resp.Exito) return resp;
 
-            var user = UsuarioServicio.Obtener(userDto.IdUsuario);
+            var user = UsuarioServicio.ObtenerUser(userDto.IdUsuario);
             if (user == null) return UsuarioServicio.NoExiste();
 
             var rol = RolServicio.Obtener(userDto.Roles.FirstOrDefault().IdRol);
             if (user == null) return UsuarioServicio.NoExiste();
 
-            var usuario = UsuarioAdapter.FromDtoRol(userDto, user);            
+            var usuario = UsuarioAdapter.FromDtoRol(userDto, user);
 
             List<Rol> _rol = usuario.Roles.ToList();
             return UsuarioServicio.ActualizarUsuarioRol(usuario, _rol);
@@ -226,7 +226,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var emp = RolAdapter.FromDto(rolDto.ListaRoles);
-         
+
             return RolServicio.Actualizar(emp);
 
             //insertar Rol in data access
@@ -243,6 +243,25 @@ namespace Application.MainModule.Flujos
             rol = RolAdapter.FromEntity(rol);
             rol.Activo = false;
             return RolServicio.Actualizar(rol);
+        }
+        #endregion
+
+        #region Clientes
+        public List<TipoPersonaDTO> TiposPersona()
+        {
+            return TipoPersonaServicio.ListaTipoPersona().ToList();
+        }
+        public List<RegimenDTO> RegimenFiscal()
+        {
+            return RegimenServicio.ListaRegimen().ToList();
+        }
+
+        public List<ClientesDto> ListaClientes(short idEmpresa)
+        {
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return ClienteServicio.ListaClientes().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+            else
+                return ClienteServicio.ListaClientes().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
         #endregion
 
@@ -326,7 +345,7 @@ namespace Application.MainModule.Flujos
             var linProd = ProductoServicios.ObtenerLineaProducto(lpDto.IdProductoLinea);
             if (linProd == null) return ProductoServicios.NoExiste("La línea del producto");
 
-            var Linea = ProductoAdapter.FromDto(lpDto,linProd);     
+            var Linea = ProductoAdapter.FromDto(lpDto, linProd);
             return ProductoServicios.ModificarLineaProducto(Linea);
         }
 
@@ -381,7 +400,7 @@ namespace Application.MainModule.Flujos
             var uM = ProductoServicios.ObtenerUnidadMedida(uMDto.IdUnidadMedida);
             if (uM == null) return ProductoServicios.NoExiste("La unidad de medida");
 
-            var uMedida = ProductoAdapter.FromDto(uMDto,uM);
+            var uMedida = ProductoAdapter.FromDto(uMDto, uM);
             return ProductoServicios.ModificarUnidadMedida(uMedida);
         }
 
@@ -436,7 +455,7 @@ namespace Application.MainModule.Flujos
             var prod = ProductoServicios.ObtenerProducto(pDto.IdProducto);
             if (prod == null) return ProductoServicios.NoExiste("El producto");
 
-            var producto  = ProductoAdapter.FromDto(pDto, prod);
+            var producto = ProductoAdapter.FromDto(pDto, prod);
             return ProductoServicios.ModificarProducto(producto);
         }
 

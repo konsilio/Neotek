@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Exceptions.MainModule.Validaciones;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,9 +11,8 @@ namespace MVC.Presentacion.Models.Catalogos
     public class EmpresaModel
     {
 
-        const string eReq = "Requerido";//R0002
-        const string eTa = "Tamaño incorrecto";//R0004
-
+        const string eReq = Error.R0002;//R0002
+        const string eTa = Error.R0004;//R0004
 
         //[Required(ErrorMessage = eReq)]
         //[StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]

@@ -19,7 +19,8 @@ namespace MVC.Presentacion.Controllers
         // GET: Empresas
         public ActionResult Index()
         {
-            ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
+            _tok = Session["StringToken"].ToString();
+            ViewBag.listaEmpresas = CatalogoServicio.Empresas(_tok);
             return View();
         }
 

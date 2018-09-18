@@ -38,6 +38,9 @@ namespace MVC.Presentacion.Agente
         public List<PaisModel> _listaPaises;
         public List<EstadosRepModel> _listaEstados;
         public List<RolDto> _lstaAllRoles;
+        public List<TipoPersonaModel> _lstaTipoPersona;
+        public List<RegimenFiscalModel> _lstaRegimenFiscal; 
+        public List<ClientesDto> _lstaClientes; 
 
         public List<RequisicionEstatusDTO> _listaRequisicionEstatus;
         public List<UsuarioDTO> _listaUsuarios;
@@ -67,20 +70,20 @@ namespace MVC.Presentacion.Agente
             Paises.Add(rol);
 
             return Paises;
-                      
+
         }
         private async Task ListaPaises(string api, string token)
         {
             using (var client = new HttpClient())
             {
                 List<PaisModel> emp = new List<PaisModel>();
-              
+
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                   HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<PaisModel>>();
                     else
@@ -150,7 +153,7 @@ namespace MVC.Presentacion.Agente
                 var item = AgregaritemE();
                 item.AddRange(emp);
                 _listaEstados = item;
-              
+
             }
         }
 
@@ -562,7 +565,7 @@ namespace MVC.Presentacion.Agente
                 _respuestaDTO = resp;
             }
         }
-        
+
         public void GuardarRolesAsig(UsuariosModel dto, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PutUsuarioRolAgrega"];
@@ -897,6 +900,113 @@ namespace MVC.Presentacion.Agente
             }
         }
 
+        #endregion
+
+        #region Clientes
+
+        public void BuscarTiposPersona(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetTiposPersona"];
+            GetTiposPersona(tkn).Wait();
+        }
+        
+        private async Task GetTiposPersona(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<TipoPersonaModel> lus = new List<TipoPersonaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<TipoPersonaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<TipoPersonaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaTipoPersona = lus;
+            }
+        }
+
+        public void BuscarRegimenFiscal(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetRegimenFiscal"];
+            GetRegimen(tkn).Wait();
+        }
+
+        private async Task GetRegimen(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RegimenFiscalModel> lus = new List<RegimenFiscalModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<RegimenFiscalModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<RegimenFiscalModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaRegimenFiscal = lus;
+            }
+        }
+
+        public void BuscarListaClientes(short idEmpresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaClientes"];
+            GetListaClientes(idEmpresa, tkn).Wait();
+        }
+        private async Task GetListaClientes(short IdEmpresa, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ClientesDto> lus = new List<ClientesDto>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + IdEmpresa.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<ClientesDto>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<ClientesDto>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaClientes = lus;
+            }
+        }
         #endregion
         public void BuscarCentrosCostos(string tkn)
         {

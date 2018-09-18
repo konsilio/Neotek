@@ -33,6 +33,11 @@ namespace Application.MainModule.Servicios.Catalogos
             return new UsuarioDataAccess().Buscar(idUsuario);
         }
 
+        public static Sagas.MainModule.Usuario ObtenerUser(int idUsuario)
+        {
+            return new UsuarioDataAccess().BuscarUser(idUsuario);
+        }
+
         public static string ObtenerNombreCompleto(Usuario usuario)
         {
             return string.Concat(usuario.Nombre, " ", usuario.Apellido1, " ", usuario.Apellido2);
@@ -44,7 +49,7 @@ namespace Application.MainModule.Servicios.Catalogos
         }
 
         //ActualizarUsuarioRol
-        public static RespuestaDto ActualizarUsuarioRol(Usuario usuario, List<Rol> _rol)
+        public static RespuestaDto ActualizarUsuarioRol(Sagas.MainModule.Usuario usuario, List<Rol> _rol)
         {
             return new UsuarioDataAccess().ActualizarUsuarioRol(usuario, _rol);
         }

@@ -244,6 +244,7 @@
     <Compile Include="ObjetosValor\Enum\TipoPersonaFiscalEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoProveedorEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Usuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

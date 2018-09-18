@@ -232,6 +232,24 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Clientes
+
+        [Route("clientes/tipopersona")]
+        public HttpResponseMessage GetTiposPersona()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.TiposPersona());
+        }
+
+        [Route("clientes/regimenfiscal")]
+        public HttpResponseMessage GetRegimenFiscal()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.RegimenFiscal());
+        }
+
+        [Route("clientes/listaclientes/{idEmpresa}")]
+        public HttpResponseMessage GetListaClientes(short idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaClientes(idEmpresa));
+        }
         //[Route("registra/cliente")]
         //public HttpResponseMessage PostRegistraCliente(ClienteCrearDto clienteDto)
         //{

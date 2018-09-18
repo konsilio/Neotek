@@ -272,12 +272,30 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             #endregion
         }
 
-        public static Usuario FromDtoRol(UsuariosModel usDTO, Usuario usr)
+        //public static Usuario FromDtoRol(UsuariosModel usDTO, Usuario usr)
+        //{
+        //    var catUsuario = FromEntity(usr);
+        //    //catUsuario.Roles.Add(getRol(usDTO, catUsuario.IdEmpresa));
+        //    catUsuario.Roles.Add(RolAdapter.FromDto(usDTO.Roles.FirstOrDefault()));
+        //   // catUsuario.Roles.
+        //    return catUsuario;
+        //}
+
+        public static Sagas.MainModule.Usuario FromEntity(Sagas.MainModule.Usuario user)
+        {
+            return new Sagas.MainModule.Usuario()
+            {
+                IdUsuario = user.IdUsuario,            
+
+            };
+        }
+
+        public static Sagas.MainModule.Usuario FromDtoRol(UsuariosModel usDTO, Sagas.MainModule.Usuario usr)
         {
             var catUsuario = FromEntity(usr);
             //catUsuario.Roles.Add(getRol(usDTO, catUsuario.IdEmpresa));
             catUsuario.Roles.Add(RolAdapter.FromDto(usDTO.Roles.FirstOrDefault()));
-           // catUsuario.Roles.
+            // catUsuario.Roles.
             return catUsuario;
         }
 

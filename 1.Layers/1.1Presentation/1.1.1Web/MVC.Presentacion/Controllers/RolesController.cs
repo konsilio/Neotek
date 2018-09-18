@@ -66,7 +66,7 @@ namespace MVC.Presentacion.Controllers
             _tok = Session["StringToken"].ToString();
             if (ModelState.IsValid)
             {
-                CatalogoServicio.ActualizaPermisos(objrol, _tok);
+               // CatalogoServicio.ActualizaPermisos(objrol, _tok);
             }
             return RedirectToAction("Index");
         }

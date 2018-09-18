@@ -315,6 +315,27 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
 
+        #region Clientes
+        public static List<TipoPersonaModel> ObtenerTiposPersona(string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarTiposPersona(token);
+            return agente._lstaTipoPersona;
+        }
+        public static List<RegimenFiscalModel> ObtenerRegimenFiscal(string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarRegimenFiscal(token);
+            return agente._lstaRegimenFiscal;
+        }
+
+        public static List<ClientesDto> ListaClientes(short idEmpresa, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaClientes(idEmpresa, token);
+            return agente._lstaClientes;
+        }
+        #endregion
         #region Centro de Costo
         public static List<CentroCostoDTO> BuscarCentrosCosto(string Tkn)
         {
