@@ -6,6 +6,7 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Catalogos
 {
+    [Serializable]
     public class CuentaContableModificarDTO : CuentaContableDTO
     {
       

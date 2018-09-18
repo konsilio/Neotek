@@ -112,7 +112,18 @@ namespace MVC.Presentacion.App_Code
         }
         #endregion
         #region Cuentas contables      
-        public static RespuestaDTO GuardarCtaCtble(CuentaContableCrearDTO cc, string tkn)
+        public static RespuestaDTO GuardarCuentaContable(CuentaContableModel model, string tkn)
+        {
+            CuentaContableCrearDTO ccC = new CuentaContableCrearDTO()
+            {
+                Numero = model.Numero,
+                Descripcion = model.Descripcion,
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn),
+                FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
+            };
+            return GuardarCtaCtble(ccC, tkn);
+        }
+        private static RespuestaDTO GuardarCtaCtble(CuentaContableCrearDTO cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarCuentaContable(cc, tkn);
@@ -132,14 +143,26 @@ namespace MVC.Presentacion.App_Code
         }
         public static RespuestaDTO BorrarCuentaContable(int idCC, string tkn)
         {
-            return EliminarCentroCosto(new CentroCostoEliminarDTO { IdCentroCosto = idCC }, tkn);
+            return EliminarCtaContable(new CuentaContableEliminarDTO { IdCuenta = idCC }, tkn);
         }
-        public static RespuestaDTO ModificarCtaContable(CuentaContableModificarDTO cc, string tkn)
+        private static RespuestaDTO ModificarCtaContable(CuentaContableModificarDTO cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.ModificarCtaCtble(cc, tkn);
             return agente._RespuestaDTO;
         }
+        public static RespuestaDTO EditarCuentaContable(CuentaContableModel model, string tkn)
+        {
+            CuentaContableModificarDTO ccm = new CuentaContableModificarDTO()
+            {
+                IdCuentaContable = model.IdCuentaContable,
+                IdEmpresa = model.IdEmpresa,
+                Descripcion = model.Descripcion,
+                Numero = model.Numero,
+                Activo = true
+            };
+            return ModificarCtaContable(ccm, tkn);            
+        }         
         public static CuentaContableModel InitCtaContable(string tkn)
         {
             return new CuentaContableModel()

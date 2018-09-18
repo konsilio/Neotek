@@ -9,11 +9,8 @@ using System.Threading.Tasks;
 namespace Application.MainModule.DTOs.Catalogo
 {
     [Serializable]
-    public class CuentaContableModificarDto : CuentaContableCrearDto
+    public class CuentaContableModificarDto : CuentaContableDto
     {
-        [Required(ErrorMessage = Error.R0002)]
-        [Range(minimum: 1, maximum: int.MaxValue, ErrorMessage = Error.R0002)]
-        [Display(Name = "Cuenta Contable")]
-        public int IdCuenta { get; set; }
+
     }
 }

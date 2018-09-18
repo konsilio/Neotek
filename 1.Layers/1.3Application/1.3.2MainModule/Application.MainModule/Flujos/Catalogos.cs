@@ -373,8 +373,8 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeModificarCentroCosto();
             if (!resp.Exito) return resp;
 
-            resp = ValidarCatalogoServicio.CentroCosto(ccDto);
-            if (!resp.Exito) return resp;
+            //resp = ValidarCatalogoServicio.CentroCosto(ccDto);
+            //if (!resp.Exito) return resp;
 
             var centro = CentroCostoServicio.Obtener(ccDto.IdCentroCosto);
             if (centro == null) return CentroCostoServicio.NoExiste();
@@ -479,7 +479,7 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeModificarCuentaContable();
             if (!resp.Exito) return resp;
 
-            var ctactble = CuentaContableServicio.Obtener(ccDto.IdCuenta);
+            var ctactble = CuentaContableServicio.Obtener(ccDto.IdCuentaContable);
             if (ctactble == null) return CuentaContableServicio.NoExiste();
 
             //var CuentaContable = CuentaContableAdapter.FromDto(ccDto);

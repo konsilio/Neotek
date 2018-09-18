@@ -27,32 +27,58 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult Crear(CuentaContableModel model)
         {
-
-            return View();
+            if (Session["StringToken"] != null)
+            {
+                string token = Session["StringToken"].ToString();
+                var respuesta = CatalogoServicio.GuardarCuentaContable(model, token);
+                if (respuesta.Exito)
+                {
+                    ViewBag.Empresas = CatalogoServicio.Empresas(token);
+                    return View("CuentaContable",CatalogoServicio.InitCtaContable(token));
+                }
+                else
+                {
+                    ViewBag.Empresas = CatalogoServicio.Empresas(token);
+                    ViewBag.MensajeError = respuesta.Mensaje;
+                    return View("CuentaContable", model);
+                }                
+            }
+            else
+                return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
         }
         public ActionResult ActivarEditar(int? id, CuentaContableModel model)
         {
             if (Session["StringToken"] != null)
             {
                 string token = Session["StringToken"].ToString();
-                ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                ViewBag.EsEdicion = true;
-                return View("CuentaContable",CatalogoServicio.ActivarModifiarCuentaContable(id.Value, model, token));
+                if (id != null)
+                {
+                    ViewBag.Empresas = CatalogoServicio.Empresas(token);
+                    ViewBag.EsEdicion = true;
+                    return View("CuentaContable", CatalogoServicio.ActivarModifiarCuentaContable(id.Value, model, token));
+                }
+                else
+                {
+                    var respuesta = CatalogoServicio.EditarCuentaContable(model, token);
+                    if (respuesta.Exito)
+                    {
+                        model.Numero = string.Empty;
+                        model.Descripcion = string.Empty;
+                        ViewBag.Empresas = CatalogoServicio.Empresas(token);
+                        return View("CuentaContable", CatalogoServicio.InitCtaContable(token));
+                    }
+                    else
+                    {
+                        ViewBag.Empresas = CatalogoServicio.Empresas(token);
+                        ViewBag.MensajeError = respuesta.Mensaje;
+                        return View("CuentaContable", model);
+
+                    }
+                }
             }
             else
                 return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-        }
-        public ActionResult Modificar(CuentaContableModel model)
-        {
-            if (Session["StringToken"] != null)
-            {
-                string token = Session["StringToken"].ToString();
-                ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                return View("CuentaContable" ,CatalogoServicio.InitCtaContable(token));
-            }
-            else
-                return View("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-        }
+        }      
         public ActionResult Eliminar(int id)
         {
             if (Session["StringToken"] != null)
@@ -62,7 +88,7 @@ namespace MVC.Presentacion.Controllers
                 if (resp.Exito)
                 {
                     ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                    return View(CatalogoServicio.InitCtaContable(token));
+                    return View("CuentaContable" ,CatalogoServicio.InitCtaContable(token));
                 }
                 else
                 {
