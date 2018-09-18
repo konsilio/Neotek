@@ -241,7 +241,7 @@ namespace MVC.Presentacion.Agente
         }
         public void GuardarCentroCosto(CentroCostoCrearDTO dto, string tkn)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraProveedor"];
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraCentroCosto"];
             GuardarCtroCosto(dto, tkn).Wait();
         }
         private async Task GuardarCtroCosto(CentroCostoCrearDTO _pcDTO, string token)
@@ -249,7 +249,6 @@ namespace MVC.Presentacion.Agente
             using (var client = new HttpClient())
             {
                 RespuestaDTO resp = new RespuestaDTO();
-
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -260,7 +259,7 @@ namespace MVC.Presentacion.Agente
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
-                    {
+                    {                        
                         client.CancelPendingRequests();
                         client.Dispose();
                     }

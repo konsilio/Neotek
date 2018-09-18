@@ -448,6 +448,7 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.ListaEstacionesCarburacion(), Request);
         }
         #endregion
+
         #region Unidad Almacen Gas
         [Route("consulta/unidadalmacengas/{idEmpresa}")]
         public HttpResponseMessage GetListaUnidadAlmcenGas(short IdEmpresa)
@@ -455,6 +456,7 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.ListaUnidadAlmacenGas(IdEmpresa), Request);
         }
         #endregion
+
         #region Equipo de transporte
         [Route("consulta/equipotransporte")]
         public HttpResponseMessage GetListaEquiposTransporte()
@@ -462,5 +464,6 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.ListaEquipoTrasnporte(), Request);
         }
         #endregion
+
     }
 }

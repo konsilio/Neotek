@@ -7,17 +7,20 @@
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 </head>
 <body style="padding-top:10px">
-    <section class="content">
-        <div class="container-fluid">
-            <div class="block-header">
-                <div class="row clearfix">
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <ul class="breadcrumb padding-0">
-                            <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item active">
-                                <Label> Catalogos / Centros de costo</Label>
-                            </li>
-                        </ul>
+    @using (Html.BeginForm("Crear", "CentroCosto", FormMethod.Post))
+    {
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item active">
+                                    <Label> Catalogos / Centros de costo</Label>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="row clearfix">
@@ -106,42 +109,49 @@
                                     </div>
                                     <div class="col-md-3 form-control-label">
                                         <b>&nbsp; </b>
-                                        <div class="form-group">
-                                            <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round btn-sm">
-                                                <i class="zmdi zmdi-plus" id="iSimboloBoton"></i>
-                                            </a>
-                                        </div>
+                                        @if (ViewBag.EsEdicion == null)
+                                        {
+                                            <button btn id="BtnCrear" formaction="Crear" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                                <i class="zmdi zmdi-plus"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button btn id="btnUpDate" formaction="Modificar" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                                <i class="zmdi zmdi-swap"></i>
+                                            </button>
+                                        }
                                     </div>
                                 </div>
                                 <div class="row clearfix">
                                     @*<div class="col-md-3 form-control-label">
-                                            <label for="ddlCamioneta">Camioneta</label>
-                                            <div class="form-group">
-                                                <select id="IdCamioneta" class="form-control z-index show-tick" disabled data-live-search="true">
-                                                    <option id="0">Seleccione uno</option>
-                                                </select>
+                                                <label for="ddlCamioneta">Camioneta</label>
+                                                <div class="form-group">
+                                                    <select id="IdCamioneta" class="form-control z-index show-tick" disabled data-live-search="true">
+                                                        <option id="0">Seleccione uno</option>
+                                                    </select>
+                                                </div>
+                                                <Label ID="reqCamnioneta" class="alert-danger" hidden="hidden">Campo requerido</Label>
                                             </div>
-                                            <Label ID="reqCamnioneta" class="alert-danger" hidden="hidden">Campo requerido</Label>
-                                        </div>
-                                    <div class="col-md-3 form-control-label">
-                                            <label for="ddlPipa">Pipa</label>
-                                            <div class="form-group">
-                                                <select id="IdPipa" class="form-control z-index show-tick" disabled data-live-search="true">
-                                                    <option id="0">Seleccione uno</option>
+                                        <div class="col-md-3 form-control-label">
+                                                <label for="ddlPipa">Pipa</label>
+                                                <div class="form-group">
+                                                    <select id="IdPipa" class="form-control z-index show-tick" disabled data-live-search="true">
+                                                        <option id="0">Seleccione uno</option>
 
-                                                </select>
+                                                    </select>
+                                                </div>
+                                                <Label ID="reqPipa" class="alert-danger" hidden="hidden">Campo requerido</Label>
                                             </div>
-                                            <Label ID="reqPipa" class="alert-danger" hidden="hidden">Campo requerido</Label>
-                                        </div>
-                                    <div class="col-md-3 form-control-label">
-                                            <label for="ddlCilindroGas">Cilindro de Gas</label>
-                                            <div class="form-group">
-                                                <select id="IdCilindroGas" class="form-control z-index show-tick" disabled data-live-search="true">
-                                                    <option id="0">Seleccione uno</option>
-                                                </select>
-                                            </div>
-                                            <Label ID="reqCilindro" CssClass="alert-danger" hidden="hidden">Campo requerido</Label>
-                                        </div>*@
+                                        <div class="col-md-3 form-control-label">
+                                                <label for="ddlCilindroGas">Cilindro de Gas</label>
+                                                <div class="form-group">
+                                                    <select id="IdCilindroGas" class="form-control z-index show-tick" disabled data-live-search="true">
+                                                        <option id="0">Seleccione uno</option>
+                                                    </select>
+                                                </div>
+                                                <Label ID="reqCilindro" CssClass="alert-danger" hidden="hidden">Campo requerido</Label>
+                                            </div>*@
                                 </div>
                             </div>
                         </div>
@@ -157,34 +167,41 @@
                                     <div class="col-md-4 form-control-label">
                                         <label for="ddlFiltroGasera">Gasera</label>
                                         <div class="form-group">
-                                            <DropDownList ID="ddlFiltroGasera" CssClass="form-control" placeholder="Descripción">
-                                            </DropDownList>
+                                            <select name="idEmpresa" class="form-control z-index show-tick" data-live-search="true">
+                                                <option value="0">Seleccione uno</option>
+                                                @foreach (var item in ViewBag.Empresas)
+                                                {
+
+                                                }
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-control-label">
                                         <label for="txtFiltroNumero">Numero</label>
                                         <div class="form-group">
-                                            <TextBox ID="txtFiltroNumero" CssClass="form-control" placeholder="Numero" />
+                                            <input type="text" id="txtFiltroNumero" class="form-control" />
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-control-label">
                                         <label for="ddlFiltroCentroCosto">Tipo centro de costo</label>
                                         <div class="form-group">
-                                            <DropDownList ID="ddlFiltroCentroCosto" CssClass="form-control" placeholder="Descripción">
-                                            </DropDownList>
+                                            <select></select>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="DivAlerta" hidden="hidden" class="container">
-                                    <div class="alert alert-danger">
-                                        <div class="alert-icon">
-                                            <i class="zmdi zmdi-block"></i>
+                                @if (ViewBag.MensajeError != null)
+                                {
+                                    <div id="DivAlerta" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                @ViewBag.MensajeError
+                                            </strong>
                                         </div>
-                                        <strong>
-                                            <Label ID="lblMensajeError" Text="" />
-                                        </strong>
                                     </div>
-                                </div>
+                                }
                                 <div class="row clearfix">
                                     <div class="table-responsive">
                                         <table class="table table-bordered">
@@ -198,28 +215,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach (var item in Model.CentrosCostos)
-                                                {
-                                                    <tr>
-                                                        <td>@item.Empresa</td>
-                                                        <td>@item.Numero</td>
-                                                        <td>@item.Descripcion</td>
-                                                        <td>@item.TipoCentroCosto</td>
-                                                        <td>
-                                                            <a data-value="@item.IdEmpresa"
-                                                               href="javascript:void(0)" class="btnEdit">
-                                                                <i class="material-icons">edit</i>
-                                                                <span class="icon-name"></span>
-                                                            </a>
-                                                            <a data-value="@item.IdEmpresa"
-                                                               href="javascript:void(0)" class="btnEdit">
-                                                                <i class="material-icons">delete</i>
-                                                                <span class="icon-name"></span>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                }
-
+                                                @Html.EditorFor(m => m.CentrosCostos)
                                             </tbody>
                                         </table>
                                     </div>
@@ -228,23 +224,25 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+        </section>
+        <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" Text="Si" OnClick="BtnCrear_Click" />
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-    <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
-                </div>
-                <div class="modal-footer">
-                    <Button ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" Text="Si" OnClick="BtnCrear_Click" />
-                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
-</body>
+    }
+    </body>
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
+    

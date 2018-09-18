@@ -4042,6 +4042,7 @@
     <Content Include="Views\CentroCosto\CentroCosto.cshtml" />
     <Content Include="Views\CuentaContable\CuentaContable.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CuentaContableDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CentroCostoDTO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

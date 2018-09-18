@@ -67,23 +67,72 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarListaTipoCentroCosto(Tkn);
             return agente._listaTipoCentroCosto;
         }
-        public static RespuestaDTO ModificarCentroCosto(CentroCostoModificarDTO dto, string Tkn)
+        private static RespuestaDTO ModificarCentroCosto(CentroCostoModificarDTO dto, string Tkn)
         {
             var agente = new AgenteServicio();
             agente.ModificarCtroCosto(dto, Tkn);
             return agente._RespuestaDTO;
         }
-        public static RespuestaDTO EliminarCentroCosto(CentroCostoEliminarDTO dto, string Tkn)
+        public static RespuestaDTO EditarCentroCosto(CentroCostoModel model, string tkn)
+        {
+            CentroCostoModificarDTO dto = new CentroCostoModificarDTO()
+            {
+                IdCentroCosto = model.IdCentroCosto,
+                Descripcion = model.Descripcion,
+                Numero = model.Numero,
+                IdTipoCentroCosto = model.IdTipoCentroCosto
+            };
+            if (!model.IdEquipoTransporte.Equals(0)) dto.IdEquipoTransporte = model.IdEquipoTransporte;
+            if (!model.IdEstacionCarburacion.Equals(0)) dto.IdEstacionCarburacion = model.IdEstacionCarburacion;
+            if (!model.IdCAlmacenGas.Equals(0)) dto.IdCAlmacenGas = model.IdCAlmacenGas;
+            return ModificarCentroCosto(dto, tkn);
+        }
+        public static CentroCostoModel ActivarModificar(int idcc, CentroCostoModel model, string tkn)
+        {
+            if (model.CentrosCostos == null)
+                model = InitCentroCosto(tkn);
+            var cc = model.CentrosCostos.SingleOrDefault(x => x.IdCentroCosto.Equals(idcc));
+            model.Numero = cc.Numero;
+            model.IdCentroCosto = cc.IdCentroCosto;
+            model.Descripcion = cc.Descripcion;
+            if (!cc.IdEquipoTransporte.Equals(0)) model.IdEquipoTransporte = cc.IdEquipoTransporte;
+            if (!cc.IdEstacionCarburacion.Equals(0)) model.IdEstacionCarburacion = cc.IdEstacionCarburacion;
+            if (!cc.IdCAlmacenGas.Equals(0)) model.IdCAlmacenGas = cc.IdCAlmacenGas;
+            return model;
+        }
+        private static RespuestaDTO EliminarCentroCosto(CentroCostoEliminarDTO dto, string Tkn)
         {
             var agente = new AgenteServicio();
             agente.EliminarCtroCosto(dto, Tkn);
             return agente._RespuestaDTO;
         }
-        public static RespuestaDTO NuevoCentroCosto(CentroCostoCrearDTO dto, string Tkn)
+        public static RespuestaDTO BorrarCentroCosto(int id, string tkn)
+        {
+            return EliminarCentroCosto(new CentroCostoEliminarDTO { IdCentroCosto = id }, tkn);
+        }
+        private static RespuestaDTO NuevoCentroCosto(CentroCostoCrearDTO dto, string Tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarCentroCosto(dto, Tkn);
             return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO CrearCentroCosto(CentroCostoModel model, string tkn)
+        {
+            CentroCostoCrearDTO dto = new CentroCostoCrearDTO()
+            {
+                Descripcion = model.Descripcion,
+                Numero = model.Numero,
+                IdTipoCentroCosto = model.IdTipoCentroCosto
+            };
+            dto.IdEquipoTransporte = model.IdEquipoTransporte;
+            dto.IdEstacionCarburacion = model.IdEstacionCarburacion;
+            dto.IdCAlmacenGas = model.IdCAlmacenGas;
+            dto.IdCamioneta = 0;
+            dto.IdCilindro = 0;
+            dto.IdPipa = 0;
+            dto.IdVehiculoUtilitario = 0;
+            dto.IdTipoCentroCosto = 1;
+            return NuevoCentroCosto(dto, tkn);
         }
         #endregion
         #region Porductos
@@ -161,8 +210,8 @@ namespace MVC.Presentacion.App_Code
                 Numero = model.Numero,
                 Activo = true
             };
-            return ModificarCtaContable(ccm, tkn);            
-        }         
+            return ModificarCtaContable(ccm, tkn);
+        }
         public static CuentaContableModel InitCtaContable(string tkn)
         {
             return new CuentaContableModel()
