@@ -148,4 +148,10 @@
     <string name="recarga">Recarga</string>
     <string name="registra_configuracion_recarga">Registra la configuración de recarga de la camioneta</string>
     <string name="Recarga_de_estacion">Recarga estación</string>
+    <string name="datos_inciales">Datos inciales</string>
+    <string name="selecciona_la_pipa_de_salida">Selecciona la pipa de salida:</string>
+    <string name="selecciona_medidor_porcentual_salida">Selecciona el tipo de medidor porcentual:</string>
+    <string name="selecciona_estacion_destino">Selecciona la Estación de Carburación:</string>
+    <string name="selecciona_medidor_porcentual_estacion">Selecciona el tipo de medidor porcentual:</string>
+    <string name="Estacion">Estación</string>
 </resources>

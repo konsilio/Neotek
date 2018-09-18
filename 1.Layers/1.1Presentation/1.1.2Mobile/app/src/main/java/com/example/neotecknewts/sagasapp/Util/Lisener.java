@@ -153,9 +153,9 @@ public class Lisener{
                             cursor.getColumnIndex("IdTipoMedidorEntrada")));
                     recargaDTO.setIdTipoEvento(cursor.getInt(
                             cursor.getColumnIndex("IdTipoEvento")));
-                    recargaDTO.setP5000Salida(cursor.getDouble(
+                    recargaDTO.setP5000Salida(cursor.getInt(
                             cursor.getColumnIndex("P5000Salida")));
-                    recargaDTO.setP5000Entrada(cursor.getDouble(
+                    recargaDTO.setP5000Entrada(cursor.getInt(
                             cursor.getColumnIndex("P5000Entrada")));
 
                     String tipo = cursor.getString(

@@ -145,21 +145,17 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     Intent intent = new Intent(view.getContext(),RecargaCamionetaActivity.class);
                     intent.putExtra("EsRecargaCamioneta",true);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Estación Carb. (Inicial)") &&
-                        menuItem.getHeaderMenu().equals("Recarga gas")){
+                }else if(menuItem.getName().equals("Estación Cab. (Inicial)") &&
+                        menuItem.getHeaderMenu().equals("Recarga - Gas")){
                     Intent intent = new Intent(view.getContext(),
                             RecargaEstacionCarburacionActivity.class);
                     intent.putExtra("EsRecargaEstacionInicial",true);
-
+                    view.getContext().startActivity(intent);
                 }else if(menuItem.getName().equals("Estación Carb. (Final)") &&
-                        menuItem.getHeaderMenu().equals("Recarga gas")){
+                        menuItem.getHeaderMenu().equals("Recarga - Gas")){
                     Intent intent = new Intent(view.getContext(),
                             RecargaEstacionCarburacionActivity.class);
                     intent.putExtra("EsRecargaEstacionFinal",true);
-                }else if(menuItem.getHeaderMenu().equals("Recarga gas") &&
-                        menuItem.getName().equals("Camioneta")){
-                    Intent intent = new Intent(view.getContext(),RecargaCamionetaActivity.class);
-                    intent.putExtra("EsRecargaCamioneta",true);
                     view.getContext().startActivity(intent);
                 }
 

@@ -206,4 +206,13 @@ public interface RestClient {
     @GET(Constantes.GET_UNIDADES)
     Call<List<UnidadesDTO>> getUnidades(@Header("Authorization") String token,
                                         @Header("Content-Type") String contentType);
+    @GET(Constantes.GET_CATALOGO_RECARGAS)
+    Call<Object> getCatalogsRecarga(
+            @Path(value = "esEstacion", encoded=true) boolean esEstacion,
+            @Path(value = "esPipa", encoded=true)boolean esPipa,
+            @Path(value = "esCamioneta", encoded=true)boolean esCamioneta,
+            @Path(value = "esFinalizar", encoded=true)boolean esFinalizar,
+            @Header("Authorization") String token,
+             @Header("Content-Type") String contentType
+    );
 }

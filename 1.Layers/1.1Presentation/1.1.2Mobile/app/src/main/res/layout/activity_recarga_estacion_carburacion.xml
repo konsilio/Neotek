@@ -16,57 +16,117 @@
             tools:ignore="UselessLeaf" >
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/TVRecargaEstacionCarburacionActivityTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="15dp"
+                android:paddingTop="20dp"
+                android:text="@string/datos_inciales"
+                android:textAlignment="center"
+                android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/TVRecargaEstacionCarburacionActivityPipaSalida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="@string/selecciona_la_pipa_de_salida" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/SRecargaEstacionCarburacionActivityListaPipa"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="20dp" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/TVRecargaEstacionCarburacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="@string/selecciona_medidor_porcentual_salida" />
 
             <Spinner
-                android:id="@+id/spinner2"
+                android:id="@+id/SRecargaEstacionCarburacionActivityListaMedidorPipa"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="20dp" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/TVRecargaEstacionCarburacionAcitvityEstacionDestino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="@string/selecciona_estacion_destino" />
 
             <Spinner
-                android:id="@+id/spinner3"
+                android:id="@+id/SRecargaEstacionCarburacionActivityListaEstacion"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="20dp" />
+
+            <TextView
+                android:id="@+id/TVRecargaEstacionCarburacionActivityMedidorEstacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="@string/selecciona_medidor_porcentual_estacion" />
+
+            <Spinner
+                android:id="@+id/SRecargaEstacionCarburacionActivityListaMedidorPorcentualDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="20dp"
+                />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/BtnRecargaEstacionCarburacionActivityAceptar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:layout_marginLeft="85dp"
+                android:layout_marginRight="85dp"
+                android:backgroundTint="@color/colorButtonLogin"
+                android:text="@string/message_acept"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="30sp"
+                tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

@@ -21,6 +21,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 /**
@@ -46,6 +47,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     LecturaDTO lecturaDTO;
     LecturaPipaDTO lecturaPipaDTO;
     LecturaAlmacenDTO lecturaAlmacenDTO;
+    RecargaDTO recargaDTO;
 
     //banderas para saber que objeto utilizar
     public boolean papeleta;
@@ -57,6 +59,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean EsLecturaFinal;
     public boolean EsLecturaInicialPipa,EsLecturaFinalPipa;
     public boolean EsLecturaInicialAlmacen,EsLecturaFinalAlmacen;
+    public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
+
 
 
     @SuppressLint("SetTextI18n")
@@ -194,6 +198,18 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                         "Toma de lectura final");
                 textView.setText("Registra el porcentaje del "+
                         lecturaAlmacenDTO.getNombreTipoMedidor()+"del almacén pral.");
+            }else if(extras.getBoolean("EsRecargaEstacionInicial") ||
+                    extras.getBoolean("EsRecargaEstacionFinal")){
+                EsRecargaEstacionInicial = extras.getBoolean("EsRecargaEstacionInicial",
+                        false);
+                EsRecargaEstacionFinal = extras.getBoolean("EsRecargaEstacionFinal",
+                        false);
+                EsPrimeraLectura = extras.getBoolean("EsPrimeraLectura",false);
+                recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
+                textViewTitulo.setText("Recarga gas");
+                textView.setText("Registra el porcentaje de la estación "+
+                    recargaDTO.getNombreMedidorEntrada()
+                );
             }
         }
 
@@ -250,6 +266,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             lecturaPipaDTO.setPorcentajeMedidor(porcentaje);
         }else if (EsLecturaInicialAlmacen ||EsLecturaFinalAlmacen){
             lecturaAlmacenDTO.setPorcentajeMedidor(porcentaje);
+        }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
+            recargaDTO.setProcentajeEntrada(porcentaje);
         }
         startActivity();
     }
@@ -301,6 +319,16 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             intent.putExtra("EsLecturaFinalPipa",false);
             intent.putExtra("EsLecturaInicialAlmacen",EsLecturaInicialAlmacen);
             intent.putExtra("EsLecturaFinalAlmacen",EsLecturaFinalAlmacen);
+        }else  if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
+            intent.putExtra("lecturaAlmacenDTO",false);
+            intent.putExtra("EsLecturaInicial",false);
+            intent.putExtra("EsLecturaFinal",false);
+            intent.putExtra("EsLecturaInicialPipa",false);
+            intent.putExtra("EsLecturaFinalPipa",false);
+            intent.putExtra("EsRecargaEstacionInicial",EsRecargaEstacionInicial);
+            intent.putExtra("EsRecargaEstacionFinal",EsRecargaEstacionFinal);
+            intent.putExtra("EsPrimeraLectura",EsPrimeraLectura);
+            intent.putExtra("recargaDTO",recargaDTO);
         }
         intent.putExtra("EsPapeleta",papeleta);
         intent.putExtra("EsDescargaIniciar",iniciar);

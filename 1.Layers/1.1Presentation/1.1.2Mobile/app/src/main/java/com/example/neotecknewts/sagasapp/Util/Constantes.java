@@ -26,4 +26,5 @@ public class Constantes {
     public static final String LISTA_TIPO_ALMACEN = "mobile/catalogos/almacenes/{esEstacion}/{esPipa}/{esCamioneta}/{esFinalizar}";
     public static final String POST_RECARGA = "mobile/recarga";
     public static final String GET_UNIDADES = "mobile/catalogo/unidades";
+    public static final String GET_CATALOGO_RECARGAS = "catalogos/recarga/{esEstacion}/{esPipa}/{esCamioneta}/{esFinalizar}";
 }

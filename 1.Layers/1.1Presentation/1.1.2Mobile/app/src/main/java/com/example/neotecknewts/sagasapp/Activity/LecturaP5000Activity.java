@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5000View,
@@ -26,7 +27,10 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
     public Boolean EsLecturaInicial,EsLecturaFinal,EsLecturaFinalPipa,EsLecturaInicialPipa;
     public LecturaDTO lecturaDTO;
     public LecturaPipaDTO lecturaPipaDTO;
+    public RecargaDTO recargaDTO;
     public int max_p5000,p5000;
+    public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -39,6 +43,10 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             EsLecturaFinal = (boolean) b.get("EsLecturaFinal");
             EsLecturaFinalPipa = (boolean) b.get("EsLecturaFinalPipa");
             EsLecturaInicialPipa = (boolean) b.get("EsLecturaInicialPipa");
+            EsRecargaEstacionInicial = b.getBoolean("EsRecargaEstacionInicial",false);
+            EsRecargaEstacionFinal = b.getBoolean("EsRecargaEstacionFinal",false);
+            EsPrimeraLectura = b.getBoolean("EsPrimeraLectura",false);
+
             if(EsLecturaInicial){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
                 max_p5000 = lecturaDTO.getCantidadP5000();
@@ -56,6 +64,11 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 lecturaPipaDTO = (LecturaPipaDTO) b.getSerializable("lecturaPipaDTO");
                 max_p5000 = lecturaPipaDTO.getCantidadP5000();
                 p5000 = lecturaPipaDTO.getCantidadP5000();
+            }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
+                recargaDTO = (RecargaDTO) b.getSerializable("recargaDTO");
+
+                max_p5000 = 5000;
+                p5000 = 5000;
             }
         }
 
@@ -85,6 +98,15 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             TVLecturaP5000Registro.setText(R.string.registra_la_lectura_del_p500_de_la_pipa);
         }
 
+        if(EsRecargaEstacionInicial||EsRecargaEstacionFinal){
+            TVLecturaP5000Titulo.setText(getString(R.string.registra_la_lectura_del_p500_de_la_pipa));
+            if(EsLecturaInicial) {
+                TVLecturaP5000Titulo.setText(getString(R.string.p500) + " " + getString(R.string.Pipa));
+            }else{
+                TVLecturaP5000Titulo.setText(getString(R.string.p500) + " " + getString(R.string.Estacion));
+            }
+        }
+
         NPLecturaP500CantidadLectura = findViewById(R.id.NPLecturaP500CantidadLectura);
 
 
@@ -93,6 +115,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
 
         NPLecturaP500CantidadLectura.setValue(p5000);
         NPLecturaP500CantidadLectura.setMaxValue(max_p5000);
+        NPLecturaP500CantidadLectura.setMinValue(0);
     }
 
     @Override
@@ -185,6 +208,21 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 intent.putExtra("EsLecturaInicialPipa",EsLecturaInicialPipa);
                 intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
                 intent.putExtra("EsFotoP5000",true);
+            }else if(EsRecargaEstacionInicial||EsRecargaEstacionFinal){
+                if(EsLecturaInicial)
+                    recargaDTO.setP5000Salida(CantidadP500);
+                else
+                    recargaDTO.setP5000Salida(CantidadP500);
+                intent.putExtra("EsRecargaEstacionInicial",EsRecargaEstacionInicial);
+                intent.putExtra("EsRecargaEstacionFinal",EsRecargaEstacionFinal);
+                intent.putExtra("EsPrimeraLectura",EsPrimeraLectura);
+                intent.putExtra("EsLecturaFinal",false);
+                intent.putExtra("EsLecturaInicial",false);
+                intent.putExtra("EsLecturaInicialPipa",false);
+                intent.putExtra("EsLecturaFinalPipa",false);
+                intent.putExtra("EsFotoP5000",false);
+                intent.putExtra("recargaDTO",recargaDTO);
+                startActivity(intent);
             }
             startActivity(intent);
         }
