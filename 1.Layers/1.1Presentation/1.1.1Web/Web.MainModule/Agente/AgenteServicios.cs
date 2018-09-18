@@ -56,39 +56,7 @@ namespace Web.MainModule.Agente
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
         }
         #region Catalogos
-        public void BuscarProveedores(string tkn)
-        {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaProveedores"];
-            ListaProveedores(tkn).Wait();
-        }
-        private async Task ListaProveedores(string token)
-        {
-            using (var client = new HttpClient())
-            {
-                List<ProveedorDTO> emp = new List<ProveedorDTO>();
-                client.BaseAddress = new Uri(UrlBase);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                try
-                {
-                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
-                    if (response.IsSuccessStatusCode)
-                        emp = await response.Content.ReadAsAsync<List<ProveedorDTO>>();
-                    else
-                    {
-                        client.CancelPendingRequests();
-                        client.Dispose();
-                    }
-                }
-                catch (Exception)
-                {
-                    emp = new List<ProveedorDTO>();
-                    client.CancelPendingRequests();
-                    client.Dispose(); ;
-                }
-                _listaProveedores = emp;
-            }
-        }
+      
         public void BuscarCentrosCostos(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetCentrosCostos"];
@@ -122,6 +90,7 @@ namespace Web.MainModule.Agente
                 _listaCentrosCostos = emp;
             }
         }    
+
         public void BuscarCuentasContables(short idEmpresa, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCuentasContables"];
@@ -263,6 +232,39 @@ namespace Web.MainModule.Agente
             }
         }
 
+        public void BuscarProveedores(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaProveedores"];
+            ListaProveedores(tkn).Wait();
+        }
+        private async Task ListaProveedores(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ProveedorDTO> emp = new List<ProveedorDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<ProveedorDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<ProveedorDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaProveedores = emp;
+            }
+        }
         public void GuardarProveedoresNuevo(ProveedorCrearDto dto, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraProveedor"];

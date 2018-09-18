@@ -1,36 +1,21 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.neotecknewts.sagasapp.R;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Set;
-import java.util.UUID;
+import com.example.neotecknewts.sagasapp.Util.Imprimir;
 
 public class VerReporteActivity extends AppCompatActivity {
     private boolean EsReporteDelDia;
-    private String StringReporte;
+    private String StringReporte,HtmlReporte;
 
     // android built in classes for bluetooth operations
-    BluetoothAdapter mBluetoothAdapter;
+    /*BluetoothAdapter mBluetoothAdapter;
     BluetoothSocket mmSocket;
     BluetoothDevice mmDevice;
 
@@ -40,9 +25,9 @@ public class VerReporteActivity extends AppCompatActivity {
 
     byte[] readBuffer;
     int readBufferPosition;
-    int counter;
     volatile boolean stopWorker;
-    String device_select;
+    String device_select;*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,20 +36,19 @@ public class VerReporteActivity extends AppCompatActivity {
         if(bundle!=null){
             EsReporteDelDia = (boolean)bundle.get("EsReporteDelDia");
             StringReporte = (String) bundle.get("StringReporte");
+            HtmlReporte = (String) bundle.get("HtmlReporte");
         }
         WebView WVVerReporteActivityReporte = findViewById(R.id.WVVerReporteActivityReporte);
-         Button btnVerReporteActivityTerminar= findViewById(R.id.BtnVerReporteActivityTerminar);
+        Button btnVerReporteActivityTerminar= findViewById(R.id.BtnVerReporteActivityTerminar);
         Button btnReporteActivityImprimir = findViewById(R.id.BtnReporteActivityImprimir);
-        btnVerReporteActivityTerminar.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(VerReporteActivity.this, MenuActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
+        btnVerReporteActivityTerminar.setOnClickListener(v -> {
+            Intent intent = new Intent(VerReporteActivity.this, MenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
         });
-        btnReporteActivityImprimir.setOnClickListener(v -> listDevices());
+        btnReporteActivityImprimir.setOnClickListener(v -> /*listDevices()*/
+                new Imprimir(this).starPrint(StringReporte));
         if (EsReporteDelDia){
             WVVerReporteActivityReporte.setWebViewClient(new WebViewClient(){
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -75,14 +59,14 @@ public class VerReporteActivity extends AppCompatActivity {
                 public void onPageFinished(WebView view, String url) {
                 }
             });
-            WVVerReporteActivityReporte.loadDataWithBaseURL(null, StringReporte,
+            WVVerReporteActivityReporte.loadDataWithBaseURL(null, HtmlReporte,
                     "text/HTML", "UTF-8", null);
         }
 
 
     }
 
-    void listDevices(){
+    /*void listDevices(){
         try {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -136,10 +120,10 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     // This will find a bluetooth printer device
-    void findBT(CharSequence charSequence) {
+    /*void findBT(CharSequence charSequence) {
 
         try {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -175,10 +159,10 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     // Tries to open a connection to the bluetooth printer device
-    void openBT() throws IOException {
+    /*void openBT() throws IOException {
         try {
             // Standard SerialPortService ID
             UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
@@ -195,11 +179,11 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     // After opening a connection to bluetooth printer device,
     // we have to listen and check if a data were sent to be printed.
-    void beginListenForData() {
+    /*void beginListenForData() {
         try {
             final Handler handler = new Handler();
 
@@ -258,12 +242,12 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /*
      * This will send data to be printed by the bluetooth printer
      */
-    void sendData() throws IOException {
+    /*void sendData() throws IOException {
         try {
 
             // the text typed by the user
@@ -277,10 +261,10 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     // Close the connection to bluetooth printer.
-    void closeBT() throws IOException {
+    /*void closeBT() throws IOException {
         try {
             stopWorker = true;
             mmOutputStream.close();
@@ -292,7 +276,7 @@ public class VerReporteActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
 }

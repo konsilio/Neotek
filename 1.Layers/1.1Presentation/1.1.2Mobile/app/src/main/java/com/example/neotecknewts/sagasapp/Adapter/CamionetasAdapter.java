@@ -45,7 +45,7 @@ public class CamionetasAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
     public class  CamionetasHolder extends RecyclerView.ViewHolder{
         public TextView TVCamposCamionetasTipoCilindro;
         public EditText ETConfiguracionCamionetasCantidad;
-        public CamionetasHolder(View v){
+        CamionetasHolder(View v){
             super(v);
             TVCamposCamionetasTipoCilindro =  v.findViewById(R.id.TVCamposCamionetasTipoCilindro);
             ETConfiguracionCamionetasCantidad = v.findViewById(R.id.ETConfiguracionCamionetasCantidad);

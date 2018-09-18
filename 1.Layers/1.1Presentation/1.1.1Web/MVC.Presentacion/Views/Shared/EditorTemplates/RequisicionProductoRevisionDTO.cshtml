@@ -1,0 +1,17 @@
+﻿@model MVC.Presentacion.Models.Requisicion.RequisicionProductoRevisionDTO
+@Html.HiddenFor(m => m.IdProducto)
+<tr>
+    <td>@Model.TipoProducto</td>
+    <td>@Model.Producto</td>
+    <td>@Model.Cantidad</td>
+    <td>@Model.Unidad</td>
+    <td>@Model.Aplicacion</td>
+    <td>@Model.CentroCosto</td>
+    <td>@Model.CantidadAlmacenActual</td>
+    <td>@Html.CheckBoxFor(x => x.RevisionFisica)</td>
+</tr>
+
+
+
+
+

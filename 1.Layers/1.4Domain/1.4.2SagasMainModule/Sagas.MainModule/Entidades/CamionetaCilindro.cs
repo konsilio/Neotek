@@ -17,8 +17,9 @@ namespace Sagas.MainModule.Entidades
         public short IdEmpresa { get; set; }
         public int IdCamioneta { get; set; }
         public int IdCilindro { get; set; }
+        public decimal Cantidad { get; set; }
     
-        public virtual CAlmacenGasCilindro CAlmacenGasCilindro { get; set; }
+        public virtual UnidadAlmacenGasCilindro UnidadAlmacenGasCilindro { get; set; }
         public virtual Camioneta Camioneta { get; set; }
         public virtual Empresa Empresa { get; set; }
     }

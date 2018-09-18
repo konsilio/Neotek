@@ -1,6 +1,7 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 public interface EnviarDatosPresenter {
@@ -12,4 +13,6 @@ public interface EnviarDatosPresenter {
     void onSuccessServicio();
 
     void onSuccessAndroid();
+
+    void RegistrarRecargaCamioneta(RecargaDTO recargaDTO, String token, SAGASSql sagasSql);
 }

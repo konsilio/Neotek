@@ -9,176 +9,173 @@
         <p>Espere por favor</p>
     </div>
 </div>
-@using (Html.BeginForm("Requisicion", "Requisicion", FormMethod.Post))
-{
-    <section class="content home">
-        <div class="container-fluid">
-            <div class="block-header">
-                <div class="row clearfix">
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>Compras</h2>
-                        <ul class="breadcrumb padding-0">
-                            <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item active">
-                                <label id="lblRuta">Requisición</label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong></strong><small></small></h2>
-                            </div>
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-sm-4">
-                                        <select id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
-                                            @foreach (var lst in Model.Empresas)
-                                            {
-                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                            }
-                                        </select>
-                                        @*<asp:DropDownList runat="server" ID="ddlEmpresas" data-live-search="true" AutoPostBack="true" CssClass="form-control z-index show-tick" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged">
-                                            </asp:DropDownList>*@
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <input type="text" id="txtNumRequisicion" CssClass="form-control" placeholder="N° de Requisición" />
-                                            @*<asp:TextBox runat="server" ID="txtNoRequisicion" CssClass="form-control" placeholder="N° de Requisición" AutoPostBack="true" OnTextChanged="txtNoRequisicion_TextChanged" />*@
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input id="BtnNuevaReq" type="submit" onclick="location.href='@Url.Action("Requisicion", "Requisicion")'" value="Requisicion" class="btn btn-primary btn-round btn-block btn-icon" />
-                                        @*<asp:Button runat="server" ID="btnNuevaReq" Text="Nueva Requisición" CssClass="btn btn-primary btn-round btn-block btn-icon" OnClick="btnNuevaReq_Click" />*@
-                                    </div>
-                                </div>
-                            </div>
+<body style="padding-top:10px">
+    @using (Html.BeginForm("Requisicion", "Requisicion", FormMethod.Post))
+    {
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Compras</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item active">
+                                    <label id="lblRuta">Requisición</label>
+                                </li>
+                            </ul>
                         </div>
-
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong></strong><small></small></h2>
-                            </div>
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-lg-3">
-                                        <label>Estatus</label>
-                                        <select id="estatus" class="form-control selectpicker show-tick" data-live-search="true">
-                                            @foreach (var lst in Model.Estatus)
-                                            {
-                                                <option value="@lst.IdRequisicionEstatus">@lst.Estatus</option>
-                                            }
-                                        </select>
-                                        @*<asp:DropDownList CssClass="form-control show-tick" runat="server" ID="ddlFiltroEstatus" AutoPostBack="true">
-                                            </asp:DropDownList>*@
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <label>Fecha de registro</label>
-                                        <div class="from-group">                                           
-                                            <div>
-                                                @Html.EditorFor(model => model.FechaCreacionDe, new { htmlAttributes = new { @class = "from-control" } })
-                                                @Html.ValidationMessageFor(model => model.FechaCreacionDe, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h2><strong></strong><small></small></h2>
+                                </div>
+                                <div class="body">
+                                    <div class="row clearfix">
+                                        <div class="col-sm-4">
+                                            <select id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                                @foreach (var lst in Model.Empresas)
+                                                {
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
+                                            </select>
+                                            @*<asp:DropDownList runat="server" ID="ddlEmpresas" data-live-search="true" AutoPostBack="true" CssClass="form-control z-index show-tick" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged">
+                                                </asp:DropDownList>*@
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="text" id="txtNumRequisicion" CssClass="form-control" placeholder="N° de Requisición" />
+                                                @*<asp:TextBox runat="server" ID="txtNoRequisicion" CssClass="form-control" placeholder="N° de Requisición" AutoPostBack="true" OnTextChanged="txtNoRequisicion_TextChanged" />*@
                                             </div>
                                         </div>
-
-                                        @*<dtp:DateTimePicker ID="dtpFechaRegiistrDe" CssClass="dataTxt" />*@
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <label>&nbsp; </label>
-                                        <div class="from-group">                                          
-                                            <div>
-                                                @Html.EditorFor(model => model.FechaCreacionA, new { htmlAttributes = new { @class = "from-control" } })
-                                                @Html.ValidationMessageFor(model => model.FechaCreacionA, "", new { @class = "text-danger" })
-                                            </div>
+                                        <div class="col-sm-4">
+                                            <input id="BtnNuevaReq" type="submit" onclick="location.href='@Url.Action("Requisicion", "Requisicion")'" value="Requisicion" class="btn btn-primary btn-round btn-block" />
+                                            @*<asp:Button runat="server" ID="btnNuevaReq" Text="Nueva Requisición" CssClass="btn btn-primary btn-round btn-block btn-icon" OnClick="btnNuevaReq_Click" />*@
                                         </div>
-                                        @*<dtp:DateTimePicker ID="dtpFechaRegiistrA" CssClass="dataTxt" />*@
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <label>Fecha de requisición</label>
-                                        <div class="from-group">                                         
-                                            <div>
-                                                @Html.EditorFor(model => model.FechaRequeridaDe, new { htmlAttributes = new { @class = "from-control" } })
-                                                @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        @*<dtp:DateTimePicker ID="dtpFechaRequisicionDe" CssClass="dataTxt" />*@
-                                    </div>
-                                    <div class="col-lg-2">
-                                        <label>&nbsp; </label>
-                                        <div class="from-group">                                            
-                                            <div>
-                                                @Html.EditorFor(model => model.FechaRequeridaA, new { htmlAttributes = new { @class = "from-control" } })
-                                                @Html.ValidationMessageFor(model => model.FechaRequeridaA, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        @*<dtp:DateTimePicker ID="dtpFechaRequisicionA" CssClass="dataTxt" />*@
-
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <label>&nbsp; </label>
-                                        <input id="buscar" type="submit" value="Inicio" class="btn btn-primary btn-round btn-block" />
-                                        <i class="material-icons">search</i>
-                                        <span class="icon-name"></span>
-                                        @*<div class="input-group">
-                                                <asp:LinkButton ID="btnBuscar" runat="server" CssClass="btn btn-danger btn-simple btn-round btn-sm" OnClick="btnBuscar_Click">
-                                                    <i class="material-icons">search</i>
-                                                    <span class="icon-name"></span>
-                                                </asp:LinkButton>
-                                            </div>*@
                                     </div>
                                 </div>
-                                <div class="row clearfix">
-                                    <div class="table-responsive">
-                                        <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="RequisicionProductos">
-                                            <thead>
-                                                <tr>
-                                                    <td>Gasera</td>
-                                                    <td>No. Requisicion</td>
-                                                    <td>Fecha Requerida</td>
-                                                    <td>Solicitante</td>
-                                                    <td>Estatus</td>
-                                                    <td>Accion</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var req in Model.Requisiciones)
+                            </div>
+
+                            <div class="card">
+                                <div class="header">
+                                    <h2><strong></strong><small></small></h2>
+                                </div>
+                                <div class="body">
+                                    <div class="row clearfix">
+                                        <div class="col-lg-3">
+                                            <label>Estatus</label>
+                                            <select id="estatus" class="form-control selectpicker show-tick" data-live-search="true">
+                                                @foreach (var lst in Model.Estatus)
                                                 {
-                                                    <tr>
-                                                        <td>@req.NombreComercial</td>
-                                                        <td>@req.NumeroRequisicion</td>
-                                                        <td>@req.FechaRequerida</td>
-                                                        <td>@req.UsuarioSolicitante</td>
-                                                        <td>@req.RequisicionEstatus</td>
-                                                        <td>
-                                                            @if (req.IdRequisicionEstatus.Equals(1))
-                                                            {
-                                                                <a id="lbDgOjo" href="">
-                                                                    <i class="material-icons">picture_as_pdf</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                                <a id="lbDgPDF" href="@Url.Action("RequisicionAlternativa", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })">
-                                                                    <i class="material-icons">content_paste</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                            }
-                                                            @if (req.IdRequisicionEstatus.Equals(3) || req.IdRequisicionEstatus.Equals(4))
-                                                            {
-                                                                <a id="lbDgPDF" href="">
-                                                                    <i class="material-icons">picture_as_pdf</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                                <a id="lbAutoriza" href="@Url.Action("RequisicionAlternativa", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })">
-                                                                    <i class="material-icons">spellcheck</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                            }                                                         
-                                                        </td>
-                                                    </tr>
+                                                    <option value="@lst.IdRequisicionEstatus">@lst.Estatus</option>
                                                 }
-                                            </tbody>
-                                        </table>
+                                            </select>
+                                            @*<asp:DropDownList CssClass="form-control show-tick" runat="server" ID="ddlFiltroEstatus" AutoPostBack="true">
+                                                </asp:DropDownList>*@
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label>Fecha de registro</label>
+                                            <div class="from-group">
+                                                <div>
+                                                    @Html.EditorFor(model => model.FechaCreacionDe, new { htmlAttributes = new { @class = "from-control" } })
+                                                    @Html.ValidationMessageFor(model => model.FechaCreacionDe, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            @*<dtp:DateTimePicker ID="dtpFechaRegiistrDe" CssClass="dataTxt" />*@
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label>&nbsp; </label>
+                                            <div class="from-group">
+                                                <div>
+                                                    @Html.EditorFor(model => model.FechaCreacionA, new { htmlAttributes = new { @class = "from-control" } })
+                                                    @Html.ValidationMessageFor(model => model.FechaCreacionA, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            @*<dtp:DateTimePicker ID="dtpFechaRegiistrA" CssClass="dataTxt" />*@
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label>Fecha de requisición</label>
+                                            <div class="from-group">
+                                                <div>
+                                                    @Html.EditorFor(model => model.FechaRequeridaDe, new { htmlAttributes = new { @class = "from-control" } })
+                                                    @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            @*<dtp:DateTimePicker ID="dtpFechaRequisicionDe" CssClass="dataTxt" />*@
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label>&nbsp; </label>
+                                            <div class="from-group">
+                                                <div>
+                                                    @Html.EditorFor(model => model.FechaRequeridaA, new { htmlAttributes = new { @class = "from-control" } })
+                                                    @Html.ValidationMessageFor(model => model.FechaRequeridaA, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            @*<dtp:DateTimePicker ID="dtpFechaRequisicionA" CssClass="dataTxt" />*@
+
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <button class="btn btn-primary btn-round btn-block text-center" OnClick="btnBuscar_Click">
+                                                <i class="material-icons">search</i>
+                                                <span class="icon-name"></span>
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="table-responsive">
+                                            <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="RequisicionProductos">
+                                                <thead>
+                                                    <tr>
+                                                        <td>Gasera</td>
+                                                        <td>No. Requisicion</td>
+                                                        <td>Fecha Requerida</td>
+                                                        <td>Solicitante</td>
+                                                        <td>Estatus</td>
+                                                        <td>Accion</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var req in Model.Requisiciones)
+                                                    {
+                                                        <tr>
+                                                            <td>@req.NombreComercial</td>
+                                                            <td>@req.NumeroRequisicion</td>
+                                                            <td>@req.FechaRequerida</td>
+                                                            <td>@req.UsuarioSolicitante</td>
+                                                            <td>@req.RequisicionEstatus</td>
+                                                            <td>
+                                                                @if (req.IdRequisicionEstatus.Equals(1))
+                                                                {
+                                                                    <a id="lbDgOjo" href="">
+                                                                        <i class="material-icons">picture_as_pdf</i>
+                                                                        <span class="icon-name"></span>
+                                                                    </a>
+                                                                    <a id="lbDgPDF" href="@Url.Action("RequisicionRevision", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })">
+                                                                        <i class="material-icons">content_paste</i>
+                                                                        <span class="icon-name"></span>
+                                                                    </a>
+                                                                }
+                                                                @if (req.IdRequisicionEstatus.Equals(3) || req.IdRequisicionEstatus.Equals(4))
+                                                                {
+                                                                    <a id="lbDgPDF" href="">
+                                                                        <i class="material-icons">picture_as_pdf</i>
+                                                                        <span class="icon-name"></span>
+                                                                    </a>
+                                                                    <a id="lbAutoriza" href="@Url.Action("RequisicionAutorizacion", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })">
+                                                                        <i class="material-icons">spellcheck</i>
+                                                                        <span class="icon-name"></span>
+                                                                    </a>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -186,9 +183,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-}
+        </section>
+
+    }
+</body>
 <script src="~/assets/bundles/datatablescripts.bundle.js"></script>
 <script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
 <script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>

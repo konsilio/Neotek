@@ -26,6 +26,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
     public Boolean EsLecturaInicial,EsLecturaFinal,EsLecturaFinalPipa,EsLecturaInicialPipa;
     public LecturaDTO lecturaDTO;
     public LecturaPipaDTO lecturaPipaDTO;
+    public int max_p5000,p5000;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -40,12 +41,21 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             EsLecturaInicialPipa = (boolean) b.get("EsLecturaInicialPipa");
             if(EsLecturaInicial){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
+                max_p5000 = lecturaDTO.getCantidadP5000();
+                p5000 = lecturaDTO.getCantidadP5000();
             }else if(EsLecturaFinal){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
+                max_p5000 = lecturaDTO.getCantidadP5000();
+                p5000 = lecturaDTO.getCantidadP5000();
             }else if (EsLecturaInicialPipa){
                 lecturaPipaDTO = (LecturaPipaDTO) b.getSerializable("lecturaPipaDTO");
+                max_p5000 = lecturaPipaDTO.getCantidadP5000();
+                p5000 = lecturaPipaDTO.getCantidadP5000();
+
             }else if(EsLecturaFinalPipa){
                 lecturaPipaDTO = (LecturaPipaDTO) b.getSerializable("lecturaPipaDTO");
+                max_p5000 = lecturaPipaDTO.getCantidadP5000();
+                p5000 = lecturaPipaDTO.getCantidadP5000();
             }
         }
 
@@ -81,8 +91,8 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
         BtnLecturaP5000Guardar = findViewById(R.id.BtnLecturaP5000Guardar);
         BtnLecturaP5000Guardar.setOnClickListener(this);
 
-        NPLecturaP500CantidadLectura.setValue(5000);
-        NPLecturaP500CantidadLectura.setMaxValue(5000);
+        NPLecturaP500CantidadLectura.setValue(p5000);
+        NPLecturaP500CantidadLectura.setMaxValue(max_p5000);
     }
 
     @Override

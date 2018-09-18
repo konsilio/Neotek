@@ -229,6 +229,16 @@ public class FinalizarDescargaSQL extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM "+TABLE_IMAGENES_FINALIZAR_DESCARGA+
                 " WHERE ClaveOperacion ='"+ClaveOperacion+"'",null);
     }
+
+    /**
+     * Permite realizar una consulta de todos los registros de finalizar descarga, retornara
+     * un objeto de tipo {@link Cursor} con los datos resultantes
+     * @return Objeto {@link Cursor} con el resultado de los datos
+     */
+    public Cursor GetFinalizarDescargas() {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_FINALIZAR_DESCARGA,
+                null);
+    }
     //endregion
     //endregion
 

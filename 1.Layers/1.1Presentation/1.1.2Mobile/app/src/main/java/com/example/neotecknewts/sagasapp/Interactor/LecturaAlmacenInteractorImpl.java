@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaAlmacenPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaAlmacenPresenterImpl;
@@ -77,5 +78,64 @@ public class LecturaAlmacenInteractorImpl implements LecturaAlmacenInteractor {
             }
         });
 
+    }
+
+    @Override
+    public void getAlmacenes(String token,boolean esFinalizar ) {
+        String url = Constantes.BASE_URL;
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
+                false,
+                false,
+                false,
+                esFinalizar,
+                token
+        );
+        Log.w("Url base",retrofit.baseUrl().toString());
+
+        call.enqueue(new Callback<DatosTomaLecturaDto>() {
+            @Override
+            public void onResponse(Call<DatosTomaLecturaDto> call, Response<DatosTomaLecturaDto> response) {
+                if (response.isSuccessful()) {
+                    DatosTomaLecturaDto data = response.body();
+                    Log.w("Estatus","Success");
+                    lecturaAlmacenPresenter.onSuccessGetAlmacen(data);
+                }
+                else {
+                    switch (response.code()) {
+                        case 404:
+                            Log.w("Error","not found");
+
+                            break;
+                        case 500:
+                            Log.w("Error", "server broken");
+
+                            break;
+                        default:
+                            Log.w("Error", "Error desconocido: "+response.code());
+
+                            break;
+                    }
+                    lecturaAlmacenPresenter.onError();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<DatosTomaLecturaDto> call, Throwable t) {
+                Log.e("error", "Error desconocido: "+t.toString());
+                lecturaAlmacenPresenter.onError();
+            }
+        });
     }
 }

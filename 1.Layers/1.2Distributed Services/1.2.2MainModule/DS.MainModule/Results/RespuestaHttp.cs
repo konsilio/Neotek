@@ -77,6 +77,11 @@ namespace DS.MainModule.Results
             return respuestaHttp;
         }
 
+        public static HttpResponseMessage crearRespuesta(DatosTomaLecturaDto respuesta, HttpRequestMessage request)
+        {
+            return request.CreateResponse(HttpStatusCode.OK, respuesta);           
+        }
+
         public static HttpResponseMessage crearRespuesta<T>(List<T> respuesta, HttpRequestMessage request)
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);

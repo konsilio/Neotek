@@ -3,9 +3,9 @@ package com.example.neotecknewts.sagasapp.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaDatosPresenter;
@@ -35,7 +37,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
 
     public Button BLecturaDatosActivityAceptar;
 
-    public boolean EsLecturaInicial, EsLecturaFinal;
+    public boolean EsLecturaInicial, EsLecturaFinal,esFinalizar;
     public ProgressDialog dialog_progres;
 
     public String[]ListaCarburacion,ListaTipoMedidor;
@@ -45,7 +47,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
     public List<MedidorDTO> listaDTO;
 
     public LecturaDTO lecturaDTO;
-
+    public DatosTomaLecturaDto DatosTomaLecturaDto;
 
 
     @Override
@@ -78,7 +80,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
             EsLecturaInicial = true;
             EsLecturaFinal = false;
         }
-
+        esFinalizar = b.getBoolean("EsLecturaInicial",false);
         lecturaDTO = new LecturaDTO();
 
         TVLecturaDatosActivityTitulo.setText(
@@ -87,12 +89,12 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
 
         ListaCarburacion = new String[]{"Seleccione","Tipo 1","Tipo 2"};
         ListaTipoMedidor = getResources().getStringArray(R.array.tipos_medidor);
-        SLecturaDatosActivityListaCarburacion.setAdapter(new ArrayAdapter<>(this,
-                R.layout.custom_spinner, ListaCarburacion ));
+        /*SLecturaDatosActivityListaCarburacion.setAdapter(new ArrayAdapter<>(this,
+                R.layout.custom_spinner, ListaCarburacion ));*/
         SLecturaDatosActivityTipoMedidor.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner, ListaTipoMedidor));
 
-        lecturaDatosPresenter.getMedidores(session.getToken());
+        /*lecturaDatosPresenter.getMedidores(session.getToken());*/
 
         SLecturaDatosActivityTipoMedidor.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
@@ -122,12 +124,20 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                 lecturaDTO.setNombreTipoMedidor("");
             }
         });
-
+        lecturaDatosPresenter.getEstacionesCarburacion(session.getToken(),esFinalizar);
         SLecturaDatosActivityListaCarburacion.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getItemAtPosition(position).toString().equals("Tipo 1")){
+                for (AlmacenDTO estacion:DatosTomaLecturaDto.getAlmacenes()){
+                    if(estacion.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())){
+                        lecturaDTO.setNombreEstacionCarburacion(estacion.getNombreAlmacen());
+                        lecturaDTO.setIdEstacionCarburacion(estacion.getIdAlmacenGas());
+                        lecturaDTO.setCantidadP5000(estacion.getCantidadP5000());
+                        lecturaDTO.setPorcentajeMedidor(estacion.getPorcentajeMedidor());
+                    }
+                }
+                /*if(parent.getItemAtPosition(position).toString().equals("Tipo 1")){
                     lecturaDTO.setNombreEstacionCarburacion(parent.getItemAtPosition(position)
                             .toString());
                     lecturaDTO.setIdEstacionCarburacion(1);
@@ -135,13 +145,15 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                     lecturaDTO.setNombreEstacionCarburacion(parent.getItemAtPosition(position)
                             .toString());
                     lecturaDTO.setIdEstacionCarburacion(1);
-                }
+                }*/
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 lecturaDTO.setNombreEstacionCarburacion("");
                 lecturaDTO.setIdEstacionCarburacion(0);
+                lecturaDTO.setCantidadP5000(0);
+                lecturaDTO.setPorcentajeMedidor(0.0);
             }
         });
 
@@ -263,6 +275,18 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
         });
         //builder.create();
         builder.show();
+    }
+
+    @Override
+    public void onSuccessEstacionesCarburacion(DatosTomaLecturaDto data) {
+        DatosTomaLecturaDto = data;
+        ListaCarburacion = new String[DatosTomaLecturaDto.getAlmacenes().size()+1];
+        ListaCarburacion[0] = "Seleccione";
+        for (int x = 0;x<data.getAlmacenes().size();x++){
+            ListaCarburacion[x+1]=data.getAlmacenes().get(x).getNombreAlmacen();
+        }
+        SLecturaDatosActivityListaCarburacion.setAdapter(new ArrayAdapter<>(this,
+                R.layout.custom_spinner,ListaCarburacion));
     }
 
     private AlertDialog.Builder CrearAlerta(int titulo,String mensaje){

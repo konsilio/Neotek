@@ -188,6 +188,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
         if(registro_local ){
             subirImagenesPresenter.onSuccessRegistroAndroid();
+            Lisener lisener = new Lisener(papeletaSQL,token);
+            lisener.CrearRunable(Lisener.Papeleta);
         }
     }
 
@@ -323,6 +325,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
         if(registro_local ){
             subirImagenesPresenter.onSuccessRegistroAndroid();
+            Lisener lisener = new Lisener(iniciarDescargaSQL,token);
+            lisener.CrearRunable(Lisener.IniciarDescarga);
         }
         //endregion
     }
@@ -459,6 +463,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
         if(registro_local ){
             subirImagenesPresenter.onSuccessRegistroAndroid();
+            Lisener lisener = new Lisener(finalizarDescargaSQL,token);
+            lisener.CrearRunable(Lisener.FinalizarDescarga);
         }
         //endregion
 

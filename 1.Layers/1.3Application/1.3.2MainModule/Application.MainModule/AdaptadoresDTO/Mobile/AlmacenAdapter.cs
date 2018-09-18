@@ -204,12 +204,53 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new AlmacenDto()
             {
                 IdAlmacenGas = alm.IdCAlmacenGas,
+                IdTipoMedidor = alm.IdTipoMedidor,
                 NombreAlmacen= AlmacenGasServicio.ObtenerNombreUnidadAlmacenGas(alm),
+                CantidadP5000 = alm.P5000Actual,
+                PorcentajeMedidor = alm.PorcentajeActual,
+                Cilindros = null,
             };
         }
+
+        public static AlmacenDto ToDto(UnidadAlmacenGas alm, AlmacenGasTomaLectura lect)
+        {
+            var almDto = ToDto(alm);
+            if (lect == null || lect.Cilindros == null)
+                almDto.Cilindros = ToDto(AlmacenGasServicio.AdaptarCilindro(0));            
+            else
+                almDto.Cilindros = ToDto(AlmacenGasServicio.AdaptarCilindro(lect.Cilindros.ToList()));
+
+            return almDto;
+        }
+
         public static List<AlmacenDto> ToDto(List<UnidadAlmacenGas> alm)
         {
             return alm.ToList().Select(x => ToDto(x)).ToList();
+        }
+
+        public static List<AlmacenDto> ToDto(List<UnidadAlmacenGas> alms, List<AlmacenGasTomaLectura> lects)
+        {
+            var almacenDto = new List<AlmacenDto>();
+            int i = 0;
+            foreach (var alm in alms)
+            {
+                almacenDto.Add(ToDto(alm, lects.ElementAt(i)));
+            }
+            return almacenDto;
+        }
+
+        public static CilindroDto ToDto(UnidadAlmacenGasCilindro cil)
+        {
+            return new CilindroDto()
+            {
+                IdCilindro = cil.IdCilindro,
+                CapacidadKg = cil.CapacidadKg.ToString(),
+                Cantidad = cil.Cantidad,
+            };
+        }
+        public static List<CilindroDto> ToDto(List<UnidadAlmacenGasCilindro> cils)
+        {
+            return cils.ToList().Select(x => ToDto(x)).ToList();
         }
     }
 }

@@ -475,8 +475,8 @@
                     <li class="menu_dark"><a href="@Url.Action("Requisiciones", "Requisicion")"><i class="material-icons">feedback </i><span class="icon-name">Requisicion</span> </a></li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
-                        <ul class="ml-menu">
-                            <li><a href="../../OrdenCompra/Vistas/Compra.aspx">Orden de Compra</a></li>
+                        <ul class="ml-menu">                            
+                            <li><a href="@Url.Action("Ordenes", "OrdenCompra")">Orden de Compra </a></li>
                         </ul>
                     </li>
                     <li>
@@ -518,6 +518,5 @@
     <script src="~/assets/bundles/libscripts.bundle.js"></script>
     <script src="~/assets/bundles/vendorscripts.bundle.js"></script>
     <script src="~/assets/bundles/mainscripts.bundle.js"></script>
-
 </body>
 </html>

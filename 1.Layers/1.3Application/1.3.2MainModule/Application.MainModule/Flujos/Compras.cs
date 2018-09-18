@@ -2,6 +2,7 @@
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
+using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.AccesoADatos;
@@ -43,16 +44,16 @@ namespace Application.MainModule.Flujos
             Req.Productos = OrdenCompraServicio.DescartarProductosParaOC(Req.Productos);
             //Retornamos el objeto con los productos filtrados
             return Req;
-
-        }
+        }      
         /// <summary>
         /// Generamos la(s) ordene(s) de compra segun los provedores de la lista de productos.
         /// </summary>
         /// <param name="oc"></param>
         /// <returns></returns>
-        public List<OrdenCompraRespuestaDTO> GenerarOrdenesCompra(OrdenCompraCrearDTO oc)
+        public RespuestaDto GenerarOrdenesCompra(OrdenCompraCrearDTO oc)
         {
-            List<OrdenCompraRespuestaDTO> lrOC = new List<OrdenCompraRespuestaDTO>();
+            RespuestaDto respuesta = new RespuestaDto();
+            respuesta.Exito = true;
             List<OrdenCompra> locDTO = OrdenCompraServicio.IdentificarOrdenes(oc);
             locDTO = OrdenCompraServicio.AsignarProductos(oc.Productos, locDTO);
             locDTO = OrdenCompraServicio.CalcularTotales(locDTO);
@@ -60,14 +61,21 @@ namespace Application.MainModule.Flujos
             {                
                 ocDTO.NumOrdenCompra = FolioServicio.GeneraNumerOrdenCompra(ocDTO);
                 OrdenCompraRespuestaDTO orDTO = OrdenCompraServicio.GuardarOrdenCompra(ocDTO);
-                lrOC.Add(orDTO);
+                respuesta.Mensaje+= orDTO.NumOrdenCompra +"|";
                 if (orDTO.Exito)
                 {
+                    respuesta.Id = orDTO.IdOrdenCompra;
+                    respuesta.EsInsercion = true;
                     RequisicionServicio.UpDateRequisicionEstaus(oc.IdRequisicion, 8);
                     NotificarServicio.OrdenDeCompraNueva(OrdenCompraServicio.Buscar(orDTO.IdOrdenCompra));
                 }
+                else
+                {
+                    respuesta.Exito = orDTO.Exito;
+                    respuesta.Mensaje = orDTO.Mensaje;
+                }
             }            
-            return lrOC;
+            return respuesta;
         }
         /// <summary>
         /// Actualiza los datos de la orden de compra de su autorizacion

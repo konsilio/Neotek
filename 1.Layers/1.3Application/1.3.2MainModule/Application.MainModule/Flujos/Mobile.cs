@@ -34,7 +34,7 @@ namespace Application.MainModule.Flujos
 
         public List<AlmacenDto> ObtenerAlmacenesGas()
         {
-            return AlmacenAdapter.ToDto(AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa()));
+            return AlmacenAdapter.ToDto(AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa(), true));
         }
 
         public RespuestaDto RegistrarPapeleta(PapeletaDTO papeletaDto)
@@ -62,6 +62,76 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
             return EntradaGasServicio.Descargar(desDto, true);
+        }
+
+        public RespuestaDto InicializarTomaDeLectura(LecturaDTO liadto)
+        {
+            var resp = LecturaGasServicio.EvaluarClaveOperacion(liadto);
+            if (resp.Exito) return resp;
+
+            return LecturaGasServicio.Lectura(liadto);
+        }
+
+        public RespuestaDto FinalizarTomaDeLectura(LecturaDTO lfadto)
+        {
+            var resp = LecturaGasServicio.EvaluarClaveOperacion(lfadto);
+            if (resp.Exito) return resp;
+
+            return LecturaGasServicio.Lectura(lfadto, true);
+        }
+
+        public RespuestaDto IniciarTomaDeLecturaCamioneta(LecturaCamionetaDTO lcdto)
+        {
+            var resp = LecturaGasServicio.EvaluarClaveOperacion(lcdto);
+            if (resp.Exito) return resp;
+
+            return LecturaGasServicio.Lectura(lcdto);
+        }
+
+        public RespuestaDto FinalizarTomaDeLecturaCamioneta(LecturaCamionetaDTO lcdto)
+        {
+            var resp = LecturaGasServicio.EvaluarClaveOperacion(lcdto);
+            if (resp.Exito) return resp;
+
+            return LecturaGasServicio.Lectura(lcdto,true);
+        }
+
+        public DatosTomaLecturaDto ConsultaDatosTomaLectura(bool esEstacion, bool esPipa, bool esCamioneta, bool esFinalizar)
+        {
+            if(esEstacion)
+                return LecturaGasServicio.ConsultaDatosTomaLecturaEstacionCarburacion(esFinalizar);
+
+            if (esPipa)
+                return LecturaGasServicio.ConsultaDatosTomaLecturaPipa(esFinalizar);
+
+            if (esCamioneta)
+                return LecturaGasServicio.ConsultaDatosTomaLecturaCamioneta(esFinalizar);
+
+            return LecturaGasServicio.ConsultaDatosTomaLecturaAlmacenGeneral(esFinalizar);
+        }
+
+        public RespuestaDto IniciarRecargaCamioneta(RecargaDTO rdto)
+        {
+            var resp = RecargaGasServicio.EvaluarClaveOperacion(rdto);
+            if (resp.Exito) return resp;
+
+            return RecargaGasServicio.Recarga(rdto);
+        }
+
+        public RespuestaDto IniciarRecarga(RecargaDTO ridto)
+        {
+            var resp = RecargaGasServicio.EvaluarClaveOperacion(ridto);
+            if (resp.Exito) return resp;
+
+            return RecargaGasServicio.Recarga(ridto,true);
+        }
+
+        public RespuestaDto FinalizarRecarga(RecargaDTO rfdto)
+        {
+            var resp = RecargaGasServicio.EvaluarClaveOperacion(rfdto);
+            if (resp.Exito) return resp;
+
+            return RecargaGasServicio.Recarga(rfdto, true);
         }
     }
 }

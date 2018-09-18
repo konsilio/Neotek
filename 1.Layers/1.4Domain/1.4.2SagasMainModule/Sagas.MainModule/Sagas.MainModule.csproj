@@ -97,9 +97,6 @@
     <Compile Include="Entidades\Banco.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\CAlmacenGasCilindro.cs">
-      <DependentUpon>Sagas.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entidades\Camioneta.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -222,6 +219,9 @@
     <Compile Include="Entidades\UnidadAlmacenGas.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\UnidadAlmacenGasCilindro.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\UnidadMedida.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -241,6 +241,7 @@
     <Compile Include="ObjetosValor\Enum\ImagenDeEnum.cs" />
     <Compile Include="ObjetosValor\Enum\RequisicionEstatusEnum.cs" />
     <Compile Include="ObjetosValor\Enum\OrdenCompraEstatusEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\TipoEventoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoPersonaFiscalEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoProveedorEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

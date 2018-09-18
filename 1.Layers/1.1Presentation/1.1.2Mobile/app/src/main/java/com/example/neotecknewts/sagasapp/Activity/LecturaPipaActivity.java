@@ -15,9 +15,10 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
-import com.example.neotecknewts.sagasapp.Model.PipaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaPipaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
@@ -36,11 +37,11 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
     ProgressDialog progressDialog;
     String []ListaMedidores,ListaPipas;
     List<MedidorDTO> MedidorDTOList;
-    List<PipaDTO> PipaDTOList;
+    DatosTomaLecturaDto DatosTomaLecturaDto;
     LecturaPipaPresenterImpl lecturaPipaPresenter;
     Session session;
     LecturaPipaDTO lecturaPipaDTO;
-    Boolean EsLecturaInicialPipa,EsLecturaFinalPipa;
+    Boolean EsLecturaInicialPipa,EsLecturaFinalPipa,EsFinal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
         if(b!=null) {
             EsLecturaInicialPipa = (boolean)b.get("EsLecturaInicialPipa");
             EsLecturaFinalPipa = (boolean) b.get("EsLecturaFinalPipa");
+            EsFinal = b.getBoolean("EsLecturaFinalPipa",false);
         }
         TVLecturaPipaActivityTitulo = findViewById(R.id.TVLecturaPipaActivityTitulo);
         if(EsLecturaInicialPipa){
@@ -76,20 +78,28 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
                 R.layout.custom_spinner,ListaMedidores));
         SLecturaPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaPipas));
-        lecturaPipaPresenter.getMedidores(session.getToken());
-        //lecturaPipaPresenter.getPipas(session.getToken());
+        //lecturaPipaPresenter.getMedidores(session.getToken());
+        lecturaPipaPresenter.getPipas(session.getToken(),EsFinal);
 
         SLecturaPipaActivityListaPipa.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position>0) {
-                    for (String m : ListaPipas) {
+                    for (AlmacenDTO almacenDTO :DatosTomaLecturaDto.getAlmacenes()){
+                        if (almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
+                            lecturaPipaDTO.setIdPipa(almacenDTO.getIdAlmacenGas());
+                            lecturaPipaDTO.setNombrePipa(almacenDTO.getNombreAlmacen());
+                            lecturaPipaDTO.setPorcentajeMedidor(almacenDTO.getPorcentajeMedidor());
+                            lecturaPipaDTO.setCantidadP5000(almacenDTO.getCantidadP5000());
+                        }
+                    }
+                    /*for (String m : ListaPipas) {
                         if (m.equals(parent.getItemAtPosition(position).toString())) {
                             lecturaPipaDTO.setNombrePipa(m);
                             lecturaPipaDTO.setIdPipa(1);
                         }
-                    }
+                    }*/
                 }
             }
 
@@ -97,6 +107,8 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
             public void onNothingSelected(AdapterView<?> parent) {
                 lecturaPipaDTO.setIdPipa(0);
                 lecturaPipaDTO.setNombrePipa("");
+                lecturaPipaDTO.setPorcentajeMedidor(0.0);
+                lecturaPipaDTO.setCantidadP5000(0);
             }
         });
 
@@ -252,12 +264,12 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
     }
 
     @Override
-    public void onSuccessPipas(List<PipaDTO> pipaDTOList) {
-        ListaPipas = new String[pipaDTOList.size()+1];
-        PipaDTOList = pipaDTOList;
+    public void onSuccessPipas(DatosTomaLecturaDto data) {
+        ListaPipas = new String[data.getAlmacenes().size()+1];
+        DatosTomaLecturaDto = data;
         ListaPipas[0]= "Seleccione";
-        for (int x =0; x< pipaDTOList.size();x++){
-            ListaPipas[x+1] = pipaDTOList.get(x).getNombrePipa();
+        for (int x =0; x< data.getAlmacenes().size();x++){
+            ListaPipas[x+1] = data.getAlmacenes().get(x).getNombreAlmacen();
         }
         SLecturaPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaPipas));

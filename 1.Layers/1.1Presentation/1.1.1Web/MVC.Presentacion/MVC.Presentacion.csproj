@@ -118,7 +118,6 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
@@ -218,7 +217,6 @@
     <Compile Include="Agente\AgenteServicio.cs" />
     <Compile Include="App_Code\AutenticacionServicio.cs" />
     <Compile Include="App_Code\OrdenCompraServicio.cs" />
-    <Content Include="App_Code\OrdenesComprasModel.cs" />
     <Compile Include="App_Code\RequisicionServicio.cs" />
     <Compile Include="App_Code\CatalogoServicio.cs" />
     <Compile Include="App_Code\TokenServicio.cs" />
@@ -242,6 +240,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Catalogos\CatalogoRespuestaDTO.cs" />
+    <Compile Include="Models\Catalogos\CuentaContableDTO.cs" />
     <Compile Include="Models\Catalogos\ClienteLocacionMod.cs" />
     <Compile Include="Models\Catalogos\ClientesDto.cs" />
     <Compile Include="Models\Catalogos\ClientesModel.cs" />
@@ -262,13 +261,18 @@
     <Compile Include="Models\Catalogos\UsuariosModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraCrearDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraEstatusDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraEstatusEnum.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraModel.cs" />
-    <Compile Include="Models\OrdenCompra\OrdenCompraPorductoDTO.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraProductoCrearDTO.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraProductoDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenesCompraModel.cs" />
+    <Compile Include="Models\OrdenCompra\ProductoOCDTO.cs" />
+    <Compile Include="Models\OrdenCompra\RequisicionOCDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionAutorizacionModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutPutDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionCancelaDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionDTO.cs" />
@@ -285,6 +289,7 @@
     <Compile Include="Models\Requisicion\RequisicionProductoDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionProductoNuevoDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionRevisionDTO.cs" />
+    <Compile Include="Models\Requisicion\RequisicionRevisionModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionRevPutDTO.cs" />
     <Compile Include="Models\Requisicion\RespuestaRequisicionDTO.cs" />
     <Compile Include="Models\Seguridad\AutenticacionDTO.cs" />
@@ -4035,6 +4040,12 @@
     <Content Include="Views\Empresas\Nueva.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Requisicion\RequisicionRevision.cshtml" />
+    <Content Include="Views\Requisicion\RequisicionAutorizacion.cshtml" />
+    <Content Include="Views\OrdenCompra\OrdenCompraAutorizacion.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RequisicionProductoRevisionDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RequisicionProductoAutorizacionDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ProductoOCDTO.cshtml" />
     <Content Include="Views\Empresas\ActualizaParametros.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="Views\Usuarios\Nuevo.cshtml" />
