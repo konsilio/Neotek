@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Catalogo
 {
-    public class CentroCostoModificarDto : CentroCostoDTO
-    {      
+    public class CentroCostoModificarDto : CentroCostoCrearDto
+    {
+        public int IdCentroCosto { get; set; }
     }
 }

@@ -73,6 +73,16 @@ namespace MVC.Presentacion.App_Code
             agente.ModificarCtroCosto(dto, Tkn);
             return agente._RespuestaDTO;
         }
+        public static RespuestaDTO CrearCategoria(CategoriaProductoDTO dto, string Tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarCategoria(dto, Tkn);
+            return agente._RespuestaDTO;
+        }
+        public static string InitCategoria(string tkn)
+        {
+            throw new NotImplementedException();
+        }
         public static RespuestaDTO EditarCentroCosto(CentroCostoModel model, string tkn)
         {
             CentroCostoModificarDTO dto = new CentroCostoModificarDTO()
@@ -140,7 +150,7 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.BuscarProductos(Token);
-            return agente._listProductos;
+            return agente._listaProductos;
         }
         #endregion
         #region Proveedores

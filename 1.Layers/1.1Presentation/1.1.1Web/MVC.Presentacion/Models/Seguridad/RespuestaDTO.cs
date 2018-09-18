@@ -16,5 +16,7 @@ namespace MVC.Presentacion.Models.Seguridad
         public bool ModeloValido { get; set; }
         public List<string> MensajesError { get; set; }
         public string RedirigirUrl { get; set; }
+
+       // public T RirigirUrl { get; set; }
     }
 }

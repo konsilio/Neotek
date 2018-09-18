@@ -21,6 +21,7 @@ namespace MVC.Presentacion.Agente
         private string ApiCatalgos;
         private string ApiRequisicion;
         private string ApiOrdenCompra;
+        private string ApiRoute = string.Empty;
 
         public RespuestaDTO _RespuestaDTO;
 
@@ -39,7 +40,7 @@ namespace MVC.Presentacion.Agente
         public List<RequisicionEstatusDTO> _listaRequisicionEstatus;
         public List<UsuarioDTO> _listaUsuarios;
         public List<CentroCostoDTO> _listaCentroCosto;
-        public List<ProductoDTO> _listProductos;
+        public List<ProductoDTO> _listaProductos;
         public List<OrdenCompraDTO> _listaOrdenCompra;
         public List<OrdenCompraEstatusDTO> _listaOrdenCompraEstatus;
         public List<ProveedorDTO> _listaProveedores;
@@ -48,6 +49,9 @@ namespace MVC.Presentacion.Agente
         public List<UnidadAlmacenGasDTO> _listaUnidadAlmacenGas;
         public List<EquipoTransporteDTO> _listaEquipoTransporte;
         public List<TipoCentroCostoDTO> _listaTipoCentroCosto;
+        public List<CategoriaProductoDTO> _listaCategoriasProducto;
+        public List<LineaProductoDTO> _listaLineasProducto;
+        public List<UnidadMedidaDTO> _listaUnidadesMedida;
 
         public AgenteServicio()
         {
@@ -259,7 +263,7 @@ namespace MVC.Presentacion.Agente
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
-                    {                        
+                    {
                         client.CancelPendingRequests();
                         client.Dispose();
                     }
@@ -345,7 +349,7 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
-        public void BuscarListaTipoCentroCosto( string tkn)
+        public void BuscarListaTipoCentroCosto(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetTipoCentroCostos"];
             GetListaTipoCentroCosto(tkn).Wait();
@@ -410,9 +414,26 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                _listProductos = emp;
+                _listaProductos = emp;
             }
         }
+        public void GuardarProducto(LineaProductoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraProducto"];
+            Guardar(dto, tkn).Wait();
+        }
+        public void ModificarProducto(LineaProductoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaProducto"];
+            Guardar(dto, tkn).Wait();
+        }
+        public void EliminarProducto(LineaProductoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaProducto"];
+            Guardar(dto, tkn).Wait();
+        }
+        #endregion
+        #region Proveedor
         public void BuscarProveedores(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaProveedores"];
@@ -695,8 +716,158 @@ namespace MVC.Presentacion.Agente
         }
 
         #endregion
+        #region Producto Categoria
+        public void GuardarCategoria(CategoriaProductoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraCategoria"];
+            Guardar(dto, tkn).Wait();
+        }
+        public void ModificarCategoria(CategoriaProductoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaCategoria"];
+            Guardar(dto, tkn).Wait();
+        }
+        public void EliminarCategoria(CategoriaProductoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaCategoria"];
+            Guardar(dto, tkn).Wait();
+        }
+        public void ListaCategoriasProducto(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCategoriasProducto"];
+            GetListaCategoriasProducto(tkn).Wait();
+        }       
+        private async Task GetListaCategoriasProducto(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CategoriaProductoDTO> list = new List<CategoriaProductoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<CategoriaProductoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<CategoriaProductoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaCategoriasProducto = list;
+            }
+        }
         #endregion
+        #region Linea Producto
+        public void GuardarLineaProducto(LineaProductoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraLineaProducto"];
+            Guardar(dto, tkn).Wait();
+        }
+        public void ModificarLineaProducto(LineaProductoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaLineaProducto"];
+            Guardar(dto, tkn).Wait();
+        }
+        public void EliminarLineaProducto(LineaProductoDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaLineaProducto"];
+            Guardar(dto, tkn).Wait();
+        }
+        public void ListaLienasProducto(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetLineasProducto"];
+            GetListaLienasProducto(tkn).Wait();
+        }
+        private async Task GetListaLienasProducto(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<LineaProductoDTO> list = new List<LineaProductoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<LineaProductoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<LineaProductoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaLineasProducto = list;
+            }
+        }
+        #endregion
+        #region Unidad de Medidad
+        public void GuardarUnidadMedida(UnidadMedidaDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraUnidadMedida"];
+            Guardar(dto, tkn).Wait();
+        }
+        public void ModificarUnidadMedida(UnidadMedidaDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaUnidadMedida"];
+            Guardar(dto, tkn).Wait();
+        }
+        public void EliminarUnidadMedida(UnidadMedidaDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaUnidadMedida"];
+            Guardar(dto, tkn).Wait();
 
+        }
+        public void ListaUnidadesMedida(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetLineasProducto"];
+            GetListaUnidadesMedida(tkn).Wait();
+        }
+        private async Task GetListaUnidadesMedida(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<UnidadMedidaDTO> list = new List<UnidadMedidaDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<UnidadMedidaDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<UnidadMedidaDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaUnidadesMedida = list;
+            }
+        }
+        #endregion
+        #endregion
         #region Login
         public void Acceder(AutenticacionDTO autDto)
         {
@@ -732,7 +903,6 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
-
         #region Requisicion
         public void BuscarRequisicionEstatus(string Tkn)
         {
@@ -1007,7 +1177,6 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
-
         #region Orden de Compra
         public void BuscarRequisicionOC(int idReq, string tkn)
         {
@@ -1251,5 +1420,35 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
+
+        private async Task Guardar<T>(T _dto, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _RespuestaDTO = resp;
+            }
+        }
     }
 }
