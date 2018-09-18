@@ -23,7 +23,11 @@ namespace Application.MainModule.Servicios.Catalogos
             List<UsuarioDTO> lUsuarios = AdaptadoresDTO.Catalogo.UsuarioAdapter.ToDTO(new UsuarioDataAccess().BuscarTodos());
             return lUsuarios;
         }
-
+        public static List<UsuariosModel> ListaAllUsuarios()
+        {
+            List<UsuariosModel> lUsuarios = AdaptadoresDTO.Catalogo.UsuarioAdapter.ToDTOEmpresa(new UsuarioDataAccess().BuscarTodos());
+            return lUsuarios;
+        }
         public static Usuario Obtener(int idUsuario)
         {
             return new UsuarioDataAccess().Buscar(idUsuario);
@@ -37,6 +41,12 @@ namespace Application.MainModule.Servicios.Catalogos
         public static RespuestaDto Actualizar(Usuario usuario)
         {
             return new UsuarioDataAccess().Actualizar(usuario);
+        }
+
+        //ActualizarUsuarioRol
+        public static RespuestaDto ActualizarUsuarioRol(Usuario usuario, List<Rol> _rol)
+        {
+            return new UsuarioDataAccess().ActualizarUsuarioRol(usuario, _rol);
         }
 
         public static RespuestaDto AltaUsuario(Usuario user)

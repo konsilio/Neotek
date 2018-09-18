@@ -4,20 +4,9 @@
 @{
     ViewBag.Title = "Catálogo / Gasera / Nueva";
 }
-<script src="~/Resources/js/shared/jCatalogo.js"></script>
-@*<link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">*@
-
-<!-- Custom Css -->
-@*<link rel="stylesheet" href="~/assets/css/main.css">
-    <link rel="stylesheet" href="~/assets/css/color_skins.css">
-    <link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">*@
-<!-- Bootstrap Select Css -->
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-@*<script src="~/assets/bundles/libscripts.bundle.js"></script>
-    <script src="~/assets/bundles/vendorscripts.bundle.js"></script>*@ <!-- Lib Scripts Plugin Js -->
 
-@using (Html.BeginForm("Actualiza", "Empresas", FormMethod.Post)) //
+@using (Html.BeginForm("Actualiza", "Empresas", FormMethod.Post)) 
 {
     <section class="content home">
         <div class="container-fluid">
@@ -26,10 +15,7 @@
                 <div class="col-lg-7 col-md-7 col-sm-12">
                     <h3>&nbsp;Catálogo / Gasera / Nueva</h3>
                 </div>
-            </div>
-            @*@Html.HiddenFor()@Html.HiddenFor(m => m.StudentId)*@
-            <label id="IdEmpresa" name="IdEmpresa" value="@ViewBag.Empresas[0].IdEmpresa"></label>
-
+            </div>       
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
@@ -170,10 +156,6 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="form-group">
-                            @*<input type="button" value="Actualiza" class="btn btn-raised btn-primary float-right" onclick="location.href='@Html.Action("Actualiza", "Empresas" )'"/>*@
-                            @*<input type="button" value="Actualizar" formaction="Actualiza" class="btn btn-raised btn-primary float-right" formmethod="post" onclick="location.href='@Html.Action("Actualiza", "Empresas" )'" />*@
-                            @*<input type="button" id="btnActualiza" value="Actualiza"  formaction="Actualiza" class="btn btn-raised btn-primary float-right" formmethod="post" />*@
-                            @*<button class="btn btn-default" style="height: 34px;" onclick="catalogo.fnEjecutar('Carga', null );  return false;" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>  Upload</button>*@
                             <button class="btn btn-raised btn-primary float-right" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>  Actualizar</button>
 
                         </div>

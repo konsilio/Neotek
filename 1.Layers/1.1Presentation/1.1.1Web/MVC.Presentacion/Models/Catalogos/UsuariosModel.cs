@@ -7,7 +7,7 @@ namespace MVC.Presentacion.Models.Catalogos
 {
     public class UsuariosModel : UsuarioDTO
     {
-
         public string Empresa { get; set; }
+        public List<RolDto> Roles { get; set; }
     }
 }

@@ -55,7 +55,7 @@ namespace Application.MainModule.Flujos
             return EmpresaServicio.RegistrarEmpresa(EmpresaAdapter.FromDto(empDto));
         }
         
-        public RespuestaDto ModificaEmpresa(EmpresaModificarDto empDto)
+        public RespuestaDto ModificaEmpresa(EmpresaDTO empDto)
         {
             var resp = PermisosServicio.PuedeModificarEmpresa();
             if (!resp.Exito) return resp;
@@ -63,17 +63,17 @@ namespace Application.MainModule.Flujos
             var empresas = EmpresaServicio.Obtener(empDto.IdEmpresa);
             if (empresas == null) return EmpresaServicio.NoExiste();
 
-            var emp = EmpresaAdapter.FromDto(empDto);
+            var emp = EmpresaAdapter.FromDTOEditar(empDto, empresas);
             emp.FechaRegistro = emp.FechaRegistro;
             return EmpresaServicio.ModificarEmpresa(emp);
         }
 
-        public RespuestaDto EliminaEmpresa(EmpresaEliminarDto empDto)
+        public RespuestaDto EliminaEmpresa(short id)
         {
             var resp = PermisosServicio.PuedeEliminarEmpresa();
             if (!resp.Exito) return resp;
 
-            var empresas = EmpresaServicio.Obtener(empDto.IdEmpresa);
+            var empresas = EmpresaServicio.Obtener(id);
             if (empresas == null) return EmpresaServicio.NoExiste();
 
             empresas = EmpresaAdapter.FromEntity(empresas);
@@ -90,19 +90,18 @@ namespace Application.MainModule.Flujos
             if (empresaaMod == null) return EmpresaServicio.NoExiste();
 
             var emp = EmpresaAdapter.FromDtoConfig(empDto,empresaaMod);
-            emp.FechaRegistro = emp.FechaRegistro;
             return EmpresaServicio.ModificarEmpresa(emp);
         }
 
         #endregion
 
         #region Usuarios
-        public List<UsuarioDTO> AllUers()
+        public List<UsuariosModel> AllUsers()
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
-                return UsuarioServicio.ListaUsuarios().ToList();
+                return UsuarioServicio.ListaAllUsuarios().ToList();
             else
-                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+                return UsuarioServicio.ListaAllUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
 
         public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
@@ -118,33 +117,132 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeRegistrarUsuario();
             if (!resp.Exito) return resp;
 
-            return UsuarioServicio.AltaUsuario(UsuarioAdapter.FromDto(userDto));
+            var usuario = UsuarioAdapter.FromDto(userDto);
+
+            if (!TokenServicio.EsSuperUsuario() && !TokenServicio.ObtenerEsAdministracionCentral())
+                usuario.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
+
+            return UsuarioServicio.AltaUsuario(usuario);
         }
 
-        public RespuestaDto ModificaUsuario(UsuarioModificarDto userDto)
+        public RespuestaDto ModificaCredencial(UsuarioCrearDto userDto)
         {
             var resp = PermisosServicio.PuedeModificarUsuario();
             if (!resp.Exito) return resp;
 
-            var user = UsuarioServicio.Obtener(userDto.Idusuario);
+            var user = UsuarioServicio.Obtener(userDto.IdUsuario);
             if (user == null) return UsuarioServicio.NoExiste();
 
-            var emp = UsuarioAdapter.FromDto(userDto);
+            var emp = UsuarioAdapter.FromDtoCredencial(userDto, user);
+            emp.FechaRegistro = emp.FechaRegistro;
+            return UsuarioServicio.Actualizar(emp);
+        }
+        public RespuestaDto ModificaRol(UsuariosModel userDto)
+        {
+            var resp = PermisosServicio.PuedeModificarUsuario();
+            if (!resp.Exito) return resp;
+
+            var user = UsuarioServicio.Obtener(userDto.IdUsuario);
+            if (user == null) return UsuarioServicio.NoExiste();
+
+            var rol = RolServicio.Obtener(userDto.Roles.FirstOrDefault().IdRol);
+            if (user == null) return UsuarioServicio.NoExiste();
+
+            var usuario = UsuarioAdapter.FromDtoRol(userDto, user);            
+
+            List<Rol> _rol = usuario.Roles.ToList();
+            return UsuarioServicio.ActualizarUsuarioRol(usuario, _rol);
+
+
+            //insertar Rol in data access
+        }
+        public RespuestaDto ModificaUsuario(UsuarioCrearDto userDto)
+        {
+            var resp = PermisosServicio.PuedeModificarUsuario();
+            if (!resp.Exito) return resp;
+
+            var user = UsuarioServicio.Obtener(userDto.IdUsuario);
+            if (user == null) return UsuarioServicio.NoExiste();
+
+            var emp = UsuarioAdapter.FromDTOEditar(userDto, user);
             emp.FechaRegistro = emp.FechaRegistro;
             return UsuarioServicio.Actualizar(emp);
         }
 
-        public RespuestaDto EliminaUsuario(UsuarioEliminarDto userDto)
+        public RespuestaDto EliminaUsuario(short id)
         {
             var resp = PermisosServicio.PuedeEliminarUsuario();
             if (!resp.Exito) return resp;
 
-            var user = UsuarioServicio.Obtener(userDto.Idusuario);
+            var user = UsuarioServicio.Obtener(id);
             if (user == null) return UsuarioServicio.NoExiste();
 
             user = UsuarioAdapter.FromEntity(user);
             user.Activo = false;
             return UsuarioServicio.Actualizar(user);
+        }
+        #endregion
+
+        #region Roles
+        public List<RolDto> AllRoles()
+        {
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return RolServicio.ListaAllRoles().ToList();
+            else
+                return RolServicio.ListaAllRoles().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+        }
+
+        public RespuestaDto AltaRoles(RolDto rolDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarUsuario();
+            if (!resp.Exito) return resp;
+
+            var rol = RolAdapter.FromDto(rolDto);
+
+            if (!TokenServicio.EsSuperUsuario() && !TokenServicio.ObtenerEsAdministracionCentral())
+                rol.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
+
+            return RolServicio.AltaRol(rol);
+        }
+
+        public RespuestaDto ModificaRolName(RolDto rolDto)
+        {
+            var resp = PermisosServicio.PuedeModificarUsuario();
+            if (!resp.Exito) return resp;
+
+            var rol = RolServicio.Obtener(rolDto.IdRol);
+            if (rol == null) return RolServicio.NoExiste();
+
+            var emp = RolAdapter.FromDtoNomRol(rolDto, rol);
+            emp.FechaRegistro = emp.FechaRegistro;
+            return RolServicio.Actualizar(emp);
+
+            //insertar Rol in data access
+        }
+
+        public RespuestaDto ModificaPermisos(RolDto rolDto)
+        {
+            var resp = PermisosServicio.PuedeModificarUsuario();
+            if (!resp.Exito) return resp;
+
+            var emp = RolAdapter.FromDto(rolDto.ListaRoles);
+         
+            return RolServicio.Actualizar(emp);
+
+            //insertar Rol in data access
+        }
+
+        public RespuestaDto EliminaRol(short id)
+        {
+            var resp = PermisosServicio.PuedeEliminarUsuario();
+            if (!resp.Exito) return resp;
+
+            var rol = RolServicio.Obtener(id);
+            if (rol == null) return RolServicio.NoExiste();
+
+            rol = RolAdapter.FromEntity(rol);
+            rol.Activo = false;
+            return RolServicio.Actualizar(rol);
         }
         #endregion
 

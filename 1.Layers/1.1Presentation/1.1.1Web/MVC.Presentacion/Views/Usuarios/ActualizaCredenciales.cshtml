@@ -1,22 +1,14 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
-@model  EmpresaModel
+@model  UsuarioDTO
 
 @{
     ViewBag.Title = "Catálogo / Usuarios";
 }
 
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">
-
-<!-- Custom Css -->
-<link rel="stylesheet" href="~/assets/css/main.css">
-<link rel="stylesheet" href="~/assets/css/color_skins.css">
-<link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
-<!-- Bootstrap Select Css -->
+<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-<script src="~/assets/bundles/libscripts.bundle.js"></script>
-<script src="~/assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
-@using (Html.BeginForm("GuardarCredenciales", "Usuarios", FormMethod.Post)) //"Crear", "Empresas", FormMethod.Post
+
+@using (Html.BeginForm("GuardarCredenciales", "Usuarios", FormMethod.Post)) 
 {
     <section class="content home">
         <div class="container-fluid">
@@ -30,72 +22,71 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
-                        <div class="header">
-                            <h2><strong>Responsable de la gasera</strong></h2>
-                        </div>
                         <div class="body">
-                            <form>
-                                <div class="row clearfix">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                                <div>
-                                                    <label id="lblUser" class="form-control">usuario</label>
-                                                </div>
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div>
+                                                <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Nombre + " " +ViewBag.IdUser[0].Apellido1 + " " +ViewBag.IdUser[0].Apellido2 )" />
+                                                <input type="text" name="IdUsuario" hidden="hidden" value="@ViewBag.IdUser[0].IdUsuario" readonly="readonly" id="IdUsuario" class="form-control" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                                <div>
-                                                    <label for="txtmail">
-                                                        Correo elect.:*
-                                                    </label>
-                                                    <input type="text" name="Email1" id="txtmail" class="form-control">
-                                                </div>
-                                            </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <label for="txtmail">
+                                                Correo elect.:*
+                                            </label>
+                                            <input type="text" name="Email1" id="txtmail" class="form-control">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="form-group">
-                                            <div class="col-lg-12 col-md-12 col-sm-12">
-                                                <div>
-                                                    <label for="txtpwd">
-                                                        Contraseña:*
-                                                    </label>
-                                                    <input type="text" name="Password" id="txtpwd" class="form-control">
-                                                </div>
-                                            </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <label for="txtpwd">
+                                                Contraseña:*
+                                            </label>
+                                            <input type="password" name="Password" id="txtpwd" class="form-control">
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="body">
-                <form>
-                    <div class="row clearfix">
-                        <div class="col-lg-5 col-md-5 col-sm-5">
-                            <div class="form-group">
-                                <input type="submit" value="Regresar" class="btn btn-raised btn-primary float-left" formaction="Index" />
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <input type="submit" value="GuardarCredenciales" formaction="GuardarCredenciales" class="btn btn-raised btn-primary float-right" />
-                            </div>
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-5">
+                        <div class="form-group">
+                            <input type="submit" value="Regresar" class="btn btn-raised btn-primary float-left" formaction="Index" />
                         </div>
                     </div>
-                </form>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            @*<input type="submit" value="GuardarCredenciales" formaction="GuardarCredenciales" class="btn btn-raised btn-primary float-right" />*@
+                            <button class="btn btn-raised btn-primary float-right" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>  Actualizar</button>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 }
+<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

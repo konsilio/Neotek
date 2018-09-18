@@ -5,18 +5,10 @@
     ViewBag.Title = "Index";
 }
 
-@*<link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">*@
-
-<!-- Custom Css -->
-@*<link rel="stylesheet" href="~/assets/css/main.css">
-    <link rel="stylesheet" href="~/assets/css/color_skins.css">
-    <link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">*@
 <!-- Bootstrap Select Css -->
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-@*<script src="~/assets/bundles/libscripts.bundle.js"></script>
-    <script src="~/assets/bundles/vendorscripts.bundle.js"></script>*@ <!-- Lib Scripts Plugin Js -->
+
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
@@ -24,7 +16,7 @@
         <p>Espere por favor</p>
     </div>
 </div>
-@using (Html.BeginForm("Nueva", "Empresas", FormMethod.Post)) //
+@using (Html.BeginForm("Nueva", "Empresas", FormMethod.Post))
 {
     <section class="content home">
         <div class="container-fluid">
@@ -34,7 +26,7 @@
                         <div class="row clearfix">
                             <div class="col-sm-3">
                                 <b>Gasera</b>
-                                <select id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
                                     @foreach (var lst in ViewBag.listaEmpresas)
                                     {
                                         <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
@@ -54,70 +46,66 @@
 
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        @*<asp:Button ID="BtnNuevo" CssClass="btn btn-raised btn-primary float-right" runat="server" Text="Nueva" OnClick="BtnNuevo_Click" /> onclick="location.href='@Url.Action("Nueva", "Empresas")'*@
-                        @*<input id="BtnNuevo" type="submit" value="Nueva" class="btn btn-raised btn-primary float-right" onclick="location.href='@Url.Action("Nueva", "Empresas")'"/>*@
                         <input id="BtnNuevo" type="submit" value="Nueva" class="btn btn-raised btn-primary float-right" />
-                        @*<input id="BtnNuevo" type="submit" value="Nueva" class="btn btn-raised btn-primary float-right" onclick="location.href='@Html.Action("Nueva","Empresas")'" />@*// onclick="location.href='@Url.Action("Crear", "EmpresasController")'"*@
-
                     </div>
                 </div>
-                <div class="card">                
+                <div class="card">
                     <div class="body">
                         <div class="row clearfix">
-                            <div class="col-lg-12 col-md-12 col-sm-12">                              
-                                    <div class="table-responsive">
-                                        @*<table class="table table-bordered" id="editableTable">*@
-                                            <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Logo</th>
-                                                        <th>Razón social</th>
-                                                        <th>RFC</th>
-                                                        <th>Contacto</th>
-                                                        <th>Celular</th>
-                                                        <th>Telefono</th>
-                                                        <th>Correo</th>
-                                                        <th>Acciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach (var item in @ViewBag.listaEmpresas)
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
+                                        <thead>
+                                            <tr>
+                                                <th>Logo</th>
+                                                <th>Razón social</th>
+                                                <th>RFC</th>
+                                                <th>Contacto</th>
+                                                <th>Celular</th>
+                                                <th>Telefono</th>
+                                                <th>Correo</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in @ViewBag.listaEmpresas)
+                                            {
+
+                                                <tr>
+                                                    @if (@item.UrlLogotipo180px != null)
                                                     {
-                                                        <tr>
-                                                            <th>@item.UrlLogotipoLogin</th>
-                                                            <td>@item.RazonSocial</td>
-                                                            <td>@item.Rfc</td>
-                                                            <td>@item.Persona1</td>
-                                                            <td>@item.Celular1</td>
-                                                            <td>@item.Telefono1</td>
-                                                            <td>@item.Email1</td>
-                                                            <td>
-                                                                @*<a data-value="@item.IdEmpresa"
-                                                                   href="javascript:void(0)" class="btnEdit">
-                                                                    <i class="material-icons">edit</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                                <% @Html.ActionLink("Edit", "ActualizaParametros", new { id=item.Id }) %> |
-                                                                <a data-value="@item.IdEmpresa"
-                                                                   href="javascript:void(0)" class="btnEdit">
-                                                                    <i class="material-icons">delete</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>*@
-                                                                <a ID="lbEdit" href="@Url.Action("ActualizaParametros", "Empresas", new { id = item.IdEmpresa })">
-                                                                    <i class="material-icons">edit</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                                <a ID="lbBorrar" href="@Url.Action("Borrar", "Empresa", new {  id=item.IdEmpresa } )">
-                                                                    <i class="material-icons">delete</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
+                                                        <td><img id="@item.UrlLogotipo180px" src="@Url.Content(@item.UrlLogotipo180px)" style="width:30px;height:30px" /></td>
                                                     }
-                                                </tbody>
-                                            </table>
-                                    </div>                      
-                             </div>
+                                                    else
+                                                    {
+                                                        <td>@item.UrlLogotipo180px</td>
+                                                    }
+                                                    <td>@item.RazonSocial</td>
+                                                    <td>@item.Rfc</td>
+                                                    <td>@item.Persona1</td>
+                                                    <td>@item.Celular1</td>
+                                                    <td>@item.Telefono1</td>
+                                                    <td>@item.Email1</td>
+                                                    <td>
+                                                        <a ID="lblCrear" href="@Url.Action("EditarEmpresa", "Empresas", new { id = item.IdEmpresa })">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                        <a ID="lbEdit" href="@Url.Action("ActualizaParametros", "Empresas", new { id = item.IdEmpresa })">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                        <a ID="lbBorrar" href="@Url.Action("BorrarEmpresa", "Empresas", new { id = item.IdEmpresa })">
+                                                            <i class="material-icons">delete</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
 
                     </div>

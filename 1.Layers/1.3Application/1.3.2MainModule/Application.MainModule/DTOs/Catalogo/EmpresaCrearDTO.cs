@@ -142,6 +142,39 @@ namespace Application.MainModule.DTOs.Catalogo
         [StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
         [Display(Name = "Grande (1000px X 1000px")]
         public string UrlLogotipo1000px { get; set; }
+
+        ////[StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
+        ////[Display(Name = "CierreInventario")]
+        ////public System.DateTime CierreInventario { get; set; }
+
+        ////[StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
+        ////[Display(Name = "FactorCompraLitroAKilos")]
+        ////public decimal FactorCompraLitroAKilos { get; set; }
+
+        ////[StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
+        ////[Display(Name = "FactorFleteGas")]
+        ////public decimal FactorFleteGas { get; set; }
+        
+        ////[StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
+        ////[Display(Name = "FactorGalonALitros")]
+        ////public decimal FactorGalonALitros { get; set; }
+
+        ////[StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
+        ////[Display(Name = "FactorLitrosAKilos")]
+        ////public decimal FactorLitrosAKilos { get; set; }
+
+        ////[StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
+        ////[Display(Name = "InventarioCrítico")]
+        ////public byte InventarioCrítico { get; set; }
+
+        ////[StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
+        ////[Display(Name = "InventarioSano")]
+        ////public byte InventarioSano { get; set; }
+
+        ////[StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
+        ////[Display(Name = "MaxRemaGaseraMensual")]
+        ////public decimal MaxRemaGaseraMensual { get; set; }
+         
         //[Required(ErrorMessage = Error.R0002)]
         //[StringLength(250, MinimumLength = 1, ErrorMessage = Error.R0004)]
         //[Display(Name = "Nombre Comercial")]

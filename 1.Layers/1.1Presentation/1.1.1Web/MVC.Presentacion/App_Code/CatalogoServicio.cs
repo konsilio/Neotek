@@ -1,14 +1,17 @@
 ﻿using MVC.Presentacion.Agente;
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Seguridad;
+using Security.MainModule.Criptografia;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
 //using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web;
+using Utilities.MainModule;
 //using System.Web.Script.Serialization;
 
 namespace MVC.Presentacion.App_Code
@@ -24,6 +27,7 @@ namespace MVC.Presentacion.App_Code
             return agente._listaPaises;
         }
         #endregion
+
         #region Estados
         public static List<EstadosRepModel> GetEstados(string tkn)
         {
@@ -32,33 +36,98 @@ namespace MVC.Presentacion.App_Code
             return agente._listaEstados;
         }
         #endregion
-        #region Empresas
-        //public bool create(EmpresaDTO Objemp)
-        //{
-        //    try
-        //    {
-        //        //DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(EmpresaDTO));
-        //        //MemoryStream mem = new MemoryStream();
-        //        //ser.WriteObject(mem, Objemp);
-        //        //string data = Encoding.UTF8.GetString(mem.ToArray(), 0, (int)mem.Length);
-        //        //WebClient webClient = new WebClient();
-        //        //webClient.Headers["Content-type"] = "application/json";
-        //        //webClient.Encoding = Encoding.UTF8;
-        //        //webClient.UploadString(_URL + "create", "POST", data);
+        
+        #region Empresas      
 
-        //        //return true;
-        //        var agente = new AgenteServicio();
-        //        agente.GuardarEmpresaNueva(Objemp);
+        public static EmpresaModel guardarLogosEmpresa(EmpresaModel Objemp, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px)
+        {
+            if (UrlLogotipo180px != null || UrlLogotipo500px != null || UrlLogotipo1000px != null)
+            {
+                try
+                {
+                    string destinationFolder = ConfigurationManager.AppSettings["GuardarLogoEmpresa"];
+                    string destinationFolderSave =  Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
 
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
+                    //Checking file is available to save.  
+                    if (UrlLogotipo180px != null)
+                    {
 
-        public static RespuestaDTO create(EmpresaModel cc, string tkn)
-        {            
+                        string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo180px.FileName));
+                        string pathSave = Path.Combine(destinationFolderSave, Path.GetFileName(UrlLogotipo180px.FileName));
+                        UrlLogotipo180px.SaveAs(pathSave);
+                        Objemp.UrlLogotipo180px = pathBD;
+                    }
+
+                    if (Objemp.UrlLogotipo500px != null)
+                    {
+                        string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo500px.FileName));
+                        string pathSave = Path.Combine(destinationFolderSave, Path.GetFileName(UrlLogotipo500px.FileName));
+                        UrlLogotipo500px.SaveAs(pathSave);
+                        Objemp.UrlLogotipo500px = pathBD;
+                    }
+
+                    if (Objemp.UrlLogotipo1000px != null)
+                    {
+                        string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo1000px.FileName));
+                        string pathSave = Path.Combine(destinationFolderSave, Path.GetFileName(UrlLogotipo500px.FileName));
+                        UrlLogotipo1000px.SaveAs(pathSave);
+                        Objemp.UrlLogotipo1000px = pathBD;
+                    }
+                }
+                catch (Exception ex)
+                {
+                   ex.ToString();
+                }
+            }
+            return Objemp;
+        }
+
+        public static EmpresaDTO guardarLogosEmpresaDto(EmpresaDTO Objemp, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px)
+        {
+            if (UrlLogotipo180px != null || UrlLogotipo500px != null || UrlLogotipo1000px != null)
+            {
+                try
+                {
+                    string destinationFolder = ConfigurationManager.AppSettings["GuardarLogoEmpresa"];
+                    string destinationFolderSave = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
+
+                    //Checking file is available to save.  
+                    if (UrlLogotipo180px != null)
+                    {
+
+                        string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo180px.FileName));
+                        string pathSave = Path.Combine(destinationFolderSave, Path.GetFileName(UrlLogotipo180px.FileName));
+                        UrlLogotipo180px.SaveAs(pathSave);
+                        Objemp.UrlLogotipo180px = pathBD;
+                    }
+
+                    if (Objemp.UrlLogotipo500px != null)
+                    {
+                        string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo500px.FileName));
+                        string pathSave = Path.Combine(destinationFolderSave, Path.GetFileName(UrlLogotipo500px.FileName));
+                        UrlLogotipo500px.SaveAs(pathSave);
+                        Objemp.UrlLogotipo500px = pathBD;
+                    }
+
+                    if (Objemp.UrlLogotipo1000px != null)
+                    {
+                        string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo1000px.FileName));
+                        string pathSave = Path.Combine(destinationFolderSave, Path.GetFileName(UrlLogotipo500px.FileName));
+                        UrlLogotipo1000px.SaveAs(pathSave);
+                        Objemp.UrlLogotipo1000px = pathBD;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ex.ToString();
+                }
+            }
+            return Objemp;
+        }
+
+        public static RespuestaDTO create(EmpresaModel cc, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px, string tkn)
+        {
+            guardarLogosEmpresa(cc, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px);
             var agente = new AgenteServicio();
             agente.GuardarEmpresaNueva(cc, tkn);
             return agente._respuestaDTO;
@@ -70,68 +139,182 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarEmpresaConfiguracion(cc, tkn);
             return agente._respuestaDTO;
         }
+        public static RespuestaDTO ActualizaEdicionEmpresa(EmpresaDTO cc, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px, string tkn)
+        {
+            guardarLogosEmpresaDto(cc, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px);
+            var agente = new AgenteServicio();
+            agente.GuardarEmpresaEdicion(cc, tkn);
+            return agente._respuestaDTO;
+        }
+
+        public static RespuestaDTO EliminaEmpresaSel(short id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarEmpresa(id, tkn);
+            return agente._respuestaDTO;
+        }
+
         public static List<EmpresaDTO> Empresas(string tkn)
         {
             var agente = new AgenteServicio();
             agente.ListaEmpresasLogin(tkn);
             return agente._listaEmpresas;
         }
+           
 
-        //public static List<EmpresaConfiguracion> EmpresasC(string tkn)
-        //{
-        //    var agente = new AgenteServicio();
-        //    agente.ListaEmpresasLogin(tkn);
-        //    return agente._listaEmpresas;
-        //}
-
+        //consulta empresa mediante id
         public static Empresa FiltrarEmpresa(Empresa model, int id, string tkn)
         {
-            List<EmpresaDTO> newList = Empresas(tkn).Where(x => x.IdEmpresa == id).ToList();//model.Empresas;
-                             
-
+            List<EmpresaDTO> newList = Empresas(tkn).Where(x => x.IdEmpresa == id).ToList();
+                       
             if (newList.Count != 0)
                 model.Empresas = newList;
 
             return model;
         }
         #endregion
+
         #region Usuarios
 
-        public static List<UsuarioDTO> ObtenerTodosUsuarios(string token)
+        public static UsuarioDTO encryptaPWD(UsuarioDTO mod)
+        {
+            if (!String.IsNullOrEmpty(mod.Password))
+            {
+                mod.Password = SHA.GenerateSHA256String(mod.Password);
+            }
+            return mod;
+        }
+        public static UsuariosModel AgregarIdRolToList(UsuariosModel cc, string token)
+        {
+           var Nombre = ObtenerRolesId(cc.IdRol, token);
+            RolDto rol = new RolDto();
+            rol.IdRol = cc.IdRol;
+            rol.NombreRol = Nombre[0].NombreRol;
+            rol.Rol1 = Nombre[0].NombreRol;
+            List<RolDto> Roles = new List<RolDto>();
+            Roles.Add(rol);
+
+            cc.Roles = Roles;
+            return cc;
+        }
+        public static List<UsuariosModel> ObtenerTodosUsuarios(string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarTodosUsuarios(token);
-            return agente._listaUsuarios;
+            return agente._lstUserEmp;
         }
-        //public static UsuariosModel UsuarioEmpresa(int id, string tkn)
-        //{
-        //    ////List<UsuarioDTO> newList = ListaUsuarios(tkn).Where(x => x.IdEmpresa == id).ToList();//model.Empresas;
 
+        public static List<UsuariosModel> ObtenerIdUsuario(int id,string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarUsuarioId(id,token);
+            return agente._lstUserEmp;
+        }
 
-        //    ////if (newList.Count != 0)
-        //    ////    model.Empresas = newList;
-
-        //    ////return model;
-        //}
-
-
-        //public static UsuarioDTO FiltrarUsuarios(int id, string tkn)
-        //{
-        //    List<UsuarioDTO> newList = ListaUsuarios(tkn).Where(x => x.IdEmpresa == id).ToList();//model.Empresas;
-
-
-        //    if (newList.Count != 0)
-        //        model.Empresas = newList;
-
-        //    return model;
-        //}
+        public static RespuestaDTO CrearUsuario(UsuarioDTO cc, string tkn)
+        {
+            encryptaPWD(cc);
+            var agente = new AgenteServicio();
+            agente.GuardarNuevoUsuario(cc, tkn);
+            return agente._respuestaDTO;
+        }
+             
         public static List<UsuarioDTO> ListaUsuarios(short idEmpresa, string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarListaUsuarios(idEmpresa, token);
             return agente._listaUsuarios;
         }
+        public static RespuestaDTO ActualizaCredencialesUser(UsuarioDTO cc, string tkn)
+        {
+            encryptaPWD(cc);
+            var agente = new AgenteServicio();
+            agente.GuardarCredenciales(cc, tkn);
+            return agente._respuestaDTO;
+        }
+
+        public static RespuestaDTO AgregarRolAlUsuario(UsuariosModel cc, string tkn)
+        {
+            AgregarIdRolToList(cc,tkn);          
+            var agente = new AgenteServicio();
+            agente.GuardarRolesAsig(cc, tkn);
+            return agente._respuestaDTO;
+        }
+
+        public static List<UsuariosModel> ObtenerUsuariosRol(string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarTodosUsuarios(token);
+            return agente._lstUserEmp;
+        }
+        public static RespuestaDTO ActualizaEdicionUsuario(UsuarioDTO cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarUsuarioEdicion(cc, tkn);
+            return agente._respuestaDTO;
+        }
+        
+        public static RespuestaDTO EliminaUsuarioSel(short id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarUsuario(id, tkn);
+            return agente._respuestaDTO;
+        }
+
+        public static List<UsuariosModel> FiltrarBusquedaUsuario(UsuariosModel us, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.FiltrarUsuarios(us.IdEmpresa,us.IdUsuario, us.Email1,token);
+            return agente._lstUserEmp;
+           
+        }
+            
         #endregion
+
+        #region Roles
+        public static List<RolDto> ObtenerTodosRoles(string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarTodosRoles(token);
+            return agente._lstaAllRoles;
+        }
+
+        public static List<RolDto> ObtenerRolesId(int id,string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarRolId(id,token);
+            return agente._lstaAllRoles;
+        }
+
+        public static RespuestaDTO AgregarRoles(RolDto cc, string tkn)
+        {            
+            var agente = new AgenteServicio();
+            agente.GuardarNuevoRol(cc, tkn);
+            return agente._respuestaDTO;
+        }
+
+        public static RespuestaDTO ActualizaNombreRol(RolDto cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarModificacionRol(cc, tkn);
+            return agente._respuestaDTO;
+        }
+
+        public static RespuestaDTO ActualizaPermisos(RolDto cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarPermisos(cc, tkn);
+            return agente._respuestaDTO;
+        }
+
+        public static RespuestaDTO EliminaRolSel(short id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarRol(id, tkn);
+            return agente._respuestaDTO;
+        }
+        #endregion
+
         #region Centro de Costo
         public static List<CentroCostoDTO> BuscarCentrosCosto(string Tkn)
         {
@@ -158,6 +341,7 @@ namespace MVC.Presentacion.App_Code
         //    return agente._respuestaDTO;
         //}
         #endregion
+
         #region Porductos
         public static List<ProductoDTO> ListaProductos(string Token)
         {

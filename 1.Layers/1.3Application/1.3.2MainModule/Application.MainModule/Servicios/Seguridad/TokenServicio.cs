@@ -55,5 +55,13 @@ namespace Application.MainModule.Servicios.Seguridad
         {
             return UsuarioServicio.Obtener(ObtenerIdUsuario());
         }
+
+        public static bool EsSuperUsuario()
+        {
+            var claims = ObtenerClaims();
+            var EsSuperUsuario = claims.FirstOrDefault(x => x.Type.Equals(TokenEtiquetasEnum.EsSuperUsuario));
+
+            return EsSuperUsuario != null ? Convert.ToBoolean(EsSuperUsuario.Value) : false;
+        }
     }
 }

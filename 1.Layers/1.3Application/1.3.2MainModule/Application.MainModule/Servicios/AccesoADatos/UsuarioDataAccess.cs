@@ -34,7 +34,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Usuario> BuscarTodos()
         {
-            return uow.Repository<Usuario>().GetAll().ToList();
+            return uow.Repository<Usuario>().Get(x => x.Activo).ToList();
         }
 
         public Usuario Buscar(short idEmpresa, string NombreUsuario, string password)
@@ -69,7 +69,32 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
+        public  RespuestaDto ActualizarUsuarioRol(Usuario usuario, List<Rol> _roluser)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.Usuario>().Update(usuario);
+                    //foreach (Rol _rol in _roluser)
+                    //    uow.Repository<Rol>().Update(_rol);
+                    uow.SaveChanges();
+                    _respuesta.Id = usuario.IdUsuario;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del Usuario"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public RespuestaDto Insertar(Usuario user)
         {
             RespuestaDto _respuesta = new RespuestaDto();

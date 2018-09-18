@@ -14,7 +14,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public byte IdAdministracionCentral { get; set; }
         public string NombreComercial { get; set; }
         public System.DateTime FechaRegistro { get; set; }
-        public Nullable<byte> IdPais { get; set; }
+        public byte IdPais { get; set; }
         public Nullable<byte> IdEstadoRep { get; set; }
         public string EstadoProvincia { get; set; }
         public string Municipio { get; set; }
@@ -40,6 +40,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public string SitioWeb3 { get; set; }
         public string Rfc { get; set; }
         public string RazonSocial { get; set; }
+        public bool Activo { get; set; }
         public decimal FactorLitrosAKilos { get; set; }
         public System.DateTime CierreInventario { get; set; }
         public byte InventarioSano { get; set; }

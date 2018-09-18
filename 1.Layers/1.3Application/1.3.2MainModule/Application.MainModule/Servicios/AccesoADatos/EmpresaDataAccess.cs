@@ -34,7 +34,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<Empresa> BuscarTodos()
         {
-            return uow.Repository<Empresa>().GetAll().ToList();
+            return uow.Repository<Empresa>().Get(x=> x.Activo).ToList();
         }
 
         public List<Empresa> BuscarTodos(bool conAC)

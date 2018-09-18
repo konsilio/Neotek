@@ -13,7 +13,7 @@ namespace MVC.Presentacion.Controllers
     {
         public ActionResult OrdenCompra()
         {
-
+            return View();
         }
     }
 }

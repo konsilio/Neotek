@@ -34,7 +34,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Message = "Your contact page.";
             return View();
         }
-        public ActionResult Inicio(AutenticacionDTO login)
+        public ActionResult Inicio(LoginModel login)
         {
             if (Session["StringToken"] == null)
             {

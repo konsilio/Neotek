@@ -836,7 +836,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdEmpresa" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NombreComercial" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="EsAdministracionCentral" Type="bit" Nullable="false" />
-          <Property Name="FechaRegistro" Type="datetime" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false"/>
           <Property Name="Activo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="EmpresaConfiguracion">
@@ -844,14 +844,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdEmpresa" />
           </Key>
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
-          <Property Name="FactorLitrosAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false"  StoreGeneratedPattern="Computed"/>
-          <Property Name="FactorGalonALitros" Type="decimal" Precision="8" Scale="5" Nullable="false"  StoreGeneratedPattern="Computed"/>
-          <Property Name="FactorCompraLitroAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed"/>
-          <Property Name="FactorFleteGas" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed"/>
-          <Property Name="CierreInventario" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed"/>
-          <Property Name="InventarioSano" Type="tinyint" Nullable="false" StoreGeneratedPattern="Computed"/>
-          <Property Name="InventarioCrítico" Type="tinyint" Nullable="false" StoreGeneratedPattern="Computed"/>
-          <Property Name="MaxRemaGaseraMensual" Type="decimal" Precision="18" Scale="4" Nullable="false" StoreGeneratedPattern="Computed"/>
+          <Property Name="FactorLitrosAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" />
+          <Property Name="FactorGalonALitros" Type="decimal" Precision="8" Scale="5" Nullable="false" />
+          <Property Name="FactorCompraLitroAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false"/>
+          <Property Name="FactorFleteGas" Type="decimal" Precision="8" Scale="5" Nullable="false"/>
+          <Property Name="CierreInventario" Type="smalldatetime" Nullable="false"/>
+          <Property Name="InventarioSano" Type="tinyint" Nullable="false"/>
+          <Property Name="InventarioCrítico" Type="tinyint" Nullable="false"/>
+          <Property Name="MaxRemaGaseraMensual" Type="decimal" Precision="18" Scale="4" Nullable="false"/>
         </EntityType>
         <EntityType Name="EmpresaContacto">
           <Key>
@@ -3990,22 +3990,22 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="RazonSocial" Type="String" MaxLength="350" FixedLength="false" Unicode="false" Nullable="false" />          
           <!--"EmpresaConfiguracion">
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />-->
-          <Property Name="FactorLitrosAKilos" Type="Decimal" Precision="8" Scale="5" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="CierreInventario" Type="DateTime" Nullable="false" Precision="0" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="InventarioSano" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="InventarioCrítico" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="MaxRemaGaseraMensual" Type="Decimal" Precision="18" Scale="4" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="FactorGalonALitros" Type="Decimal" Nullable="false" Precision="8" Scale="5" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="FactorCompraLitroAKilos" Type="Decimal" Nullable="false" Precision="8" Scale="5" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="FactorFleteGas" Type="Decimal" Nullable="false" Precision="8" Scale="5" annotation:StoreGeneratedPattern="Computed" />          
+          <Property Name="FactorLitrosAKilos" Type="Decimal" Precision="8" Scale="5" Nullable="false" />
+          <Property Name="CierreInventario" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="InventarioSano" Type="Byte" Nullable="false" />
+          <Property Name="InventarioCrítico" Type="Byte" Nullable="false" />
+          <Property Name="MaxRemaGaseraMensual" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="FactorGalonALitros" Type="Decimal" Nullable="false" Precision="8" Scale="5" />
+          <Property Name="FactorCompraLitroAKilos" Type="Decimal" Nullable="false" Precision="8" Scale="5" />
+          <Property Name="FactorFleteGas" Type="Decimal" Nullable="false" Precision="8" Scale="5" />          
           
           <!--"EmpresaImagen">
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />-->
-          <Property Name="UrlLogotipoMenu" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipoLogin" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipo180px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipo500px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipo1000px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UrlLogotipoMenu" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="UrlLogotipoLogin" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="UrlLogotipo180px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="UrlLogotipo500px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="UrlLogotipo1000px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           
                    
           <!--<NavigationProperty Name="EmpresaConfiguracion" Relationship="Self.FK_EmpresaConfiguracion_Empresa" FromRole="Empresa" ToRole="EmpresaConfiguracion" />

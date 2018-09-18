@@ -17,6 +17,14 @@ namespace Application.MainModule.Servicios.Seguridad
     {
         public static RespuestaAutenticacionDto AutenticarUsuario(AutenticacionDto autDto)
         {
+            if (autDto.IdEmpresa < 1 || string.IsNullOrEmpty(autDto.Usuario) || string.IsNullOrEmpty(autDto.Password))
+                return new RespuestaAutenticacionDto()
+                {
+                    Exito = false,
+                    Mensaje = Error.S0003,
+                    token = string.Empty
+                };
+
             UsuarioAplicacionDto usuario;
             // Validamos si es un usuario de la administración central
             // y buscamos la existencia del usuario, validando su contraseña

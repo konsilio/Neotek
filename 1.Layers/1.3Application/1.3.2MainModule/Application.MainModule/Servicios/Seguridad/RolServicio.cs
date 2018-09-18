@@ -1,4 +1,7 @@
-﻿using Application.MainModule.Servicios.AccesoADatos;
+﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.Servicios.AccesoADatos;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -22,6 +25,44 @@ namespace Application.MainModule.Servicios.Seguridad
                     return empresa.Roles.ToList();
 
             return ObtenerRoles(empresa.IdEmpresa);
+        }
+
+        public static List<RolDto> ListaAllRoles()
+        {
+            List<RolDto> lRoles = AdaptadoresDTO.Catalogo.RolAdapter.ToDTORoles(new RolDataAccess().BuscarTodosRoles());
+            return lRoles;
+        }
+
+        public static RespuestaDto AltaRol(Rol rol)
+        {
+            return new RolDataAccess().Insertar(rol);
+        }
+
+        public static Rol Obtener(short idRol)
+        {
+            return new RolDataAccess().BuscarIdRol(idRol);
+        }
+        
+        public static RespuestaDto Actualizar(Rol rol)
+        {
+            return new RolDataAccess().Actualizar(rol);
+        }
+
+        public static RespuestaDto Actualizar(List<Rol> rol)
+        {
+            return new RolDataAccess().Actualizar(rol);
+        }
+
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "El Rol");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }

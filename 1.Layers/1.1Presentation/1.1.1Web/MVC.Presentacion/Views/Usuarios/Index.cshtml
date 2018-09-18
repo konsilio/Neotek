@@ -5,18 +5,19 @@
     ViewBag.Title = "Index";
 }
 
-@*<link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">*@
-
-<!-- Custom Css -->
-@*<link rel="stylesheet" href="~/assets/css/main.css">
-    <link rel="stylesheet" href="~/assets/css/color_skins.css">
-    <link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">*@
-<!-- Bootstrap Select Css -->
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-@*<script src="~/assets/bundles/libscripts.bundle.js"></script>
-    <script src="~/assets/bundles/vendorscripts.bundle.js"></script>*@ <!-- Lib Scripts Plugin Js -->
+<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnBuscar").click(function () {
+            var form = $(this).parent("form");
+            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Usuarios", Action = "Buscar" }) %>');
+            form.attr('method', 'post');
+        });
+    });
+
+</script>
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
@@ -24,7 +25,7 @@
         <p>Espere por favor</p>
     </div>
 </div>
-@using (Html.BeginForm("Nuevo", "Usuarios", FormMethod.Post)) //
+@using (Html.BeginForm("Nuevo", "Usuarios", FormMethod.Post)) 
 {
     <section class="content home">
         <div class="container-fluid">
@@ -77,7 +78,10 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="submit" value="Buscar" formaction="Buscar" class="btn btn-raised btn-primary float-left" />
+                                        @*<input type="submit" value="Buscar" formaction="Buscar" formmethod="post" class="btn btn-raised btn-primary float-left" />*@
+                                        @*<button class="btn btn-raised btn-primary float-left" formaction="Buscar" id="btnBuscar">Buscar</button>*@
+                                        <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary float-left" />
+
                                     </div>
                                 </div>
 
@@ -86,8 +90,7 @@
                         <br />
                         <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="table-responsive">
-                                    @*<table class="table table-bordered" id="editableTable">*@
+                                <div class="table-responsive">                                  
                                     <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
                                         <thead>
                                             <tr>
@@ -103,20 +106,28 @@
                                             @foreach (var item in @ViewBag.Usuarios)
                                             {
                                                 <tr>
-                                                    <th>@item.Nombre</th>
+                                                    <th>@item.Empresa</th>
                                                     <td>@item.Nombre @item.Apellido1 @item.Apellido2 </td>
                                                     <td>@item.Email1</td>
                                                     <td>@item.Celular1</td>
                                                     <td>@item.Telefono1</td>
                                                     <td>
+                                                        <a ID="lblCrear" href="@Url.Action("EditarUsuario", "Usuarios", new { id = item.IdEmpresa })">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
                                                         <a ID="lbEdit" href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })">
                                                             <i class="material-icons">edit</i>
                                                             <span class="icon-name"></span>
                                                         </a>
-                                                        @*<a ID="lbBorrar" href="@Url.Action("Borrar", "Empresa", new {  id=item.IdEmpresa } )">
+                                                        <a ID="lbEdit" href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                        <a ID="lbBorrar" href="@Url.Action("BorrarUsuario", "Usuarios", new {  id=item.IdUsuario } )">
                                                                 <i class="material-icons">delete</i>
                                                                 <span class="icon-name"></span>
-                                                            </a>*@
+                                                            </a>
                                                     </td>
                                                 </tr>
                                             }
