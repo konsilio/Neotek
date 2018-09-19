@@ -40,6 +40,14 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().Insertar(lia);
         }
+        internal static RespuestaDto InsertarRecargaGas(AlmacenGasRecarga adapter)
+        {
+            return new AlmacenGasDataAccess().Insertar(adapter);
+        }
+        public static AlmacenGasRecarga ObtenerRecargaPorClaveOperacion(string claveOperacion)
+        {
+            return new AlmacenGasDataAccess().BuscarRecargaClaveOperacion(claveOperacion);
+        }
         public static List<UnidadAlmacenGas> ObtenerAlmacenGeneral(short idEmpresa, bool incluyeAlterno = false)
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa, true, incluyeAlterno);
@@ -154,11 +162,4 @@ namespace Application.MainModule.Servicios.Almacen
     }
 }
 
-        internal static RespuestaDto InsertarRecargaGas(AlmacenGasRecarga adapter)
-        {
-            return new AlmacenGasDataAccess().Insertar(adapter);
-        }
-        public static AlmacenGasRecarga ObtenerRecargaPorClaveOperacion(string claveOperacion)
-        {
-            return new AlmacenGasDataAccess().BuscarRecargaClaveOperacion(claveOperacion);
-        }
+      
