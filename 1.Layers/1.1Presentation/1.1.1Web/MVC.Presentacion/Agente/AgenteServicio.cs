@@ -833,7 +833,7 @@ namespace MVC.Presentacion.Agente
         }
         public void ListaUnidadesMedida(string tkn)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetLineasProducto"];
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetUnidadMedidas"];
             GetListaUnidadesMedida(tkn).Wait();
         }
         private async Task GetListaUnidadesMedida(string Token)
