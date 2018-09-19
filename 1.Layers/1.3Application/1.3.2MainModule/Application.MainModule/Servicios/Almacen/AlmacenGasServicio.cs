@@ -27,6 +27,7 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa);
         }
+
         public static AlmacenGasTomaLectura BuscarUltimaLectura(short idCAlmacenGas, byte idTipoEvento)
         {
             return new AlmacenGasDataAccess().BuscarUltimaLectura(idCAlmacenGas, idTipoEvento);
@@ -39,6 +40,14 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().Insertar(lia);
         }
+        internal static RespuestaDto InsertarRecargaGas(AlmacenGasRecarga adapter)
+        {
+            return new AlmacenGasDataAccess().Insertar(adapter);
+        }
+        public static AlmacenGasRecarga ObtenerRecargaPorClaveOperacion(string claveOperacion)
+        {
+            return new AlmacenGasDataAccess().BuscarRecargaClaveOperacion(claveOperacion);
+        }
         public static List<UnidadAlmacenGas> ObtenerAlmacenGeneral(short idEmpresa, bool incluyeAlterno = false)
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa, true, incluyeAlterno);
@@ -47,6 +56,7 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().BuscarTodas(idEmpresa);
         }
+
         public static List<UnidadAlmacenGas> ObtenerEstaciones(short idEmpresa)
         {            
             return new AlmacenGasDataAccess().BuscarTodosEstacionCarburacion(idEmpresa);
@@ -151,3 +161,5 @@ namespace Application.MainModule.Servicios.Almacen
         }
     }
 }
+
+      

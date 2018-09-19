@@ -43,6 +43,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
         public AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, int idOrden)
         {
             return uow.Repository<AlmacenGasTomaLectura>().GetSingle(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
@@ -87,6 +88,28 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        internal RespuestaDto Insertar(AlmacenGasRecarga _alm)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            try
+            {
+                uow.Repository<AlmacenGasRecarga>().Insert(_alm);
+                uow.SaveChanges();
+                _respuesta.Id = _alm.IdAlmacenGasRecarga;
+                _respuesta.EsInsercion = true;
+                _respuesta.Exito = true;
+                _respuesta.ModeloValido = true;
+                _respuesta.Mensaje = Exito.OK;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Exito = false;
+                _respuesta.Mensaje = string.Format(Error.C0002, "de la recarga del Almacen");
+                _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+            }
+            return _respuesta;
+        }
+
         public RespuestaDto Actualizar(AlmacenGas _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -180,6 +203,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasTomaLectura>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
         }
-        
+
+        public AlmacenGasRecarga BuscarRecargaClaveOperacion(string claveOperacion)
+        {
+            return uow.Repository<AlmacenGasRecarga>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
+        }
     }
 }
+      

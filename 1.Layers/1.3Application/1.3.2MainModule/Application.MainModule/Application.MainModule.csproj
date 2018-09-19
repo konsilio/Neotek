@@ -65,6 +65,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\UnidadAlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\ComplementoGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenLecturaAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\AlmacenRecargaAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenCrearEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenDTO.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Servicios\FolioServicio.cs" />
     <Compile Include="Servicios\Mobile\GasServicio.cs" />
     <Compile Include="Servicios\Mobile\LecturaGasServicio.cs" />
+    <Compile Include="Servicios\Mobile\RecargaGasServicio.cs" />
     <Compile Include="Servicios\Notificacion\CorreoHtmlServicio.cs" />
     <Compile Include="Servicios\Mobile\EntradaGasServicio.cs" />
     <Compile Include="Servicios\Notificacion\EnviarCorreosServicio.cs" />
