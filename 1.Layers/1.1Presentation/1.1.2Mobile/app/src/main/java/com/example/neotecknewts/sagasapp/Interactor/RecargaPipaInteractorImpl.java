@@ -3,7 +3,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
-import com.example.neotecknewts.sagasapp.Presenter.RecargaCamionetaPresenterImpl;
+import com.example.neotecknewts.sagasapp.Presenter.RecargaPipaPresenterImpl;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
@@ -16,14 +16,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteractor {
-    private RecargaCamionetaPresenterImpl recargaCamionetaPresenter;
-    public RecargaCamionetaInteractorImpl(RecargaCamionetaPresenterImpl recargaCamionetaPresenter) {
-        this.recargaCamionetaPresenter = recargaCamionetaPresenter;
+public class RecargaPipaInteractorImpl implements RecargaPipaInteractor {
+    RecargaPipaPresenterImpl presenter;
+
+    public RecargaPipaInteractorImpl(RecargaPipaPresenterImpl presenter) {
+        this.presenter = presenter;
     }
 
-    @Override
-    public void getCamionetas(String token) {
+    public void getList(String token,boolean EsRecargaPipaFinal) {
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
@@ -38,9 +38,9 @@ public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteracto
         RestClient restClient = retrofit.create(RestClient.class);
         Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
                 false,
-                false,
                 true,
                 false,
+                EsRecargaPipaFinal,
                 token,
                 "application/json"
         );
@@ -49,14 +49,12 @@ public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteracto
         call.enqueue(new Callback<DatosTomaLecturaDto>() {
             @Override
             public void onResponse(Call<DatosTomaLecturaDto> call, Response<DatosTomaLecturaDto> response) {
-
                 if (response.isSuccessful()) {
                     DatosTomaLecturaDto data = response.body();
                     Log.w("Estatus","Success");
-                    recargaCamionetaPresenter.onSuccessCamionetas(data);
+                    presenter.onSuccessList(data);
                 }
                 else {
-                    String mensaje = "";
                     switch (response.code()) {
                         case 404:
                             Log.w("Error","not found");
@@ -71,16 +69,15 @@ public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteracto
 
                             break;
                     }
-                    mensaje = "Se ha generado un error: "+response.message();
-                    recargaCamionetaPresenter.onError(mensaje);
+                    presenter.onError("Error : "+response.message());
                 }
 
             }
 
             @Override
             public void onFailure(Call<DatosTomaLecturaDto> call, Throwable t) {
-                Log.e("error", "Error desconocido: "+t.toString());
-                recargaCamionetaPresenter.onError("Se ha generado un error: "+t.getMessage());
+                Log.e("error", "Error desconocido: "+t.getMessage());
+                presenter.onError(t.getMessage());
             }
         });
     }

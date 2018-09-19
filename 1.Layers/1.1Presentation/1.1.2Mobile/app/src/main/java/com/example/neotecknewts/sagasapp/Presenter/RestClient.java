@@ -199,8 +199,20 @@ public interface RestClient {
     );
     @POST(Constantes.POST_RECARGA)
     Call<RespuestaRecargaDTO> postRecarga(RecargaDTO recargaDTO,
-                                          @Header("Authorization") String token,
+                                          @Header("Authorization")String token,
                                           @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_RECARGA_INCIAL)
+    Call<RespuestaRecargaDTO> postRecargaInicial(RecargaDTO recargaDTO,
+                                          @Header("Authorization")String token,
+                                          @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_RECARGA_FINAL)
+    Call<RespuestaRecargaDTO> postRecargaFinal(RecargaDTO recargaDTO,
+                                                 @Header("Authorization")String token,
+                                                 @Header("Content-Type") String contentType
     );
 
     @GET(Constantes.GET_UNIDADES)
@@ -212,7 +224,7 @@ public interface RestClient {
             @Path(value = "esPipa", encoded=true)boolean esPipa,
             @Path(value = "esCamioneta", encoded=true)boolean esCamioneta,
             @Path(value = "esFinalizar", encoded=true)boolean esFinalizar,
-            @Header("Authorization") String token,
-             @Header("Content-Type") String contentType
+            @Header("Authorization")String token,
+            @Header("Content-Type") String contentType
     );
 }

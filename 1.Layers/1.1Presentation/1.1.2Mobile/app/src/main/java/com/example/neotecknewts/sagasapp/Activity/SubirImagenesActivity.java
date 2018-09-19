@@ -21,6 +21,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
@@ -49,6 +50,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public LecturaDTO lecturaDTO;
     public LecturaPipaDTO lecturaPipaDTO;
     public LecturaAlmacenDTO lecturaAlmacenDTO;
+    public RecargaDTO recargaDTO;
 
     //banderas para indicar el objeto a utlizar
     public boolean papeleta;
@@ -56,6 +58,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public boolean finalizar;
     public boolean EsLecturaInicial,EsLecturaFinal,EsLecturaInicialPipa,EsLecturaFinalPipa;
     public boolean EsLecturaInicialAlmacen,EsLecturaFinalAlamacen;
+    public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal;
+    public boolean EsRecargaPipaInicial,EsRecargaPipaFinal;
 
     public SubirImagenesPresenter presenter;
     public ProgressDialog progressDialog;
@@ -167,6 +171,38 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 EsLecturaFinalPipa = false;
                 EsLecturaInicialAlmacen = (boolean) extras.get("EsLecturaInicialAlmacen") ;
                 EsLecturaFinalAlamacen = (boolean)extras.get("EsLecturaFinalAlmacen");
+            }else if (extras.getBoolean("EsRecargaEstacionInicial")||
+                    extras.getBoolean("EsRecargaEstacionFinal")){
+                recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
+                EsRecargaEstacionInicial = extras.getBoolean("EsRecargaEstacionInicial");
+                EsRecargaEstacionFinal = extras.getBoolean("EsRecargaEstacionFinal");
+                papeleta=false;
+                iniciar=false;
+                finalizar=false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false;
+                EsLecturaFinalAlamacen = false;
+            }else{
+                if(extras.getBoolean("EsRecargaPipaInicial") ||
+                        extras.getBoolean("EsRecargaPipaFInal")){
+                    EsRecargaPipaInicial = extras.getBoolean("EsRecargaPipaInicial");
+                    EsRecargaPipaFinal = extras.getBoolean("EsRecargaPipaFinal");
+                    recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
+                    EsRecargaEstacionInicial = false;
+                    EsRecargaEstacionFinal = false;
+                    papeleta=false;
+                    iniciar=false;
+                    finalizar=false;
+                    EsLecturaInicial = false;
+                    EsLecturaFinal = false;
+                    EsLecturaInicialPipa = false;
+                    EsLecturaFinalPipa = false;
+                    EsLecturaInicialAlmacen = false;
+                    EsLecturaFinalAlamacen = false;
+                }
             }
 
         }
@@ -181,6 +217,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
             sagasSql = new SAGASSql(getApplicationContext());
         }else if(EsLecturaInicialAlmacen || EsLecturaFinalAlamacen){
+            sagasSql = new SAGASSql(getApplicationContext());
+        }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
+            sagasSql = new SAGASSql(getApplicationContext());
+        }else if(EsRecargaPipaInicial || EsRecargaPipaFinal){
             sagasSql = new SAGASSql(getApplicationContext());
         }
         //se ejecuta la tarea asincrona para procesar las imagenes
@@ -365,6 +405,42 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     e.printStackTrace();
                 }
             }
+        }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
+            for (int i= 0; i<recargaDTO.getImagenesUri().size();i++){
+                try {
+                    Uri uri = Uri.parse(recargaDTO.getImagenesUri().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(),uri
+                    );
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    recargaDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }else if(EsRecargaPipaFinal){
+            for (int i= 0; i<recargaDTO.getImagenesUri().size();i++){
+                try {
+                    Uri uri = Uri.parse(recargaDTO.getImagenesUri().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(),uri
+                    );
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    recargaDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
 
     }
@@ -504,6 +580,24 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         builder.create().show();
     }
 
+    @Override
+    public void onSuccessRegistroRecarga() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
+        builder.setTitle(R.string.titulo_exito_registro_papeleta);
+        builder.setMessage(R.string.mensaje_exito_papeleta_registro_en_servicio);
+        builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(SubirImagenesActivity.this, MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.create().show();
+    }
+
     //tarea asincrona que ejecuta el procesado de las imagenes
     private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
 
@@ -534,6 +628,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 presenter.registrarLecturaInicialAlmacen(sagasSql,session.getToken(),lecturaAlmacenDTO);
             }else if (EsLecturaFinalAlamacen){
                 presenter.registrarLecturaFinalAlmacen(sagasSql,session.getToken(),lecturaAlmacenDTO);
+            }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
+                presenter.registrarRecargaEstacion(sagasSql,session.getToken(),recargaDTO,EsRecargaEstacionInicial);
+            }else if (EsRecargaPipaInicial || EsRecargaPipaFinal){
+                presenter.registrarRecargaPipa(sagasSql,session.getToken(),recargaDTO,EsRecargaPipaFinal);
             }
             textView.setText(R.string.cargando_imagenes_fin);
             //progressDialog.hide();

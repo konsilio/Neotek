@@ -2,10 +2,10 @@ package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 
-public interface RecargaCamionetaPresenter {
-    void getCamionetas(String token);
+public interface RecargaPipaPresenter {
+    void getLists(String token,boolean EsRecargaPipaFinal);
 
-    void onSuccessCamionetas(DatosTomaLecturaDto data);
+    void onSuccessList(DatosTomaLecturaDto data);
 
     void onError(String mensaje);
 }

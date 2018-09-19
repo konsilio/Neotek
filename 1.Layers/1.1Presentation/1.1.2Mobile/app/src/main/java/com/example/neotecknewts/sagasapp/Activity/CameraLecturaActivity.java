@@ -193,6 +193,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
                     intent.putExtra("EsRecargaEstacionFinal",EsRecargaEstacionFinal);
                     intent.putExtra("recargaDTO",recargaDTO);
                     intent.putExtra("EsPrimeraLectura",EsPrimeraLectura);
+                    startActivity(intent);
 
                 }
             }catch (URISyntaxException e){

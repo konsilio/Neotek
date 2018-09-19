@@ -18,6 +18,7 @@ import com.example.neotecknewts.sagasapp.Activity.LecturaDatosActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RecargaCamionetaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RecargaEstacionCarburacionActivity;
+import com.example.neotecknewts.sagasapp.Activity.RecargaPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaActivity;
 import com.example.neotecknewts.sagasapp.Activity.ReporteActivity;
 import com.example.neotecknewts.sagasapp.Activity.VistaOrdenCompraActivity;
@@ -104,33 +105,39 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsLecturaInicial",false);
                     intent.putExtra("EsLecturaFinal",true);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Pipa (Inicial)")){
+                }else if(menuItem.getName().equals("Pipa (Inicial)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(),LecturaPipaActivity.class);
                     intent.putExtra("EsLecturaInicialPipa",true);
                     intent.putExtra("EsLecturaFinalPipa",false);
                     view.getContext().startActivity(intent);
-                }else if (menuItem.getName().equals("Pipa. (Final)")){
+                }else if (menuItem.getName().equals("Pipa. (Final)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(),LecturaPipaActivity.class);
                     intent.putExtra("EsLecturaInicialPipa",false);
                     intent.putExtra("EsLecturaFinalPipa",true);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Almacén Pral. (Inicial)")){
+                }else if(menuItem.getName().equals("Almacén Pral. (Inicial)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(), LecturaAlmacenActivity.class);
                     intent.putExtra("EsLecturaInicialAlmacen",true);
                     intent.putExtra("EsLecturaFinalAlmacen",false);
                     view.getContext().startActivity(intent);
-                }else if (menuItem.getName().equals("Almacén Pral. (Final)")){
+                }else if (menuItem.getName().equals("Almacén Pral. (Final)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(),LecturaAlmacenActivity.class);
                     intent.putExtra("EsLecturaInicialAlmacen",false);
                     intent.putExtra("EsLecturaFinalAlmacen",true);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Camioneta (Inicial)")){
+                }else if(menuItem.getName().equals("Camioneta (Inicial)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(),LecturaCamionetaActivity.class);
                     intent.putExtra("EsLecturaInicialCamioneta",true);
                     intent.putExtra("EsLecturaFinalCamioneta",false);
                     intent.putExtra("EsRecargaCamioneta",false);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Camioneta (Final)")){
+                }else if(menuItem.getName().equals("Camioneta (Final)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(),LecturaCamionetaActivity.class);
                     intent.putExtra("EsLecturaInicialCamioneta",false);
                     intent.putExtra("EsLecturaFinalCamioneta",true);
@@ -151,11 +158,26 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                             RecargaEstacionCarburacionActivity.class);
                     intent.putExtra("EsRecargaEstacionInicial",true);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Estación Carb. (Final)") &&
+                }else if(menuItem.getName().equals("Estación Cab. (Final)") &&
                         menuItem.getHeaderMenu().equals("Recarga - Gas")){
                     Intent intent = new Intent(view.getContext(),
                             RecargaEstacionCarburacionActivity.class);
                     intent.putExtra("EsRecargaEstacionFinal",true);
+                    view.getContext().startActivity(intent);
+                }
+                else if(menuItem.getName().equals("Pipa (Inicial)") &&
+                        menuItem.getHeaderMenu().equals("Recarga - Gas")){
+                    Intent intent = new Intent(view.getContext(),
+                            RecargaPipaActivity.class);
+                    intent.putExtra("EsRecargaPipaInicial",true);
+                    intent.putExtra("EsRecargaPipaFInal",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getName().equals("Pipa (Final)") &&
+                        menuItem.getHeaderMenu().equals("Recarga - Gas")){
+                    Intent intent = new Intent(view.getContext(),
+                            RecargaPipaActivity.class);
+                    intent.putExtra("EsRecargaPipaFinal",true);
+                    intent.putExtra("EsRecargaPipaInicial",false);
                     view.getContext().startActivity(intent);
                 }
 

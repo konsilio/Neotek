@@ -154,4 +154,6 @@
     <string name="selecciona_estacion_destino">Selecciona la Estación de Carburación:</string>
     <string name="selecciona_medidor_porcentual_estacion">Selecciona el tipo de medidor porcentual:</string>
     <string name="Estacion">Estación</string>
+    <string name="Recarga_pipa">Recarga pipa </string>
+    <string name="selecciona_la_pipa_a_recargar">Selecciona la pipa a recargar</string>
 </resources>

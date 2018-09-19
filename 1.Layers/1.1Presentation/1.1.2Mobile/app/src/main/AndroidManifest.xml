@@ -128,8 +128,11 @@
         <activity
             android:name=".Activity.RecargaCamionetaActivity"
             android:label="@string/Recarga_camioneta" />
-        <activity android:name=".Activity.RecargaEstacionCarburacionActivity"
-            android:label="@string/Recarga_de_estacion"/>
+        <activity
+            android:name=".Activity.RecargaEstacionCarburacionActivity"
+            android:label="@string/Recarga_de_estacion" />
+        <activity android:name=".Activity.RecargaPipaActivity"
+            android:label="@string/Recarga_pipa"/>
     </application>
 
 </manifest>

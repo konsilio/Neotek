@@ -200,6 +200,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsLecturaFinalAlmacen = extras.getBoolean("EsLecturaFinalAlmacen");
             }else if(extras.getBoolean("EsRecargaEstacionInicial") ||
                     extras.getBoolean("EsRecargaEstacionFinal")){
+                recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
                 cantidadFotos = recargaDTO.getCantidadFotosEntrada();
                 textViewTitulo.setText("Fotografia "+ recargaDTO.getNombreMedidorEntrada()+
                     " - Estación"
@@ -210,6 +211,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsLecturaFinalPipa = false;
                 EsLecturaInicialAlmacen = false;
                 EsLecturaFinalAlmacen = false;
+                EsRecargaEstacionInicial = extras.getBoolean("EsRecargaEstacionInicial",
+                        false);
+                EsRecargaEstacionFinal = extras.getBoolean("EsRecargaEstacionFinal",
+                        false);
             }
 
         }
@@ -297,7 +302,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                     Log.v("Recarga estación","finalizar "+cantidadFotos);
                 }
             }catch(Exception ex){
-
+                ex.printStackTrace();
             }
             //se pone visible el layout para tomar la siguiente fotografia
             layoutTitle.setVisibility(View.VISIBLE);
@@ -357,10 +362,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
                     Log.w("Recarga estación","finalizar"+cantidadFotos);
                     recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
-                    startActivityReporte();
+                    startActivityRecarga();
                 }
             }catch(Exception ex){
-
+                ex.printStackTrace();
             }
 
         }
@@ -425,7 +430,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     }
 
     /**
-     * Permite detectar cuan se da click en la tecla de back para lanzar el
+     * Permite detectar cuando se da click en la tecla de back para lanzar el
      * dialogo de advertencia en caso de ser necesario
      * @param keyCode Codigo de la tecla que seleccióno el usuario
      * @param event Objeto que contiene una referencia {@link KeyEvent} de la tecla seleccíonada
@@ -516,7 +521,29 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         startActivity(intent);
     }
 
-    public void startActivityReporte(){
-        //Intent intent = new Intent(Ca)
+    /**
+     * <h3>startActivityRecarga</h3>
+     * Permite inciar la actividad para genera el reporte
+     * de la recarga en caso de ser finalizar ,  en caso contrario
+     * se enviaran los datos de la recarga para su registro.
+     * @author Jorge Omar Tovar Martínez
+     */
+    public void startActivityRecarga(){
+        if(EsRecargaEstacionFinal) {
+            Intent intent = new Intent(CameraDescargaActivity.this,
+                    VerReporteActivity.class);
+            intent.putExtra("EsRecargaEstacionInicial", EsRecargaEstacionInicial);
+            intent.putExtra("EsRecargaEstacionFinal", EsRecargaEstacionFinal);
+            intent.putExtra("recargaDTO", recargaDTO);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(CameraDescargaActivity.this,
+                    SubirImagenesActivity.class);
+            intent.putExtra("EsRecargaEstacionInicial", EsRecargaEstacionInicial);
+            intent.putExtra("EsRecargaEstacionFinal", EsRecargaEstacionFinal);
+            intent.putExtra("recargaDTO", recargaDTO);
+            startActivity(intent);
+        }
     }
+
 }

@@ -39,10 +39,10 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
         setContentView(R.layout.activity_lectura_p5000);
         Bundle b = getIntent().getExtras();
         if(b!=null) {
-            EsLecturaInicial = (boolean) b.get("EsLecturaInicial");
-            EsLecturaFinal = (boolean) b.get("EsLecturaFinal");
-            EsLecturaFinalPipa = (boolean) b.get("EsLecturaFinalPipa");
-            EsLecturaInicialPipa = (boolean) b.get("EsLecturaInicialPipa");
+            EsLecturaInicial =  b.getBoolean("EsLecturaInicial",false);
+            EsLecturaFinal = b.getBoolean("EsLecturaFinal",false);
+            EsLecturaFinalPipa =  b.getBoolean("EsLecturaFinalPipa",false);
+            EsLecturaInicialPipa = b.getBoolean("EsLecturaInicialPipa",false);
             EsRecargaEstacionInicial = b.getBoolean("EsRecargaEstacionInicial",false);
             EsRecargaEstacionFinal = b.getBoolean("EsRecargaEstacionFinal",false);
             EsPrimeraLectura = b.getBoolean("EsPrimeraLectura",false);
@@ -209,10 +209,11 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
                 intent.putExtra("EsFotoP5000",true);
             }else if(EsRecargaEstacionInicial||EsRecargaEstacionFinal){
-                if(EsLecturaInicial)
+                if(EsLecturaInicial) {
                     recargaDTO.setP5000Salida(CantidadP500);
-                else
+                } else {
                     recargaDTO.setP5000Salida(CantidadP500);
+                }
                 intent.putExtra("EsRecargaEstacionInicial",EsRecargaEstacionInicial);
                 intent.putExtra("EsRecargaEstacionFinal",EsRecargaEstacionFinal);
                 intent.putExtra("EsPrimeraLectura",EsPrimeraLectura);

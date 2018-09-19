@@ -9,10 +9,12 @@ import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
@@ -47,6 +49,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     private boolean registra_papeleta;
     private boolean registra_descarga;
     private boolean registro_local;
+    private boolean registra_reacrga;
 
     //constructor de la clase y se inicializa el presenter
     public SubirImagenesInteractorImpl(SubirImagenesPresenter subirImagenesPresenter){
@@ -1223,12 +1226,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
+        Retrofit retrofit =  new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
+        RestClient restClient = retrofits.create(RestClient.class);
 
-        RestClient restClient = retrofit.create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
         while(intentos_post<3) {
@@ -1286,6 +1289,261 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         /*sagasSql.InsertLecturaFinalAlmacen(lecturaAlmacenDTO);
         sagasSql.InsertImagenesLecturaFinalAlamacen(lecturaAlmacenDTO);
         subirImagenesPresenter.onSuccessRegistroAndroid();*/
+    }
+
+    @Override
+    public void registrarRecargaEstacion(SAGASSql sagasSql, String token, RecargaDTO recargaDTO,
+                                         boolean EsRecargaEstacionInicial) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String clave_unica = "RE";
+        clave_unica += (EsRecargaEstacionInicial)? "I":"F";
+        clave_unica += s.format(new Date());
+        recargaDTO.setClaveOperacion(clave_unica);
+        //region Verifica si el servcio esta disponible
+
+        Gson gsons = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofits =  new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gsons))
+                .build();
+        RestClient restClientS = retrofits.create(RestClient.class);
+
+        int servicio_intentos = 0;
+        esta_disponible= true;
+
+        while (servicio_intentos<3) {
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                    RespuestaServicioDisponibleDTO data = response.body();
+                    esta_disponible = response.isSuccessful() && data.isExito();
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
+                    esta_disponible = false;
+                }
+            });
+            if (esta_disponible) {
+                break;
+            }else {
+                servicio_intentos++;
+            }
+        }
+
+        if (servicio_intentos == 3) {
+            registrar_local_recarga(sagasSql,recargaDTO,clave_unica);
+            registro_local = true;
+        }
+
+        //endregion
+        //region Realiza el registro de la lectura final de la camioneta
+
+
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        int intentos_post = 0;
+        registra_reacrga = true;
+        while(intentos_post<3) {
+            Call<RespuestaRecargaDTO> call = null;
+            if(EsRecargaEstacionInicial) {
+                restClient.postRecargaInicial(
+                        recargaDTO, token, "application/json");
+            }else{
+                restClient.postRecargaFinal(
+                  recargaDTO,token,"application/json"
+                );
+            }
+            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            call.enqueue(new Callback<RespuestaRecargaDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaRecargaDTO> call,
+                                       Response<RespuestaRecargaDTO> response) {
+                    RespuestaRecargaDTO data = response.body();
+                    if (response.isSuccessful()) {
+                        Log.w("IniciarDescarga", "Success");
+                        subirImagenesPresenter.onSuccessRegistroRecarga();
+                    } else {
+                        switch (response.code()) {
+                            case 404:
+                                Log.w("LecturaInicialCamioneta", "not found");
+                                break;
+                            case 500:
+                                Log.w("LecturaInicialCamioneta", "server broken");
+                                break;
+                            default:
+                                Log.w("LecturaInicialCamioneta", "" + response.code());
+                                Log.w(" Error", response.message() + " " +
+                                        response.raw().toString());
+                                break;
+                        }
+                        //subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
+                    Log.e("error", t.toString());
+                }
+            });
+            intentos_post++;
+            if(registra_reacrga){
+                break;
+            }else{
+                intentos_post++;
+            }
+        }
+        if(intentos_post==3){
+            registrar_local_recarga(sagasSql,recargaDTO,clave_unica);
+            registro_local = true;
+        }
+        if(registro_local ){
+            Lisener lisener = new Lisener(sagasSql,token);
+            lisener.CrearRunable(Lisener.RecargaCamioneta);
+            subirImagenesPresenter.onSuccessRegistroAndroid();
+        }
+        //endregion
+    }
+
+    @Override
+    public void registrarRecargaPipa(SAGASSql sagasSql, String token, RecargaDTO recargaDTO, boolean esRecargaPipaFinal) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String clave_unica = "RP";
+        clave_unica += (esRecargaPipaFinal)? "F":"I";
+        clave_unica += s.format(new Date());
+        recargaDTO.setClaveOperacion(clave_unica);
+        //region Verifica si el servcio esta disponible
+
+        Gson gsons = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofits =  new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gsons))
+                .build();
+        RestClient restClientS = retrofits.create(RestClient.class);
+
+        int servicio_intentos = 0;
+        esta_disponible= true;
+
+        while (servicio_intentos<3) {
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                    RespuestaServicioDisponibleDTO data = response.body();
+                    esta_disponible = response.isSuccessful() && data.isExito();
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
+                    esta_disponible = false;
+                }
+            });
+            if (esta_disponible) {
+                break;
+            }else {
+                servicio_intentos++;
+            }
+        }
+
+        if (servicio_intentos == 3) {
+            registrar_local_recarga(sagasSql,recargaDTO,clave_unica);
+            registro_local = true;
+        }
+
+        //endregion
+        //region Realiza el registro de la lectura final de la camioneta
+
+
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        int intentos_post = 0;
+        registra_reacrga = true;
+        while(intentos_post<3) {
+            Call<RespuestaRecargaDTO> call = null;
+            if(esRecargaPipaFinal) {
+                call= restClient.postRecargaInicial(
+                        recargaDTO, token, "application/json");
+            }else{
+                call = restClient.postRecargaFinal(
+                        recargaDTO,token,"application/json"
+                );
+            }
+            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            call.enqueue(new Callback<RespuestaRecargaDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaRecargaDTO> call,
+                                       Response<RespuestaRecargaDTO> response) {
+                    RespuestaRecargaDTO data = response.body();
+                    if (response.isSuccessful()) {
+                        Log.w("IniciarDescarga", "Success");
+                        subirImagenesPresenter.onSuccessRegistroRecarga();
+                    } else {
+                        switch (response.code()) {
+                            case 404:
+                                Log.w("LecturaInicialCamioneta", "not found");
+                                break;
+                            case 500:
+                                Log.w("LecturaInicialCamioneta", "server broken");
+                                break;
+                            default:
+                                Log.w("LecturaInicialCamioneta", "" + response.code());
+                                Log.w(" Error", response.message() + " " +
+                                        response.raw().toString());
+                                break;
+                        }
+                        //subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
+                    Log.e("error", t.toString());
+                }
+            });
+            intentos_post++;
+            if(registra_reacrga){
+                break;
+            }else{
+                intentos_post++;
+            }
+        }
+        if(intentos_post==3){
+            registrar_local_recarga(sagasSql,recargaDTO,clave_unica);
+            registro_local = true;
+        }
+        if(registro_local ){
+            Lisener lisener = new Lisener(sagasSql,token);
+            lisener.CrearRunable(Lisener.RecargaCamioneta);
+            subirImagenesPresenter.onSuccessRegistroAndroid();
+        }
+        //endregion
     }
 
     //region Metodos de clase privados
@@ -1409,6 +1667,19 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 }
             }
         }
+    }
+
+    private void registrar_local_recarga(SAGASSql sagasSql,
+                                         RecargaDTO recargaDTO,
+                                         String clave_unica
+                                         ) {
+            if(sagasSql.GetRecargaByClaveOperacion(recargaDTO.getClaveOperacion()).getCount()==0){
+                sagasSql.InsertRecarga(recargaDTO,SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION);
+                if(sagasSql.GetImagenesRecarga(recargaDTO.getClaveOperacion()).getCount()==0){
+                    sagasSql.InsertarImagesRecarga(recargaDTO);
+                }
+            }
+
     }
     //endregion
 }

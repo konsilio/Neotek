@@ -27,8 +27,9 @@ public class RecargaCamionetaPresenterImpl implements RecargaCamionetaPresenter 
     }
 
     @Override
-    public void onError() {
+    public void onError(String mensaje) {
         recargaCamionetaView.hideProgress();
-        recargaCamionetaView.onError();
+        recargaCamionetaView.onError(mensaje);
     }
+
 }

@@ -15,6 +15,7 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.io.IOException;
@@ -26,6 +27,8 @@ import java.util.UUID;
 
 public class VerReporteActivity extends AppCompatActivity {
     private boolean EsReporteDelDia;
+    private boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
+    RecargaDTO recargaDTO;
     private String StringReporte,HtmlReporte;
 
     // android built in classes for bluetooth operations
@@ -48,37 +51,148 @@ public class VerReporteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ver_reporte);
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
-            EsReporteDelDia = (boolean)bundle.get("EsReporteDelDia");
-            StringReporte = (String) bundle.get("StringReporte");
-            HtmlReporte = (String) bundle.get("HtmlReporte");
+            EsReporteDelDia = bundle.getBoolean("EsReporteDelDia",false);
+            EsRecargaEstacionInicial = bundle.getBoolean("EsRecargaEstacionInicial",
+                    false);
+            EsRecargaEstacionFinal = bundle.getBoolean("EsRecargaEstacionFinal",
+                    false);
+            EsPrimeraLectura = bundle.getBoolean("EsPrimeraLectura",false);
+            if(EsReporteDelDia) {
+                StringReporte = (String) bundle.get("StringReporte");
+                HtmlReporte = (String) bundle.get("HtmlReporte");
+            }
+            if(EsRecargaEstacionFinal){
+                recargaDTO = (RecargaDTO) bundle.getSerializable("recargaDTO");
+                GenerarReporteRecargaFinal(recargaDTO);
+            }
         }
         WebView WVVerReporteActivityReporte = findViewById(R.id.WVVerReporteActivityReporte);
         Button btnVerReporteActivityTerminar= findViewById(R.id.BtnVerReporteActivityTerminar);
         Button btnReporteActivityImprimir = findViewById(R.id.BtnReporteActivityImprimir);
         btnVerReporteActivityTerminar.setOnClickListener(v -> {
-            Intent intent = new Intent(VerReporteActivity.this, MenuActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
+            if(EsReporteDelDia) {
+                Intent intent = new Intent(VerReporteActivity.this, MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }else if(EsRecargaEstacionFinal){
+                Intent intent = new Intent(VerReporteActivity.this,
+                        SubirImagenesActivity.class);
+                intent.putExtra("EsRecargaEstacionInicial", EsRecargaEstacionInicial);
+                intent.putExtra("EsRecargaEstacionFinal", EsRecargaEstacionFinal);
+                intent.putExtra("recargaDTO", recargaDTO);
+                startActivity(intent);
+            }
         });
-        btnReporteActivityImprimir.setOnClickListener(v -> {
+        btnReporteActivityImprimir.setOnClickListener((View v) -> {
             listDevices();
             btnVerReporteActivityTerminar.setVisibility(View.VISIBLE);
             /*new Imprimir(this,this).starPrint(StringReporte)*/
         });
-        if (EsReporteDelDia){
-            WVVerReporteActivityReporte.setWebViewClient(new WebViewClient(){
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    return true;
-                }
+        WVVerReporteActivityReporte.setWebViewClient(new WebViewClient(){
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return true;
+            }
 
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                }
-            });
-            WVVerReporteActivityReporte.loadDataWithBaseURL(null, HtmlReporte,
-                    "text/HTML", "UTF-8", null);
-        }
+            @Override
+            public void onPageFinished(WebView view, String url) {
+            }
+        });
+        WVVerReporteActivityReporte.loadDataWithBaseURL(null, HtmlReporte,
+                "text/HTML", "UTF-8", null);
+
+
+    }
+
+    /**
+     * Permite realizar la asignación de los valores para el reporte de  la recarga final
+     * de la estación ,toma de parametro el modelo para luego setear los valores
+     * @param recargaDTO Objeto co
+     */
+    private void GenerarReporteRecargaFinal(RecargaDTO recargaDTO) {
+        HtmlReporte = "<body>" +
+                "<h3>Reporte-Recarga-[{Pipa}]</h3>" +
+                "<table>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Clave Recarga</td>" +
+                "<td>[{ClaveRecarga}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Fecha</td>" +
+                "<td>[{Fecha}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Hora</td>" +
+                "<td>[{Hora}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table>" +
+                "<hr>" +
+                "<h4>Porcentaje Estación (%)</h4>" +
+                "<table>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Inicial: </td>" +
+                "<td>Final</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>[{PorcentajeInicial}]</td>" +
+                "<td>[{PorcentajeFinal}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table>" +
+                "<hr>" +
+                "<h4>Lectura P5000</h4>" +
+                "<table>" +
+                "<tr>" +
+                "<td>&nbsp;</td>" +
+                "<td>Inicial: </td>" +
+                "<td>Final</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>[{NombrePipa}]</td>" +
+                "<td>[{LecturaInicialPipa}]</td>" +
+                "<td>[{LecturaFinalPipa}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>[{NombreEstacion}]</td>" +
+                "<td>[{LecturaIncialEstacion}]</td>" +
+                "<td>[{LecturaFinalEstacion}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Litros recargados: </td>" +
+                "<td>[{LitrosRecargados}]</td>" +
+                "</tr>" +
+                "</table>" +
+                "</body>";
+
+        StringReporte = "\n Reporte-Recarga - [{Pipa}] \n" +
+                "\n Clave Recarga" +
+                "\t [{ClaveRecarga}]" +
+                "\n Fecha " +
+                "\t [{Fecha}]" +
+                "\n Hora" +
+                "\t [{Hora}]\n" +
+                "------------------------------------" +
+                "\n Porcentaje Estación (%) " +
+                "\n Inicial: " +
+                "\t Final</td>" +
+                "\n[{PorcentajeInicial}]" +
+                "\t[{PorcentajeFinal}]" +
+                "------------------------------------" +
+                "\n Lectura P5000" +
+                "\n\t" +
+                "Inicial:\t" +
+                "Final\n" +
+                "[{NombrePipa}] \t" +
+                "[{LecturaInicialPipa}] \t" +
+                "[{LecturaFinalPipa}] \n" +
+                "[{NombreEstacion}] \t" +
+                "[{LecturaIncialEstacion}] \t" +
+                "[{LecturaFinalEstacion}] \n" +
+                "Litros recargados: \t" +
+                "[{LitrosRecargados}]";
 
 
     }
