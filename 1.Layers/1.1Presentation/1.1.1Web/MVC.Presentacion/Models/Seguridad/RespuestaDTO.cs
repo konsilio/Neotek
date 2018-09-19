@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http.ModelBinding;
 
 namespace MVC.Presentacion.Models.Seguridad
 {
@@ -16,5 +17,8 @@ namespace MVC.Presentacion.Models.Seguridad
         public bool ModeloValido { get; set; }
         public List<string> MensajesError { get; set; }
         public string RedirigirUrl { get; set; }
+        public ModelStateDictionary ModelStates { get; set; }
+        public Dictionary<string, string> ModelStatesStandar { get; set; }
+        // public T RirigirUrl { get; set; }
     }
 }

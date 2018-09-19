@@ -21,7 +21,7 @@ namespace Web.MainModule
                 _tok = Session["StringToken"].ToString();
                 if (!IsPostBack)
                 {                  
-                    if (TokenServicio.ObtenerAutenticado(_tok))
+                    if (TokenServicios.ObtenerAutenticado(_tok))
                     {
                         CargarEmpresas();
                         CargarRequisiciones();
@@ -53,13 +53,13 @@ namespace Web.MainModule
             ddlEmpresas.DataValueField = "IdEmpresa";
             ddlEmpresas.DataTextField = "NombreComercial";
             ddlEmpresas.DataBind();
-            if (TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (TokenServicios.ObtenerEsAdministracionCentral(_tok))
             {
                 ddlEmpresas.SelectedValue = "-1";
             }
             else
             {
-                ddlEmpresas.SelectedValue = TokenServicio.ObtenerIdEmpresa(_tok).ToString();
+                ddlEmpresas.SelectedValue = TokenServicios.ObtenerIdEmpresa(_tok).ToString();
                 ddlEmpresas.Enabled = false;
             }
         }

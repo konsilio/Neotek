@@ -17,7 +17,6 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new ProveedorDataAccess().Insertar(provee);
         }
-
         public static RespuestaDto ModificarProveedor(Proveedor provee)
         {
             return new ProveedorDataAccess().Actualizar(provee);
@@ -35,7 +34,6 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new ProveedorDataAccess().Buscar(IdProveedor);
         }
-
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El proveedor");

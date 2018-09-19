@@ -36,16 +36,16 @@ namespace Application.MainModule.Servicios.Catalogos
                 if (ccDto.IdCilindro != null && unidadAsignada.Equals(false)) unidadAsignada = true;
                 else if (unidadAsignada) unidadMensaje = string.Concat(unidadMensaje, ", Cilindros de gas");
 
-                if(ccDto.IdEquipoTransporte != null && unidadAsignada.Equals(false)) unidadAsignada = true;
+                if (ccDto.IdEquipoTransporte != null && unidadAsignada.Equals(false)) unidadAsignada = true;
                 else if (unidadAsignada) unidadMensaje = string.Concat(unidadMensaje, ", Equipo de transporte");
 
-                if(ccDto.IdEstacionCarburacion != null && unidadAsignada.Equals(false)) unidadAsignada = true;
+                if (ccDto.IdEstacionCarburacion != null && unidadAsignada.Equals(false)) unidadAsignada = true;
                 else if (unidadAsignada) unidadMensaje = string.Concat(unidadMensaje, ", Estación de carburación");
 
-                if(ccDto.IdPipa != null && unidadAsignada.Equals(false)) unidadAsignada = true;
+                if (ccDto.IdPipa != null && unidadAsignada.Equals(false)) unidadAsignada = true;
                 else if (unidadAsignada) unidadMensaje = string.Concat(unidadMensaje, ", Pipa");
 
-                if(ccDto.IdVehiculoUtilitario != null && unidadAsignada.Equals(false)) unidadAsignada = true;
+                if (ccDto.IdVehiculoUtilitario != null && unidadAsignada.Equals(false)) unidadAsignada = true;
                 else if (unidadAsignada) unidadMensaje = string.Concat(unidadMensaje, ", Vehiculo utilitario");
 
                 if (!string.IsNullOrEmpty(unidadMensaje))
@@ -61,19 +61,32 @@ namespace Application.MainModule.Servicios.Catalogos
         #endregion
 
         #region Productos
-        public static RespuestaDto CategoriaProducto(CategoriaProductoCrearDto cpDto, bool esModificacion = false)
+        public static RespuestaDto CategoriaProducto(CategoriaProductoCrearDto cpDto)
         {
             var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
-            // Existencia            
+            // Existencia   
             if (ProductoServicios.ExisteCategoria(cpDto.Nombre))
             {
                 respuesta.Exito = false;
                 respuesta.ModeloValido = false;
                 respuesta.MensajesError.Add(string.Format(Error.C0005, "La categoría de producto", string.Empty));
             }
-
             return respuesta;
         }
+
+        public static RespuestaDto CategoriaProducto(CategoriaProductoModificarDto cpDto)
+        {
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
+            // Existencia   
+            if (ProductoServicios.ExisteCategoria(cpDto.Nombre, cpDto.IdCategoria))
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.C0005, "La categoría de producto", string.Empty));
+            }
+            return respuesta;
+        }
+
 
         public static RespuestaDto LineaProducto(LineaProductoCrearDto lpDto, bool esModificacion = false)
         {
@@ -106,7 +119,7 @@ namespace Application.MainModule.Servicios.Catalogos
         public static RespuestaDto Producto(ProductoCrearDto pDto, bool esModificacion = false)
         {
             var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
-                
+
             if (pDto.Minimos.Value > pDto.Maximo.Value)
             {
                 respuesta.Exito = false;

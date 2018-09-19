@@ -1,0 +1,16 @@
+﻿@model MVC.Presentacion.Models.Catalogos.LineaProductoDTO
+<tr>
+    <td>@Model.Linea </td>
+    <td>@Model.Descripcion </td>
+    <td>
+        <a href="@Url.Action("EditarLineaProducto", "Producto", new { Id = Model.IdProductoLinea })">
+            <i class="material-icons">edit</i>
+            <span class="icon-name"></span>
+        </a>
+        <a href="@Url.Action("EliminarLineaProducto", "Producto", new { Id = Model.IdProductoLinea})">
+            <i class="material-icons">delete</i>
+            <span class="icon-name"></span>
+        </a>
+
+    </td>
+</tr>

@@ -245,6 +245,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                    && x.Nombre.Equals(nombre)
                                                                    && x.Activo);
         }
+        public CategoriaProducto BuscarCategoria(short idEmpresa, string nombre, short idCategoria)
+        {
+            return uow.Repository<CategoriaProducto>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                   && x.Nombre.Equals(nombre)
+                                                                   && x.IdCategoria != idCategoria
+                                                                   && x.Activo);
+        }
         public LineaProducto BuscarLineaProducto(short idLineaProducto)
         {
             return uow.Repository<LineaProducto>().GetSingle(x => x.IdProductoLinea.Equals(idLineaProducto)

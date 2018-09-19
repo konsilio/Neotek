@@ -21,9 +21,9 @@ namespace Web.MainModule.Catalogos.Vista
                 _tok = Session["StringToken"].ToString();
                 if (!IsPostBack)
                 {
-                    if (TokenServicio.ObtenerAutenticado(_tok))
+                    if (TokenServicios.ObtenerAutenticado(_tok))
                     {
-                        CargarGaseras(TokenServicio.ObtenerIdEmpresa(_tok));
+                        CargarGaseras(TokenServicios.ObtenerIdEmpresa(_tok));
                     }
                     else
                         Salir();
@@ -36,14 +36,14 @@ namespace Web.MainModule.Catalogos.Vista
         }
         private void CargarGaseras(short idEmpresa)
         {
-            if (TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (TokenServicios.ObtenerEsAdministracionCentral(_tok))
                 ddlFiltroGasera.DataSource = new EmpresaServicio().Empresas(_tok).Where(x => x.EsAdministracionCentral.Equals(false)).ToList();
             else
                 ddlFiltroGasera.DataSource = new EmpresaServicio().Empresas(_tok).Where(x => x.EsAdministracionCentral.Equals(false) && x.IdEmpresa.Equals(idEmpresa)).ToList();
             ddlFiltroGasera.DataTextField = "NombreComercial";
             ddlFiltroGasera.DataValueField = "IdEmpresa";
             ddlFiltroGasera.DataBind();
-            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (!TokenServicios.ObtenerEsAdministracionCentral(_tok))
                 ddlFiltroGasera.Enabled = false;
             CargarCentrosCosto(short.Parse(ddlFiltroGasera.SelectedValue));
         }

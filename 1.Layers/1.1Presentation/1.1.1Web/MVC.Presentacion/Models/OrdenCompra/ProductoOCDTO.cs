@@ -19,6 +19,8 @@ namespace MVC.Presentacion.Models.OrdenCompra
         [Display(Name = "IDCuentaContable")]
         public int IdCuentaContable { get; set; }
 
+        public string CuentaContable { get; set; }
+
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Precio")]
         public decimal Precio { get; set; }

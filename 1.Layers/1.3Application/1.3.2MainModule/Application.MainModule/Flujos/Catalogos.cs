@@ -1,7 +1,9 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Almacen;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
@@ -128,7 +130,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             resp = ValidarCatalogoServicio.CategoriaProducto(cpDto);
-            if (!resp.Exito) return resp;
+            if (!resp.Exito) return resp;         
 
             return ProductoServicios.RegistrarCategoriaProducto(ProductoAdapter.FromDto(cpDto));
         }
@@ -138,7 +140,7 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeModificarProducto();
             if (!resp.Exito) return resp;
 
-            resp = ValidarCatalogoServicio.CategoriaProducto(cpDto, true);
+            resp = ValidarCatalogoServicio.CategoriaProducto(cpDto);
             if (!resp.Exito) return resp;
 
             var catProd = ProductoServicios.ObtenerCategoria(cpDto.IdCategoria);
@@ -354,7 +356,7 @@ namespace Application.MainModule.Flujos
 
         #endregion
 
-        #region CentroCosto
+        #region Centro de Costo
         public RespuestaDto RegistraCentroCosto(CentroCostoCrearDto ccDto)
         {
             var resp = PermisosServicio.PuedeRegistrarCentroCosto();
@@ -371,8 +373,8 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeModificarCentroCosto();
             if (!resp.Exito) return resp;
 
-            resp = ValidarCatalogoServicio.CentroCosto(ccDto);
-            if (!resp.Exito) return resp;
+            //resp = ValidarCatalogoServicio.CentroCosto(ccDto);
+            //if (!resp.Exito) return resp;
 
             var centro = CentroCostoServicio.Obtener(ccDto.IdCentroCosto);
             if (centro == null) return CentroCostoServicio.NoExiste();
@@ -404,6 +406,11 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
 
             return CentroCostoAdapter.ToDTO(CentroCostoServicio.Obtener(idCentroCosto));
+        }
+
+        public List<TipoCentroCostoDto> ListaTipoCentroCosto()
+        {
+            return TipoCentroCostoAdapter.ToDTO(CentroCostoServicio.ListaTipoCentroCostos());
         }
         #endregion
 
@@ -472,7 +479,7 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeModificarCuentaContable();
             if (!resp.Exito) return resp;
 
-            var ctactble = CuentaContableServicio.Obtener(ccDto.IdCuenta);
+            var ctactble = CuentaContableServicio.Obtener(ccDto.IdCuentaContable);
             if (ctactble == null) return CuentaContableServicio.NoExiste();
 
             //var CuentaContable = CuentaContableAdapter.FromDto(ccDto);
@@ -509,34 +516,33 @@ namespace Application.MainModule.Flujos
         }
         #endregion
 
-        #region CuentaContable
-        //public List<CuentaContableDto> BuscarCuentaContable(int idEmpresa)
-        //{
-        //    var listaCuentasContables = new CuentaContableDataAccess().BuscarCuentasContables(idEmpresa);
-        //    return CuentaContableAdapter.FromDto(listaCuentasContables);
-        //}
-        //public RespuestaDto BorrarCuentaContable(int idCuentaContable)
-        //{//Borrado logico    
-        //    var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(idCuentaContable);
-        //    ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
+        #region Estación de carburación
+        public List<EstacionCarburacionDTO> ListaEstacionesCarburacion()
+        {
+            return EstacionCarburacionAdapter.toDTO(EstacionCarburacionServicio.ObtenerTodas());
+        }
+        public List<EstacionCarburacionDTO> ListaEstacionesCarburacion(short idEmpresa)
+        {
+            return EstacionCarburacionAdapter.toDTO(EstacionCarburacionServicio.ObtenerTodas(idEmpresa));
+        }
+        #endregion
 
-        //    ctaCtble.Activo = false;
-        //    return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
-        //}
-        //public RespuestaDto EditarCuentaContable(CuentaContableDto cc)
+        #region Unidad Almacen Gas
+        //public List<UnidadAlmacenGasDTO> ListaEstacionesCarburacion()
         //{
-        //    var ctaCtble = CuentaContableServicio.ObtenerCuentaContable(cc.IdCuentaContable);
-        //    ctaCtble = CuentaContableAdapter.FromEmtyte(ctaCtble);
-        //    ctaCtble.Numero = cc.Numero;
-        //    ctaCtble.Descripcion = cc.Descripcion;
+        //    return UnidadAlmacenAdapter.ToDTO(AlmacenGasServicio.ObtenerAlmacenGeneral());
+        //}
+        public List<UnidadAlmacenGasDTO> ListaUnidadAlmacenGas(short idEmpresa)
+        {
+            return UnidadAlmacenAdapter.ToDTO(AlmacenGasServicio.ObtenerAlmacenGeneral(idEmpresa));
+        }
+        #endregion
 
-        //    return CuentaContableServicio.ModificarCuentaContable(ctaCtble);
-        //}
-        //public RespuestaDto CrearCuentaContable(CuentaContableDto cc)
-        //{
-        //    CuentaContable ctaCtble = CuentaContableAdapter.ToDTO(cc);
-        //    return new CuentaContableDataAccess().InsertarCuentaContable(ctaCtble);
-        //}
+        #region Equipo Transporte
+        public List<EquipoTransporteDTO> ListaEquipoTrasnporte()
+        {
+            return EquipoTransporteAdapter.toDTO(EquipoTransporteServicio.BuscarEquipoTransporte());
+        }
         #endregion
     }
 }

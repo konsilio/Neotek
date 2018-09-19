@@ -1,0 +1,16 @@
+﻿@model MVC.Presentacion.Models.Catalogos.CuentaContableDTO
+<tr>
+    <td>@Model.Empresa</td>
+    <td>@Model.Numero</td>
+    <td>@Model.Descripcion</td>
+    <td>
+        <a href="@Url.Action("ActivarEditar", "CuentaContable", new { Id = Model.IdCuentaContable })">
+            <i class="material-icons">edit</i>
+            <span class="icon-name"></span>
+        </a>
+        <a href="@Url.Action("Eliminar", "CuentaContable", new { Id = Model.IdCuentaContable})">
+            <i class="material-icons">delete</i>
+            <span class="icon-name"></span>
+        </a>
+    </td>
+</tr>

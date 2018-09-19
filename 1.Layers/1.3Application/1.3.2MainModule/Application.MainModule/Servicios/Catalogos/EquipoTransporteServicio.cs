@@ -19,5 +19,39 @@ namespace Application.MainModule.Servicios.Catalogos
             
             return null;
         }
+        public static string ObtenerNombre(EquipoTransporte qt)
+        {
+            if (qt.IdCamioneta != null)
+            {
+                if (qt.Camionetas != null)
+                    return qt.Camionetas.Nombre;
+                else
+                    return new EquipoTransporteDataAccess().BuscarCamioneta(qt.IdCamioneta.Value).Nombre; 
+            }
+
+            if (qt.IdPipa!= null)
+            {
+                if (qt.Pipas != null)
+                    return qt.Pipas.Nombre;
+                else
+                    return new EquipoTransporteDataAccess().BuscarPipa(qt.IdPipa.Value).Nombre; 
+            }
+
+            //if (qt.Vehiculo != null)
+            //    return qt.Vehiculo.Nombre;
+            //else
+            //    return new EquipoTransporteDataAccess().BuscarVehiculo(qt.Vehiculo.Value).Nombre; 
+
+            return null;
+            
+        }
+        public static List<EquipoTransporte> BuscarEquipoTransporte()
+        {
+            return new EquipoTransporteDataAccess().BuscarEquipoTransporte();
+        }
+        public static List<EquipoTransporte> BuscarEquipoTransporte(short IdEmpresa)
+        {
+            return new EquipoTransporteDataAccess().BuscarEquipoTransporte(IdEmpresa);
+        }
     }
 }

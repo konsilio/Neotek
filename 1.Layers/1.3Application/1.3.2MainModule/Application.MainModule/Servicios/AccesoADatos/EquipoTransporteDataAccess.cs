@@ -114,5 +114,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     return null;
             }
         }
+        public List<EquipoTransporte> BuscarEquipoTransporte()
+        {
+            return uow.Repository<EquipoTransporte>().Get(x => x.Activo).ToList();
+        }
+        public List<EquipoTransporte> BuscarEquipoTransporte(short idEmpresa)
+        {
+            return uow.Repository<EquipoTransporte>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                            && x.Activo).ToList();
+        }
     }
 }

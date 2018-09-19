@@ -65,7 +65,7 @@ namespace MVC.Presentacion.App_Code
         {
             AgenteServicio agente = new AgenteServicio();
             agente.GuardarOrdenesCompra(ocDTO, Tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
         public static RespuestaDTO GenerarOrdenCompra(OrdenCompraModel model, string Tkn)
         {
