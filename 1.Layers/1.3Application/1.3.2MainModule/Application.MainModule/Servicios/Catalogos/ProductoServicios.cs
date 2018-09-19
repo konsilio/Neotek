@@ -31,27 +31,22 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new ProductoDataAccess().Insertar(prod);
         }
-
         public static RespuestaDto ModificarCategoriaProducto(CategoriaProducto cProd)
         {
             return new ProductoDataAccess().Actualizar(cProd);
         }
-
         public static RespuestaDto ModificarLineaProducto(LineaProducto lProd)
         {
             return new ProductoDataAccess().Actualizar(lProd);
         }
-
         public static RespuestaDto ModificarUnidadMedida(UnidadMedida uMedida)
         {
             return new ProductoDataAccess().Actualizar(uMedida);
         }
-
         public static RespuestaDto ModificarProducto(Producto prod)
         {
             return new ProductoDataAccess().Actualizar(prod);
         }
-
         public static List<CategoriaProducto> ObtenerCategorias()
         {
             var empresa = EmpresaServicio.Obtener(TokenServicio.ObtenerIdEmpresa());
@@ -88,12 +83,10 @@ namespace Application.MainModule.Servicios.Catalogos
             else
                 return new ProductoDataAccess().ListaProductos(empresa.IdEmpresa);
         }
-
         public static CategoriaProducto ObtenerCategoria(short idCategoria)
         {
             return new ProductoDataAccess().BuscarCategoria(idCategoria);
         }
-
         public static LineaProducto ObtenerLineaProducto(short idLineaProducto)
         {
             return new ProductoDataAccess().BuscarLineaProducto(idLineaProducto);
@@ -155,7 +148,16 @@ namespace Application.MainModule.Servicios.Catalogos
 
             return false;
         }
+        public static bool ExisteCategoria(string nombre, short idCat)
+        {
+            var proDAccess = new ProductoDataAccess();
+            var idEmpresa = TokenServicio.ObtenerIdEmpresa();
 
+            var categoria = proDAccess.BuscarCategoria(idEmpresa, nombre, idCat);
+            if (categoria != null) return true;
+
+            return false;
+        }
         public static bool ExisteLinea(string nombre)
         {
             var proDAccess = new ProductoDataAccess();
@@ -166,7 +168,6 @@ namespace Application.MainModule.Servicios.Catalogos
 
             return false;
         }
-
         public static bool ExisteUnidadMedida(string nombre, string acronimo)
         {
             var proDAccess = new ProductoDataAccess();
@@ -177,7 +178,6 @@ namespace Application.MainModule.Servicios.Catalogos
 
             return false;
         }
-
         public static RespuestaDto NoExiste(string paramtro)
         {
             string mensaje = string.Format(Error.NoExiste, paramtro);

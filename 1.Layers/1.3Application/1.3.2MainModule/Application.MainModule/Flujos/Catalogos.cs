@@ -130,7 +130,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             resp = ValidarCatalogoServicio.CategoriaProducto(cpDto);
-            if (!resp.Exito) return resp;
+            if (!resp.Exito) return resp;         
 
             return ProductoServicios.RegistrarCategoriaProducto(ProductoAdapter.FromDto(cpDto));
         }
@@ -140,7 +140,7 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeModificarProducto();
             if (!resp.Exito) return resp;
 
-            resp = ValidarCatalogoServicio.CategoriaProducto(cpDto, true);
+            resp = ValidarCatalogoServicio.CategoriaProducto(cpDto);
             if (!resp.Exito) return resp;
 
             var catProd = ProductoServicios.ObtenerCategoria(cpDto.IdCategoria);

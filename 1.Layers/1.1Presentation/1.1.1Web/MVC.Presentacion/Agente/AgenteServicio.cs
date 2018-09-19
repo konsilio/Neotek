@@ -63,7 +63,6 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPaises"];
             ListaPaises(this.ApiCatalgos, tkn).Wait();
         }
-
         private async Task ListaPaises(string api, string token)
         {
             using (var client = new HttpClient())
@@ -93,7 +92,6 @@ namespace MVC.Presentacion.Agente
                 _listaPaises = emp;
             }
         }
-
         #endregion
 
         #region Catalogos
@@ -417,20 +415,20 @@ namespace MVC.Presentacion.Agente
                 _listaProductos = emp;
             }
         }
-        public void GuardarProducto(LineaProductoDTO dto, string tkn)
+        public void GuardarProducto(ProductoDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraProducto"];
-            Guardar(dto, tkn).Wait();
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
-        public void ModificarProducto(LineaProductoDTO dto, string tkn)
+        public void ModificarProducto(ProductoDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaProducto"];
-            Guardar(dto, tkn).Wait();
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-        public void EliminarProducto(LineaProductoDTO dto, string tkn)
+        public void EliminarProducto(ProductoDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaProducto"];
-            Guardar(dto, tkn).Wait();
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
         #region Proveedor
@@ -719,18 +717,18 @@ namespace MVC.Presentacion.Agente
         #region Producto Categoria
         public void GuardarCategoria(CategoriaProductoDTO dto, string tkn)
         {
-            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraCategoria"];
-            Guardar(dto, tkn).Wait();
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraCategoriaProducto"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
         public void ModificarCategoria(CategoriaProductoDTO dto, string tkn)
         {
-            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaCategoria"];
-            Guardar(dto, tkn).Wait();
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaCategoriaProducto"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         public void EliminarCategoria(CategoriaProductoDTO dto, string tkn)
         {
-            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaCategoria"];
-            Guardar(dto, tkn).Wait();
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaCategoriaProducto"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         public void ListaCategoriasProducto(string tkn)
         {
@@ -770,17 +768,17 @@ namespace MVC.Presentacion.Agente
         public void GuardarLineaProducto(LineaProductoDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraLineaProducto"];
-            Guardar(dto, tkn).Wait();
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
         public void ModificarLineaProducto(LineaProductoDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaLineaProducto"];
-            Guardar(dto, tkn).Wait();
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         public void EliminarLineaProducto(LineaProductoDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaLineaProducto"];
-            Guardar(dto, tkn).Wait();
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         public void ListaLienasProducto(string tkn)
         {
@@ -820,17 +818,17 @@ namespace MVC.Presentacion.Agente
         public void GuardarUnidadMedida(UnidadMedidaDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraUnidadMedida"];
-            Guardar(dto, tkn).Wait();
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
         public void ModificarUnidadMedida(UnidadMedidaDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaUnidadMedida"];
-            Guardar(dto, tkn).Wait();
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         public void EliminarUnidadMedida(UnidadMedidaDTO dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaUnidadMedida"];
-            Guardar(dto, tkn).Wait();
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
 
         }
         public void ListaUnidadesMedida(string tkn)
@@ -1421,7 +1419,7 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
 
-        private async Task Guardar<T>(T _dto, string token)
+        private async Task LLamada<T>(T _dto, string token, string Tipo)
         {
             using (var client = new HttpClient())
             {
@@ -1432,11 +1430,17 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    HttpResponseMessage response = new HttpResponseMessage();
+                    if (Tipo.Equals(MetodoRestConst.Post))                    
+                        response = await client.PostAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+                    if (Tipo.Equals(MetodoRestConst.Put))
+                        response = await client.PutAsJsonAsync(ApiRoute, _dto).ConfigureAwait(false);
+
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
                     {
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                         client.CancelPendingRequests();
                         client.Dispose();
                     }
@@ -1450,5 +1454,12 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
+    }
+    public static class MetodoRestConst
+    {
+        public const string Post = "Post";
+        public const string Put = "Put";
+        public const string Get = "Get";
+        public const string Delete = "Delete";
     }
 }

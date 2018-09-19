@@ -111,20 +111,17 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ModificaEmpresa(empresaDto), Request);
         }
-
         [Route("elimina/empresa")]
         public HttpResponseMessage PutEliminaEmpresas(EmpresaEliminarDto empresaDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.EliminaEmpresa(empresaDto), Request);
         }
-
         [AllowAnonymous]
         [Route("empresas/listaempresaslogin")]
         public HttpResponseMessage GetListaEmpresasLogin()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresasLogin());
         }
-
         [Route("empresas/listaempresa")]
         public HttpResponseMessage GetListaEmpresas()
         {

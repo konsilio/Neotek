@@ -4051,6 +4051,9 @@
     <Content Include="Views\Producto\LineaProducto.cshtml" />
     <Content Include="Views\Producto\UnidadMedida.cshtml" />
     <Content Include="Views\Producto\Producto.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CategoriaProductoDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\LineaProductoDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\UnidadMedidaDTO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,7 +16,6 @@ namespace MVC.Presentacion.App_Code
 {
     public static class CatalogoServicio
     {
-
         #region Empresas    
         public static RespuestaDTO create(EmpresaModel cc, string tkn)
         {
@@ -72,16 +71,6 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.ModificarCtroCosto(dto, Tkn);
             return agente._RespuestaDTO;
-        }
-        public static RespuestaDTO CrearCategoria(CategoriaProductoDTO dto, string Tkn)
-        {
-            var agente = new AgenteServicio();
-            agente.GuardarCategoria(dto, Tkn);
-            return agente._RespuestaDTO;
-        }
-        public static string InitCategoria(string tkn)
-        {
-            throw new NotImplementedException();
         }
         public static RespuestaDTO EditarCentroCosto(CentroCostoModel model, string tkn)
         {
@@ -152,6 +141,25 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarProductos(Token);
             return agente._listaProductos;
         }
+        public static RespuestaDTO CrearProducto(ProductoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarProducto(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarProducto(ProductoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ModificarProducto(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO EliminiarProducto(ProductoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarProducto(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+
         #endregion
         #region Proveedores
         public static List<ProveedorDTO> CargarProveedores(string Tkn)
@@ -282,6 +290,97 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.BuscarListaEquipoTransporte(tkn);
             return agente._listaEquipoTransporte;
+        }
+        #endregion
+        #region Categoria Producto
+        public static RespuestaDTO CrearCategoriaProducto(CategoriaProductoDTO dto, string tkn)
+        {
+            if (dto.IdEmpresa.Equals(0))
+                dto.IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
+            var agente = new AgenteServicio();
+            agente.GuardarCategoria(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarCategoriaProducto(CategoriaProductoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ModificarCategoria(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO EliminiarCategoriaProducto(CategoriaProductoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarCategoria(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static List<CategoriaProductoDTO> ListaCategorias(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaCategoriasProducto(tkn);
+            return agente._listaCategoriasProducto;
+        }
+        public static CategoriaProductoDTO ActivarEditar(short id, string tkn)
+        {
+            var cat = ListaCategorias(tkn).SingleOrDefault(x => x.IdCategoria.Equals(id));
+            return new CategoriaProductoDTO()
+            {
+                IdCategoria = cat.IdCategoria,
+                Descripcion = cat.Descripcion,
+                Nombre = cat.Nombre,
+                IdEmpresa = cat.IdEmpresa
+            };
+        }
+        #endregion
+        #region Linea Producto
+        public static RespuestaDTO CrearLineaProducto(LineaProductoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarLineaProducto(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarLineaProducto(LineaProductoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ModificarLineaProducto(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO EliminiarLineaProducto(LineaProductoDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarLineaProducto(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static List<LineaProductoDTO> ListaLineasProducto(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaCategoriasProducto(tkn);
+            return agente._listaLineasProducto;
+        }
+        #endregion
+        #region Unidad de medida
+        public static RespuestaDTO CrearUnidadMedida(UnidadMedidaDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarUnidadMedida(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarUnidadMedida(UnidadMedidaDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ModificarUnidadMedida(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO EliminiarUnidadMedida(UnidadMedidaDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarUnidadMedida(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static List<UnidadMedidaDTO> ListaUnidadesMedida(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaUnidadesMedida(tkn);
+            return agente._listaUnidadesMedida;
         }
         #endregion
     }
