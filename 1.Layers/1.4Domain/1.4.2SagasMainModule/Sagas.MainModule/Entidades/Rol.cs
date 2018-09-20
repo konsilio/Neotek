@@ -17,7 +17,7 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Rol()
         {
-            this.ListaUsuarios = new HashSet<Usuario>();
+            this.UsuariosRoles = new HashSet<UsuarioRol>();
         }
     
         public short IdRol { get; set; }
@@ -89,6 +89,6 @@ namespace Sagas.MainModule.Entidades
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Usuario> ListaUsuarios { get; set; }
+        public virtual ICollection<UsuarioRol> UsuariosRoles { get; set; }
     }
 }

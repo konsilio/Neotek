@@ -1,0 +1,54 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model  RolDto
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Bootstrap Select Css -->
+<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
+@using (Html.BeginForm("GuardarCambioRol", "Roles", FormMethod.Post))
+{
+    <section class="content home">
+        <div class="container-fluid">
+            <div class="block-header">        
+
+                <div class="row clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="card">
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="form-group">
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            Nombre rol:<input id="NombreRol" type="text" name="NombreRol"  value="@ViewBag.IdRol[0].NombreRol" class="form-control" />
+                                            <input type="text" name="IdRol" hidden="hidden" value="@ViewBag.IdRol[0].IdRol" readonly="readonly" id="IdRol" class="form-control" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <button class="btn btn-raised btn-primary"><i class="glyphicon glyphicon-open-file"></i>Modificar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+        </div>
+    </div>
+</section>
+}
+<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

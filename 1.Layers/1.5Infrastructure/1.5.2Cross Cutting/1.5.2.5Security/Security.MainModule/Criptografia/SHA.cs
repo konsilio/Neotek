@@ -11,6 +11,9 @@ namespace Security.MainModule.Criptografia
     {
         public static string GenerateSHA256String(string inputString)
         {
+            if (string.IsNullOrEmpty(inputString))
+                return inputString;
+
             SHA256 sha256 = SHA256Managed.Create();
             byte[] bytes = Encoding.UTF8.GetBytes(inputString);
             byte[] hash = sha256.ComputeHash(bytes);
@@ -18,6 +21,9 @@ namespace Security.MainModule.Criptografia
         }
         public static string GenerateSHA512String(string inputString)
         {
+            if (string.IsNullOrEmpty(inputString))
+                return inputString;
+
             SHA512 sha512 = SHA512Managed.Create();
             byte[] bytes = Encoding.UTF8.GetBytes(inputString);
             byte[] hash = sha512.ComputeHash(bytes);

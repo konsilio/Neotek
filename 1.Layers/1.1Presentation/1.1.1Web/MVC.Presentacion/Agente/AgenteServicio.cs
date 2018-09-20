@@ -60,13 +60,14 @@ namespace MVC.Presentacion.Agente
         public List<TipoPersonaModel> _lstaTipoPersona;
         public List<RegimenFiscalModel> _lstaRegimenFiscal;
         public List<ClientesDto> _lstaClientes;
+        public List<UsuariosModel> _lstUserEmp;
+        public List<EstadosRepModel> _listaEstados;
 
 
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
         }
-
 
         #region Catalogos
         #region roles
@@ -308,7 +309,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
         public void GuardarModificacionRol(RolDto dto, string tkn)
@@ -345,7 +346,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
 
@@ -383,7 +384,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
 
@@ -421,7 +422,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
 
@@ -502,7 +503,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
 
@@ -540,7 +541,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
         public void GuardarEmpresaConfiguracion(EmpresaConfiguracion dto, string tkn)
@@ -576,7 +577,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
         public void GuardarEmpresaEdicion(EmpresaDTO dto, string tkn)
@@ -613,7 +614,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
 
@@ -803,7 +804,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
 
@@ -841,7 +842,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
 
@@ -878,7 +879,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
 
@@ -916,7 +917,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
 
@@ -954,7 +955,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
 
@@ -1096,7 +1097,7 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose();
                 }
-                _respuestaDTO = resp;
+                _RespuestaDTO = resp;
             }
         }
         #endregion

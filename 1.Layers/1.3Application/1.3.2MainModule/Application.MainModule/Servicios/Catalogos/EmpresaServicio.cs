@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
-using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Respuesta;
 using Sagas.MainModule.Entidades;
 using Exceptions.MainModule.Validaciones;

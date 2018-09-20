@@ -853,14 +853,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdEmpresa" />
           </Key>
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
-          <Property Name="FactorLitrosAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed" />
-          <Property Name="FactorGalonALitros" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed" />
-          <Property Name="FactorCompraLitroAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed" />
-          <Property Name="FactorFleteGas" Type="decimal" Precision="8" Scale="5" Nullable="false" StoreGeneratedPattern="Computed" />
-          <Property Name="CierreInventario" Type="smalldatetime" Nullable="false" StoreGeneratedPattern="Computed" />
-          <Property Name="InventarioSano" Type="tinyint" Nullable="false" StoreGeneratedPattern="Computed" />
-          <Property Name="InventarioCrítico" Type="tinyint" Nullable="false" StoreGeneratedPattern="Computed" />
-          <Property Name="MaxRemaGaseraMensual" Type="decimal" Precision="18" Scale="4" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="FactorLitrosAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" />
+          <Property Name="FactorGalonALitros" Type="decimal" Precision="8" Scale="5" Nullable="false" />
+          <Property Name="FactorCompraLitroAKilos" Type="decimal" Precision="8" Scale="5" Nullable="false" />
+          <Property Name="FactorFleteGas" Type="decimal" Precision="8" Scale="5" Nullable="false" />
+          <Property Name="CierreInventario" Type="smalldatetime" Nullable="false" />
+          <Property Name="InventarioSano" Type="tinyint" Nullable="false" />
+          <Property Name="InventarioCrítico" Type="tinyint" Nullable="false" />
+          <Property Name="MaxRemaGaseraMensual" Type="decimal" Precision="18" Scale="4" Nullable="false" />
         </EntityType>
         <EntityType Name="EmpresaContacto">
           <Key>
@@ -911,11 +911,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <PropertyRef Name="IdEmpresa" />
           </Key>
           <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
-          <Property Name="UrlLogotipo180px" Type="varchar" MaxLength="350" StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipo500px" Type="varchar" MaxLength="350" StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipo1000px" Type="varchar" MaxLength="350" StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipoMenu" Type="varchar" MaxLength="350" StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipoLogin" Type="varchar" MaxLength="350" StoreGeneratedPattern="Computed" />
+          <Property Name="UrlLogotipo180px" Type="varchar" MaxLength="350" />
+          <Property Name="UrlLogotipo500px" Type="varchar" MaxLength="350" />
+          <Property Name="UrlLogotipo1000px" Type="varchar" MaxLength="350" />
+          <Property Name="UrlLogotipoMenu" Type="varchar" MaxLength="350" />
+          <Property Name="UrlLogotipoLogin" Type="varchar" MaxLength="350" />
         </EntityType>
         <EntityType Name="ImagenDe">
           <Key>
@@ -1228,6 +1228,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdUsuario" Type="int" Nullable="false" />
           <Property Name="IdRol" Type="smallint" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="1" />
         </EntityType>
         <Association Name="FK_Almacen_CProducto">
           <End Role="CProducto" Type="Self.CProducto" Multiplicity="1" />
@@ -4050,21 +4051,22 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="RazonSocial" Type="String" MaxLength="350" FixedLength="false" Unicode="false" Nullable="false" />          
           <!--"EmpresaConfiguracion">
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />-->
-          <Property Name="FactorLitrosAKilos" Type="Decimal" Precision="8" Scale="5" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="CierreInventario" Type="DateTime" Nullable="false" Precision="0" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="InventarioSano" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="InventarioCrítico" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="MaxRemaGaseraMensual" Type="Decimal" Precision="18" Scale="4" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="FactorGalonALitros" Type="Decimal" Nullable="false" Precision="8" Scale="5" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="FactorCompraLitroAKilos" Type="Decimal" Nullable="false" Precision="8" Scale="5" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="FactorFleteGas" Type="Decimal" Nullable="false" Precision="8" Scale="5" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="FactorLitrosAKilos" Type="Decimal" Precision="8" Scale="5" Nullable="false" />
+          <Property Name="CierreInventario" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="InventarioSano" Type="Byte" Nullable="false" />
+          <Property Name="InventarioCrítico" Type="Byte" Nullable="false" />
+          <Property Name="MaxRemaGaseraMensual" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="FactorGalonALitros" Type="Decimal" Nullable="false" Precision="8" Scale="5" />
+          <Property Name="FactorCompraLitroAKilos" Type="Decimal" Nullable="false" Precision="8" Scale="5" />
+          <Property Name="FactorFleteGas" Type="Decimal" Nullable="false" Precision="8" Scale="5" />          
+          
           <!--"EmpresaImagen">
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />-->
-          <Property Name="UrlLogotipoMenu" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipoLogin" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipo180px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipo500px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <Property Name="UrlLogotipo1000px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UrlLogotipoMenu" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="UrlLogotipoLogin" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="UrlLogotipo180px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="UrlLogotipo500px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="UrlLogotipo1000px" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           
           <!--<NavigationProperty Name="EmpresaConfiguracion" Relationship="Self.FK_EmpresaConfiguracion_Empresa" FromRole="Empresa" ToRole="EmpresaConfiguracion" />
           <NavigationProperty Name="EmpresaContacto" Relationship="Self.FK_EmpresaContacto_Empresa" FromRole="Empresa" ToRole="EmpresaContacto" />
@@ -4181,7 +4183,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="AppTraspasoPipa" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
 
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
-          <NavigationProperty Name="ListaUsuarios" Relationship="Sagas.MainModuleModel.UsuarioRol" FromRole="Rol" ToRole="Usuario" />          
+          <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />          
           <!--<NavigationProperty Name="RolAccionMovil" Relationship="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" FromRole="Rol" ToRole="RolAccionMovil" />-->
           
           <!--<NavigationProperty Name="Rol" Relationship="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" FromRole="RolAccionMovil" ToRole="Rol" />-->
@@ -4202,6 +4204,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UsuarioRol">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdRol" Type="Int16" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="80" FixedLength="false" Unicode="false"  />
+
+          <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Usuario" FromRole="UsuarioRol" ToRole="Usuario" />
+          <NavigationProperty Name="Role" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="UsuarioRol" ToRole="Rol" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -4254,7 +4268,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Requisiciones" Relationship="Sagas.MainModuleModel.FK_Requisicion_Usuario" FromRole="Usuario" ToRole="Requisicion" />
           <NavigationProperty Name="RecibeMercancia" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_Usuario" FromRole="Usuario" ToRole="AlmacenEntradaProducto" />
           <NavigationProperty Name="EntregaMercancia" Relationship="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Usuario" FromRole="Usuario" ToRole="AlmacenSalidaProducto" />
-          <NavigationProperty Name="Roles" Relationship="Sagas.MainModuleModel.UsuarioRol" FromRole="Usuario" ToRole="Rol" />
+          <NavigationProperty Name="UsuarioRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Usuario" FromRole="Usuario" ToRole="UsuarioRol" />
           <NavigationProperty Name="OrdenesCompraAutorizadas" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_UsuarioAutorizador" FromRole="Usuario" ToRole="OrdenCompra" />
           <NavigationProperty Name="OrdenesCompraGeneradas" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_UsuarioGenerador" FromRole="Usuario" ToRole="OrdenCompra" />
           <NavigationProperty Name="OperadoresChoferes" Relationship="Sagas.MainModuleModel.FK_COperadorChofer_Usuario" FromRole="Usuario" ToRole="OperadorChofer" />
@@ -4933,9 +4947,17 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="Rol" EntitySet="Rol" />
           </AssociationSet>
-          <AssociationSet Name="UsuarioRol" Association="Sagas.MainModuleModel.UsuarioRol">
+          <!--<AssociationSet Name="UsuarioRol" Association="Sagas.MainModuleModel.UsuarioRol">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>-->
+          <AssociationSet Name="FK_UsuarioRol_Rol" Association="Sagas.MainModuleModel.FK_UsuarioRol_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioRol_Usuario" Association="Sagas.MainModuleModel.FK_UsuarioRol_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioRol" EntitySet="UsuarioRol" />
           </AssociationSet>
           <AssociationSet Name="FK_OrdenCompraProducto_CentroCosto" Association="Sagas.MainModuleModel.FK_OrdenCompraProducto_CentroCosto">
             <End Role="CentroCosto" EntitySet="CentroCosto" />
@@ -4970,6 +4992,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Proveedor" EntitySet="Proveedor" />
           </AssociationSet>
           <EntitySet Name="Banco" EntityType="Sagas.MainModuleModel.Banco" />
+          <EntitySet Name="UsuarioRol" EntityType="Sagas.MainModuleModel.UsuarioRol" />
           <EntitySet Name="CuentaContable" EntityType="Sagas.MainModuleModel.CuentaContable" />
           <EntitySet Name="RegimenFiscal" EntityType="Sagas.MainModuleModel.RegimenFiscal" />
           <EntitySet Name="TipoPersona" EntityType="Sagas.MainModuleModel.TipoPersona" />
@@ -6922,9 +6945,33 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UsuarioRol">
+        <!--<Association Name="UsuarioRol">
           <End Type="Sagas.MainModuleModel.Rol" Role="Rol" Multiplicity="*" />
           <End Type="Sagas.MainModuleModel.Usuario" Role="Usuario" Multiplicity="*" />
+        </Association>-->
+        <Association Name="FK_UsuarioRol_Rol">
+          <End Type="Sagas.MainModuleModel.Rol" Role="Rol" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.UsuarioRol" Role="UsuarioRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="UsuarioRol">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioRol_Usuario">
+          <End Type="Sagas.MainModuleModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.UsuarioRol" Role="UsuarioRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioRol">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrdenCompraProducto_CentroCosto">
           <End Type="Sagas.MainModuleModel.CentroCosto" Role="CentroCosto" Multiplicity="1" />
@@ -9016,14 +9063,25 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="UsuarioRol" TypeName="Sagas.MainModuleModel.UsuarioRol" StoreEntitySet="UsuarioRol">
+          <!--<AssociationSetMapping Name="UsuarioRol" TypeName="Sagas.MainModuleModel.UsuarioRol" StoreEntitySet="UsuarioRol">
             <EndProperty Name="Usuario">
               <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
             </EndProperty>
             <EndProperty Name="Rol">
               <ScalarProperty Name="IdRol" ColumnName="IdRol" />
             </EndProperty>
-          </AssociationSetMapping>
+          </AssociationSetMapping>-->
+
+          <EntitySetMapping Name="UsuarioRol">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.UsuarioRol">
+              <MappingFragment StoreEntitySet="UsuarioRol">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          
           <EntitySetMapping Name="Banco">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.Banco">
               <MappingFragment StoreEntitySet="CBanco">

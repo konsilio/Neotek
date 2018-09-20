@@ -122,7 +122,7 @@ namespace Application.MainModule.Servicios.Notificacion
         private static List<Usuario> ObtenerDestinatarios(List<Rol> roles)
         {
             var destinatarios = new List<Usuario>();
-            roles.ToList().ForEach(x => destinatarios.AddRange(x.ListaUsuarios));
+            roles.ToList().ForEach(x => destinatarios.AddRange(x.Usuarios));//.ListaUsuarios));
             return destinatarios.Distinct().ToList();
         }
         private static List<string> ObtenerCorreo(List<Usuario> usuarios)

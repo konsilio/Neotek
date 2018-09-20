@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.UnitOfWork;
-using Application.MainModule.AdaptadoresDTO.Catalogo;
+using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Respuesta;
 using Exceptions.MainModule.Validaciones;
 using Exceptions.MainModule;
@@ -34,7 +34,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<Empresa> BuscarTodos()
         {
-            return uow.Repository<Empresa>().GetAll().ToList();
+            return uow.Repository<Empresa>().Get(x=> x.Activo).ToList();
         }
 
         public List<Empresa> BuscarTodos(bool conAC)

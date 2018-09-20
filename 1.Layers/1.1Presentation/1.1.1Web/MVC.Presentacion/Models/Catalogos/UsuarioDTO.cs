@@ -40,5 +40,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public string Calle { get; set; }
         public string NumExt { get; set; }
         public string NumInt { get; set; }
+
+        public List<UsuariosModel> Listausuarios { get; set; }
     }
 }

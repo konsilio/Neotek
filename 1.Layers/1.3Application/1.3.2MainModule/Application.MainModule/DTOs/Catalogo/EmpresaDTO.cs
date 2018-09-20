@@ -10,6 +10,7 @@ namespace Application.MainModule.DTOs.Catalogo
     {
         public short IdEmpresa { get; set; }
         public bool EsAdministracionCentral { get; set; }
+        public byte IdAdministracionCentral { get; set; }
         public string NombreComercial { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public byte IdPais { get; set; }
@@ -39,12 +40,15 @@ namespace Application.MainModule.DTOs.Catalogo
         public string Rfc { get; set; }
         public string RazonSocial { get; set; }
         public bool Activo { get; set; }
-       // public System.DateTime FechaRegistro { get; set; }
+        //public System.DateTime FechaRegistro { get; set; }
         public decimal FactorLitrosAKilos { get; set; }
         public System.DateTime CierreInventario { get; set; }
         public byte InventarioSano { get; set; }
         public byte InventarioCrítico { get; set; }
         public decimal MaxRemaGaseraMensual { get; set; }
+        public decimal FactorGalonALitros { get; set; }
+        public decimal FactorCompraLitroAKilos { get; set; }
+        public decimal FactorFleteGas { get; set; }
         public string UrlLogotipoMenu { get; set; }
         public string UrlLogotipoLogin { get; set; }
         public string UrlLogotipo180px { get; set; }

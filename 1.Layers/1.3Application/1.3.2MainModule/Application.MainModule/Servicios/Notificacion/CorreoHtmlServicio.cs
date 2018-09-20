@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Seguridad;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

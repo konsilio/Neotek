@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/assets/css/main.css">
     <link rel="stylesheet" href="~/assets/css/color_skins.css">
 </head>
-<body class="theme-black menu_dark"  style="overflow: auto;padding-top:10px">
+<body class="theme-black menu_dark" style="overflow: auto;padding-top:10px">
     @RenderBody()
     <div class="overlay_menu">
         <button class="btn btn-primary btn-icon btn-icon-mini btn-round"><i class="zmdi zmdi-close"></i></button>
@@ -469,7 +469,6 @@
                             </div>
                         </div>
                     </li>
-
                     <li class="menu_dark"><a href="@Url.Action("Inicio", "Home")"><i class="material-icons">dashboard</i> <span class="icon-name">Dashboard</span></a></li>
                     <li class="menu_dark"><a href="@Url.Action("Requisiciones", "Requisicion")"><i class="material-icons">feedback </i><span class="icon-name">Requisicion</span> </a></li>
                     <li>
@@ -501,15 +500,11 @@
                                     <li>@Html.ActionLink("Unidad de Medidad", "UnidadMedida", "Producto")</li>
                                     <li>@Html.ActionLink("Categoria", "Categoria", "Producto")</li>
                                 </ul>
-
-                               
                             </li>
-                            <li><a href="../../Catalogos/Vista/Proveedor.aspx">Proveedores</a></li>
-                            <li>@Html.ActionLink("Centros de costos", "CentroCosto", "CentroCosto")</li>
-                            <li>@Html.ActionLink("Cuentas contables", "CuentaContable", "CuentaContable")</li>
-                            <li><a href="table-filter.html">Puntos de venta</a></li>
-                            <li><a href="table-filter.html">Equipo de transporte</a></li>
                             <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
+                            <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
+                            <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
+                            <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
                         </ul>
                     </li>
                 </ul>

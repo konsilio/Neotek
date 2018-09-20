@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Exceptions.MainModule.Validaciones;
 
 namespace MVC.Presentacion.App_Code
 { 
@@ -12,6 +13,14 @@ namespace MVC.Presentacion.App_Code
     {
         public static RespuestaAutenticacionDto Autenticar(short _rs, string _us, string _pwr)
         {
+            if(_rs < 1 || string.IsNullOrEmpty(_us) || string.IsNullOrEmpty(_pwr))
+                return new RespuestaAutenticacionDto()
+                    {
+                        Exito = false,
+                        Mensaje = Error.S0003,
+                        token = string.Empty
+                    };
+
             var agente = new AgenteServicio();
             agente.Acceder(new AutenticacionDTO() { IdEmpresa = _rs, Password = _pwr, Usuario = _us });
             return agente._respuestaAutenticacion;

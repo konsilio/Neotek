@@ -5,18 +5,46 @@
     ViewBag.Title = "Catálogo / Gasera / Nueva";
 }
 
-<link rel="icon" href="favicon.ico" type="image/x-icon">
-<link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">
 
-<!-- Custom Css -->
-<link rel="stylesheet" href="~/assets/css/main.css">
-<link rel="stylesheet" href="~/assets/css/color_skins.css">
-<link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
-<!-- Bootstrap Select Css -->
+<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-<script src="~/assets/bundles/libscripts.bundle.js"></script>
-<script src="~/assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js -->
-@using (Html.BeginForm("Crear", "Empresas", FormMethod.Post)) //"Crear", "Empresas", FormMethod.Post
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('select').on('change', function () {  
+          
+            if ($('#ddlPais').find('option:selected').text() != 'México')
+            {
+               $('#ddlEdo').parent().hide();
+                $('#txtEdoP').show();
+            }
+
+            if ($('#ddlPais').find('option:selected').text() == 'México' || $('#ddlPais').find('option:selected').text() == 'Seleccione') {
+                 $('#ddlEdo').parent().show();
+                $('#txtEdoP').hide();
+            }
+                     
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#RegresaIndex").click(function () {
+            var form = $(this).parent("form");
+            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Empresas", Action = "Index" }) %>');
+            form.attr('method', 'post');
+
+        });
+
+    });
+
+</script>
+@using (Html.BeginForm((ViewBag.Empresas == null) ? "Crear" : "GuardaEdicionEmpresa", "Empresas", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <section class="content home">
         <div class="container-fluid">
@@ -34,10 +62,22 @@
                             <h2><strong>Generales</strong></h2>
                         </div>
                         <div class="body">
-                            Nombre Comercial:*
-                            <input id="txtNomC" name="NombreComercial" type="text" CssClass="form-control" />
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div>
+                                                <label for="txtNomC">
+                                                    Nombre Comercial:*
+                                                </label>
+                                                <input id="NombreComercial" type="text" name="NombreComercial" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].NombreComercial)" />
+                                                <input id="IdEmpresa" type="text" name="IdEmpresa" hidden="hidden" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].IdEmpresa)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -48,10 +88,164 @@
                             <h2><strong>Fiscales</strong></h2>
                         </div>
                         <div class="body">
-                            Razón social:*
-                            <input id="txtRazon" name="RazonSocial" type="text" CssClass="form-control" />
-                            Rfc:*
-                            <input id="Rfc" name="Rfc" type="text" CssClass="form-control" />
+                            <div class="row clearfix">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <div>
+                                            <label for="txtRazonS">
+                                                Razón social:*
+                                            </label>
+                                            <input type="text" name="RazonSocial" id="txtRazonS" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].RazonSocial)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <label for="txtRfc">
+                                            Rfc:*
+                                        </label>
+                                        <input type="text" name="Rfc" id="txtRfc" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Rfc)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Contacto</strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Persona de contacto 1: <input id="txtPersona1" name="Persona1" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Persona1)" />
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <div>
+                                            Teléfono 1: <input id="txtTel1" name="Telefono1" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Telefono1)" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <div>
+                                            Celular 1:
+                                            <input id="txtCel1" type="text" name="Celular1" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Celular1)" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Persona de contacto 2:
+                                        <input id="txtPersona2" name="Persona2" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Persona2)" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <div>
+                                            Teléfono 2:
+                                            <input id="txtTel2" name="Telefono2" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Telefono2)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <div>
+                                            Celular 2:
+                                            <input id="txtCel2" name="Celular2" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Celular2)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group ">
+                                        Persona de contacto 3:
+                                        <input id="txtPersona3" name="Persona3" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Persona3)" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <div>
+                                            Teléfono 3:
+                                            <input id="txtTel3" name="Telefono3" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Telefono3)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <div>
+                                            Celular 3:
+                                            <input id="txtCel3" type="text" name="Celular3" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Celular3)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        Correo elect. 1:
+                                        <input id="txtmail1" name="Email1" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Email1)" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <div>
+                                            Sitio web 1:
+                                            <input id="txtweb1" name="SitioWeb1" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].SitioWeb1)" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        Correo elect. 2:
+                                        <input id="txtmail2" name="Email2" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Email2)" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <div>
+                                            Sitio web 2:
+                                            <input id="txtweb2" name="SitioWeb2" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].SitioWeb2)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        Correo elect. 3:
+                                        <input id="txtmail3" name="Email3" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Email3)" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <div>
+                                            Sitio web 3:
+                                            <input id="txtweb3" name="SitioWeb3" type="text" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].SitioWeb3)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,225 +255,168 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="header">
-                            <h2><strong>Contacto</strong></h2>
+                            <h2><strong>Dirección</strong></h2>
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-
-                                <div class="form-group">
-                                    Persona de contacto 1:
-                                    <input id="txtPersona1" name="Persona1" type="text" CssClass="form-control" />
-                                    Teléfono 1:
-                                    <input id="txtTel1" name="Telefono1" type="text" CssClass="form-control" />
-                                    Celular 1:
-                                    <input id="txtCel1" type="text" name="Celular1" CssClass="form-control" />
-                                </div>
-
-                            </div>
-                            <div class="row clearfix">
-
-                                <div class="form-group">
-                                    Persona de contacto 2:
-                                    <input id="txtPersona2" name="Persona2" type="text" CssClass="form-control" />
-                                    Teléfono 2:
-                                    <input id="txtTel2" name="Telefono2" type="text" CssClass="form-control" />
-                                    Celular 2:
-                                    <input id="txtCel2" name="Celular2" type="text" CssClass="form-control" />
-                                </div>
-
-                            </div>
-                            <div class="row clearfix">
-
-                                <div class="form-group">
-                                    Persona de contacto 3:
-                                    <input id="txtPersona3" name="Persona3" type="text" CssClass="form-control" />
-                                    Teléfono 3:
-                                    <input id="txtTel3" name="Telefono3" type="text" CssClass="form-control" />
-                                    Celular 3:
-                                    <input id="txtCel3" type="text" name="Celular3" CssClass="form-control" />
-                                </div>
-
-                            </div>
-                            <div class="row clearfix">
-
-                                <div class="form-group">
-                                    Correo elect. 1:
-                                    <input id="txtmail1" name="Telefono3" type="text" CssClass="form-control" />
-                                    Sitio web 1:
-                                    <input id="txtweb1" name="SitioWeb1" type="text" CssClass="form-control" />
-
-                                </div>
-
-                            </div>
-                            <div class="row clearfix">
-
-                                <div class="form-group">
-                                    Correo elect. 2:
-                                    <input id="txtmail2" name="Email2" type="text" CssClass="form-control" />
-                                    Sitio web 2:
-                                    <input id="txtweb2" name="SitioWeb2" type="text" CssClass="form-control" />
-
-                                </div>
-
-                            </div>
-                             <div class="row clearfix">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        Correo elect. 3:
-                                        <input id="txtmail3" name="Email3" type="text" CssClass="form-control" />
-                                        Sitio web 3:
-                                        <input id="txtweb3" name="SitioWeb3" type="text" CssClass="form-control" />
+                                        <label for="ddlPais">
+                                            Pais:*
+                                        </label>
+                                        <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
+                                            @foreach (var lst in ViewBag.ListaPaises)
+                                            {
+                                                <option value="@lst.IdPais">@lst.Pais</option>
+                                            }
+                                        </select>
+                                        @*<select id="IdPais" name="IdPais" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.ListaPaises)
+                                                {
+                                                    <option value="@lst.IdPais">@lst.Pais</option>
+                                                }
+                                            </select>*@
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label for="ddlEdo">
+                                            Estado:*
+                                        </label><input type="text" name="EstadoProvincia" style="display:none" id="txtEdoP" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].EstadoProvincia)" />
+
+                                        <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                            @foreach (var lst in ViewBag.ListaEstados)
+                                            {
+                                                <option value="@lst.IdEstadoRep">@lst.Estado</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label for="txtMun">
+                                            Municipio:*
+                                        </label>
+                                        <input type="text" name="Municipio" id="txtMun" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Municipio)" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label for="txtCP">
+                                            C.P.:*
+                                        </label>
+                                        <input type="text" name="CodigoPostal" id="txtCP" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].CodigoPostal)" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <div>
+                                            <label for="txtCol">
+                                                Colonia:*
+                                            </label>
+                                            <input type="text" name="Colonia" id="txtCol" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Colonia)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <label for="txtCalle">
+                                            Calle:*
+                                        </label>
+                                        <input type="text" name="Calle" id="txtCalle" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Calle)" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div class="form-group">
+                                        <div>
+                                            <label for="txtNume">
+                                                Núm. Ext.:*
+                                            </label>
+                                            <input type="text" name="NumExt" id="txtNume" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].NumExt)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div class="form-group">
+                                        <label for="txtNumI">
+                                            Núm. Int.:
+                                        </label>
+                                        <input type="text" name="NumInt" id="txtNumI" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].NumInt)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Logotipos</strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        Pequeño (180px X 180px)
+                                        <input type="file" name="UrlLogotipo180px" id="file" accept="image/gif, image/jpeg , image/jpg" class="form-control-file" />
 
                                     </div>
-
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        Mediano (500px X 500px)
+                                        <input id="txtMed" type="file" name="UrlLogotipo500px" accept="image/gif, image/jpeg , image/jpg" class="form-control-file" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        Grande (1000px X 1000px)
+                                        <input id="txtGra" type="file" name="UrlLogotipo1000px" class="form-control-file" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong>Dirección</strong></h2>
-                            </div>
-                            <div class="body">
-                                <form>
-                                    <div class="row clearfix">
-                                        <div class="col-lg-3 col-md-3 col-sm-3">
-                                            <div class="form-group">
-                                                <div>
-                                                    <label for="ddlPais">
-                                                        Pais:*
-                                                    </label>
-                                                    <select name="IdPais" id="ddlPais" class="form-control selectpickershow-tick" data-live-search="true">
-                                                        <option value="1">Seleccionar</option>
-                                                        <option value="2">Mexico</option>
-                                                        <option value="3">Estados Unidos</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3">
-                                            <div class="form-group">
-                                                <label for="ddlEdo">
-                                                    Estado:*
-                                                </label>
-                                                <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpickershow-tick" data-live-search="true">
-                                                    <option value="1">Seleccionar</option>
-                                                    <option value="2">Aguascalientes</option>
-                                                    <option value="3">Zacatecas</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3">
-                                            <div class="form-group">
-                                                <label for="txtMun">
-                                                    Municipio:*
-                                                </label>
-                                                <input type="text" name="Municipio" id="txtMun" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-3">
-                                            <div class="form-group">
-                                                <label for="txtCP">
-                                                    C.P.:*
-                                                </label>
-                                                <input type="text" name="CodigoPostal" id="txtCP" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row clearfix">
-                                        <div class="col-lg-3 col-md-3 col-sm-3">
-                                            <div class="form-group">
-                                                <div>
-                                                    <label for="txtCol">
-                                                        Colonia:*
-                                                    </label>
-                                                    <input type="text" name="Colonia" id="txtCol" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <div class="form-group">
-                                                <label for="txtCalle">
-                                                    Calle:*
-                                                </label>
-                                                <input type="text" name="Calle" id="txtCalle" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row clearfix">
-                                        <div class="col-lg-2 col-md-2 col-sm-2">
-                                            <div class="form-group">
-                                                <div>
-                                                    <label for="txtNume">
-                                                        Núm. Ext.:*
-                                                    </label>
-                                                    <input type="text" name="NumExt" id="txtNume" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-2">
-                                            <div class="form-group">
-                                                <label for="txtNumI">
-                                                    Núm. Int.:
-                                                </label>
-                                                <input type="text" name="NumInt" id="txtNumI" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @*<div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2><strong>Logotipos</strong></h2>
-                            </div>
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-md-11">
-                                        <div class="form-group">
-                                            Pequeño (180px X 180px)
-                                            <input id="txtPeq" type="file" CssClass="form-control-file" />
-                                            Mediano (500px X 500px)
-                                            <input id="txtMed" type="file" CssClass="form-control-file" />
-                                            Grande (1000px X 1000px)
-                                            <input id="txtGra" type="file" CssClass="form-control-file" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
-        </div>
-        <div class="body">
-            <form>
+            <div class="body">
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            @*<input id="BtnRegreso" type="submit" value="Index" class="btn btn-raised btn-primary float-right" onclick="location.href='@Html.Action("Index", "Empresas")'" />*@
-                            @*<button id="btnRegreso" value="Index" class="btn btn-raised btn-primary float-right" onclick="location.href='@Html.Action("Index", "Empresas")'"></button>onclick="location.href='@Html.Action("Crear", "Empresas")'" *@
+                            <input type="submit" value="Regresar" id="RegresaIndex" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary float-left"/>                            
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="form-group">
-                            @*<button id="BtnAgregar" formaction="Crear" class="btn btn-raised btn-primary float-right" onclick="location.href='@Html.Action("Crear", "Empresas")'"></button>*@
-                            @*<button id="BtnAgregar" value="Crear" />*@
-                            @*<input type="button" value="Crear" class="btn btn-raised btn-primary float-right" onclick="location.href='@Html.Action("Crear", "Empresas" )'" />*@
-                            <input type="submit" value="Crear" formaction="Crear" class="btn btn-raised btn-primary float-right" />
-                            @*@Html.ActionLink("Crear", "Crear")*@
+                            @if (@ViewBag.Empresas == null)
+                            {
+                                <input type="submit" value="Crear" formaction="Crear" formmethod="post" class="btn btn-raised btn-primary float-right" />
+                            }
+                            else
+                            {
+                                <input type="submit" value="Actualizar" formmethod="post" class="btn btn-raised btn-primary float-right" />
+                            }
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </section>
 }
+<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

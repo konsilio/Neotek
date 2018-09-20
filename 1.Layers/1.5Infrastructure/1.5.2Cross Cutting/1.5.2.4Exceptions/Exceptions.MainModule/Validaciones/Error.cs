@@ -9,10 +9,13 @@ namespace Exceptions.MainModule.Validaciones
     public static class Error
     {
         public const string NoExiste = "{0} no existe. Revise la información que esta solicitando.";
+        public const string ContieneRol = "{0} contiene el Rol {1}. Por lo que no puede asignarse de nuevo.";
 
         public const string S0001 = "El campo '{0}' es obligatorio.";
         public const string S0002 = "El campo '{0}' requiere un mínimo de {2} caracteres y un máximo de {1}.";
         public const string S0003 = "El Usuario y la contraseña no coinciden";
+        public const string S0004 = "No se logró {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
+
 
         public const string R0001 = "Error al guardar la requisición";
         public const string R0002 = "El campo '{0}' es obligatorio.";
@@ -39,7 +42,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string C0006 = "Un centro de costos no puede contener multiples unidades físicas. Unidades seleccionadas {0}. Deselecciones las unidades hasta dejar una o ninguna.";
         public const string C0007 = "{0} no exite. Verifique la información.";
         public const string C0008 = "El campo '{0}' acepta un valor mínimo de {2} y un máximo de {1}.";
-
+     
         public const string CP0001 = "El almacén mínimo ('{0}') no puede ser mayor al almacén máximo ('{1}').";
         public const string CP0002 = "Si marcas'Activo de venta' o 'Es Gas'; no debe marcarse 'Es Transporte Gas'.";
 

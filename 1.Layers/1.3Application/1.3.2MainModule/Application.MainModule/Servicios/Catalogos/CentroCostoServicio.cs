@@ -1,4 +1,4 @@
-﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+﻿using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
