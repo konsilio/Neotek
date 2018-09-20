@@ -26,8 +26,8 @@
     <div class="container-fluid">
         @using (Html.BeginForm("CrearProducto", "Producto", FormMethod.Post))
             {
-            @Html.HiddenFor(m => m.IdEmpresa)
-            @Html.HiddenFor(m => m.IdUnidadMedida)
+          
+            @Html.HiddenFor(m => m.IdProducto)
             <div class="block-header">
                 <div class="row">
                     <div class="col-lg-5 col-md-5 col-sm-12">
@@ -60,25 +60,24 @@
                                         else
                                         {
                                             <input type="text" class="form-control " disabled value="@ViewBag.Empresas" />
+                                            @Html.HiddenFor(m => m.IdEmpresa)
                                         }
                                         @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <b>Tipo ¿Es producto o Servicio?</b>
+                                            <b>Tipo: ¿Es producto o Servicio?</b>
                                             <select name="IdProductoServicioTipo">
                                                 <option value="2">Producto</option>
                                                 <option value="3">Servicio</option>
                                             </select>
                                             @Html.ValidationMessageFor(m => m.IdProductoServicioTipo, "", new { @class = "alert-danger" })
-
-
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <b>Cuenta contable</b>
-                                            <select name="IdCuentaContable">
+                                            <b>Cuenta contable:</b>
+                                            <select name="IdCuentaContable" class="form-control">
                                                 @foreach (var cc in ViewBag.CuentasContables)
                                                 {
                                                     <option value="@cc.IdCuentaContable">@cc.Descripcion</option>
@@ -89,46 +88,45 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <b>Categorías</b>
-                                            <select name="IdCategoria">
+                                            <b>Categorías:</b>
+                                            <select name="IdCategoria" class="form-control">
                                                 @foreach (var cc in ViewBag.Categorias)
                                                 {
                                                     <option value="@cc.IdCategoria">@cc.Nombre</option>
                                                 }
                                             </select>
                                             @Html.ValidationMessageFor(m => m.IdCategoria, "", new { @class = "alert-danger" })
-
-
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row clearfix">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <b>Linea de Productos:</b>
-                                        <select name="IdProductoLinea">
+                                        <select name="IdProductoLinea" class="form-control">
                                             @foreach (var cc in ViewBag.LineasProducto)
                                             {
-                                                <option value="@cc.IdProductoLinea">@cc.Descripcion</option>
+                                                <option value="@cc.IdProductoLinea">@cc.Linea</option>
                                             }
                                         </select>
                                         @Html.ValidationMessageFor(m => m.IdProductoLinea, "", new { @class = "alert-danger" })
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <b>Unidad de medida:</b>
-                                        <select name="IdUnidadMedida">
+                                        <select name="IdUnidadMedida" class="form-control">
                                             @foreach (var cc in ViewBag.UnidadesMedida)
                                             {
-                                                <option value="@cc.IdUnidadMedida">@cc.Descripcion</option>
+                                                <option value="@cc.IdUnidadMedida">@cc.Acronimo</option>
                                             }
                                         </select>
                                         @Html.ValidationMessageFor(m => m.IdUnidadMedida, "", new { @class = "alert-danger" })
                                     </div>
                                     <div class="col-md-4">
-                                        <b>Unidad de medida alternativa (Opcional)</b>
-                                        <select name="IdUnidadMedida2">
-                                            @foreach (var cc in ViewBag.UnidadesMedida)
+                                        <b>Unidad de medida alternativa: (Opcional)</b>
+                                        <select name="IdUnidadMedida2" class="form-control">
+                                            <option>Seleccione unidad </option>
+                                            @foreach (var cc in ViewBag.UnidadesMedida2)
                                             {
-                                                <option value="@cc.IdUnidadMedida">@cc.Descripcion</option>
+                                                <option value="@cc.IdUnidadMedida">@cc.Acronimo</option>
                                             }
                                         </select>
                                     </div>
@@ -140,32 +138,34 @@
                                         @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "alert-danger" })
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="checkbox">
-                                            <input id="cbServicioTransporte" name="EsServicioTransporte" type="checkbox">
+                                        <div class="form-group">
+                                            @Html.CheckBoxFor(m => m.EsTransporteGas, new { id = "cbServicioTransporte" })
+                                            @*<input id="cbServicioTransporte" name="EsTransporteGas" type="checkbox">*@
                                             <label for="cbServicioTransporte">
                                                 ¿Es Servicio de transporte?
                                             </label>
                                         </div>
-                                        <div class="checkbox">
-                                            <input id="cbActivoVenta" name="EsActivoVenta" type="checkbox">
+                                        <div class="form-group">
+                                            @Html.CheckBoxFor(m => m.EsActivoVenta, new { id = "cbActivoVenta" })
+                                            @*<input id="cbActivoVenta" name="EsActivoVenta" type="checkbox">*@
                                             <label for="cbActivoVenta">
                                                 ¿Es activo de venta?
                                             </label>
                                         </div>
-                                        <div class="checkbox">
-                                            <input id="cbEsGas" name="EsGas" type="checkbox">
+                                        <div class="form-group">
+                                            @Html.CheckBoxFor(m => m.EsGas, new { id = "cbEsGas" })
+                                            @*<input id="cbEsGas" name="EsGas" type="checkbox">*@
                                             <label for="cbEsGas">
                                                 ¿Es Gas?
                                             </label>
                                         </div>
                                         <div><b>Almacen</b></div>
-                                      
                                         <div class="col-md-6">
-                                            @Html.TextBoxFor(m => m.Minimos, new { @class = "form-control", @placeholder = "Minimo" })
+                                            @Html.TextBoxFor(m => m.Minimos, new { @class = "form-control", @placeholder = "Minimo", type = "number", @Value = "0" })
                                             @Html.ValidationMessageFor(m => m.Minimos, "", new { @class = "alert-danger" })
                                         </div>
                                         <div class="col-md-6">
-                                            @Html.TextBoxFor(m => m.Maximo, new { @class = "form-control", @placeholder = "Maximo" })
+                                            @Html.TextBoxFor(m => m.Maximo, new { @class = "form-control", @placeholder = "Maximo", type = "number", @Value = "0" })
                                             @Html.ValidationMessageFor(m => m.Maximo, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -258,7 +258,7 @@
                                                     <tr>
                                                         <td>@prod.TipoProducto </td>
                                                         <td>@prod.Categoria </td>
-                                                        <td>@prod.LineaProducto</td>
+                                                        <td>@prod.ProductoLinea</td>
                                                         <td>@prod.Descripcion</td>
                                                         <td>@prod.UnidadMedida</td>
                                                         @if (prod.EsActivoVenta)

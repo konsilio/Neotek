@@ -263,6 +263,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn);
             ViewBag.LineasProducto = CatalogoServicio.ListaLineasProducto(tkn);
             ViewBag.UnidadesMedida = CatalogoServicio.ListaUnidadesMedida(tkn);
+            ViewBag.UnidadesMedida2 = CatalogoServicio.ListaUnidadesMedida(tkn);
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             if (TempData["RespuestaDTO"] != null)
                 Resp = (RespuestaDTO)TempData["RespuestaDTO"];
@@ -305,7 +306,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
-            var respuesta = CatalogoServicio.EliminiarProducto(new ProductoDTO { IdUnidadMedida = id }, tkn);
+            var respuesta = CatalogoServicio.EliminiarProducto(new ProductoDTO { IdProducto = id }, tkn);
             if (respuesta.Exito)
             {
 
@@ -322,7 +323,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             if (id != null)
-                return RedirectToAction("Producto", CatalogoServicio.ActivarEditarUnidadMedida(id.Value, tkn));
+                return RedirectToAction("Producto", CatalogoServicio.ActivarEditarProducto(id.Value, tkn));
             else
             {
                 var respuesta = CatalogoServicio.ModificarProducto(model, tkn);

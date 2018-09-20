@@ -258,16 +258,13 @@
     <Compile Include="Models\Catalogos\ClientesDto.cs" />
     <Compile Include="Models\Catalogos\ClientesModel.cs" />
     <Compile Include="Models\Catalogos\EmpDto.cs" />
-    <Compile Include="Models\Catalogos\CuentaContableDTO.cs" />
     <Compile Include="Models\Catalogos\Empresa.cs" />
     <Compile Include="Models\Catalogos\EmpresaConfiguracion.cs" />
     <Compile Include="Models\Catalogos\EmpresaModel.cs" />
     <Compile Include="Models\Catalogos\CentroCosto\CentroCostoDTO.cs" />
-    <Compile Include="Models\Catalogos\EmpresasDTO.cs" />
     <Compile Include="Models\Catalogos\EquipoTransporteDTO.cs" />
     <Compile Include="Models\Catalogos\EstacionCarburacionDTO.cs" />
     <Compile Include="Models\Catalogos\LineaProductoDTO.cs" />
-    <Compile Include="Models\Catalogos\CentroCostoDTO.cs" />
     <Compile Include="Models\Catalogos\EmpresaDTO.cs" />
     <Compile Include="Models\Catalogos\EstadosRepModel.cs" />
     <Compile Include="Models\Catalogos\PaisModel.cs" />

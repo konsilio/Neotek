@@ -53,13 +53,11 @@ namespace MVC.Presentacion.App_Code
                     //Checking file is available to save.  
                     if (UrlLogotipo180px != null)
                     {
-
                         string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo180px.FileName));
                         string pathSave = Path.Combine(destinationFolderSave, Path.GetFileName(UrlLogotipo180px.FileName));
                         UrlLogotipo180px.SaveAs(pathSave);
                         Objemp.UrlLogotipo180px = pathBD;
                     }
-
                     if (Objemp.UrlLogotipo500px != null)
                     {
                         string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo500px.FileName));
@@ -67,7 +65,6 @@ namespace MVC.Presentacion.App_Code
                         UrlLogotipo500px.SaveAs(pathSave);
                         Objemp.UrlLogotipo500px = pathBD;
                     }
-
                     if (Objemp.UrlLogotipo1000px != null)
                     {
                         string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo1000px.FileName));
@@ -92,7 +89,6 @@ namespace MVC.Presentacion.App_Code
                 {
                     string destinationFolder = ConfigurationManager.AppSettings["GuardarLogoEmpresa"];
                     string destinationFolderSave = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
-
                     //Checking file is available to save.  
                     if (UrlLogotipo180px != null)
                     {
@@ -102,7 +98,6 @@ namespace MVC.Presentacion.App_Code
                         UrlLogotipo180px.SaveAs(pathSave);
                         Objemp.UrlLogotipo180px = pathBD;
                     }
-
                     if (Objemp.UrlLogotipo500px != null)
                     {
                         string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo500px.FileName));
@@ -110,7 +105,6 @@ namespace MVC.Presentacion.App_Code
                         UrlLogotipo500px.SaveAs(pathSave);
                         Objemp.UrlLogotipo500px = pathBD;
                     }
-
                     if (Objemp.UrlLogotipo1000px != null)
                     {
                         string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo1000px.FileName));
@@ -139,46 +133,40 @@ namespace MVC.Presentacion.App_Code
         //{
         //    var agente = new AgenteServicio();
         //    agente.GuardarEmpresaNueva(cc, tkn);
-        //    return agente._respuestaDTO;
+        //    return agente._RespuestaDTO;
         //}
 
         public static RespuestaDTO ActualizaConfigEmpresa(EmpresaConfiguracion cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarEmpresaConfiguracion(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
         public static RespuestaDTO ActualizaEdicionEmpresa(EmpresaDTO cc, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px, string tkn)
         {
             guardarLogosEmpresaDto(cc, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px);
             var agente = new AgenteServicio();
             agente.GuardarEmpresaEdicion(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
-
         public static RespuestaDTO EliminaEmpresaSel(short id, string tkn)
         {
             var agente = new AgenteServicio();
             agente.EliminarEmpresa(id, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
-
         public static List<EmpresaDTO> Empresas(string tkn)
         {
             var agente = new AgenteServicio();
             agente.ListaEmpresasLogin(tkn);
             return agente._listaEmpresas;
         }
-
-
         //consulta empresa mediante id
         public static Empresa FiltrarEmpresa(Empresa model, int id, string tkn)
         {
             List<EmpresaDTO> newList = Empresas(tkn).Where(x => x.IdEmpresa == id).ToList();
-
             if (newList.Count != 0)
                 model.Empresas = newList;
-
             return model;
         }
         #endregion
@@ -225,7 +213,7 @@ namespace MVC.Presentacion.App_Code
             encryptaPWD(cc);
             var agente = new AgenteServicio();
             agente.GuardarNuevoUsuario(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static List<UsuarioDTO> ListaUsuarios(short idEmpresa, string token)
@@ -239,7 +227,7 @@ namespace MVC.Presentacion.App_Code
             encryptaPWD(cc);
             var agente = new AgenteServicio();
             agente.GuardarCredenciales(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static RespuestaDTO AgregarRolAlUsuario(UsuariosModel cc, string tkn)
@@ -247,7 +235,7 @@ namespace MVC.Presentacion.App_Code
             AgregarIdRolToList(cc, tkn);
             var agente = new AgenteServicio();
             agente.GuardarRolesAsig(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static List<UsuariosModel> ObtenerUsuariosRol(string token)
@@ -260,14 +248,14 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.GuardarUsuarioEdicion(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static RespuestaDTO EliminaUsuarioSel(short id, string tkn)
         {
             var agente = new AgenteServicio();
             agente.EliminarUsuario(id, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static List<UsuariosModel> FiltrarBusquedaUsuario(UsuariosModel us, string token)
@@ -694,14 +682,14 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.GuardarNuevoRol(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static RespuestaDTO ActualizaNombreRol(RolDto cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarModificacionRol(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static RespuestaDTO ActualizaPermisos(RolDto cc, string tkn)
@@ -731,7 +719,7 @@ namespace MVC.Presentacion.App_Code
                 agente.GuardarPermisos(cc, tkn);
             }
 
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
 
         }
 
@@ -739,7 +727,7 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.EliminarRol(id, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
         #endregion
 
@@ -767,7 +755,7 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.GuardarNuevoCliente(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         #endregion
@@ -870,6 +858,7 @@ namespace MVC.Presentacion.App_Code
         }
         public static RespuestaDTO CrearProducto(ProductoDTO dto, string tkn)
         {
+            if (dto.IdEmpresa.Equals(0)) dto.IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
             var agente = new AgenteServicio();
             agente.GuardarProducto(dto, tkn);
             return agente._RespuestaDTO;
@@ -885,6 +874,10 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.EliminarProducto(dto, tkn);
             return agente._RespuestaDTO;
+        }
+        public static ProductoDTO ActivarEditarProducto(short id, string tkn)
+        {
+            return ListaProductos(tkn).SingleOrDefault(x => x.IdProducto.Equals(id));           
         }
 
         #endregion

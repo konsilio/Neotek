@@ -26,7 +26,8 @@ namespace DS.MainModule.Filters
                     }
                 for (int index = 0; index < respuesta.ModelStates.Keys.Count; index++)
                 {
-                    respuesta.ModelStatesStandar.Add(respuesta.ModelStates.Keys.ToArray()[index].Split('.')[1], respuesta.ModelStates.Values.ToArray()[index].Errors.ToList().FirstOrDefault().ErrorMessage);
+                    if (!String.IsNullOrEmpty(respuesta.ModelStates.Values.ToArray()[index].Errors.ToList().FirstOrDefault().ErrorMessage))
+                        respuesta.ModelStatesStandar.Add(respuesta.ModelStates.Keys.ToArray()[index].Split('.')[1], respuesta.ModelStates.Values.ToArray()[index].Errors.ToList().FirstOrDefault().ErrorMessage);
                 }
                 actionContext.Response = RespuestaHttp.crearRespuesta(respuesta, actionContext.Request);
             }
@@ -43,7 +44,8 @@ namespace DS.MainModule.Filters
                         respuesta.MensajesError.Add(error.ErrorMessage);
                 for (int index = 0; index < respuesta.ModelStates.Keys.Count; index++)
                 {
-                    respuesta.ModelStatesStandar.Add(respuesta.ModelStates.Keys.ToArray()[index].Split('.')[1], respuesta.ModelStates.Values.ToArray()[index].Errors.ToList().FirstOrDefault().ErrorMessage);
+                    if (!String.IsNullOrEmpty(respuesta.ModelStates.Values.ToArray()[index].Errors.ToList().FirstOrDefault().ErrorMessage))
+                        respuesta.ModelStatesStandar.Add(respuesta.ModelStates.Keys.ToArray()[index].Split('.')[1], respuesta.ModelStates.Values.ToArray()[index].Errors.ToList().FirstOrDefault().ErrorMessage);
                 }
                 actionExecutedContext.ActionContext.Response = RespuestaHttp.crearRespuesta(respuesta, actionExecutedContext.ActionContext.Request);
             }
