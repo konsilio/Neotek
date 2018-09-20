@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Activity.AutoconsumoEstacionActivity;
 import com.example.neotecknewts.sagasapp.Activity.FinalizarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.IniciarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaAlmacenActivity;
@@ -178,6 +179,20 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                             RecargaPipaActivity.class);
                     intent.putExtra("EsRecargaPipaFinal",true);
                     intent.putExtra("EsRecargaPipaInicial",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Estación Carb. (Inicial)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoEstacionActivity.class);
+                    intent.putExtra("EsAutoconsumoEstacionInicial",true);
+                    intent.putExtra("EsAutoconsumoEstacionFinal",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Estación Carb. (Final)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoEstacionActivity.class);
+                    intent.putExtra("EsAutoconsumoEstacionInicial",false);
+                    intent.putExtra("EsAutoconsumoEstacionFinal",true);
                     view.getContext().startActivity(intent);
                 }
 

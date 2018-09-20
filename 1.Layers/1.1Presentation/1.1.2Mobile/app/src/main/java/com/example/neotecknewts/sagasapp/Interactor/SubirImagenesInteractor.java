@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Interactor;
 
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -39,4 +40,6 @@ public interface SubirImagenesInteractor {
                                   boolean EsRecargaEstacionInicial);
 
     void registrarRecargaPipa(SAGASSql sagasSql, String token, RecargaDTO recargaDTO, boolean esRecargaPipaFinal);
+
+    void registrarAutoconsumoEstacion(SAGASSql sagasSql, String token, AutoconsumoDTO autoconsumoDTO, boolean esAutoconsumoEstacionFinal);
 }

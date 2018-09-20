@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
@@ -28,9 +29,11 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
     public LecturaDTO lecturaDTO;
     public LecturaPipaDTO lecturaPipaDTO;
     public RecargaDTO recargaDTO;
+    public AutoconsumoDTO autoconsumoDTO;
+
     public int max_p5000,p5000;
     public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
-
+    public boolean EsAutoconsumoEstacionInicial,EsAutoconsumoEstacionFinal;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -46,6 +49,8 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             EsRecargaEstacionInicial = b.getBoolean("EsRecargaEstacionInicial",false);
             EsRecargaEstacionFinal = b.getBoolean("EsRecargaEstacionFinal",false);
             EsPrimeraLectura = b.getBoolean("EsPrimeraLectura",false);
+            EsAutoconsumoEstacionInicial = b.getBoolean("EsAutoconsumoEstacionInicial",false);
+            EsAutoconsumoEstacionFinal = b.getBoolean("EsAutoconsumoEstacionFinal",false);
 
             if(EsLecturaInicial){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
@@ -67,6 +72,10 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
                 recargaDTO = (RecargaDTO) b.getSerializable("recargaDTO");
 
+                max_p5000 = 5000;
+                p5000 = 5000;
+            }else if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
+                autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
                 max_p5000 = 5000;
                 p5000 = 5000;
             }
@@ -105,6 +114,16 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             }else{
                 TVLecturaP5000Titulo.setText(getString(R.string.p500) + " " + getString(R.string.Estacion));
             }
+        }
+
+        if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
+            TVLecturaP5000Titulo.setText((
+                    (EsAutoconsumoEstacionInicial) ?
+                            getString(R.string.carburaci_n_de_gas)+" - Incial":
+                            getString(R.string.carburaci_n_de_gas)+" - Final")
+                    + "\n P5000 Estación"
+            );
+            TVLecturaP5000Registro.setText(getString(R.string.registra_la_lectura_del_p500_de_la_estaci_n));
         }
 
         NPLecturaP500CantidadLectura = findViewById(R.id.NPLecturaP500CantidadLectura);
@@ -223,6 +242,20 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 intent.putExtra("EsLecturaFinalPipa",false);
                 intent.putExtra("EsFotoP5000",false);
                 intent.putExtra("recargaDTO",recargaDTO);
+                startActivity(intent);
+            }else if (EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
+                autoconsumoDTO.setP5000Salida(CantidadP500);
+                /*intent.putExtra("EsRecargaEstacionInicial",false);
+                intent.putExtra("EsRecargaEstacionFinal",false);
+                intent.putExtra("EsPrimeraLectura",false);
+                intent.putExtra("EsLecturaFinal",false);
+                intent.putExtra("EsLecturaInicial",false);
+                intent.putExtra("EsLecturaInicialPipa",false);
+                intent.putExtra("EsLecturaFinalPipa",false);
+                intent.putExtra("EsFotoP5000",false);*/
+                intent.putExtra("EsAutoconsumoEstacionInicial",EsAutoconsumoEstacionInicial);
+                intent.putExtra("EsAutoconsumoEstacionFinal",EsAutoconsumoEstacionFinal);
+                intent.putExtra("autoconsumoDTO",autoconsumoDTO);
                 startActivity(intent);
             }
             startActivity(intent);

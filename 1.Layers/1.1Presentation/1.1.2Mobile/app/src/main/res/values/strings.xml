@@ -156,4 +156,8 @@
     <string name="Estacion">Estación</string>
     <string name="Recarga_pipa">Recarga pipa </string>
     <string name="selecciona_la_pipa_a_recargar">Selecciona la pipa a recargar</string>
+    <string name="Autoconsumo_estacion">Autoconsumo Estación de Carb.</string>
+    <string name="carburaci_n_de_gas">Carburación de Gas</string>
+    <string name="selecciona_la_estaci_n_de_salida">Selecciona la estación de salida:</string>
+    <string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>
 </resources>

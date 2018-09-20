@@ -4,6 +4,7 @@ import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaView;
 import com.example.neotecknewts.sagasapp.Activity.SubirImagenesView;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractorImpl;
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -209,5 +210,15 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
         subirImagenesView.showProgress(R.string.message_cargando);
         interactor.registrarRecargaPipa(sagasSql,token,recargaDTO,esRecargaPipaFinal);
     }
+
+    @Override
+    public void registrarAutoconsumoEstacion(SAGASSql sagasSql, String token, AutoconsumoDTO
+            autoconsumoDTO, boolean esAutoconsumoEstacionFinal) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarAutoconsumoEstacion(sagasSql,token,autoconsumoDTO,
+                esAutoconsumoEstacionFinal);
+
+    }
+
     //endregion
 }

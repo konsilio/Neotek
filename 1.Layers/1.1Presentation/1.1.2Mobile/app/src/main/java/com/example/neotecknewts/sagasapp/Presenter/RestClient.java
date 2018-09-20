@@ -1,6 +1,8 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
@@ -226,5 +228,27 @@ public interface RestClient {
             @Path(value = "esFinalizar", encoded=true)boolean esFinalizar,
             @Header("Authorization")String token,
             @Header("Content-Type") String contentType
+    );
+    @GET(Constantes.GETCATALOGO_AUTOCONSUMO)
+    Call<DatosAutoconsumoDTO> getDatosAutoconsumo(
+                                                  @Path(value = "esEstacion",encoded = true)
+                                                          boolean esEstacion,
+                                                  @Path(value = "esInventario",encoded = true)
+                                                          boolean esInventario,
+                                                  @Path(value =  "esPipa",encoded = true)
+                                                          boolean esPipa,
+                                                  @Path(value = "esFinalizar",encoded = true)
+                                                          boolean esFinalizar,
+                                                  @Header("Authorization") String token,
+                                                  @Header("Content-Type") String contentType
+                                                  );
+    @POST(Constantes.POST_AUTOCONSUMO)
+    Call<RespuestaRecargaDTO> postAutorconsumo(@Body AutoconsumoDTO autoconsumoDTO,
+                                               @Path(value = "esEstacion") boolean esEstacion,
+                                               @Path(value = "esIventario") boolean esInventario,
+                                               @Path(value = "esPipa") boolean esPipa,
+                                               @Path(value = "esFinal") boolean esFinal,
+                                               @Header("Authorization") String token,
+                                               @Header("Content-type") String contentType
     );
 }
