@@ -1022,8 +1022,7 @@ namespace MVC.Presentacion.App_Code
         #region Categoria Producto
         public static RespuestaDTO CrearCategoriaProducto(CategoriaProductoDTO dto, string tkn)
         {
-            if (dto.IdEmpresa.Equals(0))
-                dto.IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
+            if (dto.IdEmpresa.Equals(0)) dto.IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
             var agente = new AgenteServicio();
             agente.GuardarCategoria(dto, tkn);
             return agente._RespuestaDTO;
@@ -1046,7 +1045,7 @@ namespace MVC.Presentacion.App_Code
             agente.ListaCategoriasProducto(tkn);
             return agente._listaCategoriasProducto;
         }
-        public static CategoriaProductoDTO ActivarEditar(short id, string tkn)
+        public static CategoriaProductoDTO ActivarEditarCategoria(short id, string tkn)
         {
             var cat = ListaCategorias(tkn).SingleOrDefault(x => x.IdCategoria.Equals(id));
             return new CategoriaProductoDTO()
@@ -1057,10 +1056,12 @@ namespace MVC.Presentacion.App_Code
                 IdEmpresa = cat.IdEmpresa
             };
         }
+        
         #endregion
         #region Linea Producto
         public static RespuestaDTO CrearLineaProducto(LineaProductoDTO dto, string tkn)
         {
+            if (dto.IdEmpresa.Equals(0)) dto.IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
             var agente = new AgenteServicio();
             agente.GuardarLineaProducto(dto, tkn);
             return agente._RespuestaDTO;
@@ -1080,13 +1081,25 @@ namespace MVC.Presentacion.App_Code
         public static List<LineaProductoDTO> ListaLineasProducto(string tkn)
         {
             var agente = new AgenteServicio();
-            agente.ListaCategoriasProducto(tkn);
+            agente.ListaLienasProducto(tkn);
             return agente._listaLineasProducto;
+        }
+        public static LineaProductoDTO ActivarEditarLineaProducto(short id, string tkn)
+        {
+            var cat = ListaLineasProducto(tkn).SingleOrDefault(x => x.IdProductoLinea.Equals(id));
+            return new LineaProductoDTO()
+            {
+                IdProductoLinea = cat.IdProductoLinea,
+                Descripcion = cat.Descripcion,
+                Linea = cat.Linea,
+                IdEmpresa = cat.IdEmpresa
+            };
         }
         #endregion
         #region Unidad de medida
         public static RespuestaDTO CrearUnidadMedida(UnidadMedidaDTO dto, string tkn)
         {
+            if (dto.IdEmpresa.Equals(0)) dto.IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
             var agente = new AgenteServicio();
             agente.GuardarUnidadMedida(dto, tkn);
             return agente._RespuestaDTO;
@@ -1108,6 +1121,18 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.ListaUnidadesMedida(tkn);
             return agente._listaUnidadesMedida;
+        }
+        public static UnidadMedidaDTO ActivarEditarUnidadMedida(short id, string tkn)
+        {
+            var cat = ListaUnidadesMedida(tkn).SingleOrDefault(x => x.IdUnidadMedida.Equals(id));
+            return new UnidadMedidaDTO()
+            {
+                IdUnidadMedida = cat.IdUnidadMedida,
+                Descripcion = cat.Descripcion,
+                Acronimo = cat.Acronimo,
+                Nombre = cat.Nombre,
+                IdEmpresa = cat.IdEmpresa
+            };
         }
         #endregion
     }

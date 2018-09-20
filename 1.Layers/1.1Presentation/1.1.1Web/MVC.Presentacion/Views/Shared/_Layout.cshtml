@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/assets/css/main.css">
     <link rel="stylesheet" href="~/assets/css/color_skins.css">
 </head>
-<body class="theme-black menu_dark">
+<body class="theme-black menu_dark"  style="overflow: auto;padding-top:10px">
     @RenderBody()
     <div class="overlay_menu">
         <button class="btn btn-primary btn-icon btn-icon-mini btn-round"><i class="zmdi zmdi-close"></i></button>
@@ -493,6 +493,17 @@
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-grid"></i><span>Catalogos</span></a>
                         <ul class="ml-menu">
+                            <li>
+                                <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">content_paste</i><span>Producto</span> </a>
+                                <ul class="ml-menu">
+                                    <li>@Html.ActionLink("Producto", "Producto", "Producto")</li>
+                                    <li>@Html.ActionLink("Linea", "LineaProducto", "Producto")</li>
+                                    <li>@Html.ActionLink("Unidad de Medidad", "UnidadMedida", "Producto")</li>
+                                    <li>@Html.ActionLink("Categoria", "Categoria", "Producto")</li>
+                                </ul>
+
+                               
+                            </li>
                             <li><a href="../../Catalogos/Vista/Proveedor.aspx">Proveedores</a></li>
                             <li><a href="table-color.html">Clientes</a></li>
                             <li><a href="../../Catalogos/Vista/CuentasContables.aspx">Cuentas contables</a></li>
