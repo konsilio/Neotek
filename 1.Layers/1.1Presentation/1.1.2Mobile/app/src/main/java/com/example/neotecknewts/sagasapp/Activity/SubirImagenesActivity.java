@@ -187,7 +187,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 EsLecturaFinalAlamacen = false;
             }else{
                 if(extras.getBoolean("EsRecargaPipaInicial") ||
-                        extras.getBoolean("EsRecargaPipaFInal")){
+                        extras.getBoolean("EsRecargaPipaFinal")){
                     EsRecargaPipaInicial = extras.getBoolean("EsRecargaPipaInicial");
                     EsRecargaPipaFinal = extras.getBoolean("EsRecargaPipaFinal");
                     recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");

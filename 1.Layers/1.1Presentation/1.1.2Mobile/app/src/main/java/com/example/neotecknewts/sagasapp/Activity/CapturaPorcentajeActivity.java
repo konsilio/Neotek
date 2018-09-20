@@ -60,7 +60,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean EsLecturaInicialPipa,EsLecturaFinalPipa;
     public boolean EsLecturaInicialAlmacen,EsLecturaFinalAlmacen;
     public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
-
+    public boolean EsRecargaPipaFinal,EsRecargaPipaInicial;
 
 
     @SuppressLint("SetTextI18n")
@@ -210,6 +210,12 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 textView.setText("Registra el porcentaje de la estación "+
                     recargaDTO.getNombreMedidorEntrada()
                 );
+            }else if(extras.getBoolean("EsRecargaPipaFinal") ||
+                    extras.getBoolean("EsRecargaPipaInicial")){
+                EsRecargaPipaFinal = extras.getBoolean("EsRecargaPipaFinal",false);
+                EsRecargaPipaInicial = extras.getBoolean("EsRecargaPipaInicial",false);
+                recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
+
             }
         }
 
@@ -267,6 +273,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         }else if (EsLecturaInicialAlmacen ||EsLecturaFinalAlmacen){
             lecturaAlmacenDTO.setPorcentajeMedidor(porcentaje);
         }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
+            recargaDTO.setProcentajeEntrada(porcentaje);
+        }else if(EsRecargaPipaFinal || EsRecargaPipaInicial){
             recargaDTO.setProcentajeEntrada(porcentaje);
         }
         startActivity();
@@ -328,6 +336,15 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             intent.putExtra("EsRecargaEstacionInicial",EsRecargaEstacionInicial);
             intent.putExtra("EsRecargaEstacionFinal",EsRecargaEstacionFinal);
             intent.putExtra("EsPrimeraLectura",EsPrimeraLectura);
+            intent.putExtra("recargaDTO",recargaDTO);
+        }else if(EsRecargaPipaFinal){
+            intent.putExtra("EsRecargaPipaFinal", true);
+            intent.putExtra("EsLecturaFinal",false);
+            intent.putExtra("EsLecturaInicialPipa",false);
+            intent.putExtra("EsLecturaFinalPipa",false);
+            intent.putExtra("EsRecargaEstacionInicial",false);
+            intent.putExtra("EsRecargaEstacionFinal",false);
+            intent.putExtra("EsPrimeraLectura",false);
             intent.putExtra("recargaDTO",recargaDTO);
         }
         intent.putExtra("EsPapeleta",papeleta);

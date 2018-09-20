@@ -289,7 +289,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 public void onResponse(Call<RespuestaIniciarDescargaDTO> call,
                                        Response<RespuestaIniciarDescargaDTO> response) {
                     RespuestaIniciarDescargaDTO data = response.body();
-                    if (response.isSuccessful()) {
+
+                    if (response.isSuccessful()&& data.isExito()) {
                         Log.w("IniciarDescarga", "Success");
                         subirImagenesPresenter.onRegistrarIniciarDescarga();
                     } else {
@@ -1368,7 +1369,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                   recargaDTO,token,"application/json"
                 );
             }
-            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            Log.w("Url camioneta", call.request().url().toString());
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaRecargaDTO> call,
@@ -1391,6 +1392,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
+                        registra_reacrga = false;
                         //subirImagenesPresenter.errorSolicitud(data.getMensaje());
                     }
                 }
@@ -1475,10 +1477,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL)
+                .baseUrl(Constantes.BASE_URL+"/ras/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -1488,10 +1490,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         while(intentos_post<3) {
             Call<RespuestaRecargaDTO> call = null;
             if(esRecargaPipaFinal) {
-                call= restClient.postRecargaInicial(
+                call= restClient.postRecargaFinal(
                         recargaDTO, token, "application/json");
             }else{
-                call = restClient.postRecargaFinal(
+                call = restClient.postRecargaInicial(
                         recargaDTO,token,"application/json"
                 );
             }
@@ -1505,19 +1507,21 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         Log.w("IniciarDescarga", "Success");
                         subirImagenesPresenter.onSuccessRegistroRecarga();
                     } else {
+                        registra_reacrga = false;
                         switch (response.code()) {
                             case 404:
-                                Log.w("LecturaInicialCamioneta", "not found");
+                                Log.w("RecargaPipa", "not found");
                                 break;
                             case 500:
-                                Log.w("LecturaInicialCamioneta", "server broken");
+                                Log.w("RecargaPipa", "server broken");
                                 break;
                             default:
-                                Log.w("LecturaInicialCamioneta", "" + response.code());
+                                Log.w("RecargaPipa", "" + response.code());
                                 Log.w(" Error", response.message() + " " +
                                         response.raw().toString());
                                 break;
                         }
+
                         //subirImagenesPresenter.errorSolicitud(data.getMensaje());
                     }
                 }
@@ -1525,6 +1529,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 @Override
                 public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
+                    registra_reacrga = false;
                 }
             });
             intentos_post++;
