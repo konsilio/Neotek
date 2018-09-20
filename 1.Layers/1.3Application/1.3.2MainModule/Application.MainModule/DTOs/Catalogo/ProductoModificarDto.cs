@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Catalogo
 {
+    [Serializable]
     public class ProductoModificarDto : ProductoCrearDto
     {
         [Required(ErrorMessage = Error.R0002)]

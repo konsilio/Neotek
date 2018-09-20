@@ -31,9 +31,13 @@ namespace Application.MainModule.DTOs.Catalogo
         [Display(Name = "IdCategoria")]
         public short IdCategoria { get; set; }
 
+        public string Categoria { get; set; }
+
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdProductoLinea")]
         public short IdProductoLinea { get; set; }
+
+        public string ProductoLinea { get; set; }
 
         public int IdCuentaContable { get; set; }
 
@@ -76,5 +80,9 @@ namespace Application.MainModule.DTOs.Catalogo
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "FechaRegistro")]
         public DateTime? FechaRegistro { get; set; }
+        public bool EsActivoVenta { get; set; }
+        public bool EsGas { get; set; }
+        public bool EsTransporteGas { get; set; }
+
     }
 }

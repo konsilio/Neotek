@@ -94,7 +94,6 @@
     <Compile Include="DTOs\Catalogo\TipoCentroCostoDto.cs" />
     <Compile Include="DTOs\Catalogo\UnidadAlmacenGasDTO.cs" />
     <Compile Include="DTOs\Catalogo\RegimenDTO.cs" />
-    <Compile Include="DTOs\Catalogo\TipoCentroCostoEnum.cs" />
     <Compile Include="DTOs\Catalogo\TipoPersonaDTO.cs" />
     <Compile Include="DTOs\Catalogo\UnidadMedidaCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\UnidadMedidaDto.cs" />

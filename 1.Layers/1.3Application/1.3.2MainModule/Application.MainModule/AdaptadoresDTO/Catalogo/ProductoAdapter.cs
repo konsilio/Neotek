@@ -224,9 +224,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             prodDTO.IdProducto = _prod.IdProducto;
             prodDTO.IdEmpresa = _prod.IdEmpresa;
             prodDTO.IdProductoServicioTipo = _prod.IdProductoServicioTipo;
-            prodDTO.TipoProducto = _prod.TipoServicioOProducto.Descripcion;
+            prodDTO.TipoProducto = _prod.TipoServicioOProducto.Nombre;
             prodDTO.IdCategoria = _prod.IdCategoria;
+            prodDTO.Categoria = _prod.Categoria.Nombre;
             prodDTO.IdProductoLinea = _prod.IdProductoLinea;
+            prodDTO.ProductoLinea = _prod.LineaProducto.Linea;
             prodDTO.IdUnidadMedida = _prod.IdUnidadMedida;
             prodDTO.UnidadMedida = _prod.UnidadMedida.Acronimo;
             prodDTO.IdUnidadMedida2 = _prod.IdUnidadMedida2;
@@ -237,6 +239,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             prodDTO.PathImagen = _prod.PathImagen;
             prodDTO.Activo = _prod.Activo;
             prodDTO.FechaRegistro = _prod.FechaRegistro;
+            prodDTO.EsActivoVenta = _prod.EsActivoVenta;
+            prodDTO.EsGas = _prod.EsGas;
+            prodDTO.EsTransporteGas = _prod.EsTransporteGas;
+
+
             return prodDTO;
         }
         public static List<ProductoDTO> ToDTO(List<Producto> lProd)
