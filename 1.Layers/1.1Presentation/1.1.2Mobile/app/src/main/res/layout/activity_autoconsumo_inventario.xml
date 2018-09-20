@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.AutoconsumoEstacionActivity">
+    tools:context=".Activity.AutoconsumoInventarioActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,49 +16,39 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/TVAutoconsumoEstacionActivityTitulo"
+                android:id="@+id/TVAutoconsumoInventarioTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="5dp"
+                android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:text="@string/carburaci_n_de_gas"
                 android:textAlignment="center"
-                android:textSize="24sp" />
+                android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/TVAutoconsumoEstacionActivityEstacionSalida"
+                android:id="@+id/TVAutoconsumoInventarioActivitySubtitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="45dp"
+                android:paddingTop="15dp"
+                android:text="@string/la_salida_es_desde_el_inventario_general" />
+
+            <TextView
+                android:id="@+id/TVAutoconsumoInventarioActivityUnidadEntrada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:paddingBottom="5dp"
                 android:paddingTop="15dp"
-                android:text="@string/selecciona_la_estaci_n_de_salida"
-                android:textSize="18sp" />
+                android:text="@string/selecciona_la_unidad_de_entrada" />
 
             <Spinner
-                android:id="@+id/SAutoconsumoEstacionActivityListaEstaciones"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:padding="20dp" />
-
-            <TextView
-                android:id="@+id/TVAutoconsumoEstacionActivityUnidad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:paddingBottom="5dp"
-                android:paddingTop="15dp"
-                android:text="@string/selecciona_la_unidad_de_entrada"
-                android:textSize="18sp" />
-
-            <Spinner
-                android:id="@+id/SAutoconsumoEstacionActivityListaUnidades"
+                android:id="@+id/SAutoconsumoInvetarioActivityInventario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -66,16 +57,14 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp" />
+                android:layout_height="60dp" />
 
             <Button
-                android:id="@+id/BtnAutoconsumoActtivityGuardar"
+                android:id="@+id/BtnAutoconsumoInventarioActivityGuardar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="95dp"
-                android:layout_marginRight="95dp"
+                android:layout_marginLeft="85dp"
+                android:layout_marginRight="85dp"
                 android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"

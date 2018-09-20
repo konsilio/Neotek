@@ -134,9 +134,11 @@
         <activity
             android:name=".Activity.RecargaPipaActivity"
             android:label="@string/Recarga_pipa" />
-        <activity android:name=".Activity.AutoconsumoEstacionActivity"
-            android:label="@string/Autoconsumo_estacion"
-            />
+        <activity
+            android:name=".Activity.AutoconsumoEstacionActivity"
+            android:label="@string/Autoconsumo_estacion" />
+        <activity android:name=".Activity.AutoconsumoInventarioActivity"
+            android:label="@string/Autoconsumo_inventario"/>
     </application>
 
 </manifest>

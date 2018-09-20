@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Activity.AutoconsumoEstacionActivity;
+import com.example.neotecknewts.sagasapp.Activity.AutoconsumoInventarioActivity;
 import com.example.neotecknewts.sagasapp.Activity.FinalizarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.IniciarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaAlmacenActivity;
@@ -193,6 +194,20 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                             AutoconsumoEstacionActivity.class);
                     intent.putExtra("EsAutoconsumoEstacionInicial",false);
                     intent.putExtra("EsAutoconsumoEstacionFinal",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Inventario Gral.(Inicial)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoInventarioActivity.class);
+                    intent.putExtra("EsAutoconsumoInventarioInicial",true);
+                    intent.putExtra("EsAutoconsumoInventarioFinal",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Inventario Gral.(Final)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoInventarioActivity.class);
+                    intent.putExtra("EsAutoconsumoInventarioInicial",false);
+                    intent.putExtra("EsAutoconsumoInventarioFinal",true);
                     view.getContext().startActivity(intent);
                 }
 

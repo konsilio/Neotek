@@ -160,4 +160,8 @@
     <string name="carburaci_n_de_gas">Carburación de Gas</string>
     <string name="selecciona_la_estaci_n_de_salida">Selecciona la estación de salida:</string>
     <string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>
+    <string name="Autoconsumo_inventario">Autoconsumo Inventario Gral</string>
+    <string name="autoconsumo_inventario_gral">Autoconsumo Inventario Gral</string>
+    <string name="la_salida_es_desde_el_inventario_general">La salida es desde el inventario general</string>
+    <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
 </resources>
