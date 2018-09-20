@@ -1,0 +1,107 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model  UsuarioDTO
+
+@{
+    ViewBag.Title = "Catálogo / Usuarios";
+}
+
+<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+
+@using (Html.BeginForm("GuardarRol", "Usuarios", FormMethod.Post))
+{
+    <section class="content home">
+        <div class="container-fluid">
+
+            <div class="row clearfix">
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <h3>&nbsp;Catálogo / Usuarios / Roles</h3>
+                </div>
+            </div>
+
+            <div class="row clearfix">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="card">
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                    <div class="form-group">
+                                        <div class="col-lg-8 col-md-8 col-sm-8">                                          
+                                                <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Nombre + " " +ViewBag.IdUser[0].Apellido1 + " " +ViewBag.IdUser[0].Apellido2 )" />
+                                                <input type="text" name="IdUsuario" hidden="hidden" value="@ViewBag.IdUser[0].IdUsuario" readonly="readonly" id="IdUsuario" class="form-control" />
+                                      </div>
+                                    </div>
+                                </div>
+                            </div><br />
+                            <div class="row clearfix">
+                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                    <div class="form-group">
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <select id="ddlRoles" name="IdRol" class="form-control selectpicker z-index show-tick" data-live-search="true">
+
+                                                @foreach (var lst in ViewBag.AllRoles)
+                                                {
+                                                    <option value="@lst.IdRol">@lst.NombreRol</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <button class="btn btn-raised btn-primary float-right" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>  Agregar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="table-responsive">
+                        <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
+                            <thead>
+                                <tr>
+                                    <th>Roles Asignados</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                                    @foreach (var item in @ViewBag.IdUser[0].Roles)
+                                    {
+                                          
+                                        <tr>
+                                            <th>@item.NombreRol</th>
+                                            <td>
+                                                <a ID="lbBorrar" href="@Url.Action("BorrarRol", "Usuarios", new { id = item.IdEmpresa })">
+                                                    <i class="material-icons">delete</i>
+                                                    <span class="icon-name"></span>
+                                                </a>
+                                            </td>
+                                        </tr>                                    
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="body">
+                <div class="row clearfix">
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="form-group">
+                            <input type="submit" value="Regresar" class="btn btn-raised btn-primary float-left" formaction="Index" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

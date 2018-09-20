@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Catalogo;
 using Sagas.MainModule.Entidades;
 
-namespace Application.MainModule.AdaptadoresDTO.Catalogo
+namespace Application.MainModule.AdaptadoresDTO.Seguridad
 {
     public static class ProductoAdapter
     {
         #region Categoria Producto
-        public static CategoriaProducto FromDto(CategoriaProductoCrearDto cProDto)
+        public static CategoriaProducto CategoriaProducto(CategoriaProductoCrearDto cProDto)
         {
             return new CategoriaProducto()
             {

@@ -36,9 +36,21 @@ namespace MVC.Presentacion.Agente
 
         public List<RequisicionDTO> _listaRequisicion;
         public List<EmpresaDTO> _listaEmpresas;
+        public List<EmpresaConfiguracion> _EmpresasConfiguracion;
         public List<PaisModel> _listaPaises;
+        public List<EstadosRepModel> _listaEstados;
+        public List<RolDto> _lstaAllRoles;
+        public List<RolCat> _lstaRolesCat;
+        public List<RolMovilCompra> _lstaRolesMovilCom;
+        public List<RolCompras> _lstaRolesCom;
+        public List<RolRequsicion> _lstaRolesReq;
+        public List<TipoPersonaModel> _lstaTipoPersona;
+        public List<RegimenFiscalModel> _lstaRegimenFiscal;
+        public List<ClientesDto> _lstaClientes;
+
         public List<RequisicionEstatusDTO> _listaRequisicionEstatus;
         public List<UsuarioDTO> _listaUsuarios;
+        public List<UsuariosModel> _lstUserEmp;
         public List<CentroCostoDTO> _listaCentroCosto;
         public List<ProductoDTO> _listaProductos;
         public List<OrdenCompraDTO> _listaOrdenCompra;
@@ -57,23 +69,35 @@ namespace MVC.Presentacion.Agente
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
         }
+
         #region Paises
         public void BuscarPaises(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPaises"];
             ListaPaises(this.ApiCatalgos, tkn).Wait();
         }
+
+        public List<PaisModel> AgregaritemP()
+        {
+            PaisModel rol = new PaisModel();
+            rol.Pais = "Seleccione";
+            List<PaisModel> Paises = new List<PaisModel>();
+            Paises.Add(rol);
+
+            return Paises;
+
+        }
         private async Task ListaPaises(string api, string token)
         {
             using (var client = new HttpClient())
             {
                 List<PaisModel> emp = new List<PaisModel>();
+
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    //HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
                     HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<PaisModel>>();
@@ -89,7 +113,9 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                _listaPaises = emp;
+                var item = AgregaritemP();
+                item.AddRange(emp);
+                _listaPaises = item;
             }
         }
         #endregion
@@ -107,6 +133,27 @@ namespace MVC.Presentacion.Agente
             ListaEmp(ApiCatalgos, token).Wait();
         }
         private async Task ListaEmp(string api, string token = null)
+        {
+            using (var client = new HttpClient())
+        #region Estados
+
+        public List<EstadosRepModel> AgregaritemE()
+        {
+            EstadosRepModel rol = new EstadosRepModel();
+            rol.Estado = "Seleccione";
+            List<EstadosRepModel> Edos = new List<EstadosRepModel>();
+            Edos.Add(rol);
+
+            return Edos;
+
+        }
+        public void BuscarEstados(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaEstadosR"];
+            ListaEstados(this.ApiCatalgos, tkn).Wait();
+        }
+
+        private async Task ListaEstados(string api, string token)
         {
             using (var client = new HttpClient())
             {
@@ -133,6 +180,32 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _listaEmpresas = emp;
+                List<EstadosRepModel> emp = new List<EstadosRepModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    //HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<EstadosRepModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<EstadosRepModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                var item = AgregaritemE();
+                item.AddRange(emp);
+                _listaEstados = item;
+
             }
         }
         public void GuardarEmpresaNueva(EmpresaModel dto, string tkn)
@@ -143,6 +216,38 @@ namespace MVC.Presentacion.Agente
         private async Task GuardarEmpresa(EmpresaModel _pcDTO, string token)
         {
 
+            using (var client = new HttpClient())
+        }
+
+        #endregion
+
+        #region Catalogos 
+
+        #region Empresa
+        public void ListaEmpresasLogin()
+        {
+            this.ApiLogin = ConfigurationManager.AppSettings["GetListaEmpresasLogin"];
+            ListaEmp(this.ApiLogin).Wait();
+        }
+        public void ListaEmpresasLogin(string token)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaEmpresas"];
+            ListaEmp(ApiCatalgos, token).Wait();
+        }
+        //private async Task ListaEmp(string api, string token = null)
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        //this.ApiLogin = ConfigurationManager.AppSettings["GetListaEmpresasLogin"];
+        //        //ListaEmp(this.ApiLogin).Wait();
+        //    }
+        //public void ListaEmpresasLogin(string token)
+        //{
+        //    this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaEmpresas"];
+        //    ListaEmp(ApiCatalgos, token).Wait();
+        //}
+        private async Task ListaEmp(string api, string token = null)
+        {
             using (var client = new HttpClient())
             {
                 RespuestaDTO resp = new RespuestaDTO();
@@ -169,6 +274,29 @@ namespace MVC.Presentacion.Agente
                     client.Dispose();
                 }
                 _RespuestaDTO = resp;
+                List<EmpresaDTO> emp = new List<EmpresaDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                if (!string.IsNullOrEmpty(token))
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(api).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<EmpresaDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<EmpresaDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaEmpresas = emp;
             }
         }
         #endregion
@@ -181,16 +309,46 @@ namespace MVC.Presentacion.Agente
         private async Task GetListaUsuarios(short IdEmpresa, string Token)
         {
             using (var client = new HttpClient())
+        }
+        //}
+        public void GuardarEmpresaNueva(EmpresaModel dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraEmpresas"];
+            GuardarEmpresa(dto, tkn).Wait();
+        }
+        //private async Task GuardarEmpresa(EmpresaModel _pcDTO, string token)
+        //{
+
+        //    using (var client = new HttpClient())
+        //    {
+        //        this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraEmpresas"];
+        //        GuardarEmpresa(dto, tkn).Wait();
+        //    }
+        private async Task GuardarEmpresa(EmpresaModel _pcDTO, string token)
+        {
+
+            using (var client = new HttpClient())
             {
                 List<UsuarioDTO> lus = new List<UsuarioDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
                 {
                     HttpResponseMessage response = await client.GetAsync(ApiCatalgos + IdEmpresa.ToString()).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         lus = await response.Content.ReadAsAsync<List<UsuarioDTO>>();
+                    else
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -227,6 +385,80 @@ namespace MVC.Presentacion.Agente
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<CentroCostoDTO>>();
                     else
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
+            }
+        }
+        //  #endregion
+        //#region Usuarios
+        //public void BuscarListaUsuarios(short idEmpresa, string tkn)
+        //{
+        //    this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
+        //    GetListaUsuarios(idEmpresa, tkn).Wait();
+        //}
+        //private async Task GetListaUsuarios(short IdEmpresa, string Token)
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        List<UsuarioDTO> lus = new List<UsuarioDTO>();
+        //        client.BaseAddress = new Uri(UrlBase);
+        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+        //        try
+        //        {
+        //            HttpResponseMessage response = await client.GetAsync(ApiCatalgos + IdEmpresa.ToString()).ConfigureAwait(false);
+        //            if (response.IsSuccessStatusCode)
+        //                lus = await response.Content.ReadAsAsync<List<UsuarioDTO>>();
+        //            else
+        //            {
+        //                client.CancelPendingRequests();
+        //                client.Dispose();
+        //            }
+        //        }
+        //        catch (Exception)
+        //        {
+        //            lus = new List<UsuarioDTO>();
+        //            client.CancelPendingRequests();
+        //            client.Dispose(); ;
+        //        }
+        //        _listaUsuarios = lus;
+        //    }
+        //}
+        //#endregion
+
+        //#region Centros de costos
+        //public void BuscarCentrosCostos(string tkn)
+        //     }
+
+        public void EliminarEmpresa(short dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminarEmpresa"];
+            EliminarEmpresaSeleccionada(dto, tkn).Wait();
+        }
+
+        private async Task EliminarEmpresaSeleccionada(short _pcDTO, string token)
+        {
+
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos + _pcDTO.ToString(), "").ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
                     {
                         client.CancelPendingRequests();
                         client.Dispose();
@@ -239,6 +471,13 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _listaCentroCosto = emp;
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
             }
         }
         public void GuardarCentroCosto(CentroCostoCrearDTO dto, string tkn)
@@ -248,6 +487,16 @@ namespace MVC.Presentacion.Agente
         }
         private async Task GuardarCtroCosto(CentroCostoCrearDTO _pcDTO, string token)
         {
+            using (var client = new HttpClient())
+        }
+        public void GuardarEmpresaConfiguracion(EmpresaConfiguracion dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutEmpresaConfig"];
+            GuardarEmpresaConfig(dto, tkn).Wait();
+        }
+        private async Task GuardarEmpresaConfig(EmpresaConfiguracion _pcDTO, string token)
+        {
+
             using (var client = new HttpClient())
             {
                 RespuestaDTO resp = new RespuestaDTO();
@@ -273,6 +522,30 @@ namespace MVC.Presentacion.Agente
                     client.Dispose();
                 }
                 _RespuestaDTO = resp;
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {//PostAsJsonAsync
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
             }
         }
         public void EliminarCtroCosto(CentroCostoEliminarDTO dto, string token)
@@ -283,6 +556,17 @@ namespace MVC.Presentacion.Agente
         private async Task EliminarCentroCosto(CentroCostoEliminarDTO _dto, string token)
         {
             using (var client = new HttpClient())
+        }
+        public void GuardarEmpresaEdicion(EmpresaDTO dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutModificaEmpresas"];
+            GuardarEmpresaEditada(dto, tkn).Wait();
+        }
+
+        private async Task GuardarEmpresaEditada(EmpresaDTO _pcDTO, string token)
+        {
+
+            using (var client = new HttpClient())
             {
                 RespuestaDTO resp = new RespuestaDTO();
 
@@ -291,13 +575,61 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {//PostAsJsonAsync
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
                 {
                     HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, _dto).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
+            }
+        }
+
+        #endregion
+
+        #region Usuarios
+        public void BuscarListaUsuarios(short idEmpresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
+            GetListaUsuarios(idEmpresa, tkn).Wait();
+        }
+        private async Task GetListaUsuarios(short IdEmpresa, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<UsuarioDTO> lus = new List<UsuarioDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + IdEmpresa.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<UsuarioDTO>>();
+                    else
                     {
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                        client.CancelPendingRequests();
+                        client.Dispose();
                         client.CancelPendingRequests();
                         client.Dispose();
                     }
@@ -332,6 +664,36 @@ namespace MVC.Presentacion.Agente
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
+                }
+                catch (Exception)
+                {
+                    lus = new List<UsuarioDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaUsuarios = lus;
+            }
+        }
+        public void BuscarUsuarioId(int id, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
+            GetListaIdUsuario(id, tkn).Wait();
+        }
+
+        private async Task GetListaIdUsuario(int id, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<UsuariosModel> lus = new List<UsuariosModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<UsuariosModel>>();
+                    else
                     {
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                         client.CancelPendingRequests();
@@ -345,6 +707,13 @@ namespace MVC.Presentacion.Agente
                     client.Dispose();
                 }
                 _RespuestaDTO = resp;
+                catch (Exception)
+                {
+                    lus = new List<UsuariosModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstUserEmp = (from x in lus where x.IdUsuario == id select x).ToList();
             }
         }
         public void BuscarListaTipoCentroCosto(string tkn)
@@ -353,6 +722,16 @@ namespace MVC.Presentacion.Agente
             GetListaTipoCentroCosto(tkn).Wait();
         }
         private async Task GetListaTipoCentroCosto(string Token)
+        {
+            using (var client = new HttpClient())
+        }
+        public void BuscarTodosUsuarios(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
+            GetListaTodosUsuarios(tkn).Wait();
+        }
+
+        private async Task GetListaTodosUsuarios(string Token)
         {
             using (var client = new HttpClient())
             {
@@ -378,6 +757,28 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _listaTipoCentroCosto = list;
+                List<UsuariosModel> lus = new List<UsuariosModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<UsuariosModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<UsuariosModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstUserEmp = lus;
             }
         }
         #endregion
@@ -390,16 +791,36 @@ namespace MVC.Presentacion.Agente
         private async Task ListaProductosPorIdEmpresa(string token)
         {
             using (var client = new HttpClient())
+        }
+
+        public void FiltrarUsuarios(int idEmpresa, int idUser, string mail, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
+            GetListaFiltroUsuarios(idEmpresa, idUser, mail, tkn).Wait();
+        }
+
+        private async Task GetListaFiltroUsuarios(int idEmpresa, int idUser, string mail, string Token)
+        {
+            using (var client = new HttpClient())
             {
                 List<ProductoDTO> emp = new List<ProductoDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
+                List<UsuariosModel> lus = new List<UsuariosModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
                 {
                     HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<ProductoDTO>>();
+                    else
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<UsuariosModel>>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -451,6 +872,53 @@ namespace MVC.Presentacion.Agente
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<ProveedorDTO>>();
                     else
+                }
+                catch (Exception)
+                {
+                    lus = new List<UsuariosModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _lstUserEmp = lus;
+
+                if (idEmpresa != 0)
+                {
+                    _lstUserEmp = (from x in lus where x.IdEmpresa == idEmpresa select x).ToList();
+                }
+                if (idUser != 0)
+                {
+                    _lstUserEmp = (from x in lus where x.IdUsuario == idUser select x).ToList();
+                }
+
+
+                if (!String.IsNullOrEmpty(mail))
+                {
+                    _lstUserEmp = (from x in lus where x.Email1 == mail select x).ToList();
+                }
+            }
+        }
+
+        public void GuardarNuevoUsuario(UsuarioDTO dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraUsuarios"];
+            GuardarUsuario(dto, tkn).Wait();
+        }
+        private async Task GuardarUsuario(UsuarioDTO _pcDTO, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
                     {
                         client.CancelPendingRequests();
                         client.Dispose();
@@ -463,6 +931,13 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _listaProveedores = emp;
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
             }
         }
         #endregion
@@ -474,6 +949,18 @@ namespace MVC.Presentacion.Agente
         }
         private async Task ListaCuentaContable(short idEmpresa, string token)
         {
+            using (var client = new HttpClient())
+        }
+
+        public void GuardarCredenciales(UsuarioDTO dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutModificaCredencial"];
+            GuardarCredencial(dto, tkn).Wait();
+        }
+
+        private async Task GuardarCredencial(UsuarioDTO _pcDTO, string token)
+        {
+
             using (var client = new HttpClient())
             {
                 List<CuentaContableDTO> emp = new List<CuentaContableDTO>();
@@ -498,6 +985,30 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _listaCuentasContables = emp;
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
             }
         }
         public void GuardarCuentaContable(CuentaContableCrearDTO _cc, string token)
@@ -507,6 +1018,17 @@ namespace MVC.Presentacion.Agente
         }
         private async Task SaveCtaCtble(CuentaContableCrearDTO _cc, string token)
         {
+            using (var client = new HttpClient())
+        }
+
+        public void GuardarRolesAsig(UsuariosModel dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostAsignarRol"];
+            GuardarRolUser(dto, tkn).Wait();
+        }
+        private async Task GuardarRolUser(UsuariosModel _pcDTO, string token)
+        {
+
             using (var client = new HttpClient())
             {
                 RespuestaDTO resp = new RespuestaDTO();
@@ -518,6 +1040,10 @@ namespace MVC.Presentacion.Agente
                 try
                 {
                     HttpResponseMessage response = await client.PostAsJsonAsync(ApiCatalgos, _cc).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
@@ -556,6 +1082,40 @@ namespace MVC.Presentacion.Agente
                     if (response.IsSuccessStatusCode)
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
+            }
+        }
+
+        public void GuardarUsuarioEdicion(UsuarioDTO dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutModificaUsuarios"];
+            GuardarUsuarioEditado(dto, tkn).Wait();
+        }
+
+        private async Task GuardarUsuarioEditado(UsuarioDTO _pcDTO, string token)
+        {
+
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
                     {
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                         client.CancelPendingRequests();
@@ -569,6 +1129,13 @@ namespace MVC.Presentacion.Agente
                     client.Dispose();
                 }
                 _RespuestaDTO = resp;
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
             }
         }
         public void EliminarCtaCtble(CuentaContableEliminarDTO _cc, string token)
@@ -578,6 +1145,18 @@ namespace MVC.Presentacion.Agente
         }
         private async Task EliminarCuentaContable(CuentaContableEliminarDTO _cc, string token)
         {
+            using (var client = new HttpClient())
+        }
+
+        public void EliminarUsuario(short dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminarUsuario"];
+            EliminarUsuarioSeleccionado(dto, tkn).Wait();
+        }
+
+        private async Task EliminarUsuarioSeleccionado(short _pcDTO, string token)
+        {
+
             using (var client = new HttpClient())
             {
                 RespuestaDTO resp = new RespuestaDTO();
@@ -605,6 +1184,30 @@ namespace MVC.Presentacion.Agente
                     client.Dispose();
                 }
                 _RespuestaDTO = resp;
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos + _pcDTO.ToString(), "").ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
             }
         }
         #endregion
@@ -617,16 +1220,78 @@ namespace MVC.Presentacion.Agente
         private async Task GetListaEstacionCarburacion(string Token)
         {
             using (var client = new HttpClient())
+        }
+
+        //public void BuscarListaUsuarios(short idEmpresa, string tkn)
+        //{
+        //    this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
+        //    GetListaUsuarios(idEmpresa, tkn).Wait();
+        //}
+        //private async Task GetListaUsuarios(short IdEmpresa, string Token)
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        this.ApiCatalgos = ConfigurationManager.AppSettings["GetCentrosCostos"];
+        //        ListaCentrosCosto(tkn).Wait();
+        //    }
+        //private async Task ListaCentrosCosto(string token)
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        List<CentroCostoDTO> emp = new List<CentroCostoDTO>();
+        //        client.BaseAddress = new Uri(UrlBase);
+        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+        //        try
+        //        {
+        //            HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+        //            if (response.IsSuccessStatusCode)
+        //                emp = await response.Content.ReadAsAsync<List<CentroCostoDTO>>();
+        //            else
+        //            {
+        //                client.CancelPendingRequests();
+        //                client.Dispose();
+        //            }
+        //        }
+        //        catch (Exception)
+        //        {
+        //            emp = new List<CentroCostoDTO>();
+        //            client.CancelPendingRequests();
+        //            client.Dispose(); ;
+        //        }
+        //        _listaCentroCosto = emp;
+        //    }
+        //}
+        #endregion
+
+        #region Productos
+        public void BuscarProductos(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaProductos"];
+            ListaProductosPorIdEmpresa(tkn).Wait();
+        }
+        private async Task ListaProductosPorIdEmpresa(string token)
+        {
+            using (var client = new HttpClient())
             {
                 List<EstacionCarburacionDTO> list = new List<EstacionCarburacionDTO>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
+                List<ProductoDTO> emp = new List<ProductoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
                 {
                     HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         list = await response.Content.ReadAsAsync<List<EstacionCarburacionDTO>>();
+                    else
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<ProductoDTO>>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -663,6 +1328,43 @@ namespace MVC.Presentacion.Agente
                     if (response.IsSuccessStatusCode)
                         list = await response.Content.ReadAsAsync<List<UnidadAlmacenGasDTO>>();
                     else
+                }
+                catch (Exception)
+                {
+                    emp = new List<ProductoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listProductos = emp;
+            }
+        }
+        // }
+
+
+        #endregion
+
+        #region roles
+
+        public void BuscarRolesRequisicion(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
+            GetListaRolesReq(tkn).Wait();
+        }
+
+        private async Task GetListaRolesReq(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RolRequsicion> lus = new List<RolRequsicion>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<RolRequsicion>>();
+                    else
                     {
                         client.CancelPendingRequests();
                         client.Dispose();
@@ -675,6 +1377,13 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _listaUnidadAlmacenGas = list;
+                catch (Exception)
+                {
+                    lus = new List<RolRequsicion>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaRolesReq = (from x in lus where x.NombreRol != "Super Usuario" select x).ToList();
             }
         }
         #endregion
@@ -685,6 +1394,17 @@ namespace MVC.Presentacion.Agente
             GetListaEquipoTransporte(tkn).Wait();
         }
         private async Task GetListaEquipoTransporte(string Token)
+        {
+            using (var client = new HttpClient())
+        }
+
+        public void BuscarRolesMovilCompras(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
+            GetListaRolesMovilCom(tkn).Wait();
+        }
+
+        private async Task GetListaRolesMovilCom(string Token)
         {
             using (var client = new HttpClient())
             {
@@ -710,6 +1430,28 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _listaEquipoTransporte = list;
+                List<RolMovilCompra> lus = new List<RolMovilCompra>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<RolMovilCompra>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<RolMovilCompra>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaRolesMovilCom = (from x in lus where x.NombreRol != "Super Usuario" select x).ToList();
             }
         }
 
@@ -738,8 +1480,23 @@ namespace MVC.Presentacion.Agente
         private async Task GetListaCategoriasProducto(string Token)
         {
             using (var client = new HttpClient())
+        }
+        public void BuscarRolesCompras(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
+            GetListaRolesCom(tkn).Wait();
+        }
+
+        private async Task GetListaRolesCom(string Token)
+        {
+            using (var client = new HttpClient())
             {
                 List<CategoriaProductoDTO> list = new List<CategoriaProductoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                List<RolCompras> lus = new List<RolCompras>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
@@ -748,6 +1505,10 @@ namespace MVC.Presentacion.Agente
                     HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         list = await response.Content.ReadAsAsync<List<CategoriaProductoDTO>>();
+                    else
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<RolCompras>>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -799,6 +1560,36 @@ namespace MVC.Presentacion.Agente
                     if (response.IsSuccessStatusCode)
                         list = await response.Content.ReadAsAsync<List<LineaProductoDTO>>();
                     else
+                }
+                catch (Exception)
+                {
+                    lus = new List<RolCompras>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaRolesCom = (from x in lus where x.NombreRol != "Super Usuario" select x).ToList();
+            }
+        }
+        public void BuscarRolesCat(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
+            GetListaRolesCat(tkn).Wait();
+        }
+
+        private async Task GetListaRolesCat(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RolCat> lus = new List<RolCat>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<RolCat>>();
+                    else
                     {
                         client.CancelPendingRequests();
                         client.Dispose();
@@ -811,6 +1602,13 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _listaLineasProducto = list;
+                catch (Exception)
+                {
+                    lus = new List<RolCat>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaRolesCat = (from x in lus where x.NombreRol != "Super Usuario" select x).ToList();
             }
         }
         #endregion
@@ -839,8 +1637,57 @@ namespace MVC.Presentacion.Agente
         private async Task GetListaUnidadesMedida(string Token)
         {
             using (var client = new HttpClient())
+        }
+        public void BuscarTodosRoles(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
+            GetListaTodosRoles(tkn).Wait();
+        }
+
+        private async Task GetListaTodosRoles(string Token)
+        {
+            using (var client = new HttpClient())
             {
                 List<UnidadMedidaDTO> list = new List<UnidadMedidaDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                List<RolDto> lus = new List<RolDto>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<RolDto>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<RolDto>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaAllRoles = (from x in lus where x.NombreRol != "Super Usuario" select x).ToList();
+            }
+        }
+
+        public void BuscarRolId(int id, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
+            GetListaIdRol(id, tkn).Wait();
+        }
+        private async Task GetListaIdRol(int id, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RolDto> lus = new List<RolDto>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
@@ -849,6 +1696,45 @@ namespace MVC.Presentacion.Agente
                     HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         list = await response.Content.ReadAsAsync<List<UnidadMedidaDTO>>();
+                    else
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<RolDto>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<RolDto>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaAllRoles = (from x in lus where x.IdRol == id select x).ToList();
+            }
+        }
+        public void GuardarNuevoRol(RolDto dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraRol"];
+            GuardarRol(dto, tkn).Wait();
+        }
+        private async Task GuardarRol(RolDto _pcDTO, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -862,10 +1748,386 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _listaUnidadesMedida = list;
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
+            }
+        }
+        }
+        public void GuardarModificacionRol(RolDto dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutModificaRoles"];
+            GuardarEdicionRol(dto, tkn).Wait();
+        }
+
+        private async Task GuardarEdicionRol(RolDto _pcDTO, string token)
+        {
+
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
+            }
+        }
+
+        public void GuardarPermisos(RolDto dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutModificaPermisos"];
+            ActualizaPermisos(dto, tkn).Wait();
+        }
+
+        private async Task ActualizaPermisos(RolDto _pcDTO, string token)
+        {
+
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
+            }
+        }
+
+        public void EliminarRol(short dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutEliminarRol"];
+            EliminarRolSeleccionado(dto, tkn).Wait();
+        }
+
+        private async Task EliminarRolSeleccionado(short _pcDTO, string token)
+        {
+
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos + _pcDTO.ToString(), "").ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
+            }
+        }
+
+        #endregion
+        #endregion
+
+        #region Clientes
+
+        public void BuscarTiposPersona(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetTiposPersona"];
+            GetTiposPersona(tkn).Wait();
+        }
+
+        private async Task GetTiposPersona(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<TipoPersonaModel> lus = new List<TipoPersonaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<TipoPersonaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<TipoPersonaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaTipoPersona = lus;
+            }
+        }
+
+        public void BuscarRegimenFiscal(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetRegimenFiscal"];
+            GetRegimen(tkn).Wait();
+        }
+
+        private async Task GetRegimen(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RegimenFiscalModel> lus = new List<RegimenFiscalModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<RegimenFiscalModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<RegimenFiscalModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaRegimenFiscal = lus;
+            }
+        }
+
+        public void BuscarListaClientes(short idEmpresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaClientes"];
+            GetListaClientes(idEmpresa, tkn).Wait();
+        }
+        private async Task GetListaClientes(short IdEmpresa, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ClientesDto> lus = new List<ClientesDto>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + IdEmpresa.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<ClientesDto>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<ClientesDto>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _lstaClientes = lus;
+            }
+        }
+        public void GuardarNuevoCliente(ClientesDto dto, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraClientes"];
+            GuardarClientes(dto, tkn).Wait();
+        }
+        private async Task GuardarClientes(ClientesDto _pcDTO, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                RespuestaDTO resp = new RespuestaDTO();
+
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiCatalgos, _pcDTO).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    resp.Mensaje = ex.Message;
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }
+                _respuestaDTO = resp;
             }
         }
         #endregion
+
+        public void BuscarCentrosCostos(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetCentrosCostos"];
+            ListaCentrosCosto(tkn).Wait();
+        }
+        private async Task ListaCentrosCosto(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CentroCostoDTO> emp = new List<CentroCostoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<CentroCostoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<CentroCostoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaCentroCosto = emp;
+            }
+        }
+
+        public void BuscarProveedores(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaProveedores"];
+            ListaProveedores(tkn).Wait();
+        }
+        private async Task ListaProveedores(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<ProveedorDTO> emp = new List<ProveedorDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<ProveedorDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    emp = new List<ProveedorDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaProveedores = emp;
+            }
+        }
+        //private async Task ListaCentrosCosto(string token)
+        //    {
+        //        using (var client = new HttpClient())
+
+
         #endregion
+
+        #region Cuentas Contables
+        public void BuscarCuentasContables(short idEmpresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCuentasContables"];
+            ListaCuentaContable(idEmpresa, tkn).Wait();
+        }
+        private async Task ListaCuentaContable(short idEmpresa, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CuentaContableDTO> emp = new List<CuentaContableDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiCatalgos, idEmpresa)).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<CuentaContableDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new List<CuentaContableDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaCuentasContables = emp;
+            }
+        }
+        #endregion
+        //  #endregion
+
         #region Login
         public void Acceder(AutenticacionDTO autDto)
         {
@@ -1174,6 +2436,8 @@ namespace MVC.Presentacion.Agente
                 _requsicionAutorizacion = emp;
             }
         }
+
+
         #endregion
         #region Orden de Compra
         public void BuscarRequisicionOC(int idReq, string tkn)

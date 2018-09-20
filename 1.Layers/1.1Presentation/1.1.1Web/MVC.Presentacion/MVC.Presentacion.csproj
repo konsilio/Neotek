@@ -228,13 +228,16 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CentroCostoController.cs" />
     <Compile Include="Controllers\CuentaContableController.cs" />
+    <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EmpresasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdenCompraController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\RequisicionController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\Shared\MainController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -251,18 +254,36 @@
     <Compile Include="Models\Catalogos\CuentaContable\CuentaContableEliminarDTO.cs" />
     <Compile Include="Models\Catalogos\CuentaContable\CuentaContableModel.cs" />
     <Compile Include="Models\Catalogos\CuentaContable\CuentaContableModificarDTO.cs" />
+    <Compile Include="Models\Catalogos\ClienteLocacionMod.cs" />
+    <Compile Include="Models\Catalogos\ClientesDto.cs" />
+    <Compile Include="Models\Catalogos\ClientesModel.cs" />
+    <Compile Include="Models\Catalogos\EmpDto.cs" />
+    <Compile Include="Models\Catalogos\CuentaContableDTO.cs" />
     <Compile Include="Models\Catalogos\Empresa.cs" />
+    <Compile Include="Models\Catalogos\EmpresaConfiguracion.cs" />
     <Compile Include="Models\Catalogos\EmpresaModel.cs" />
     <Compile Include="Models\Catalogos\CentroCosto\CentroCostoDTO.cs" />
     <Compile Include="Models\Catalogos\EmpresasDTO.cs" />
     <Compile Include="Models\Catalogos\EquipoTransporteDTO.cs" />
     <Compile Include="Models\Catalogos\EstacionCarburacionDTO.cs" />
     <Compile Include="Models\Catalogos\LineaProductoDTO.cs" />
+    <Compile Include="Models\Catalogos\CentroCostoDTO.cs" />
+    <Compile Include="Models\Catalogos\EmpresaDTO.cs" />
+    <Compile Include="Models\Catalogos\EstadosRepModel.cs" />
     <Compile Include="Models\Catalogos\PaisModel.cs" />
+    <Compile Include="Models\Catalogos\PartialViewModel.cs" />
     <Compile Include="Models\Catalogos\ProductoDTO.cs" />
     <Compile Include="Models\Catalogos\ProveedorDTO.cs" />
     <Compile Include="Models\Catalogos\UnidadAlmacenGasDTO.cs" />
+    <Compile Include="Models\Catalogos\RegimenFiscalModel.cs" />
+    <Compile Include="Models\Catalogos\RolCat.cs" />
+    <Compile Include="Models\Catalogos\RolCompras.cs" />
+    <Compile Include="Models\Catalogos\RolDto.cs" />
+    <Compile Include="Models\Catalogos\RolMovilCompra.cs" />
+    <Compile Include="Models\Catalogos\RolRequsicion.cs" />
+    <Compile Include="Models\Catalogos\TipoPersonaModel.cs" />
     <Compile Include="Models\Catalogos\UsuarioDTO.cs" />
+    <Compile Include="Models\Catalogos\UsuariosModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraAutorizacionModel.cs" />
@@ -328,6 +349,7 @@
     <Content Include="assets\css\blog.css" />
     <Content Include="assets\css\chatapp.css" />
     <Content Include="assets\css\color_skins.css" />
+    <Content Include="assets\css\form.css" />
     <Content Include="assets\css\hm-style.css" />
     <Content Include="assets\css\inbox.css" />
     <Content Include="assets\css\main.css" />
@@ -3763,6 +3785,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Resources\js\shared\jCatalogo.js" />
+    <Content Include="Resources\js\shared\jLayout.js" />
+    <Content Include="Resources\js\shared\jServices.js" />
+    <Content Include="Resources\js\shared\jUserSearcher.js" />
+    <Content Include="Resources\js\shared\jUtils.js" />
+    <Content Include="Resources\js\shared\jValidator.js" />
+    <Content Include="Resources\js\shared\TreeView.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -4054,11 +4083,27 @@
     <Content Include="Views\Shared\EditorTemplates\CategoriaProductoDTO.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\LineaProductoDTO.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\UnidadMedidaDTO.cshtml" />
+    <Content Include="Views\Empresas\ActualizaParametros.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\Usuarios\Nuevo.cshtml" />
+    <Content Include="Views\Usuarios\ActualizaCredenciales.cshtml" />
+    <Content Include="Views\Usuarios\ActualizaRoles.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\ActualizaNombreRol.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RolDto.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RolCompras.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Clientes\Nuevo.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RolCat.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RolRequsicion.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RolMovilCompra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\css\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\js\i18n\" />
+    <Folder Include="LogosEmpresa\" />
+    <Folder Include="Resources\js\lib\" />
     <Folder Include="Servicios\" />
   </ItemGroup>
   <ItemGroup>

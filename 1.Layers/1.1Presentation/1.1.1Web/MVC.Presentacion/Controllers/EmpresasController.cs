@@ -1,6 +1,5 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Catalogos;
-using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Seguridad;
 using Security.MainModule.Criptografia;
 using System;
@@ -9,6 +8,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -18,36 +19,92 @@ namespace MVC.Presentacion.Controllers
         // GET: Empresas
         public ActionResult Index()
         {
-            ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
-
+            _tok = Session["StringToken"].ToString();
+            ViewBag.listaEmpresas = CatalogoServicio.Empresas(_tok);
             return View();
         }
 
-        // [HttpPost]
         public ActionResult Nueva()
         {
-            //Se obtienen los paises
+            EmpresaModel em = new EmpresaModel();
             _tok = Session["StringToken"].ToString();
-            //CatalogoServicio pais = new CatalogoServicio();
-            //pais.GetPaises(_tok);                       
-         
-            ////Session["ListaRoles"] = getSelectList<Roles>(ListObject, "Clave", "IdRol");
-            //TempData["ListaPaises"] = pais.GetPaises(_tok);
+            //Se obtienen los paises         
+            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tok);
+            //Se obtienen los estados 
+            ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
+            ViewBag.Empresas = null;
+            return View(em);
+        }     
 
-            EmpresaModel Objemp = new EmpresaModel();
-            return View(new EmpresaModel());
+        [HttpPost]
+        public ActionResult Crear(EmpresaModel Objemp, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px)
+        {
+           
+            _tok = Session["StringToken"].ToString();
+            if (ModelState.IsValid)
+            {
+                CatalogoServicio.create(Objemp, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
+            }
+                    
+            return RedirectToAction("Index", Objemp);
         }
 
-        public ActionResult Crear(EmpresaModel Objemp)
+        public ActionResult ActualizaParametros(int id)
+        {
+            Empresa em = new Empresa();
+            string _tkn = Session["StringToken"].ToString();
+            ViewBag.Empresas = CatalogoServicio.FiltrarEmpresa(em, id, _tkn).Empresas.ToList();
+            return View();
+        }
+
+        public ActionResult EditarEmpresa(int id)
+        {
+            Empresa em = new Empresa();
+            string _tkn = Session["StringToken"].ToString();
+            ViewBag.Empresas = CatalogoServicio.FiltrarEmpresa(em, id, _tkn).Empresas.ToList();
+            //Se obtienen los paises         
+            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
+            //Se obtienen los estados 
+            ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
+            return View("Nueva");
+        }
+
+        public ActionResult BorrarEmpresa(short id)
+        {
+            Empresa em = new Empresa();
+            string _tkn = Session["StringToken"].ToString();
+            //  ViewBag.Empresas = CatalogoServicio.FiltrarEmpresa(em, id, _tkn).Empresas.ToList();
+            CatalogoServicio.EliminaEmpresaSel(id, _tkn);
+            //return View();
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        public ActionResult Actualiza(EmpresaConfiguracion _Obj)
         {
             _tok = Session["StringToken"].ToString();
             if (ModelState.IsValid)
             {
-                //CatalogoServicio lst = new CatalogoServicio();
-                //lst.create(Objemp, _tok);
+                CatalogoServicio.ActualizaConfigEmpresa(_Obj, _tok);
             }
-            //return View(Objemp);
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Index", _Obj);
         }
+
+        [HttpPost]
+        public ActionResult GuardaEdicionEmpresa(EmpresaDTO _Obj, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px)
+
+        {
+            _tok = Session["StringToken"].ToString();
+            if (ModelState.IsValid)
+            {
+                CatalogoServicio.ActualizaEdicionEmpresa(_Obj, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
+                // CatalogoServicio.create(_Obj, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
+            }
+
+            return RedirectToAction("Index", _Obj);
+        }
+        
     }
 }

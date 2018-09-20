@@ -1,0 +1,421 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model  PartialViewModel
+
+    @{
+    ViewBag.Title = "Index";
+    }
+
+    <!-- Bootstrap Select Css -->
+    <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+
+    <script type="text/javascript">
+    $(function () {
+
+        $('#interest_tabs').on('click', 'a[data-toggle="tab"]', function (e) {
+            e.preventDefault();
+
+            var $link = $(this);
+
+            if (!$link.parent().hasClass('active')) {
+
+                //remove active class from other tab-panes
+                $('.tab-content:not(.' + $link.attr('href').replace('#', '') + ') .tab-pane').removeClass('active');
+
+                // click first submenu tab for active section
+                $('a[href="' + $link.attr('href') + '_all"][data-toggle="tab"]').click();
+
+                // activate tab-pane for active section
+                $('.tab-content.' + $link.attr('href').replace('#', '') + ' .tab-pane:first').addClass('active');
+            }
+
+
+            //tabSisCompra
+        });
+    });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnGuardaP").click(function () {
+          
+            var form = $(this).parent("form");
+            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Roles", Action = "GuardarPermisos" }) %>');
+            form.attr('method', 'post');
+
+            //var arrItem = [];
+            //var commaSeparated = "";
+            //$("#ItemList td input[type=checkbox]").each(function (index, val) {
+            //    alert(index);
+            //    alert(val);
+            //     debugger
+            //    var checkdId = $(val).atrr("Id");
+            //    var arr = checkdId.split('_');
+            //    var currentCheckboxId = arr[1];
+            //    var IsChecked = $("#" + checkId).is(":checked", true);
+
+            //    if (Ischecked) {
+            //        arrItem.push(currentCheckboxId);
+            //    }
+            //    alert(arrItem.values);
+            //})
+
+            //if (arrItem.lenght != 0)
+
+            //{
+            //    $.ajax({
+            //        url: "/Roles/SaveList",
+            //        type:"POST",
+            //        data: { ItemList: commaSeparated },
+            //        success: function (response)
+            //        {
+
+            //        }
+            //    })
+
+            //}
+        });
+         
+    });
+   
+    </script>
+
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper">
+        <div class="loader">
+            <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+            <p>Espere por favor</p>
+        </div>
+    </div>
+    @using (Html.BeginForm("AgregarNuevoRol", "Roles", FormMethod.Post))
+    {
+    <section class="content home">
+        <div class="container-fluid">
+            <div class="block-header">
+
+                <div class="row clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="card">
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <b>Gasera</b>
+                                            <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                                @foreach (var lst in ViewBag.listaEmpresas)
+                                                {
+                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            <b>Estatus</b>
+                                            <select name="IdStatus" class="form-control show-tick" data-live-search="true">
+                                                <option value="Enfunciones">En funciones</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="card">
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="form-group">
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            Nombre rol:<input id="NombreRol" type="text" name="NombreRol" class="form-control" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <button class="btn btn-raised btn-primary"><i class="glyphicon glyphicon-open-file"></i>  Agregar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="body">
+                    <!-- Nav tabs all menu-->
+                    <ul class="nav nav-tabs" role="tablist">
+                        @*active show*@
+                        <li class="nav-item"><a class="nav-link" id="homeRequisicion" data-toggle="tab" href="#window_Requsicion"><i class="zmdi zmdi-apps"></i> Requisicion </a></li>
+                        <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#window_Compra"> <i class="zmdi zmdi-money-box"></i> Compra </a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_Inventario"><i class="zmdi zmdi-file"></i> Inventario </a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_Ventas"><i class="zmdi zmdi-money"></i> Ventas </a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_Catalogos"><i class="zmdi zmdi-settings-square"></i> Catalogos </a></li>
+                    </ul>
+                    <div class="row clearfix">
+                        <div class="col-md-12">
+                            <div class="form-group">                            
+                                <input type="submit" id="btnGuardaP" name="Guardar" value="Guardar" formaction=@Url.Action("GuardarPermisos") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <!--Compra tab menu-->
+                        <div id="window_Compra" class="tab-pane">
+                            <ul class="nav nav-tabs" id="compras_tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" href="#SistemaCompra" data-toggle="tab"><i class="zdmi"></i> Sistema</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#MovilCompra" data-toggle="tab"><i class="zmdi"></i> App móvil</a></li>
+                            </ul>
+                        </div>
+
+                        <!--ventas tab content-->
+                        <div id="window_Ventas" class="tab-pane">
+                            <ul class="nav nav-tabs" id="ventas_tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" href="#SistemaVentas" data-toggle="tab">Sistema</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#MovilVentas" data-toggle="tab">App móvil</a></li>
+                            </ul>
+                        </div>
+
+                        <!--Inventario tab menu-->
+                        <div id="window_Inventario" class="tab-pane">
+                            <ul class="nav nav-tabs" id="inventario_tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" href="#SistemaInventario" data-toggle="tab">Sistema</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#MovilInventario" data-toggle="tab">App móvil</a></li>
+                            </ul>
+                        </div>
+
+                        <!--Requisicion tab content-->
+                        <div id="window_Requsicion" class="tab-pane">
+                            <ul class="nav nav-tabs" id="requisicion_tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" href="#SistemaRequsicion" data-toggle="tab">Sistema</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#MovilRequsicion" data-toggle="tab">App móvil</a></li>
+                            </ul>
+                        </div>
+
+                        <!--Catalogo tab menu-->
+                        <div id="window_Catalogos" class="tab-pane">
+                            <ul class="nav nav-tabs" id="catalogos_tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" href="#SistemaCatalogo" data-toggle="tab"><i class="zdmi"></i> Sistema</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#MovilCatalogo" data-toggle="tab"><i class="zmdi"></i> App móvil</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--Catalogo tab content-->
+                    <div class="tab-content">
+                        <div id="SistemaCatalogo" class="tab-pane">
+   
+
+                            @{
+                            ViewBag.Message = "Catalogo";
+                            }
+                            <div class="table-responsive">
+
+                                <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" id="ItemList">
+                                    <thead>
+                                        <tr>
+                                            <th>Rol</th>
+                                            <th>CatInsertarUsuario</th>
+                                            <th>CatModificarUsuario</th>
+                                            <th>CatEliminarUsuario</th>
+                                            <th>CatConsultarUsuario</th>
+                                            <th>CatInsertarProveedor</th>
+                                            <th>CatEliminarProveedor</th>
+                                            <th>CatConsultarProveedor</th>
+                                            <th>CatModificarProveedor</th>
+                                            <th>CatInsertarProducto</th>
+                                            <th>CatModificarProducto</th>
+                                            <th>CatEliminarProducto</th>
+                                            <th>CatConsultarProducto</th>
+                                            <th>CatInsertarCentroCosto</th>
+                                            <th>CatModificarCentroCosto</th>
+                                            <th>CatEliminarCentroCosto</th>
+                                            <th>CatConsultarCentroCosto</th>
+                                            <th>CatInsertarCuentaContable</th>
+                                            <th>CatModificarCuentaContable</th>
+                                            <th>CatEliminarCuentaContable</th>
+                                            <th>CatConsultarCuentaContable</th>
+                                            <th>CatInsertarCliente</th>
+                                            <th>CatModificarCliente</th>
+                                            <th>CatEliminarCliente</th>
+                                            <th>CatConsultarCliente</th>
+                                            <th>CatAsignarChoferPuntoVenta</th>
+                                            <th>CatEliminarPuntoVenta</th>
+                                            <th>CatConsultarPuntoVenta</th>
+                                            <th>CatAsignarEquipoTransporte</th>
+                                            <th>CatModificarEquipoTransporte</th>
+                                            <th>CatEliminarEquipoTransporte</th>
+                                            <th>CatConsultarEquipoTransporte</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @Html.EditorFor(m => m.ListaRolesCat)
+                                        
+                                    </tbody>
+                                </table>
+</div>
+                        </div>
+                        <div id="MovilCatalogo" class="tab-pane">
+                            <i>MovilCatalogo interests go here</i>
+                        </div>
+                    </div>
+
+                    <!--Compra tab content-->
+                    <div class="tab-content">
+                        <div id="SistemaCompra" class="tab-pane">
+                            @{
+                            ViewBag.Message = "Compra";
+                            }
+                            <div class="table-responsive">
+                                <table id="tabSisCompra" class="table table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Rol</th>
+                                            <th>CompraVerOCompra</th>
+                                            <th>CompraGenerarOCompra</th>
+                                            <th>CompraAutorizarOCompra</th>
+                                            <th>CompraEntraProductoOCompra</th>
+                                            <th>CompraAtiendeServicioOCompra</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @Html.EditorFor(m => m.ListaRolesCom)                                      
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="MovilCompra" class="tab-pane">
+                            @{
+                            ViewBag.Message = "MovilCompra";
+                            }
+                            <div class="table-responsive">
+                                <table id="tabSisCompra" class="table table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Rol</th>
+                                            <th>AppCompraVerOCompra</th>
+                                            <th>AppCompraEntraGas</th>
+                                            <th>AppCompraGasIniciarDescarga</th>
+                                            <th>AppCompraGasFinalizarDescarga</th>
+                                            <th>AppAutoconsumoInventarioGral</th>
+                                            <th>AppAutoconsumoEstacionCarb</th>
+                                            <th>AppAutoconsumoPipa</th>
+                                            <th>AppCalibracionEstacionCarb</th>
+                                            <th>AppCalibracionPipa</th>
+                                            <th>AppCalibracionCamionetaCilindro</th>
+                                            <th>AppRecargaEstacionCarb</th>
+                                            <th>AppRecargaPipa</th>
+                                            <th>AppRecargaCamionetaCilindro</th>
+                                            <th>AppTomaLecturaAlmacenPral</th>
+                                            <th>AppTomaLecturaEstacionCarb</th>
+                                            <th>AppTomaLecturaPipa</th>
+                                            <th>AppTomaLecturaCamionetaCilindro</th>
+                                            <th>AppTomaLecturaReporteDelDia</th>
+                                            <th>AppTraspasoEstacionCarb</th>
+                                            <th>AppTraspasoPipa</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @Html.EditorFor(m => m.ListaMovilCompra)
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--ventas tab content-->
+                    <div class="tab-content">
+                        <div id="SistemaVentas" class="tab-pane">
+                            <i>SistemaVentas interests go here</i>
+                        </div>
+                        <div id="MovilVentas" class="tab-pane">
+                            <i>MovilVentas interests go here</i>
+                        </div>
+                    </div>
+
+                    <!--Inventario tab content-->
+                    <div class="tab-content">
+                        <div id="SistemaInventario" class="tab-pane">
+                            <i>SistemaInventario interests go here</i>
+                        </div>
+                        <div id="MovilInventario" class="tab-pane">
+                            <i>MovilInventario interests go here</i>
+                        </div>
+                    </div>
+
+                    <!--Requisicion tab content-->
+                    <div class="tab-content">
+                        <div id="SistemaRequsicion" class="tab-pane">
+                            @{
+                            ViewBag.Message = "Requsicion";
+                            }
+                            <div class="table-responsive">
+                                <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
+                                    <thead>
+                                        <tr>
+                                            <th>Rol</th>
+                                            <th>RequisicionVerRequisiciones</th>
+                                            <th>RequisicionGenerarNueva</th>
+                                            <th>RequisicionRevisarExistencia</th>
+                                            <th>RequisicionAutorizar</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @Html.EditorFor(m => m.ListaRequsicion)                                      
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="MovilRequsicion" class="tab-pane">
+                            <i>MovilRequsicion interests go here</i>
+                        </div>
+                    </div>
+                    <!-- Tab panes -->
+                    @*<div class="tab-content">
+                        <div role="tabpanel" class="tab-pane in active show" id="window_Ventas">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_SistemaVentas"> <i class="zmdi zmdi-home"></i> Sistema </a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_SistemaMovilVentas"> <i class="zmdi zmdi-home"></i> App móvil </a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="window_Requsicion">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_SistemaRequsicion"> <i class="zmdi zmdi-home"></i> Sistema </a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_SistemaMovilRequsicion"> <i class="zmdi zmdi-home"></i> App móvil </a></li>
+                            </ul>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="window_Inventario">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_SistemaInventario"> <i class="zmdi zmdi-home"></i> Sistema </a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_SistemaMovilInventario"> <i class="zmdi zmdi-home"></i> App móvil </a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="window_Compra">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_SistemaCompra"> <i class="zmdi zmdi-home"></i> Sistema </a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_SistemaMovilCompra"> <i class="zmdi zmdi-home"></i> App móvil </a></li>
+                            </ul>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </section>
+    }
+    <script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+    <script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+    <script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+    <script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+    <script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+    <script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+    <script src="~/assets/js/pages/tables/jquery-datatable.js"></script>
+
+

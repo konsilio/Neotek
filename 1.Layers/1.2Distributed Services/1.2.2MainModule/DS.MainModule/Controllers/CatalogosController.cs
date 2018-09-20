@@ -31,13 +31,21 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaPaises()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPaises());
-        }      
+        }
+        #endregion
+
+        #region Estados Republica
+        [Route("estadosr")]
+        public HttpResponseMessage GetListaEstados()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEstados());
+        }
         #endregion
 
         #region Empresas
 
-        [Route("registra/empresa")]
-        public async Task<HttpResponseMessage> PostRegistraEmpresas()
+        // [Route("registra/empresa")]
+        public async Task<HttpResponseMessage> PostGuardaLogosEmpresas()
         {
             string destinationFolderPDF = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
             string root = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["RutaTemporal"]);
@@ -51,14 +59,14 @@ namespace DS.MainModule.Controllers
                 var empresaDto = provider.FormData.AsObject<EmpresaCrearDTO>();
 
                 var resp = ValidadorClases.EnlistaErrores(empresaDto);
-                if(!resp.ModeloValido)
+                if (!resp.ModeloValido)
                     return Request.CreateResponse(HttpStatusCode.BadRequest, resp);
 
                 string extension = string.Empty;
                 string fileName = string.Empty;
                 bool existe;
 
-                empresaDto.rutasImagenes = new List<string>();
+                // empresaDto.rutasImagenes = new List<string>();
 
                 // This illustrates how to get the file names.
                 foreach (MultipartFileData file in provider.FileData)
@@ -89,7 +97,7 @@ namespace DS.MainModule.Controllers
                             File.Move(file.LocalFileName, newFilePath);
                         }
                         // Guardar newFilePath en la propiedad de UrlImage de la entidad
-                        empresaDto.rutasImagenes.Add(newFilePath.ToString());
+                        //  empresaDto.rutasImagenes.Add(newFilePath.ToString());
                     }
                 }
                 return RespuestaHttp.crearRespuesta(_catalogos.RegistraEmpresa(empresaDto), Request);
@@ -100,22 +108,30 @@ namespace DS.MainModule.Controllers
             }
         }
 
-
-        //public HttpResponseMessage PostRegistraEmpresas(EmpresaCrearDTO empresaDto)
-        //{
-        //    return RespuestaHttp.crearRespuesta(_catalogos.RegistraEmpresa(empresaDto), Request);
-        //}
+        [Route("registra/empresa")]
+        public HttpResponseMessage PostRegistraEmpresas(EmpresaCrearDTO empresaDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraEmpresa(empresaDto), Request);
+        }
 
         [Route("modifica/empresa")]
-        public HttpResponseMessage PutModificaEmpresas(EmpresaModificarDto empresaDto)
+        public HttpResponseMessage PutModificaEmpresas(EmpresaDTO empresaDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ModificaEmpresa(empresaDto), Request);
         }
-        [Route("elimina/empresa")]
-        public HttpResponseMessage PutEliminaEmpresas(EmpresaEliminarDto empresaDto)
+
+        [Route("modifica/empresaconfiguracion")]
+        public HttpResponseMessage PutModificaEmpresaConfig(EmpresaModificaConfig empresaDto)
         {
-            return RespuestaHttp.crearRespuesta(_catalogos.EliminaEmpresa(empresaDto), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.ActualizaEmpresaConfig(empresaDto), Request);
         }
+
+        [Route("elimina/empresa/{id}")]
+        public HttpResponseMessage PutEliminaEmpresas(short id)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaEmpresa(id), Request);
+        }
+
         [AllowAnonymous]
         [Route("empresas/listaempresaslogin")]
         public HttpResponseMessage GetListaEmpresasLogin()
@@ -126,47 +142,40 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaEmpresas()
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresas());
-        }       
+        }
         [Route("empresas/listaempresa/{conAdminCent}")]
         public HttpResponseMessage GetListaEmpresascad(bool conAdminCent)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresas(conAdminCent));
         }
-        #endregion
 
-        #region Usuarios
-        [Route("usuarios/listausuarios/{idEmpresa}")]
-        public HttpResponseMessage GetListaUsuarios(short idEmpresa)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaUsuarios(idEmpresa));
-        }
-
-        [Route("registra/usuarios")]
-        public HttpResponseMessage PostRegistraUsuario(UsuarioCrearDto usuarioDto)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.AltaUsuarios(usuarioDto), Request);
-        }
-
-        [Route("modifica/usuario")]
-        public HttpResponseMessage PutModificaUsuario(UsuarioModificarDto usuarioDto)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.ModificaUsuario(usuarioDto), Request);
-        }
-
-        [Route("elimina/usuario")]
-        public HttpResponseMessage PutEliminaUsuario(UsuarioEliminarDto usuarioDto)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.EliminaUsuario(usuarioDto), Request);
-        }
 
         #endregion
 
         #region Clientes
-        //[Route("registra/cliente")]
-        //public HttpResponseMessage PostRegistraCliente(ClienteCrearDto clienteDto)
-        //{
-        //    return RespuestaHttp.crearRespuesta(_catalogos.RegistraCliente(clienteDto), Request);
-        //}
+
+        [Route("clientes/tipopersona")]
+        public HttpResponseMessage GetTiposPersona()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.TiposPersona());
+        }
+
+        [Route("clientes/regimenfiscal")]
+        public HttpResponseMessage GetRegimenFiscal()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.RegimenFiscal());
+        }
+
+        [Route("clientes/listaclientes/{idEmpresa}")]
+        public HttpResponseMessage GetListaClientes(short idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaClientes(idEmpresa));
+        }
+        [Route("registra/cliente")]
+        public HttpResponseMessage PostRegistraCliente(ClienteCrearDto clienteDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraCliente(clienteDto), Request);
+        }
 
         //[Route("modifica/cliente")]
         //public HttpResponseMessage PutModificaCliente(ClienteModificarDto clienteDto)
@@ -191,7 +200,7 @@ namespace DS.MainModule.Controllers
         //{
         //    return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCliente(idCliente));
         //}
-        #endregion       
+        #endregion
 
         #region Productos
 
@@ -337,7 +346,7 @@ namespace DS.MainModule.Controllers
         #endregion
 
         #region Proveedor
-        [Route("registra/proveedor")]        
+        [Route("registra/proveedor")]
         public HttpResponseMessage PostRegistraProveedor(ProveedorCrearDto provDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.RegistraProveedor(provDto), Request);

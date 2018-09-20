@@ -1,0 +1,174 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model  EmpresaConfiguracion
+
+@{
+    ViewBag.Title = "Catálogo / Gasera / Nueva";
+}
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+
+@using (Html.BeginForm("Actualiza", "Empresas", FormMethod.Post)) 
+{
+    <section class="content home">
+        <div class="container-fluid">
+
+            <div class="row clearfix">
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <h3>&nbsp;Catálogo / Gasera / Nueva</h3>
+                </div>
+            </div>       
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Generales</strong></h2>
+                        </div>
+
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <label for="txtNomC">
+                                                Nombre Comercial:*
+                                            </label>
+                                            <input type="text" name="NombreComercial" value="@ViewBag.Empresas[0].NombreComercial" readonly="readonly" id="NombreComercial" class="form-control" />
+                                            <input type="text" name="IdEmpresa" hidden="hidden" value="@ViewBag.Empresas[0].IdEmpresa" readonly="readonly" id="IdEmpresa" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Parámetros configurables</strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="txtfactlk">
+                                                Factor de conversión de litros a kilogramos:*
+                                            </label>
+                                            <input type="text" name="FactorLitrosAKilos" value="@ViewBag.Empresas[0].FactorLitrosAKilos" id="txtfactlk" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+
+                                            <label for="txtInv">
+                                                % Inventario sano (limite Inferior):*
+                                            </label>
+                                            <input type="text" name="InventarioSano" value="@ViewBag.Empresas[0].InventarioSano" id="txtInv" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+
+                                            <label for="txtfactgl">
+                                                Factor de conversión de galón litros:*
+                                            </label>
+                                            <input type="text" name="FactorGalonALitros" value="@ViewBag.Empresas[0].FactorGalonALitros" id="txtfactgl" class="form-control" />
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="txtInv">
+                                                % Inventario crítico (límite Superior):*
+                                            </label>
+                                            <input type="text" name="InventarioCrítico" value="@ViewBag.Empresas[0].InventarioCrítico" id="txtInvc" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="txtfactgl">
+                                                Factor de conversión de litros a kilogramos
+                                                (En compra de gas):*
+                                            </label>
+                                            <input type="text" name="FactorCompraLitroAKilos" value="@ViewBag.Empresas[0].FactorCompraLitroAKilos" id="txtfact3" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="txtInv">
+                                                $ Cantidad maxima de Remanente
+                                                para la gasera
+                                            </label>
+                                            <input type="text" name="MaxRemaGaseraMensual" value="@ViewBag.Empresas[0].MaxRemaGaseraMensual" id="txtCant" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="txtfactgl">
+                                                Factor de transporte de gas:*
+                                            </label>
+                                            <input type="text" name="FactorFleteGas" value="@ViewBag.Empresas[0].FactorFleteGas" id="txtfactT" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label for="txtInv">
+                                                Cierre de inventario(Hora)
+                                            </label>
+                                            <input type="text" name="CierreInventario" id="txtCE" value="@ViewBag.Empresas[0].CierreInventario" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-5">
+                        <div class="form-group">
+                            @*<input type="submit" value="Regresar" class="btn btn-raised btn-primary float-left" formaction="Index" />*@
+                            @*<button class="btn btn-raised btn-primary float-left" formaction="Index" onclick="catalogo.fnEjecutar('Carga', null );  return false;" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>Regresar</button>*@
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="form-group">
+                            <button class="btn btn-raised btn-primary float-right" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>  Actualizar</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.DTOs;
+﻿using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
@@ -21,8 +22,15 @@ namespace Application.MainModule.Flujos
         #region Paises
         public List<PaisDTO> ListaPaises()
         {
-            return PaisServicio.ListaPaises();
-        }      
+            return PaisServicio.ListaPaises().ToList();
+        }
+        #endregion
+
+        #region Estados Rep
+        public List<EstadosRepDTO> ListaEstados()
+        {
+            return EstadosrepServicio.ListaEstadosR().ToList();
+        }
         #endregion
 
         #region Empresas
@@ -49,8 +57,8 @@ namespace Application.MainModule.Flujos
 
             return EmpresaServicio.RegistrarEmpresa(EmpresaAdapter.FromDto(empDto));
         }
-        
-        public RespuestaDto ModificaEmpresa(EmpresaModificarDto empDto)
+
+        public RespuestaDto ModificaEmpresa(EmpresaDTO empDto)
         {
             var resp = PermisosServicio.PuedeModificarEmpresa();
             if (!resp.Exito) return resp;
@@ -58,66 +66,68 @@ namespace Application.MainModule.Flujos
             var empresas = EmpresaServicio.Obtener(empDto.IdEmpresa);
             if (empresas == null) return EmpresaServicio.NoExiste();
 
-            var emp = EmpresaAdapter.FromDto(empDto);
+            var emp = EmpresaAdapter.FromDTOEditar(empDto, empresas);
             emp.FechaRegistro = emp.FechaRegistro;
             return EmpresaServicio.ModificarEmpresa(emp);
         }
 
-        public RespuestaDto EliminaEmpresa(EmpresaEliminarDto empDto)
+        public RespuestaDto EliminaEmpresa(short id)
         {
             var resp = PermisosServicio.PuedeEliminarEmpresa();
             if (!resp.Exito) return resp;
 
-            var empresas = EmpresaServicio.Obtener(empDto.IdEmpresa);
+            var empresas = EmpresaServicio.Obtener(id);
             if (empresas == null) return EmpresaServicio.NoExiste();
 
             empresas = EmpresaAdapter.FromEntity(empresas);
             empresas.Activo = false;
             return EmpresaServicio.ModificarEmpresa(empresas);
         }
-        #endregion
 
-        #region Usuarios
-        public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
+        public RespuestaDto ActualizaEmpresaConfig(EmpresaModificaConfig empDto)
         {
-            if (TokenServicio.ObtenerEsAdministracionCentral())
-                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
-            else
-                return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+            var resp = PermisosServicio.PuedeModificarEmpresa();
+            if (!resp.Exito) return resp;
+
+            var empresaaMod = EmpresaServicio.Obtener(empDto.IdEmpresa);
+            if (empresaaMod == null) return EmpresaServicio.NoExiste();
+
+            var emp = EmpresaAdapter.FromDtoConfig(empDto, empresaaMod);
+            return EmpresaServicio.ModificarEmpresa(emp);
         }
 
-        public RespuestaDto AltaUsuarios(UsuarioCrearDto userDto)
+        #endregion
+
+        #region Clientes
+        public List<TipoPersonaDTO> TiposPersona()
+        {
+            return TipoPersonaServicio.ListaTipoPersona().ToList();
+        }
+        public List<RegimenDTO> RegimenFiscal()
+        {
+            return RegimenServicio.ListaRegimen().ToList();
+        }
+
+        public List<ClientesDto> ListaClientes(short idEmpresa)
+        {
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return ClienteServicio.ListaClientes().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+            else
+                return ClienteServicio.ListaClientes().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+        }
+
+
+        public RespuestaDto RegistraCliente(ClienteCrearDto cteDto)
         {
             var resp = PermisosServicio.PuedeRegistrarUsuario();
             if (!resp.Exito) return resp;
 
-            return UsuarioServicio.AltaUsuario(UsuarioAdapter.FromDto(userDto));
-        }
+            var cliente = ClientesAdapter.FromDto(cteDto);
 
-        public RespuestaDto ModificaUsuario(UsuarioModificarDto userDto)
-        {
-            var resp = PermisosServicio.PuedeModificarUsuario();
-            if (!resp.Exito) return resp;
+            if (!TokenServicio.EsSuperUsuario() && !TokenServicio.ObtenerEsAdministracionCentral())
+                cliente.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
 
-            var user = UsuarioServicio.Obtener(userDto.Idusuario);
-            if (user == null) return UsuarioServicio.NoExiste();
-
-            var emp = UsuarioAdapter.FromDto(userDto);
-            emp.FechaRegistro = emp.FechaRegistro;
-            return UsuarioServicio.Actualizar(emp);
-        }
-
-        public RespuestaDto EliminaUsuario(UsuarioEliminarDto userDto)
-        {
-            var resp = PermisosServicio.PuedeEliminarUsuario();
-            if (!resp.Exito) return resp;
-
-            var user = UsuarioServicio.Obtener(userDto.Idusuario);
-            if (user == null) return UsuarioServicio.NoExiste();
-
-            user = UsuarioAdapter.FromEntity(user);
-            user.Activo = false;
-            return UsuarioServicio.Actualizar(user);
+            return ClienteServicio.AltaCliente(cliente);
         }
         #endregion
 
@@ -132,7 +142,7 @@ namespace Application.MainModule.Flujos
             resp = ValidarCatalogoServicio.CategoriaProducto(cpDto);
             if (!resp.Exito) return resp;         
 
-            return ProductoServicios.RegistrarCategoriaProducto(ProductoAdapter.FromDto(cpDto));
+            return ProductoServicios.RegistrarCategoriaProducto(ProductoAdapter.CategoriaProducto(cpDto));
         }
 
         public RespuestaDto ModificaCategoriaProducto(CategoriaProductoModificarDto cpDto)
@@ -201,7 +211,7 @@ namespace Application.MainModule.Flujos
             var linProd = ProductoServicios.ObtenerLineaProducto(lpDto.IdProductoLinea);
             if (linProd == null) return ProductoServicios.NoExiste("La línea del producto");
 
-            var Linea = ProductoAdapter.FromDto(lpDto,linProd);     
+            var Linea = ProductoAdapter.FromDto(lpDto, linProd);
             return ProductoServicios.ModificarLineaProducto(Linea);
         }
 
@@ -256,7 +266,7 @@ namespace Application.MainModule.Flujos
             var uM = ProductoServicios.ObtenerUnidadMedida(uMDto.IdUnidadMedida);
             if (uM == null) return ProductoServicios.NoExiste("La unidad de medida");
 
-            var uMedida = ProductoAdapter.FromDto(uMDto,uM);
+            var uMedida = ProductoAdapter.FromDto(uMDto, uM);
             return ProductoServicios.ModificarUnidadMedida(uMedida);
         }
 
@@ -311,7 +321,7 @@ namespace Application.MainModule.Flujos
             var prod = ProductoServicios.ObtenerProducto(pDto.IdProducto);
             if (prod == null) return ProductoServicios.NoExiste("El producto");
 
-            var producto  = ProductoAdapter.FromDto(pDto, prod);
+            var producto = ProductoAdapter.FromDto(pDto, prod);
             return ProductoServicios.ModificarProducto(producto);
         }
 

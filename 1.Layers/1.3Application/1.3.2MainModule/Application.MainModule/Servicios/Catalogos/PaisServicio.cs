@@ -1,4 +1,4 @@
-﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+﻿using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
 using System;
@@ -13,7 +13,8 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static List<PaisDTO> ListaPaises()
         {
-            return PaisAdapter.ToDTO(new PaisDataAccess().ListaPaises());
+            List<PaisDTO> lpaises = AdaptadoresDTO.Seguridad.PaisAdapter.ToDTO(new PaisDataAccess().ListaPaises());
+            return lpaises;
         }
     }
 }

@@ -1,0 +1,157 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+ 
+@model  UsuariosModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnBuscar").click(function () {
+            var form = $(this).parent("form");
+            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Usuarios", Action = "Buscar" }) %>');
+            form.attr('method', 'post');
+        });
+    });
+
+</script>
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
+@using (Html.BeginForm("Nuevo", "Usuarios", FormMethod.Post)) 
+{
+    <section class="content home">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-7 col-md-7 col-sm-12">
+                        <h3>&nbsp;Catálogo /  Usuarios </h3>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-sm-3">
+                                <b>Gasera</b>
+                                <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                    @foreach (var lst in ViewBag.listaEmpresas)
+                                    {
+                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                    }
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-primary float-right" />
+                            </div>
+                        </div>
+
+                        <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <div class="row clearfix">
+                                    <div class="col-sm-3">
+                                        <b>Nombre</b>
+                                        <select id="ddlUser" name="IdUsuario" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                            @foreach (var lst in ViewBag.Usuarios)
+                                            {
+                                                <option value="@lst.IdUsuario">@lst.Nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <b>Correo Elect. (Acceso)</b>
+                                        <select id="ddlUser" name="Email1" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                            @foreach (var lst in ViewBag.Usuarios)
+                                            {
+                                                <option value="@lst.Email1">@lst.Email1</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        @*<input type="submit" value="Buscar" formaction="Buscar" formmethod="post" class="btn btn-raised btn-primary float-left" />*@
+                                        @*<button class="btn btn-raised btn-primary float-left" formaction="Buscar" id="btnBuscar">Buscar</button>*@
+                                        <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary float-left" />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive">                                  
+                                    <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
+                                        <thead>
+                                            <tr>
+                                                <th>Gasera</th>
+                                                <th>Nombre</th>
+                                                <th>Correo Elect. (Acceso)</th>
+                                                <th>Celular</th>
+                                                <th>Telefono</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Listausuarios)
+                                            {
+                                                <tr>
+                                                    <th>@item.Empresa</th>
+                                                    <td>@item.Nombre @item.Apellido1 @item.Apellido2 </td>
+                                                    <td>@item.Email1</td>
+                                                    <td>@item.Celular1</td>
+                                                    <td>@item.Telefono1</td>
+                                                    <td>
+                                                        <a ID="lblCrear" href="@Url.Action("EditarUsuario", "Usuarios", new { id = item.IdEmpresa })">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                        <a ID="lbEdit" href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })">
+                                                            @*<i class="material-icons">edit</i>*@
+                                                            <i class="zmdi zmdi-settings"></i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                        <a ID="lbEdit" href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                        <a ID="lbBorrar" href="@Url.Action("BorrarUsuario", "Usuarios", new {  id=item.IdUsuario } )">
+                                                                <i class="material-icons">delete</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>
+

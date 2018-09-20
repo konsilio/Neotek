@@ -34,7 +34,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<Usuario> BuscarTodos()
         {
-            return uow.Repository<Usuario>().GetAll().ToList();
+            return uow.Repository<Usuario>().Get(x => x.Activo).ToList();
         }
 
         public Usuario Buscar(short idEmpresa, string NombreUsuario, string password)
@@ -69,7 +69,53 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public RespuestaDto Insertar(UsuarioRol usuarioRol)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<UsuarioRol>().Insert(usuarioRol);
+                    uow.SaveChanges();
+                    _respuesta.Id = usuarioRol.IdUsuario;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del Usuario");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
 
+        public RespuestaDto Eliminar(UsuarioRol usuarioRol)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<UsuarioRol>().Delete(usuarioRol);
+                    uow.SaveChanges();                                    
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "Desasignar el Rol al Usuario");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public RespuestaDto Insertar(Usuario user)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -110,6 +156,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Usuario>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
                                                          && x.Activo);
+            //usuario.Roles = usuario.UsuarioRoles.Select(x => x.Roles).ToList(); /*uow.Repository<Rol>().Get(x=> x.IdRol.).;*/
+
+            //return usuario;
+        }
+
+        public Sagas.MainModule.Usuario BuscarUser(int idUsuario)
+        {
+            return uow.Repository<Sagas.MainModule.Usuario>().GetSingle(x => x.IdUsuario.Equals(idUsuario));
         }
     }
 }

@@ -1,0 +1,83 @@
+﻿@model MVC.Presentacion.Models.Catalogos.RolMovilCompra
+
+@Html.HiddenFor(m => m.IdRol)
+@Html.HiddenFor(m => m.IdEmpresa)
+@Html.HiddenFor(m => m.NombreRol)
+@Html.HiddenFor(m => m.Rol1)
+@Html.HiddenFor(m => m.Activo)
+@Html.HiddenFor(m => m.FechaRegistro)
+
+@*MovilCompra*@
+    @Html.HiddenFor(m => m.CompraVerOCompra)
+    @Html.HiddenFor(m => m.CompraGenerarOCompra)
+    @Html.HiddenFor(m => m.CompraAutorizarOCompra)
+    @Html.HiddenFor(m => m.CompraEntraProductoOCompra)
+    @Html.HiddenFor(m => m.CompraAtiendeServicioOCompra)
+    @Html.HiddenFor(m => m.RequisicionVerRequisiciones)
+    @Html.HiddenFor(m => m.RequisicionGenerarNueva)
+    @Html.HiddenFor(m => m.RequisicionRevisarExistencia)
+    @Html.HiddenFor(m => m.RequisicionAutorizar)
+    @Html.HiddenFor(m => m.CatInsertarUsuario)
+    @Html.HiddenFor(m => m.CatModificarUsuario)
+    @Html.HiddenFor(m => m.CatEliminarUsuario)
+    @Html.HiddenFor(m => m.CatConsultarUsuario)
+    @Html.HiddenFor(m => m.CatInsertarProveedor)
+    @Html.HiddenFor(m => m.CatEliminarProveedor)
+    @Html.HiddenFor(m => m.CatConsultarProveedor)
+    @Html.HiddenFor(m => m.CatModificarProveedor)
+    @Html.HiddenFor(m => m.CatInsertarProducto)
+    @Html.HiddenFor(m => m.CatModificarProducto)
+    @Html.HiddenFor(m => m.CatEliminarProducto)
+    @Html.HiddenFor(m => m.CatConsultarProducto)
+    @Html.HiddenFor(m => m.CatInsertarCentroCosto)
+    @Html.HiddenFor(m => m.CatModificarCentroCosto)
+    @Html.HiddenFor(m => m.CatEliminarCentroCosto)
+    @Html.HiddenFor(m => m.CatConsultarCentroCosto)
+    @Html.HiddenFor(m => m.CatInsertarCuentaContable)
+    @Html.HiddenFor(m => m.CatModificarCuentaContable)
+    @Html.HiddenFor(m => m.CatEliminarCuentaContable)
+    @Html.HiddenFor(m => m.CatConsultarCuentaContable)
+    @Html.HiddenFor(m => m.CatInsertarCliente)
+    @Html.HiddenFor(m => m.CatModificarCliente)
+    @Html.HiddenFor(m => m.CatEliminarCliente)
+    @Html.HiddenFor(m => m.CatConsultarCliente)
+    @Html.HiddenFor(m => m.CatAsignarChoferPuntoVenta)
+    @Html.HiddenFor(m => m.CatEliminarPuntoVenta)
+    @Html.HiddenFor(m => m.CatConsultarPuntoVenta)
+    @Html.HiddenFor(m => m.CatAsignarEquipoTransporte)
+    @Html.HiddenFor(m => m.CatModificarEquipoTransporte)
+    @Html.HiddenFor(m => m.CatEliminarEquipoTransporte)
+    @Html.HiddenFor(m => m.CatConsultarEquipoTransporte)
+    <tr>
+        <td>@Model.NombreRol </td>
+        <td>@Html.CheckBoxFor(m => m.AppCompraVerOCompra)</td>
+        <td>@Html.CheckBoxFor(m => m.AppCompraEntraGas)</td>
+        <td>@Html.CheckBoxFor(m => m.AppCompraGasIniciarDescarga)</td>
+        <td>@Html.CheckBoxFor(m => m.AppCompraGasFinalizarDescarga)</td>
+        <td>@Html.CheckBoxFor(m => m.AppAutoconsumoInventarioGral)</td>
+        <td>@Html.CheckBoxFor(m => m.AppAutoconsumoEstacionCarb)</td>
+        <td>@Html.CheckBoxFor(m => m.AppAutoconsumoPipa)</td>
+        <td>@Html.CheckBoxFor(m => m.AppCalibracionEstacionCarb)</td>
+        <td>@Html.CheckBoxFor(m => m.AppCalibracionPipa)</td>
+        <td>@Html.CheckBoxFor(m => m.AppCalibracionCamionetaCilindro)</td>
+        <td>@Html.CheckBoxFor(m => m.AppRecargaEstacionCarb)</td>
+        <td>@Html.CheckBoxFor(m => m.AppRecargaPipa)</td>
+        <td>@Html.CheckBoxFor(m => m.AppRecargaCamionetaCilindro)</td>
+        <td>@Html.CheckBoxFor(m => m.AppTomaLecturaAlmacenPral)</td>
+        <td>@Html.CheckBoxFor(m => m.AppTomaLecturaEstacionCarb)
+        <td>@Html.CheckBoxFor(m => m.AppTomaLecturaPipa)</td>
+        <td>@Html.CheckBoxFor(m => m.AppTomaLecturaCamionetaCilindro)</td>
+        <td>@Html.CheckBoxFor(m => m.AppTomaLecturaReporteDelDia)</td>
+        <td>@Html.CheckBoxFor(m => m.AppTraspasoEstacionCarb)</td>
+        <td>@Html.CheckBoxFor(m => m.AppTraspasoPipa)</td>
+        <td>
+            <a ID="lbEdit" href="@Url.Action("ActualizaNombreRol", "Roles", new { id = Model.IdRol })">
+                <i class="material-icons">edit</i>
+                <span class="icon-name"></span>
+            </a>
+            <a ID="lbBorrar" href="@Url.Action("BorrarRol", "Roles", new { id = Model.IdRol })">
+                <i class="material-icons">delete</i>
+                <span class="icon-name"></span>
+            </a>
+        </td>
+    </tr>

@@ -19,7 +19,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<Pais> ListaPaises()
         {
-            return uow.Repository<Pais>().Get().ToList();
+            return uow.Repository<Pais>().GetAll().ToList();
         }
     }
 }
