@@ -18,8 +18,12 @@ namespace MVC.Presentacion.Controllers
             ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             ViewBag.Usuarios = CatalogoServicio.ObtenerTodosUsuarios(_tkn);
+            UsuariosModel rolCat = new UsuariosModel()
+            {
+                Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(_tkn)
+            };
 
-            return View();
+            return View(rolCat);
         }
 
         public ActionResult Nuevo()
@@ -138,8 +142,17 @@ namespace MVC.Presentacion.Controllers
         public ActionResult Buscar(UsuariosModel filterObj)
         {
             string _tkn = Session["StringToken"].ToString();
-            CatalogoServicio.FiltrarBusquedaUsuario(filterObj, _tkn);
-            return RedirectToAction("Index");
+       
+            UsuariosModel rolCat = new UsuariosModel()
+            {
+                Listausuarios = CatalogoServicio.FiltrarBusquedaUsuario(filterObj, _tkn)
+
+        };
+            
+            ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
+            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            ViewBag.Usuarios = CatalogoServicio.ObtenerTodosUsuarios(_tkn);
+            return View("Index", rolCat);
         }
     }
 }

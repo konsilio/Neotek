@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Catalogo;
 using Sagas.MainModule.Entidades;
 
-namespace Application.MainModule.AdaptadoresDTO.Catalogo
+namespace Application.MainModule.AdaptadoresDTO.Seguridad
 {
     public static class EmpresaAdapter
     {

@@ -1,4 +1,4 @@
-﻿@model MVC.Presentacion.Models.Catalogos.RolDto
+﻿@model MVC.Presentacion.Models.Catalogos.RolCat
 
 @*--var TypeV = @ViewBag.Message;*@
 
@@ -10,8 +10,8 @@
 @Html.HiddenFor(m => m.FechaRegistro)
 
 @*Catalogos*@
-@if (ViewBag.Message == "Compra")
-{
+@*@if (ViewBag.Message == "Compra")
+{*@
     <tr>
         <td>@Model.NombreRol </td>
         <td>@Html.CheckBoxFor(m => m.CatInsertarUsuario)</td>
@@ -45,11 +45,7 @@
         <td>@Html.CheckBoxFor(m => m.CatModificarEquipoTransporte)</td>
         <td>@Html.CheckBoxFor(m => m.CatEliminarEquipoTransporte)</td>
         <td>@Html.CheckBoxFor(m => m.CatConsultarEquipoTransporte) </td>
-        @if (ViewBag.Message == "Compra")
-        {
-            <td>@Html.CheckBoxFor(m => m.CompraVerOCompra, new { @class = "control-hide" }) </td>
-
-        }
+     
         <td>
             <a ID="lbEdit" href="@Url.Action("ActualizaNombreRol", "Roles", new { id = Model.IdRol })">
                 <i class="material-icons">edit</i>
@@ -61,11 +57,10 @@
             </a>
         </td>
     </tr>
-}
-@if (ViewBag.Message == "Compra")
-{
+@*}*@
 
-    @*Compra*@
+
+    @*@*Compra
     @Html.HiddenFor(m => m.RequisicionVerRequisiciones)
     @Html.HiddenFor(m => m.RequisicionGenerarNueva)
     @Html.HiddenFor(m => m.RequisicionRevisarExistencia)
@@ -139,5 +134,5 @@
             </a>
         </td>
     </tr>
-}
+}*@
 

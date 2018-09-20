@@ -1,4 +1,4 @@
-﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
+﻿using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
 using System;
@@ -12,7 +12,7 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static List<EstadosRepDTO> ListaEstadosR()
         {
-            List<EstadosRepDTO> ledos = AdaptadoresDTO.Catalogo.EstadoRepAdapter.ToDTO(new EstadoRDataAccess().ListaEstadosR());
+            List<EstadosRepDTO> ledos = AdaptadoresDTO.Seguridad.EstadoRepAdapter.ToDTO(new EstadoRDataAccess().ListaEstadosR());
             return ledos;
         }
     }

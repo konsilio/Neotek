@@ -1,4 +1,4 @@
-﻿using Application.MainModule.DTOs.Catalogo;
+﻿using Application.MainModule.DTOs.Seguridad;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Exceptions.MainModule.Validaciones;
@@ -27,9 +27,18 @@ namespace Application.MainModule.Servicios.Seguridad
             return ObtenerRoles(empresa.IdEmpresa);
         }
 
+        public static Rol Obtener(UsuarioRol usrRol)
+        {
+            if (usrRol != null)
+                if (usrRol.Role != null)
+                    return usrRol.Role;
+
+            return Obtener(usrRol.IdRol);
+        }
+
         public static List<RolDto> ListaAllRoles()
         {
-            List<RolDto> lRoles = AdaptadoresDTO.Catalogo.RolAdapter.ToDTORoles(new RolDataAccess().BuscarTodosRoles());
+            List<RolDto> lRoles = AdaptadoresDTO.Seguridad.RolAdapter.ToDTORoles(new RolDataAccess().BuscarTodosRoles());
             return lRoles;
         }
 
@@ -42,7 +51,24 @@ namespace Application.MainModule.Servicios.Seguridad
         {
             return new RolDataAccess().BuscarIdRol(idRol);
         }
-        
+
+        public static RespuestaDto ExisteRol(Usuario usuario, Rol rol)
+        {
+            if (usuario.Roles.Contains(rol))
+            {
+                string mensaje = string.Format(Error.ContieneRol, "El usuario", rol.NombreRol);
+
+                return new RespuestaDto()
+                {
+                    Exito = true,
+                    Mensaje = mensaje,
+                    MensajesError = new List<string>() { mensaje },
+                };
+            }
+
+            return new RespuestaDto();
+        }
+
         public static RespuestaDto Actualizar(Rol rol)
         {
             return new RolDataAccess().Actualizar(rol);

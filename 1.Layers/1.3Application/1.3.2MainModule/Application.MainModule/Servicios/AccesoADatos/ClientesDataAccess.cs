@@ -1,4 +1,7 @@
-﻿using Application.MainModule.UnitOfWork;
+﻿using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.UnitOfWork;
+using Exceptions.MainModule;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -20,6 +23,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<Cliente> Buscar()
         {
             return uow.Repository<Cliente>().Get(x => x.Activo).ToList();                                                          
+        }
+
+        public RespuestaDto Insertar(Cliente cte)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Cliente>().Insert(cte);
+                    uow.SaveChanges();
+                    _respuesta.Id = cte.IdCliente;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del Cliente");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
         }
     }
 }

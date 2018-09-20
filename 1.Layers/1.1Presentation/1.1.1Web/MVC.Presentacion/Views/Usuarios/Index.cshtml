@@ -1,5 +1,6 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
-@model  UsuarioDTO
+ 
+@model  UsuariosModel
 
 @{
     ViewBag.Title = "Index";
@@ -40,7 +41,7 @@
                         <div class="row clearfix">
                             <div class="col-sm-3">
                                 <b>Gasera</b>
-                                <select id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
                                     @foreach (var lst in ViewBag.listaEmpresas)
                                     {
                                         <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
@@ -60,7 +61,7 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-3">
                                         <b>Nombre</b>
-                                        <select id="ddlUser" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                        <select id="ddlUser" name="IdUsuario" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
                                             @foreach (var lst in ViewBag.Usuarios)
                                             {
                                                 <option value="@lst.IdUsuario">@lst.Nombre</option>
@@ -70,10 +71,10 @@
 
                                     <div class="col-sm-3">
                                         <b>Correo Elect. (Acceso)</b>
-                                        <select id="ddlUser" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                        <select id="ddlUser" name="Email1" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
                                             @foreach (var lst in ViewBag.Usuarios)
                                             {
-                                                <option value="@lst.IdUsuario">@lst.Email1</option>
+                                                <option value="@lst.Email1">@lst.Email1</option>
                                             }
                                         </select>
                                     </div>
@@ -103,7 +104,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var item in @ViewBag.Usuarios)
+                                            @foreach (var item in Model.Listausuarios)
                                             {
                                                 <tr>
                                                     <th>@item.Empresa</th>
@@ -117,7 +118,8 @@
                                                             <span class="icon-name"></span>
                                                         </a>
                                                         <a ID="lbEdit" href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })">
-                                                            <i class="material-icons">edit</i>
+                                                            @*<i class="material-icons">edit</i>*@
+                                                            <i class="zmdi zmdi-settings"></i>
                                                             <span class="icon-name"></span>
                                                         </a>
                                                         <a ID="lbEdit" href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })">

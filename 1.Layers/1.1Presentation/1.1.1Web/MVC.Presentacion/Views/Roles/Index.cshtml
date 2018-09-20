@@ -1,5 +1,5 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
-@model  RolDto
+@model  PartialViewModel
 
     @{
     ViewBag.Title = "Index";
@@ -38,12 +38,46 @@
     <script type="text/javascript">
     $(document).ready(function () {
         $("#btnGuardaP").click(function () {
+          
             var form = $(this).parent("form");
             form.attr('action', '<%= Url.RouteUrl(new { Controller = "Roles", Action = "GuardarPermisos" }) %>');
             form.attr('method', 'post');
-        });
-    });
 
+            //var arrItem = [];
+            //var commaSeparated = "";
+            //$("#ItemList td input[type=checkbox]").each(function (index, val) {
+            //    alert(index);
+            //    alert(val);
+            //     debugger
+            //    var checkdId = $(val).atrr("Id");
+            //    var arr = checkdId.split('_');
+            //    var currentCheckboxId = arr[1];
+            //    var IsChecked = $("#" + checkId).is(":checked", true);
+
+            //    if (Ischecked) {
+            //        arrItem.push(currentCheckboxId);
+            //    }
+            //    alert(arrItem.values);
+            //})
+
+            //if (arrItem.lenght != 0)
+
+            //{
+            //    $.ajax({
+            //        url: "/Roles/SaveList",
+            //        type:"POST",
+            //        data: { ItemList: commaSeparated },
+            //        success: function (response)
+            //        {
+
+            //        }
+            //    })
+
+            //}
+        });
+         
+    });
+   
     </script>
 
     <!-- Page Loader -->
@@ -108,7 +142,6 @@
                     </div>
                 </div>
 
-
                 <div class="body">
                     <!-- Nav tabs all menu-->
                     <ul class="nav nav-tabs" role="tablist">
@@ -121,7 +154,7 @@
                     </ul>
                     <div class="row clearfix">
                         <div class="col-md-12">
-                            <div class="form-group">
+                            <div class="form-group">                            
                                 <input type="submit" id="btnGuardaP" name="Guardar" value="Guardar" formaction=@Url.Action("GuardarPermisos") formmethod="post" class="btn btn-raised btn-primary float-right" />
                             </div>
                         </div>
@@ -171,12 +204,14 @@
                     <!--Catalogo tab content-->
                     <div class="tab-content">
                         <div id="SistemaCatalogo" class="tab-pane">
+   
+
                             @{
                             ViewBag.Message = "Catalogo";
                             }
                             <div class="table-responsive">
-                               
-                                <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
+
+                                <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" id="ItemList">
                                     <thead>
                                         <tr>
                                             <th>Rol</th>
@@ -216,59 +251,11 @@
                                     </thead>
                                     <tbody>
 
-                                        @*@Html.EditorFor(m => m.ListaRoles)*@
-
-                                         @foreach (var item in Model.ListaRoles)
-                                        {
-                                        <tr>
-                                            <td>@item.NombreRol </td>
-                                            <td><input id="@item.IdRol.ToString()chbxInsUsuario" class="checkbox" name="CatInsertarUsuario" type="checkbox" checked="@item.CatInsertarUsuario" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxModUsuario" name="CatModificarUsuario" type="checkbox" checked="@item.CatModificarUsuario" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxEliminaUs" name="CatEliminarUsuario" type="checkbox" checked="@item.CatEliminarUsuario" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxConUs" name="CatConsultarUsuario" type="checkbox" checked="@item.CatConsultarUsuario" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxInProv" name="CatInsertarProveedor" type="checkbox" checked="@item.CatInsertarProveedor" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxElimProv" name="CatEliminarProveedor" type="checkbox" checked="@item.CatEliminarProveedor" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxConProv" name="CatConsultarProveedor" type="checkbox" checked="@item.CatConsultarProveedor" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxInProd" name="CatInsertarProducto" type="checkbox" checked="@item.CatInsertarProducto" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxModProd" name="CatModificarProducto" type="checkbox" checked="@item.CatModificarProducto" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxElimProd" name="CatEliminarProducto" type="checkbox" checked="@item.CatEliminarProducto" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxConProd" name="CatConsultarProducto" type="checkbox" checked="@item.CatConsultarProducto" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxCInsertaCC" name="CatInsertarCentroCosto" type="checkbox" checked="@item.CatInsertarCentroCosto" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxModCC" name="CatModificarCentroCosto" type="checkbox" checked="@item.CatModificarCentroCosto" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxEliCC" name="CatEliminarCentroCosto" type="checkbox" checked="@item.CatEliminarCentroCosto" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxConCC" name="CatConsultarCentroCosto" type="checkbox" checked="@item.CatConsultarCentroCosto" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxInCtaC" name="CatInsertarCuentaContable" type="checkbox" checked="@item.CatInsertarCuentaContable" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxModCtaC" name="CatModificarCuentaContable" type="checkbox" checked="@item.CatModificarCuentaContable" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxElCtaC" name="CatEliminarCuentaContable" type="checkbox" checked="@item.CatEliminarCuentaContable" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxConCtaC" name="CatConsultarCuentaContable" type="checkbox" checked="@item.CatConsultarCuentaContable" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxInCli" name="CatInsertarCliente" type="checkbox" checked="@item.CatInsertarCliente" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxModCli" name="CatModificarCliente" type="checkbox" checked="@item.CatModificarCliente" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxEliCl" name="CatEliminarCliente" type="checkbox" checked="@item.CatEliminarCliente" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxConsCl" name="CatConsultarCliente" type="checkbox" checked="@item.CatConsultarCliente" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxAsigChoferPV" name="CatAsignarChoferPuntoVenta" type="checkbox" checked="@item.CatAsignarChoferPuntoVenta" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxEliPV" name="CatEliminarPuntoVenta" type="checkbox" checked="@item.CatEliminarPuntoVenta" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxConsPV" name="CatConsultarPuntoVenta" type="checkbox" checked="@item.CatConsultarPuntoVenta" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxAsigEqT" name="CatAsignarEquipoTransporte" type="checkbox" checked="@item.CatAsignarEquipoTransporte" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxModEqT" name="CatModificarEquipoTransporte" type="checkbox" checked="@item.CatModificarEquipoTransporte" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxEliEqT" name="CatEliminarEquipoTransporte" type="checkbox" checked="@item.CatEliminarEquipoTransporte" /></td>
-                                            <td><input id="@item.IdRol.ToString()chbxConEqT" name="CatConsultarEquipoTransporte" type="checkbox" checked="@item.CatConsultarEquipoTransporte" /></td>
-
-                                            <td>
-                                                <a ID="lbEdit" href="@Url.Action(" ActualizaNombreRol", "Roles" , new { id=item.IdRol })">
-                                                    <i class="material-icons">edit</i>
-                                                    <span class="icon-name"></span>
-                                                </a>
-                                                <a ID="lbBorrar" href="@Url.Action(" BorrarRol", "Roles" , new { id=item.IdRol })">
-                                                    <i class="material-icons">delete</i>
-                                                    <span class="icon-name"></span>
-                                                </a>
-
-                                            </td>
-                                        </tr>
-                                        }
+                                        @Html.EditorFor(m => m.ListaRolesCat)
+                                        
                                     </tbody>
                                 </table>
-                            </div>
+</div>
                         </div>
                         <div id="MovilCatalogo" class="tab-pane">
                             <i>MovilCatalogo interests go here</i>
@@ -295,29 +282,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @*@Html.EditorFor(m => m.ListaRoles)*@
-                                      
-                                        @foreach (var item in Model.ListaRoles)
-                                        {
-                                        <tr>
-                                            <td>@item.NombreRol </td>
-                                            <td><input id="chbxComVerO" name="CompraVerOCompra" type="checkbox" checked="@item.CompraVerOCompra" /></td>
-                                            <td><input id="chbxComGeneraOC" name="CompraGenerarOCompra" type="checkbox" checked="@item.CompraGenerarOCompra" /></td>
-                                            <td><input id="chbxComAut" name="CompraAutorizarOCompra" type="checkbox" checked="@item.CompraAutorizarOCompra" /></td>
-                                            <td><input id="chbxComEnt" name="CompraEntraProductoOCompra" type="checkbox" checked="@item.CompraEntraProductoOCompra" /></td>
-                                            <td><input id="chbxComAtSvo" name="CompraAtiendeServicioOCompra" type="checkbox" checked="@item.CompraAtiendeServicioOCompra" /></td>
-                                            <td>
-                                                <a ID="lbEdit" href="@Url.Action(" ActualizaNombreRol", "Roles" , new { id=item.IdRol })">
-                                                    <i class="material-icons">edit</i>
-                                                    <span class="icon-name"></span>
-                                                </a>
-                                                <a ID="lbBorrar" href="@Url.Action(" BorrarRol", "Roles" , new { id=item.IdRol })">
-                                                    <i class="material-icons">delete</i>
-                                                    <span class="icon-name"></span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        }
+                                        @Html.EditorFor(m => m.ListaRolesCom)                                      
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -355,8 +321,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @Html.EditorFor(m => m.ListaRoles)
-
+                                        @Html.EditorFor(m => m.ListaMovilCompra)
                                     </tbody>
                                 </table>
                             </div>
@@ -403,27 +368,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @*@Html.EditorFor(m => m.ListaRoles)*@
-                                        @foreach (var item in Model.ListaRoles)
-                                        {
-                                        <tr>
-                                            <td>@item.NombreRol </td>
-                                            <td><input id="chbxReqVer" name="RequisicionVerRequisiciones" type="checkbox" checked="@item.RequisicionVerRequisiciones" /></td>
-                                            <td><input id="chbxReqGenera" name="RequisicionGenerarNueva" type="checkbox" checked="@item.RequisicionGenerarNueva" /></td>
-                                            <td><input id="chbxReqRev" name="RequisicionRevisarExistencia" type="checkbox" checked="@item.RequisicionRevisarExistencia" /></td>
-                                            <td><input id="chbxReqAut" name="RequisicionAutorizar" type="checkbox" checked="@item.RequisicionAutorizar" /></td>
-                                            <td>
-                                                <a ID="lbEdit" href="@Url.Action(" ActualizaNombreRol", "Roles" , new { id=item.IdRol })">
-                                                    <i class="material-icons">edit</i>
-                                                    <span class="icon-name"></span>
-                                                </a>
-                                                <a ID="lbBorrar" href="@Url.Action(" BorrarRol", "Roles" , new { id=item.IdRol })">
-                                                    <i class="material-icons">delete</i>
-                                                    <span class="icon-name"></span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        }
+                                        @Html.EditorFor(m => m.ListaRequsicion)                                      
                                     </tbody>
                                 </table>
                             </div>

@@ -14,16 +14,22 @@
 
         $('select').on('change', function () {
 
-            if ($('#ddlPais').find('option:selected').text() != 'México') {
-                $('#ddlEdo').parent().hide();
-                $('#txtEdoP').show();
+            if ($('#ddlTipopersona').find('option:selected').text() == 'Moral') {
+                $('#div_hideRP').show();
+                $('#div_hidePM').hide();
             }
 
-            if ($('#ddlPais').find('option:selected').text() == 'México' || $('#ddlPais').find('option:selected').text() == 'Seleccione') {
-                $('#ddlEdo').parent().show();
-                $('#txtEdoP').hide();
+            if ($('#ddlTipopersona').find('option:selected').text() == 'Física') {
+                $('#div_hideRP').hide();
+                $('#hide_razonS').hide();
             }
 
+            if ($('#ddlTipopersona').find('option:selected').text() == 'Seleccione') {
+                $('#div_hidePM').show();
+                $('#div_hideRP').show();
+                $('#hide_razonS').show();
+            }
+          
         });
 
     });
@@ -46,7 +52,7 @@
                             <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
                                 @foreach (var lst in ViewBag.Empresas)
                                 {
-                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                 }
                             </select>
                         </div>
@@ -69,6 +75,7 @@
                                                 Tipo persona:*
                                             </label>
                                             <select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
+                                                <option value="0">Seleccione</option>
                                                 @foreach (var lst in ViewBag.TipoPersona)
                                                 {
                                                 <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
@@ -94,7 +101,7 @@
                             </div>
                             <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="form-group">
+                                    <div class="form-group" id="hide_razonS">
                                         <div class="col-lg-8 col-md-8 col-sm-8">
                                             <label for="txtRS">
                                                 Razón social:*
@@ -112,11 +119,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">
+                            <div class="row clearfix" id="div_hideRP">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="card">
                                         <div class="header">
-                                            <h2><strong>Representante Legal</strong></h2>
+                                            <h2><strong>Representante Legal </strong></h2>
                                         </div>
                                         <div class="body">
                                             <div class="row clearfix">
@@ -175,6 +182,35 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="row clearfix" id="div_hidePM">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-4 col-md-4 col-sm-6">
+                                            <label for="txtRS">
+                                                Nombres:*
+                                            </label>
+                                            <input type="text" name="Nombre" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Nombre)" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-4 col-md-4 col-sm-6">
+                                            <label for="txtRfc">
+                                                Apellido 1:*
+                                            </label>
+                                            <input type="text" name="Apellido1" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Apellido1)" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-4 col-md-4 col-sm-6">
+                                            <label for="txtRfc">
+                                                Apellido 2:
+                                            </label>
+                                            <input type="text" name="Apellido2" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Apellido2)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -191,17 +227,28 @@
                             <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group">
-                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                        <div class="col-lg-1 col-md-1 col-sm-2">
                                             <label for="txtNomCom">
-                                                Límite del crédito:
-                                            </label>
+                                                Límite de crédito:
+                                            </label>                                          
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">                                           
+                                            Monto $ <input name="limiteCreditoMonto" type="number" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].limiteCreditoMonto)" />
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">                                           
+                                            Dias <input name="limiteCreditoDias" type="number" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].limiteCreditoDias)" />
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <label for="txtTel">
-                                                Descuento %:
-                                            </label>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label for="desc">
+                                                Descuento $ x kilo:
+                                            </label>                    
+                                               
+                                                                               
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1">                                          
+                                            <input id="desc" name="DescuentoXKilo" type="number" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].DescuentoXKilo)" />
                                         </div>
                                     </div>
                                 </div>
@@ -222,7 +269,7 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <div class="col-lg-8 col-md-8 col-sm-8">
-                                            <input type="checkbox" id="checkAcceso" name="AccesoPortal" class="form-control"/>
+                                            <input type="checkbox" id="checkAcceso" name="AccesoPortal" />
                                             <label for="checkAcceso">
                                                 Acceso al portal de facturación
                                             </label>

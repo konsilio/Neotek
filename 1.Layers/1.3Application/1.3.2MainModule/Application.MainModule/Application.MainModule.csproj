@@ -62,7 +62,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\RegimenAdapter.cs" />
-    <Compile Include="AdaptadoresDTO\Catalogo\RolAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Seguridad\RolAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\TipoPerAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\ComplementoGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenLecturaAdapter.cs" />
@@ -87,14 +87,12 @@
     <Compile Include="DTOs\Catalogo\ProductoEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\RegimenDTO.cs" />
-    <Compile Include="DTOs\Catalogo\RolDto.cs" />
     <Compile Include="DTOs\Catalogo\TipoCentroCostoEnum.cs" />
     <Compile Include="DTOs\Catalogo\TipoPersonaDTO.cs" />
     <Compile Include="DTOs\Catalogo\UnidadMedidaCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\UnidadMedidaDto.cs" />
     <Compile Include="DTOs\Catalogo\UnidadMedidaEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\UnidadMedidaModificarDto.cs" />
-    <Compile Include="DTOs\Catalogo\UsuariosModel.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraAutorizacionDTO.cs" />
     <Compile Include="AdaptadoresDTO\CorreoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAdapter.cs" />
@@ -102,7 +100,7 @@
     <Compile Include="AdaptadoresDTO\Compras\OrdenComprasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\ProductosOCAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Requisicion\RequisicionAdapter.cs" />
-    <Compile Include="AdaptadoresDTO\Catalogo\UsuarioAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Seguridad\UsuarioAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Requisicion\RequisicionProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\OrdenesCompraAdapter.cs" />
     <Compile Include="DTOs\Catalogo\CentroCostoCrearDto.cs" />
@@ -122,7 +120,6 @@
     <Compile Include="DTOs\Catalogo\ProveedorEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\UsuarioCrearDto.cs" />
-    <Compile Include="DTOs\Catalogo\UsuarioDTO.cs" />
     <Compile Include="DTOs\Catalogo\UsuarioEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\UsuarioModificarDto.cs" />
     <Compile Include="DTOs\Compras\ComplementoGasDTO.cs" />
@@ -171,7 +168,14 @@
     <Compile Include="DTOs\Seguridad\AutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionDto.cs" />
     <Compile Include="DTOs\Seguridad\RespuestaAutenticacionMobileDto.cs" />
+    <Compile Include="DTOs\Seguridad\RolCat.cs" />
+    <Compile Include="DTOs\Seguridad\RolCompras.cs" />
+    <Compile Include="DTOs\Seguridad\RolDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioAplicacionDto.cs" />
+    <Compile Include="DTOs\Seguridad\UsuarioDTO.cs" />
+    <Compile Include="DTOs\Seguridad\UserRol.cs" />
+    <Compile Include="DTOs\Seguridad\UsuarioRolDto.cs" />
+    <Compile Include="DTOs\Seguridad\UsuariosModel.cs" />
     <Compile Include="Flujos\Almacen.cs" />
     <Compile Include="Flujos\Catalogos.cs" />
     <Compile Include="Flujos\Compras.cs" />
@@ -222,7 +226,7 @@
     <Compile Include="Servicios\Catalogos\PuntoVentaServicio.cs" />
     <Compile Include="Servicios\Catalogos\TipoMedidorGasServicio.cs" />
     <Compile Include="Servicios\Catalogos\TipoPersonaServicio.cs" />
-    <Compile Include="Servicios\Catalogos\UsuarioServicio.cs" />
+    <Compile Include="Servicios\Seguridad\UsuarioServicio.cs" />
     <Compile Include="Servicios\Catalogos\ValidarCatalogoServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />

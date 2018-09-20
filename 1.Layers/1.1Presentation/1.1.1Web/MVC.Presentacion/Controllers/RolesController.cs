@@ -19,8 +19,18 @@ namespace MVC.Presentacion.Controllers
             RolDto rol = new RolDto()
             {
                 ListaRoles = CatalogoServicio.ObtenerTodosRoles(_tok)
-            };            
-            return View(rol);
+            };
+
+            PartialViewModel rolCat = new PartialViewModel()
+            {
+                ListaRolesCat = CatalogoServicio.ObtenerRolesCat(_tok),
+                ListaRoles = CatalogoServicio.ObtenerTodosRoles(_tok),
+                ListaRolesCom = CatalogoServicio.ObtenerRolesCom(_tok),
+                ListaRequsicion = CatalogoServicio.ObtenerRolesReq(_tok),
+                ListaMovilCompra = CatalogoServicio.ObtenerRolesMovilCompra(_tok),
+
+            };
+            return View(rolCat);
         }
 
         public ActionResult AgregarNuevoRol(RolDto ObjRol)
@@ -66,9 +76,22 @@ namespace MVC.Presentacion.Controllers
             _tok = Session["StringToken"].ToString();
             if (ModelState.IsValid)
             {
-               // CatalogoServicio.ActualizaPermisos(objrol, _tok);
+                CatalogoServicio.ActualizaPermisos(objrol, _tok);
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public JsonResult SaveList(string ItemList)
+        {
+            string[] arr = ItemList.Split(',');
+
+            foreach (var id in arr)
+            {
+                var currentId = id;
+            }
+
+            return Json("", JsonRequestBehavior.AllowGet);
         }
     }
 }

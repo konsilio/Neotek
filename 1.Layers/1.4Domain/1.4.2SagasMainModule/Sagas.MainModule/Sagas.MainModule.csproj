@@ -184,6 +184,7 @@
     <Compile Include="Entidades\Rol.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\RolPartial.cs" />
     <Compile Include="Entidades\Sagas1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -226,6 +227,10 @@
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Usuario.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\UsuarioPartial.cs" />
+    <Compile Include="Entidades\UsuarioRol.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="IRepositorios\IEmpresaRepositorio.cs" />

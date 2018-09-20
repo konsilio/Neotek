@@ -1,4 +1,4 @@
-﻿using Application.MainModule.DTOs.Catalogo;
+﻿using Application.MainModule.DTOs.Seguridad;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.MainModule.AdaptadoresDTO.Catalogo
+namespace Application.MainModule.AdaptadoresDTO.Seguridad
 {
     public class RolAdapter
     {
@@ -115,7 +115,6 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             List<RolDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
         }
-
 
         public static Rol FromDto(RolDto rolDTO)
         {
@@ -272,8 +271,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             return  rolDTO.ToList().Select(x => FromDtoPermiso(x)).ToList();
         }
-
-   
+           
         public static Rol FromEntity(Rol rol)
         {
             return new Rol()

@@ -77,5 +77,10 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public List<RolDto> ListaRoles { get; set; }
+
+        public List<RolCat> ListaRolesCat { get; set; }
+        public List<RolCompras> ListaRolesCom { get; set; }
+        public List<RolRequsicion> ListaRequsicion { get; set; }
+        public List<RolMovilCompra> ListaMovilCompra { get; set; }
     }
 }

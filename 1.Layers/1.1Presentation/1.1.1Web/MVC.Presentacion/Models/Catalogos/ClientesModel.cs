@@ -41,8 +41,8 @@ namespace MVC.Presentacion.Models.Catalogos
         [Display(Name = "Apellido2")]
         public string Apellido2 { get; set; }
 
-        [Display(Name = "PorcentDescuento")]
-        public decimal PorcentDescuento { get; set; }
+        [Display(Name = "DescuentoXKilo")]
+        public decimal DescuentoXKilo { get; set; }
 
         [Required(ErrorMessage = eReq)]
         [Display(Name = "limiteCreditoMonto")]

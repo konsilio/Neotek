@@ -153,84 +153,6 @@ namespace DS.MainModule.Controllers
 
         #endregion
 
-        #region Usuarios
-
-        [Route("usuarios/listausuarios")]
-        public HttpResponseMessage GetAllUsuarios()
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.AllUsers());
-        }
-
-        [Route("usuarios/listausuarios/{idEmpresa}")]
-        public HttpResponseMessage GetListaUsuarios(short idEmpresa)
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaUsuarios(idEmpresa));
-        }
-
-        [Route("registra/usuarios")]
-        public HttpResponseMessage PostRegistraUsuario(UsuarioCrearDto usuarioDto)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.AltaUsuarios(usuarioDto), Request);
-        }
-
-        [Route("modifica/usuariocredencial")]
-        public HttpResponseMessage PutModificaCredencial(UsuarioCrearDto usuarioDto)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.ModificaCredencial(usuarioDto), Request);
-        }
-
-        [Route("modifica/usuario")]
-        public HttpResponseMessage PutModificaUsuario(UsuarioCrearDto usuarioDto)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.ModificaUsuario(usuarioDto), Request);
-        }
-               
-        [Route("elimina/usuario/{id}")]
-        public HttpResponseMessage PutEliminaUsuario(short id)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.EliminaUsuario(id), Request);
-        }
-
-        [Route("agrega/usuariorol")]
-        public HttpResponseMessage PutUsuarioRolAgrega(UsuariosModel usuarioDto)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.ModificaRol(usuarioDto), Request);
-        }
-
-        #endregion
-
-        #region Roles
-
-        [Route("roles/listaAllRoles")]
-        public HttpResponseMessage GetAllRoles()
-        {
-            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.AllRoles());
-        }
-        [Route("registra/roles")]
-        public HttpResponseMessage PostRegistraRol(RolDto rolDto)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.AltaRoles(rolDto), Request);
-        }
-
-        [Route("modifica/nombrerol")]
-        public HttpResponseMessage PutModificaRol(RolDto rolDto)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.ModificaRolName(rolDto), Request);
-        }
-
-        [Route("modifica/permisos")]
-        public HttpResponseMessage PutModificaPermiso(RolDto rolDto)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.ModificaPermisos(rolDto), Request);
-        }
-
-        [Route("elimina/rol/{id}")]
-        public HttpResponseMessage PutEliminaRol(short id)
-        {
-            return RespuestaHttp.crearRespuesta(_catalogos.EliminaRol(id), Request);
-        }
-        #endregion
-
         #region Clientes
 
         [Route("clientes/tipopersona")]
@@ -250,11 +172,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaClientes(idEmpresa));
         }
-        //[Route("registra/cliente")]
-        //public HttpResponseMessage PostRegistraCliente(ClienteCrearDto clienteDto)
-        //{
-        //    return RespuestaHttp.crearRespuesta(_catalogos.RegistraCliente(clienteDto), Request);
-        //}
+        [Route("registra/cliente")]
+        public HttpResponseMessage PostRegistraCliente(ClienteCrearDto clienteDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraCliente(clienteDto), Request);
+        }
 
         //[Route("modifica/cliente")]
         //public HttpResponseMessage PutModificaCliente(ClienteModificarDto clienteDto)

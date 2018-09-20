@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.MainModule.AdaptadoresDTO.Catalogo
+namespace Application.MainModule.AdaptadoresDTO.Seguridad
 {
     public static class RegimenAdapter
     {

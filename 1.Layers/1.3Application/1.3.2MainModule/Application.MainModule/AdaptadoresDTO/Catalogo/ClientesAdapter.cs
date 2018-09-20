@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.MainModule.AdaptadoresDTO.Catalogo
+namespace Application.MainModule.AdaptadoresDTO.Seguridad
 {
     public static class ClientesAdapter
     {
@@ -24,7 +24,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Apellido2 = us.Apellido2,
                 //Activo = us.Activo,
                 //FechaRegistro = us.FechaRegistro,
-                PorcentDescuento = us.PorcentDescuento,
+                DescuentoXKilo = us.DescuentoXKilo,
                 limiteCreditoMonto = us.limiteCreditoMonto,
                 limiteCreditoDias = us.limiteCreditoDias,
                 Telefono1 = us.Telefono1,
@@ -59,5 +59,47 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             List<ClientesDto> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
         }
+
+        public static Cliente FromDto(ClienteCrearDto cteDTO)
+        {
+            return new Cliente()
+            {
+               // IdCliente = cteDTO.IdCliente,
+                IdTipoPersona = cteDTO.IdTipoPersona,
+                IdRegimenFiscal = cteDTO.IdRegimenFiscal,
+                IdCuentaContable = cteDTO.IdCuentaContable,
+                Nombre = cteDTO.Nombre,
+                Apellido1 = cteDTO.Apellido1,
+                Apellido2 = cteDTO.Apellido2,
+                DescuentoXKilo = cteDTO.DescuentoXKilo,
+                limiteCreditoMonto = cteDTO.limiteCreditoMonto,
+                limiteCreditoDias = cteDTO.limiteCreditoDias,
+                Telefono1 = cteDTO.Telefono1,
+                Telefono2 = cteDTO.Telefono2,
+                Telefono3 = cteDTO.Telefono3,
+                Celular1 = cteDTO.Celular1,
+                Celular2 = cteDTO.Celular2,
+                Celular3 = cteDTO.Celular3,
+                Email1 = cteDTO.Email1,
+                Email2 = cteDTO.Email2,
+                Email3 = cteDTO.Email3,
+                SitioWeb1 = cteDTO.SitioWeb1,
+                SitioWeb2 = cteDTO.SitioWeb2,
+                SitioWeb3 = cteDTO.SitioWeb3,
+                Usuario = cteDTO.Usuario,
+                Password = cteDTO.Password,
+                AccesoPortal = cteDTO.AccesoPortal,
+                Rfc = cteDTO.Rfc,
+                RazonSocial = cteDTO.RazonSocial,
+                RepresentanteLegal = cteDTO.RepresentanteLegal,
+                Telefono = cteDTO.Telefono,
+                Celular = cteDTO.Celular,
+                CorreoElectronico = cteDTO.CorreoElectronico,
+                Domicilio = cteDTO.Domicilio,
+                Activo = true,
+                FechaRegistro = DateTime.Now
+            };
+        }
+
     }
 }

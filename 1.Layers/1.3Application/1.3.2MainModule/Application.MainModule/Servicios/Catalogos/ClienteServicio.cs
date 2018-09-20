@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs.Respuesta;
+using Sagas.MainModule.Entidades;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -12,8 +14,13 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static List<ClientesDto> ListaClientes()
         {
-            List<ClientesDto> lClientes = AdaptadoresDTO.Catalogo.ClientesAdapter.ToDTO(new ClientesDataAccess().Buscar());
+            List<ClientesDto> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTO(new ClientesDataAccess().Buscar());
             return lClientes;
+        }
+
+        public static RespuestaDto AltaCliente(Cliente cte)
+        {
+            return new ClientesDataAccess().Insertar(cte);
         }
     }
 }

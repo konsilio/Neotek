@@ -34,12 +34,12 @@ namespace MVC.Presentacion.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult GuardarCliente(UsuarioDTO _ojUs)
+        public ActionResult GuardarCliente(ClientesDto _ojUs)
         {
             _tok = Session["StringToken"].ToString();
             if (ModelState.IsValid)
             {
-                //CatalogoServicio.CrearUsuario(_ojUs, _tok);
+               CatalogoServicio.CrearCliente(_ojUs, _tok);
             }
 
             return RedirectToAction("Index", _ojUs);

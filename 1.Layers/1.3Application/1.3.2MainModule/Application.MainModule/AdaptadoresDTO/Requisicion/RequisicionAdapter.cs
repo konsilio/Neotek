@@ -5,6 +5,7 @@ using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
+using Application.MainModule.Servicios.Seguridad;
 
 namespace Application.MainModule.AdaptadoresDTO.Requisicion
 {

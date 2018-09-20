@@ -20,7 +20,7 @@ namespace Sagas.MainModule.Entidades
             this.Requisiciones = new HashSet<Requisicion>();
             this.RecibeMercancia = new HashSet<AlmacenEntradaProducto>();
             this.EntregaMercancia = new HashSet<AlmacenSalidaProducto>();
-            this.Roles = new HashSet<Rol>();
+            this.UsuarioRoles = new HashSet<UsuarioRol>();
             this.OrdenesCompraAutorizadas = new HashSet<OrdenCompra>();
             this.OrdenesCompraGeneradas = new HashSet<OrdenCompra>();
             this.OperadoresChoferes = new HashSet<OperadorChofer>();
@@ -70,7 +70,7 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenSalidaProducto> EntregaMercancia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rol> Roles { get; set; }
+        public virtual ICollection<UsuarioRol> UsuarioRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrdenCompra> OrdenesCompraAutorizadas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -12,7 +12,7 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static List<TipoPersonaDTO> ListaTipoPersona()
         {
-            List<TipoPersonaDTO> lpaises = AdaptadoresDTO.Catalogo.TipoPerAdapter.ToDTO(new TipoPerDataAccess().ListaTiposPer());
+            List<TipoPersonaDTO> lpaises = AdaptadoresDTO.Seguridad.TipoPerAdapter.ToDTO(new TipoPerDataAccess().ListaTiposPer());
             return lpaises;
         }
     }

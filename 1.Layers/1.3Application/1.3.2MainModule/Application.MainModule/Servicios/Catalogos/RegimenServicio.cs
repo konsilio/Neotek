@@ -12,7 +12,7 @@ namespace Application.MainModule.Servicios.Catalogos
     {
         public static List<RegimenDTO> ListaRegimen()
         {
-            List<RegimenDTO> lregimen = AdaptadoresDTO.Catalogo.RegimenAdapter.ToDTO(new RegimenDataAccess().ListaRegimen());
+            List<RegimenDTO> lregimen = AdaptadoresDTO.Seguridad.RegimenAdapter.ToDTO(new RegimenDataAccess().ListaRegimen());
             return lregimen;
         }
     }

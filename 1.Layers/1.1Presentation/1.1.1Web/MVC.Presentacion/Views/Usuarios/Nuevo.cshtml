@@ -29,7 +29,7 @@
 
     });
 </script>
-@using (Html.BeginForm((ViewBag.IdUser == null) ? "GuardarUsuario" : "GuardaEdicionUsuario", "Usuarios", FormMethod.Post))
+@using (Html.BeginForm((ViewBag.IdUser.Count == 0 || ViewBag.IdUser != null) ? "GuardarUsuario" : "GuardaEdicionUsuario", "Usuarios", FormMethod.Post))
 {
     <section class="content home">
         <div class="container-fluid">
@@ -45,10 +45,10 @@
                         <div class="col-sm-3">
                             <b>Gasera</b>
                             <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
-                                @foreach (var lst in ViewBag.Empresas)
+                                @*@foreach (var lst in ViewBag.Empresas)
                                 {
                                     <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                }
+                                }*@
                             </select>
                         </div>
 

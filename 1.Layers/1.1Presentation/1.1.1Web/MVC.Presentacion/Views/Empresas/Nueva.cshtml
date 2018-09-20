@@ -31,6 +31,19 @@
 
     });
 </script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#RegresaIndex").click(function () {
+            var form = $(this).parent("form");
+            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Empresas", Action = "Index" }) %>');
+            form.attr('method', 'post');
+
+        });
+
+    });
+
+</script>
 @using (Html.BeginForm((ViewBag.Empresas == null) ? "Crear" : "GuardaEdicionEmpresa", "Empresas", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <section class="content home">
@@ -380,7 +393,7 @@
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            <input type="submit" value="Regresar" class="btn btn-raised btn-primary float-left" formaction="Index" />
+                            <input type="submit" value="Regresar" id="RegresaIndex" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary float-left"/>                            
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
