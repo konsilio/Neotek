@@ -15,7 +15,12 @@ namespace Application.MainModule.Servicios.Almacen
 
         public static decimal ObtenerKilogramosDesdeLitros(decimal litros, decimal factor)
         {
-            return litros * factor;
+            return litros / factor;
+        }
+
+        public static decimal ObtenerLitrosDesdeKilos(decimal kilogramos, decimal factor)
+        {
+            return kilogramos * factor;
         }
 
         public static decimal ObtenerDiferenciaKilogramos(decimal cantidadMayor, decimal cantidadMenor)
@@ -26,9 +31,9 @@ namespace Application.MainModule.Servicios.Almacen
             return cantidadMayor - cantidadMenor;
         }
 
-        public static decimal ObtenerLitrosDesdeKilos(decimal kilogramos, decimal factor)
+        public static decimal SumarKilogramos(decimal cantidadActualKg, decimal ingresoKg)
         {
-            return kilogramos / factor;
+            return cantidadActualKg + ingresoKg;   
         }
     }
 }

@@ -11,6 +11,8 @@ using Application.MainModule.DTOs.Mobile;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.Servicios.Mobile;
+using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.AdaptadoresDTO.Almacen;
 
 namespace Application.MainModule.Servicios.Almacen
 {
@@ -221,7 +223,43 @@ namespace Application.MainModule.Servicios.Almacen
         public static void CalcularInventarioAlmacenPrincipal(UnidadAlmacenGas unidad)
         {
             var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
-            
+            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+        }
+
+        public static InventarioGasDto AplicarDescarga(AlmacenGasDescarga descarga)
+        {
+            UnidadAlmacenGas unidadEntrada = AlmacenGasServicio.ObtenerUnidadAlamcenGas(descarga);
+            Empresa empresa = EmpresaServicio.Obtener(unidadEntrada);
+
+            decimal kilogramosPapeletaTractor = descarga.MasaKg.Value;
+            decimal litrosPapeletaTractor = CalcularGasServicio.ObtenerLitrosDesdeKilos(kilogramosPapeletaTractor, empresa.FactorLitrosAKilos);
+            decimal litrosRealesTractor = CalcularGasServicio.ObtenerLitrosEnElTanque(descarga.CapacidadTanqueLt.Value, descarga.PorcenMagnatelOcularTractorINI.Value);
+            decimal kilogramosRealesTractor = CalcularGasServicio.ObtenerKilogramosDesdeLitros(litrosRealesTractor, empresa.FactorLitrosAKilos);
+            decimal kilogramosRemanentes = CalcularGasServicio.ObtenerDiferenciaKilogramos(kilogramosRealesTractor, kilogramosPapeletaTractor);
+            decimal litrosRemanentes = CalcularGasServicio.ObtenerLitrosDesdeKilos(kilogramosRemanentes, empresa.FactorLitrosAKilos);
+
+            unidadEntrada.CantidadActualKg = CalcularGasServicio.SumarKilogramos(unidadEntrada.CantidadActualKg, kilogramosRealesTractor);
+            unidadEntrada.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdeKilos(unidadEntrada.CantidadActualKg, empresa.FactorLitrosAKilos);
+            unidadEntrada.PorcentajeActual = descarga.PorcenMagnatelOcularAlmacenFIN.Value;
+
+            return new InventarioGasDto()
+            {
+                unidadEntrada = AlmacenGasAdapter.FromEmtity(unidadEntrada),
+                identidadUE = IdentificarTipoUnidadAlamcenGas(unidadEntrada),
+                PorcentajeUE = unidadEntrada.PorcentajeActual,
+                CantidadSINRemanenteKg = kilogramosPapeletaTractor,
+                CantidadSINRemanenteLt = litrosPapeletaTractor,
+                RemanenteKg = kilogramosRemanentes,
+                RemanenteLt = litrosRemanentes,
+                CantidadCONRemanenteKg = kilogramosRealesTractor,
+                CantidadCONRemanenteLt = litrosRealesTractor,
+            };
         }
     }
 }

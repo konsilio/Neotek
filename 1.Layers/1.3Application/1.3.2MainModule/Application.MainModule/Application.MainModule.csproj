@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Almacen\AlmacenGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CentroCostoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CuentaContableAdapter.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="DTOs\Almacen\AlmacenCrearEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenDTO.cs" />
+    <Compile Include="DTOs\Almacen\InventarioGasDto.cs" />
     <Compile Include="DTOs\Catalogo\EstacionCarburacionDTO.cs" />
     <Compile Include="DTOs\Catalogo\PaisDTO.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoCrearDto.cs" />
