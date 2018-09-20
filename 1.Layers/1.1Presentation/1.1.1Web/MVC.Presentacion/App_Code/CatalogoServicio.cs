@@ -133,34 +133,27 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.GuardarEmpresaNueva(cc, tkn);
             return agente._RespuestaDTO;
-        }
-        //#region Empresas    
-        //public static RespuestaDTO create(EmpresaModel cc, string tkn)
-        //{
-        //    var agente = new AgenteServicio();
-        //    agente.GuardarEmpresaNueva(cc, tkn);
-        //    return agente._respuestaDTO;
-        //}
+        }   
 
         public static RespuestaDTO ActualizaConfigEmpresa(EmpresaConfiguracion cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarEmpresaConfiguracion(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
         public static RespuestaDTO ActualizaEdicionEmpresa(EmpresaDTO cc, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px, string tkn)
         {
             guardarLogosEmpresaDto(cc, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px);
             var agente = new AgenteServicio();
             agente.GuardarEmpresaEdicion(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static RespuestaDTO EliminaEmpresaSel(short id, string tkn)
         {
             var agente = new AgenteServicio();
             agente.EliminarEmpresa(id, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static List<EmpresaDTO> Empresas(string tkn)
@@ -169,8 +162,6 @@ namespace MVC.Presentacion.App_Code
             agente.ListaEmpresasLogin(tkn);
             return agente._listaEmpresas;
         }
-
-
         //consulta empresa mediante id
         public static Empresa FiltrarEmpresa(Empresa model, int id, string tkn)
         {
@@ -225,7 +216,7 @@ namespace MVC.Presentacion.App_Code
             encryptaPWD(cc);
             var agente = new AgenteServicio();
             agente.GuardarNuevoUsuario(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static List<UsuarioDTO> ListaUsuarios(short idEmpresa, string token)
@@ -239,7 +230,7 @@ namespace MVC.Presentacion.App_Code
             encryptaPWD(cc);
             var agente = new AgenteServicio();
             agente.GuardarCredenciales(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static RespuestaDTO AgregarRolAlUsuario(UsuariosModel cc, string tkn)
@@ -247,7 +238,7 @@ namespace MVC.Presentacion.App_Code
             AgregarIdRolToList(cc, tkn);
             var agente = new AgenteServicio();
             agente.GuardarRolesAsig(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static List<UsuariosModel> ObtenerUsuariosRol(string token)
@@ -260,14 +251,14 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.GuardarUsuarioEdicion(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static RespuestaDTO EliminaUsuarioSel(short id, string tkn)
         {
             var agente = new AgenteServicio();
             agente.EliminarUsuario(id, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static List<UsuariosModel> FiltrarBusquedaUsuario(UsuariosModel us, string token)
@@ -607,19 +598,7 @@ namespace MVC.Presentacion.App_Code
         {
             List<RolDto> Roles = new List<RolDto>();
             Roles = (TODto(cc.ListaRolesCat));
-
-            //var infCat = cc.ListaRolesCat.ToList();
-            //Roles.AddRange((List<RolDto>)infCat);
-
-
-           // List<RolDto> listOfCat = cc.ListaRolesCat.Cast<RolDto>().ToList();
-            //if (listOfCat.Count > 0)
-            //    Roles.AddRange(listOfCat);
-
-            //List<RolDto> listOfComp = cc.ListaRolesCom.Cast<RolDto>().ToList();
-            //if (listOfComp.Count > 0)
-            //    Roles.AddRange(listOfComp);            
-
+                      
             cc.ListaRoles = Roles;
             return cc;
         }
@@ -694,14 +673,14 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.GuardarNuevoRol(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static RespuestaDTO ActualizaNombreRol(RolDto cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarModificacionRol(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
 
         public static RespuestaDTO ActualizaPermisos(RolDto cc, string tkn)
@@ -731,7 +710,7 @@ namespace MVC.Presentacion.App_Code
                 agente.GuardarPermisos(cc, tkn);
             }
 
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
 
         }
 
@@ -739,7 +718,7 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.EliminarRol(id, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
         #endregion
 
@@ -757,18 +736,34 @@ namespace MVC.Presentacion.App_Code
             return agente._lstaRegimenFiscal;
         }
 
-        public static List<ClientesDto> ListaClientes(short idEmpresa, string token)
+        public static List<ClientesDto> ListaClientes(int id, string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaClientes(idEmpresa, token);
+            agente.BuscarListaClientes(id,token);
             return agente._lstaClientes;
         }
-        public static RespuestaDTO CrearCliente(ClientesDto cc, string tkn)
+
+        public static RespuestaDTO CrearCliente(ClientesModel cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarNuevoCliente(cc, tkn);
-            return agente._respuestaDTO;
+            return agente._RespuestaDTO;
         }
+
+        public static RespuestaDTO ModificarCliente(ClientesDto cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EditarCliente(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+
+        public static RespuestaDTO EliminarCliente(int id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarCliente(id, tkn);
+            return agente._RespuestaDTO;
+        }
+
 
         #endregion
 

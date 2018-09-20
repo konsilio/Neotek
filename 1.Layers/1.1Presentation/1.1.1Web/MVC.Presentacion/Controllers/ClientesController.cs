@@ -18,7 +18,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
             ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
-            ViewBag.Clientes = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(0,_tkn);
             
             return View();
         }
@@ -29,12 +29,13 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
             ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
-            ViewBag.Clientes = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(0,_tkn);
+            //ViewBag.Clientes = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             ViewBag.IdCliente = null;
             return View();
         }
         [HttpPost]
-        public ActionResult GuardarCliente(ClientesDto _ojUs)
+        public ActionResult GuardarCliente(ClientesModel _ojUs)
         {
             _tok = Session["StringToken"].ToString();
             if (ModelState.IsValid)
@@ -44,13 +45,24 @@ namespace MVC.Presentacion.Controllers
 
             return RedirectToAction("Index", _ojUs);
         }
+        public ActionResult EditarCliente(int id)
+        {
+            string _tkn = Session["StringToken"].ToString();
+            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
+            ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(0,_tkn);
+            ViewBag.IdCliente = CatalogoServicio.ListaClientes(id,_tkn);
+            return View("Nuevo");
+        }
+            
         [HttpPost]
         public ActionResult GuardaEdicionCliente(ClientesDto _Obj)
         {
             _tok = Session["StringToken"].ToString();
             if (ModelState.IsValid)
             {
-               // CatalogoServicio.ActualizaEdicionUsuario(_Obj, _tok);
+                CatalogoServicio.ModificarCliente(_Obj, _tok);
             }
 
             return RedirectToAction("Index", _Obj);

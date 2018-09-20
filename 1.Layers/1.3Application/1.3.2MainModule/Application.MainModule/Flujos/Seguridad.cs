@@ -134,7 +134,7 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto AltaRoles(RolDto rolDto)
         {
-            var resp = PermisosServicio.PuedeRegistrarUsuario();
+            var resp = PermisosServicio.PuedeRegistrarRol();
             if (!resp.Exito) return resp;
 
             var rol = RolAdapter.FromDto(rolDto);
@@ -147,7 +147,7 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto ModificaRolName(RolDto rolDto)
         {
-            var resp = PermisosServicio.PuedeModificarUsuario();
+            var resp = PermisosServicio.PuedeModificarRol();
             if (!resp.Exito) return resp;
 
             var rol = RolServicio.Obtener(rolDto.IdRol);
@@ -162,7 +162,7 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto ModificaPermisos(RolDto rolDto)
         {
-            var resp = PermisosServicio.PuedeModificarUsuario();
+            var resp = PermisosServicio.PuedeModificarRol();
             if (!resp.Exito) return resp;
 
             var emp = RolAdapter.FromDto(rolDto.ListaRoles);
@@ -174,7 +174,7 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto EliminaRol(short id)
         {
-            var resp = PermisosServicio.PuedeEliminarUsuario();
+            var resp = PermisosServicio.PuedeEliminarRol();
             if (!resp.Exito) return resp;
 
             var rol = RolServicio.Obtener(id);

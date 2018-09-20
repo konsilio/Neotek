@@ -27,11 +27,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<Empresa>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa));
         }
 
-        public Empresa Buscar(int idEmpresa)
-        {
-            return uow.Repository<Empresa>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa));
-        }
-
         public List<Empresa> BuscarTodos()
         {
             return uow.Repository<Empresa>().Get(x=> x.Activo).ToList();

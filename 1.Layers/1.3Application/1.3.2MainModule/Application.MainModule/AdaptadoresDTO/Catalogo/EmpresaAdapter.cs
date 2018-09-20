@@ -111,7 +111,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         public static Empresa FromDTOEditar(EmpresaDTO empresadto, Empresa catEmp)
         {
             var catEmpresa = FromEntity(catEmp);
-            // catEmpresa.NombreComercial = empresadto.NombreComercial;
             if (empresadto.NombreComercial != null){ catEmpresa.NombreComercial = empresadto.NombreComercial; } else { catEmpresa.NombreComercial = catEmpresa.NombreComercial; }
             if (empresadto.IdPais != 0) { catEmpresa.IdPais = empresadto.IdPais; } else catEmpresa.IdPais = catEmpresa.IdPais;
             if (empresadto.IdEstadoRep != 0) catEmpresa.IdEstadoRep = empresadto.IdEstadoRep; else catEmpresa.IdEstadoRep = catEmpresa.IdEstadoRep;
@@ -149,48 +148,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             empresadto.InventarioCrítico = catEmpresa.InventarioCrítico;
             empresadto.MaxRemaGaseraMensual = catEmpresa.MaxRemaGaseraMensual;
 
-            //Empresa empresa = new Empresa()
-            //{
-            //    IdEmpresa = empresadto.IdEmpresa,
-            //    EsAdministracionCentral = empresadto.EsAdministracionCentral,
-            //    NombreComercial = empresadto.NombreComercial,
-            //    FechaRegistro = empresadto.FechaRegistro,
-            //    IdPais = empresadto.IdPais,
-            //    IdEstadoRep = empresadto.IdEstadoRep,
-            //    EstadoProvincia = empresadto.EstadoProvincia,
-            //    Municipio = empresadto.Municipio,
-            //    CodigoPostal = empresadto.CodigoPostal,
-            //    Colonia = empresadto.Colonia,
-            //    Calle = empresadto.Calle != null ? empresadto.Calle : "",
-            //    NumExt = empresadto.NumExt,
-            //    NumInt = empresadto.NumInt,
-            //    Telefono1 = empresadto.Telefono1,
-            //    Telefono2 = empresadto.Telefono2,
-            //    Telefono3 = empresadto.Telefono3,
-            //    Celular1 = empresadto.Celular1,
-            //    Celular2 = empresadto.Celular2,
-            //    Celular3 = empresadto.Celular3,
-            //    Email1 = empresadto.Email1,
-            //    Email2 = empresadto.Email2,
-            //    Email3 = empresadto.Email3,
-            //    SitioWeb1 = empresadto.SitioWeb1,
-            //    SitioWeb2 = empresadto.SitioWeb2,
-            //    SitioWeb3 = empresadto.SitioWeb3,
-            //    Rfc = empresadto.Rfc,
-            //    RazonSocial = empresadto.RazonSocial,
-            //    //FactorLitrosAKilos = empresadto.FactorLitrosAKilos,
-            //    //CierreInventario = empresadto.CierreInventario,
-            //    //InventarioSano = empresadto.InventarioSano,
-            //    //InventarioCrítico = empresadto.InventarioCrítico,
-            //    //MaxRemaGaseraMensual = empresadto.MaxRemaGaseraMensual,
-            //    UrlLogotipoMenu = empresadto.UrlLogotipoMenu,
-            //    UrlLogotipoLogin = empresadto.UrlLogotipoLogin,
-            //    UrlLogotipo180px = empresadto.UrlLogotipo180px,
-            //    UrlLogotipo500px = empresadto.UrlLogotipo500px,
-            //    UrlLogotipo1000px = empresadto.UrlLogotipo1000px,
-            //  };
-
-
+            
             return catEmpresa;
         }
         public static List<Empresa> FromDTO(List<EmpresaDTO> empresasDTO)
@@ -250,36 +208,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         public static Empresa FromDtoConfig(EmpresaModificaConfig empresa, Empresa catEmp)
         {
             var catEmpresa = FromEntity(catEmp);
-            //catEmpresa.NombreComercial = empresa.NombreComercial;
-            //catEmpresa.IdPais = empresa.IdPais;
-            //catEmpresa.IdEstadoRep = empresa.IdEstadoRep;
-            //catEmpresa.EstadoProvincia = empresa.EstadoProvincia;
-            //catEmpresa.Municipio = empresa.Municipio;
-            //catEmpresa.CodigoPostal = empresa.CodigoPostal;
-            //catEmpresa.Colonia = empresa.Colonia;
-            //catEmpresa.Calle = empresa.Calle;
-            //catEmpresa.NumExt = empresa.NumExt;
-            //catEmpresa.NumInt = empresa.NumInt;
-            //catEmpresa.Persona1 = empresa.Persona1;
-            //catEmpresa.Persona2 = empresa.Persona2;
-            //catEmpresa.Persona3 = empresa.Persona3;
-            //catEmpresa.Telefono1 = empresa.Telefono1;
-            //catEmpresa.Telefono2 = empresa.Telefono2;
-            //catEmpresa.Telefono3 = empresa.Telefono3;
-            //catEmpresa.Celular1 = empresa.Celular1;
-            //catEmpresa.Celular2 = empresa.Celular2;
-            //catEmpresa.Celular3 = empresa.Celular3;
-            //catEmpresa.Email1 = empresa.Email1;
-            //catEmpresa.Email2 = empresa.Email2;
-            //catEmpresa.Email3 = empresa.Email3;
-            //catEmpresa.SitioWeb1 = empresa.SitioWeb1;
-            //catEmpresa.SitioWeb2 = empresa.SitioWeb2;
-            //catEmpresa.SitioWeb3 = empresa.SitioWeb3;
-            //catEmpresa.Rfc = empresa.Rfc;
-            //catEmpresa.RazonSocial = empresa.RazonSocial;
-            //catEmpresa.UrlLogotipo180px = empresa.UrlLogotipo180px;
-            //catEmpresa.UrlLogotipo500px = empresa.UrlLogotipo500px;
-            //catEmpresa.UrlLogotipo1000px = empresa.UrlLogotipo1000px;        
+       
             catEmpresa.FactorLitrosAKilos = empresa.FactorLitrosAKilos;
             catEmpresa.CierreInventario = empresa.CierreInventario;
             catEmpresa.InventarioSano = empresa.InventarioSano;

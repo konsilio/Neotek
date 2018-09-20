@@ -179,7 +179,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 FechaRegistro = DateTime.Now
             };
         }
-
         public static UsuariosModel ToDTOEmp(Usuario us)
         {
             UsuariosModel usDTO = new UsuariosModel()
@@ -220,7 +219,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Empresa = us.Empresa.NombreComercial,
                 Roles = getRol(us.UsuarioRoles.ToList()),
                 //Roles = RolAdapter.ToDTO(us.Roles.ToList()),
-            //    UsuarioRoles = RolAdapter.ToDTO(us.UsuarioRoles.ToList())
+                //UsuarioRoles = RolAdapter.ToDTO(us.UsuarioRoles.ToList())
                // catUsuario.Roles.Add(getRol(usDTO, catUsuario.IdEmpresa))
         };
 
@@ -256,42 +255,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             if (usDTO.Email1 != null) { catUsuario.Email1 = usDTO.Email1; } else { catUsuario.Email1 = catUsuario.Email1; }
             if (usDTO.Password != null) { catUsuario.Password = usDTO.Password; } else { catUsuario.Password = catUsuario.Password; }
 
-            return catUsuario;
-
-            #region seccionAnterior
-            //return new Usuario()
-            //{
-            //    IdEmpresa = usDTO.IdEmpresa,
-            //    Nombre = usDTO.Nombre,
-            //    Apellido1 = usDTO.Apellido1,
-            //    Apellido2 = usDTO.Apellido2,
-            //    NombreUsuario = usDTO.Email1,
-            //    Password = usDTO.Password,
-            //    Telefono1 = usDTO.Telefono1,
-            //    Telefono2 = usDTO.Telefono2,
-            //    Telefono3 = usDTO.Telefono3,
-            //    Celular1 = usDTO.Celular1,
-            //    Celular2 = usDTO.Celular2,
-            //    Celular3 = usDTO.Celular3,
-            //    Email1 = usDTO.Email1,
-            //    Email2 = usDTO.Email2,
-            //    Email3 = usDTO.Email3,
-            //    SitioWeb1 = usDTO.SitioWeb1,
-            //    SitioWeb2 = usDTO.SitioWeb2,
-            //    SitioWeb3 = usDTO.SitioWeb3,
-            //    IdPais = usDTO.IdPais,
-            //    IdEstadoRep = usDTO.IdEstadoRep,
-            //    EstadoProvincia = usDTO.EstadoProvincia,
-            //    Municipio = usDTO.Municipio,
-            //    CodigoPostal = usDTO.CodigoPostal,
-            //    Colonia = usDTO.Colonia,
-            //    Calle = usDTO.Calle,
-            //    NumExt = usDTO.NumExt,
-            //    NumInt = usDTO.NumInt,
-            //    Activo = true,
-            //    FechaRegistro = DateTime.Now
-            //};
-            #endregion
+            return catUsuario;      
         }
 
         //public static Usuario FromDtoRol(UsuariosModel usDTO, Usuario usr)
@@ -385,7 +349,6 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
             return catUsuario;
         }
-
-
+        
     }
 }

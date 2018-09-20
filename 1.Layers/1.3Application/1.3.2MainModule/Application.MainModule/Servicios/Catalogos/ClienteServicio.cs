@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Respuesta;
 using Sagas.MainModule.Entidades;
+using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -21,6 +22,29 @@ namespace Application.MainModule.Servicios.Catalogos
         public static RespuestaDto AltaCliente(Cliente cte)
         {
             return new ClientesDataAccess().Insertar(cte);
+        }
+
+        public static Cliente Obtener(int IdCliente)
+        {
+            return new ClientesDataAccess().Buscar(IdCliente);
+        }
+
+        public static RespuestaDto Modificar(Cliente cte)
+        {
+            return new ClientesDataAccess().Actualizar(cte);
+        }
+   
+
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "El cliente");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }
