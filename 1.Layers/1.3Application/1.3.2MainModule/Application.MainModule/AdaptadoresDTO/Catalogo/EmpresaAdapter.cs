@@ -114,7 +114,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             // catEmpresa.NombreComercial = empresadto.NombreComercial;
             if (empresadto.NombreComercial != null){ catEmpresa.NombreComercial = empresadto.NombreComercial; } else { catEmpresa.NombreComercial = catEmpresa.NombreComercial; }
             if (empresadto.IdPais != 0) { catEmpresa.IdPais = empresadto.IdPais; } else catEmpresa.IdPais = catEmpresa.IdPais;
-            if (empresadto.IdEstadoRep != null) catEmpresa.IdEstadoRep = empresadto.IdEstadoRep; else catEmpresa.IdEstadoRep = catEmpresa.IdEstadoRep;
+            if (empresadto.IdEstadoRep != 0) catEmpresa.IdEstadoRep = empresadto.IdEstadoRep; else catEmpresa.IdEstadoRep = catEmpresa.IdEstadoRep;
             if (empresadto.EstadoProvincia != null) catEmpresa.EstadoProvincia = empresadto.EstadoProvincia; else catEmpresa.EstadoProvincia = catEmpresa.EstadoProvincia;
             if (empresadto.Municipio != null) catEmpresa.Municipio = empresadto.Municipio; else catEmpresa.Municipio = catEmpresa.Municipio;
             if (empresadto.CodigoPostal != null) catEmpresa.CodigoPostal = empresadto.CodigoPostal; else catEmpresa.CodigoPostal = catEmpresa.CodigoPostal;
