@@ -19,10 +19,10 @@ namespace Web.MainModule.Catalogos
                 _tok = Session["StringToken"].ToString();
                 if (!IsPostBack)
                 {
-                    if (TokenServicio.ObtenerAutenticado(_tok))
+                    if (TokenServicios.ObtenerAutenticado(_tok))
                     {
-                        CargarEmpresas(TokenServicio.ObtenerIdEmpresa(_tok));
-                        CargarEmpresasFiltro(TokenServicio.ObtenerIdEmpresa(_tok));
+                        CargarEmpresas(TokenServicios.ObtenerIdEmpresa(_tok));
+                        CargarEmpresasFiltro(TokenServicios.ObtenerIdEmpresa(_tok));
                     }
                     else
                         Salir();
@@ -35,26 +35,26 @@ namespace Web.MainModule.Catalogos
         }      
         private void CargarEmpresas(short idEmpresa)
         {
-            if (TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (TokenServicios.ObtenerEsAdministracionCentral(_tok))
                 ddlEmpresas.DataSource = new EmpresaServicio().Empresas(_tok).Where(x => x.EsAdministracionCentral.Equals(false)).ToList();
             else
                 ddlEmpresas.DataSource = new EmpresaServicio().Empresas(_tok).Where(x => x.EsAdministracionCentral.Equals(false) && x.IdEmpresa.Equals(idEmpresa)).ToList();
             ddlEmpresas.DataTextField = "NombreComercial";
             ddlEmpresas.DataValueField = "IdEmpresa";
             ddlEmpresas.DataBind();
-            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (!TokenServicios.ObtenerEsAdministracionCentral(_tok))
                 ddlEmpresas.Enabled = false;
         }
         private void CargarEmpresasFiltro(short idEmpresa)
         {
-            if (TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (TokenServicios.ObtenerEsAdministracionCentral(_tok))
                 ddlFiltroEmpresa.DataSource = new EmpresaServicio().Empresas(_tok).Where(x => x.EsAdministracionCentral.Equals(false)).ToList();
             else
                 ddlFiltroEmpresa.DataSource = new EmpresaServicio().Empresas(_tok).Where(x => x.EsAdministracionCentral.Equals(false) && x.IdEmpresa.Equals(idEmpresa)).ToList();
             ddlFiltroEmpresa.DataTextField = "NombreComercial";
             ddlFiltroEmpresa.DataValueField = "IdEmpresa";
             ddlFiltroEmpresa.DataBind();
-            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (!TokenServicios.ObtenerEsAdministracionCentral(_tok))
                 ddlFiltroEmpresa.Enabled = false;
             CargarListaProveedor();
         }

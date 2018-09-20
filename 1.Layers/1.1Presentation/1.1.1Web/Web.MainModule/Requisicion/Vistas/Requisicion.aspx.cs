@@ -20,7 +20,7 @@ namespace Web.MainModule.Requisicion.Vista
                 _tok = Session["StringToken"].ToString();
                 if (!IsPostBack)
                 {
-                    if (TokenServicio.ObtenerAutenticado(_tok))
+                    if (TokenServicios.ObtenerAutenticado(_tok))
                     {
                         if (Request.QueryString["nr"] != null)
                         {
@@ -32,7 +32,7 @@ namespace Web.MainModule.Requisicion.Vista
                         else
                         {
                             CargarEmpresas();
-                            if (Convert.ToBoolean(TokenServicio.ObtenerEsAdministracionCentral(_tok)))
+                            if (Convert.ToBoolean(TokenServicios.ObtenerEsAdministracionCentral(_tok)))
                             {
                                 CargarUsuariosSolicitante(short.Parse(ddlEmpresas.SelectedValue));
                                 CargarCentrosCosto(short.Parse(ddlEmpresas.SelectedValue));
@@ -40,8 +40,8 @@ namespace Web.MainModule.Requisicion.Vista
                             else
                             {
                                 ddlEmpresas.Enabled = false;
-                                CargarUsuariosSolicitante(TokenServicio.ObtenerIdEmpresa(_tok));
-                                CargarCentrosCosto(TokenServicio.ObtenerIdEmpresa(_tok));
+                                CargarUsuariosSolicitante(TokenServicios.ObtenerIdEmpresa(_tok));
+                                CargarCentrosCosto(TokenServicios.ObtenerIdEmpresa(_tok));
                             }
                         }
                         dgListaproductos.DataBind();
@@ -81,15 +81,15 @@ namespace Web.MainModule.Requisicion.Vista
         private Model.RequisicionCrearDTO CrearReq()
         {
             Model.RequisicionCrearDTO reqCrearDTO = new Model.RequisicionCrearDTO();
-            if (Convert.ToBoolean(TokenServicio.ObtenerEsAdministracionCentral(_tok)))
+            if (Convert.ToBoolean(TokenServicios.ObtenerEsAdministracionCentral(_tok)))
             {
                 reqCrearDTO.IdEmpresa = short.Parse(ddlEmpresas.SelectedValue);
                 reqCrearDTO.IdUsuarioSolicitante = int.Parse(ddlSolicitante.SelectedValue);
             }
             else
             {
-                reqCrearDTO.IdUsuarioSolicitante = TokenServicio.ObtenerIdUsuario(_tok);
-                reqCrearDTO.IdEmpresa = TokenServicio.ObtenerIdEmpresa(_tok);
+                reqCrearDTO.IdUsuarioSolicitante = TokenServicios.ObtenerIdUsuario(_tok);
+                reqCrearDTO.IdEmpresa = TokenServicios.ObtenerIdEmpresa(_tok);
             }
             reqCrearDTO.MotivoRequisicion = txtMotivoCompra.Text;
             reqCrearDTO.RequeridoEn = txtRequeridoEn.Text;
@@ -129,10 +129,10 @@ namespace Web.MainModule.Requisicion.Vista
             _aut.IdRequisicion = (int)ViewState["idRequisicion"];
             _aut.NumeroRequisicion = lblIdRequisicion.Text;
             _aut.FechaAutorizacion = DateTime.Today;
-            if (TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (TokenServicios.ObtenerEsAdministracionCentral(_tok))
                 _aut.IdUsuarioAutorizacion = int.Parse(ddlSolicitante.SelectedValue);
             else
-                _aut.IdUsuarioAutorizacion = TokenServicio.ObtenerIdUsuario(_tok);
+                _aut.IdUsuarioAutorizacion = TokenServicios.ObtenerIdUsuario(_tok);
             _aut.ListaProductos = (List<Model.RequisicionProdAutPutDTO>)ViewState["ListaRequisicionProdAutPutDTO"];
             _aut.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Autorizacion_finalizada;
             return _aut;
@@ -148,9 +148,9 @@ namespace Web.MainModule.Requisicion.Vista
                 CancelaDTO.IdRequisicionEstatus = (byte)Model.RequisiconEstatus.Cerrada;
                 CancelaDTO.FechaAutorizacion = DateTime.Today;
                 if (Request.QueryString["Sts"].Equals("1"))
-                    CancelaDTO.IdUsuarioRevision = TokenServicio.ObtenerIdUsuario(_tok);
+                    CancelaDTO.IdUsuarioRevision = TokenServicios.ObtenerIdUsuario(_tok);
                 else
-                    CancelaDTO.IdUsuarioAutorizacion = TokenServicio.ObtenerIdUsuario(_tok);
+                    CancelaDTO.IdUsuarioAutorizacion = TokenServicios.ObtenerIdUsuario(_tok);
             }
             return CancelaDTO;
         }
@@ -427,10 +427,10 @@ namespace Web.MainModule.Requisicion.Vista
         }
         private void CargarProductos(short idTipoServicio)
         {
-            if (Convert.ToBoolean(TokenServicio.ObtenerEsAdministracionCentral(_tok)))
+            if (Convert.ToBoolean(TokenServicios.ObtenerEsAdministracionCentral(_tok)))
                 ddlProdcutos.DataSource = ViewState["ProductosDTO"] = new RequisicionServicio().ListaProductos(short.Parse(ddlEmpresas.SelectedValue), _tok).Where(x => x.IdProductoServicioTipo.Equals(idTipoServicio)).ToList();
             else
-                ddlProdcutos.DataSource = ViewState["ProductosDTO"] = new RequisicionServicio().ListaProductos(TokenServicio.ObtenerIdEmpresa(_tok), _tok).Where(x => x.IdProductoServicioTipo.Equals(idTipoServicio)).ToList();
+                ddlProdcutos.DataSource = ViewState["ProductosDTO"] = new RequisicionServicio().ListaProductos(TokenServicios.ObtenerIdEmpresa(_tok), _tok).Where(x => x.IdProductoServicioTipo.Equals(idTipoServicio)).ToList();
             ddlProdcutos.DataTextField = "Descripcion";
             ddlProdcutos.DataValueField = "IdProducto";
             ddlProdcutos.DataBind();
@@ -572,10 +572,10 @@ namespace Web.MainModule.Requisicion.Vista
             Model.RequisicionRevPutDTO requRevision = new Model.RequisicionRevPutDTO();
             requRevision.IdRequisicion = (int)ViewState["idRequisicion"];
             requRevision.NumeroRequisicion = lblIdRequisicion.Text;
-            if (TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            if (TokenServicios.ObtenerEsAdministracionCentral(_tok))
                 requRevision.IdUsuarioRevision = int.Parse(ddlSolicitante.SelectedValue);
             else
-                requRevision.IdUsuarioRevision = TokenServicio.ObtenerIdUsuario(_tok);
+                requRevision.IdUsuarioRevision = TokenServicios.ObtenerIdUsuario(_tok);
             requRevision.OpinionAlmacen = txtOpinion.Text;
             requRevision.FechaRevision = DateTime.Today;
             requRevision.ListaProductos = (List<Model.RequisicionProdReviPutDTO>)ViewState["LIstaReqProdRevPutDTO"];

@@ -25,13 +25,14 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         {
             return new CuentaContable()
             {
-                IdCuentaContable = cuentaContableDto.IdCuenta,
+                IdCuentaContable = cuentaContableDto.IdCuentaContable,
                 IdEmpresa = cuentaContableDto.IdEmpresa,
                 Numero = cuentaContableDto.Numero,
                 Descripcion = cuentaContableDto.Descripcion,
                 Activo = true,
             };
-        }        public static CuentaContable FromEntity(CuentaContable cuentaContable)
+        }
+        public static CuentaContable FromEntity(CuentaContable cuentaContable)
         {
             return new CuentaContable()
             {

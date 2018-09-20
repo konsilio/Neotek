@@ -1,0 +1,305 @@
+﻿@model MVC.Presentacion.Models.Catalogos.ProductoDTO
+@{
+    string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
+}
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+<script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".filterable tr:has(td)").each(function () {
+            var t = $(this).text().toLowerCase();
+            $("<td class='indexColumn'></td>")
+             .hide().text(t).appendTo(this);
+        });
+        $("#txtNumeroFiltro").keyup(function () {
+            var s = $(this).val().toLowerCase().split(" ");
+            $(".filterable tr:hidden").show();
+            $.each(s, function () {
+                $(".filterable tr:visible .indexColumn:not(:contains('"
+                   + this + "'))").parent().hide();
+            });//each
+        });//key up.
+    });//document.ready
+
+</script>
+<section class="content home">
+    <div class="container-fluid">
+        @using (Html.BeginForm("CrearProducto", "Producto", FormMethod.Post))
+            {
+            @Html.HiddenFor(m => m.IdEmpresa)
+            @Html.HiddenFor(m => m.IdUnidadMedida)
+            <div class="block-header">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Producto</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item active">Producto / Producto</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Crear</strong> nueva Unidad de Medida</h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-sm-3">
+                                        <b>Gasera:</b>
+                                        @if (ViewBag.EsAdmin)
+                                        {
+                                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control " disabled value="@ViewBag.Empresas" />
+                                        }
+                                        @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <b>Tipo ¿Es producto o Servicio?</b>
+                                            <select name="IdProductoServicioTipo">
+                                                <option value="2">Producto</option>
+                                                <option value="3">Servicio</option>
+                                            </select>
+                                            @Html.ValidationMessageFor(m => m.IdProductoServicioTipo, "", new { @class = "alert-danger" })
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <b>Cuenta contable</b>
+                                            <select name="IdCuentaContable">
+                                                @foreach (var cc in ViewBag.CuentasContables)
+                                                {
+                                                    <option value="@cc.IdCuentaContable">@cc.Descripcion</option>
+                                                }
+                                            </select>
+                                            @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <b>Categorías</b>
+                                            <select name="IdCategoria">
+                                                @foreach (var cc in ViewBag.Categorias)
+                                                {
+                                                    <option value="@cc.IdCategoria">@cc.Nombre</option>
+                                                }
+                                            </select>
+                                            @Html.ValidationMessageFor(m => m.IdCategoria, "", new { @class = "alert-danger" })
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-4">
+                                        <b>Linea de Productos:</b>
+                                        <select name="IdProductoLinea">
+                                            @foreach (var cc in ViewBag.LineasProducto)
+                                            {
+                                                <option value="@cc.IdProductoLinea">@cc.Descripcion</option>
+                                            }
+                                        </select>
+                                        @Html.ValidationMessageFor(m => m.IdProductoLinea, "", new { @class = "alert-danger" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Unidad de medida:</b>
+                                        <select name="IdUnidadMedida">
+                                            @foreach (var cc in ViewBag.UnidadesMedida)
+                                            {
+                                                <option value="@cc.IdUnidadMedida">@cc.Descripcion</option>
+                                            }
+                                        </select>
+                                        @Html.ValidationMessageFor(m => m.IdUnidadMedida, "", new { @class = "alert-danger" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Unidad de medida alternativa (Opcional)</b>
+                                        <select name="IdUnidadMedida2">
+                                            @foreach (var cc in ViewBag.UnidadesMedida)
+                                            {
+                                                <option value="@cc.IdUnidadMedida">@cc.Descripcion</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-8">
+                                        <b>Descripcion: </b>
+                                        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control", @Rows = 5 })
+                                        @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "alert-danger" })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="checkbox">
+                                            <input id="cbServicioTransporte" name="EsServicioTransporte" type="checkbox">
+                                            <label for="cbServicioTransporte">
+                                                ¿Es Servicio de transporte?
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <input id="cbActivoVenta" name="EsActivoVenta" type="checkbox">
+                                            <label for="cbActivoVenta">
+                                                ¿Es activo de venta?
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <input id="cbEsGas" name="EsGas" type="checkbox">
+                                            <label for="cbEsGas">
+                                                ¿Es Gas?
+                                            </label>
+                                        </div>
+                                        <div><b>Almacen</b></div>
+                                      
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(m => m.Minimos, new { @class = "form-control", @placeholder = "Minimo" })
+                                            @Html.ValidationMessageFor(m => m.Minimos, "", new { @class = "alert-danger" })
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(m => m.Maximo, new { @class = "form-control", @placeholder = "Maximo" })
+                                            @Html.ValidationMessageFor(m => m.Maximo, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-1">
+                                        <b>&nbsp; </b>
+                                        <div class="form-group">
+                                            @if (ViewBag.EsEdicion == null)
+                                            {
+                                                <button btn id="BtnCrear" formaction="CrearProducto" class="btn btn-primary btn-icon btn-round">
+                                                    <i class="zmdi zmdi-plus">Agregar</i>
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button btn id="btnUpDate" formaction="EditarProducto" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                                    <i class="zmdi zmdi-swap">Terminar Edicion</i>
+                                                </button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (ViewBag.MensajeError != null)
+                                {
+                                    <br />
+                                    <div id="DivAlerta" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                @ViewBag.MensajeError
+                                            </strong>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-sm-4">
+                                        @if (ViewBag.EsAdmin)
+                                        {
+                                            <select id="ddlEmpresasFilter" class="form-control show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control" disabled value="@ViewBag.Empresas" />
+                                        }
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Numero" id="txtNumeroFiltro" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="table-responsive">
+                                        <table class="table table table-bordered table-striped table-hover js-basic-example dataTable filterable" name="RequisicionProductos">
+                                            <thead>
+                                                <tr>
+                                                    <td><b>Tipo</b></td>
+                                                    <td><b>Categoria</b></td>
+                                                    <td><b>Línea</b></td>
+                                                    <td><b>Descripción</b></td>
+                                                    <td><b>Unidad de Medida</b></td>
+                                                    <td><b>Activo Venta</b></td>
+                                                    <td><b>Es Gas</b></td>
+                                                    <td><b>Es Transporte</b></td>
+                                                    <td><b>Accion</b></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var prod in ViewBag.Productos)
+                                                {
+                                                    <tr>
+                                                        <td>@prod.TipoProducto </td>
+                                                        <td>@prod.Categoria </td>
+                                                        <td>@prod.LineaProducto</td>
+                                                        <td>@prod.Descripcion</td>
+                                                        <td>@prod.UnidadMedida</td>
+                                                        @if (prod.EsActivoVenta)
+                                                        {
+                                                            <td>Si</td> }
+                                                        else
+                                                        {
+                                                            <td>No</td> }
+                                                        @if (prod.EsGas)
+                                                        {
+                                                            <td>Si</td> }
+                                                        else
+                                                        {
+                                                            <td>No</td>}
+                                                        @if (prod.EsTransporteGas)
+                                                        {
+                                                            <td>Si</td> }
+                                                        else
+                                                        {
+                                                            <td>No</td>}
+                                                        <td>
+                                                            <a href="@Url.Action("EditarProducto", "Producto", new { Id = prod.IdProducto })">
+                                                                <i class="material-icons">edit</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                            <a href="@Url.Action("EliminarProducto", "Producto", new { Id = prod.IdProducto })">
+                                                                <i class="material-icons">delete</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

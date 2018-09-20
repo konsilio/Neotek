@@ -1,0 +1,18 @@
+﻿@model MVC.Presentacion.Models.Catalogos.CentroCostoDTO
+
+<tr>
+    <td>@Model.Empresa </td>
+    <td>@Model.Numero </ td >
+    <td>@Model.Descripcion </ td >
+    <td>@Model.TipoCentroCosto </ td >
+    <td>
+        <a href="@Url.Action("ActivarEditar", "CentroCosto", new { Id = Model.IdCentroCosto })">
+            <i class="material-icons">edit</i>
+            <span class="icon-name"></span>
+        </a>
+        <a href="@Url.Action("Eliminar", "CentroCosto", new { Id = Model.IdCentroCosto})">
+            <i class="material-icons">delete</i>
+            <span class="icon-name"></span>        </a>
+
+    </td>
+</tr>

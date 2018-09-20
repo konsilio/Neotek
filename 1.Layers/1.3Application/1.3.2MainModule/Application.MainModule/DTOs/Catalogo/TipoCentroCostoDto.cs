@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Catalogo
 {
-    public enum TipoCentroCostoEnum
+    public class TipoCentroCostoDto
     {
-        Administrativos = 1,
-        Operativos = 2,
-        Ventas = 3
+        public byte IdTipoCentroCosto { get; set; }
+        public string Descripcion { get; set; }
     }
 }

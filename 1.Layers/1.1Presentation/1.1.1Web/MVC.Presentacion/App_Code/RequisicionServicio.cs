@@ -158,7 +158,7 @@ namespace MVC.Presentacion.App_Code
         {
             var respuestaReq = new AgenteServicio();
             respuestaReq.GuardarRequisicon(Req, tkn);
-            return respuestaReq._respuestaDTO;
+            return respuestaReq._RespuestaDTO;
         }
         #region Revicion Requisicion
         public static RespuestaDTO FinalizarRevision(RequisicionRevisionModel model, string _tok)
@@ -197,7 +197,7 @@ namespace MVC.Presentacion.App_Code
         {
             var respuestaReq = new AgenteServicio();
             respuestaReq.ActualizarRequisicionRevision(Req, tkn);
-            return respuestaReq._respuestaDTO;
+            return respuestaReq._RespuestaDTO;
         }
         private static RespuestaDTO ValidarRevisionAlmacen(RequisicionRevisionModel dto, out List<RequisicionProdReviPutDTO> lProd)
         {

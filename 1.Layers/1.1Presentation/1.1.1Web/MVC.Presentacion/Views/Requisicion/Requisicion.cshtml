@@ -132,7 +132,7 @@
                                             <textarea name="RequeridoEn" class="form-control no-resize" @EnabledEsNueva placeholder="Se requiere en..." rows="4">@Model.RequeridoEn</textarea>
                                         </div>
                                     </div>
-                                    @if (ViewBag.MensajeError != null && !ViewBag.MensajeError.Equal(string.Empty))
+                                    @if (!string.IsNullOrEmpty(ViewBag.MensajeError))
                                     {
                                         <div class="row clearfix">
                                             <div id="divCampos" class="container">
@@ -190,9 +190,9 @@
                                             <div class="col-lg-3">
                                                 <b>Centro de costo:</b>
                                                 <select class="form-control z-index show-tick selectpicker" data-live-search="true" name="IdCentroCosto">
+                                                    <option value="0">Seleccione uno</option>
                                                     @foreach (var lst in Model.CentrosCostos)
                                                     {
-                                                        <option value="0">Seleccione uno</option>
                                                         if (lst.IdCentroCosto.Equals(Model.IdCentroCosto))
                                                         {
                                                             <option value="@lst.IdCentroCosto" selected>@lst.Descripcion</option>

@@ -138,7 +138,6 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaEmpresasLogin());
         }
-
         [Route("empresas/listaempresa")]
         public HttpResponseMessage GetListaEmpresas()
         {
@@ -408,6 +407,12 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCentroCosto(idCosto));
         }
+
+        [Route("consulta/tipocentrosdecosto")]
+        public HttpResponseMessage GetTipoCentroCostos()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaTipoCentroCosto(), Request);
+        }
         #endregion
 
         #region Cuentas Contables
@@ -440,6 +445,31 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaCuentaContable(idCuenta));
         }
-        #endregion      
+        #endregion
+
+        #region Estación de Carburación
+        [Route("consulta/estacioncarburacion")]
+        public HttpResponseMessage GetListaEstacionCarburacion()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaEstacionesCarburacion(), Request);
+        }
+        #endregion
+
+        #region Unidad Almacen Gas
+        [Route("consulta/unidadalmacengas/{idEmpresa}")]
+        public HttpResponseMessage GetListaUnidadAlmcenGas(short IdEmpresa)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaUnidadAlmacenGas(IdEmpresa), Request);
+        }
+        #endregion
+
+        #region Equipo de transporte
+        [Route("consulta/equipotransporte")]
+        public HttpResponseMessage GetListaEquiposTransporte()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaEquipoTrasnporte(), Request);
+        }
+        #endregion
+
     }
 }

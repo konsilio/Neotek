@@ -32,17 +32,24 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
 
         public static CentroCosto FromDto(CentroCostoModificarDto cCostoDto, CentroCosto cc)
         {
+            //centroCosto.IdCAlmacenGas = cCostoDto.IdCAlmacenGas != null && cCostoDto.IdCAlmacenGas > 0 ? cCostoDto.IdCAlmacenGas : null;
+            //centroCosto.IdCamioneta = cCostoDto.IdCamioneta != null && cCostoDto.IdCamioneta > 0 ? cCostoDto.IdCamioneta : null;
+            //centroCosto.IdCilindro = cCostoDto.IdCilindro != null && cCostoDto.IdCilindro > 0 ? cCostoDto.IdCilindro : null;
+            //centroCosto.IdEquipoTransporte = cCostoDto.IdEquipoTransporte != null && cCostoDto.IdCAlmacenGas > 0 ? cCostoDto.IdCAlmacenGas : null;
+            //centroCosto.IdEstacionCarburacion = cCostoDto.IdEstacionCarburacion != null && cCostoDto.IdEstacionCarburacion > 0 ? cCostoDto.IdEstacionCarburacion : null;
+            //centroCosto.IdPipa = cCostoDto.IdPipa != null && cCostoDto.IdPipa > 0 ? cCostoDto.IdPipa : null;
+            //centroCosto.IdVehiculoUtilitario = cCostoDto.IdVehiculoUtilitario != null && cCostoDto.IdVehiculoUtilitario > 0 ? cCostoDto.IdVehiculoUtilitario : null;
+
             var centroCosto = FromEntity(cc);
             centroCosto.IdCentroCosto = cCostoDto.IdCentroCosto;
             centroCosto.IdEmpresa = cCostoDto.IdEmpresa;
             centroCosto.IdTipoCentroCosto = cCostoDto.IdTipoCentroCosto;
-            centroCosto.IdCAlmacenGas = cCostoDto.IdCAlmacenGas != null && cCostoDto.IdCAlmacenGas > 0 ? cCostoDto.IdCAlmacenGas : null;
-            centroCosto.IdCamioneta = cCostoDto.IdCamioneta != null && cCostoDto.IdCamioneta > 0 ? cCostoDto.IdCamioneta : null;
-            centroCosto.IdCilindro = cCostoDto.IdCilindro != null && cCostoDto.IdCilindro > 0 ? cCostoDto.IdCilindro : null;
-            centroCosto.IdEquipoTransporte = cCostoDto.IdEquipoTransporte != null && cCostoDto.IdCAlmacenGas > 0 ? cCostoDto.IdCAlmacenGas : null;
-            centroCosto.IdEstacionCarburacion = cCostoDto.IdEstacionCarburacion != null && cCostoDto.IdEstacionCarburacion > 0 ? cCostoDto.IdEstacionCarburacion : null;
-            centroCosto.IdPipa = cCostoDto.IdPipa != null && cCostoDto.IdPipa > 0 ? cCostoDto.IdPipa : null;
-            centroCosto.IdVehiculoUtilitario = cCostoDto.IdVehiculoUtilitario != null && cCostoDto.IdVehiculoUtilitario > 0 ? cCostoDto.IdVehiculoUtilitario : null;
+            centroCosto.IdCAlmacenGas = cCostoDto.IdCAlmacenGas;
+            centroCosto.IdCamioneta = cCostoDto.IdCamioneta;
+            centroCosto.IdCilindro = cCostoDto.IdCilindro;
+            centroCosto.IdEquipoTransporte = cCostoDto.IdEquipoTransporte;
+            centroCosto.IdEstacionCarburacion = cCostoDto.IdEstacionCarburacion;
+            centroCosto.IdPipa = cCostoDto.IdPipa;
             centroCosto.Numero = cCostoDto.Numero;
             centroCosto.Descripcion = cCostoDto.Descripcion;
             return centroCosto;
