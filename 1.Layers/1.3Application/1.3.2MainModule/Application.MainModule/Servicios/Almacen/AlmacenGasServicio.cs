@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.Servicios.Mobile;
 
 namespace Application.MainModule.Servicios.Almacen
 {
@@ -35,6 +36,16 @@ namespace Application.MainModule.Servicios.Almacen
         public static List<AlmacenGasTomaLectura> ObtenerLecturas(short idCAlmacenGas)
         {            
             return new AlmacenGasDataAccess().BuscarLecturas(idCAlmacenGas); 
+        }
+        public static List<AlmacenGasTomaLectura> ObtenerTomaLecturasDatosNoProcesados(UnidadAlmacenGas unidad)
+        {
+            bool noProcesados = false;
+
+            if (unidad != null)
+                if (unidad.TomasLectura != null && unidad.TomasLectura.Count > 0)
+                    return unidad.TomasLectura.Where(x => x.DatosProcesados.Equals(noProcesados)).ToList();
+
+            return new AlmacenGasDataAccess().BuscarLecturas(unidad.IdCAlmacenGas, noProcesados);
         }
         public static RespuestaDto InsertarLectura(AlmacenGasTomaLectura lia)
         {
@@ -88,6 +99,18 @@ namespace Application.MainModule.Servicios.Almacen
         public static AlmacenGas Obtener(short idAlmacenGas)
         {
             return new AlmacenGasDataAccess().Buscar(idAlmacenGas);
+        }
+        public static UnidadAlmacenGas ObtenerUnidadAlamcenGas(short idCAlmacenGas)
+        {
+            return new AlmacenGasDataAccess().BuscarUnidadAlamcenGas(idCAlmacenGas);
+        }
+        public static UnidadAlmacenGas ObtenerUnidadAlamcenGas(AlmacenGasDescarga descarga)
+        {
+            if (descarga != null)
+                if (descarga.UnidadAlmacen != null)
+                    return descarga.UnidadAlmacen;
+
+            return ObtenerUnidadAlamcenGas(descarga.IdCAlmacenGas.Value);
         }
         public static AlmacenGasDescarga ObtenerDescargaPorOCompraExpedidor(int idOCompra)
         {
@@ -158,6 +181,47 @@ namespace Application.MainModule.Servicios.Almacen
                 cilindros.Add(AdaptarCilindro(cil, cantidad));
 
             return cilindros;
+        }
+
+        public static identidadUnidadAlmacenGas IdentificarTipoUnidadAlamcenGas(UnidadAlmacenGas unidad)
+        {
+            if (unidad.EsGeneral && unidad.EsAlterno)
+                return identidadUnidadAlmacenGas.AlmacenAlterno;
+
+            if (unidad.EsGeneral && unidad.EsAlterno.Equals(false))
+                return identidadUnidadAlmacenGas.AlmacenPrincipal;
+
+            if (unidad.IdEstacionCarburacion != null && unidad.IdEstacionCarburacion > 0)
+                return identidadUnidadAlmacenGas.EstacionCarburacion;
+
+            if (unidad.IdPipa != null && unidad.IdPipa > 0)
+                return identidadUnidadAlmacenGas.Pipa;
+
+            if (unidad.IdCamioneta != null && unidad.IdCamioneta > 0)
+                return identidadUnidadAlmacenGas.Camioneta;
+        }
+
+        public static void ProcesarInventario()
+        {
+            var lecturas = LecturaGasServicio.ObtenerTomaLectura();
+        }
+
+        public static void CalcularInventarioDeUnidadAlmacenGas(UnidadAlmacenGas unidad)
+        {            
+            switch (IdentificarTipoUnidadAlamcenGas(unidad))
+            {
+                case identidadUnidadAlmacenGas.AlmacenPrincipal: CalcularInventarioAlmacenPrincipal(unidad); break;
+                case identidadUnidadAlmacenGas.AlmacenAlterno: break;
+                case identidadUnidadAlmacenGas.EstacionCarburacion: break;
+                case identidadUnidadAlmacenGas.Pipa: break;
+                case identidadUnidadAlmacenGas.Camioneta: break;
+            }
+        }
+
+        public static void CalcularInventarioAlmacenPrincipal(UnidadAlmacenGas unidad)
+        {
+            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            
         }
     }
 }

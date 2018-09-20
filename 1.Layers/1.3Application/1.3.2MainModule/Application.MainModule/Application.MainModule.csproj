@@ -194,6 +194,7 @@
     <Compile Include="Servicios\AccesoADatos\TipoCentroCostoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\TipoMedidorGasDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
+    <Compile Include="Servicios\Almacen\CalcularGasServicio.cs" />
     <Compile Include="Servicios\Almacen\ProductoAlmacenServicio.cs" />
     <Compile Include="Servicios\Almacen\AlmacenGasServicio.cs" />
     <Compile Include="Servicios\Catalogos\CentroCostoServicio.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Servicios\Catalogos\ValidarCatalogoServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
+    <Compile Include="Servicios\FuncionIngresoGastoServicio.cs" />
     <Compile Include="Servicios\Mobile\GasServicio.cs" />
     <Compile Include="Servicios\Mobile\LecturaGasServicio.cs" />
     <Compile Include="Servicios\Mobile\RecargaGasServicio.cs" />

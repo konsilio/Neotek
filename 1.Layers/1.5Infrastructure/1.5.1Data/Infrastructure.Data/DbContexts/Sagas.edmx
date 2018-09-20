@@ -80,6 +80,7 @@
           <Property Name="CapacidadTanqueLt" Type="decimal" Precision="18" Scale="4" />
           <Property Name="CapacidadTanqueKg" Type="decimal" Precision="18" Scale="4" />
           <Property Name="PorcenMagnatelPapeleta" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="MasaKg" Type="decimal" Precision="18" Scale="4" />
           <Property Name="PresionTanque" Type="decimal" Precision="10" Scale="2" />
           <Property Name="Sello" Type="varchar" MaxLength="25" />
           <Property Name="ValorCarga" Type="decimal" Precision="18" Scale="4" />
@@ -1121,13 +1122,29 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CatModificarCliente" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="CatEliminarCliente" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="CatConsultarCliente" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
-          <Property Name="CatAsignarChoferPuntoVenta" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarEmpresa" Type="bit" Nullable="false" />
+          <Property Name="CatModificarEmpresa" Type="bit" Nullable="false" />
+          <Property Name="CatEliminarEmpresa" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarEmpresa" Type="bit" Nullable="false" />
+          <Property Name="CatInsertarRol" Type="bit" Nullable="false" />
+          <Property Name="CatModificarRol" Type="bit" Nullable="false" />
+          <Property Name="CatEliminarRol" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarRol" Type="bit" Nullable="false" />
           <Property Name="CatEliminarPuntoVenta" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="CatConsultarPuntoVenta" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
-          <Property Name="CatAsignarEquipoTransporte" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="CatModificarEquipoTransporte" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="CatEliminarEquipoTransporte" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="CatConsultarEquipoTransporte" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatInsertarPrecioVentaGas" Type="bit" Nullable="false" />
+          <Property Name="CatModificarPrecioVentaGas" Type="bit" Nullable="false" />
+          <Property Name="CatEliminarPrecioVentaGas" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarPrecioVentaGas" Type="bit" Nullable="false" />
+          <Property Name="CatInsertarPrecioVenta" Type="bit" Nullable="false" />
+          <Property Name="CatModificarPrecioVenta" Type="bit" Nullable="false" />
+          <Property Name="CatEliminarPrecioVenta" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarPrecioVenta" Type="bit" Nullable="false" />
+          <Property Name="CatAsignarChoferPuntoVenta" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
+          <Property Name="CatAsignarEquipoTransporte" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="RolAccionMovil">
           <Key>
@@ -1228,6 +1245,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdUsuario" Type="int" Nullable="false" />
           <Property Name="IdRol" Type="smallint" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="1" />
         </EntityType>
         <Association Name="FK_Almacen_CProducto">
           <End Role="CProducto" Type="Self.CProducto" Multiplicity="1" />
@@ -4181,7 +4199,23 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="AppTraspasoPipa" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
 
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
-          <NavigationProperty Name="ListaUsuarios" Relationship="Sagas.MainModuleModel.UsuarioRol" FromRole="Rol" ToRole="Usuario" />          
+          <NavigationProperty Name="ListaUsuarios" Relationship="Sagas.MainModuleModel.UsuarioRol" FromRole="Rol" ToRole="Usuario" />
+          <Property Name="CatInsertarEmpresa" Type="Boolean" Nullable="false" />
+          <Property Name="CatModificarEmpresa" Type="Boolean" Nullable="false" />
+          <Property Name="CatEliminarEmpresa" Type="Boolean" Nullable="false" />
+          <Property Name="CatConsultarEmpresa" Type="Boolean" Nullable="false" />
+          <Property Name="CatInsertarRol" Type="Boolean" Nullable="false" />
+          <Property Name="CatModificarRol" Type="Boolean" Nullable="false" />
+          <Property Name="CatEliminarRol" Type="Boolean" Nullable="false" />
+          <Property Name="CatConsultarRol" Type="Boolean" Nullable="false" />
+          <Property Name="CatInsertarPrecioVentaGas" Type="Boolean" Nullable="false" />
+          <Property Name="CatModificarPrecioVentaGas" Type="Boolean" Nullable="false" />
+          <Property Name="CatEliminarPrecioVentaGas" Type="Boolean" Nullable="false" />
+          <Property Name="CatConsultarPrecioVentaGas" Type="Boolean" Nullable="false" />
+          <Property Name="CatInsertarPrecioVenta" Type="Boolean" Nullable="false" />
+          <Property Name="CatModificarPrecioVenta" Type="Boolean" Nullable="false" />
+          <Property Name="CatEliminarPrecioVenta" Type="Boolean" Nullable="false" />
+          <Property Name="CatConsultarPrecioVenta" Type="Boolean" Nullable="false" />          
           <!--<NavigationProperty Name="RolAccionMovil" Relationship="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" FromRole="Rol" ToRole="RolAccionMovil" />-->
           
           <!--<NavigationProperty Name="Rol" Relationship="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" FromRole="RolAccionMovil" ToRole="Rol" />-->
@@ -6122,6 +6156,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CapacidadTanqueLt" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="CapacidadTanqueKg" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="PorcenMagnatelPapeleta" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="MasaKg" Type="Decimal" Precision="18" Scale="4" />          
           <Property Name="PresionTanque" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="Sello" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="ValorCarga" Type="Decimal" Precision="18" Scale="4" />
@@ -8318,7 +8353,23 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 </MappingFragment>
               
                 <MappingFragment StoreEntitySet="RolAccionCatalogo">
-                  <ScalarProperty Name="CatConsultarEquipoTransporte" ColumnName="CatConsultarEquipoTransporte" />
+                  <ScalarProperty Name="CatConsultarPrecioVenta" ColumnName="CatConsultarPrecioVenta" />
+                <ScalarProperty Name="CatEliminarPrecioVenta" ColumnName="CatEliminarPrecioVenta" />
+                <ScalarProperty Name="CatModificarPrecioVenta" ColumnName="CatModificarPrecioVenta" />
+                <ScalarProperty Name="CatInsertarPrecioVenta" ColumnName="CatInsertarPrecioVenta" />
+                <ScalarProperty Name="CatConsultarPrecioVentaGas" ColumnName="CatConsultarPrecioVentaGas" />
+                <ScalarProperty Name="CatEliminarPrecioVentaGas" ColumnName="CatEliminarPrecioVentaGas" />
+                <ScalarProperty Name="CatModificarPrecioVentaGas" ColumnName="CatModificarPrecioVentaGas" />
+                <ScalarProperty Name="CatInsertarPrecioVentaGas" ColumnName="CatInsertarPrecioVentaGas" />
+                <ScalarProperty Name="CatConsultarRol" ColumnName="CatConsultarRol" />
+                <ScalarProperty Name="CatEliminarRol" ColumnName="CatEliminarRol" />
+                <ScalarProperty Name="CatModificarRol" ColumnName="CatModificarRol" />
+                <ScalarProperty Name="CatInsertarRol" ColumnName="CatInsertarRol" />
+                <ScalarProperty Name="CatConsultarEmpresa" ColumnName="CatConsultarEmpresa" />
+                <ScalarProperty Name="CatEliminarEmpresa" ColumnName="CatEliminarEmpresa" />
+                <ScalarProperty Name="CatModificarEmpresa" ColumnName="CatModificarEmpresa" />
+                <ScalarProperty Name="CatInsertarEmpresa" ColumnName="CatInsertarEmpresa" />
+                <ScalarProperty Name="CatConsultarEquipoTransporte" ColumnName="CatConsultarEquipoTransporte" />
                 <ScalarProperty Name="CatEliminarEquipoTransporte" ColumnName="CatEliminarEquipoTransporte" />
                 <ScalarProperty Name="CatModificarEquipoTransporte" ColumnName="CatModificarEquipoTransporte" />
                 <ScalarProperty Name="CatAsignarEquipoTransporte" ColumnName="CatAsignarEquipoTransporte" />
@@ -8788,6 +8839,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
             
               <MappingFragment StoreEntitySet="AlmacenEntradaGasDescargaPuerta">
+                <ScalarProperty Name="MasaKg" ColumnName="MasaKg" />
                 <ScalarProperty Name="FechaEntraGas" ColumnName="FechaEntraGas" />
                 <ScalarProperty Name="PorcenMagnatelOcular" ColumnName="PorcenMagnatelOcular" />
                 <ScalarProperty Name="NombreResponsable" ColumnName="NombreResponsable" />

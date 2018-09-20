@@ -19,6 +19,7 @@ namespace Application.MainModule.Servicios.Catalogos
             List<EmpresaDTO> lEmpresas = new List<EmpresaDTO>(EmpresaAdapter.ToDTO(new EmpresaDataAccess().BuscarTodos()));
             return lEmpresas;
         }
+
         public static List<EmpresaDTO> BuscarEmpresas(bool conAC)
         {
             List<EmpresaDTO> lEmpresas = new List<EmpresaDTO>(EmpresaAdapter.ToDTO(new EmpresaDataAccess().BuscarTodos(conAC)));
@@ -32,6 +33,14 @@ namespace Application.MainModule.Servicios.Catalogos
         public static Empresa Obtener(short IdEmpresa)
         {
             return new EmpresaDataAccess().Buscar(IdEmpresa);
+        }
+        public static Empresa Obtener(UnidadAlmacenGas unidad)
+        {
+            if (unidad != null)
+                if (unidad.Empresa != null)
+                    return unidad.Empresa;
+
+            return Obtener(unidad.IdEmpresa);
         }
 
         public static RespuestaDto RegistrarEmpresa(Empresa emp)
