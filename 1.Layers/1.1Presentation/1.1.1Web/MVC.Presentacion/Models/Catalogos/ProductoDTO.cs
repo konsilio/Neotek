@@ -30,9 +30,14 @@ namespace MVC.Presentacion.Models.Catalogos
         [Display(Name = "IdCategoria")]
         public short IdCategoria { get; set; }
 
+        public string Categoria { get; set; }
+        public int IdCuentaContable { get; set; }
+
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdProductoLinea")]
         public short IdProductoLinea { get; set; }
+
+        public string LineaProducto { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdUnidadMedida")]
@@ -73,5 +78,8 @@ namespace MVC.Presentacion.Models.Catalogos
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "FechaRegistro")]
         public DateTime? FechaRegistro { get; set; }
+        public bool EsActivoVenta { get; set; }
+        public bool EsGas { get; set; }
+        public bool EsTransporteGas { get; set; }     
     }
 }
