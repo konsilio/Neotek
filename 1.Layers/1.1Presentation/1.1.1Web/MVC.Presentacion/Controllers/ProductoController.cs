@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -13,12 +14,13 @@ namespace MVC.Presentacion.Controllers
     {
         string tkn = string.Empty;        
         #region Categorías Producto
-        public ActionResult Categoria(CategoriaProductoDTO model = null)
-        {
-            RespuestaDTO Resp = new RespuestaDTO();
+        public ActionResult Categoria(int? page, CategoriaProductoDTO model = null)
+        {     
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            RespuestaDTO Resp = new RespuestaDTO();
             tkn = Session["StringToken"].ToString();
-            ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn);
+            var Pagina = page ?? 1;
+            ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn).ToPagedList(Pagina, 20); ;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             if (TempData["RespuestaDTO"] != null)
                 Resp = (RespuestaDTO)TempData["RespuestaDTO"];
@@ -93,12 +95,13 @@ namespace MVC.Presentacion.Controllers
         }
         #endregion
         #region Linea Producto
-        public ActionResult LineaProducto(LineaProductoDTO model = null)
-        {
-            RespuestaDTO Resp = new RespuestaDTO();
-            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+        public ActionResult LineaProducto(int? page, LineaProductoDTO model = null)
+        {            
+            if (Session["StringToken"] == null) return View("Index","Home", AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
-            ViewBag.Lineas = CatalogoServicio.ListaLineasProducto(tkn);
+            RespuestaDTO Resp = new RespuestaDTO();
+            var Pagina = page ?? 1;
+            ViewBag.Lineas = CatalogoServicio.ListaLineasProducto(tkn).ToPagedList(Pagina, 20); ;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             if (TempData["RespuestaDTO"] != null)
                 Resp = (RespuestaDTO)TempData["RespuestaDTO"];
@@ -136,7 +139,6 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("LineaProducto", new { respuesta, model });
             }
         }
-
         public ActionResult EliminarLineaProducto(short id)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -173,12 +175,14 @@ namespace MVC.Presentacion.Controllers
         }
         #endregion
         #region Unidada de Medida
-        public ActionResult UnidadMedida(UnidadMedidaDTO model = null)
+        public ActionResult UnidadMedida(int? page, UnidadMedidaDTO model = null)
         {
-            RespuestaDTO Resp = new RespuestaDTO();
+            
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
-            ViewBag.Unidades = CatalogoServicio.ListaUnidadesMedida(tkn);
+            RespuestaDTO Resp = new RespuestaDTO();
+            var Pagina = page ?? 1;
+            ViewBag.Unidades = CatalogoServicio.ListaUnidadesMedida(tkn).ToPagedList(Pagina, 20); ;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             if (TempData["RespuestaDTO"] != null)
                 Resp = (RespuestaDTO)TempData["RespuestaDTO"];
@@ -216,7 +220,6 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("UnidadMedida", new { respuesta, model });
             }
         }
-
         public ActionResult EliminarUnidadMedida(short id)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
@@ -253,12 +256,13 @@ namespace MVC.Presentacion.Controllers
         }
         #endregion
         #region Producto
-        public ActionResult Producto(ProductoDTO model = null)
-        {
+        public ActionResult Producto(int? page, ProductoDTO model = null)
+        {           
             RespuestaDTO Resp = new RespuestaDTO();
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
-            ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
+            var Pagina = page ?? 1;
+            ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).ToPagedList(Pagina, 20);
             ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn) ,tkn);
             ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn);
             ViewBag.LineasProducto = CatalogoServicio.ListaLineasProducto(tkn);
@@ -268,9 +272,9 @@ namespace MVC.Presentacion.Controllers
             if (TempData["RespuestaDTO"] != null)
                 Resp = (RespuestaDTO)TempData["RespuestaDTO"];
             ModelState.Clear();
-            if (model != null)
+            if (model != null)            
                 if (model.IdProducto != 0)
-                    ViewBag.EsEdicion = true;
+                    ViewBag.EsEdicion = true;       
             if (Resp != null)
             {
                 if (Resp.ModelStatesStandar != null)
@@ -284,7 +288,7 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
-                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(tkn))).NombreComercial;
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(tkn))).NombreComercial;           
             return View(model);
         }
         [HttpPost]
