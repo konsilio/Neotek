@@ -166,25 +166,25 @@ public interface RestClient {
     );
 
     @POST(Constantes.POST_LECTURA_INICIAL)
-    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialAlmacen(LecturaAlmacenDTO lecturaAlmacenDTO,
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialAlmacen(@Body LecturaAlmacenDTO lecturaAlmacenDTO,
                                                                    @Header("Authorization")String token,
                                                                    @Header("Content-Type") String contentType
     );
 
     @POST(Constantes.POST_LECTURA_FINAL)
-    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalAlmacen(LecturaAlmacenDTO lecturaAlmacenDTO,
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalAlmacen(@Body LecturaAlmacenDTO lecturaAlmacenDTO,
                                                                  @Header("Authorization")String token,
                                                                  @Header("Content-Type") String contentType
     );
 
     @POST(Constantes.POST_LECTURA_INICIAL_CAMIONETA)
-    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialCamioneta(LecturaCamionetaDTO lecturaAlmacenDTO,
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialCamioneta(@Body LecturaCamionetaDTO lecturaAlmacenDTO,
                                                                    @Header("Authorization")String token,
                                                                    @Header("Content-Type") String contentType
     );
 
     @POST(Constantes.POST_LECTURA_FINAL_CAMIONETA)
-    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalCamioneta(LecturaCamionetaDTO  lecturaAlmacenDTO,
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalCamioneta(@Body LecturaCamionetaDTO  lecturaAlmacenDTO,
                                                                  @Header("Authorization")String token,
                                                                  @Header("Content-Type") String contentType
     );
@@ -198,19 +198,19 @@ public interface RestClient {
             @Header("Content-Type") String contentType
     );
     @POST(Constantes.POST_RECARGA)
-    Call<RespuestaRecargaDTO> postRecarga(RecargaDTO recargaDTO,
+    Call<RespuestaRecargaDTO> postRecarga(@Body RecargaDTO recargaDTO,
                                           @Header("Authorization")String token,
                                           @Header("Content-Type") String contentType
     );
 
     @POST(Constantes.POST_RECARGA_INCIAL)
-    Call<RespuestaRecargaDTO> postRecargaInicial(RecargaDTO recargaDTO,
+    Call<RespuestaRecargaDTO> postRecargaInicial(@Body RecargaDTO recargaDTO,
                                           @Header("Authorization")String token,
                                           @Header("Content-Type") String contentType
     );
 
     @POST(Constantes.POST_RECARGA_FINAL)
-    Call<RespuestaRecargaDTO> postRecargaFinal(RecargaDTO recargaDTO,
+    Call<RespuestaRecargaDTO> postRecargaFinal(@Body RecargaDTO recargaDTO,
                                                  @Header("Authorization")String token,
                                                  @Header("Content-Type") String contentType
     );

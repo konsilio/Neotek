@@ -95,12 +95,14 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 recargaDTO.setIdTipoMedidorEntrada(1);
                 recargaDTO.setNombreMedidorEntrada("Magnatel");
+                recargaDTO.setCantidadFotosEntrada(1);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 recargaDTO.setIdTipoMedidorEntrada(0);
                 recargaDTO.setNombreMedidorEntrada("");
+                recargaDTO.setCantidadFotosEntrada(0);
             }
         });
 
