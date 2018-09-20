@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/assets/css/main.css">
     <link rel="stylesheet" href="~/assets/css/color_skins.css">
 </head>
-<body class="theme-black menu_dark"  style="overflow: auto;padding-top:10px">
+<body class="theme-black menu_dark" style="overflow: auto;padding-top:10px">
     @RenderBody()
     <div class="overlay_menu">
         <button class="btn btn-primary btn-icon btn-icon-mini btn-round"><i class="zmdi zmdi-close"></i></button>
@@ -461,7 +461,7 @@
                             </div>
                             <div class="detail">
                                 <h6>
-                                    <asp:Label  ID="lblNombre" Text="Michael" />
+                                    <asp:Label ID="lblNombre" Text="Michael" />
                                 </h6>
                                 <p class="m-b-0">
                                     <asp:Label ID="lblUsuario" Text="-----"></asp:Label>
@@ -469,12 +469,11 @@
                             </div>
                         </div>
                     </li>
-
                     <li class="menu_dark"><a href="@Url.Action("Inicio", "Home")"><i class="material-icons">dashboard</i> <span class="icon-name">Dashboard</span></a></li>
                     <li class="menu_dark"><a href="@Url.Action("Requisiciones", "Requisicion")"><i class="material-icons">feedback </i><span class="icon-name">Requisicion</span> </a></li>
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">shopping_cart</i><span>Compras</span> </a>
-                        <ul class="ml-menu">                            
+                        <ul class="ml-menu">
                             <li><a href="@Url.Action("Ordenes", "OrdenCompra")">Orden de Compra </a></li>
                         </ul>
                     </li>
@@ -501,43 +500,23 @@
                                     <li>@Html.ActionLink("Unidad de Medidad", "UnidadMedida", "Producto")</li>
                                     <li>@Html.ActionLink("Categoria", "Categoria", "Producto")</li>
                                 </ul>
-
-                               
                             </li>
-                            <li><a href="../../Catalogos/Vista/Proveedor.aspx">Proveedores</a></li>
-                            <li><a href="table-color.html">Clientes</a></li>
-                            <li><a href="../../Catalogos/Vista/CuentasContables.aspx">Cuentas contables</a></li>
-                            <li><a href="../../Catalogos/Vista/CentrosCosto.aspx">Centro de costos</a></li>
-                            <li><a href="table-filter.html">Puntos de venta</a></li>
-                            <li><a href="table-filter.html">Equipo de transporte</a></li>
-                            @*<li><a href="../../Catalogos/Vista/Empresas.aspx">Gaseras</a></li>*@
                             <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
+                            <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
+                            <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
+                            <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
-    </aside>   
+    </aside>
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Scripts/jquery-ui.js")
-    @Scripts.Render("~/Scripts/DatePickerReady.js")    
+    @Scripts.Render("~/Scripts/DatePickerReady.js")
     <script src="~/assets/bundles/libscripts.bundle.js"></script>
     <script src="~/assets/bundles/vendorscripts.bundle.js"></script>
     <script src="~/assets/bundles/mainscripts.bundle.js"></script>
 </body>
 </html>
-
-                        <ul class="ml-menu">
-                            <li><a href="../../Catalogos/Vista/Proveedor.aspx">Proveedores</a></li>
-                            <li><a href="table-color.html">Clientes</a></li>
-                            <li><a href="../../Catalogos/Vista/CuentasContables.aspx">Cuentas contables</a></li>
-                            <li><a href="../../Catalogos/Vista/CentrosCosto.aspx">Centro de costos</a></li>
-                            <li><a href="table-filter.html">Puntos de venta</a></li>
-                            <li><a href="table-filter.html">Equipo de transporte</a></li>
-                            @*<li><a href="../../Catalogos/Vista/Empresas.aspx">Gaseras</a></li>*@
-                            <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
-                            <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
-                            <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
-                            <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
-                        </ul>
