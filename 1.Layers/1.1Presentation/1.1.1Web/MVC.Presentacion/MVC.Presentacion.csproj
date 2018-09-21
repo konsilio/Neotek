@@ -250,6 +250,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Catalogos\BancoDTO.cs" />
     <Compile Include="Models\Catalogos\CatalogoRespuestaDTO.cs" />
     <Compile Include="Models\Catalogos\CategoriaProductoDTO.cs" />
     <Compile Include="Models\Catalogos\CentroCosto\CentroCostoCrearDTO.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Models\Catalogos\CentroCosto\CentroCostoDTO.cs" />
     <Compile Include="Models\Catalogos\EquipoTransporteDTO.cs" />
     <Compile Include="Models\Catalogos\EstacionCarburacionDTO.cs" />
+    <Compile Include="Models\Catalogos\FormaPagoDTO.cs" />
     <Compile Include="Models\Catalogos\LineaProductoDTO.cs" />
     <Compile Include="Models\Catalogos\EmpresaDTO.cs" />
     <Compile Include="Models\Catalogos\EstadosRepModel.cs" />
@@ -279,6 +281,7 @@
     <Compile Include="Models\Catalogos\PartialViewModel.cs" />
     <Compile Include="Models\Catalogos\ProductoDTO.cs" />
     <Compile Include="Models\Catalogos\ProveedorDTO.cs" />
+    <Compile Include="Models\Catalogos\TipoProveedorDTO.cs" />
     <Compile Include="Models\Catalogos\UnidadAlmacenGasDTO.cs" />
     <Compile Include="Models\Catalogos\RegimenFiscalModel.cs" />
     <Compile Include="Models\Catalogos\RolCat.cs" />
@@ -4104,6 +4107,8 @@
     <Content Include="Views\Shared\EditorTemplates\RolRequsicion.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolMovilCompra.cshtml" />
     <Content Include="Views\Clientes\EditarLocaciones.cshtml" />
+    <Content Include="Views\Producto\Proveedor.cshtml" />
+    <Content Include="Views\Producto\Proveedores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

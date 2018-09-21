@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
+
 namespace Sagas.MainModule.IRepositorios
 {    public interface IRepository<T> where T : class
     {
@@ -18,6 +19,6 @@ namespace Sagas.MainModule.IRepositorios
         void Delete(object id);
         void Delete(T entity);
         void Update(T entity);
-        void Save();
+        void Save();      
     }
 }

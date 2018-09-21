@@ -20,7 +20,7 @@ namespace Sagas.MainModule.Entidades
             this.Proveedores = new HashSet<Proveedor>();
         }
     
-        public byte IdTipoProveedor { get; set; }
+        public byte IdTipoProveedor { get; set; }       
         public string Tipo { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }

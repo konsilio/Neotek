@@ -62,6 +62,9 @@ namespace MVC.Presentacion.Agente
         public List<ClientesDto> _lstaClientes;
         public List<UsuariosModel> _lstUserEmp;
         public List<EstadosRepModel> _listaEstados;
+        public List<TipoProveedorDTO> _listaTipoProveedor;
+        public List<BancoDTO> _listaBanco;
+        public List<FormaPagoDTO> _listaFormaPago;
 
 
         public AgenteServicio()
@@ -928,6 +931,111 @@ namespace MVC.Presentacion.Agente
         }
 
         #endregion
+        #region Tipo Proveedor
+        public void ListaTipoProveedor(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaTipoProveedores"];
+            GetListaTipoProveedor(tkn).Wait();
+        }
+        private async Task GetListaTipoProveedor(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<TipoProveedorDTO> list = new List<TipoProveedorDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<TipoProveedorDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<TipoProveedorDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaTipoProveedor = list;
+            }
+        }
+        #endregion
+        #region Banco
+        public void ListaBanco(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaBancos"];
+            GetListaBanco(tkn).Wait();
+        }
+        private async Task GetListaBanco(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<BancoDTO> list = new List<BancoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<BancoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<BancoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaBanco = list;
+            }
+        }
+        #endregion
+        #region Forma de Pago
+        public void ListaFormaPago(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaFormaPagos"];
+            GetListaFormaPago(tkn).Wait();
+        }
+        private async Task GetListaFormaPago(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<FormaPagoDTO> list = new List<FormaPagoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<FormaPagoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<FormaPagoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaFormaPago = list;
+            }
+        }
+        #endregion
 
         #region Centros de costos
         public void BuscarCentrosCostos(string tkn)
@@ -1186,6 +1294,21 @@ namespace MVC.Presentacion.Agente
                 }
                 _listaProveedores = emp;
             }
+        }
+        public void GuardarProveedor(ProveedorDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraProveedor"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        public void ModificarProveedor(ProveedorDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaProveedor"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void EliminarProveedor(ProveedorDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaProveedor"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
         #region Cuentas Contables

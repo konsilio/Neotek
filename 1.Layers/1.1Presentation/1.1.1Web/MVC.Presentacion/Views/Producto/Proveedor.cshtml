@@ -1,0 +1,443 @@
+﻿@model MVC.Presentacion.Models.Catalogos.ProveedorDTO
+@{
+    string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
+}
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
+<section class="content home">
+    <div class="container-fluid">
+        @using (Html.BeginForm("CrearProveedor", "Producto", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.IdProveedor)
+            <div class="block-header">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h2>Proveedores</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">Forms</a></li>
+                            <li class="breadcrumb-item active">Catálogo / Proveedor </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Información <strong>General</strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-12">
+                                    <b>Empresa</b>
+                                    @if (ViewBag.EsAdmin)
+                                        {
+                                    <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                        @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                    if (lst.IdEmpresa == Model.IdEmpresa)
+                                                    {
+                                            <option value="@lst.IdEmpresa" selected>@lst.NombreComercial</option>
+                                                    }
+                                                    else
+                                                    {
+                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                    }
+                                                }
+                                    </select>
+                                        }
+                                        else
+                                        {
+                                    <input type="text" class="form-control " disabled value="@ViewBag.Empresas" />
+                                    @Html.HiddenFor(m => m.IdEmpresa)
+                                        }
+                                    @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <b>Tipo de proveedor</b>
+                                    <select name="IdTipoProveedor" class="form-control">
+                                        @foreach (var cc in ViewBag.TipoProveedores)
+                                            {
+                                                if (Model != null && cc.IdTipoProveedor == Model.IdTipoProveedor)
+                                                {
+                                        <option value="@cc.IdTipoProveedor" selected>@cc.Tipo</option>
+                                                }
+                                                else
+                                                {
+                                        <option value="@cc.IdTipoProveedor">@cc.Tipo</option>
+                                                }
+                                            }
+                                    </select>
+                                    @Html.ValidationMessageFor(m => m.IdTipoProveedor, "", new { @class = "alert-danger" })
+                                </div>
+                                <div class="col-md-4">
+                                    <b>Centa contable</b>
+                                    <select name="IdCuentaContable" class="form-control">
+                                        @foreach (var cc in ViewBag.CuentasContables)
+                                            {
+                                                if (Model != null && cc.IdCuentaContable == Model.IdCuentaContable)
+                                                {
+                                        <option value="@cc.IdCuentaContable" selected>@cc.Descripcion</option>
+                                                }
+                                                else
+                                                {
+                                        <option value="@cc.IdCuentaContable">@cc.Descripcion</option>
+                                                }
+                                            }
+                                    </select>
+                                    @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
+                                </div>
+                                <div class="col-md-4">
+                                    <b>Nombre comercial</b>
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.NombreComercial, new { @class = "form-control", @placeholder = "Nombre comercial" })
+                                        @Html.ValidationMessageFor(m => m.NombreComercial, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        @Html.CheckBoxFor(m => m.TransportistaProdutoPrinicpal, new { id = "cbServicioTransporte" })
+                                        @*<input id="cbServicioTransporte" name="EsTransporteGas" type="checkbox">*@
+                                        <label for="cbServicioTransporte">
+                                            ¿Es Servicio de transporte?
+                                        </label>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        @Html.CheckBoxFor(m => m.ProdutoPrinicpal, new { id = "cbEsGas" })
+                                        @*<input id="cbEsGas" name="EsGas" type="checkbox">*@
+                                        <label for="cbEsGas">
+                                            ¿Es Gas?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <p>¿Que es lo que vende?</p>
+                                        @Html.TextAreaFor(m => m.Vende, new { @class = "form-control", @Rows = 5, @placeholder = "Descripción de lo que vende el proveedor" })
+                                        @Html.ValidationMessageFor(m => m.Vende, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Información de <strong>ubicación </strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <b>Pais</b>
+                                    <select name="IdPais" class="form-control">
+                                        @foreach (var cc in ViewBag.Paises)
+                                        {
+                                            if (Model != null && cc.IdPais == Model.IdTipoProveedor)
+                                            {
+                                            <option value="@cc.IdPais" selected>@cc.Pais</option>
+                                            }
+                                            else
+                                            {
+                                            <option value="@cc.IdPais">@cc.Pais</option>
+                                            }
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger" })
+                                </div>
+                                <div class="col-md-4">
+                                    <b>Estado de la rep.</b>
+                                    <select name="IdEstadoRep" class="form-control">
+                                        @foreach (var cc in ViewBag.Estados)
+                                        {
+                                            if (Model != null && cc.IdEstadoRep == Model.IdEstadoRep)
+                                            {
+                                            <option value="@cc.IdEstadoRep" selected>@cc.Estado</option>
+                                            }
+                                            else
+                                            {
+                                            <option value="@cc.IdEstadoRep">@cc.Estado</option>
+                                            }
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(m => m.IdEstadoRep, "", new { @class = "alert-danger" })
+                                </div>
+                                <!--Este debe aparecer si eligen un pais diferente a México y desaparecer la lista de estados de la rep.-->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <b>Estado.</b>
+                                        @Html.TextBoxFor(m => m.EstadoProvincia, new { @class = "form-control", @placeholder = "Estado/Provincia" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.Municipio, new { @class = "form-control", @placeholder = "Municipio" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.CodigoPostal, new { @class = "form-control", @placeholder = "Código postal" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.Colonia, new { @class = "form-control", @placeholder = "Colonia o fraccionamiento" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.Calle, new { @class = "form-control", @placeholder = "Calle" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.NumExt, new { @class = "form-control", @placeholder = "Número exterior" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.NumInt, new { @class = "form-control", @placeholder = "Número interior" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>Información <strong>Bancaria</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        <b>Banco</b>
+                                        <select name="IdBanco" class="form-control show-tick" data-live-search="true">
+                                            @foreach (var lst in ViewBag.Bancos)
+                                            {
+                                                if (lst.IdEmpresa == Model.IdBanco)
+                                                {
+                                                    <option value="@lst.IdBanco" selected>@lst.NombreCorto</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@lst.IdBanco">@lst.NombreCorto</option>
+                                                }
+                                            }
+                                        </select>
+                                        @Html.ValidationMessageFor(m => m.IdBanco, "", new { @class = "alert-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <b>Cuenta</b>
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.Cuenta, new { @class = "form-control", @placeholder = "Número de cuenta" })                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        <b>Forma de pago</b>
+                                        <select name="IdFormaDePago" class="form-control show-tick" data-live-search="true">
+                                            @foreach (var lst in ViewBag.Bancos)
+                                            {
+                                                if (lst.IdFormaPago == Model.IdFormaDePago)
+                                                {
+                                                    <option value="@lst.IdFormaPago" selected>@lst.Descripcion</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@lst.IdFormaPago">@lst.Descripcion</option>
+                                                }
+                                            }
+                                        </select>
+                                        @Html.ValidationMessageFor(m => m.IdFormaDePago, "", new { @class = "alert-danger" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <b>Dìas de credito</b>
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.DiasCredito, new { @class = "form-control", @placeholder = "Días que otorga de crédito" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>Información <strong>de Contacto</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <b>Nombre del Contacto</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                                                <input type="text" class="form-control" placeholder="Nombre del primer contacto">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                                                <input type="text" class="form-control" placeholder="Nombre del segundo contacto">
+                                            </div>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                                                <input type="text" class="form-control" placeholder="Nombre del tercer contacto">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <b>Teléfono</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
+                                                <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
+                                            </div>
+
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
+                                                <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
+                                            </div>
+
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
+                                                <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Celular</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-smartphone"></i></span>
+                                            <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-smartphone"></i></span>
+                                            <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-smartphone"></i></span>
+                                            <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-4">
+                                        <b>Correo electrónico</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo1@example.com">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo2@example.com">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo3@example.com">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>Sitios web</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo1.com">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo2.com">
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo3.com">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2>Información <strong>Fiscal</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-md-3">
+                                        <b>Tipo persona</b>
+                                        <select class="form-control z-index show-tick" data-live-search="true">
+                                            <option>Moral</option>
+                                            <option>Física</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <b>Regimen Fiscal</b>
+                                        <select name="IdRegimenFiscal" class="form-control">
+                                            @foreach (var cc in ViewBag.RegimenesFiscales)
+                                            {
+                                                if (Model != null && cc.IdRegimenFiscal == Model.IdRegimenFiscal)
+                                                {
+                                                    <option value="@cc.IdRegimenFiscal" selected>@cc.Descripcion</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@cc.IdRegimenFiscal">@cc.Descripcion</option>
+                                                }
+                                            }
+                                        </select>
+                                        @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-3">
+                                        <b>Rfc</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
+                                            <input type="text" class="form-control key" placeholder="Ex: XXX-000000-XXX">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <b>Razon Social</b>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Razón social">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        }
+    </div>
+</section>

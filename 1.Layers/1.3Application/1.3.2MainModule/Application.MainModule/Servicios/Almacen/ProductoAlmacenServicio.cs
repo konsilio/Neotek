@@ -19,7 +19,7 @@ namespace Application.MainModule.Servicios.Almacen
             int x = 0;
             foreach (RequisicionProducto _prod in _requisicion.Productos)
             {
-                var prod = ProductoServicios.ObtenerProducto(_prod.IdProducto);
+                var prod = ProductoServicio.ObtenerProducto(_prod.IdProducto);
                 if (prod.EsGas)
                 {
                     _requisicion.Productos.ElementAt(x).CantidadAlmacenActual = AlmacenGasServicio.ObtenerCantidadActualAlmacenGeneral(_requisicion.IdEmpresa);

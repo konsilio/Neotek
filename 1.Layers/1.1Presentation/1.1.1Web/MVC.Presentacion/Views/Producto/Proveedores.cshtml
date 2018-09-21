@@ -1,0 +1,210 @@
+﻿@model MVC.Presentacion.Models.Catalogos.ProveedorDTO
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
+}
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+<script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".filterable tr:has(td)").each(function () {
+            var t = $(this).text().toLowerCase();
+            $("<td class='indexColumn'></td>")
+             .hide().text(t).appendTo(this);
+        });
+        $("#txtNumeroFiltro").keyup(function () {
+            var s = $(this).val().toLowerCase().split(" ");
+            $(".filterable tr:hidden").show();
+            $.each(s, function () {
+                $(".filterable tr:visible .indexColumn:not(:contains('"
+                   + this + "'))").parent().hide();
+            });
+        });
+    });
+
+</script>
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
+<section class="content home">
+    <div class="container-fluid">
+        @using (Html.BeginForm("CrearProveedor", "Producto", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.IdProveedor)
+            <div class="block-header">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h2>Proveedores</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">Forms</a></li>
+                            <li class="breadcrumb-item active">Catálogo / Proveedores</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="divPrincipal">
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Proveedor</strong></h2>
+                                <ul class="header-dropdown">
+                                    <li class="dropdown">
+                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="zmdi zmdi-more"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li>
+                                                <asp:LinkButton ID="btnNuevoProveedor" OnClick="btnNuevoProveedor_Click"><i class="material-icons">add</i> Agregar</asp:LinkButton>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 m-b-20">
+                                        <b>Empresa</b>
+                                        @if (ViewBag.EsAdmin)
+                                        {
+                                            <select id="ddlEmpresas" class="form-control show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                    if (lst.IdEmpresa == Model.IdEmpresa)
+                                                    {
+                                                        <option value="@lst.IdEmpresa" selected>@lst.NombreComercial</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                    }
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <input type="text" class="form-control " disabled value="@ViewBag.Empresas" />
+                                            @Html.HiddenFor(m => m.IdEmpresa)
+                                        }
+                                        @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="form-group text-center">
+                                            <button class="btn btn-primary btn-round" id="btnProvedorNuevo">
+                                                <i class="material-icons">add</i> Nuevo
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="form-group text-center">
+                                            <button class="btn btn-primary btn-round">
+                                                <i class="material-icons">search</i> Buscar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-3">
+                                        <b>Tipo de Proveedor</b>
+                                        <select class="form-control">
+                                            @foreach (var cc in ViewBag.TipoProveedores)
+                                            {
+                                                <option value="@cc.IdTipoProveedor">@cc.Tipo</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Estado</b>
+                                        <select class="form-control">
+                                            @foreach (var cc in ViewBag.Estados)
+                                            {
+                                                <option value="@cc.IdEstadoRep">@cc.Estado</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>RFC</b>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Ej: VECJ880326XXX">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="checkbox">
+                                            <input id="checkbox10" type="checkbox">
+                                            <label for="checkbox10">
+                                                Trasnporta gas
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <input id="checkbox11" type="checkbox">
+                                            <label for="checkbox11">
+                                                Vende gas
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="table-responsive">
+                                        <table class="table table table-bordered table-striped table-hover js-basic-example dataTable filterable">
+                                            <thead>
+                                                <tr>
+                                                    <td><b>Nombre</b></td>
+                                                    <td><b>RFC</b></td>
+                                                    <td><b>Contacto</b></td>
+                                                    <td><b>Telefono</b></td>
+                                                    <td><b>Email</b></td>
+                                                    <td><b>Acciones</b></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var prov in ViewBag.Proveedores)
+                                                {
+                                                    <tr>
+                                                        <td>@prov.NombreComercial</td>
+                                                        <td>@prov.Rfc</td>
+                                                        <td>@prov.Persona1</td>
+                                                        <td>@prov.Telefono1</td>
+                                                        <td>@prov.Email1</td>
+                                                        <td>
+                                                            <a href="@Url.Action("EditarProveedor", "Producto" , new { Id=prov.IdProveedor })">
+                                                                <i class="material-icons">edit</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                            <a href="@Url.Action("EliminarProveedor", "Producto" , new { Id=prov.IdProveedor})">
+                                                                <i class="material-icons">delete</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        Pagina @(ViewBag.Proveedores.PageCount < ViewBag.Proveedores.PageNumber ? 0 : ViewBag.Proveedores.PageNumber) de @ViewBag.Proveedores.PageCount
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        @Html.PagedListPager((IPagedList)ViewBag.Proveedores, page => Url.Action("Producto", new { page, @class = "btn btn-primary btn-simple" }))
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
