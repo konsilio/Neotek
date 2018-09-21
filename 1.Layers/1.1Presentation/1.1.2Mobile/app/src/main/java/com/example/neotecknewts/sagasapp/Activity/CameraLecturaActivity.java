@@ -54,6 +54,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
     public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsAutoconsumoEstacionInicial,EsAutoconsumoEstacionFinal;
     public boolean EsAutoconsumoInvetarioInicial, EsAutoconsumoInventarioFinal;
+    public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
 
     public Uri imageUri;
 
@@ -81,6 +82,8 @@ public class CameraLecturaActivity extends AppCompatActivity {
             EsAutoconsumoEstacionInicial = b.getBoolean("EsAutoconsumoEstacionInicial",false);
             EsAutoconsumoInvetarioInicial = b.getBoolean("EsAutoconsumoInvetarioInicial",false);
             EsAutoconsumoInventarioFinal = b.getBoolean("EsAutoconsumoInventarioFinal",false);
+            EsAutoconsumoPipaInicial = b.getBoolean("EsAutoconsumoPipaInicial",false);
+            EsAutoconsumoPipaFinal = b.getBoolean("EsAutoconsumoPipaFinal",false);
             autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
 
         }
@@ -122,7 +125,11 @@ public class CameraLecturaActivity extends AppCompatActivity {
                     getString(R.string.tomar_foto_estacion)
                     +" - " +getString(R.string.Estacion));
         }
-
+        if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
+            TVCameraLecturaActivityFotoEstacion.setText(
+                    getString(R.string.tomar_foto_estacion)
+                            +" - " +getString(R.string.Pipa));
+        }
         BtnCameraLecturaTomarFoto.setOnClickListener(v -> {
             List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
 
@@ -220,6 +227,19 @@ public class CameraLecturaActivity extends AppCompatActivity {
                         SubirImagenesActivity.class);
                 intent.putExtra("EsAutoconsumoInvetarioInicial",EsAutoconsumoInvetarioInicial);
                 intent.putExtra("EsAutoconsumoInventarioFinal",EsAutoconsumoInventarioFinal);
+                intent.putExtra("autoconsumoDTO",autoconsumoDTO);
+                startActivity(intent);
+            }catch (URISyntaxException e){
+                e.printStackTrace();
+            }
+        }else if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
+            try {
+                autoconsumoDTO.getImagenes().add(imageurl);
+                autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                Intent intent = new Intent(CameraLecturaActivity.this,
+                        CapturaPorcentajeActivity.class);
+                intent.putExtra("EsAutoconsumoPipaInicial",EsAutoconsumoPipaInicial);
+                intent.putExtra("EsAutoconsumoPipaFinal",EsAutoconsumoPipaFinal);
                 intent.putExtra("autoconsumoDTO",autoconsumoDTO);
                 startActivity(intent);
             }catch (URISyntaxException e){

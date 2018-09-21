@@ -64,6 +64,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public boolean EsRecargaPipaInicial,EsRecargaPipaFinal;
     public boolean EsAutoconsumoEstacionInicial,EsAutoconsumoEstacionFinal;
     public boolean EsAutoconsumoInvetarioInicial, EsAutoconsumoInventarioFinal;
+    public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
 
     public SubirImagenesPresenter presenter;
     public ProgressDialog progressDialog;
@@ -222,6 +223,11 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 EsAutoconsumoInventarioFinal = extras.getBoolean("EsAutoconsumoInventarioFinal",false);
                 autoconsumoDTO =  (AutoconsumoDTO) extras.getSerializable("autoconsumoDTO");
                 setTitle("Autoconsumo");
+            }else if(extras.getBoolean("EsAutoconsumoPipaInicial") ||
+                    extras.getBoolean("EsAutoconsumoPipaFinal")){
+                EsAutoconsumoPipaInicial = extras.getBoolean("EsAutoconsumoPipaInicial",false);
+                EsAutoconsumoPipaFinal = extras.getBoolean("EsAutoconsumoPipaFinal",false);
+                autoconsumoDTO = (AutoconsumoDTO) extras.getSerializable("autoconsumoDTO");
             }
 
         }
@@ -244,6 +250,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         }else if (EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
             sagasSql = new SAGASSql(getApplicationContext());
         }else if(EsAutoconsumoInvetarioInicial|| EsAutoconsumoInventarioFinal){
+            sagasSql = new SAGASSql(getApplicationContext());
+        }else if(EsAutoconsumoPipaInicial ||EsAutoconsumoPipaFinal){
             sagasSql = new SAGASSql(getApplicationContext());
         }
         //se ejecuta la tarea asincrona para procesar las imagenes
@@ -500,6 +508,24 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     e.printStackTrace();
                 }
             }
+        }else if (EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
+            for (int i= 0; i<autoconsumoDTO.getImagenesURI().size();i++){
+                try {
+                    Uri uri = Uri.parse(autoconsumoDTO.getImagenesURI().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(),uri
+                    );
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    autoconsumoDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
 
     }
@@ -695,6 +721,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 presenter.registrarAutoconsumoEstacion(sagasSql,session.getToken(),autoconsumoDTO,EsAutoconsumoEstacionFinal);
             }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
                 presenter.registrarAutoconsumoInventario(sagasSql,session.getToken(),autoconsumoDTO,EsAutoconsumoInventarioFinal);
+            }else if(EsAutoconsumoPipaInicial ||EsAutoconsumoPipaFinal){
+                presenter.registrarAutoconsumoPipa(sagasSql,session.getToken(),autoconsumoDTO,EsAutoconsumoPipaFinal);
             }
             textView.setText(R.string.cargando_imagenes_fin);
             //progressDialog.hide();

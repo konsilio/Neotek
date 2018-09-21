@@ -228,5 +228,12 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
                 esAutoconsumoInventarioFinal);
     }
 
+    @Override
+    public void registrarAutoconsumoPipa(SAGASSql sagasSql, String token, AutoconsumoDTO
+            autoconsumoDTO, boolean esAutoconsumoPipaFinal) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarAutoconsumoPipa(sagasSql,token,autoconsumoDTO,esAutoconsumoPipaFinal);
+    }
+
     //endregion
 }

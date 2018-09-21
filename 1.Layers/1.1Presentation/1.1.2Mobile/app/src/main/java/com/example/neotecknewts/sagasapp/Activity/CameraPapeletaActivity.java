@@ -21,7 +21,6 @@ import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
-import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.util.List;
 

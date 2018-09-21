@@ -163,5 +163,6 @@
     <string name="Autoconsumo_inventario">Autoconsumo Inventario Gral</string>
     <string name="autoconsumo_inventario_gral">Autoconsumo Inventario Gral</string>
     <string name="la_salida_es_desde_el_inventario_general">La salida es desde el inventario general</string>
+    <string name="Autoconsumo">Autoconsumo</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
 </resources>

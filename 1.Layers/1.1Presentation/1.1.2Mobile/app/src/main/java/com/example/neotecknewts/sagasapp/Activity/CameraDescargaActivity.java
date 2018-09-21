@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -65,6 +66,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public LecturaPipaDTO lecturaPipaDTO;
     public LecturaAlmacenDTO lecturaAlmacenDTO;
     public RecargaDTO recargaDTO;
+    public AutoconsumoDTO autoconsumoDTO;
 
     //Banderas para indicar que objeto trabajar
     public boolean papeleta;
@@ -78,6 +80,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public boolean EsLecturaInicialAlmacen,EsLecturaFinalAlmacen;
     public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsRecargaPipaFinal;
+    public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -229,6 +232,22 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsRecargaEstacionInicial = false;
                 EsRecargaEstacionFinal = false;
                 textViewTitulo.setText("Fotografia "+ recargaDTO.getNombreMedidorEntrada());
+            }else if(extras.getBoolean("EsAutoconsumoPipaInicial")||
+                    extras.getBoolean("EsAutoconsumoPipaFinal")){
+                EsRecargaPipaFinal = false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false;
+                EsLecturaFinalAlmacen = false;
+                EsRecargaEstacionInicial = false;
+                EsRecargaEstacionFinal = false;
+                EsAutoconsumoPipaInicial = extras.getBoolean("EsAutoconsumoPipaInicial");
+                EsAutoconsumoPipaFinal = extras.getBoolean("EsAutoconsumoPipaFinal");
+                autoconsumoDTO = (AutoconsumoDTO) extras.getSerializable("autoconsumoDTO");
+                textViewTitulo.setText("Fotografia del "+autoconsumoDTO.getNombreTipoMedidor());
+                cantidadFotos = autoconsumoDTO.getCantidadFotos();
             }
 
         }
@@ -318,7 +337,9 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }else if(EsRecargaPipaFinal){
                     Log.v("Recarga estación","finalizar "+cantidadFotos);
                     recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
-
+                }else if (EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
+                    Log.v("Autoconsumo pipa","finalizar "+cantidadFotos);
+                    autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 }
             }catch(Exception ex){
                 ex.printStackTrace();
@@ -386,6 +407,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                     Log.w("Recarga estación","finalizar"+cantidadFotos);
                     recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
                     startActivityRecarga();
+                }else if (EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
+                    Log.v("Autoconsumo pipa","finalizar "+cantidadFotos);
+                    autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                    startActivityAutoconsumo();
                 }
             }catch(Exception ex){
                 ex.printStackTrace();
@@ -576,4 +601,14 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         }
     }
 
+    private void startActivityAutoconsumo(){
+        if(EsAutoconsumoPipaInicial||EsAutoconsumoPipaFinal){
+            Intent intent = new Intent(CameraDescargaActivity.this,
+                    SubirImagenesActivity.class);
+            intent.putExtra("EsAutoconsumoPipaInicial",EsAutoconsumoPipaInicial);
+            intent.putExtra("EsAutoconsumoPipaFinal",EsAutoconsumoPipaFinal);
+            intent.putExtra("autoconsumoDTO",autoconsumoDTO);
+            startActivity(intent);
+        }
+    }
 }
