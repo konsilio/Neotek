@@ -220,5 +220,13 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
 
     }
 
+    @Override
+    public void registrarAutoconsumoInventario(SAGASSql sagasSql, String token, AutoconsumoDTO
+            autoconsumoDTO, boolean esAutoconsumoInventarioFinal) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarAutoconsumoInventario(sagasSql,token,autoconsumoDTO,
+                esAutoconsumoInventarioFinal);
+    }
+
     //endregion
 }

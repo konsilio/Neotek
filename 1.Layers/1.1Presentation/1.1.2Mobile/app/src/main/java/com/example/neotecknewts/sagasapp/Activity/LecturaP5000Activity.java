@@ -34,6 +34,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
     public int max_p5000,p5000;
     public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsAutoconsumoEstacionInicial,EsAutoconsumoEstacionFinal;
+    public boolean EsAutoconsumoInvetarioInicial, EsAutoconsumoInventarioFinal;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -51,6 +52,8 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             EsPrimeraLectura = b.getBoolean("EsPrimeraLectura",false);
             EsAutoconsumoEstacionInicial = b.getBoolean("EsAutoconsumoEstacionInicial",false);
             EsAutoconsumoEstacionFinal = b.getBoolean("EsAutoconsumoEstacionFinal",false);
+            EsAutoconsumoInvetarioInicial = b.getBoolean("EsAutoconsumoInvetarioInicial",false);
+            EsAutoconsumoInventarioFinal = b.getBoolean("EsAutoconsumoInventarioFinal",false);
 
             if(EsLecturaInicial){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
@@ -75,6 +78,10 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 max_p5000 = 5000;
                 p5000 = 5000;
             }else if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
+                autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
+                max_p5000 = 5000;
+                p5000 = 5000;
+            }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
                 autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
                 max_p5000 = 5000;
                 p5000 = 5000;
@@ -124,6 +131,16 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     + "\n P5000 Estación"
             );
             TVLecturaP5000Registro.setText(getString(R.string.registra_la_lectura_del_p500_de_la_estaci_n));
+        }
+
+        if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
+            TVLecturaP5000Titulo.setText((EsAutoconsumoInvetarioInicial)?
+                    getString(R.string.carburaci_n_de_gas)+" - Inicial":
+                    getString(R.string.carburaci_n_de_gas)+" - Final");
+            TVLecturaP5000Tipo.setText(
+                   "P5000"
+            );
+            TVLecturaP5000Registro.setText("Registra la lectura del P5000");
         }
 
         NPLecturaP500CantidadLectura = findViewById(R.id.NPLecturaP500CantidadLectura);
@@ -228,11 +245,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
                 intent.putExtra("EsFotoP5000",true);
             }else if(EsRecargaEstacionInicial||EsRecargaEstacionFinal){
-                if(EsLecturaInicial) {
-                    recargaDTO.setP5000Salida(CantidadP500);
-                } else {
-                    recargaDTO.setP5000Salida(CantidadP500);
-                }
+                recargaDTO.setP5000Salida(CantidadP500);
                 intent.putExtra("EsRecargaEstacionInicial",EsRecargaEstacionInicial);
                 intent.putExtra("EsRecargaEstacionFinal",EsRecargaEstacionFinal);
                 intent.putExtra("EsPrimeraLectura",EsPrimeraLectura);
@@ -245,16 +258,14 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 startActivity(intent);
             }else if (EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
                 autoconsumoDTO.setP5000Salida(CantidadP500);
-                /*intent.putExtra("EsRecargaEstacionInicial",false);
-                intent.putExtra("EsRecargaEstacionFinal",false);
-                intent.putExtra("EsPrimeraLectura",false);
-                intent.putExtra("EsLecturaFinal",false);
-                intent.putExtra("EsLecturaInicial",false);
-                intent.putExtra("EsLecturaInicialPipa",false);
-                intent.putExtra("EsLecturaFinalPipa",false);
-                intent.putExtra("EsFotoP5000",false);*/
                 intent.putExtra("EsAutoconsumoEstacionInicial",EsAutoconsumoEstacionInicial);
                 intent.putExtra("EsAutoconsumoEstacionFinal",EsAutoconsumoEstacionFinal);
+                intent.putExtra("autoconsumoDTO",autoconsumoDTO);
+                startActivity(intent);
+            }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
+                autoconsumoDTO.setP5000Salida(CantidadP500);
+                intent.putExtra("EsAutoconsumoInvetarioInicial",EsAutoconsumoInvetarioInicial);
+                intent.putExtra("EsAutoConsumoInventarioFinal",EsAutoconsumoEstacionFinal);
                 intent.putExtra("autoconsumoDTO",autoconsumoDTO);
                 startActivity(intent);
             }

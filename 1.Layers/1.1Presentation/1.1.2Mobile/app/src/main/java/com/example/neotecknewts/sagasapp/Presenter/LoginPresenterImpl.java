@@ -56,10 +56,11 @@ public class LoginPresenterImpl implements LoginPresenter {
 
     //metodo de error
     @Override
-    public void onError() {
+    public void onError(String mensaje) {
         Log.e("error", "onerror");
         mainView.hideProgress();
-        mainView.messageError(R.string.error_conexion);
+        mainView.messageError(mensaje);
+
     }
 
 

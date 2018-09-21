@@ -209,6 +209,20 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsAutoconsumoInventarioInicial",false);
                     intent.putExtra("EsAutoconsumoInventarioFinal",true);
                     view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Pipa.(Inicial)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoInventarioActivity.class);
+                    intent.putExtra("EsAutoconsumoPipaInicial",true);
+                    intent.putExtra("EsAutoconsumoPipaFinal",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Pipa (Final)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoInventarioActivity.class);
+                    intent.putExtra("EsAutoconsumoPipaInicial",false);
+                    intent.putExtra("EsAutoconsumoPipaFinal",true);
+                    view.getContext().startActivity(intent);
                 }
 
             }
