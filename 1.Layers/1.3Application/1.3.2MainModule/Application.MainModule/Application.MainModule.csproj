@@ -70,7 +70,7 @@
     <Compile Include="DTOs\Almacen\AlmacenCrearEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenDTO.cs" />
-    <Compile Include="DTOs\Almacen\InventarioGasDto.cs" />
+    <Compile Include="DTOs\Almacen\AplicaDescargaDto.cs" />
     <Compile Include="DTOs\Catalogo\EstacionCarburacionDTO.cs" />
     <Compile Include="DTOs\Catalogo\PaisDTO.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoCrearDto.cs" />
@@ -213,6 +213,7 @@
     <Compile Include="Servicios\Catalogos\TipoMedidorGasServicio.cs" />
     <Compile Include="Servicios\Catalogos\UsuarioServicio.cs" />
     <Compile Include="Servicios\Catalogos\ValidarCatalogoServicio.cs" />
+    <Compile Include="Servicios\Compras\CalcularOrdenCompraServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
     <Compile Include="Servicios\FuncionIngresoGastoServicio.cs" />
@@ -225,7 +226,7 @@
     <Compile Include="Servicios\Notificacion\NotificarServicio.cs" />
     <Compile Include="Servicios\Requisicion\RequisicionServicio.cs" />
     <Compile Include="Servicios\Mobile\MenuServicio.cs" />
-    <Compile Include="Servicios\Mobile\OrdenesCompraServicio.cs" />
+    <Compile Include="Servicios\Mobile\MobileOrdenesCompraServicio.cs" />
     <Compile Include="Servicios\Seguridad\AutenticarServicio.cs" />
     <Compile Include="Servicios\Seguridad\RolServicio.cs" />
     <Compile Include="Servicios\Seguridad\PermisosServicio.cs" />

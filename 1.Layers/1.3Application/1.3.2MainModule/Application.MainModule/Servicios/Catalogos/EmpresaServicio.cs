@@ -25,6 +25,10 @@ namespace Application.MainModule.Servicios.Catalogos
             List<EmpresaDTO> lEmpresas = new List<EmpresaDTO>(EmpresaAdapter.ToDTO(new EmpresaDataAccess().BuscarTodos(conAC)));
             return lEmpresas;
         }
+        public static List<Empresa> BuscarEmpresasSinAdminCentral()
+        {
+            return new EmpresaDataAccess().BuscarTodos(false);
+        }
         public static List<EmpresaDTO> BuscarEmpresasLogin()
         {            
             return BuscarEmpresas();

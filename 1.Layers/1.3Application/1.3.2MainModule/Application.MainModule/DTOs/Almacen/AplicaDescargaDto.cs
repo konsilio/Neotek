@@ -8,13 +8,24 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Almacen
 {
-    public class InventarioGasDto
+    public class AplicaDescargaDto
     {
+        public OrdenCompra OCExpedidor { get; set; }
+        public OrdenCompra OCPorteador { get; set; }
+
+
+
+        public AlmacenGas AlmacenGas { get; set; }
+
+
+
         public UnidadAlmacenGas unidadEntrada { get; set; }
         public identidadUnidadAlmacenGas identidadUE { get; set; }
         public decimal P5000UE { get; set; }
         public decimal PorcentajeUE { get; set; }
 
+
+        public string Concepto { get; set; }// Revisar si puede ser catálogo de apoyo
 
 
         public decimal CantidadSINRemanenteKg { get; set; }
