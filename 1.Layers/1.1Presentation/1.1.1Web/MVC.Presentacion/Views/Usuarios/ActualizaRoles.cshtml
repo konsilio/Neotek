@@ -73,7 +73,7 @@
                                         <tr>
                                             <th>@item.NombreRol</th>
                                             <td>
-                                                <a ID="lbBorrar" href="@Url.Action("BorrarRol", "Usuarios", new { id = item.IdEmpresa })">
+                                                <a ID="lbBorrar" href="@Url.Action("BorrarRol", "Usuarios", new { id = item.IdRol })">
                                                     <i class="material-icons">delete</i>
                                                     <span class="icon-name"></span>
                                                 </a>
@@ -90,7 +90,7 @@
                 <div class="row clearfix">
                     <div class="col-lg-3 col-md-3 col-sm-3">
                         <div class="form-group">
-                            <input type="submit" value="Regresar" class="btn btn-raised btn-primary float-left" formaction="Index" />
+                            <input type="submit" value="Regresar"  formaction=@Url.Action("Index")  class="btn btn-raised btn-primary float-left" />
                         </div>
                     </div>
                 </div>

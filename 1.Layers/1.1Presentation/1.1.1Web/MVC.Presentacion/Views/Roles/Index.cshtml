@@ -74,10 +74,31 @@
             //    })
 
             //}
+
+            /*********/           
+
         });
          
     });
    
+    $(document).ready(function () {
+        alert("yes");
+        $("#homeRequisicion").click(function () {
+            alert("Req");
+            $('#MovilCompra').css("display", "none");
+            $('#SistemaCompra').css("display", "none");
+            $('#SistemaCatalogo').css("display", "none");
+            $('#window_Compra').css("display", "none");
+            $('#window_Ventas').css("display", "none");
+            $('#window_Inventario').css("display", "none");
+            $('#window_Catalogos').css("display", "none");
+            $('#hide_divCat').css("display", "none");
+
+
+        });
+
+    });
+
     </script>
 
     <!-- Page Loader -->
@@ -126,27 +147,40 @@
                 <div class="row clearfix">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="card">
-                            <div class="body">
+                            <div class="body">                            
                                 <div class="row clearfix">
-                                    <div class="form-group">
-                                        <div class="col-lg-8 col-md-8 col-sm-8">
-                                            Nombre rol:<input id="NombreRol" type="text" name="NombreRol" class="form-control" />
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4">
-                                            <button class="btn btn-raised btn-primary"><i class="glyphicon glyphicon-open-file"></i>  Agregar</button>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Nombre rol:
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <input id="NombreRol" type="text" name="NombreRol" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                <button class="btn btn-raised btn-primary"><i class="glyphicon glyphicon-open-file"></i>  Agregar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>         
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>            
 
                 <div class="body">
                     <!-- Nav tabs all menu-->
                     <ul class="nav nav-tabs" role="tablist">
                         @*active show*@
-                        <li class="nav-item"><a class="nav-link" id="homeRequisicion" data-toggle="tab" href="#window_Requsicion"><i class="zmdi zmdi-apps"></i> Requisicion </a></li>
+                        <li class="nav-item" id="homeRequisicion" ><a class="nav-link" id="homeRequisicion" data-toggle="tab" href="#window_Requsicion"><i class="zmdi zmdi-apps"></i> Requisicion </a></li>
                         <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#window_Compra"> <i class="zmdi zmdi-money-box"></i> Compra </a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_Inventario"><i class="zmdi zmdi-file"></i> Inventario </a></li>
                         <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#window_Ventas"><i class="zmdi zmdi-money"></i> Ventas </a></li>
@@ -205,11 +239,7 @@
                     <div class="tab-content">
                         <div id="SistemaCatalogo" class="tab-pane">
    
-
-                            @{
-                            ViewBag.Message = "Catalogo";
-                            }
-                            <div class="table-responsive">
+                            <div class="table-responsive" id="hide_divCat">
 
                                 <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" id="ItemList">
                                     <thead>

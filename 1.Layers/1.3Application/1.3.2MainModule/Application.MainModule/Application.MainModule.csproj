@@ -75,6 +75,7 @@
     <Compile Include="DTOs\Almacen\AlmacenEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenDTO.cs" />
     <Compile Include="DTOs\Catalogo\ClienteCrearDto.cs" />
+    <Compile Include="DTOs\Catalogo\ClienteLocacionDTO.cs" />
     <Compile Include="DTOs\Catalogo\ClientesDto.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaModificaConfig.cs" />
     <Compile Include="DTOs\Catalogo\EstadosRepDTO.cs" />

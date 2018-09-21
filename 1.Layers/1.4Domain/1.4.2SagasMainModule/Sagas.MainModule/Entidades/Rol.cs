@@ -35,10 +35,18 @@ namespace Sagas.MainModule.Entidades
         public bool CompraAutorizarOCompra { get; set; }
         public bool CompraEntraProductoOCompra { get; set; }
         public bool CompraAtiendeServicioOCompra { get; set; }
+        public bool CatInsertarEmpresa { get; set; }
+        public bool CatModificarEmpresa { get; set; }
+        public bool CatEliminarEmpresa { get; set; }
+        public bool CatConsultarEmpresa { get; set; }
         public bool CatInsertarUsuario { get; set; }
         public bool CatModificarUsuario { get; set; }
         public bool CatEliminarUsuario { get; set; }
         public bool CatConsultarUsuario { get; set; }
+        public bool CatInsertarRol { get; set; }
+        public bool CatModificarRol { get; set; }
+        public bool CatEliminarRol { get; set; }
+        public bool CatConsultarRol { get; set; }
         public bool CatInsertarProveedor { get; set; }
         public bool CatModificarProveedor { get; set; }
         public bool CatEliminarProveedor { get; set; }
@@ -59,13 +67,21 @@ namespace Sagas.MainModule.Entidades
         public bool CatModificarCliente { get; set; }
         public bool CatEliminarCliente { get; set; }
         public bool CatConsultarCliente { get; set; }
-        public bool CatAsignarChoferPuntoVenta { get; set; }
         public bool CatEliminarPuntoVenta { get; set; }
         public bool CatConsultarPuntoVenta { get; set; }
-        public bool CatAsignarEquipoTransporte { get; set; }
+        public bool CatInsertarPrecioVentaGas { get; set; }
+        public bool CatModificarPrecioVentaGas { get; set; }
+        public bool CatEliminarPrecioVentaGas { get; set; }
+        public bool CatConsultarPrecioVentaGas { get; set; }
+        public bool CatInsertarPrecioVenta { get; set; }
+        public bool CatModificarPrecioVenta { get; set; }
+        public bool CatEliminarPrecioVenta { get; set; }
+        public bool CatConsultarPrecioVenta { get; set; }
         public bool CatModificarEquipoTransporte { get; set; }
         public bool CatEliminarEquipoTransporte { get; set; }
         public bool CatConsultarEquipoTransporte { get; set; }
+        public bool CatAsignarChoferPuntoVenta { get; set; }
+        public bool CatAsignarEquipoTransporte { get; set; }
         public bool AppCompraVerOCompra { get; set; }
         public bool AppCompraEntraGas { get; set; }
         public bool AppCompraGasIniciarDescarga { get; set; }

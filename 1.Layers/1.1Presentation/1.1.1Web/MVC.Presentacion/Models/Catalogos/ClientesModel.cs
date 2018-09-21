@@ -44,11 +44,11 @@ namespace MVC.Presentacion.Models.Catalogos
         [Display(Name = "DescuentoXKilo")]
         public decimal DescuentoXKilo { get; set; }
 
-        [Required(ErrorMessage = eReq)]
+        //[Required(ErrorMessage = eReq)]
         [Display(Name = "limiteCreditoMonto")]
         public decimal limiteCreditoMonto { get; set; }
 
-        [Required(ErrorMessage = eReq)]
+        //[Required(ErrorMessage = eReq)]
         [Display(Name = "limiteCreditoDias")]
         public short limiteCreditoDias { get; set; }
 
@@ -138,6 +138,8 @@ namespace MVC.Presentacion.Models.Catalogos
         [StringLength(350, MinimumLength = 1, ErrorMessage = eTa)]
         [Display(Name = "Domicilio")]
         public string Domicilio { get; set; }
-     
+
+        List<ClienteLocacionMod> Locaciones { get; set; }
+
     }
 }
