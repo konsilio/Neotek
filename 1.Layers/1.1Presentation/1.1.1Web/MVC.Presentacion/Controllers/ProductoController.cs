@@ -342,20 +342,37 @@ namespace MVC.Presentacion.Controllers
         }
         #endregion
         #region Proveedor
-        public ActionResult Proveedor(int? page, ProveedorDTO model = null)
-        {
-            RespuestaDTO Resp = new RespuestaDTO();
+        public ActionResult Proveedores(int? page, ProveedorDTO model = null)
+        {            
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             var Pagina = page ?? 1;
             ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).ToPagedList(Pagina, 20);         
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            ViewBag.TipoProveedores = CatalogoServicio.ListaTipoProveedor(tkn);
+            ViewBag.Estados = CatalogoServicio.GetEstados(tkn);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(tkn))).NombreComercial;
+            return View(model);
+        }
+        public ActionResult Proveedor(ProveedorDTO model = null)
+        {
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
+            tkn = Session["StringToken"].ToString();
+            RespuestaDTO Resp = new RespuestaDTO();
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            ViewBag.TipoProveedores = CatalogoServicio.ListaTipoProveedor(tkn);
+            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            ViewBag.Estados = CatalogoServicio.GetEstados(tkn);
+            ViewBag.Paises = CatalogoServicio.GetPaises(tkn);
+            ViewBag.Bancos = CatalogoServicio.ListaBanco(tkn);
+            ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(tkn);
+            ViewBag.RegimenesFiscales = CatalogoServicio.ObtenerRegimenFiscal(tkn);
             if (TempData["RespuestaDTO"] != null)
                 Resp = (RespuestaDTO)TempData["RespuestaDTO"];
             ModelState.Clear();
-            if (model != null)
-                if (model.IdProveedor != 0)
-                    ViewBag.EsEdicion = true;
             if (Resp != null)
             {
                 if (Resp.ModelStatesStandar != null)
@@ -365,11 +382,12 @@ namespace MVC.Presentacion.Controllers
                     }
                 if (Resp.MensajesError != null)
                     ViewBag.MensajeError = Resp.MensajesError[0];
-            }
+            }       
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(tkn))).NombreComercial;
+
             return View(model);
         }
         [HttpPost]
@@ -394,8 +412,7 @@ namespace MVC.Presentacion.Controllers
             var respuesta = CatalogoServicio.EliminiarProveedor(new ProveedorDTO { IdProveedor = id }, tkn);
             if (respuesta.Exito)
             {
-
-                return RedirectToAction("Proveedor");
+                return RedirectToAction("Proveedores");
             }
             else
             {
@@ -413,7 +430,7 @@ namespace MVC.Presentacion.Controllers
             {
                 var respuesta = CatalogoServicio.ModificarProveedor(model, tkn);
                 if (respuesta.Exito)
-                    return RedirectToAction("Proveedor");
+                    return RedirectToAction("Proveedores");
                 else
                 {
                     TempData["RespuestaDTO"] = respuesta;

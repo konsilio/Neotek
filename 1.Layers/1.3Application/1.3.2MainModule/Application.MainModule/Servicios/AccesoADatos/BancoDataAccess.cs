@@ -77,7 +77,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public Banco BuscarNombreCorto(string NombreCorto)
         {
-            return uow.Repository<Banco>().GetSingle(x => x.NombreCorto.Equals(NombreCorto) &&);
+            return uow.Repository<Banco>().GetSingle(x => x.NombreCorto.Equals(NombreCorto));
         }
     }
 }

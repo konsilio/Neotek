@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Sagas.MainModule.Entidades;
+
 
 namespace Sagas.MainModule.IRepositorios
 {    public interface IRepository<T> where T : class
@@ -19,7 +19,6 @@ namespace Sagas.MainModule.IRepositorios
         void Delete(object id);
         void Delete(T entity);
         void Update(T entity);
-        void Save();
-        object Get(Func<Banco, bool> p);
+        void Save();      
     }
 }

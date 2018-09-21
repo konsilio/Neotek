@@ -17,9 +17,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
             uow = new SagasDataUow();
         }
 
-        public List<RegimenFiscalDataAccess> ListaRegimen()
+        public List<RegimenFiscal> ListaRegimen()
         {
-            return uow.Repository<RegimenFiscalDataAccess>().GetAll().ToList();
+            return uow.Repository<RegimenFiscal>().GetAll().ToList();
         }
     }
 }
