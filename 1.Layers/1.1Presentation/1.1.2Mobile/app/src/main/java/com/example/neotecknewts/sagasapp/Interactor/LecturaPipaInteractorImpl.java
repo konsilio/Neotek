@@ -117,11 +117,13 @@ public class LecturaPipaInteractorImpl implements LecturaPipaInteractor {
 
         RestClient restClient = retrofit.create(RestClient.class);
         Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
+                false,
                 true,
                 false,
-                false,
                 esFinalizar,
-                token);
+                token,
+                "application/json"
+                );
         Log.w("Url base",retrofit.baseUrl().toString());
 
         call.enqueue(new Callback<DatosTomaLecturaDto>() {

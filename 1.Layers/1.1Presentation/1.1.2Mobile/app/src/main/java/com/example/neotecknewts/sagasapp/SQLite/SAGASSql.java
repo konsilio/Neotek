@@ -51,6 +51,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_RECARGAS = "recargas";
     private static final String TABLE_RECARGAS_IMAGENES = "recargas_imagenes";
     private static final String TABLE_RECARGAS_CILINDROS = "recargas_images_cilindros";
+    private static final String TABLE_REPORTES = "reportes";
 
     public static final String TIPO_RECARGA_CAMIONETA = "C";
     public static final String TIPO_RECARGA_ESTACION_CARBURACION =  "EC";
@@ -325,6 +326,16 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "IdCilindro INTEGER," +
                 "Cantidad INTEGER," +
                 "ClaveOperacion TEXT," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+        //region Tabla de reportes
+        db.execSQL("CREATE TABLE "+ TABLE_REPORTES+ "(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Fecha TEXT," +
+                "IdCalmacen INTEGER," +
+                "Html TEXT," +
+                "Texto TEXT," +
                 "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
@@ -1543,9 +1554,10 @@ public class SAGASSql extends SQLiteOpenHelper {
     }
 
     /**
-     *
-     * @param ClaveOperacion
-     * @return
+     * <h3>GetImagenesRecarga</h3>
+     * Permite obtener las imagenes de la recarga
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Retorna un objeto de tipo {@link Cursor} con la consulta
      */
     public Cursor GetImagenesRecarga(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+
@@ -1553,9 +1565,11 @@ public class SAGASSql extends SQLiteOpenHelper {
     }
 
     /**
-     *
-     * @param ClaveOperacion
-     * @return
+     *<h3>EliminarImagenesRecarga</h3>
+     * Permite eliminar una imagen de recarga , se envia de parametro la clave
+     * de operación.
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Variable de tipo {@link Integer} con el resultado de los registros eliminados
      */
     public Integer EliminarImagenesRecarga(String ClaveOperacion){
         return this.getWritableDatabase().delete(TABLE_RECARGAS_IMAGENES,
@@ -1566,9 +1580,11 @@ public class SAGASSql extends SQLiteOpenHelper {
     //region Metodos para el registro de los cilindros de la recarga
 
     /**
-     *
-     * @param recargaDTO
-     * @return
+     * <h3>InsertarCilindrosRecarga</h3>
+     * Permite registrar los cilindros de una recarga , se enviara
+     * como parametro un objeto {@link RecargaDTO} con los valores de la recarga
+     * @param recargaDTO Objeto de tipo {@link RecargaDTO} con los valores a registrar
+     * @return Array de tipo {@link Integer} con los id registrados
      */
     public Long[] InsertarCilindrosRecarga(RecargaDTO recargaDTO){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1584,9 +1600,11 @@ public class SAGASSql extends SQLiteOpenHelper {
     }
 
     /**
-     *
-     * @param ClaveOperacion
-     * @return
+     * <h3>GetCilindrosRecarga</h3>
+     * Permite obtener el listado de cilindros, se enviara de parametro un {@link String}
+     * con la clave de operación
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Retorna un objeto de tipo {@link Cursor} con los cilindros
      */
     public Cursor GetCilindrosRecarga(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "
@@ -1595,14 +1613,20 @@ public class SAGASSql extends SQLiteOpenHelper {
     }
 
     /**
-     *
-     * @param ClaveOperacion
-     * @return
+     * <h3>EliminarCilindrosRecarga</h3>
+     * Permite eliminar los registros de cilindros por medio de la clave de operación
+     * @param ClaveOperacion Cadena de tipo {@link String} que reprecenta la clave unica de proceso
+     * @return Valor de tipo {@link Integer} que reprecenta el total de registros eliminados
      */
     public Integer EliminarCilindrosRecarga(String ClaveOperacion){
         return this.getWritableDatabase().delete(TABLE_RECARGAS_CILINDROS,
                 " WHERE  ClaveOperacion = "+ClaveOperacion,null);
     }
 
+    //endregion
+    //region Metodos para el registro del reporte
+    /*public Long InsertReporte (String ){
+
+    }*/
     //endregion
 }

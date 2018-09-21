@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.AutoconsumoEstacionActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/TVAutoconsumoEstacionActivityTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="15dp"
+                android:text="@string/carburaci_n_de_gas"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/TVAutoconsumoEstacionActivityEstacionSalida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="15dp"
+                android:text="@string/selecciona_la_estaci_n_de_salida"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/SAutoconsumoEstacionActivityListaEstaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="20dp" />
+
+            <TextView
+                android:id="@+id/TVAutoconsumoEstacionActivityUnidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="15dp"
+                android:text="@string/selecciona_la_unidad_de_entrada"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/SAutoconsumoEstacionActivityListaUnidades"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="20dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <Button
+                android:id="@+id/BtnAutoconsumoActtivityGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="95dp"
+                android:layout_marginRight="95dp"
+                android:backgroundTint="@color/colorButtonLogin"
+                android:text="@string/message_acept"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="30sp"
+                tools:ignore="UnusedAttribute" />
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

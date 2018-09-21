@@ -13,6 +13,7 @@ public class RecargaCamionetaPresenterImpl implements RecargaCamionetaPresenter 
         this.interactor = new RecargaCamionetaInteractorImpl(this);
     }
 
+
     @Override
     public void getCamionetas(String token) {
         recargaCamionetaView.showProgres();
@@ -26,8 +27,9 @@ public class RecargaCamionetaPresenterImpl implements RecargaCamionetaPresenter 
     }
 
     @Override
-    public void onError() {
+    public void onError(String mensaje) {
         recargaCamionetaView.hideProgress();
-        recargaCamionetaView.onError();
+        recargaCamionetaView.onError(mensaje);
     }
+
 }

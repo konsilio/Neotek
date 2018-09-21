@@ -15,12 +15,14 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 /**
@@ -46,6 +48,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     LecturaDTO lecturaDTO;
     LecturaPipaDTO lecturaPipaDTO;
     LecturaAlmacenDTO lecturaAlmacenDTO;
+    RecargaDTO recargaDTO;
+    AutoconsumoDTO autoconsumoDTO;
 
     //banderas para saber que objeto utilizar
     public boolean papeleta;
@@ -57,6 +61,9 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean EsLecturaFinal;
     public boolean EsLecturaInicialPipa,EsLecturaFinalPipa;
     public boolean EsLecturaInicialAlmacen,EsLecturaFinalAlmacen;
+    public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
+    public boolean EsRecargaPipaFinal,EsRecargaPipaInicial;
+    public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
 
 
     @SuppressLint("SetTextI18n")
@@ -194,6 +201,33 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                         "Toma de lectura final");
                 textView.setText("Registra el porcentaje del "+
                         lecturaAlmacenDTO.getNombreTipoMedidor()+"del almacén pral.");
+            }else if(extras.getBoolean("EsRecargaEstacionInicial") ||
+                    extras.getBoolean("EsRecargaEstacionFinal")){
+                EsRecargaEstacionInicial = extras.getBoolean("EsRecargaEstacionInicial",
+                        false);
+                EsRecargaEstacionFinal = extras.getBoolean("EsRecargaEstacionFinal",
+                        false);
+                EsPrimeraLectura = extras.getBoolean("EsPrimeraLectura",false);
+                recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
+                textViewTitulo.setText("Recarga gas");
+                textView.setText("Registra el porcentaje de la estación "+
+                    recargaDTO.getNombreMedidorEntrada()
+                );
+            }else if(extras.getBoolean("EsRecargaPipaFinal") ||
+                    extras.getBoolean("EsRecargaPipaInicial")){
+                EsRecargaPipaFinal = extras.getBoolean("EsRecargaPipaFinal",false);
+                EsRecargaPipaInicial = extras.getBoolean("EsRecargaPipaInicial",false);
+                recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
+
+            }else if(extras.getBoolean("EsAutoconsumoPipaInicial")|| extras.getBoolean("EsAutoconsumoPipaFinal")){
+                EsAutoconsumoPipaInicial = extras.getBoolean("EsAutoconsumoPipaInicial",false);
+                EsAutoconsumoPipaFinal = extras.getBoolean("EsAutoconsumoPipaFinal",false);
+                autoconsumoDTO = (AutoconsumoDTO) extras.getSerializable("autoconsumoDTO");
+                textView.setText("Registra el porcentaje del "+
+                        autoconsumoDTO.getNombreTipoMedidor()+
+                        " de la pipa"
+                );
+                textViewTitulo.setText(autoconsumoDTO.getNombreTipoMedidor()+" - Pipa");
             }
         }
 
@@ -250,64 +284,98 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             lecturaPipaDTO.setPorcentajeMedidor(porcentaje);
         }else if (EsLecturaInicialAlmacen ||EsLecturaFinalAlmacen){
             lecturaAlmacenDTO.setPorcentajeMedidor(porcentaje);
+        }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
+            recargaDTO.setProcentajeEntrada(porcentaje);
+        }else if(EsRecargaPipaFinal || EsRecargaPipaInicial){
+            recargaDTO.setProcentajeEntrada(porcentaje);
+        }else if(EsAutoconsumoPipaInicial||EsAutoconsumoPipaFinal){
+            autoconsumoDTO.setPorcentajeMedidor(porcentaje);
         }
         startActivity();
     }
 
     //se inicia el siguiente activity y se le envian parametros
     public void startActivity(){
-        Intent intent = new Intent(getApplicationContext(), CameraDescargaActivity.class);
-        CameraPapeletaActivity.fotoTomada = false;
-        if(papeleta){
-            intent.putExtra("Papeleta",papeletaDTO);
-        }else if(iniciar) {
-            intent.putExtra("IniciarDescarga",iniciarDescargaDTO);
-            intent.putExtra("TanquePrestado",es_tanque_prestado);
-            intent.putExtra("EsLecturaInicial",false);
-            intent.putExtra("EsLecturaFinal",false);
-            intent.putExtra("EsLecturaInicialPipa",false);
-            intent.putExtra("EsLecturaFinalPipa",false);
-            intent.putExtra("EsLecturaInicialAlmacen",false);
-            intent.putExtra("EsLecturaFinalAlmacen",false);
-        }else if(finalizar){
-            intent.putExtra("FinalizarDescarga",finalizarDescargaDTO);
-            intent.putExtra("EsLecturaInicial",false);
-            intent.putExtra("EsLecturaFinal",false);
-            intent.putExtra("EsLecturaInicialPipa",false);
-            intent.putExtra("EsLecturaFinalPipa",false);
-            intent.putExtra("EsLecturaInicialAlmacen",false);
-            intent.putExtra("EsLecturaFinalAlmacen",false);
-        }else if(EsLecturaInicial || EsLecturaFinal){
-            intent.putExtra("lecturaDTO",lecturaDTO);
-            intent.putExtra("EsLecturaInicial",EsLecturaInicial);
-            intent.putExtra("EsLecturaFinal",EsLecturaFinal);
-            intent.putExtra("EsLecturaInicialPipa",false);
-            intent.putExtra("EsLecturaFinalPipa",false);
-            intent.putExtra("EsLecturaInicialAlmacen",false);
-            intent.putExtra("EsLecturaFinalAlmacen",false);
-        }else if(EsLecturaInicialPipa || EsLecturaFinalPipa){
-            intent.putExtra("lecturaPipaDTO",lecturaPipaDTO);
-            intent.putExtra("EsLecturaInicial",EsLecturaInicial);
-            intent.putExtra("EsLecturaFinal",EsLecturaFinal);
-            intent.putExtra("EsLecturaInicialPipa",EsLecturaInicialPipa);
-            intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
-            intent.putExtra("EsLecturaInicialAlmacen",false);
-            intent.putExtra("EsLecturaFinalAlmacen",false);
-        }else if (EsLecturaInicialAlmacen ||EsLecturaFinalAlmacen){
-            intent.putExtra("lecturaAlmacenDTO",lecturaAlmacenDTO);
-            intent.putExtra("EsLecturaInicial",EsLecturaInicial);
-            intent.putExtra("EsLecturaFinal",EsLecturaFinal);
-            intent.putExtra("EsLecturaInicialPipa",false);
-            intent.putExtra("EsLecturaFinalPipa",false);
-            intent.putExtra("EsLecturaInicialAlmacen",EsLecturaInicialAlmacen);
-            intent.putExtra("EsLecturaFinalAlmacen",EsLecturaFinalAlmacen);
-        }
-        intent.putExtra("EsPapeleta",papeleta);
-        intent.putExtra("EsDescargaIniciar",iniciar);
-        intent.putExtra("EsDescargaFinalizar",finalizar);
-        intent.putExtra("Almacen",almacen);
+        if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
+            Intent intent = new Intent(CapturaPorcentajeActivity.this,
+                    CameraDescargaActivity.class);
+            intent.putExtra("EsAutoconsumoPipaInicial",EsAutoconsumoPipaInicial);
+            intent.putExtra("EsAutoconsumoPipaFinal",EsAutoconsumoPipaFinal);
+            intent.putExtra("autoconsumoDTO",autoconsumoDTO);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(getApplicationContext(), CameraDescargaActivity.class);
+            CameraPapeletaActivity.fotoTomada = false;
+            if (papeleta) {
+                intent.putExtra("Papeleta", papeletaDTO);
+            } else if (iniciar) {
+                intent.putExtra("IniciarDescarga", iniciarDescargaDTO);
+                intent.putExtra("TanquePrestado", es_tanque_prestado);
+                intent.putExtra("EsLecturaInicial", false);
+                intent.putExtra("EsLecturaFinal", false);
+                intent.putExtra("EsLecturaInicialPipa", false);
+                intent.putExtra("EsLecturaFinalPipa", false);
+                intent.putExtra("EsLecturaInicialAlmacen", false);
+                intent.putExtra("EsLecturaFinalAlmacen", false);
+            } else if (finalizar) {
+                intent.putExtra("FinalizarDescarga", finalizarDescargaDTO);
+                intent.putExtra("EsLecturaInicial", false);
+                intent.putExtra("EsLecturaFinal", false);
+                intent.putExtra("EsLecturaInicialPipa", false);
+                intent.putExtra("EsLecturaFinalPipa", false);
+                intent.putExtra("EsLecturaInicialAlmacen", false);
+                intent.putExtra("EsLecturaFinalAlmacen", false);
+            } else if (EsLecturaInicial || EsLecturaFinal) {
+                intent.putExtra("lecturaDTO", lecturaDTO);
+                intent.putExtra("EsLecturaInicial", EsLecturaInicial);
+                intent.putExtra("EsLecturaFinal", EsLecturaFinal);
+                intent.putExtra("EsLecturaInicialPipa", false);
+                intent.putExtra("EsLecturaFinalPipa", false);
+                intent.putExtra("EsLecturaInicialAlmacen", false);
+                intent.putExtra("EsLecturaFinalAlmacen", false);
+            } else if (EsLecturaInicialPipa || EsLecturaFinalPipa) {
+                intent.putExtra("lecturaPipaDTO", lecturaPipaDTO);
+                intent.putExtra("EsLecturaInicial", EsLecturaInicial);
+                intent.putExtra("EsLecturaFinal", EsLecturaFinal);
+                intent.putExtra("EsLecturaInicialPipa", EsLecturaInicialPipa);
+                intent.putExtra("EsLecturaFinalPipa", EsLecturaFinalPipa);
+                intent.putExtra("EsLecturaInicialAlmacen", false);
+                intent.putExtra("EsLecturaFinalAlmacen", false);
+            } else if (EsLecturaInicialAlmacen || EsLecturaFinalAlmacen) {
+                intent.putExtra("lecturaAlmacenDTO", lecturaAlmacenDTO);
+                intent.putExtra("EsLecturaInicial", EsLecturaInicial);
+                intent.putExtra("EsLecturaFinal", EsLecturaFinal);
+                intent.putExtra("EsLecturaInicialPipa", false);
+                intent.putExtra("EsLecturaFinalPipa", false);
+                intent.putExtra("EsLecturaInicialAlmacen", EsLecturaInicialAlmacen);
+                intent.putExtra("EsLecturaFinalAlmacen", EsLecturaFinalAlmacen);
+            } else if (EsRecargaEstacionInicial || EsRecargaEstacionFinal) {
+                intent.putExtra("lecturaAlmacenDTO", false);
+                intent.putExtra("EsLecturaInicial", false);
+                intent.putExtra("EsLecturaFinal", false);
+                intent.putExtra("EsLecturaInicialPipa", false);
+                intent.putExtra("EsLecturaFinalPipa", false);
+                intent.putExtra("EsRecargaEstacionInicial", EsRecargaEstacionInicial);
+                intent.putExtra("EsRecargaEstacionFinal", EsRecargaEstacionFinal);
+                intent.putExtra("EsPrimeraLectura", EsPrimeraLectura);
+                intent.putExtra("recargaDTO", recargaDTO);
+            } else if (EsRecargaPipaFinal) {
+                intent.putExtra("EsRecargaPipaFinal", true);
+                intent.putExtra("EsLecturaFinal", false);
+                intent.putExtra("EsLecturaInicialPipa", false);
+                intent.putExtra("EsLecturaFinalPipa", false);
+                intent.putExtra("EsRecargaEstacionInicial", false);
+                intent.putExtra("EsRecargaEstacionFinal", false);
+                intent.putExtra("EsPrimeraLectura", false);
+                intent.putExtra("recargaDTO", recargaDTO);
+            }
+            intent.putExtra("EsPapeleta", papeleta);
+            intent.putExtra("EsDescargaIniciar", iniciar);
+            intent.putExtra("EsDescargaFinalizar", finalizar);
+            intent.putExtra("Almacen", almacen);
 
-        startActivity(intent);
+            startActivity(intent);
+        }
     }
 
     /**

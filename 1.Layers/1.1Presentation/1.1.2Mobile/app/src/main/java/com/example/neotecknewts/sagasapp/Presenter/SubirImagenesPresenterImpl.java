@@ -4,12 +4,14 @@ import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaView;
 import com.example.neotecknewts.sagasapp.Activity.SubirImagenesView;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractorImpl;
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
@@ -185,6 +187,52 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
                                              LecturaAlmacenDTO lecturaAlmacenDTO) {
         subirImagenesView.showProgress(R.string.message_cargando);
         interactor.registrarLecturaFinalAlmacen(sagasSql,token,lecturaAlmacenDTO);
+    }
+
+    @Override
+    public void registrarRecargaEstacion(SAGASSql sagasSql, String token, RecargaDTO recargaDTO,
+                                         boolean EsRecargaEstacionInicial) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarRecargaEstacion(sagasSql,token,recargaDTO,
+                EsRecargaEstacionInicial
+                );
+    }
+
+    @Override
+    public void onSuccessRegistroRecarga() {
+        subirImagenesView.hideProgress();
+        subirImagenesView.onSuccessRegistroRecarga();
+    }
+
+    @Override
+    public void registrarRecargaPipa(SAGASSql sagasSql, String token, RecargaDTO recargaDTO,
+                                     boolean esRecargaPipaFinal) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarRecargaPipa(sagasSql,token,recargaDTO,esRecargaPipaFinal);
+    }
+
+    @Override
+    public void registrarAutoconsumoEstacion(SAGASSql sagasSql, String token, AutoconsumoDTO
+            autoconsumoDTO, boolean esAutoconsumoEstacionFinal) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarAutoconsumoEstacion(sagasSql,token,autoconsumoDTO,
+                esAutoconsumoEstacionFinal);
+
+    }
+
+    @Override
+    public void registrarAutoconsumoInventario(SAGASSql sagasSql, String token, AutoconsumoDTO
+            autoconsumoDTO, boolean esAutoconsumoInventarioFinal) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarAutoconsumoInventario(sagasSql,token,autoconsumoDTO,
+                esAutoconsumoInventarioFinal);
+    }
+
+    @Override
+    public void registrarAutoconsumoPipa(SAGASSql sagasSql, String token, AutoconsumoDTO
+            autoconsumoDTO, boolean esAutoconsumoPipaFinal) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarAutoconsumoPipa(sagasSql,token,autoconsumoDTO,esAutoconsumoPipaFinal);
     }
 
     //endregion

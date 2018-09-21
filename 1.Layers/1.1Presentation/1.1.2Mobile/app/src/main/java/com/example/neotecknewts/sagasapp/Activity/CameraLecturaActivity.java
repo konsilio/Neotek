@@ -23,8 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
@@ -47,6 +49,12 @@ public class CameraLecturaActivity extends AppCompatActivity {
     public String imageurl;
     public LecturaDTO lecturaDTO;
     public LecturaPipaDTO lecturaPipaDTO;
+    public RecargaDTO recargaDTO;
+    public AutoconsumoDTO autoconsumoDTO;
+    public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
+    public boolean EsAutoconsumoEstacionInicial,EsAutoconsumoEstacionFinal;
+    public boolean EsAutoconsumoInvetarioInicial, EsAutoconsumoInventarioFinal;
+    public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
 
     public Uri imageUri;
 
@@ -57,13 +65,27 @@ public class CameraLecturaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera_lectura);
         Bundle b = getIntent().getExtras();
         if(b!=null) {
-            EsLecturaFinal = (boolean) b.get("EsLecturaFinal");
-            EsLecturaInicial = (boolean) b.get("EsLecturaInicial");
-            EsLecturaInicialPipa = (boolean) b.get("EsLecturaInicialPipa");
-            EsLecturaFinalPipa = (boolean) b.get("EsLecturaFinalPipa");
-            EsFotoP5000 = (boolean) b.get("EsFotoP5000");
+            EsLecturaFinal = b.getBoolean("EsLecturaFinal",false);
+            EsLecturaInicial =  b.getBoolean("EsLecturaInicial",false);
+            EsLecturaInicialPipa = b.getBoolean("EsLecturaInicialPipa",false);
+            EsLecturaFinalPipa = (boolean) b.getBoolean("EsLecturaFinalPipa",false);
+            EsFotoP5000 =  b.getBoolean("EsFotoP5000",false);
             lecturaDTO = (LecturaDTO) b.getSerializable("lecturaDTO");
-            lecturaPipaDTO = (LecturaPipaDTO) b.get("lecturaPipaDTO");
+            lecturaPipaDTO = (LecturaPipaDTO) b.getSerializable("lecturaPipaDTO");
+            EsRecargaEstacionInicial = b.getBoolean("EsRecargaEstacionInicial",
+                    false);
+            EsRecargaEstacionFinal = b.getBoolean("EsRecargaEstacionFinal",
+                    false);
+            EsPrimeraLectura = b.getBoolean("EsPrimeraLectura",false);
+            recargaDTO = (RecargaDTO) b.getSerializable("recargaDTO");
+            EsAutoconsumoEstacionFinal = b.getBoolean("EsAutoconsumoEstacionFinal",false);
+            EsAutoconsumoEstacionInicial = b.getBoolean("EsAutoconsumoEstacionInicial",false);
+            EsAutoconsumoInvetarioInicial = b.getBoolean("EsAutoconsumoInvetarioInicial",false);
+            EsAutoconsumoInventarioFinal = b.getBoolean("EsAutoconsumoInventarioFinal",false);
+            EsAutoconsumoPipaInicial = b.getBoolean("EsAutoconsumoPipaInicial",false);
+            EsAutoconsumoPipaFinal = b.getBoolean("EsAutoconsumoPipaFinal",false);
+            autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
+
         }
 
         LLCameraLecturaActivityTitulo = findViewById(R.id.LLCameraLecturaActivityTitulo);
@@ -89,35 +111,39 @@ public class CameraLecturaActivity extends AppCompatActivity {
             TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
                     " - "+lecturaPipaDTO.getNombrePipa());
         }
-
-        BtnCameraLecturaTomarFoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
-
-                Log.w("Prueba","prueba"+permissions(permissionList));
-
-                if (permissions(permissionList)) {
-
-                    openCameraIntent();
-                }
+        if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
+            if(EsPrimeraLectura){
+                TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)
+                +" - " +getString(R.string.Pipa));
+            }else{
+                TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)
+                        +" - " +getString(R.string.Estacion));
             }
-        });
+        }
+        if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
+            TVCameraLecturaActivityFotoEstacion.setText(
+                    getString(R.string.tomar_foto_estacion)
+                    +" - " +getString(R.string.Estacion));
+        }
+        if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
+            TVCameraLecturaActivityFotoEstacion.setText(
+                    getString(R.string.tomar_foto_estacion)
+                            +" - " +getString(R.string.Pipa));
+        }
+        BtnCameraLecturaTomarFoto.setOnClickListener(v -> {
+            List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
 
-        BtnCameraLecturaFotoNitidaNo.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View v) {
+            Log.w("Prueba","prueba"+permissions(permissionList));
+
+            if (permissions(permissionList)) {
+
                 openCameraIntent();
             }
         });
 
-        BtnCameraLecturaFotoNitidaSi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                verificarBoton();
-            }
-        });
+        BtnCameraLecturaFotoNitidaNo.setOnClickListener(v -> openCameraIntent());
+
+        BtnCameraLecturaFotoNitidaSi.setOnClickListener(v -> verificarBoton());
     }
 
     private void verificarBoton() {
@@ -152,6 +178,71 @@ public class CameraLecturaActivity extends AppCompatActivity {
                 intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
                 startActivity(intent);
             } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }else if(EsRecargaEstacionInicial|| EsRecargaEstacionFinal){
+            try {
+                recargaDTO.getImagenes().add(imageurl);
+                recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                if (EsPrimeraLectura) {
+                    Intent intent = new Intent(CameraLecturaActivity.this,
+                        LecturaP5000Activity.class);
+                    intent.putExtra("EsRecargaEstacionInicial",EsRecargaEstacionInicial);
+                    intent.putExtra("EsRecargaEstacionFinal",EsRecargaEstacionFinal);
+                    intent.putExtra("recargaDTO",recargaDTO);
+                    intent.putExtra("EsPrimeraLectura",false);
+                    startActivity(intent);
+                }else{
+                    //Ir a la lectura del medidor
+                    Intent intent = new Intent(CameraLecturaActivity.this,
+                            CapturaPorcentajeActivity.class);
+                    intent.putExtra("EsRecargaEstacionInicial",EsRecargaEstacionInicial);
+                    intent.putExtra("EsRecargaEstacionFinal",EsRecargaEstacionFinal);
+                    intent.putExtra("recargaDTO",recargaDTO);
+                    intent.putExtra("EsPrimeraLectura",EsPrimeraLectura);
+                    startActivity(intent);
+
+                }
+            }catch (URISyntaxException e){
+                e.printStackTrace();
+            }
+        }else if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
+            try {
+                autoconsumoDTO.getImagenes().add(imageurl);
+                autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                Intent intent = new Intent(CameraLecturaActivity.this,
+                        SubirImagenesActivity.class);
+                intent.putExtra("EsAutoconsumoEstacionInicial",EsAutoconsumoEstacionInicial);
+                intent.putExtra("EsAutoconsumoEstacionFinal",EsAutoconsumoEstacionFinal);
+                intent.putExtra("autoconsumoDTO",autoconsumoDTO);
+                startActivity(intent);
+            }catch (URISyntaxException e){
+                e.printStackTrace();
+            }
+        }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
+            try {
+                autoconsumoDTO.getImagenes().add(imageurl);
+                autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                Intent intent = new Intent(CameraLecturaActivity.this,
+                        SubirImagenesActivity.class);
+                intent.putExtra("EsAutoconsumoInvetarioInicial",EsAutoconsumoInvetarioInicial);
+                intent.putExtra("EsAutoconsumoInventarioFinal",EsAutoconsumoInventarioFinal);
+                intent.putExtra("autoconsumoDTO",autoconsumoDTO);
+                startActivity(intent);
+            }catch (URISyntaxException e){
+                e.printStackTrace();
+            }
+        }else if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
+            try {
+                autoconsumoDTO.getImagenes().add(imageurl);
+                autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                Intent intent = new Intent(CameraLecturaActivity.this,
+                        CapturaPorcentajeActivity.class);
+                intent.putExtra("EsAutoconsumoPipaInicial",EsAutoconsumoPipaInicial);
+                intent.putExtra("EsAutoconsumoPipaFinal",EsAutoconsumoPipaFinal);
+                intent.putExtra("autoconsumoDTO",autoconsumoDTO);
+                startActivity(intent);
+            }catch (URISyntaxException e){
                 e.printStackTrace();
             }
         }

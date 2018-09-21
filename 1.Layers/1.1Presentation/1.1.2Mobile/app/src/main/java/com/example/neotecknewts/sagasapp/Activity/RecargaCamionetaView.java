@@ -12,5 +12,5 @@ public interface RecargaCamionetaView {
 
     void onSuccessCamionetas(DatosTomaLecturaDto data);
 
-    void onError();
+    void onError(String mensaje);
 }

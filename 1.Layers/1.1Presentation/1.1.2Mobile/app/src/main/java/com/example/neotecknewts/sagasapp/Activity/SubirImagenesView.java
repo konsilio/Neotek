@@ -14,4 +14,6 @@ public interface SubirImagenesView {
     void showError(String mensaje);
 
     void onRegistrarIniciarDescarga();
+
+    void onSuccessRegistroRecarga();
 }

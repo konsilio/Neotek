@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -31,14 +29,9 @@ import com.example.neotecknewts.sagasapp.Util.Utilidades;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.security.NoSuchAlgorithmException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
 
 /**
  * Created by neotecknewts on 07/08/18.
@@ -209,8 +202,11 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     //metodo que envia un mensaje de error
     @Override
-    public void messageError(int mensaje) {
-        showDialog(getResources().getString(mensaje));
+    public void messageError(String mensaje) {
+        if(mensaje==null) {
+            mensaje = getResources().getString(R.string.error_conexion);
+        }
+        showDialog(mensaje);
     }
 
     //funcion que se llama al obtener todas las empresas y llena el spinner

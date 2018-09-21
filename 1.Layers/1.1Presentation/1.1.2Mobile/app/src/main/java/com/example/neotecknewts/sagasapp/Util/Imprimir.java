@@ -36,8 +36,8 @@ public class Imprimir {
     private String cadena_impresion;
     private Activity activity;
 
-    public Imprimir(Activity activity){
-        this.context = activity.getApplicationContext();
+    public Imprimir(Activity activity,Context context){
+        this.context = context;
         this.activity = activity;
     }
 
@@ -77,7 +77,7 @@ public class Imprimir {
                 for (int x = 0;x<adevices.size();x++){
                     lista[x] = adevices.get(x);
                 }
-                AlertDialog.Builder builder = new AlertDialog.Builder(context.getApplicationContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Seleccione un dispositivo de la lista");
                 builder.setItems(lista,(dialog, which) -> {
                     device_select = lista[which].toString();

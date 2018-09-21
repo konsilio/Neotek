@@ -22,6 +22,6 @@ public interface LoginPresenter {
     void doLogin(UsuarioLoginDTO usuarioLoginDTO);
     void onSuccessGetEmpresas(List<EmpresaDTO> empresaDTOs);
     void onSuccessLogin(UsuarioDTO usuarioDTO);
-    void onError();
+    void onError(String mensaje);
 
 }
