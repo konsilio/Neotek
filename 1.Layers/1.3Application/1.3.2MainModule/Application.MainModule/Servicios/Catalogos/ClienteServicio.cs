@@ -24,6 +24,11 @@ namespace Application.MainModule.Servicios.Catalogos
             return new ClientesDataAccess().Insertar(cte);
         }
 
+        public static RespuestaDto AltaClienteL(ClienteLocacion cte)
+        {
+            return new ClientesDataAccess().Insertar(cte);
+        }
+
         public static Cliente Obtener(int IdCliente)
         {
             return new ClientesDataAccess().Buscar(IdCliente);

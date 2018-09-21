@@ -54,6 +54,12 @@ namespace Application.MainModule.Servicios.Seguridad
             return new UsuarioDataAccess().Insertar(user);
         }
 
+        //EliminarUsuarioRol
+        public static RespuestaDto Eliminar(UsuarioRol usRol)
+        {
+            return new UsuarioDataAccess().Eliminar(usRol);
+        }
+
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El Usuario");

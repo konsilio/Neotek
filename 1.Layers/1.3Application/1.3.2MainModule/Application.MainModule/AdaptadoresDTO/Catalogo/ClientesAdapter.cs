@@ -62,6 +62,29 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             return luDTO;
         }
 
+        public static ClienteLocacion FromDto(ClienteLocacionDTO cteDTO)
+        {
+            return new ClienteLocacion()
+            {
+                IdCliente = cteDTO.IdCliente,
+                Orden = cteDTO.Orden,
+                IdPais = cteDTO.IdPais,
+                IdEstadoRep = cteDTO.IdEstadoRep,
+                EstadoProvincia = cteDTO.EstadoProvincia,
+                Municipio = cteDTO.Municipio,
+                CodigoPostal = cteDTO.CodigoPostal,
+                Colonia = cteDTO.Colonia,
+                Calle = cteDTO.Calle,
+                NumExt = cteDTO.NumExt,
+                NumInt = cteDTO.NumInt,
+                formatted_address = cteDTO.formatted_address,
+                location_lat = cteDTO.location_lat,
+                location_lng = cteDTO.location_lng,
+                place_id = cteDTO.place_id,
+                TipoLocacion = cteDTO.TipoLocacion,
+            };
+        }
+
         public static Cliente FromDto(ClienteCrearDto cteDTO)
         {
             return new Cliente()
@@ -138,8 +161,8 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             if (Ctedto.Celular != null) catCliente.Celular = Ctedto.Celular; else catCliente.Celular = catCliente.Celular;
             if (Ctedto.CorreoElectronico != null) catCliente.CorreoElectronico = Ctedto.CorreoElectronico; else catCliente.CorreoElectronico = catCliente.CorreoElectronico;
             if (Ctedto.Domicilio != null) catCliente.Domicilio = Ctedto.Domicilio; else catCliente.Domicilio = catCliente.Domicilio;
-           // if (Ctedto.Loca != null) catCliente.Domicilio = Ctedto.Domicilio; else catCliente.Domicilio = catCliente.Domicilio;
-            
+            // if (Ctedto.Loca != null) catCliente.Domicilio = Ctedto.Domicilio; else catCliente.Domicilio = catCliente.Domicilio;
+
             return catCliente;
         }
 
@@ -161,7 +184,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             //if (Ctedto.location_lng != null) catCliente.location_lng = Ctedto.location_lng; else catCliente.location_lng = catCliente.location_lng;
             //if (Ctedto.place_id != null) catCliente.place_id = Ctedto.place_id; else catCliente.place_id = catCliente.place_id;
             //if (Ctedto.TipoLocacion != null) catCliente.TipoLocacion = Ctedto.TipoLocacion; else catCliente.TipoLocacion = catCliente.TipoLocacion;
-  
+
             return catCliente;
         }
 
@@ -233,7 +256,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Domicilio = cte.Domicilio,
                 /**************************/
                 Locaciones = cte.Locaciones//getLoc(cte.Locaciones.ToList()),
-              
+
                 //Orden = cte
                 //IdPais =
                 //IdEstadoRep =

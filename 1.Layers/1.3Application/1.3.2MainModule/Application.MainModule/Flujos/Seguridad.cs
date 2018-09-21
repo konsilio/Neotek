@@ -55,7 +55,7 @@ namespace Application.MainModule.Flujos
                 return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
 
-        public RespuestaDto AltaUsuarios(UsuarioDTO userDto)//UsuarioCrearDto
+        public RespuestaDto AltaUsuarios(UsuarioDTO userDto)
         {
             var resp = PermisosServicio.PuedeRegistrarUsuario();
             if (!resp.Exito) return resp;
@@ -68,7 +68,7 @@ namespace Application.MainModule.Flujos
             return UsuarioServicio.AltaUsuario(usuario);
         }
 
-        public RespuestaDto ModificaCredencial(UsuarioDTO userDto)//UsuarioCrearDto
+        public RespuestaDto ModificaCredencial(UsuarioDTO userDto)
         {
             var resp = PermisosServicio.PuedeModificarUsuario();
             if (!resp.Exito) return resp;
@@ -81,7 +81,7 @@ namespace Application.MainModule.Flujos
             return UsuarioServicio.Actualizar(emp);
         }
 
-        public RespuestaDto ModificaUsuario(UsuarioDTO userDto)//UsuarioCrearDto
+        public RespuestaDto ModificaUsuario(UsuarioDTO userDto)
         {
             var resp = PermisosServicio.PuedeModificarUsuario();
             if (!resp.Exito) return resp;
@@ -124,6 +124,26 @@ namespace Application.MainModule.Flujos
             var usuarioRol = UsuarioAdapter.FromDtoRol(uRDto);
             return UsuarioServicio.Insertar(usuarioRol);
         }
+
+        public RespuestaDto EliminaRolAsignado(UsuarioRolDto usrol)
+        {
+            var resp = PermisosServicio.PuedeEliminarRol();
+            if (!resp.Exito) return resp;
+
+            var user = UsuarioServicio.Obtener(usrol.IdUsuario);
+            if (user == null) return UsuarioServicio.NoExiste();
+
+            var rol = RolServicio.Obtener(usrol.IdRol);
+            if (rol == null) return RolServicio.NoExiste();
+
+            resp = RolServicio.ExisteRol(user, rol);
+            if (resp.Exito) return resp;
+
+
+           var userol = UsuarioAdapter.FromDtoRol(usrol);
+           return UsuarioServicio.Eliminar(userol);
+        }
+        
         #endregion
 
         #region Roles

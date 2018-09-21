@@ -4094,6 +4094,7 @@
     <Content Include="Views\Shared\EditorTemplates\RolCat.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolRequsicion.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolMovilCompra.cshtml" />
+    <Content Include="Views\Clientes\EditarLocaciones.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

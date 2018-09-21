@@ -17,10 +17,10 @@ namespace MVC.Presentacion.Controllers
             string _tkn = Session["StringToken"].ToString();
             ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-            ViewBag.Usuarios = CatalogoServicio.ObtenerTodosUsuarios(_tkn);
+            ViewBag.Usuarios = CatalogoServicio.ObtenerTodosUsuarios(0,_tkn);
             UsuariosModel rolCat = new UsuariosModel()
             {
-                Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(_tkn)
+                Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0,_tkn)
             };
 
             return View(rolCat);
@@ -34,7 +34,7 @@ namespace MVC.Presentacion.Controllers
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
             ViewBag.Empresas = CatalogoServicio.Empresas(_tok);
-            ViewBag.IdUser = null;
+           // ViewBag.IdUser.Count() = 0;
             return View();
         }
 
@@ -75,7 +75,7 @@ namespace MVC.Presentacion.Controllers
         {
             string _tkn = Session["StringToken"].ToString();
             ViewBag.IdUser = CatalogoServicio.ObtenerIdUsuario(id, _tkn);
-            ViewBag.CurrentRolUser = CatalogoServicio.ObtenerTodosUsuarios(_tkn);
+            ViewBag.CurrentRolUser = CatalogoServicio.ObtenerTodosUsuarios(0,_tkn);
             ViewBag.AllRoles = CatalogoServicio.ObtenerTodosRoles(_tkn);
             return View();
         }
@@ -101,7 +101,8 @@ namespace MVC.Presentacion.Controllers
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
             ViewBag.Empresas = CatalogoServicio.Empresas(_tok);
-            ViewBag.IdUser = CatalogoServicio.ObtenerIdUsuario(id, _tok);
+            //   ViewBag.IdUser = CatalogoServicio.ObtenerIdUsuario(id, _tok);
+            ViewBag.IdUser = CatalogoServicio.ObtenerTodosUsuarios(id, _tok);
             return View("Nuevo");
         }
 
@@ -128,30 +129,28 @@ namespace MVC.Presentacion.Controllers
         //BorrarRol
 
         [HttpPost]
-        public ActionResult BorrarRol(int id)
+        public ActionResult BorrarRol(UsuariosModel objUser)
         {
-            //Empresa em = new Empresa();
-            //string _tkn = Session["StringToken"].ToString();
-            ////  ViewBag.Empresas = CatalogoServicio.FiltrarEmpresa(em, id, _tkn).Empresas.ToList();
-            //CatalogoServicio.EliminaEmpresaSel(id, _tkn);
+            _tok = Session["StringToken"].ToString();
+            if (ModelState.IsValid)
+            {
+                CatalogoServicio.EliminarRolAlUsuario(objUser, _tok);
+            }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", objUser);           
         }
 
         //[HttpPost]
         public ActionResult Buscar(UsuariosModel filterObj)
         {
-            string _tkn = Session["StringToken"].ToString();
-       
+            string _tkn = Session["StringToken"].ToString();       
             UsuariosModel rolCat = new UsuariosModel()
             {
                 Listausuarios = CatalogoServicio.FiltrarBusquedaUsuario(filterObj, _tkn)
-
-        };
-            
+        };            
             ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-            ViewBag.Usuarios = CatalogoServicio.ObtenerTodosUsuarios(_tkn);
+            ViewBag.Usuarios = CatalogoServicio.ObtenerTodosUsuarios(0,_tkn);
             return View("Index", rolCat);
         }
     }

@@ -194,7 +194,12 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_catalogos.EliminaCliente(idCliente), Request);
         }
-
+        
+        [Route("modifica/clientelocacion")]
+        public HttpResponseMessage PutModificaClienteLoc(ClienteLocacionDTO cteLoc)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ActualizaClienteLocacion(cteLoc), Request);
+        }
         //[Route("consulta/clientes")]
         //public HttpResponseMessage GetCategoriasProducto()
         //{

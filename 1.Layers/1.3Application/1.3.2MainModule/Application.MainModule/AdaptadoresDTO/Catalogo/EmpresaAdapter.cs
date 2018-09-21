@@ -111,7 +111,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         public static Empresa FromDTOEditar(EmpresaDTO empresadto, Empresa catEmp)
         {
             var catEmpresa = FromEntity(catEmp);
-            if (empresadto.NombreComercial != null){ catEmpresa.NombreComercial = empresadto.NombreComercial; } else { catEmpresa.NombreComercial = catEmpresa.NombreComercial; }
+            if (empresadto.NombreComercial != null) { catEmpresa.NombreComercial = empresadto.NombreComercial; } else { catEmpresa.NombreComercial = catEmpresa.NombreComercial; }
             if (empresadto.IdPais != 0) { catEmpresa.IdPais = empresadto.IdPais; } else catEmpresa.IdPais = catEmpresa.IdPais;
             if (empresadto.IdEstadoRep != 0) catEmpresa.IdEstadoRep = empresadto.IdEstadoRep; else catEmpresa.IdEstadoRep = catEmpresa.IdEstadoRep;
             if (empresadto.EstadoProvincia != null) catEmpresa.EstadoProvincia = empresadto.EstadoProvincia; else catEmpresa.EstadoProvincia = catEmpresa.EstadoProvincia;
@@ -148,7 +148,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             empresadto.InventarioCrítico = catEmpresa.InventarioCrítico;
             empresadto.MaxRemaGaseraMensual = catEmpresa.MaxRemaGaseraMensual;
 
-            
+
             return catEmpresa;
         }
         public static List<Empresa> FromDTO(List<EmpresaDTO> empresasDTO)
@@ -164,6 +164,8 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 NombreComercial = empresa.NombreComercial,
                 IdPais = empresa.IdPais,
                 IdEstadoRep = empresa.IdEstadoRep,
+               // if (empresa.EstadoProvincia == "") { IdEstadoRep = null} else { IdEstadoRep = empresa.IdEstadoRep },//,
+              //  empresa.EstadoProvincia != "" ? IdEstadoRep = null : IdEstadoRep = empresa.IdEstadoRep,
                 EstadoProvincia = empresa.EstadoProvincia,
                 Municipio = empresa.Municipio,
                 CodigoPostal = empresa.CodigoPostal,
@@ -208,7 +210,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         public static Empresa FromDtoConfig(EmpresaModificaConfig empresa, Empresa catEmp)
         {
             var catEmpresa = FromEntity(catEmp);
-       
+
             catEmpresa.FactorLitrosAKilos = empresa.FactorLitrosAKilos;
             catEmpresa.CierreInventario = empresa.CierreInventario;
             catEmpresa.InventarioSano = empresa.InventarioSano;

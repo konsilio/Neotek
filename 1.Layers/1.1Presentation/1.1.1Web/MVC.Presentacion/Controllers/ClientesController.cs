@@ -67,5 +67,35 @@ namespace MVC.Presentacion.Controllers
 
             return RedirectToAction("Index", _Obj);
         }
+
+
+        public ActionResult BorrarClientes(ClientesModel _Obj, int id)
+        {
+            string _tkn = Session["StringToken"].ToString();
+            CatalogoServicio.EliminarCliente(id, _tkn);
+
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(0, _tkn);
+            return RedirectToAction("Index", _Obj);
+        }
+
+        public ActionResult EditarLocaciones(ClientesModel _Obj, int id)
+        {
+            string _tkn = Session["StringToken"].ToString();
+            ViewBag.IdCliente = CatalogoServicio.ListaClientes(id, _tkn);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GuardarLocaciones(ClienteLocacionMod _Obj)
+        {
+            _tok = Session["StringToken"].ToString();
+            if (ModelState.IsValid)
+            {
+                CatalogoServicio.RegistraLocaciones(_Obj, _tok);
+            }
+
+            return RedirectToAction("Index", _Obj);
+        }        
+
     }
 }

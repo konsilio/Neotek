@@ -167,7 +167,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 SitioWeb2 = usDTO.SitioWeb2,
                 SitioWeb3 = usDTO.SitioWeb3,
                 IdPais = usDTO.IdPais,
-                IdEstadoRep = usDTO.IdEstadoRep,
+                IdEstadoRep = usDTO.IdEstadoRep ==0? null: usDTO.IdEstadoRep,
                 EstadoProvincia = usDTO.EstadoProvincia,
                 Municipio = usDTO.Municipio,
                 CodigoPostal = usDTO.CodigoPostal,

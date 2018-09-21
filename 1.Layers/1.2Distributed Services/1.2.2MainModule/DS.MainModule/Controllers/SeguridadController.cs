@@ -78,6 +78,12 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_seguridad.AsignarRol(uRDto), Request);
         }
 
+        [Route("eliminar/usuariorol")]
+        public HttpResponseMessage PutEliminaRol(UsuarioRolDto uRDto)
+        {
+            return RespuestaHttp.crearRespuesta(_seguridad.EliminaRolAsignado(uRDto), Request);
+        }
+
         #endregion
 
         #region Roles

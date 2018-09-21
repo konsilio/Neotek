@@ -81,6 +81,11 @@ namespace MVC.Presentacion.App_Code
                     ex.ToString();
                 }
             }
+
+            if (!String.IsNullOrEmpty(Objemp.EstadoProvincia))
+            {
+                Objemp.IdEstadoRep = null;
+            }
             return Objemp;
         }
 
@@ -197,10 +202,10 @@ namespace MVC.Presentacion.App_Code
             cc.Roles = Roles;
             return cc;
         }
-        public static List<UsuariosModel> ObtenerTodosUsuarios(string token)
+        public static List<UsuariosModel> ObtenerTodosUsuarios(int id ,string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarTodosUsuarios(token);
+            agente.BuscarTodosUsuarios(id,token);
             return agente._lstUserEmp;
         }
 
@@ -244,7 +249,7 @@ namespace MVC.Presentacion.App_Code
         public static List<UsuariosModel> ObtenerUsuariosRol(string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarTodosUsuarios(token);
+            agente.BuscarTodosUsuarios(0,token);
             return agente._lstUserEmp;
         }
         public static RespuestaDTO ActualizaEdicionUsuario(UsuarioDTO cc, string tkn)
@@ -269,6 +274,13 @@ namespace MVC.Presentacion.App_Code
 
         }
 
+        public static RespuestaDTO EliminarRolAlUsuario(UsuariosModel cc, string tkn)
+        {
+           // AgregarIdRolToList(cc, tkn);
+            var agente = new AgenteServicio();
+            agente.EliminarRolesAsig(cc, tkn);
+            return agente._RespuestaDTO;
+        }
         #endregion
 
         #region Roles
@@ -764,7 +776,12 @@ namespace MVC.Presentacion.App_Code
             return agente._RespuestaDTO;
         }
 
-
+        public static RespuestaDTO RegistraLocaciones(ClienteLocacionMod cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarClienteLocacion(cc, tkn);
+            return agente._RespuestaDTO;
+        }
         #endregion
 
         #region Centro de Costo

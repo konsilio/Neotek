@@ -40,14 +40,14 @@
 
             var form = $(this).parent("form");
             form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "GuardaEdicionCliente" }) %>');
-            form.attr('method', 'post');       
+            form.attr('method', 'post');
         });
         $("#btnRegresarIndex").click(function () {
 
             var form = $(this).parent("form");
             form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "Index" }) %>');
             form.attr('method', 'post');
-        });       
+        });
 
     });
 </script>
@@ -102,10 +102,39 @@
                                         <div class="form-group">
                                             Regimen Fiscal:*
                                             <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
-                                                @foreach (var lst in ViewBag.RegimenFiscal)
+                                                @foreach (var lstrf in ViewBag.RegimenFiscal)
                                                 {
-                                                    <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
+                                                    <option value="@lstrf.IdRegimenFiscal">@lstrf.Descripcion</option>
                                                 }
+
+                                                @*@{int x = 0;}*@
+
+                                                @*@foreach (var lst in ViewBag.RegimenFiscal)
+                                                    {
+                                                        //if (ViewBag.RegimenFiscal != null && ViewBag.RegimenFiscal[x].Descripcion != null)
+                                                        //{
+                                                        <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
+                                                        //x = x++;
+                                                        //}
+                                                    }*@
+
+                                                @*@{int x = ViewBag.RegimenFiscal.Count-1;}
+                                                    @{var obj = new string[] { ViewBag.RegimenFiscal[x].Descripcion };}
+
+                                                    @for (var index = 0; index < obj.Length; index++)
+                                                    {
+                                                        x++;
+                                                        if (index < x)
+                                                        {
+                                                            var item = obj[index];
+                                                            <option value="index">@item</option>
+                                                                @*/**/
+                                                                foreach (var lst in ViewBag.RegimenFiscal)
+                                                                {
+                                                                    <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
+                                                                }
+                                                        }
+                                                    }*@
                                             </select>
 
                                         </div>
@@ -123,7 +152,6 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         Rfc:*
-
                                         <input type="text" name="Rfc" id="txtRfc" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Rfc)" />
                                     </div>
                                 </div>
@@ -232,7 +260,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        Monto $ <input name="limiteCreditoMonto" step=".0000" min="0"  pattern="^\d+(?:\.\d{1,4})?$" type="number" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].limiteCreditoMonto)" />
+                                        Monto $ <input name="limiteCreditoMonto" step=".0000" min="0" pattern="^\d+(?:\.\d{1,4})?$" type="number" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].limiteCreditoMonto)" />
                                     </div>
                                 </div>
 
@@ -247,7 +275,7 @@
                                     <div class="form-group">
                                         <div>
                                             Descuento $ x kilo:
-                                            <input id="desc" required name="DescuentoXKilo" type="number" placeholder="0"  min="0" step="0.000" pattern="^\d+(?:\.\d{1,4})?$"  value="@((ViewBag.IdCliente[0].DescuentoXKilo==null)?"0":ViewBag.IdCliente[0].DescuentoXKilo)" />
+                                            <input id="desc" required name="DescuentoXKilo" type="number" placeholder="0" min="0" step="0.000" pattern="^\d+(?:\.\d{1,4})?$" value="@((ViewBag.IdCliente[0].DescuentoXKilo==null)?"0":ViewBag.IdCliente[0].DescuentoXKilo)" />
                                         </div>
                                     </div>
                                 </div>

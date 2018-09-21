@@ -54,6 +54,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        public RespuestaDto Insertar(ClienteLocacion cte)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<ClienteLocacion>().Insert(cte);
+                    uow.SaveChanges();
+                    _respuesta.Id = cte.IdCliente;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del Cliente Locacion");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        
         public RespuestaDto Actualizar(Cliente _pro)
         {
             RespuestaDto _respuesta = new RespuestaDto();

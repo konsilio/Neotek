@@ -160,6 +160,17 @@ namespace Application.MainModule.Flujos
             return ClienteServicio.Modificar(clientes);
         }
 
+        public RespuestaDto RegistraClienteLocacion(ClienteLocacionDTO cteDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarCliente();
+            if (!resp.Exito) return resp;
+
+            var cliente = ClientesAdapter.FromDto(cteDto);
+                      
+
+            return ClienteServicio.AltaClienteL(cliente);
+        }
+
         public RespuestaDto ActualizaClienteLocacion(ClienteLocacionDTO cteDto)
         {
             var resp = PermisosServicio.PuedeModificarCliente();
@@ -171,7 +182,7 @@ namespace Application.MainModule.Flujos
             var cte = ClientesAdapter.FromDto(cteDto, clientes);
             cte.FechaRegistro = cte.FechaRegistro;
             return ClienteServicio.Modificar(cte);
-        }
+        }       
         #endregion
 
         #region Productos
