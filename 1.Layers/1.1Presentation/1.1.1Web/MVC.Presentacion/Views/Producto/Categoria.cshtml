@@ -5,6 +5,7 @@
 @{
     string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
 }
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -24,6 +25,12 @@
     });//document.ready
 
 </script>
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
 <section class="content">
     <div class="container-fluid">
         @using (Html.BeginForm("CrearCategoria", "Producto", FormMethod.Post))
@@ -161,11 +168,11 @@
                                                         <td>@cat.Nombre </td>
                                                         <td>@cat.Descripcion </td>
                                                         <td>
-                                                            <a href="@Url.Action(" EditarCategoria", "Producto" , new { Id=cat.IdCategoria })">
+                                                            <a href="@Url.Action("EditarCategoria", "Producto" , new { Id=cat.IdCategoria })">
                                                                 <i class="material-icons">edit</i>
                                                                 <span class="icon-name"></span>
                                                             </a>
-                                                            <a href="@Url.Action(" EliminarCategoria", "Producto" , new { Id=cat.IdCategoria})">
+                                                            <a href="@Url.Action("EliminarCategoria", "Producto" , new { Id=cat.IdCategoria})">
                                                                 <i class="material-icons">delete</i>
                                                                 <span class="icon-name"></span>
                                                             </a>
