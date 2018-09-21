@@ -1,4 +1,5 @@
 ﻿using Exceptions.MainModule.Validaciones;
+using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -139,5 +140,7 @@ namespace Application.MainModule.DTOs.Catalogo
         [StringLength(350, MinimumLength = 1, ErrorMessage = eTa)]
         [Display(Name = "Domicilio")]
         public string Domicilio { get; set; }
+        List<ClienteLocacionDTO> Locaciones { get; set; }       
+
     }
 }

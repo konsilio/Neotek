@@ -171,24 +171,35 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaClientes(idEmpresa));
         }
+
+        [Route("clientes/listaclientes")]
+        public HttpResponseMessage GetListaClientes()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaClientes());
+        }
         [Route("registra/cliente")]
         public HttpResponseMessage PostRegistraCliente(ClienteCrearDto clienteDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.RegistraCliente(clienteDto), Request);
         }
 
-        //[Route("modifica/cliente")]
-        //public HttpResponseMessage PutModificaCliente(ClienteModificarDto clienteDto)
-        //{
-        //    return RespuestaHttp.crearRespuesta(_catalogos.ModificaCliente(clienteDto), Request);
-        //}
+        [Route("modifica/cliente")]
+        public HttpResponseMessage PutModificaCliente(ClienteCrearDto clienteDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaCliente(clienteDto), Request);
+        }
 
-        //[Route("elimina/cliente")]
-        //public HttpResponseMessage PutEliminaCliente(ClienteEliminarDto clienteDto)
-        //{
-        //    return RespuestaHttp.crearRespuesta(_catalogos.EliminaCliente(clienteDto), Request);
-        //}
-
+        [Route("elimina/cliente/{idCliente}")]
+        public HttpResponseMessage PutEliminaCliente(int idCliente)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaCliente(idCliente), Request);
+        }
+        
+        [Route("modifica/clientelocacion")]
+        public HttpResponseMessage PutModificaClienteLoc(ClienteLocacionDTO cteLoc)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ActualizaClienteLocacion(cteLoc), Request);
+        }
         //[Route("consulta/clientes")]
         //public HttpResponseMessage GetCategoriasProducto()
         //{

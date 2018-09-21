@@ -4106,6 +4106,7 @@
     <Content Include="Views\Shared\EditorTemplates\RolCat.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolRequsicion.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolMovilCompra.cshtml" />
+    <Content Include="Views\Clientes\EditarLocaciones.cshtml" />
     <Content Include="Views\Producto\Proveedor.cshtml" />
     <Content Include="Views\Producto\Proveedores.cshtml" />
   </ItemGroup>

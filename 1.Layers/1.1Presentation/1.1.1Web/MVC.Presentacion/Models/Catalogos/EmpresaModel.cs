@@ -98,7 +98,7 @@ namespace MVC.Presentacion.Models.Catalogos
         [Display(Name = "IdPais")]
         public Nullable<byte> IdPais { get; set; }
 
-        [Required(ErrorMessage = eReq)]
+      //  [Required(ErrorMessage = eReq)]
         [Display(Name = "IdEstadoRep")]
         public Nullable<byte> IdEstadoRep { get; set; }
 

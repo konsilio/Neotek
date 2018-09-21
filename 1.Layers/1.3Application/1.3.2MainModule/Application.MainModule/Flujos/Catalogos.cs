@@ -1,6 +1,6 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Catalogo;
 using Application.MainModule.DTOs;
-﻿using Application.MainModule.AdaptadoresDTO.Seguridad;
+using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
@@ -115,11 +115,15 @@ namespace Application.MainModule.Flujos
             else
                 return ClienteServicio.ListaClientes().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
+        public List<ClientesDto> ListaClientes()
+        {
+            return ClienteServicio.ListaClientes().ToList();
+        }
 
 
         public RespuestaDto RegistraCliente(ClienteCrearDto cteDto)
         {
-            var resp = PermisosServicio.PuedeRegistrarUsuario();
+            var resp = PermisosServicio.PuedeRegistrarCliente();
             if (!resp.Exito) return resp;
 
             var cliente = ClientesAdapter.FromDto(cteDto);
@@ -129,6 +133,56 @@ namespace Application.MainModule.Flujos
 
             return ClienteServicio.AltaCliente(cliente);
         }
+
+        public RespuestaDto ModificaCliente(ClienteCrearDto cteDto)
+        {
+            var resp = PermisosServicio.PuedeModificarCliente();
+            if (!resp.Exito) return resp;
+
+            var clientes = ClienteServicio.Obtener(cteDto.IdCliente);
+            if (clientes == null) return ClienteServicio.NoExiste();
+
+            var cte = ClientesAdapter.FromDto(cteDto, clientes);
+            cte.FechaRegistro = cte.FechaRegistro;
+            return ClienteServicio.Modificar(cte);
+        }
+
+        public RespuestaDto EliminaCliente(int id)
+        {
+            var resp = PermisosServicio.PuedeEliminarCliente();
+            if (!resp.Exito) return resp;
+
+            var clientes = ClienteServicio.Obtener(id);
+            if (clientes == null) return ClienteServicio.NoExiste();
+
+            clientes = ClientesAdapter.FromEntity(clientes);
+            clientes.Activo = false;
+            return ClienteServicio.Modificar(clientes);
+        }
+
+        public RespuestaDto RegistraClienteLocacion(ClienteLocacionDTO cteDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarCliente();
+            if (!resp.Exito) return resp;
+
+            var cliente = ClientesAdapter.FromDto(cteDto);
+                      
+
+            return ClienteServicio.AltaClienteL(cliente);
+        }
+
+        public RespuestaDto ActualizaClienteLocacion(ClienteLocacionDTO cteDto)
+        {
+            var resp = PermisosServicio.PuedeModificarCliente();
+            if (!resp.Exito) return resp;
+
+            var clientes = ClienteServicio.Obtener(cteDto.IdCliente);
+            if (clientes == null) return ClienteServicio.NoExiste();
+
+            var cte = ClientesAdapter.FromDto(cteDto, clientes);
+            cte.FechaRegistro = cte.FechaRegistro;
+            return ClienteServicio.Modificar(cte);
+        }       
         #endregion
 
         #region Productos
@@ -140,7 +194,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             resp = ValidarCatalogoServicio.CategoriaProducto(cpDto);
-            if (!resp.Exito) return resp;         
+            if (!resp.Exito) return resp;
 
             return ProductoServicio.RegistrarCategoriaProducto(ProductoAdapter.CategoriaProducto(cpDto));
         }

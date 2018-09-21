@@ -1,0 +1,121 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model  UsuarioDTO
+
+@{
+    ViewBag.Title = "Catálogo / Usuarios";
+}
+
+<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnRegresarIndex").click(function () {
+
+            var form = $(this).parent("form");
+            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "Index" }) %>');
+            form.attr('method', 'post');
+        });
+
+    });
+</script>
+@using (Html.BeginForm("GuardarLocaciones", "Clientes", FormMethod.Post))
+{
+    <section class="content home">
+        <div class="container-fluid">
+
+            <div class="row clearfix">
+                <div class="col-lg-7 col-md-7 col-sm-12">
+                    <h3>&nbsp;Catálogo / Clientes / Locaciones</h3>
+                </div>
+            </div>
+
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <div>
+                                                <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdCliente[0].RazonSocial=="")?ViewBag.IdCliente[0].Nombre + " " +ViewBag.IdCliente[0].Apellido1 + " " +ViewBag.IdCliente[0].Apellido2:ViewBag.IdCliente[0].RazonSocial )" />
+                                                <input type="text" name="IdCliente" hidden="hidden" value="@ViewBag.IdCliente[0].IdCliente" readonly="readonly" id="IdCliente" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div class="form-group">
+                                        <div>
+                                            <label for="txtNume">
+                                                Tipo de locación(Lugar):
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <input type="text" name="TipoLocacion" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <div>
+                                            <label for="txtNume">
+                                                Localización Manual | Localización Google Maps
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
+                            <div class="row clearfix">
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div class="form-group">
+                                        <div>
+                                            <label for="txtNume">
+                                                Dirección del Lugar:
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                    <div class="form-group">
+                                        <input type="text" name="txtDir" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <div class="form-group">
+                                        <input type="submit" id="btnRegresarIndex" value="Regresar" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-left" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="form-group">
+                                        <button class="btn btn-raised btn-primary float-right" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>Agregar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+          
+
+        </div>
+    </section>
+}
+<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

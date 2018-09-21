@@ -113,7 +113,7 @@
                                                     <td>@item.Celular1</td>
                                                     <td>@item.Telefono1</td>
                                                     <td>
-                                                        <a ID="lblCrear" href="@Url.Action("EditarUsuario", "Usuarios", new { id = item.IdEmpresa })">
+                                                        <a ID="lblCrear" href="@Url.Action("EditarUsuario", "Usuarios", new { id = item.IdUsuario })">
                                                             <i class="material-icons">edit</i>
                                                             <span class="icon-name"></span>
                                                         </a>
@@ -123,7 +123,7 @@
                                                             <span class="icon-name"></span>
                                                         </a>
                                                         <a ID="lbEdit" href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })">
-                                                            <i class="material-icons">edit</i>
+                                                            <i class="material-icons">dashboard</i>
                                                             <span class="icon-name"></span>
                                                         </a>
                                                         <a ID="lbBorrar" href="@Url.Action("BorrarUsuario", "Usuarios", new {  id=item.IdUsuario } )">

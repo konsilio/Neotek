@@ -57,7 +57,7 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeRegistrarEmpresa()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatModificarUsuario).ToList();//CatInsertarEmpresa
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarEmpresa).ToList();
             
             return EvaluarPermiso(roles, Error.P0001, "Empresa");
         }
@@ -65,7 +65,7 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeModificarEmpresa()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatModificarUsuario).ToList();//CatModificarEmpresa
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatModificarEmpresa).ToList();
             
             return EvaluarPermiso(roles, Error.P0002, "Empresa");
         }
@@ -73,7 +73,7 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeEliminarEmpresa()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarUsuario).ToList();//CatEliminarEmpresa
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarEmpresa).ToList();
            
             return EvaluarPermiso(roles, Error.P0003, "Empresa");
         }
@@ -91,7 +91,7 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeRegistrarRol()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarUsuario).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarRol).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "Rol");
         }
@@ -99,7 +99,7 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeModificarRol()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatModificarUsuario).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatModificarRol).ToList();
 
             return EvaluarPermiso(roles, Error.P0002, "Rol");
         }
@@ -107,14 +107,13 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeEliminarRol()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarUsuario).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarRol).ToList();
 
             return EvaluarPermiso(roles, Error.P0003, "Rol");
         }
         #endregion
 
         #region Clientes
-
         public static RespuestaDto PuedeConsultarCliente()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();

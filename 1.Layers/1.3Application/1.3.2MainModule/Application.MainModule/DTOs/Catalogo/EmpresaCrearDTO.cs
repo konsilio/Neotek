@@ -93,7 +93,7 @@ namespace Application.MainModule.DTOs.Catalogo
         [Display(Name = "IdPais")]
         public byte IdPais { get; set; }
 
-        [Required(ErrorMessage = eReq)]
+      //  [Required(ErrorMessage = eReq)]
         [Display(Name = "IdEstadoRep")]
         public Nullable<byte> IdEstadoRep { get; set; }
 

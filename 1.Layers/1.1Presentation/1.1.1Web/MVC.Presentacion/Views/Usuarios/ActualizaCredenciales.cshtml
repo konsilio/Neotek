@@ -7,7 +7,20 @@
 
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 
+<script type="text/javascript">
+  
+    $(document).ready(function () {  
+        $("#btnRegresarIndex").click(function () {
+
+            var form = $(this).parent("form");
+            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Usuarios", Action = "Index" }) %>');
+            form.attr('method', 'post');
+        });
+
+    });
+</script>
 @using (Html.BeginForm("GuardarCredenciales", "Usuarios", FormMethod.Post)) 
 {
     <section class="content home">
@@ -68,12 +81,11 @@
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            <input type="submit" value="Regresar" class="btn btn-raised btn-primary float-left" formaction="Index" />
+                            <input type="submit" id="btnRegresarIndex" value="Regresar" formaction=@Url.Action("Index")  class="btn btn-raised btn-primary float-left" formaction="Index" />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="form-group">
-                            @*<input type="submit" value="GuardarCredenciales" formaction="GuardarCredenciales" class="btn btn-raised btn-primary float-right" />*@
                             <button class="btn btn-raised btn-primary float-right" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>  Actualizar</button>
 
                         </div>
