@@ -44,11 +44,11 @@
                                                 {
                                                     if (lst.IdEmpresa == Model.IdEmpresa)
                                                     {
-                                            <option value="@lst.IdEmpresa" selected>@lst.NombreComercial</option>
+                                        <option value="@lst.IdEmpresa" selected>@lst.NombreComercial</option>
                                                     }
                                                     else
                                                     {
-                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                     }
                                                 }
                                     </select>
@@ -152,11 +152,11 @@
                                         {
                                             if (Model != null && cc.IdPais == Model.IdTipoProveedor)
                                             {
-                                            <option value="@cc.IdPais" selected>@cc.Pais</option>
+                                        <option value="@cc.IdPais" selected>@cc.Pais</option>
                                             }
                                             else
                                             {
-                                            <option value="@cc.IdPais">@cc.Pais</option>
+                                        <option value="@cc.IdPais">@cc.Pais</option>
                                             }
                                         }
                                     </select>
@@ -169,11 +169,11 @@
                                         {
                                             if (Model != null && cc.IdEstadoRep == Model.IdEstadoRep)
                                             {
-                                            <option value="@cc.IdEstadoRep" selected>@cc.Estado</option>
+                                        <option value="@cc.IdEstadoRep" selected>@cc.Estado</option>
                                             }
                                             else
                                             {
-                                            <option value="@cc.IdEstadoRep">@cc.Estado</option>
+                                        <option value="@cc.IdEstadoRep">@cc.Estado</option>
                                             }
                                         }
                                     </select>
@@ -225,219 +225,228 @@
                     </div>
                 </div>
             </div>
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2>Información <strong>Bancaria</strong></h2>
-                            </div>
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-md-6">
-                                        <b>Banco</b>
-                                        <select name="IdBanco" class="form-control show-tick" data-live-search="true">
-                                            @foreach (var lst in ViewBag.Bancos)
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Información <strong>Bancaria</strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-6">
+                                    <b>Banco</b>
+                                    <select name="IdBanco" class="form-control show-tick" data-live-search="true">
+                                        @foreach (var lst in ViewBag.Bancos)
+                                        {
+                                            if (Model != null && lst.IdBanco == Model.IdBanco)
                                             {
-                                                if (lst.IdEmpresa == Model.IdBanco)
-                                                {
-                                                    <option value="@lst.IdBanco" selected>@lst.NombreCorto</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@lst.IdBanco">@lst.NombreCorto</option>
-                                                }
+                                                <option value="@lst.IdBanco" selected>@lst.NombreCorto</option>
                                             }
-                                        </select>
-                                        @Html.ValidationMessageFor(m => m.IdBanco, "", new { @class = "alert-danger" })
-                                    </div>
-                                    <div class="col-md-6">
-                                        <b>Cuenta</b>
-                                        <div class="form-group">
-                                            @Html.TextBoxFor(m => m.Cuenta, new { @class = "form-control", @placeholder = "Número de cuenta" })                                            
-                                        </div>
+                                            else
+                                            {
+                                                <option value="@lst.IdBanco">@lst.NombreCorto</option>
+                                            }
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(m => m.IdBanco, "", new { @class = "alert-danger" })
+                                </div>
+                                <div class="col-md-6">
+                                    <b>Cuenta</b>
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.Cuenta, new { @class = "form-control", @placeholder = "Número de cuenta" })
                                     </div>
                                 </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-6">
-                                        <b>Forma de pago</b>
-                                        <select name="IdFormaDePago" class="form-control show-tick" data-live-search="true">
-                                            @foreach (var lst in ViewBag.Bancos)
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-6">
+                                    <b>Forma de pago</b>
+                                    <select name="IdFormaDePago" class="form-control show-tick" data-live-search="true">
+                                        @foreach (var lst in ViewBag.FormasPago)
+                                        {
+                                            if (lst.IdFormaPago == Model.IdFormaDePago)
                                             {
-                                                if (lst.IdFormaPago == Model.IdFormaDePago)
-                                                {
-                                                    <option value="@lst.IdFormaPago" selected>@lst.Descripcion</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@lst.IdFormaPago">@lst.Descripcion</option>
-                                                }
+                                                <option value="@lst.IdFormaPago" selected>@lst.Descripcion</option>
                                             }
-                                        </select>
-                                        @Html.ValidationMessageFor(m => m.IdFormaDePago, "", new { @class = "alert-danger" })
-                                    </div>
-                                    <div class="col-md-6">
-                                        <b>Dìas de credito</b>
-                                        <div class="form-group">
-                                            @Html.TextBoxFor(m => m.DiasCredito, new { @class = "form-control", @placeholder = "Días que otorga de crédito" })
-                                        </div>
+                                            else
+                                            {
+                                                <option value="@lst.IdFormaPago">@lst.Descripcion</option>
+                                            }
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(m => m.IdFormaDePago, "", new { @class = "alert-danger" })
+                                </div>
+                                <div class="col-md-6">
+                                    <b>Dìas de credito</b>
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.DiasCredito, new { @class = "form-control", @placeholder = "Días que otorga de crédito" })
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2>Información <strong>de Contacto</strong></h2>
-                            </div>
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <b>Nombre del Contacto</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
-                                                <input type="text" class="form-control" placeholder="Nombre del primer contacto">
-                                            </div>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
-                                                <input type="text" class="form-control" placeholder="Nombre del segundo contacto">
-                                            </div>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
-                                                <input type="text" class="form-control" placeholder="Nombre del tercer contacto">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <b>Teléfono</b>
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
-                                                <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
-                                            </div>
-
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
-                                                <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
-                                            </div>
-
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
-                                                <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <b>Celular</b>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Información <strong>de Contacto</strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <b>Nombre del Contacto</b>
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-smartphone"></i></span>
-                                            <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                                            @Html.TextBoxFor(m => m.Persona1, new { @class = "form-control", @placeholder = "Nombre del primer contacto" })
                                         </div>
-
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-smartphone"></i></span>
-                                            <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                                            @Html.TextBoxFor(m => m.Persona2, new { @class = "form-control", @placeholder = "Nombre del segundo contacto" })
                                         </div>
-
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-smartphone"></i></span>
-                                            <input type="text" class="form-control mobile-phone-number" placeholder="Ej: +00 (000) 000-00-00">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
+                                            @Html.TextBoxFor(m => m.Persona3, new { @class = "form-control", @placeholder = "Nombre del tercer contacto" })
+
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-4">
-                                        <b>Correo electrónico</b>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <b>Teléfono</b>
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
-                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo1@example.com">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
+                                            @Html.TextBoxFor(m => m.Telefono1, new { @class = "form-control mobile-phone-number", @placeholder = "Ej: +00 (000) 000-00-00" })
                                         </div>
 
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
-                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo2@example.com">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
+                                            @Html.TextBoxFor(m => m.Telefono2, new { @class = "form-control mobile-phone-number", @placeholder = "Ej: +00 (000) 000-00-00" })
                                         </div>
 
                                         <div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
-                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo3@example.com">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
+                                            @Html.TextBoxFor(m => m.Telefono3, new { @class = "form-control mobile-phone-number", @placeholder = "Ej: +00 (000) 000-00-00" })
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <b>Sitios web</b>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
-                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo1.com">
-                                        </div>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
-                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo2.com">
-                                        </div>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
-                                            <input type="text" class="form-control email" placeholder="Ej: ejemplo3.com">
-                                        </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <b>Celular</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="zmdi zmdi-smartphone"></i></span>
+                                        @Html.TextBoxFor(m => m.Celular1, new { @class = "form-control mobile-phone-number", @placeholder = "Ej: +00 (000) 000-00-00" })
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="zmdi zmdi-smartphone"></i></span>
+                                        @Html.TextBoxFor(m => m.Celular2, new { @class = "form-control mobile-phone-number", @placeholder = "Ej: +00 (000) 000-00-00" })
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="zmdi zmdi-smartphone"></i></span>
+                                        @Html.TextBoxFor(m => m.Celular3, new { @class = "form-control mobile-phone-number", @placeholder = "Ej: +00 (000) 000-00-00" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-4">
+                                    <b>Correo electrónico</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                        @Html.TextBoxFor(m => m.Email1, new { @class = "form-control email", @placeholder = "Ej: ejemplo3@example.com" })
+                                    </div>
+
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                        @Html.TextBoxFor(m => m.Email2, new { @class = "form-control email", @placeholder = "Ej: ejemplo3@example.com" })
+                                    </div>
+
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                        @Html.TextBoxFor(m => m.Email3, new { @class = "form-control email", @placeholder = "Ej: ejemplo3@example.com" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <b>Sitios web</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                        @Html.TextBoxFor(m => m.SitioWeb1, new { @class = "form-control email", @placeholder = "Ej: ejemplo1.com" })
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                        @Html.TextBoxFor(m => m.SitioWeb2, new { @class = "form-control email", @placeholder = "Ej: ejemplo1.com" })
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                                        @Html.TextBoxFor(m => m.SitioWeb3, new { @class = "form-control email", @placeholder = "Ej: ejemplo1.com" })
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row clearfix">
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="card">
-                            <div class="header">
-                                <h2>Información <strong>Fiscal</strong></h2>
-                            </div>
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-md-3">
-                                        <b>Tipo persona</b>
-                                        <select class="form-control z-index show-tick" data-live-search="true">
-                                            <option>Moral</option>
-                                            <option>Física</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <b>Regimen Fiscal</b>
-                                        <select name="IdRegimenFiscal" class="form-control">
-                                            @foreach (var cc in ViewBag.RegimenesFiscales)
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>Información <strong>Fiscal</strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-md-3">
+                                    <b>Tipo persona</b>
+                                    <select name="IdTipoPersona" class="form-control">
+                                        @foreach (var cc in ViewBag.TipoPersonas)
+                                        {
+                                            if (Model != null && cc.IdTipoPersona == Model.IdTipoPersona)
                                             {
-                                                if (Model != null && cc.IdRegimenFiscal == Model.IdRegimenFiscal)
-                                                {
-                                                    <option value="@cc.IdRegimenFiscal" selected>@cc.Descripcion</option>
-                                                }
-                                                else
-                                                {
-                                                    <option value="@cc.IdRegimenFiscal">@cc.Descripcion</option>
-                                                }
+                                                <option value="@cc.IdTipoPersona" selected>@cc.Descripcion</option>
                                             }
-                                        </select>
-                                        @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
+                                            else
+                                            {
+                                                <option value="@cc.IdTipoPersona">@cc.Descripcion</option>
+                                            }
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
+                                </div>
+                                <div class="col-md-9">
+                                    <b>Regimen Fiscal</b>
+                                    <select name="IdRegimenFiscal" class="form-control">
+                                        @foreach (var cc in ViewBag.RegimenesFiscales)
+                                        {
+                                            if (Model != null && cc.IdRegimenFiscal == Model.IdRegimenFiscal)
+                                            {
+                                                <option value="@cc.IdRegimenFiscal" selected>@cc.Descripcion</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@cc.IdRegimenFiscal">@cc.Descripcion</option>
+                                            }
+                                        }
+                                    </select>
+                                    @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-md-3">
+                                    <b>Rfc</b>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
+                                        @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control key", @placeholder = "Ej: XXX-000000-XXX" })                                        
                                     </div>
                                 </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">
-                                        <b>Rfc</b>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
-                                            <input type="text" class="form-control key" placeholder="Ex: XXX-000000-XXX">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <b>Razon Social</b>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Razón social">
-                                        </div>
+                                <div class="col-md-9">
+                                    <b>Razon Social</b>
+                                    <div class="form-group">
+                                        @Html.TextBoxFor(m => m.RazonSocial, new { @class = "form-control", @placeholder = "Razón social" })
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         }
     </div>
 </section>
