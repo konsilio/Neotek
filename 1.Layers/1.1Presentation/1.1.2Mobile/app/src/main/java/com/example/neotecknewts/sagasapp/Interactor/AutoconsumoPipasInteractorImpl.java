@@ -27,8 +27,6 @@ public class AutoconsumoPipasInteractorImpl implements AutoconsumoPipaInteractor
     @Override
     public void getList(Session session, boolean esAutoconsumoPipaFinal) {
         DatosAutoconsumoDTO dto = new DatosAutoconsumoDTO();
-        presenter.onSuccess(dto);
-        presenter.onError("");
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
