@@ -29,6 +29,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Cliente>().GetSingle(x => x.IdCliente.Equals(idCliente));
         }
+
+        public List<ClienteLocacion> BuscarLocacion(int idCliente)
+        {
+            return uow.Repository<ClienteLocacion>().Get(x => x.IdCliente.Equals(idCliente)).ToList();
+        }
+
         public RespuestaDto Insertar(Cliente cte)
         {
             RespuestaDto _respuesta = new RespuestaDto();

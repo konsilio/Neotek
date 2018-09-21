@@ -755,6 +755,12 @@ namespace MVC.Presentacion.App_Code
             return agente._lstaClientes;
         }
 
+        public static List<ClienteLocacionMod> ObtenerLocaciones(int id, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaLocaciones(id, token);           
+            return agente._cteLocacion;
+        }
         public static RespuestaDTO CrearCliente(ClientesModel cc, string tkn)
         {
             var agente = new AgenteServicio();

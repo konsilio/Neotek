@@ -21,5 +21,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<Pais>().GetAll().ToList();
         }
+
+        public Pais BuscarIdPais(int idPais)
+        {
+            return uow.Repository<Pais>().GetSingle(x => x.IdPais.Equals(idPais));
+        }
     }
 }

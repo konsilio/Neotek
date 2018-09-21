@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,38 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             return luDTO;
         }
 
-        public static ClienteLocacion FromDto(ClienteLocacionDTO cteDTO)
+        public static ClienteLocacionDTO ToDTOLoc(ClienteLocacion _loc)
+        {
+            ClienteLocacionDTO locDto = new ClienteLocacionDTO()
+            {
+                Orden = _loc.Orden,
+                IdPais = _loc.IdPais,
+                IdEstadoRep = _loc.IdEstadoRep,
+                EstadoProvincia = _loc.EstadoProvincia,
+                Municipio = _loc.Municipio,
+                CodigoPostal = _loc.CodigoPostal,
+                Colonia = _loc.Colonia,
+                Calle = _loc.Calle,
+                NumExt = _loc.NumExt,
+                NumInt = _loc.NumInt,
+                formatted_address = _loc.formatted_address,
+                location_lat = _loc.location_lat,
+                location_lng = _loc.location_lng,
+                place_id = _loc.place_id,
+                TipoLocacion = _loc.TipoLocacion,
+                Pais = PaisServicio.Obtener(_loc.IdPais).PaisNombre,
+                Estado = EstadosrepServicio.Obtener((int)_loc.IdEstadoRep).Estado,
+
+            };
+            return locDto;
+        }
+        public static List<ClienteLocacionDTO> ToDTOLoc(List<ClienteLocacion> lu)
+        {
+            List<ClienteLocacionDTO> luDTO = lu.ToList().Select(x => ToDTOLoc(x)).ToList();
+            return luDTO;
+        }
+
+        public static ClienteLocacion FromDtox(ClienteLocacionDTO cteDTO)
         {
             return new ClienteLocacion()
             {
@@ -77,15 +109,15 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 Calle = cteDTO.Calle,
                 NumExt = cteDTO.NumExt,
                 NumInt = cteDTO.NumInt,
-                formatted_address = cteDTO.formatted_address,
-                location_lat = cteDTO.location_lat,
-                location_lng = cteDTO.location_lng,
-                place_id = cteDTO.place_id,
-                TipoLocacion = cteDTO.TipoLocacion,
+                formatted_address = cteDTO.Calle + cteDTO.Colonia + cteDTO.NumExt,//cteDTO.formatted_address,
+                location_lat = "1",//cteDTO.location_lat,
+                location_lng = "1",//cteDTO.location_lng,
+                place_id = "1",//cteDTO.place_id,
+                TipoLocacion = "1"//cteDTO.TipoLocacion,
             };
         }
 
-        public static Cliente FromDto(ClienteCrearDto cteDTO)
+        public static Cliente FromDtoMod(ClienteCrearDto cteDTO)
         {
             return new Cliente()
             {
@@ -126,7 +158,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             };
         }
 
-        public static Cliente FromDto(ClienteCrearDto Ctedto, Cliente catCte)
+        public static Cliente FromDtoEditar(ClienteCrearDto Ctedto, Cliente catCte)
         {
             var catCliente = FromEntity(catCte);
             if (Ctedto.IdEmpresa != 0) { catCliente.IdEmpresa = Ctedto.IdEmpresa; } else { catCliente.IdEmpresa = catCliente.IdEmpresa; }

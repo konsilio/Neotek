@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.AccesoADatos;
+using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             List<EstadosRepDTO> ledos = AdaptadoresDTO.Seguridad.EstadoRepAdapter.ToDTO(new EstadoRDataAccess().ListaEstadosR());
             return ledos;
+        }
+
+        public static EstadosRepublica Obtener(int idEdo)
+        {
+            return new EstadoRDataAccess().BuscarIdEdo(idEdo);
         }
     }
 }

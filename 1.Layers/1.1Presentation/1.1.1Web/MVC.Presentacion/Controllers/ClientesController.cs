@@ -29,8 +29,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
             ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
-            ViewBag.Clientes = CatalogoServicio.ListaClientes(0,_tkn);
-            //ViewBag.Clientes = CatalogoServicio.ListaClientes(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(0,_tkn);            
             ViewBag.IdCliente = null;
             return View();
         }
@@ -82,6 +81,11 @@ namespace MVC.Presentacion.Controllers
         {
             string _tkn = Session["StringToken"].ToString();
             ViewBag.IdCliente = CatalogoServicio.ListaClientes(id, _tkn);
+            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tok);
+            //Se obtienen los estados 
+            ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
+            //llenar locaciones
+            ViewBag.Locaciones = CatalogoServicio.ObtenerLocaciones(id, _tkn);
             return View();
         }
 

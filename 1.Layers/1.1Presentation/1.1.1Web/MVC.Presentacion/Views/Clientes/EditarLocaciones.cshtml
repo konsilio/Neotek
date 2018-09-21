@@ -1,5 +1,5 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
-@model  UsuarioDTO
+@model  ClienteLocacionMod
 
 @{
     ViewBag.Title = "Catálogo / Usuarios";
@@ -8,17 +8,85 @@
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+<style>
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
 
+        .switch input {
+            display: none;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
 <script type="text/javascript">
 
     $(document).ready(function () {
+        $('#Dir').hide();
         $("#btnRegresarIndex").click(function () {
 
             var form = $(this).parent("form");
             form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "Index" }) %>');
             form.attr('method', 'post');
         });
+        $("#payMethod").change(function () {
 
+            if ($(this).prop("checked") == true) {
+                $('#Dir').show();
+                $('#DirManual').hide();
+            } else {
+                $('#Dir').hide();
+                $('#DirManual').show();
+            }
+        });
     });
 </script>
 @using (Html.BeginForm("GuardarLocaciones", "Clientes", FormMethod.Post))
@@ -58,22 +126,25 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
                                         <input type="text" name="TipoLocacion" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-7 col-md-7 col-sm-7">
                                     <div class="form-group">
                                         <div>
-                                            <label for="txtNume">
-                                                Localización Manual | Localización Google Maps
+                                            Localización Manual
+                                            <label class="switch">
+                                                <input type="checkbox" id="payMethod">
+                                                <span class="slider round"></span>
                                             </label>
+                                            Localización Google Maps
                                         </div>
                                     </div>
                                 </div>
-                            </div>                        
-                            <div class="row clearfix">
+                            </div>
+                            <div class="row clearfix" id="Dir">
                                 <div class="col-lg-2 col-md-2 col-sm-2">
                                     <div class="form-group">
                                         <div>
@@ -89,16 +160,194 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div id="DirManual">
+                                <div class="row clearfix">
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Pais:*
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
+                                                @foreach (var lst in ViewBag.ListaPaises)
+                                                {
+                                                    <option value="@lst.IdPais">@lst.Pais</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Estado:*
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.ListaEstados)
+                                                {
+                                                    <option value="@lst.IdEstadoRep">@lst.Estado</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Municipio:*
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <input type="text" name="Municipio" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Colonia:*
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <input type="text" name="Colonia" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Calle:*
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-7 col-md-7 col-sm-7">
+                                        <div class="form-group">
+                                            <input type="text" name="Calle" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Núm Ext:*
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <input type="text" name="NumExt" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Núm. Int:*
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <input type="text" name="NumInt" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <div class="form-group">
+                                            <div>
+                                                <label for="txtNume">
+                                                    Cod. Postal:*
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <input type="text" name="CodigoPostal" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row clearfix">
                                 <div class="col-lg-5 col-md-5 col-sm-5">
                                     <div class="form-group">
                                         <input type="submit" id="btnRegresarIndex" value="Regresar" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-left" />
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-7 col-md-7 col-sm-7">
                                     <div class="form-group">
                                         <button class="btn btn-raised btn-primary float-right" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>Agregar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
+                                            <thead>
+                                                <tr>
+                                                    <th>Pais</th>
+                                                    <th>Estado</th>
+                                                    <th>Municipio</th>
+                                                    <th>Tipo Locacion</th>
+                                                    <th>Cod Postal</th>
+                                                    <th>Colonia</th>
+                                                    <th>Calle</th>
+                                                    <th>Núm Int</th>
+                                                    <th>Núm Ext</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in @ViewBag.Locaciones)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Pais</td>
+                                                        <td>@item.EstadoProvincia</td>
+                                                        <td>@item.Municipio</td>
+                                                        <td>@item.TipoLocacion</td>
+                                                        <td>@item.CodigoPostal</td>
+                                                        <td>@item.Colonia</td>
+                                                        <td>@item.Calle</td>
+                                                        <td>@item.NumInt</td>
+                                                        <td>@item.NumExt</td>
+                                                        <td>
+                                                            <a ID="lblCrear" href="@Url.Action("EditarClienteLoc", "Clientes", new { id = item.IdCliente })">
+                                                                <i class="material-icons">edit</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                            <a ID="lbBorrar" href="@Url.Action("BorrarClienteLoc", "Clientes", new { id = item.IdCliente })">
+                                                                <i class="material-icons">delete</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +356,7 @@
                 </div>
             </div>
 
-          
+
 
         </div>
     </section>

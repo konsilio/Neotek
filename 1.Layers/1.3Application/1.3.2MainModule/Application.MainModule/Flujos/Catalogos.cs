@@ -107,7 +107,6 @@ namespace Application.MainModule.Flujos
         {
             return RegimenServicio.ListaRegimen().ToList();
         }
-
         public List<ClientesDto> ListaClientes(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
@@ -120,13 +119,17 @@ namespace Application.MainModule.Flujos
             return ClienteServicio.ListaClientes().ToList();
         }
 
+        public List<ClienteLocacionDTO> ListaLocaciones(int id)
+        {
+            return ClienteServicio.ObtenerLoc(id).ToList();
+        }
 
         public RespuestaDto RegistraCliente(ClienteCrearDto cteDto)
         {
             var resp = PermisosServicio.PuedeRegistrarCliente();
             if (!resp.Exito) return resp;
 
-            var cliente = ClientesAdapter.FromDto(cteDto);
+            var cliente = ClientesAdapter.FromDtoMod(cteDto);
 
             if (!TokenServicio.EsSuperUsuario() && !TokenServicio.ObtenerEsAdministracionCentral())
                 cliente.IdEmpresa = TokenServicio.ObtenerIdEmpresa();
@@ -142,7 +145,7 @@ namespace Application.MainModule.Flujos
             var clientes = ClienteServicio.Obtener(cteDto.IdCliente);
             if (clientes == null) return ClienteServicio.NoExiste();
 
-            var cte = ClientesAdapter.FromDto(cteDto, clientes);
+            var cte = ClientesAdapter.FromDtoEditar(cteDto, clientes);
             cte.FechaRegistro = cte.FechaRegistro;
             return ClienteServicio.Modificar(cte);
         }
@@ -165,7 +168,7 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeRegistrarCliente();
             if (!resp.Exito) return resp;
 
-            var cliente = ClientesAdapter.FromDto(cteDto);
+            var cliente = ClientesAdapter.FromDtox(cteDto);
                       
 
             return ClienteServicio.AltaClienteL(cliente);

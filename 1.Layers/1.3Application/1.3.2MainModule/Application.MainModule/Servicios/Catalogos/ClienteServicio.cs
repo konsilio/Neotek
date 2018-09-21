@@ -34,6 +34,13 @@ namespace Application.MainModule.Servicios.Catalogos
             return new ClientesDataAccess().Buscar(IdCliente);
         }
 
+        public static List<ClienteLocacionDTO> ObtenerLoc(int IdCliente)
+        {
+            List<ClienteLocacionDTO> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTOLoc(new ClientesDataAccess().BuscarLocacion(IdCliente));
+            return lClientes;
+            // return new ClientesDataAccess().Buscar(IdCliente);
+        }
+
         public static RespuestaDto Modificar(Cliente cte)
         {
             return new ClientesDataAccess().Actualizar(cte);
