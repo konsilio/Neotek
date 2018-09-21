@@ -21,6 +21,8 @@ namespace Sagas.MainModule.Entidades
         }
     
         public byte IdTipoProveedor { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Tipo")]
         public string Tipo { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }

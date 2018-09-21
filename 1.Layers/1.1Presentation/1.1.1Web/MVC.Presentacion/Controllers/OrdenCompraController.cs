@@ -19,7 +19,7 @@ namespace MVC.Presentacion.Controllers
             {
                 string tkn = Session["StringToken"].ToString();
                 ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
-                ViewBag.Proveedores = CatalogoServicio.CargarProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
+                ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
                 ViewBag.IVAs = CatalogoServicio.ListaIVA();
                 ViewBag.IEPs = CatalogoServicio.ListaIEPS();
                 return View(OrdenCompraServicio.InitOrdenCompra(id, tkn));
@@ -37,7 +37,7 @@ namespace MVC.Presentacion.Controllers
                     string tkn = Session["StringToken"].ToString();
                     ViewBag.EsAdminCentral = TokenServicio.ObtenerEsAdministracionCentral(tkn);
                     ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-                    ViewBag.Proveedores = CatalogoServicio.CargarProveedores(tkn);
+                    ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
                     ViewBag.Estatus = OrdenCompraServicio.ListaEstatus(tkn);
                     return View(OrdenCompraServicio.InitOrdenesCompra(tkn));
                 }
@@ -45,7 +45,7 @@ namespace MVC.Presentacion.Controllers
                 {
                     string tkn = Session["StringToken"].ToString();
                     ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
-                    ViewBag.Proveedores = CatalogoServicio.CargarProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
+                    ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
                     ViewBag.IVAs = CatalogoServicio.ListaIVA();
                     ViewBag.IEPs = CatalogoServicio.ListaIEPS();
                     return View(model);
@@ -61,7 +61,7 @@ namespace MVC.Presentacion.Controllers
                 string tkn = Session["StringToken"].ToString();
                 ViewBag.EsAdminCentral = TokenServicio.ObtenerEsAdministracionCentral(tkn);
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-                ViewBag.Proveedores = CatalogoServicio.CargarProveedores(tkn);
+                ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
                 ViewBag.Estatus = OrdenCompraServicio.ListaEstatus(tkn);
                 return View(OrdenCompraServicio.InitOrdenesCompra(tkn));
             }

@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenProductoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\BancoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CentroCostoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ClientesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CuentaContableAdapter.cs" />
@@ -60,10 +61,12 @@
     <Compile Include="AdaptadoresDTO\Catalogo\EquipoTransporteAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EstacionCarburacionAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\EstadoRepAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\FormaPagoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\TipoCentroCostoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\TipoProveedorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\UnidadAlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\RegimenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Seguridad\RolAdapter.cs" />
@@ -74,11 +77,13 @@
     <Compile Include="DTOs\Almacen\AlmacenCrearEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenDTO.cs" />
+    <Compile Include="DTOs\Catalogo\BancoDTO.cs" />
     <Compile Include="DTOs\Catalogo\ClienteCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\ClientesDto.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaModificaConfig.cs" />
     <Compile Include="DTOs\Catalogo\EstadosRepDTO.cs" />
     <Compile Include="DTOs\Catalogo\EstacionCarburacionDTO.cs" />
+    <Compile Include="DTOs\Catalogo\FormaPagoDTO.cs" />
     <Compile Include="DTOs\Catalogo\PaisDTO.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoDto.cs" />
@@ -92,6 +97,7 @@
     <Compile Include="DTOs\Catalogo\ProductoEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\TipoCentroCostoDto.cs" />
+    <Compile Include="DTOs\Catalogo\TipoProveedorDTO.cs" />
     <Compile Include="DTOs\Catalogo\UnidadAlmacenGasDTO.cs" />
     <Compile Include="DTOs\Catalogo\RegimenDTO.cs" />
     <Compile Include="DTOs\Catalogo\TipoPersonaDTO.cs" />
@@ -194,6 +200,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenGasDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\BancoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CentroCostoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenGasDescargaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ClientesDataAccess.cs" />
@@ -202,12 +209,14 @@
     <Compile Include="Servicios\AccesoADatos\EmpresaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EquipoTransporteDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EstacionCarburacionDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\FormaPagoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OperadorChoferDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\EstadoRDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PaisDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\PuntoVentaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\RegimenDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\RegimenFiscalDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\RequisicionDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\ProveedorDataAccess.cs" />
@@ -215,9 +224,11 @@
     <Compile Include="Servicios\AccesoADatos\TipoCentroCostoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\TipoMedidorGasDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\TipoPerDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\TipoProveedorDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
     <Compile Include="Servicios\Almacen\ProductoAlmacenServicio.cs" />
     <Compile Include="Servicios\Almacen\AlmacenGasServicio.cs" />
+    <Compile Include="Servicios\Catalogos\BancoServicio.cs" />
     <Compile Include="Servicios\Catalogos\CentroCostoServicio.cs" />
     <Compile Include="Servicios\Catalogos\ClienteServicio.cs" />
     <Compile Include="Servicios\Catalogos\CuentaContableServicio.cs" />
@@ -226,14 +237,16 @@
     <Compile Include="Servicios\Catalogos\EquipoTransporteServicio.cs" />
     <Compile Include="Servicios\Catalogos\EstacionCarburacionServicio.cs" />
     <Compile Include="Servicios\Catalogos\EstadosrepServicio.cs" />
+    <Compile Include="Servicios\Catalogos\FormaPagoServicio.cs" />
     <Compile Include="Servicios\Catalogos\OperadorChoferServicio.cs" />
     <Compile Include="Servicios\Catalogos\PaisServicio.cs" />
-    <Compile Include="Servicios\Catalogos\ProductoServicios.cs" />
+    <Compile Include="Servicios\Catalogos\ProductoServicio.cs" />
     <Compile Include="Servicios\Catalogos\ProveedorServicio.cs" />
     <Compile Include="Servicios\Catalogos\RegimenServicio.cs" />
     <Compile Include="Servicios\Catalogos\PuntoVentaServicio.cs" />
     <Compile Include="Servicios\Catalogos\TipoMedidorGasServicio.cs" />
     <Compile Include="Servicios\Catalogos\TipoPersonaServicio.cs" />
+    <Compile Include="Servicios\Catalogos\TipoProveedorServicio.cs" />
     <Compile Include="Servicios\Seguridad\UsuarioServicio.cs" />
     <Compile Include="Servicios\Catalogos\ValidarCatalogoServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />

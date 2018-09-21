@@ -48,6 +48,5 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             return uags.Select(x => FromDTO(x)).ToList();
         }
-
     }
 }

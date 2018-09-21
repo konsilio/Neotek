@@ -13,7 +13,7 @@ using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
-    public static class ProductoServicios
+    public static class ProductoServicio
     {
         public static RespuestaDto RegistrarCategoriaProducto(CategoriaProducto cProd)
         {

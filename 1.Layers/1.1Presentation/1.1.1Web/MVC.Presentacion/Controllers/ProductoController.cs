@@ -341,5 +341,87 @@ namespace MVC.Presentacion.Controllers
             }
         }
         #endregion
+        #region Proveedor
+        public ActionResult Proveedor(int? page, ProveedorDTO model = null)
+        {
+            RespuestaDTO Resp = new RespuestaDTO();
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
+            tkn = Session["StringToken"].ToString();
+            var Pagina = page ?? 1;
+            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).ToPagedList(Pagina, 20);         
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            if (TempData["RespuestaDTO"] != null)
+                Resp = (RespuestaDTO)TempData["RespuestaDTO"];
+            ModelState.Clear();
+            if (model != null)
+                if (model.IdProveedor != 0)
+                    ViewBag.EsEdicion = true;
+            if (Resp != null)
+            {
+                if (Resp.ModelStatesStandar != null)
+                    foreach (var error in Resp.ModelStatesStandar.ToList())
+                    {
+                        ModelState.AddModelError(error.Key, error.Value);
+                    }
+                if (Resp.MensajesError != null)
+                    ViewBag.MensajeError = Resp.MensajesError[0];
+            }
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(tkn))).NombreComercial;
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult CrearProveedor(ProveedorDTO model)
+        {
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
+            tkn = Session["StringToken"].ToString();
+            var respuesta = CatalogoServicio.CrearProveedor(model, tkn);
+            if (respuesta.Exito)
+                return RedirectToAction("Proveedor");
+            else
+            {
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("Proveedor", new { respuesta, model });
+            }
+        }
+
+        public ActionResult EliminarProveedor(short id)
+        {
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
+            tkn = Session["StringToken"].ToString();
+            var respuesta = CatalogoServicio.EliminiarProveedor(new ProveedorDTO { IdProveedor = id }, tkn);
+            if (respuesta.Exito)
+            {
+
+                return RedirectToAction("Proveedor");
+            }
+            else
+            {
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("Proveedor");
+            }
+        }
+        public ActionResult EditarProveedor(short? id, ProveedorDTO model)
+        {
+            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
+            tkn = Session["StringToken"].ToString();
+            if (id != null)
+                return RedirectToAction("Proveedor", CatalogoServicio.ActivarEditarProveedor(id.Value, tkn));
+            else
+            {
+                var respuesta = CatalogoServicio.ModificarProveedor(model, tkn);
+                if (respuesta.Exito)
+                    return RedirectToAction("Proveedor");
+                else
+                {
+                    TempData["RespuestaDTO"] = respuesta;
+                    return RedirectToAction("Proveedor");
+                }
+            }
+        }
+        #endregion      
+
     }
 }

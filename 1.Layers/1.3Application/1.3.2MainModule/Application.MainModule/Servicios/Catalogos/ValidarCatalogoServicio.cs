@@ -65,7 +65,7 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
             // Existencia   
-            if (ProductoServicios.ExisteCategoria(cpDto.Nombre))
+            if (TipoProveedorServicios.ExisteCategoria(cpDto.Nombre))
             {
                 respuesta.Exito = false;
                 respuesta.ModeloValido = false;
@@ -78,7 +78,7 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
             // Existencia   
-            if (ProductoServicios.ExisteCategoria(cpDto.Nombre, cpDto.IdCategoria))
+            if (TipoProveedorServicios.ExisteCategoria(cpDto.Nombre, cpDto.IdCategoria))
             {
                 respuesta.Exito = false;
                 respuesta.ModeloValido = false;
@@ -92,7 +92,7 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
             // Existencia            
-            if (ProductoServicios.ExisteLinea(lpDto.Linea))
+            if (TipoProveedorServicios.ExisteLinea(lpDto.Linea))
             {
                 respuesta.Exito = false;
                 respuesta.ModeloValido = false;
@@ -106,7 +106,7 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
             // Existencia            
-            if (ProductoServicios.ExisteUnidadMedida(uMDto.Nombre, uMDto.Acronimo))
+            if (TipoProveedorServicios.ExisteUnidadMedida(uMDto.Nombre, uMDto.Acronimo))
             {
                 respuesta.Exito = false;
                 respuesta.ModeloValido = false;

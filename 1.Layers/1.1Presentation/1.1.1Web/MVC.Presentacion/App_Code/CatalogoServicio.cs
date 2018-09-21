@@ -881,8 +881,9 @@ namespace MVC.Presentacion.App_Code
         }
 
         #endregion
+
         #region Proveedores
-        public static List<ProveedorDTO> CargarProveedores(string Tkn)
+        public static List<ProveedorDTO> ListaProveedores(string Tkn)
         {
             var agente = new AgenteServicio();
             agente.BuscarProveedores(Tkn);
@@ -897,7 +898,31 @@ namespace MVC.Presentacion.App_Code
             }
             return nlprov;
         }
+        public static RespuestaDTO CrearProveedor(ProveedorDTO dto, string tkn)
+        {
+            if (dto.IdEmpresa.Equals(0)) dto.IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
+            var agente = new AgenteServicio();
+            agente.GuardarProveedor(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarProveedor(ProveedorDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ModificarProveedor(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO EliminiarProveedor(ProveedorDTO dto, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarProveedor(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static ProveedorDTO ActivarEditarProveedor(short id, string tkn)
+        {
+            return ListaProveedores(tkn).SingleOrDefault(x => x.IdProveedor.Equals(id));
+        }
         #endregion
+
         #region Cuentas contables      
         public static RespuestaDTO GuardarCuentaContable(CuentaContableModel model, string tkn)
         {
@@ -966,6 +991,7 @@ namespace MVC.Presentacion.App_Code
             return model;
         }
         #endregion
+
         #region Impuestos
         public static List<SelectListItem> ListaIVA()
         {
@@ -985,6 +1011,7 @@ namespace MVC.Presentacion.App_Code
             return Ieps;
         }
         #endregion
+
         #region Estación de Carburación
 
         public static List<EstacionCarburacionDTO> GetListaEstacionCarburacion(string tkn)
@@ -994,6 +1021,7 @@ namespace MVC.Presentacion.App_Code
             return agente._listaEstacionCarburacion;
         }
         #endregion
+
         #region Unidad Almacen Gas
 
         public static List<UnidadAlmacenGasDTO> GetListaUnidadAlmcenGas(short IdEmpresa, string tkn)
@@ -1003,6 +1031,7 @@ namespace MVC.Presentacion.App_Code
             return agente._listaUnidadAlmacenGas;
         }
         #endregion
+
         #region Equipo de transporte
 
         public static List<EquipoTransporteDTO> GetListaEquiposTransporte(string tkn)
@@ -1012,6 +1041,7 @@ namespace MVC.Presentacion.App_Code
             return agente._listaEquipoTransporte;
         }
         #endregion
+
         #region Categoria Producto
         public static RespuestaDTO CrearCategoriaProducto(CategoriaProductoDTO dto, string tkn)
         {
@@ -1051,6 +1081,7 @@ namespace MVC.Presentacion.App_Code
         }
         
         #endregion
+
         #region Linea Producto
         public static RespuestaDTO CrearLineaProducto(LineaProductoDTO dto, string tkn)
         {
@@ -1089,6 +1120,7 @@ namespace MVC.Presentacion.App_Code
             };
         }
         #endregion
+
         #region Unidad de medida
         public static RespuestaDTO CrearUnidadMedida(UnidadMedidaDTO dto, string tkn)
         {
@@ -1128,5 +1160,32 @@ namespace MVC.Presentacion.App_Code
             };
         }
         #endregion
+
+        #region Tipo proveedor
+        public static List<TipoProveedorDTO> ListaTipoProveedor(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaTipoProveedor(tkn);
+            return agente._listaTipoProveedor;
+        }
+        #endregion
+        #region Banco
+        public static List<BancoDTO> ListaBanco(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaBanco(tkn);
+            return agente._listaBanco;
+        }
+        #endregion
+        #region Forma de Pago
+        public static List<FormaPagoDTO> ListaFormaPago(string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ListaFormaPago(tkn);
+            return agente._listaFormaPago;
+        }
+
+        #endregion
+
     }
 }

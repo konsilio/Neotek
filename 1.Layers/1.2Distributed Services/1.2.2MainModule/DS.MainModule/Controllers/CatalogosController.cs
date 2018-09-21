@@ -351,30 +351,32 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_catalogos.RegistraProveedor(provDto), Request);
         }
-
         [Route("modifica/proveedor")]
         public HttpResponseMessage PutModificaProveedor(ProveedorModificarDto provDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ModificaProveedor(provDto), Request);
         }
-
         [Route("elimina/proveedor")]
         public HttpResponseMessage PutEliminaProveedor(ProveedorEliminarDto provDto)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.EliminaProveedor(provDto), Request);
         }
-
         [Route("consulta/proveedores")]
         public HttpResponseMessage GetListaProveedores()
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ConsultaProveedores(), Request);
         }
-
         [Route("consulta/proveedor/{idProveedor}")]
         public HttpResponseMessage GetListaProveedores(int idProveedor)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ConsultaProveedor(idProveedor));
         }
+        [Route("consulta/tipos/proveedor")]
+        public HttpResponseMessage GetListaTipoProveedores()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaTipoProveedor(), Request);
+        }
+
         #endregion
 
         #region Centro de Costo
@@ -468,6 +470,20 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaEquiposTransporte()
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ListaEquipoTrasnporte(), Request);
+        }
+        #endregion
+        #region Banco
+        [Route("consulta/bancos")]
+        public HttpResponseMessage GetListabancos()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaBanco(), Request);
+        }
+        #endregion
+        #region Fomra de pago
+        [Route("consulta/formaspago")]
+        public HttpResponseMessage GetListaFormasPago()
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ListaFormaPago(), Request);
         }
         #endregion
 
