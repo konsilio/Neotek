@@ -261,6 +261,8 @@ namespace Application.MainModule.Servicios.Almacen
             AplicaDescargaDto apDescDto = AplicarDescarga(unidadEntrada, descarga, empresa);
             apDescDto = OrdenCompraServicio.AplicarDescarga(apDescDto, descarga, empresa);
 
+            Descarga = AlmacenGasAdapter.FromEmtity(descarga)
+
             return apDescDto;
         }
 
@@ -278,7 +280,7 @@ namespace Application.MainModule.Servicios.Almacen
             unidadEntrada.PorcentajeActual = descarga.PorcenMagnatelOcularAlmacenFIN.Value;
 
             return new AplicaDescargaDto()
-            {
+            {                
                 unidadEntrada = AlmacenGasAdapter.FromEmtity(unidadEntrada),
                 identidadUE = IdentificarTipoUnidadAlamcenGas(unidadEntrada),
                 PorcentajeUE = unidadEntrada.PorcentajeActual,
