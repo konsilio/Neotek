@@ -370,6 +370,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Bancos = CatalogoServicio.ListaBanco(tkn);
             ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(tkn);
             ViewBag.RegimenesFiscales = CatalogoServicio.ObtenerRegimenFiscal(tkn);
+            ViewBag.TipoPersonas = CatalogoServicio.ObtenerTiposPersona(tkn);
             if (TempData["RespuestaDTO"] != null)
                 Resp = (RespuestaDTO)TempData["RespuestaDTO"];
             ModelState.Clear();

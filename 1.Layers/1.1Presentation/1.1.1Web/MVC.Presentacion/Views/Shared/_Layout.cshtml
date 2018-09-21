@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets/css/main.css">
     <link rel="stylesheet" href="~/assets/css/color_skins.css">
-    <link href="~/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body class="theme-black menu_dark">
     @RenderBody()
@@ -497,11 +496,12 @@
                                     <li>@Html.ActionLink("Producto", "Producto", "Producto")</li>
                                     <li>@Html.ActionLink("Linea", "LineaProducto", "Producto")</li>
                                     <li>@Html.ActionLink("Unidad de Medidad", "UnidadMedida", "Producto")</li>
-                                    <li>@Html.ActionLink("Categoria", "Categoria", "Producto")</li>         
-                                    <li>@Html.ActionLink("Proveedor", "Proveedores", "Producto")</li>          
-                                    <li><br /></li>                        
+                                    <li>@Html.ActionLink("Categoria", "Categoria", "Producto")</li>             
                                 </ul>
                             </li>
+                            <li>@Html.ActionLink("Centro de costos", "CentroCosto", "CentroCosto")</li>  
+                            <li>@Html.ActionLink("Cuenta Contable", "CuentaContable", "CuentaContable")</li>    
+                            <li>@Html.ActionLink("Proveedor", "Proveedores", "Producto")</li>    
                             <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
                             <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
                             <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
