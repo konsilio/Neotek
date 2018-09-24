@@ -2,14 +2,13 @@
 @{
     string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
 }
-<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 
-<div class="page-loader-wrapper">
+@*<div class="page-loader-wrapper">
     <div class="loader">
-        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <div class="m-t-30"><img src="~/assets/images/logo.svg" width="48" height="48" alt="Alpino"></div>
         <p>Espere por favor</p>
     </div>
-</div>
+</div>*@
 <section class="content home">
     <div class="container-fluid">
         @using (Html.BeginForm("CrearProveedor", "Producto", FormMethod.Post))
@@ -21,7 +20,6 @@
                         <h2>Proveedores</h2>
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item"><a href="javascript:void(0);">Forms</a></li>
                             <li class="breadcrumb-item active"> Catálogo / Proveedor </li>
                         </ul>
                     </div>
@@ -38,61 +36,54 @@
                                 <div class="col-md-12">
                                     <b>Empresa</b>
                                     @if (ViewBag.EsAdmin)
-                                        {
-                                    <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                        @foreach (var lst in ViewBag.Empresas)
-                                                {
-                                                    if (lst.IdEmpresa == Model.IdEmpresa)
-                                                    {
-                                        <option value="@lst.IdEmpresa" selected>@lst.NombreComercial</option>
-                                                    }
-                                                    else
-                                                    {
-                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                                    }
-                                                }
-                                    </select>
-                                        }
-                                        else
-                                        {
-                                    <input type="text" class="form-control " disabled value="@ViewBag.Empresas" />
-                                    @Html.HiddenFor(m => m.IdEmpresa)
-                                        }
+                                    {
+                                        <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker show-tick" data-live-search="true">
+                                            @foreach (var lst in ViewBag.Empresas)
+                                            {
+                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                            }
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control " disabled value="@ViewBag.Empresas" />
+                                        @Html.HiddenFor(m => m.IdEmpresa)
+                                    }
                                     @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                                 </div>
                             </div>
                             <div class="row clearfix">
                                 <div class="col-md-4">
                                     <b>Tipo de proveedor</b>
-                                    <select name="IdTipoProveedor" class="form-control">
+                                    <select name="IdTipoProveedor"  class="form-control selectpicker show-tick"" data-live-search="true">
                                         @foreach (var cc in ViewBag.TipoProveedores)
+                                        {
+                                            if (Model != null && cc.IdTipoProveedor == Model.IdTipoProveedor)
                                             {
-                                                if (Model != null && cc.IdTipoProveedor == Model.IdTipoProveedor)
-                                                {
-                                        <option value="@cc.IdTipoProveedor" selected>@cc.Tipo</option>
-                                                }
-                                                else
-                                                {
-                                        <option value="@cc.IdTipoProveedor">@cc.Tipo</option>
-                                                }
+                                                <option value="@cc.IdTipoProveedor" selected>@cc.Tipo</option>
                                             }
+                                            else
+                                            {
+                                                <option value="@cc.IdTipoProveedor">@cc.Tipo</option>
+                                            }
+                                        }
                                     </select>
                                     @Html.ValidationMessageFor(m => m.IdTipoProveedor, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-4">
                                     <b>Centa contable</b>
-                                    <select name="IdCuentaContable" class="form-control">
+                                    <select name="IdCuentaContable" class="form-control selectpicker show-tick"" data-live-search="true">
                                         @foreach (var cc in ViewBag.CuentasContables)
+                                        {
+                                            if (Model != null && cc.IdCuentaContable == Model.IdCuentaContable)
                                             {
-                                                if (Model != null && cc.IdCuentaContable == Model.IdCuentaContable)
-                                                {
-                                        <option value="@cc.IdCuentaContable" selected>@cc.Descripcion</option>
-                                                }
-                                                else
-                                                {
-                                        <option value="@cc.IdCuentaContable">@cc.Descripcion</option>
-                                                }
+                                                <option value="@cc.IdCuentaContable" selected>@cc.Descripcion</option>
                                             }
+                                            else
+                                            {
+                                                <option value="@cc.IdCuentaContable">@cc.Descripcion</option>
+                                            }
+                                        }
                                     </select>
                                     @Html.ValidationMessageFor(m => m.IdCuentaContable, "", new { @class = "alert-danger" })
                                 </div>
@@ -113,8 +104,6 @@
                                             ¿Es Servicio de transporte?
                                         </label>
                                     </div>
-
-
                                     <div class="form-group">
                                         @Html.CheckBoxFor(m => m.ProdutoPrinicpal, new { id = "cbEsGas" })
                                         @*<input id="cbEsGas" name="EsGas" type="checkbox">*@
@@ -126,11 +115,12 @@
                             </div>
                             <div class="row clearfix">
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <p>¿Que es lo que vende?</p>
+                                    <p>¿Que es lo que vende?</p>
+                                    <div class="blockquote blockquote-info btn-round">
                                         @Html.TextAreaFor(m => m.Vende, new { @class = "form-control", @Rows = 5, @placeholder = "Descripción de lo que vende el proveedor" })
                                         @Html.ValidationMessageFor(m => m.Vende, "", new { @class = "alert-danger" })
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -147,16 +137,16 @@
                             <div class="row clearfix">
                                 <div class="col-md-4">
                                     <b>Pais</b>
-                                    <select name="IdPais" class="form-control">
+                                    <select name="IdPais" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.Paises)
                                         {
                                             if (Model != null && cc.IdPais == Model.IdTipoProveedor)
                                             {
-                                        <option value="@cc.IdPais" selected>@cc.Pais</option>
+                                                <option value="@cc.IdPais" selected>@cc.Pais</option>
                                             }
                                             else
                                             {
-                                        <option value="@cc.IdPais">@cc.Pais</option>
+                                                <option value="@cc.IdPais">@cc.Pais</option>
                                             }
                                         }
                                     </select>
@@ -164,16 +154,16 @@
                                 </div>
                                 <div class="col-md-4">
                                     <b>Estado de la rep.</b>
-                                    <select name="IdEstadoRep" class="form-control">
+                                    <select name="IdEstadoRep" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.Estados)
                                         {
                                             if (Model != null && cc.IdEstadoRep == Model.IdEstadoRep)
                                             {
-                                        <option value="@cc.IdEstadoRep" selected>@cc.Estado</option>
+                                                <option value="@cc.IdEstadoRep" selected>@cc.Estado</option>
                                             }
                                             else
                                             {
-                                        <option value="@cc.IdEstadoRep">@cc.Estado</option>
+                                                <option value="@cc.IdEstadoRep">@cc.Estado</option>
                                             }
                                         }
                                     </select>
@@ -185,11 +175,13 @@
                                         <b>Estado.</b>
                                         @Html.TextBoxFor(m => m.EstadoProvincia, new { @class = "form-control", @placeholder = "Estado/Provincia" })
                                     </div>
+                                    @Html.ValidationMessageFor(m => m.EstadoProvincia, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.Municipio, new { @class = "form-control", @placeholder = "Municipio" })
                                     </div>
+                                    @Html.ValidationMessageFor(m => m.Municipio, "", new { @class = "alert-danger" })
                                 </div>
                             </div>
                             <div class="row clearfix">
@@ -197,16 +189,20 @@
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.CodigoPostal, new { @class = "form-control", @placeholder = "Código postal" })
                                     </div>
+                                  @Html.ValidationMessageFor(m => m.CodigoPostal, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.Colonia, new { @class = "form-control", @placeholder = "Colonia o fraccionamiento" })
                                     </div>
+                                  @Html.ValidationMessageFor(m => m.Colonia, "", new { @class = "alert-danger" })
+
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.Calle, new { @class = "form-control", @placeholder = "Calle" })
                                     </div>
+                                   @Html.ValidationMessageFor(m => m.Calle, "", new { @class = "alert-danger" })
                                 </div>
                             </div>
                             <div class="row clearfix">
@@ -214,11 +210,13 @@
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.NumExt, new { @class = "form-control", @placeholder = "Número exterior" })
                                     </div>
+                                  @Html.ValidationMessageFor(m => m.NumExt, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.NumInt, new { @class = "form-control", @placeholder = "Número interior" })
                                     </div>
+                                    @Html.ValidationMessageFor(m => m.NumInt, "", new { @class = "alert-danger" })
                                 </div>
                             </div>
                         </div>
@@ -235,7 +233,7 @@
                             <div class="row clearfix">
                                 <div class="col-md-6">
                                     <b>Banco</b>
-                                    <select name="IdBanco" class="form-control show-tick" data-live-search="true">
+                                    <select name="IdBanco" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var lst in ViewBag.Bancos)
                                         {
                                             if (Model != null && lst.IdBanco == Model.IdBanco)
@@ -260,7 +258,7 @@
                             <div class="row clearfix">
                                 <div class="col-md-6">
                                     <b>Forma de pago</b>
-                                    <select name="IdFormaDePago" class="form-control show-tick" data-live-search="true">
+                                    <select name="IdFormaDePago" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var lst in ViewBag.FormasPago)
                                         {
                                             if (lst.IdFormaPago == Model.IdFormaDePago)
@@ -301,14 +299,22 @@
                                             <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
                                             @Html.TextBoxFor(m => m.Persona1, new { @class = "form-control", @placeholder = "Nombre del primer contacto" })
                                         </div>
+                                        <div>
+                                            @Html.ValidationMessageFor(m => m.Persona1, "", new { @class = "alert-danger" })
+                                        </div>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
                                             @Html.TextBoxFor(m => m.Persona2, new { @class = "form-control", @placeholder = "Nombre del segundo contacto" })
                                         </div>
+                                        <div>
+                                            @Html.ValidationMessageFor(m => m.Persona2, "", new { @class = "alert-danger" })
+                                        </div>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
                                             @Html.TextBoxFor(m => m.Persona3, new { @class = "form-control", @placeholder = "Nombre del tercer contacto" })
-
+                                        </div>
+                                        <div>
+                                            @Html.ValidationMessageFor(m => m.Persona3, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -319,7 +325,9 @@
                                             <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
                                             @Html.TextBoxFor(m => m.Telefono1, new { @class = "form-control mobile-phone-number", @placeholder = "Ej: +00 (000) 000-00-00" })
                                         </div>
-
+                                        <div>
+                                            @Html.ValidationMessageFor(m => m.Telefono1, "", new { @class = "alert-danger" })
+                                        </div>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
                                             @Html.TextBoxFor(m => m.Telefono2, new { @class = "form-control mobile-phone-number", @placeholder = "Ej: +00 (000) 000-00-00" })
@@ -336,6 +344,9 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-smartphone"></i></span>
                                         @Html.TextBoxFor(m => m.Celular1, new { @class = "form-control mobile-phone-number", @placeholder = "Ej: +00 (000) 000-00-00" })
+                                    </div>
+                                    <div>
+                                        @Html.ValidationMessageFor(m => m.Celular1, "", new { @class = "alert-danger" })
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-smartphone"></i></span>
@@ -395,7 +406,7 @@
                             <div class="row clearfix">
                                 <div class="col-md-3">
                                     <b>Tipo persona</b>
-                                    <select name="IdTipoPersona" class="form-control">
+                                    <select name="IdTipoPersona" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.TipoPersonas)
                                         {
                                             if (Model != null && cc.IdTipoPersona == Model.IdTipoPersona)
@@ -412,7 +423,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <b>Regimen Fiscal</b>
-                                    <select name="IdRegimenFiscal" class="form-control">
+                                    <select name="IdRegimenFiscal" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.RegimenesFiscales)
                                         {
                                             if (Model != null && cc.IdRegimenFiscal == Model.IdRegimenFiscal)
@@ -433,15 +444,32 @@
                                     <b>Rfc</b>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
-                                        @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control key", @placeholder = "Ej: XXX-000000-XXX" })                                        
+                                        @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control key", @placeholder = "Ej: XXX-000000-XXX" })
+                                     
                                     </div>
+                                    @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-9">
                                     <b>Razon Social</b>
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.RazonSocial, new { @class = "form-control", @placeholder = "Razón social" })
                                     </div>
+                                    @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
                                 </div>
+                            </div>
+                            <div class="row clearfix">
+                                @if (ViewBag.EsEdicion == null)
+                                {
+                                    <button btn id="BtnCrear" formaction="CrearProveedor" class="btn btn-primary btn-round">
+                                        <i class="zmdi zmdi-plus"> </i> Crear
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button btn id="btnUpDate" formaction="EditarProveedor" class="btn btn-primary btn-round">
+                                        <i class="zmdi zmdi-swap"> </i> Terminar Edicion
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>

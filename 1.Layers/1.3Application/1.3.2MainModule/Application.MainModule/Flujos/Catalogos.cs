@@ -564,12 +564,12 @@ namespace Application.MainModule.Flujos
             ctactbleEmptity.Activo = false;
             return CuentaContableServicio.ModificarCuentaContable(ctactbleEmptity);
         }
-        public List<CuentaContableDto> ConsultaCuentasContables(short idEmpresa)
+        public List<CuentaContableDto> ConsultaCuentasContables()
         {
             var resp = PermisosServicio.PuedeConsultarCuentaContable();
             if (!resp.Exito) return new List<CuentaContableDto>();
 
-            return CuentaContableAdapter.ToDto(CuentaContableServicio.Obtener().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList());
+            return CuentaContableAdapter.ToDto(CuentaContableServicio.Obtener());
         }
         public CuentaContableDto ConsultaCuentaContable(int idCuentaContable)
         {

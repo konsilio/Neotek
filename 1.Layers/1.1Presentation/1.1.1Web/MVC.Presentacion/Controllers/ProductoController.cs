@@ -41,7 +41,7 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
-                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(tkn))).NombreComercial;
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
             return View(model);
         }
         [HttpPost]
@@ -122,7 +122,7 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
-                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(tkn))).NombreComercial;
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
             return View(model);
         }
         [HttpPost]
@@ -203,7 +203,7 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
-                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(tkn))).NombreComercial;
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
             return View(model);
         }
         [HttpPost]
@@ -263,7 +263,7 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             var Pagina = page ?? 1;
             ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).ToPagedList(Pagina, 20);
-            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn) ,tkn);
+            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn);
             ViewBag.LineasProducto = CatalogoServicio.ListaLineasProducto(tkn);
             ViewBag.UnidadesMedida = CatalogoServicio.ListaUnidadesMedida(tkn);
@@ -288,7 +288,7 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
-                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(tkn))).NombreComercial;           
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
             return View(model);
         }
         [HttpPost]
@@ -354,7 +354,7 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
-                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(tkn))).NombreComercial;
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
             return View(model);
         }
         public ActionResult Proveedor(ProveedorDTO model = null)
@@ -364,7 +364,7 @@ namespace MVC.Presentacion.Controllers
             RespuestaDTO Resp = new RespuestaDTO();
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             ViewBag.TipoProveedores = CatalogoServicio.ListaTipoProveedor(tkn);
-            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             ViewBag.Estados = CatalogoServicio.GetEstados(tkn);
             ViewBag.Paises = CatalogoServicio.GetPaises(tkn);
             ViewBag.Bancos = CatalogoServicio.ListaBanco(tkn);
@@ -374,6 +374,9 @@ namespace MVC.Presentacion.Controllers
             if (TempData["RespuestaDTO"] != null)
                 Resp = (RespuestaDTO)TempData["RespuestaDTO"];
             ModelState.Clear();
+            if (model != null)
+                if (model.IdProveedor != 0)
+                    ViewBag.EsEdicion = true;
             if (Resp != null)
             {
                 if (Resp.ModelStatesStandar != null)
@@ -387,7 +390,7 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
-                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(tkn))).NombreComercial;
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
 
             return View(model);
         }
@@ -398,11 +401,11 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.CrearProveedor(model, tkn);
             if (respuesta.Exito)
-                return RedirectToAction("Proveedor");
+                return RedirectToAction("Proveedores");
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Proveedor", new { respuesta, model });
+                return RedirectToAction("Proveedor",model);
             }
         }
 
@@ -435,7 +438,7 @@ namespace MVC.Presentacion.Controllers
                 else
                 {
                     TempData["RespuestaDTO"] = respuesta;
-                    return RedirectToAction("Proveedor");
+                    return RedirectToAction("Proveedor", model);
                 }
             }
         }

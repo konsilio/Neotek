@@ -157,7 +157,7 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.ListaEmpresasLogin(tkn);
-            return agente._listaEmpresas;
+            return agente._listaEmpresas.Where(x => x.EsAdministracionCentral.Equals(false)).ToList();
         }
         //consulta empresa mediante id
         public static Empresa FiltrarEmpresa(Empresa model, int id, string tkn)
@@ -955,10 +955,10 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarCuentaContable(cc, tkn);
             return agente._RespuestaDTO;
         }
-        public static List<CuentaContableDTO> ListaCtaCtble(short idEmpresa, string tkn)
+        public static List<CuentaContableDTO> ListaCtaCtble(string tkn)
         {
             var agente = new AgenteServicio();
-            agente.BuscarCuentasContables(idEmpresa, tkn);
+            agente.BuscarCuentasContables(tkn);
             return agente._listaCuentasContables;
         }
         private static RespuestaDTO EliminarCtaContable(CuentaContableEliminarDTO cc, string tkn)
@@ -992,7 +992,7 @@ namespace MVC.Presentacion.App_Code
         public static CuentaContableModel InitCtaContable(string tkn)
         {
             return new CuentaContableModel()
-            { CuentasContables = ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn), tkn) };
+            { CuentasContables = ListaCtaCtble(tkn) };
         }
         public static CuentaContableModel ActivarModifiarCuentaContable(int idcc, CuentaContableModel model, string tkn)
         {

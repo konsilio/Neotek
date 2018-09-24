@@ -18,7 +18,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] != null)
             {
                 string tkn = Session["StringToken"].ToString();
-                ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
+                ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
                 ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
                 ViewBag.IVAs = CatalogoServicio.ListaIVA();
                 ViewBag.IEPs = CatalogoServicio.ListaIEPS();
@@ -44,7 +44,7 @@ namespace MVC.Presentacion.Controllers
                 else
                 {
                     string tkn = Session["StringToken"].ToString();
-                    ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(TokenServicio.ObtenerIdEmpresa(tkn), tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
+                    ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
                     ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
                     ViewBag.IVAs = CatalogoServicio.ListaIVA();
                     ViewBag.IEPs = CatalogoServicio.ListaIEPS();

@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 </head>
-<body style="padding-top:10px;">
+
+<body style="padding-top:10px;">   
     @using (Html.BeginForm("Crear", "CuentaContable", FormMethod.Post))
     {
         @Html.HiddenFor(m => m.IdCuentaContable)

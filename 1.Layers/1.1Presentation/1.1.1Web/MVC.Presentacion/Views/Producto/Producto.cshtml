@@ -4,8 +4,6 @@
 @{
     string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
 }
-<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-<script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
 <script>
     $(document).ready(function () {
         $(".filterable tr:has(td)").each(function () {
@@ -34,15 +32,9 @@
             error: function () { alert('error'); }
         });
 
-    }   
+    }
 </script>
-<div class="page-loader-wrapper">
-    <div class="loader">
-        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
-        <p>Espere por favor</p>
-    </div>
-</div>
-<section class="content home">
+<section class="content home">    
     <div class="container-fluid">
         @using (Html.BeginForm("CrearProducto", "Producto", FormMethod.Post))
         {
@@ -69,18 +61,10 @@
                                         <b>Gasera:</b>
                                         @if (ViewBag.EsAdmin)
                                         {
-                                            
-                                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker show-tick" data-live-search="true">
                                                 @foreach (var lst in ViewBag.Empresas)
                                                 {
-                                                    if (lst.IdEmpresa == Model.IdEmpresa)
-                                                    {
-                                                        <option value="@lst.IdEmpresa" selected>@lst.NombreComercial</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                                    }
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                 }
                                             </select>
                                         }
@@ -94,7 +78,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <b>Tipo: ¿Es producto o Servicio?</b>
-                                            <select name="IdProductoServicioTipo">
+                                            <select name="IdProductoServicioTipo" class="form-control selectpicker show-tick" data-live-search="true">
                                                 <option value="2">Producto</option>
                                                 <option value="3">Servicio</option>
                                             </select>

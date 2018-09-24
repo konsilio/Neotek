@@ -447,10 +447,10 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.EliminaCuentaContable(cuentaDto), Request);
         }
 
-        [Route("consulta/cuentas/contables/{idEmpresa}")]
-        public HttpResponseMessage GetListaCuentasContables(short idEmpresa)
+        [Route("consulta/cuentas/contables")]
+        public HttpResponseMessage GetListaCuentasContables()
         {
-            return RespuestaHttp.crearRespuesta(_catalogos.ConsultaCuentasContables(idEmpresa), Request);
+            return RespuestaHttp.crearRespuesta(_catalogos.ConsultaCuentasContables(), Request);
         }
 
         [Route("consulta/cuenta/contable/{idCuenta}")]
