@@ -27,6 +27,7 @@ import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
@@ -51,10 +52,13 @@ public class CameraLecturaActivity extends AppCompatActivity {
     public LecturaPipaDTO lecturaPipaDTO;
     public RecargaDTO recargaDTO;
     public AutoconsumoDTO autoconsumoDTO;
+    public TraspasoDTO  traspasoDTO;
     public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsAutoconsumoEstacionInicial,EsAutoconsumoEstacionFinal;
     public boolean EsAutoconsumoInvetarioInicial, EsAutoconsumoInventarioFinal;
     public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
+    public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
+    public boolean EsTraspasoPipaInicial,EsTraspasoPipaFinal,EsPasoIniciaLPipa;
 
     public Uri imageUri;
 
@@ -85,6 +89,13 @@ public class CameraLecturaActivity extends AppCompatActivity {
             EsAutoconsumoPipaInicial = b.getBoolean("EsAutoconsumoPipaInicial",false);
             EsAutoconsumoPipaFinal = b.getBoolean("EsAutoconsumoPipaFinal",false);
             autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
+            EsTraspasoEstacionInicial = b.getBoolean("EsTraspasoEstacionInicial",false);
+            EsTraspasoEstacionFinal = b.getBoolean("EsTraspasoEstacionFinal",false);
+            EsPrimeraParteTraspaso = b.getBoolean("EsPrimeraParteTraspaso",true);
+            EsTraspasoPipaInicial = b.getBoolean("EsTraspasoPipaInicial",false);
+            EsTraspasoPipaFinal = b.getBoolean("EsTraspasoPipaFinal",false);
+            EsPasoIniciaLPipa = b.getBoolean("EsPasoIniciaLPipa",true);
+            traspasoDTO = (TraspasoDTO) b.getSerializable("traspasoDTO");
 
         }
 
@@ -129,6 +140,18 @@ public class CameraLecturaActivity extends AppCompatActivity {
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
                             +" - " +getString(R.string.Pipa));
+        }
+        if(EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
+            TVCameraLecturaActivityFotoEstacion.setText(
+                    getString(R.string.tomar_foto_estacion)
+                            +" - " +getString(R.string.Estacion)
+            );
+        }
+        if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
+            TVCameraLecturaActivityFotoEstacion.setText(
+                    getString(R.string.tomar_foto_estacion)
+                            +" - " +getString(R.string.Pipa)
+            );
         }
         BtnCameraLecturaTomarFoto.setOnClickListener(v -> {
             List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
@@ -240,8 +263,58 @@ public class CameraLecturaActivity extends AppCompatActivity {
                         CapturaPorcentajeActivity.class);
                 intent.putExtra("EsAutoconsumoPipaInicial",EsAutoconsumoPipaInicial);
                 intent.putExtra("EsAutoconsumoPipaFinal",EsAutoconsumoPipaFinal);
+                intent.putExtra("EsPrimeraParteTraspaso",EsPrimeraParteTraspaso);
                 intent.putExtra("autoconsumoDTO",autoconsumoDTO);
                 startActivity(intent);
+            }catch (URISyntaxException e){
+                e.printStackTrace();
+            }
+        }else if(EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
+            try {
+                traspasoDTO.getImagenes().add(imageurl);
+                traspasoDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                if(EsPrimeraParteTraspaso) {
+                    Intent intent = new Intent(CameraLecturaActivity.this,
+                            CapturaPorcentajeActivity.class);
+                    intent.putExtra("EsTraspasoEstacionInicial", EsTraspasoEstacionInicial);
+                    intent.putExtra("EsTraspasoEstacionFinal", EsTraspasoEstacionFinal);
+                    intent.putExtra("EsPrimeraParteTraspaso", EsPrimeraParteTraspaso);
+                    intent.putExtra("traspasoDTO", traspasoDTO);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(CameraLecturaActivity.this,
+                            VerReporteActivity.class);
+                    intent.putExtra("EsTraspasoEstacionInicial", EsTraspasoEstacionInicial);
+                    intent.putExtra("EsTraspasoEstacionFinal", EsTraspasoEstacionFinal);
+                    intent.putExtra("EsPrimeraParteTraspaso", EsPrimeraParteTraspaso);
+                    intent.putExtra("traspasoDTO", traspasoDTO);
+                    startActivity(intent);
+                }
+            }catch (URISyntaxException e){
+                e.printStackTrace();
+            }
+        }else if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
+            try {
+                traspasoDTO.getImagenes().add(imageurl);
+                traspasoDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                if(EsPasoIniciaLPipa) {
+                    EsPasoIniciaLPipa = false;
+                    Intent intent = new Intent(CameraLecturaActivity.this,
+                            LecturaP5000Activity.class);
+                    intent.putExtra("EsTraspasoPipaInicial", EsTraspasoPipaInicial);
+                    intent.putExtra("EsTraspasoPipaFinal", EsTraspasoPipaFinal);
+                    intent.putExtra("EsPasoIniciaLPipa", EsPasoIniciaLPipa);
+                    intent.putExtra("traspasoDTO", traspasoDTO);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(CameraLecturaActivity.this,
+                            VerReporteActivity.class);
+                    intent.putExtra("EsTraspasoPipaInicial", EsTraspasoPipaInicial);
+                    intent.putExtra("EsTraspasoPipaFinal", EsTraspasoPipaFinal);
+                    intent.putExtra("EsPasoIniciaLPipa", EsPrimeraParteTraspaso);
+                    intent.putExtra("traspasoDTO", traspasoDTO);
+                    startActivity(intent);
+                }
             }catch (URISyntaxException e){
                 e.printStackTrace();
             }

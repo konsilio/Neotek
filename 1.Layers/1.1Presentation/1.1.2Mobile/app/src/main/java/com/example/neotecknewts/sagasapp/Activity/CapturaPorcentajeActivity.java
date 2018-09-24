@@ -23,6 +23,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 /**
@@ -50,6 +51,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     LecturaAlmacenDTO lecturaAlmacenDTO;
     RecargaDTO recargaDTO;
     AutoconsumoDTO autoconsumoDTO;
+    TraspasoDTO traspasoDTO;
 
     //banderas para saber que objeto utilizar
     public boolean papeleta;
@@ -64,6 +66,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsRecargaPipaFinal,EsRecargaPipaInicial;
     public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
+    public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
 
 
     @SuppressLint("SetTextI18n")
@@ -228,6 +231,17 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                         " de la pipa"
                 );
                 textViewTitulo.setText(autoconsumoDTO.getNombreTipoMedidor()+" - Pipa");
+            }else if(extras.getBoolean("EsTraspasoEstacionInicial",false)|| extras.getBoolean("EsTraspasoEstacionFinal",false)){
+                EsTraspasoEstacionInicial = extras.getBoolean("EsTraspasoEstacionInicial",false);
+                EsTraspasoEstacionFinal = extras.getBoolean("EsTraspasoEstacionFinal",false);
+                EsPrimeraParteTraspaso = extras.getBoolean("EsPrimeraParteTraspaso",true);
+                traspasoDTO = (TraspasoDTO) extras.getSerializable("traspasoDTO");
+                if(EsPrimeraParteTraspaso)
+                    textView.setText("Registra el porcentaje del "+traspasoDTO.getNombreMedidor()+" de" +
+                        "la estación");
+                else
+                    textView.setText("Registra el porcentaje del "+traspasoDTO.getNombreMedidor()+" de" +
+                            "la Pipa");
             }
         }
 
@@ -290,6 +304,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             recargaDTO.setProcentajeEntrada(porcentaje);
         }else if(EsAutoconsumoPipaInicial||EsAutoconsumoPipaFinal){
             autoconsumoDTO.setPorcentajeMedidor(porcentaje);
+        }else if(EsTraspasoEstacionInicial ||EsTraspasoEstacionFinal){
+            traspasoDTO.setPorcentajeSalida(porcentaje);
         }
         startActivity();
     }
@@ -368,6 +384,18 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 intent.putExtra("EsRecargaEstacionFinal", false);
                 intent.putExtra("EsPrimeraLectura", false);
                 intent.putExtra("recargaDTO", recargaDTO);
+            }else if(EsTraspasoEstacionInicial||EsTraspasoEstacionFinal){
+                intent.putExtra("EsRecargaPipaFinal", false);
+                intent.putExtra("EsLecturaFinal", false);
+                intent.putExtra("EsLecturaInicialPipa", false);
+                intent.putExtra("EsLecturaFinalPipa", false);
+                intent.putExtra("EsRecargaEstacionInicial", false);
+                intent.putExtra("EsRecargaEstacionFinal", false);
+                intent.putExtra("EsPrimeraLectura", false);
+                intent.putExtra("EsTraspasoEstacionInicial",EsTraspasoEstacionInicial);
+                intent.putExtra("EsTraspasoEstacionFinal",EsTraspasoEstacionFinal);
+                intent.putExtra("EsPrimeraParteTraspaso",EsPrimeraParteTraspaso);
+                intent.putExtra("traspasoDTO",traspasoDTO);
             }
             intent.putExtra("EsPapeleta", papeleta);
             intent.putExtra("EsDescargaIniciar", iniciar);

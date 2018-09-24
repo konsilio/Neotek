@@ -12,6 +12,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
@@ -235,5 +236,17 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
         interactor.registrarAutoconsumoPipa(sagasSql,token,autoconsumoDTO,esAutoconsumoPipaFinal);
     }
 
+    @Override
+    public void registrarTraspasoEstracion(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO,
+                                           boolean esTraspasoEstacionFinal) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarTraspasoEstacion(sagasSql,token,traspasoDTO,esTraspasoEstacionFinal);
+    }
+
+    @Override
+    public void registrarTraspasoEstracionPipa(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO, boolean esTraspasoPipaFinal) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarTraspasoPipa(sagasSql,token,traspasoDTO,esTraspasoPipaFinal);
+    }
     //endregion
 }
