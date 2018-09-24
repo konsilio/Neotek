@@ -24,5 +24,7 @@ namespace Application.MainModule.DTOs.Catalogo
         public string location_lng { get; set; }
         public string place_id { get; set; }
         public string TipoLocacion { get; set; }
+        public string Pais { get; set; }
+        public string Estado { get; set; }
     }
 }

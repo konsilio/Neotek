@@ -1,0 +1,64 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model  List<ClienteLocacionMod>
+
+
+<tr>
+    <td>Model.Pais</td>
+    @if ((Model.EstadoProvincia) != "" && (Model.EstadoProvincia) != null)
+    {
+        <td>@Model.EstadoProvincia</td>       
+    }
+    else
+    {
+        <td>@Model.Estado</td>
+    }       
+    <td>@Model.Municipio</td>
+    <td>@Model.TipoLocacion</td>
+    <td>@Model.CodigoPostal</td>
+    <td>@Model.Colonia</td>
+    <td>@Model.Calle</td>
+    <td>@Model.NumInt</td>
+    <td>@Model.NumExt</td>
+    <td>
+        <a ID="lblCrear" href="@Url.Action("EditarClienteLoc", "Clientes", new { id = Model.IdCliente , idOrden = Model.Orden })">
+            <i class="material-icons">edit</i>
+            <span class="icon-name"></span>
+        </a>
+        <a ID="lbBorrar" href="@Url.Action("BorrarClienteLoc", "Clientes", new { id = Model.IdCliente })">
+            <i class="material-icons">delete</i>
+            <span class="icon-name"></span>
+        </a>
+    </td>
+</tr>
+
+@*@foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Pais</td>
+            @if(@item.EstadoProvincia != "" && @item.EstadoProvincia != null )
+            {
+            <td>@item.EstadoProvincia</td>
+            }
+            else
+            {
+            <td>@item.Estado</td>
+            }
+            <td>@item.Municipio</td>
+            <td>@item.TipoLocacion</td>
+            <td>@item.CodigoPostal</td>
+            <td>@item.Colonia</td>
+            <td>@item.Calle</td>
+            <td>@item.NumInt</td>
+            <td>@item.NumExt</td>
+            <td>
+                <a ID="lblCrear" href="@Url.Action("EditarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })">
+                    <i class="material-icons">edit</i>
+                    <span class="icon-name"></span>
+                </a>
+                <a ID="lbBorrar" href="@Url.Action("BorrarClienteLoc", "Clientes", new { id = item.IdCliente })">
+                    <i class="material-icons">delete</i>
+                    <span class="icon-name"></span>
+                </a>
+            </td>
+        </tr>
+    }*@

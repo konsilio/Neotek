@@ -177,6 +177,12 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaClientes());
         }
+
+        [Route("clientes/listaclientesloc/{idCliente}")]
+        public HttpResponseMessage GetListaLocacion(int idCliente)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaLocaciones(idCliente));
+        }
         [Route("registra/cliente")]
         public HttpResponseMessage PostRegistraCliente(ClienteCrearDto clienteDto)
         {
@@ -199,6 +205,18 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PutModificaClienteLoc(ClienteLocacionDTO cteLoc)
         {
             return RespuestaHttp.crearRespuesta(_catalogos.ActualizaClienteLocacion(cteLoc), Request);
+        }
+
+        [Route("registra/clientelocacion")]
+        public HttpResponseMessage PostRegistraClienteLoc(ClienteLocacionDTO cteLoc)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraClienteLocacion(cteLoc), Request);
+        }
+
+        [Route("elimina/clientelocacion")]
+        public HttpResponseMessage PutEliminaClienteLocacion(ClienteLocacionDTO cteLoc)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaClienteLocacion(cteLoc), Request);
         }
         //[Route("consulta/clientes")]
         //public HttpResponseMessage GetCategoriasProducto()

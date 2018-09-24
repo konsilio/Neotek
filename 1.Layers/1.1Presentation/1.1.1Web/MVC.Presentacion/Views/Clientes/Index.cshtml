@@ -8,7 +8,17 @@
 <!-- Bootstrap Select Css -->
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnBuscar").click(function () {
+            var form = $(this).parent("form");
+            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "Buscar" }) %>');
+            form.attr('method', 'post');
+        });
+    });
 
+</script>
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
@@ -131,7 +141,7 @@
                                                         <td>@item.limiteCreditoMonto</td>
                                                         <td>@item.limiteCreditoDias</td>
                                                         <td>@item.DescuentoXKilo</td>
-                                                        <td>@item.Celular1</td>
+                                                        <td>@item.Celular</td>
                                                         <td>@item.Telefono1</td>
                                                         <td>@item.Email1</td>
                                                         <td>
