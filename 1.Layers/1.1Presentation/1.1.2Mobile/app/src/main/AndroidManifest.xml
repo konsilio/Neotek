@@ -143,8 +143,12 @@
         <activity
             android:name=".Activity.AutoconsumoPipaActivity"
             android:label="@string/Autoconsumo" />
-        <activity android:name=".Activity.TraspasoEstacionActivity"
-            android:label="@string/Traspaso"/>
+        <activity
+            android:name=".Activity.TraspasoEstacionActivity"
+            android:label="@string/Traspaso" />
+        <activity android:name=".Activity.TraspasoPipaActivity"
+            android:label="@string/Traspaso"
+            />
     </application>
 
 </manifest>

@@ -17,6 +17,8 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.Presenter.SubirImagenesPresenter;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
@@ -1960,6 +1962,279 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             subirImagenesPresenter.onSuccessRegistroAndroid();
         }
         //endregion
+    }
+
+    @Override
+    public void registrarTraspasoEstacion(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO,
+                                          boolean esTraspasoEstacionFinal) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String clave_unica = "TE";
+        clave_unica += (esTraspasoEstacionFinal)? "F":"I";
+        clave_unica += s.format(new Date());
+        traspasoDTO.setClaveOperacion(clave_unica);
+        //region Verifica si el servcio esta disponible
+
+        Gson gsons = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofits =  new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gsons))
+                .build();
+        RestClient restClientS = retrofits.create(RestClient.class);
+
+        int servicio_intentos = 0;
+        esta_disponible= true;
+
+        while (servicio_intentos<3) {
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                    RespuestaServicioDisponibleDTO data = response.body();
+                    esta_disponible = response.isSuccessful() && data.isExito();
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
+                    esta_disponible = false;
+                }
+            });
+            if (esta_disponible) {
+                break;
+            }else {
+                servicio_intentos++;
+            }
+        }
+
+        if (servicio_intentos == 3) {
+            registrar_local_traspaso(sagasSql,traspasoDTO);
+            registro_local = true;
+        }
+
+        //endregion
+        //region Realiza el registro del autoconsumo
+
+
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        int intentos_post = 0;
+        registra_reacrga = true;
+        while(intentos_post<3) {
+            Call<RespuestaTraspasoDTO> call = restClient.postTraspaso(
+                    traspasoDTO,
+                    true,
+                    false,
+                    esTraspasoEstacionFinal,
+                    token,
+                    "application/json"
+            );
+            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            call.enqueue(new Callback<RespuestaTraspasoDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaTraspasoDTO> call,
+                                       Response<RespuestaTraspasoDTO> response) {
+                    RespuestaTraspasoDTO data = response.body();
+                    if (response.isSuccessful()) {
+                        Log.w("IniciarDescarga", "Success");
+                        subirImagenesPresenter.onSuccessRegistroRecarga();
+                    } else {
+                        registra_reacrga = false;
+                        switch (response.code()) {
+                            case 404:
+                                Log.w("Autoconsumo inventario", "not found");
+                                break;
+                            case 500:
+                                Log.w("Autoconsumo inventario", "server broken");
+                                break;
+                            default:
+                                Log.w("Autoconsumo inventario", "" + response.code());
+                                Log.w(" Error", response.message() + " " +
+                                        response.raw().toString());
+                                break;
+                        }
+                        if(data!=null) {
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        }else {
+                            subirImagenesPresenter.errorSolicitud(response.message());
+                        }
+                        registra_reacrga= false;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaTraspasoDTO> call, Throwable t) {
+                    Log.e("error", t.toString());
+                    registra_reacrga = false;
+                    subirImagenesPresenter.errorSolicitud(t.getMessage());
+                }
+            });
+            intentos_post++;
+            if(registra_reacrga){
+                break;
+            }else{
+                intentos_post++;
+            }
+        }
+        if(intentos_post==3){
+            registrar_local_traspaso(sagasSql,traspasoDTO);
+            registro_local = true;
+        }
+        if(registro_local ){
+            /*Lisener lisener = new Lisener(sagasSql,token);
+            lisener.CrearRunable(Lisener.RecargaCamioneta);*/
+            subirImagenesPresenter.onSuccessRegistroAndroid();
+        }
+        //endregion
+    }
+
+    @Override
+    public void registrarTraspasoPipa(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO,
+                                      boolean esTraspasoPipaFinal) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                new SimpleDateFormat("ddMMyyyyhhmmssS");
+        String clave_unica = "TE";
+        clave_unica += (esTraspasoPipaFinal)? "F":"I";
+        clave_unica += s.format(new Date());
+        traspasoDTO.setClaveOperacion(clave_unica);
+        //region Verifica si el servcio esta disponible
+
+        Gson gsons = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofits =  new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gsons))
+                .build();
+        RestClient restClientS = retrofits.create(RestClient.class);
+
+        int servicio_intentos = 0;
+        esta_disponible= true;
+
+        while (servicio_intentos<3) {
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                    RespuestaServicioDisponibleDTO data = response.body();
+                    esta_disponible = response.isSuccessful() && data.isExito();
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaServicioDisponibleDTO> call, Throwable t) {
+                    esta_disponible = false;
+                }
+            });
+            if (esta_disponible) {
+                break;
+            }else {
+                servicio_intentos++;
+            }
+        }
+
+        if (servicio_intentos == 3) {
+            registrar_local_traspaso(sagasSql,traspasoDTO);
+            registro_local = true;
+        }
+
+        //endregion
+        //region Realiza el registro del autoconsumo
+
+
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        int intentos_post = 0;
+        registra_reacrga = true;
+        while(intentos_post<3) {
+            Call<RespuestaTraspasoDTO> call = restClient.postTraspaso(
+                    traspasoDTO,
+                    false,
+                    true,
+                    esTraspasoPipaFinal,
+                    token,
+                    "application/json"
+            );
+            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            call.enqueue(new Callback<RespuestaTraspasoDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaTraspasoDTO> call,
+                                       Response<RespuestaTraspasoDTO> response) {
+                    RespuestaTraspasoDTO data = response.body();
+                    if (response.isSuccessful()) {
+                        Log.w("IniciarDescarga", "Success");
+                        subirImagenesPresenter.onSuccessRegistroRecarga();
+                    } else {
+                        registra_reacrga = false;
+                        switch (response.code()) {
+                            case 404:
+                                Log.w("Traspaso pipa", "not found");
+                                break;
+                            case 500:
+                                Log.w("Traspaso pipa", "server broken");
+                                break;
+                            default:
+                                Log.w("Traspaso pipa", "" + response.code());
+                                Log.w(" Error", response.message() + " " +
+                                        response.raw().toString());
+                                break;
+                        }
+                        if(data!=null) {
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        }else {
+                            subirImagenesPresenter.errorSolicitud(response.message());
+                        }
+                        registra_reacrga= false;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaTraspasoDTO> call, Throwable t) {
+                    Log.e("error", t.toString());
+                    registra_reacrga = false;
+                    subirImagenesPresenter.errorSolicitud(t.getMessage());
+                }
+            });
+            intentos_post++;
+            if(registra_reacrga){
+                break;
+            }else{
+                intentos_post++;
+            }
+        }
+        if(intentos_post==3){
+            registrar_local_traspaso(sagasSql,traspasoDTO);
+            registro_local = true;
+        }
+        if(registro_local ){
+            /*Lisener lisener = new Lisener(sagasSql,token);
+            lisener.CrearRunable(Lisener.RecargaCamioneta);*/
+            subirImagenesPresenter.onSuccessRegistroAndroid();
+        }
+        //endregion
+    }
+
+    private void registrar_local_traspaso(SAGASSql sagasSql, TraspasoDTO traspasoDTO) {
     }
 
     private void registrar_local_autoconsumo(SAGASSql sagasSql, AutoconsumoDTO autoconsumoDTO) {

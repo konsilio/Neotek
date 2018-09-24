@@ -31,4 +31,6 @@ public class Constantes {
     public static final String GET_CATALOGO_RECARGAS = "mobile/catalogos/recarga/{esEstacion}/{esPipa}/{esCamioneta}/{esFinalizar}";
     public static final String GETCATALOGO_AUTOCONSUMO = "mobile/caatalogos/autoconsumo/{esEstacion}/{esInventario}/{esPipa}/{esFinalizar}";
     public static final String POST_AUTOCONSUMO = "mobile/autoconsumo/{esEstacion}/{esIventario}/{esPipa}/{esFinal}";
+    public static final String GET_CATALOGO_TRASPASO = "mobile/catalogos/traspaso/{esTraspaso}/{esPipa}";
+    public static final String POST_TRASPASO = "mobile/traspaso/{esEstacion}/{esPipa}/{esFinal}";
 }

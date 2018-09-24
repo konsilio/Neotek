@@ -4,6 +4,7 @@ import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
+import com.example.neotecknewts.sagasapp.Model.DatosTraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
@@ -22,6 +23,8 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
@@ -250,5 +253,19 @@ public interface RestClient {
                                                @Path(value = "esFinal") boolean esFinal,
                                                @Header("Authorization") String token,
                                                @Header("Content-type") String contentType
+    );
+    @GET(Constantes.GET_CATALOGO_TRASPASO)
+    Call<DatosTraspasoDTO> getDatosTraspaso(@Path(value = "esTraspaso") boolean esTraspaso,
+                                            @Path(value = "esPipa")boolean esPipa,
+                                            @Header("Authorization") String token,
+                                            @Header("Content-type") String contentType
+    );
+    @POST(Constantes.POST_TRASPASO)
+    Call<RespuestaTraspasoDTO> postTraspaso(@Body TraspasoDTO traspasoDTO,
+                                            @Path(value = "esEstacion") boolean esEstacion,
+                                            @Path(value = "esPipa") boolean esPipa,
+                                            @Path(value = "esFinal") boolean esFinal,
+                                            @Header("Authorization") String token,
+                                            @Header("Content-type") String contentType
     );
 }

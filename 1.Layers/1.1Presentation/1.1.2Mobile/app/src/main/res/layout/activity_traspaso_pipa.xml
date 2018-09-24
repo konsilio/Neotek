@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.TraspasoEstacionActivity">
+    tools:context=".Activity.TraspasoPipaActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,30 +15,30 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/TVTraspasoEstacionActivityTitulo"
+                android:id="@+id/TVTransfereciaPipaActivityTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="25dp"
-                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingTop="5dp"
                 android:text="@string/trasferencia_de_gas"
                 android:textAlignment="center"
-                android:textSize="30sp" />
+                android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/TVTraspasoEstacionActivityEstacionSalidaTitulo"
+                android:id="@+id/TVTraspasoPipaActivityPipaSalida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:paddingBottom="5dp"
                 android:paddingTop="15dp"
-                android:text="@string/selecciona_la_estacion_de_carburacion_de_salida"
+                android:text="@string/selecciona_la_pipa_de_salida"
                 android:textSize="18sp" />
 
             <Spinner
-                android:id="@+id/STraspasoEstacionActivityEstacionSalida"
+                android:id="@+id/STraspasoPipaActivityPipaSalida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -47,18 +46,18 @@
                 android:padding="20dp" />
 
             <TextView
-                android:id="@+id/TVTraspasoEstacionActivityMedidor"
+                android:id="@+id/TVTrasferenciaPipaActivityPipaEntrada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:paddingBottom="5dp"
-                android:paddingTop="15dp"
-                android:text="@string/selecciona_el_tipo_de_medidor_porcentual"
+                android:paddingTop="20dp"
+                android:text="@string/selecciona_la_pipa_de_entrada"
                 android:textSize="18sp" />
 
             <Spinner
-                android:id="@+id/STraspasoEstacionActivityMedidor"
+                android:id="@+id/STraspasoPipaActivityPipaEntrada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -71,33 +70,8 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 
-            <TextView
-                android:id="@+id/TVTraspasoEstacionActivityPipaDeEntrada"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:paddingBottom="5dp"
-                android:paddingTop="15dp"
-                android:text="@string/selecciona_la_pipa_de_entrada"
-                android:textSize="18sp" />
-
-            <Spinner
-                android:id="@+id/STraspasoEstacionActivityPipaEntrada"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:padding="20dp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp" />
-
             <Button
-                android:id="@+id/BtnTraspasoEstacionActivityAceptar"
+                android:id="@+id/BtnTraspasoPipaActivityGuardar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="85dp"
