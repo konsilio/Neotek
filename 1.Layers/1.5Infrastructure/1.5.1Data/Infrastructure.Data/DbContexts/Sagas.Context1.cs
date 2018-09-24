@@ -87,5 +87,6 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<PuntoVenta> PuntoVenta { get; set; }
         public virtual DbSet<TipoEvento> TipoEvento { get; set; }
         public virtual DbSet<TipoOperadorChofer> TipoOperadorChofer { get; set; }
+        public virtual DbSet<OrdenCompraPago> OrdenCompraPago { get; set; }
     }
 }

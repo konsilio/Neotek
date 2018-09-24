@@ -82,13 +82,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Sagas.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DbContexts\Sagas1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sagas.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorios\GenericRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="DbContexts\Sagas.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Sagas.Designer.cs</LastGenOutput>
+      <LastGenOutput>Sagas1.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>

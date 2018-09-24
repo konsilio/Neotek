@@ -148,6 +148,9 @@
     <Compile Include="Entidades\OrdenCompraEstatus.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\OrdenCompraPago.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\OrdenCompraProducto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -184,7 +187,6 @@
     <Compile Include="Entidades\Rol.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\RolPartial.cs" />
     <Compile Include="Entidades\Sagas1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -229,7 +231,6 @@
     <Compile Include="Entidades\Usuario.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\UsuarioPartial.cs" />
     <Compile Include="IRepositorios\IEmpresaRepositorio.cs" />
     <Compile Include="IRepositorios\IEstadosRepRepositorio.cs" />
     <Compile Include="IRepositorios\IPaisRepositorio.cs" />
@@ -249,7 +250,6 @@
     <Compile Include="ObjetosValor\Enum\TipoPersonaFiscalEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoProveedorEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Usuario.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

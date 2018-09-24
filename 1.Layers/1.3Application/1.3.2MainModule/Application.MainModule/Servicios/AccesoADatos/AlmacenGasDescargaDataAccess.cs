@@ -100,6 +100,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
                             // Agregar al modelo de dominio AlmacenGasMovimiento
                             //if (desDto.AGMovimiento != null)
                             //    uow.Repository<AlmacenGasMovimiento>().Insert(desDto.MovInventario);
+
+                            if (desDto.DescargaSinNavigationProperties != null)
+                                uow.Repository<AlmacenGasDescarga>().Update(desDto.DescargaSinNavigationProperties);
                         }
                         uow.SaveChanges();
                         //_respuesta.Id = _almDes.IdAlmacenEntradaGasDescarga;

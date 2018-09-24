@@ -176,8 +176,7 @@ namespace Application.MainModule.Servicios.Compras
             OCExpedidor.SubtotalSinIva = CalcularOrdenCompraServicio.Subtotal(OCExpedidor.PVPM, descarga.MasaKg);
             OCExpedidor.Iva = CalcularOrdenCompraServicio.Iva(OCExpedidor.SubtotalSinIva, IvaEnum.p16);
             OCExpedidor.Total = CalcularOrdenCompraServicio.Total(OCExpedidor.SubtotalSinIva, OCExpedidor.Iva, 0);
-
-
+            
             OCPorteador.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
             OCPorteador.FactorConvTransporte = empresa.FactorFleteGas;
             OCPorteador.PrecioTransporte = CalcularOrdenCompraServicio.ComplementoPrecioTransporteDeGas(descarga.MasaKg, OCPorteador.FactorConvTransporte);

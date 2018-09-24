@@ -11,9 +11,9 @@ namespace Application.MainModule.Servicios
 {
     public static class FuncionIngresoGastoServicio
     {
-        public static UnidadAlmacenGas Descarga(AlmacenGasDescarga descarga)
-        {            
+        //public static UnidadAlmacenGas Descarga(AlmacenGasDescarga descarga)
+        //{            
             
-        }
+        //}
     }
 }

@@ -11,6 +11,7 @@ namespace Application.MainModule.DTOs.Almacen
     public class AplicaDescargaDto
     {
         public AlmacenGasDescarga Descarga { get; set; }
+        public AlmacenGasDescarga DescargaSinNavigationProperties { get; set; }
 
 
         public OrdenCompra OCExpedidor { get; set; }

@@ -204,8 +204,8 @@ namespace Application.MainModule.Servicios.Almacen
             if (unidad.IdPipa != null && unidad.IdPipa > 0)
                 return identidadUnidadAlmacenGas.Pipa;
 
-            if (unidad.IdCamioneta != null && unidad.IdCamioneta > 0)
-                return identidadUnidadAlmacenGas.Camioneta;
+            //if (unidad.IdCamioneta != null && unidad.IdCamioneta > 0)
+            return identidadUnidadAlmacenGas.Camioneta;
         }
 
         public static void ProcesarInventario()
@@ -229,14 +229,14 @@ namespace Application.MainModule.Servicios.Almacen
 
         public static void CalcularInventarioAlmacenPrincipal(UnidadAlmacenGas unidad)
         {
-            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
-            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
-            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
-            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
-            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
-            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
-            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
-            var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
         }
 
         public static List<AplicaDescargaDto> AplicarDescargas()
@@ -261,8 +261,6 @@ namespace Application.MainModule.Servicios.Almacen
             AplicaDescargaDto apDescDto = AplicarDescarga(unidadEntrada, descarga, empresa);
             apDescDto = OrdenCompraServicio.AplicarDescarga(apDescDto, descarga, empresa);
 
-            Descarga = AlmacenGasAdapter.FromEmtity(descarga)
-
             return apDescDto;
         }
 
@@ -280,7 +278,9 @@ namespace Application.MainModule.Servicios.Almacen
             unidadEntrada.PorcentajeActual = descarga.PorcenMagnatelOcularAlmacenFIN.Value;
 
             return new AplicaDescargaDto()
-            {                
+            {
+                Descarga = descarga,
+                DescargaSinNavigationProperties = AlmacenGasAdapter.FromEmtity(descarga),
                 unidadEntrada = AlmacenGasAdapter.FromEmtity(unidadEntrada),
                 identidadUE = IdentificarTipoUnidadAlamcenGas(unidadEntrada),
                 PorcentajeUE = unidadEntrada.PorcentajeActual,

@@ -244,6 +244,14 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasRecargaCilindro_CAlmacenGasCilindro" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_CAlmacenGasCilindro" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.OrdenCompraCompExpedidor" Width="1.5" PointX="12.125" PointY="33.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.OrdenCompraCompFactura" Width="1.5" PointX="12.125" PointY="28" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.OrdenCompraCompPorteador" Width="1.5" PointX="12.125" PointY="30.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.OrdenCompraPago" Width="1.5" PointX="12.125" PointY="37.25" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraCompExpedidor_OrdenCompra" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraCompFactura_OrdenCompra" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraCompPorteador_OrdenCompra" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraPago_OrdenCompra" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
