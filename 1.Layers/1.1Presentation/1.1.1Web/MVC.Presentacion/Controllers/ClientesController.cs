@@ -14,12 +14,12 @@ namespace MVC.Presentacion.Controllers
         // GET: Clientes
         public ActionResult Index()
         {
-            string _tkn = Session["StringToken"].ToString();         
+            string _tkn = Session["StringToken"].ToString();
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
             ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
-            ViewBag.Clientes = CatalogoServicio.ListaClientes(0,_tkn);
-            
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(0,"","", _tkn);
+
             return View();
         }
 
@@ -29,7 +29,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
             ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
-            ViewBag.Clientes = CatalogoServicio.ListaClientes(0,_tkn);            
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(0, "", "", _tkn);
             ViewBag.IdCliente = null;
             return View();
         }
@@ -39,7 +39,7 @@ namespace MVC.Presentacion.Controllers
             _tok = Session["StringToken"].ToString();
             if (ModelState.IsValid)
             {
-               CatalogoServicio.CrearCliente(_ojUs, _tok);
+                CatalogoServicio.CrearCliente(_ojUs, _tok);
             }
 
             return RedirectToAction("Index", _ojUs);
@@ -50,11 +50,11 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
             ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
-            ViewBag.Clientes = CatalogoServicio.ListaClientes(0,_tkn);
-            ViewBag.IdCliente = CatalogoServicio.ListaClientes(id,_tkn);
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(0, "", "", _tkn);
+            ViewBag.IdCliente = CatalogoServicio.ListaClientes(id, "", "", _tkn);
             return View("Nuevo");
         }
-            
+
         [HttpPost]
         public ActionResult GuardaEdicionCliente(ClientesDto _Obj)
         {
@@ -73,20 +73,22 @@ namespace MVC.Presentacion.Controllers
             string _tkn = Session["StringToken"].ToString();
             CatalogoServicio.EliminarCliente(id, _tkn);
 
-            ViewBag.Clientes = CatalogoServicio.ListaClientes(0, _tkn);
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(0, "", "", _tkn);
             return RedirectToAction("Index", _Obj);
         }
 
-        public ActionResult EditarLocaciones(ClientesModel _Obj, int id)
+
+        public ActionResult EditarLocaciones(int id)
         {
             string _tkn = Session["StringToken"].ToString();
-            ViewBag.IdCliente = CatalogoServicio.ListaClientes(id, _tkn);
-            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tok);
+            ViewBag.IdCliente = CatalogoServicio.ListaClientes(id, "", "", _tkn);
+            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
             //Se obtienen los estados 
-            ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
+            ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
             //llenar locaciones
             ViewBag.Locaciones = CatalogoServicio.ObtenerLocaciones(id, _tkn);
-            return View();
+            List<ClienteLocacionMod> _lst = CatalogoServicio.ObtenerLocaciones(id, _tkn);
+            return View(_lst);
         }
 
         [HttpPost]
@@ -99,7 +101,49 @@ namespace MVC.Presentacion.Controllers
             }
 
             return RedirectToAction("Index", _Obj);
-        }        
+        }
 
+        //[HttpPost]
+        public ActionResult EditarClienteLoc(ClienteLocacionMod _ObjModel, int id, short idOrden)
+        {
+            string _tkn = Session["StringToken"].ToString();
+            ViewBag.IdCliente = CatalogoServicio.ListaClientes(id, "", "", _tkn);
+            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
+            //Se obtienen los estados 
+            ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
+            ViewBag.Locaciones = CatalogoServicio.ObtenerModel(idOrden, id, _tkn);
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult ActualizarLocacion(ClienteLocacionMod _ObjModel)//, int id, short idOrden
+        {
+            string _tkn = Session["StringToken"].ToString();
+           
+            CatalogoServicio.ModificarClienteLocacion(_ObjModel, _tkn);          
+            return RedirectToAction("EditarLocaciones", "Clientes", new { id = _ObjModel.IdCliente });
+        }
+        public ActionResult BorrarClienteLoc(ClienteLocacionMod _ObjModel, int id, short idOrden)
+        {
+            string _tkn = Session["StringToken"].ToString();
+            //CatalogoServicio.EliminarCliente(id, _tkn);
+            _ObjModel = CatalogoServicio.ObtenerModel(idOrden, id, _tkn);
+            CatalogoServicio.EliminarClienteLocacion(_ObjModel, _tkn);
+
+            return RedirectToAction("EditarLocaciones", "Clientes", new { id = _ObjModel.IdCliente });
+        }
+
+        public ActionResult Buscar(ClientesModel filterObj)
+        {
+            string _tkn = Session["StringToken"].ToString();
+          
+            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
+            ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
+            ViewBag.Clientes = CatalogoServicio.ListaClientes(0, filterObj.Rfc, filterObj.RazonSocial, _tkn);
+ 
+            return View("Index", filterObj);
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<EstadosRepublica>().GetAll().ToList();
         }
 
-        public EstadosRepublica BuscarIdEdo(int idEdo)
+        public EstadosRepublica BuscarIdEdo(byte idEdo)
         {
             return uow.Repository<EstadosRepublica>().GetSingle(x => x.IdEstadoRep.Equals(idEdo));
         }

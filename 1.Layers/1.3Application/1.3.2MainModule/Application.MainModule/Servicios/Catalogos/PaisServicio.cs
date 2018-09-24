@@ -17,7 +17,7 @@ namespace Application.MainModule.Servicios.Catalogos
             List<PaisDTO> lpaises = AdaptadoresDTO.Seguridad.PaisAdapter.ToDTO(new PaisDataAccess().ListaPaises());
             return lpaises;
         }
-        public static Pais Obtener(int IdPais)
+        public static Pais Obtener(byte IdPais)
         {
             return new PaisDataAccess().BuscarIdPais(IdPais);
         }

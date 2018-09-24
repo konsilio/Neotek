@@ -1,8 +1,7 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
-@model  List<ClienteLocacionMod>
-
+@model  ClienteLocacionMod
 @{
-    ViewBag.Title = "Catálogo / Clientes";
+    ViewBag.Title = "Catálogo / Clientes / Locaciones";
 }
 
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
@@ -89,7 +88,7 @@
         });
     });
 </script>
-@using (Html.BeginForm("GuardarLocaciones", "Clientes", FormMethod.Post))
+@using (Html.BeginForm("ActualizarLocacion", "Clientes", FormMethod.Post))
 {
     <section class="content home">
         <div class="container-fluid">
@@ -111,6 +110,8 @@
                                             <div>
                                                 <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdCliente[0].RazonSocial=="")?ViewBag.IdCliente[0].Nombre + " " +ViewBag.IdCliente[0].Apellido1 + " " +ViewBag.IdCliente[0].Apellido2:ViewBag.IdCliente[0].RazonSocial )" />
                                                 <input type="text" name="IdCliente" hidden="hidden" value="@ViewBag.IdCliente[0].IdCliente" readonly="readonly" class="form-control" />
+                                                <input type="text" name="Orden" hidden="hidden" value="@ViewBag.Locaciones.Orden" readonly="readonly" class="form-control" />
+
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +129,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input type="text" name="TipoLocacion" class="form-control">
+                                        <input type="text" name="TipoLocacion" class="form-control" value="@ViewBag.Locaciones.TipoLocacion">
                                     </div>
                                 </div>
                                 <div class="col-lg-7 col-md-7 col-sm-7">
@@ -211,7 +212,7 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
-                                            <input type="text" name="Municipio" class="form-control" />
+                                            <input type="text" name="Municipio" class="form-control" value="@ViewBag.Locaciones.Municipio"/>
                                         </div>
                                     </div>
                                 </div>
@@ -227,7 +228,7 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
-                                            <input type="text" name="Colonia" class="form-control" />
+                                            <input type="text" name="Colonia" class="form-control" value="@ViewBag.Locaciones.Colonia"/>
                                         </div>
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
@@ -241,7 +242,7 @@
                                     </div>
                                     <div class="col-lg-7 col-md-7 col-sm-7">
                                         <div class="form-group">
-                                            <input type="text" name="Calle" class="form-control" />
+                                            <input type="text" name="Calle" class="form-control" value="@ViewBag.Locaciones.Calle" />
                                         </div>
                                     </div>
                                 </div>
@@ -257,7 +258,7 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
-                                            <input type="text" name="NumExt" class="form-control" />
+                                            <input type="text" name="NumExt" class="form-control" value="@ViewBag.Locaciones.NumExt" />
                                         </div>
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
@@ -271,7 +272,7 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
-                                            <input type="text" name="NumInt" class="form-control" />
+                                            <input type="text" name="NumInt" class="form-control" value="@ViewBag.Locaciones.NumInt" />
                                         </div>
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
@@ -285,7 +286,7 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
-                                            <input type="text" name="CodigoPostal" class="form-control" />
+                                            <input type="text" name="CodigoPostal" class="form-control" value="@ViewBag.Locaciones.CodigoPostal" />
                                         </div>
                                     </div>
                                 </div>
@@ -298,64 +299,7 @@
                                 </div>
                                 <div class="col-lg-7 col-md-7 col-sm-7">
                                     <div class="form-group">
-                                        <button class="btn btn-raised btn-primary float-right" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>Agregar</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="table-responsive">
-                                        <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
-                                            <thead>
-                                                <tr>
-                                                    <th>Pais</th>
-                                                    <th>Estado</th>
-                                                    <th>Municipio</th>
-                                                    <th>Tipo Locacion</th>
-                                                    <th>Cod Postal</th>
-                                                    <th>Colonia</th>
-                                                    <th>Calle</th>
-                                                    <th>Núm Int</th>
-                                                    <th>Núm Ext</th>
-                                                    <th>Acciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @*@Html.EditorFor(m => m)*@
-                                                @foreach (var item in Model)
-                                                {
-                                                    <tr>
-                                                        <td>@item.Pais</td>
-                                                        @if(@item.EstadoProvincia != "" && @item.EstadoProvincia != null )
-                                                        {
-                                                        <td>@item.EstadoProvincia</td>
-                                                        }
-                                                        else
-                                                        {
-                                                        <td>@item.Estado</td>
-                                                        }
-                                                        <td>@item.Municipio</td>
-                                                        <td>@item.TipoLocacion</td>
-                                                        <td>@item.CodigoPostal</td>
-                                                        <td>@item.Colonia</td>
-                                                        <td>@item.Calle</td>
-                                                        <td>@item.NumInt</td>
-                                                        <td>@item.NumExt</td>
-                                                        <td>
-                                                            <a ID="lblCrear" href="@Url.Action("EditarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })">
-                                                                <i class="material-icons">edit</i>
-                                                                <span class="icon-name"></span>
-                                                            </a>
-                                                            <a ID="lbBorrar" href="@Url.Action("BorrarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })">
-                                                                <i class="material-icons">delete</i>
-                                                                <span class="icon-name"></span>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
+                                        <button class="btn btn-raised btn-primary float-right" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>Actualizar</button>
                                     </div>
                                 </div>
                             </div>
@@ -369,10 +313,3 @@
         </div>
     </section>
 }
-<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
-<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

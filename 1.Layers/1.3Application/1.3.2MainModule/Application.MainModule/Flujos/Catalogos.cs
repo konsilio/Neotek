@@ -179,13 +179,24 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeModificarCliente();
             if (!resp.Exito) return resp;
 
-            var clientes = ClienteServicio.Obtener(cteDto.IdCliente);
+            var clientes = ClienteServicio.ObtenerCL(cteDto.IdCliente, cteDto.Orden);
             if (clientes == null) return ClienteServicio.NoExiste();
 
-            var cte = ClientesAdapter.FromDto(cteDto, clientes);
-            cte.FechaRegistro = cte.FechaRegistro;
-            return ClienteServicio.Modificar(cte);
-        }       
+            var cte = ClientesAdapter.FromDto(cteDto, clientes);           
+            return ClienteServicio.ModificarCL(cte);
+        }
+
+        public RespuestaDto EliminaClienteLocacion(ClienteLocacionDTO cteDto)
+        {
+            var resp = PermisosServicio.PuedeEliminarCliente();
+            if (!resp.Exito) return resp;
+
+            //var clientes = ClienteServicio.Obtener(cteDto.Orden);
+            //if (clientes == null) return ClienteServicio.NoExiste();
+
+           var clientes = ClientesAdapter.FromDtocteLoc(cteDto);           
+            return ClienteServicio.Eliminar(clientes);
+        }
         #endregion
 
         #region Productos

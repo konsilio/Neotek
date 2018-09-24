@@ -35,6 +35,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<ClienteLocacion>().Get(x => x.IdCliente.Equals(idCliente)).ToList();
         }
 
+        public ClienteLocacion BuscarLocacionId(int idCliente, short idOrden)
+        {
+            return uow.Repository<ClienteLocacion>().GetSingle(x => x.IdCliente.Equals(idCliente) && x.Orden.Equals(idOrden));
+        }
+
         public RespuestaDto Insertar(Cliente cte)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -84,7 +89,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        
+
+        public RespuestaDto Actualizar(ClienteLocacion _pro)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.ClienteLocacion>().Update(_pro);
+                    uow.SaveChanges();
+                    _respuesta.Id = _pro.IdCliente;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "de la locacion del cliente"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public RespuestaDto Actualizar(Cliente _pro)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -104,6 +133,29 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 {
                     _respuesta.Exito = false;
                     _respuesta.Mensaje = string.Format(Error.C0003, "del cliente"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
+        public RespuestaDto Eliminar(ClienteLocacion cteL)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<ClienteLocacion>().Delete(cteL);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "Eliminar la locacion de cliente");
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }

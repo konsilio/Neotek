@@ -17,7 +17,7 @@ namespace Application.MainModule.Servicios.Catalogos
             return ledos;
         }
 
-        public static EstadosRepublica Obtener(int idEdo)
+        public static EstadosRepublica Obtener(byte idEdo)
         {
             return new EstadoRDataAccess().BuscarIdEdo(idEdo);
         }
