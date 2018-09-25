@@ -27,7 +27,7 @@ namespace DS.MainModule
 
         public void EjecutaServicios(object source, ElapsedEventArgs e)
         {
-            AlmacenGasServicio.ProcesarInventario();
+            //AlmacenGasServicio.ProcesarInventario();
         }
 
         private void Timer()
