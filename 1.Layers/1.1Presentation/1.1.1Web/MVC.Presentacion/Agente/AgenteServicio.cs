@@ -1380,12 +1380,12 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Cuentas Contables
-        public void BuscarCuentasContables(short idEmpresa, string tkn)
+        public void BuscarCuentasContables(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCuentasContables"];
-            ListaCuentaContable(idEmpresa, tkn).Wait();
+            ListaCuentaContable(tkn).Wait();
         }
-        private async Task ListaCuentaContable(short idEmpresa, string token)
+        private async Task ListaCuentaContable(string token)
         {
             using (var client = new HttpClient())
             {
@@ -1395,7 +1395,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiCatalgos, idEmpresa)).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiCatalgos)).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<List<CuentaContableDTO>>();
                     else

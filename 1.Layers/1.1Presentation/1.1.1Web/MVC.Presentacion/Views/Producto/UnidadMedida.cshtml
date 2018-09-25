@@ -19,11 +19,17 @@
             $.each(s, function () {
                 $(".filterable tr:visible .indexColumn:not(:contains('"
                    + this + "'))").parent().hide();
-            });//each
-        });//key up.
-    });//document.ready
+            });
+        });
+    });
 
 </script>
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
 <section class="content home">
     <div class="container-fluid">
         @using (Html.BeginForm("CrearLineaProducto", "Producto", FormMethod.Post))
@@ -51,7 +57,7 @@
                                     <div class="col-sm-4">
                                         <b>Gasera:</b>
                                         @if (ViewBag.EsAdmin)
-                                        {
+                                        {                                          
                                             <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
                                                 @foreach (var lst in ViewBag.Empresas)
                                                 {
