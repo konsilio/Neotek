@@ -102,22 +102,6 @@ namespace Sagas.MainModule.Entidades
         public bool AppTomaLecturaReporteDelDia { get; set; }
         public bool AppTraspasoEstacionCarb { get; set; }
         public bool AppTraspasoPipa { get; set; }
-        public bool CatInsertarEmpresa { get; set; }
-        public bool CatModificarEmpresa { get; set; }
-        public bool CatEliminarEmpresa { get; set; }
-        public bool CatConsultarEmpresa { get; set; }
-        public bool CatInsertarRol { get; set; }
-        public bool CatModificarRol { get; set; }
-        public bool CatEliminarRol { get; set; }
-        public bool CatConsultarRol { get; set; }
-        public bool CatInsertarPrecioVentaGas { get; set; }
-        public bool CatModificarPrecioVentaGas { get; set; }
-        public bool CatEliminarPrecioVentaGas { get; set; }
-        public bool CatConsultarPrecioVentaGas { get; set; }
-        public bool CatInsertarPrecioVenta { get; set; }
-        public bool CatModificarPrecioVenta { get; set; }
-        public bool CatEliminarPrecioVenta { get; set; }
-        public bool CatConsultarPrecioVenta { get; set; }
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
