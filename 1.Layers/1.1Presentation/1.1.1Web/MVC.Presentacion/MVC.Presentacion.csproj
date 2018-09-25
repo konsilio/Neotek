@@ -336,6 +336,19 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\bundles\chartscripts.bundle.js" />
+    <Content Include="assets\bundles\countTo.bundle.js" />
+    <Content Include="assets\bundles\datatablescripts.bundle.js" />
+    <Content Include="assets\bundles\doughnut.bundle.js" />
+    <Content Include="assets\bundles\easypiechart.bundle.js" />
+    <Content Include="assets\bundles\flotchartsscripts.bundle.js" />
+    <Content Include="assets\bundles\flotscripts.bundle.js" />
+    <Content Include="assets\bundles\footable.bundle.js" />
+    <Content Include="assets\bundles\fullcalendarscripts.bundle.js" />
+    <Content Include="assets\bundles\index.bundle.js" />
+    <Content Include="assets\bundles\index.jvectormap.bundle.js" />
+    <Content Include="assets\bundles\jvectormap.bundle.js" />
+    <Content Include="assets\bundles\knob.bundle.js" />
     <Content Include="assets\bundles\libscripts.bundle.js" />
     <Content Include="assets\bundles\mainscripts.bundle.js" />
     <Content Include="assets\bundles\vendorscripts.bundle.js" />
