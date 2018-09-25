@@ -6,7 +6,6 @@
 }
 <meta name="viewport" content="width=device-width" />
 <title>Categoria</title>
-<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -24,7 +23,7 @@
             });//each
         });//key up.
     });//document.ready
-    </script>
+</script>
 
 <div class="page-loader-wrapper">
     <div class="loader">
@@ -60,7 +59,7 @@
                                         <b>Gasera:</b>
                                         @if (ViewBag.EsAdmin)
                                         {
-                                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                            <select id="ddlEmpresas" name="IdEmpresa class="form-control selectpicker show-tick" data-live-search="true">
                                                 @foreach (var lst in ViewBag.Empresas)
                                                 {
                                                     <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
@@ -108,16 +107,16 @@
                                 @if (ViewBag.MensajeError != null)
                                 {
                                     <br />
-                                            <div id="DivAlerta" class="container">
-                                                <div class="alert alert-danger">
-                                                    <div class="alert-icon">
-                                                        <i class="zmdi zmdi-block"></i>
-                                                    </div>
-                                                    <strong>
-                                                        @ViewBag.MensajeError
-                                                    </strong>
-                                                </div>
+                                    <div id="DivAlerta" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
                                             </div>
+                                            <strong>
+                                                @ViewBag.MensajeError
+                                            </strong>
+                                        </div>
+                                    </div>
                                 }
                             </div>
                         </div>

@@ -2,13 +2,6 @@
 @{
     string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
 }
-
-@*<div class="page-loader-wrapper">
-    <div class="loader">
-        <div class="m-t-30"><img src="~/assets/images/logo.svg" width="48" height="48" alt="Alpino"></div>
-        <p>Espere por favor</p>
-    </div>
-</div>*@
 <section class="content home">
     <div class="container-fluid">
         @using (Html.BeginForm("CrearProveedor", "Producto", FormMethod.Post))
@@ -20,7 +13,8 @@
                         <h2>Proveedores</h2>
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item active"> Catálogo / Proveedor </li>
+                            <li class="breadcrumb-item active"> Catálogo </li>
+                            <li class="breadcrumb-item active"> Proveedor </li>
                         </ul>
                     </div>
                 </div>
@@ -72,12 +66,12 @@
                                 </div>
                                 <div class="col-md-4">
                                     <b>Centa contable</b>
-                                    <select name="IdCuentaContable" class="form-control selectpicker show-tick"" data-live-search="true">
+                                    <select name="IdCuentaContable" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.CuentasContables)
                                         {
                                             if (Model != null && cc.IdCuentaContable == Model.IdCuentaContable)
                                             {
-                                                <option value="@cc.IdCuentaContable" selected>@cc.Descripcion</option>
+                                                <option value="@cc. ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);" selected>@cc.Descripcion</option>
                                             }
                                             else
                                             {

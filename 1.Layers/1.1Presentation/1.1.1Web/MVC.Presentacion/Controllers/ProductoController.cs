@@ -1,21 +1,23 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Seguridad;
+using System.Web.Script.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using Newtonsoft.Json;
 
 namespace MVC.Presentacion.Controllers
 {
     public class ProductoController : Controller
     {
-        string tkn = string.Empty;        
+        string tkn = string.Empty;
         #region Categorías Producto
         public ActionResult Categoria(int? page, CategoriaProductoDTO model = null)
-        {     
+        {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             RespuestaDTO Resp = new RespuestaDTO();
             tkn = Session["StringToken"].ToString();
@@ -36,8 +38,8 @@ namespace MVC.Presentacion.Controllers
                         ModelState.AddModelError(error.Key, error.Value);
                     }
                 if (Resp.MensajesError != null)
-                    ViewBag.MensajeError = Resp.MensajesError[0];               
-            }           
+                    ViewBag.MensajeError = Resp.MensajesError[0];
+            }
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -96,8 +98,8 @@ namespace MVC.Presentacion.Controllers
         #endregion
         #region Linea Producto
         public ActionResult LineaProducto(int? page, LineaProductoDTO model = null)
-        {            
-            if (Session["StringToken"] == null) return View("Index","Home", AutenticacionServicio.InitIndex(new LoginModel()));
+        {
+            if (Session["StringToken"] == null) return View("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             RespuestaDTO Resp = new RespuestaDTO();
             var Pagina = page ?? 1;
@@ -177,7 +179,7 @@ namespace MVC.Presentacion.Controllers
         #region Unidada de Medida
         public ActionResult UnidadMedida(int? page, UnidadMedidaDTO model = null)
         {
-            
+
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             RespuestaDTO Resp = new RespuestaDTO();
@@ -256,14 +258,17 @@ namespace MVC.Presentacion.Controllers
         }
         #endregion
         #region Producto
-        public ActionResult Producto(int? page, ProductoDTO model = null)
-        {           
+        public ActionResult Producto(int? page, short? idempresa, ProductoDTO model = null)
+        {
             RespuestaDTO Resp = new RespuestaDTO();
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             var Pagina = page ?? 1;
             ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).ToPagedList(Pagina, 20);
-            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
+            if (idempresa != null)
+                ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Where(x => x.IdEmpresa.Equals(idempresa)).ToList();
+            else
+                ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn);
             ViewBag.LineasProducto = CatalogoServicio.ListaLineasProducto(tkn);
             ViewBag.UnidadesMedida = CatalogoServicio.ListaUnidadesMedida(tkn);
@@ -272,9 +277,9 @@ namespace MVC.Presentacion.Controllers
             if (TempData["RespuestaDTO"] != null)
                 Resp = (RespuestaDTO)TempData["RespuestaDTO"];
             ModelState.Clear();
-            if (model != null)            
+            if (model != null)
                 if (model.IdProducto != 0)
-                    ViewBag.EsEdicion = true;       
+                    ViewBag.EsEdicion = true;
             if (Resp != null)
             {
                 if (Resp.ModelStatesStandar != null)
@@ -291,6 +296,15 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
             return View(model);
         }
+        public JsonResult GetBuscarCuentasCtbls(short idEmpresa)
+        {
+            tkn = Session["StringToken"].ToString();
+            //var jsonSerialiser = new JavaScriptSerializer();
+            //var contactInfo = jsonSerialiser.Serialize(CatalogoServicio.ListaCtaCtble(tkn).Select(x => x.IdEmpresa.Equals(idEmpresa)).ToList());
+            var list = CatalogoServicio.ListaCtaCtble(tkn).Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+            var JsonInfo = JsonConvert.SerializeObject(list);
+            return Json(JsonInfo, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public ActionResult CrearProducto(ProductoDTO model)
         {
@@ -302,10 +316,9 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Producto", new { respuesta, model });
+                return RedirectToAction("Producto", model);
             }
         }
-
         public ActionResult EliminarProducto(short id)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
@@ -343,11 +356,11 @@ namespace MVC.Presentacion.Controllers
         #endregion
         #region Proveedor
         public ActionResult Proveedores(int? page, ProveedorDTO model = null)
-        {            
+        {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
             var Pagina = page ?? 1;
-            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).ToPagedList(Pagina, 20);         
+            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).ToPagedList(Pagina, 20);
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             ViewBag.TipoProveedores = CatalogoServicio.ListaTipoProveedor(tkn);
             ViewBag.Estados = CatalogoServicio.GetEstados(tkn);
@@ -386,7 +399,7 @@ namespace MVC.Presentacion.Controllers
                     }
                 if (Resp.MensajesError != null)
                     ViewBag.MensajeError = Resp.MensajesError[0];
-            }       
+            }
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -405,7 +418,7 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Proveedor",model);
+                return RedirectToAction("Proveedor", model);
             }
         }
 
