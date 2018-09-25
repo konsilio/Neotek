@@ -1,4 +1,5 @@
-﻿using Application.MainModule.Servicios.AccesoADatos;
+﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.Servicios.AccesoADatos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,13 @@ namespace Application.MainModule.Servicios.Catalogos
 {
     public static class PuntoVentaServicio
     {
+        public static List<PuntoVentaDTO> Obtener()
+        {
+            // return new PuntoVentaDataAccess().BuscarTodos();
+            List<PuntoVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PuntoVentaAdapter.ToDTO(new PuntoVentaDataAccess().BuscarTodos());
+            return lPventas;
+        }
+
         public static PuntoVenta Obtener(int idPuntoVenta)
         {
             return new PuntoVentaDataAccess().Buscar(idPuntoVenta);

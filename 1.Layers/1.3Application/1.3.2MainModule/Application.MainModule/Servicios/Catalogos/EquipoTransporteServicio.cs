@@ -19,6 +19,16 @@ namespace Application.MainModule.Servicios.Catalogos
             
             return null;
         }
+
+        public static string ObtenerNumero(UnidadAlmacenGas uAG)
+        {
+            if (uAG.IdEmpresa != null)
+                return new EquipoTransporteDataAccess().BuscarCamioneta(uAG).Numero;
+          
+
+            return null;
+        }
+
         public static string ObtenerNombre(EquipoTransporte qt)
         {
             if (qt.IdCamioneta != null)

@@ -1,0 +1,111 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model  PuntoVentaModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<!-- Bootstrap Select Css -->
+<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnBuscar").click(function () {
+            var form = $(this).parent("form");
+            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "Buscar" }) %>');
+            form.attr('method', 'post');
+        });
+    });
+
+</script>
+<!-- Page Loader -->
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
+@using (Html.BeginForm("Registrar", "PuntoVenta", FormMethod.Post))
+{
+    <section class="content home">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="card">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-sm-3">
+                                    <b>Gasera</b>
+                                    <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                        @foreach (var lst in ViewBag.Empresas)
+                                        {
+                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+             
+                <div class="card">
+                    <div class="body">                      
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
+                                        <thead>
+                                            <tr>
+                                                <th>Gasera</th>
+                                                <th>Unidad</th>
+                                                <th>Punto de venta</th>
+                                                <th>Operador/Chofer</th>                                               
+                                                <th>Accion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @*@foreach (var item in @ViewBag.Clientes)
+                                                {
+
+                                                <tr>
+
+                                                    <td>@item.Empresa</td>
+                                                    <td>@item.TipoPersonaFiscal</td>
+                                                    <td>@item.RegimenFiscal</td>
+                                                    <td>@item.RazonSocial</td>
+                                                    <td>@item.Rfc</td>
+                                                    <td>@item.limiteCreditoMonto</td>
+                                                    <td>@item.limiteCreditoDias</td>
+                                                    <td>@item.DescuentoXKilo</td>
+                                                    <td>@item.Celular</td>
+                                                    <td>@item.Telefono1</td>
+                                                    <td>@item.Email1</td>
+                                                    <td>
+                                                        <a ID="lbEdit" href="@Url.Action(" EditarLocaciones", "Clientes" , new { id=item.IdCliente })">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                        <a ID="lbBorrar" href="@Url.Action(" BorrarClientes", "Clientes" , new { id=item.IdCliente })">
+                                                            <i class="material-icons">delete</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                }*@
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+}
+
+

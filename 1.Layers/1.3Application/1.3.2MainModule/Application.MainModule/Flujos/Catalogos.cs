@@ -199,6 +199,14 @@ namespace Application.MainModule.Flujos
         }
         #endregion
 
+        #region PuntosdeVenta
+        public List<PuntoVentaDTO> ListaPuntosVenta()
+        {
+            return PuntoVentaServicio.Obtener().ToList();
+        }
+
+        #endregion
+
         #region Productos
 
         #region Categoria Productos

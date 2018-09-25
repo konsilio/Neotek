@@ -65,6 +65,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\PuntoVentaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\TipoCentroCostoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\TipoProveedorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\UnidadAlmacenAdapter.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="DTOs\Catalogo\ProductoCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoModificarDto.cs" />
+    <Compile Include="DTOs\Catalogo\PuntoVentaDTO.cs" />
     <Compile Include="DTOs\Catalogo\TipoCentroCostoDto.cs" />
     <Compile Include="DTOs\Catalogo\TipoProveedorDTO.cs" />
     <Compile Include="DTOs\Catalogo\UnidadAlmacenGasDTO.cs" />

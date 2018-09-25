@@ -107,6 +107,14 @@ namespace Application.MainModule.Servicios.Almacen
 
             return EstacionCarburacionServicio.ObtenerNombre(uAG);
         }
+        public static string ObtenerNumeroUnidadAlmacenGas(UnidadAlmacenGas uAG)
+        {       
+            var numero = EquipoTransporteServicio.ObtenerNombre(uAG);
+            if (!string.IsNullOrEmpty(nombre))
+                return nombre;
+
+            return EstacionCarburacionServicio.ObtenerNombre(uAG);
+        }
         public static decimal ObtenerCantidadActualAlmacenGeneral(short IdEmpresa, bool EnLitros = true)
         {
             var almacenGas = new AlmacenGasDataAccess().ProductoAlmacenGas(IdEmpresa);
