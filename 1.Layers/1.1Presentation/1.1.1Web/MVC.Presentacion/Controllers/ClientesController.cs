@@ -45,7 +45,7 @@ namespace MVC.Presentacion.Controllers
             return RedirectToAction("Index", _ojUs);
         }
         public ActionResult EditarCliente(int id)
-        {
+       {
             string _tkn = Session["StringToken"].ToString();
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);

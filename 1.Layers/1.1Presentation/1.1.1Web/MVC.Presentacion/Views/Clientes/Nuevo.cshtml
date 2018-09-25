@@ -260,14 +260,15 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        Monto $ <input name="limiteCreditoMonto" step=".0000" min="0" pattern="^\d+(?:\.\d{1,4})?$" type="number" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].limiteCreditoMonto)" />
-                                    </div>
+                                     Monto $ <input name="limiteCreditoMonto" type="number" value="@((ViewBag.IdCliente==null)?0:ViewBag.IdCliente[0].limiteCreditoMonto)" />     
+                                                     
+                                          </div>
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
                                         <div>
-                                            Dias <input name="limiteCreditoDias" type="number" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].limiteCreditoDias)" />
+                                            Dias <input name="limiteCreditoDias" type="number" value="@((ViewBag.IdCliente==null)?0:ViewBag.IdCliente[0].limiteCreditoDias)" />
                                         </div>
                                     </div>
                                 </div>
@@ -275,7 +276,8 @@
                                     <div class="form-group">
                                         <div>
                                             Descuento $ x kilo:
-                                            <input id="desc" required name="DescuentoXKilo" type="number" placeholder="0" min="0" step="0.000" pattern="^\d+(?:\.\d{1,4})?$" value="@((ViewBag.IdCliente[0].DescuentoXKilo==null)?"0":ViewBag.IdCliente[0].DescuentoXKilo)" />
+                                            <input name="DescuentoXKilo" type="number"  value="@((ViewBag.IdCliente[0].DescuentoXKilo==null)?0:ViewBag.IdCliente[0].DescuentoXKilo)" />
+                                            @*step="0.0001" pattern="[0-9]+([\,|\.][0-9]+)?"*@
                                         </div>
                                     </div>
                                 </div>
@@ -296,7 +298,8 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <div class="col-lg-8 col-md-8 col-sm-8">
-                                            <input type="checkbox" id="checkAcceso" name="AccesoPortal" />
+                                            @*<input type="checkbox" id="checkAcceso" name="AccesoPortal" />*@
+                                            @Html.CheckBoxFor(m => m.AccesoPortal)                                           
                                             <label for="checkAcceso">
                                                 Acceso al portal de facturación
                                             </label>
