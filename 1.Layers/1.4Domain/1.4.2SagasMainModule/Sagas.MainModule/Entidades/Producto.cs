@@ -24,6 +24,7 @@ namespace Sagas.MainModule.Entidades
             this.SalidasAlmacenMercancias = new HashSet<AlmacenSalidaProducto>();
             this.RequisicionProducto = new HashSet<RequisicionProducto>();
             this.OrdenCompraProducto = new HashSet<OrdenCompraProducto>();
+            this.PrecioVenta = new HashSet<PrecioVenta>();
         }
     
         public int IdProducto { get; set; }
@@ -66,5 +67,7 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrdenCompraProducto> OrdenCompraProducto { get; set; }
         public virtual CuentaContable CuentaContable { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PrecioVenta> PrecioVenta { get; set; }
     }
 }

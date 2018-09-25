@@ -18,6 +18,7 @@ namespace Sagas.MainModule.Entidades
         public LineaProducto()
         {
             this.Producto = new HashSet<Producto>();
+            this.PrecioVenta = new HashSet<PrecioVenta>();
         }
     
         public short IdProductoLinea { get; set; }
@@ -30,5 +31,7 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Producto> Producto { get; set; }
         public virtual Empresa Empresa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PrecioVenta> PrecioVenta { get; set; }
     }
 }
