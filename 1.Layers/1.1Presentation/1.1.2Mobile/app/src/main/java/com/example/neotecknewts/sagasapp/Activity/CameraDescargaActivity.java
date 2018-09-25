@@ -21,12 +21,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
@@ -63,6 +66,9 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public LecturaDTO lecturaDTO;
     public LecturaPipaDTO lecturaPipaDTO;
     public LecturaAlmacenDTO lecturaAlmacenDTO;
+    public RecargaDTO recargaDTO;
+    public AutoconsumoDTO autoconsumoDTO;
+    public TraspasoDTO traspasoDTO;
 
     //Banderas para indicar que objeto trabajar
     public boolean papeleta;
@@ -74,6 +80,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public boolean EsLecturaInicial,EsLecturaFinal;
     public boolean EsLecturaInicialPipa,EsLecturaFinalPipa;
     public boolean EsLecturaInicialAlmacen,EsLecturaFinalAlmacen;
+    public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
+    public boolean EsRecargaPipaFinal;
+    public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
+    public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -195,6 +205,71 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsLecturaFinalPipa = false;
                 EsLecturaInicialAlmacen = extras.getBoolean("EsLecturaInicialAlmacen");
                 EsLecturaFinalAlmacen = extras.getBoolean("EsLecturaFinalAlmacen");
+            }else if(extras.getBoolean("EsRecargaEstacionInicial") ||
+                    extras.getBoolean("EsRecargaEstacionFinal")){
+                recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
+                cantidadFotos = recargaDTO.getCantidadFotosEntrada();
+                textViewTitulo.setText("Fotografia "+ recargaDTO.getNombreMedidorEntrada()+
+                    " - Estación"
+                );
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false;
+                EsLecturaFinalAlmacen = false;
+                EsRecargaEstacionInicial = extras.getBoolean("EsRecargaEstacionInicial",
+                        false);
+                EsRecargaEstacionFinal = extras.getBoolean("EsRecargaEstacionFinal",
+                        false);
+            }else if(extras.getBoolean("EsRecargaPipaFinal")){
+                recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
+                cantidadFotos = recargaDTO.getCantidadFotosEntrada();
+                EsRecargaPipaFinal = extras.getBoolean("EsRecargaPipaFinal");
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false;
+                EsLecturaFinalAlmacen = false;
+                EsRecargaEstacionInicial = false;
+                EsRecargaEstacionFinal = false;
+                textViewTitulo.setText("Fotografia "+ recargaDTO.getNombreMedidorEntrada());
+            }else if(extras.getBoolean("EsAutoconsumoPipaInicial")||
+                    extras.getBoolean("EsAutoconsumoPipaFinal")){
+                EsRecargaPipaFinal = false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false;
+                EsLecturaFinalAlmacen = false;
+                EsRecargaEstacionInicial = false;
+                EsRecargaEstacionFinal = false;
+                EsAutoconsumoPipaInicial = extras.getBoolean("EsAutoconsumoPipaInicial");
+                EsAutoconsumoPipaFinal = extras.getBoolean("EsAutoconsumoPipaFinal");
+                autoconsumoDTO = (AutoconsumoDTO) extras.getSerializable("autoconsumoDTO");
+                textViewTitulo.setText("Fotografia del "+autoconsumoDTO.getNombreTipoMedidor());
+                cantidadFotos = autoconsumoDTO.getCantidadFotos();
+            }else if(extras.getBoolean("EsTraspasoEstacionInicial",false)||
+                    extras.getBoolean("EsTraspasoEstacionFinal",false)){
+                EsRecargaPipaFinal = false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false;
+                EsLecturaFinalAlmacen = false;
+                EsRecargaEstacionInicial = false;
+                EsRecargaEstacionFinal = false;
+                EsAutoconsumoPipaInicial = false;
+                EsAutoconsumoPipaFinal = false;
+                EsTraspasoEstacionInicial = extras.getBoolean("EsTraspasoEstacionInicial",false);
+                EsTraspasoEstacionFinal = extras.getBoolean("EsTraspasoEstacionFinal",false);
+                EsPrimeraParteTraspaso = extras.getBoolean("EsPrimeraParteTraspaso",true);
+                traspasoDTO = (TraspasoDTO) extras.getSerializable("traspasoDTO");
+                textViewTitulo.setText("Fotografia del "+traspasoDTO.getNombreMedidor());
+                cantidadFotos = traspasoDTO.getCantidadDeFotos();
             }
 
         }
@@ -278,9 +353,21 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }else if(EsLecturaInicialAlmacen || EsLecturaFinalAlmacen){
                     Log.w("Lectura Almacen","finalizar"+cantidadFotos);
                     lecturaAlmacenDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
+                    Log.v("Recarga estación","finalizar "+cantidadFotos);
+                    recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                }else if(EsRecargaPipaFinal){
+                    Log.v("Recarga estación","finalizar "+cantidadFotos);
+                    recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                }else if (EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
+                    Log.v("Autoconsumo pipa","finalizar "+cantidadFotos);
+                    autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                }else if(EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
+                    Log.v("Traspaso estacion","finalizar "+cantidadFotos);
+                    traspasoDTO.getImagenesUri().add(new URI(imageUri.toString()));
                 }
             }catch(Exception ex){
-
+                ex.printStackTrace();
             }
             //se pone visible el layout para tomar la siguiente fotografia
             layoutTitle.setVisibility(View.VISIBLE);
@@ -337,9 +424,25 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                     Log.w("Lectura Almacen","finalizar"+cantidadFotos);
                     lecturaAlmacenDTO.getImagenesURI().add(new URI(imageUri.toString()));
                     startActivity();
+                }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
+                    Log.w("Recarga estación","finalizar"+cantidadFotos);
+                    recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                    startActivityRecarga();
+                }else if (EsRecargaPipaFinal){
+                    Log.w("Recarga estación","finalizar"+cantidadFotos);
+                    recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                    startActivityRecarga();
+                }else if (EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
+                    Log.v("Autoconsumo pipa","finalizar "+cantidadFotos);
+                    autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                    startActivityAutoconsumo();
+                }else if (EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
+                    Log.v("Traspaso estación","finalizar "+cantidadFotos);
+                    traspasoDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                    startActivityTraspaso();
                 }
             }catch(Exception ex){
-
+                ex.printStackTrace();
             }
 
         }
@@ -404,7 +507,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     }
 
     /**
-     * Permite detectar cuan se da click en la tecla de back para lanzar el
+     * Permite detectar cuando se da click en la tecla de back para lanzar el
      * dialogo de advertencia en caso de ser necesario
      * @param keyCode Codigo de la tecla que seleccióno el usuario
      * @param event Objeto que contiene una referencia {@link KeyEvent} de la tecla seleccíonada
@@ -493,5 +596,61 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         intent.putExtra("EsLecturaInicial",EsLecturaInicial);
         intent.putExtra("EsLecturaFinal",EsLecturaFinal);
         startActivity(intent);
+    }
+
+    /**
+     * <h3>startActivityRecarga</h3>
+     * Permite inciar la actividad para genera el reporte
+     * de la recarga en caso de ser finalizar ,  en caso contrario
+     * se enviaran los datos de la recarga para su registro.
+     * @author Jorge Omar Tovar Martínez
+     */
+    public void startActivityRecarga(){
+        if(EsRecargaEstacionFinal) {
+            Intent intent = new Intent(CameraDescargaActivity.this,
+                    VerReporteActivity.class);
+            intent.putExtra("EsRecargaEstacionInicial", EsRecargaEstacionInicial);
+            intent.putExtra("EsRecargaEstacionFinal", EsRecargaEstacionFinal);
+            intent.putExtra("recargaDTO", recargaDTO);
+            startActivity(intent);
+        }else if (EsRecargaEstacionInicial){
+            Intent intent = new Intent(CameraDescargaActivity.this,
+                    SubirImagenesActivity.class);
+            intent.putExtra("EsRecargaEstacionInicial", EsRecargaEstacionInicial);
+            intent.putExtra("EsRecargaEstacionFinal", EsRecargaEstacionFinal);
+            intent.putExtra("recargaDTO", recargaDTO);
+            startActivity(intent);
+        }else if (EsRecargaPipaFinal){
+            Intent intent = new Intent(CameraDescargaActivity.this,
+                    SubirImagenesActivity.class);
+            intent.putExtra("recargaDTO",recargaDTO);
+            intent.putExtra("EsRecargaPipaFinal",true);
+            intent.putExtra("EsRecargaPipaInicial",false);
+            startActivity(intent);
+        }
+    }
+
+    private void startActivityAutoconsumo(){
+        if(EsAutoconsumoPipaInicial||EsAutoconsumoPipaFinal){
+            Intent intent = new Intent(CameraDescargaActivity.this,
+                    SubirImagenesActivity.class);
+            intent.putExtra("EsAutoconsumoPipaInicial",EsAutoconsumoPipaInicial);
+            intent.putExtra("EsAutoconsumoPipaFinal",EsAutoconsumoPipaFinal);
+            intent.putExtra("autoconsumoDTO",autoconsumoDTO);
+            startActivity(intent);
+        }
+    }
+
+    private void startActivityTraspaso(){
+
+        if(EsTraspasoEstacionInicial ||EsTraspasoEstacionFinal){
+            EsPrimeraParteTraspaso = false;
+            Intent intent = new Intent(CameraDescargaActivity.this,LecturaP5000Activity.class);
+            intent.putExtra("EsTraspasoEstacionInicial",EsTraspasoEstacionInicial);
+            intent.putExtra("EsTraspasoEstacionFinal",EsTraspasoEstacionFinal);
+            intent.putExtra("EsPrimeraParteTraspaso",EsPrimeraParteTraspaso);
+            intent.putExtra("traspasoDTO",traspasoDTO);
+            startActivity(intent);
+        }
     }
 }

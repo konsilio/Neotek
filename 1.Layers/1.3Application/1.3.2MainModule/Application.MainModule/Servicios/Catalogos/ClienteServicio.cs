@@ -34,12 +34,33 @@ namespace Application.MainModule.Servicios.Catalogos
             return new ClientesDataAccess().Buscar(IdCliente);
         }
 
+        public static ClienteLocacion ObtenerCL(int IdCliente, short Orden)
+        {
+            return new ClientesDataAccess().BuscarLocacionId(IdCliente, Orden);
+        }
+        
+        public static List<ClienteLocacionDTO> ObtenerLoc(int IdCliente)
+        {
+            List<ClienteLocacionDTO> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTOLoc(new ClientesDataAccess().BuscarLocacion(IdCliente));
+            return lClientes;
+            // return new ClientesDataAccess().Buscar(IdCliente);
+        }
+
+        public static RespuestaDto Eliminar(ClienteLocacion cteLoc)
+        {
+            return new ClientesDataAccess().Eliminar(cteLoc);
+        }
+
+        public static RespuestaDto ModificarCL(ClienteLocacion cte)
+        {
+            return new ClientesDataAccess().Actualizar(cte);
+        }
+
         public static RespuestaDto Modificar(Cliente cte)
         {
             return new ClientesDataAccess().Actualizar(cte);
         }
    
-
         public static RespuestaDto NoExiste()
         {
             string mensaje = string.Format(Error.NoExiste, "El cliente");

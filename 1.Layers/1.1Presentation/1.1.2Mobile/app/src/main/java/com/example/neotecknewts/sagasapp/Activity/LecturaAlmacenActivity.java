@@ -164,7 +164,7 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
             lista_almacenes[x+1] = data.getAlmacenes().get(x).getNombreAlmacen();
         }
         SLecturaAlmacenActivityListaAlmacen.setAdapter(new ArrayAdapter<>(this,
-                R.layout.custom_spinner,lista_medidores));
+                R.layout.custom_spinner,lista_almacenes));
     }
 
     @Override

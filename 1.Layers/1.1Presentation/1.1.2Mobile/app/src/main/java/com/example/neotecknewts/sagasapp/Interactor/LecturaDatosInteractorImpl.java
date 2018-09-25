@@ -98,8 +98,10 @@ public class LecturaDatosInteractorImpl implements LecturaDatosInteractor {
                 false,
                 false,
                 esFinalizar,
-                token);
-        Log.w("Url base",retrofit.baseUrl().toString());
+                token,
+                "application/json"
+                );
+        Log.w("Url base",call.request().url().toString());
 
         call.enqueue(new Callback<DatosTomaLecturaDto>() {
             @Override

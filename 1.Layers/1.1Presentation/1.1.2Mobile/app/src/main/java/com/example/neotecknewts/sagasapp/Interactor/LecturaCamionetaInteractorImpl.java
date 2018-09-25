@@ -39,10 +39,11 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
         RestClient restClient = retrofit.create(RestClient.class);
         Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
                 false,
-                true,
+                false,
                 true,
                 esFinalizar,
-                token
+                token,
+                "application/json"
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 

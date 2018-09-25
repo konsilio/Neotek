@@ -3,7 +3,6 @@ package com.example.neotecknewts.sagasapp.Activity;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ import java.util.List;
 public interface MainView {
     void showProgress(int mensaje);
     void hideProgress();
-    void messageError(int mensaje);
+    void messageError(String mensaje);
     void onSuccessGetEmpresa(List<EmpresaDTO> empresaDTOs);
     void onSuccessLogin(UsuarioDTO usuarioDTO);
 }

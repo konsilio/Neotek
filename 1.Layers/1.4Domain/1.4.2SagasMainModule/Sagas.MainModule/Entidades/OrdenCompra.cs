@@ -21,6 +21,7 @@ namespace Sagas.MainModule.Entidades
             this.AlmacenGasDescarga = new HashSet<AlmacenGasDescarga>();
             this.AlmacenGasDescarga1 = new HashSet<AlmacenGasDescarga>();
             this.EntradasAAlmacenMercancias = new HashSet<AlmacenEntradaProducto>();
+            this.OrdenCompraPago = new HashSet<OrdenCompraPago>();
         }
     
         public int IdOrdenCompra { get; set; }
@@ -39,11 +40,26 @@ namespace Sagas.MainModule.Entidades
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public Nullable<System.DateTime> FechaAutorizacion { get; set; }
+        public Nullable<System.DateTime> FechaComplemento { get; set; }
         public Nullable<decimal> SubtotalSinIva { get; set; }
         public Nullable<decimal> SubtotalSinIeps { get; set; }
         public Nullable<decimal> Iva { get; set; }
         public Nullable<decimal> Ieps { get; set; }
         public Nullable<decimal> Total { get; set; }
+        public Nullable<decimal> MontBelvieuDlls { get; set; }
+        public Nullable<decimal> TarifaServicioPorGalonDlls { get; set; }
+        public Nullable<decimal> TipoDeCambioDOF { get; set; }
+        public Nullable<decimal> PrecioPorGalon { get; set; }
+        public Nullable<decimal> FactorGalonALitros { get; set; }
+        public Nullable<decimal> ImporteEnLitros { get; set; }
+        public Nullable<decimal> FactorCompraLitrosAKilos { get; set; }
+        public Nullable<decimal> PVPM { get; set; }
+        public string FolioFiscalUUID { get; set; }
+        public string FolioFactura { get; set; }
+        public Nullable<System.DateTime> FechaResgistroFactura { get; set; }
+        public Nullable<decimal> FactorConvTransporte { get; set; }
+        public Nullable<decimal> PrecioTransporte { get; set; }
+        public Nullable<decimal> Casetas { get; set; }
     
         public virtual Proveedor Proveedor { get; set; }
         public virtual Empresa Empresa { get; set; }
@@ -59,5 +75,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<AlmacenEntradaProducto> EntradasAAlmacenMercancias { get; set; }
         public virtual Usuario UsuarioAutorizador { get; set; }
         public virtual Usuario UsuarioGenerador { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrdenCompraPago> OrdenCompraPago { get; set; }
     }
 }

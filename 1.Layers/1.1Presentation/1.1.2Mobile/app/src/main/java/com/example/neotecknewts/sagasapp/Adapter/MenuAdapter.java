@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Activity.AutoconsumoEstacionActivity;
+import com.example.neotecknewts.sagasapp.Activity.AutoconsumoInventarioActivity;
+import com.example.neotecknewts.sagasapp.Activity.AutoconsumoPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.FinalizarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.IniciarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaAlmacenActivity;
@@ -17,8 +20,12 @@ import com.example.neotecknewts.sagasapp.Activity.LecturaCamionetaActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaDatosActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RecargaCamionetaActivity;
+import com.example.neotecknewts.sagasapp.Activity.RecargaEstacionCarburacionActivity;
+import com.example.neotecknewts.sagasapp.Activity.RecargaPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaActivity;
 import com.example.neotecknewts.sagasapp.Activity.ReporteActivity;
+import com.example.neotecknewts.sagasapp.Activity.TraspasoEstacionActivity;
+import com.example.neotecknewts.sagasapp.Activity.TraspasoPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.VistaOrdenCompraActivity;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.R;
@@ -90,66 +97,171 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     Intent intent = new Intent(view.getContext() , VistaOrdenCompraActivity.class);
                     view.getContext().startActivity(intent);
                 }
-                else if(menuItem.getName().equals("Estación de Carb. (Inicial)") &&
+                else if(menuItem.getName().equals("Estación Carb. (Inicial)") &&
                         menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext() , LecturaDatosActivity.class);
                     intent.putExtra("EsLecturaInicial",true);
                     intent.putExtra("EsLecturaFinal",false);
                     view.getContext().startActivity(intent);
                 }
-                else if(menuItem.getName().equals("Estación de Carb. (Final)")&&
+                else if(menuItem.getName().equals("Estación Carb. (Final)")&&
                         menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext() , LecturaDatosActivity.class);
                     intent.putExtra("EsLecturaInicial",false);
                     intent.putExtra("EsLecturaFinal",true);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Pipa (Inicial)")){
+                }else if(menuItem.getName().equals("Pipa (Inicial)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(),LecturaPipaActivity.class);
                     intent.putExtra("EsLecturaInicialPipa",true);
                     intent.putExtra("EsLecturaFinalPipa",false);
                     view.getContext().startActivity(intent);
-                }else if (menuItem.getName().equals("Pipa (Final)")){
+                }else if (menuItem.getName().equals("Pipa. (Final)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(),LecturaPipaActivity.class);
                     intent.putExtra("EsLecturaInicialPipa",false);
                     intent.putExtra("EsLecturaFinalPipa",true);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Almacén Pral. (Inicial)")){
+                }else if(menuItem.getName().equals("Almacén Pral. (Inicial)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(), LecturaAlmacenActivity.class);
                     intent.putExtra("EsLecturaInicialAlmacen",true);
                     intent.putExtra("EsLecturaFinalAlmacen",false);
                     view.getContext().startActivity(intent);
-                }else if (menuItem.getName().equals("Almacén Pral. (Final)")){
+                }else if (menuItem.getName().equals("Almacén Pral. (Final)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(),LecturaAlmacenActivity.class);
                     intent.putExtra("EsLecturaInicialAlmacen",false);
                     intent.putExtra("EsLecturaFinalAlmacen",true);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Camioneta (Inicial)")){
+                }else if(menuItem.getName().equals("Camioneta (Inicial)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(),LecturaCamionetaActivity.class);
                     intent.putExtra("EsLecturaInicialCamioneta",true);
                     intent.putExtra("EsLecturaFinalCamioneta",false);
                     intent.putExtra("EsRecargaCamioneta",false);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Camioneta (Final)")){
+                }else if(menuItem.getName().equals("Camioneta (Final)")&&
+                        menuItem.getHeaderMenu().equals("Toma de lectura")){
                     Intent intent = new Intent(view.getContext(),LecturaCamionetaActivity.class);
                     intent.putExtra("EsLecturaInicialCamioneta",false);
                     intent.putExtra("EsLecturaFinalCamioneta",true);
                     intent.putExtra("EsRecargaCamioneta",false);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Reporte del día")) {
+                }else if(menuItem.getName().equals("Reporte del dia")) {
                     Intent intent = new Intent(view.getContext(), ReporteActivity.class);
                     intent.putExtra("EsReporteDelDia", true);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getName().equals("Camioneta") &&
-                        menuItem.getHeaderMenu().equals("Recarga")){
+                }else if(menuItem.getName().equals("Camioneta ") &&
+                        menuItem.getHeaderMenu().equals("Recarga - Gas")){
                     Intent intent = new Intent(view.getContext(),RecargaCamionetaActivity.class);
                     intent.putExtra("EsRecargaCamioneta",true);
-                }else if(menuItem.getName().equals("Estación Carb. (Inicial)") &&
-                        menuItem.getHeaderMenu().equals("Auto-consumo - Gas")){
-
-                }else if(menuItem.getName().equals("Estación Carb. (Inicial)") &&
-                        menuItem.getHeaderMenu().equals("Auto-consumo - Gas")){
-
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getName().equals("Estación Cab. (Inicial)") &&
+                        menuItem.getHeaderMenu().equals("Recarga - Gas")){
+                    Intent intent = new Intent(view.getContext(),
+                            RecargaEstacionCarburacionActivity.class);
+                    intent.putExtra("EsRecargaEstacionInicial",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getName().equals("Estación Cab. (Final)") &&
+                        menuItem.getHeaderMenu().equals("Recarga - Gas")){
+                    Intent intent = new Intent(view.getContext(),
+                            RecargaEstacionCarburacionActivity.class);
+                    intent.putExtra("EsRecargaEstacionFinal",true);
+                    view.getContext().startActivity(intent);
                 }
+                else if(menuItem.getName().equals("Pipa (Inicial)") &&
+                        menuItem.getHeaderMenu().equals("Recarga - Gas")){
+                    Intent intent = new Intent(view.getContext(),
+                            RecargaPipaActivity.class);
+                    intent.putExtra("EsRecargaPipaInicial",true);
+                    intent.putExtra("EsRecargaPipaFInal",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getName().equals("Pipa (Final)") &&
+                        menuItem.getHeaderMenu().equals("Recarga - Gas")){
+                    Intent intent = new Intent(view.getContext(),
+                            RecargaPipaActivity.class);
+                    intent.putExtra("EsRecargaPipaFinal",true);
+                    intent.putExtra("EsRecargaPipaInicial",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Estación Carb. (Inicial)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoEstacionActivity.class);
+                    intent.putExtra("EsAutoconsumoEstacionInicial",true);
+                    intent.putExtra("EsAutoconsumoEstacionFinal",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Estación Carb. (Final)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoEstacionActivity.class);
+                    intent.putExtra("EsAutoconsumoEstacionInicial",false);
+                    intent.putExtra("EsAutoconsumoEstacionFinal",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Inventario Gral.(Inicial)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoInventarioActivity.class);
+                    intent.putExtra("EsAutoconsumoInventarioInicial",true);
+                    intent.putExtra("EsAutoconsumoInventarioFinal",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Inventario Gral.(Final)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoInventarioActivity.class);
+                    intent.putExtra("EsAutoconsumoInventarioInicial",false);
+                    intent.putExtra("EsAutoconsumoInventarioFinal",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Pipa(Inicial)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoPipaActivity.class);
+                    intent.putExtra("EsAutoconsumoPipaInicial",true);
+                    intent.putExtra("EsAutoconsumoPipaFinal",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Auto-consumo - Gas") &&
+                        menuItem.getName().equals("Pipa(Final)")){
+                    Intent intent = new Intent(view.getContext(),
+                            AutoconsumoPipaActivity.class);
+                    intent.putExtra("EsAutoconsumoPipaInicial",false);
+                    intent.putExtra("EsAutoconsumoPipaFinal",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Traspaso - Gas") &&
+                        menuItem.getName().equals("Estación Carb. (Inicial)")
+                        ){
+                    Intent intent = new Intent(view.getContext(),
+                            TraspasoEstacionActivity.class);
+                    intent.putExtra("EsTraspasoEstacionInicial",true);
+                    intent.putExtra("EsTraspasoEstacionFinal",false);
+                    intent.putExtra("EsPrimeraParteTraspaso",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Traspaso - Gas") &&
+                        menuItem.getName().equals("Estación Crb. (Final)")){
+                    Intent intent = new Intent(view.getContext(),
+                            TraspasoEstacionActivity.class);
+                    intent.putExtra("EsTraspasoEstacionInicial",false);
+                    intent.putExtra("EsTraspasoEstacionFinal",true);
+                    intent.putExtra("EsPrimeraParteTraspaso",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Traspaso - Gas") &&
+                        menuItem.getName().equals("Pipa (Inicial)")
+                        ){
+                    Intent intent = new Intent(view.getContext(),
+                            TraspasoPipaActivity.class);
+                    intent.putExtra("EsTraspasoPipaInicial",true);
+                    intent.putExtra("EsTraspasoPipaFinal",false);
+                    intent.putExtra("EsPasoIniciaLPipa",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Traspaso - Gas") &&
+                        menuItem.getName().equals("Pipa (Final)")){
+                    Intent intent = new Intent(view.getContext(),
+                            TraspasoPipaActivity.class);
+                    intent.putExtra("EsTraspasoPipaInicial",false);
+                    intent.putExtra("EsTraspasoPipaFinal",true);
+                    intent.putExtra("EsPasoIniciaLPipa",true);
+                    view.getContext().startActivity(intent);
+                }
+
 
             }
         });

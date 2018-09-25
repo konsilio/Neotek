@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios.Mobile
 {
-   public static class OrdenesCompraServicio
+   public static class MobileOrdenesCompraServicio
     {
         public static RespuestaOrdenesCompraDTO Consultar(short idEmpresa, bool EsGas, bool EsActivoVenta, bool EsTransporteGas)
         {

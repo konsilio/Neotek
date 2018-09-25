@@ -7,5 +7,5 @@ public interface RecargaCamionetaPresenter {
 
     void onSuccessCamionetas(DatosTomaLecturaDto data);
 
-    void onError();
+    void onError(String mensaje);
 }

@@ -132,11 +132,11 @@ public class RecargaCamionetaActivity extends AppCompatActivity implements Recar
     }
 
     @Override
-    public void onError() {
+    public void onError(String mensaje) {
         AlertDialog.Builder builder = new AlertDialog.Builder(
                 RecargaCamionetaActivity.this);
         builder.setTitle(R.string.title_alert_message);
-        builder.setMessage(R.string.error_conexion);
+        builder.setMessage(getString(R.string.error_conexion)+"\n"+mensaje);
         builder.setNegativeButton(R.string.message_acept, (dialog, which) -> dialog.dismiss());
         builder.create().show();
     }

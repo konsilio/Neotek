@@ -147,4 +147,26 @@
     <string name="Recarga_de_gas">Recarga de gas</string>
     <string name="recarga">Recarga</string>
     <string name="registra_configuracion_recarga">Registra la configuración de recarga de la camioneta</string>
+    <string name="Recarga_de_estacion">Recarga estación</string>
+    <string name="datos_inciales">Datos inciales</string>
+    <string name="selecciona_la_pipa_de_salida">Selecciona la pipa de salida:</string>
+    <string name="selecciona_medidor_porcentual_salida">Selecciona el tipo de medidor porcentual:</string>
+    <string name="selecciona_estacion_destino">Selecciona la Estación de Carburación:</string>
+    <string name="selecciona_medidor_porcentual_estacion">Selecciona el tipo de medidor porcentual:</string>
+    <string name="Estacion">Estación</string>
+    <string name="Recarga_pipa">Recarga pipa </string>
+    <string name="selecciona_la_pipa_a_recargar">Selecciona la pipa a recargar</string>
+    <string name="Autoconsumo_estacion">Autoconsumo Estación de Carb.</string>
+    <string name="carburaci_n_de_gas">Carburación de Gas</string>
+    <string name="selecciona_la_estaci_n_de_salida">Selecciona la estación de salida:</string>
+    <string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>
+    <string name="Autoconsumo_inventario">Autoconsumo Inventario Gral</string>
+    <string name="autoconsumo_inventario_gral">Autoconsumo Inventario Gral</string>
+    <string name="la_salida_es_desde_el_inventario_general">La salida es desde el inventario general</string>
+    <string name="Autoconsumo">Autoconsumo</string>
+    <string name="Traspaso">Traspaso</string>
+    <string name="trasferencia_de_gas">Trasferencia de gas</string>
+    <string name="selecciona_la_estacion_de_carburacion_de_salida">Selecciona la Estación de Carburación de salida:</string>
+    <string name="selecciona_la_pipa_de_entrada">Selecciona la pipa de entrada:</string>
+    <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
 </resources>

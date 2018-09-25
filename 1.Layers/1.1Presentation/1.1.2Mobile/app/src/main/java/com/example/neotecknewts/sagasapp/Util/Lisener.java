@@ -53,6 +53,7 @@ public class Lisener{
     public static final String LecturaInicialCamioneta = "LecturaInicialCamioneta";
     public static final String LecturaFinalCamioneta = "LecturaFinalCamioneta";
     public static final String RecargaCamioneta = "RecargaCamioneta";
+    public static final String RecargaEstacion ="RecargaEstacion";
 
     private  String token;
 
@@ -120,7 +121,9 @@ public class Lisener{
                 case RecargaCamioneta:
                     completo = RecargaCamioneta();
                     break;
-
+                case RecargaEstacion:
+                    completo = RecargaEstacion();
+                    break;
             }
         };
 
@@ -130,6 +133,9 @@ public class Lisener{
         if(completo) {
             scheduledFuture.cancel(false);
         }
+    }
+    private boolean RecargaEstacion(){
+        return false;
     }
     private boolean RecargaCamioneta(){
         boolean registrado = false;
@@ -153,9 +159,9 @@ public class Lisener{
                             cursor.getColumnIndex("IdTipoMedidorEntrada")));
                     recargaDTO.setIdTipoEvento(cursor.getInt(
                             cursor.getColumnIndex("IdTipoEvento")));
-                    recargaDTO.setP5000Salida(cursor.getDouble(
+                    recargaDTO.setP5000Salida(cursor.getInt(
                             cursor.getColumnIndex("P5000Salida")));
-                    recargaDTO.setP5000Entrada(cursor.getDouble(
+                    recargaDTO.setP5000Entrada(cursor.getInt(
                             cursor.getColumnIndex("P5000Entrada")));
 
                     String tipo = cursor.getString(

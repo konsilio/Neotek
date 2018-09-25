@@ -125,8 +125,29 @@
         <activity
             android:name=".Activity.VerReporteActivity"
             android:label="@string/Reporte" />
-        <activity android:name=".Activity.RecargaCamionetaActivity"
-            android:label="@string/Recarga_camioneta"
+        <activity
+            android:name=".Activity.RecargaCamionetaActivity"
+            android:label="@string/Recarga_camioneta" />
+        <activity
+            android:name=".Activity.RecargaEstacionCarburacionActivity"
+            android:label="@string/Recarga_de_estacion" />
+        <activity
+            android:name=".Activity.RecargaPipaActivity"
+            android:label="@string/Recarga_pipa" />
+        <activity
+            android:name=".Activity.AutoconsumoEstacionActivity"
+            android:label="@string/Autoconsumo_estacion" />
+        <activity
+            android:name=".Activity.AutoconsumoInventarioActivity"
+            android:label="@string/Autoconsumo_inventario" />
+        <activity
+            android:name=".Activity.AutoconsumoPipaActivity"
+            android:label="@string/Autoconsumo" />
+        <activity
+            android:name=".Activity.TraspasoEstacionActivity"
+            android:label="@string/Traspaso" />
+        <activity android:name=".Activity.TraspasoPipaActivity"
+            android:label="@string/Traspaso"
             />
     </application>
 

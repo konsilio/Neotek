@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.Servicios.Mobile;
+using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.AdaptadoresDTO.Almacen;
+using Application.MainModule.Servicios.Compras;
 
 namespace Application.MainModule.Servicios.Almacen
 {
@@ -35,6 +39,16 @@ namespace Application.MainModule.Servicios.Almacen
         public static List<AlmacenGasTomaLectura> ObtenerLecturas(short idCAlmacenGas)
         {            
             return new AlmacenGasDataAccess().BuscarLecturas(idCAlmacenGas); 
+        }
+        public static List<AlmacenGasTomaLectura> ObtenerTomaLecturasDatosNoProcesados(UnidadAlmacenGas unidad)
+        {
+            bool noProcesados = false;
+
+            if (unidad != null)
+                if (unidad.TomasLectura != null && unidad.TomasLectura.Count > 0)
+                    return unidad.TomasLectura.Where(x => x.DatosProcesados.Equals(noProcesados)).ToList();
+
+            return new AlmacenGasDataAccess().BuscarLecturas(unidad.IdCAlmacenGas, noProcesados);
         }
         public static RespuestaDto InsertarLectura(AlmacenGasTomaLectura lia)
         {
@@ -89,6 +103,18 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().Buscar(idAlmacenGas);
         }
+        public static UnidadAlmacenGas ObtenerUnidadAlamcenGas(short idCAlmacenGas)
+        {
+            return new AlmacenGasDataAccess().BuscarUnidadAlamcenGas(idCAlmacenGas);
+        }
+        public static UnidadAlmacenGas ObtenerUnidadAlamcenGas(AlmacenGasDescarga descarga)
+        {
+            if (descarga != null)
+                if (descarga.UnidadAlmacen != null)
+                    return descarga.UnidadAlmacen;
+
+            return ObtenerUnidadAlamcenGas(descarga.IdCAlmacenGas.Value);
+        }
         public static AlmacenGasDescarga ObtenerDescargaPorOCompraExpedidor(int idOCompra)
         {
             return new AlmacenGasDescargaDataAccess().BuscarOCompraExpedidor(idOCompra);
@@ -96,6 +122,10 @@ namespace Application.MainModule.Servicios.Almacen
         public static AlmacenGasDescarga ObtenerDescargaPorClaveOperacion(string claveOperacion)
         {
             return new AlmacenGasDescargaDataAccess().BuscarClaveOperacion(claveOperacion);
+        }
+        public static List<AlmacenGasDescarga> ObtenerDescargasTodas()
+        {
+            return new AlmacenGasDescargaDataAccess().BuscarTodas();
         }
         public static string ObtenerNombreUnidadAlmacenGas(UnidadAlmacenGas uAG)
         {
@@ -158,6 +188,109 @@ namespace Application.MainModule.Servicios.Almacen
                 cilindros.Add(AdaptarCilindro(cil, cantidad));
 
             return cilindros;
+        }
+
+        public static identidadUnidadAlmacenGas IdentificarTipoUnidadAlamcenGas(UnidadAlmacenGas unidad)
+        {
+            if (unidad.EsGeneral && unidad.EsAlterno)
+                return identidadUnidadAlmacenGas.AlmacenAlterno;
+
+            if (unidad.EsGeneral && unidad.EsAlterno.Equals(false))
+                return identidadUnidadAlmacenGas.AlmacenPrincipal;
+
+            if (unidad.IdEstacionCarburacion != null && unidad.IdEstacionCarburacion > 0)
+                return identidadUnidadAlmacenGas.EstacionCarburacion;
+
+            if (unidad.IdPipa != null && unidad.IdPipa > 0)
+                return identidadUnidadAlmacenGas.Pipa;
+
+            //if (unidad.IdCamioneta != null && unidad.IdCamioneta > 0)
+            return identidadUnidadAlmacenGas.Camioneta;
+        }
+
+        public static void ProcesarInventario()
+        {
+            //var lecturas = LecturaGasServicio.ObtenerTomaLectura();
+            var descargasDto = AplicarDescargas();
+
+        }
+
+        public static void CalcularInventarioDeUnidadAlmacenGas(UnidadAlmacenGas unidad)
+        {            
+            switch (IdentificarTipoUnidadAlamcenGas(unidad))
+            {
+                case identidadUnidadAlmacenGas.AlmacenPrincipal: CalcularInventarioAlmacenPrincipal(unidad); break;
+                case identidadUnidadAlmacenGas.AlmacenAlterno: break;
+                case identidadUnidadAlmacenGas.EstacionCarburacion: break;
+                case identidadUnidadAlmacenGas.Pipa: break;
+                case identidadUnidadAlmacenGas.Camioneta: break;
+            }
+        }
+
+        public static void CalcularInventarioAlmacenPrincipal(UnidadAlmacenGas unidad)
+        {
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+            //var lecturas = ObtenerTomaLecturasDatosNoProcesados(unidad);
+        }
+
+        public static List<AplicaDescargaDto> AplicarDescargas()
+        {
+            List<AplicaDescargaDto> aplicaciones = new List<AplicaDescargaDto>();
+            List<AlmacenGasDescarga> descargasGas = ObtenerDescargasTodas();
+
+            if (descargasGas != null && descargasGas.Count > 0)
+            {                
+                descargasGas.ForEach(x => aplicaciones.Add(AplicarDescarga(x)));
+                new AlmacenGasDescargaDataAccess().Actualizar(aplicaciones);
+            }
+
+            return aplicaciones;
+        }
+
+        public static AplicaDescargaDto AplicarDescarga(AlmacenGasDescarga descarga)
+        {
+            UnidadAlmacenGas unidadEntrada = AlmacenGasServicio.ObtenerUnidadAlamcenGas(descarga);
+            Empresa empresa = EmpresaServicio.Obtener(unidadEntrada);
+
+            AplicaDescargaDto apDescDto = AplicarDescarga(unidadEntrada, descarga, empresa);
+            apDescDto = OrdenCompraServicio.AplicarDescarga(apDescDto, descarga, empresa);
+
+            return apDescDto;
+        }
+
+        public static AplicaDescargaDto AplicarDescarga(UnidadAlmacenGas unidadEntrada, AlmacenGasDescarga descarga, Empresa empresa)
+        {
+            decimal kilogramosPapeletaTractor = descarga.MasaKg.Value;
+            decimal litrosPapeletaTractor = CalcularGasServicio.ObtenerLitrosDesdeKilos(kilogramosPapeletaTractor, empresa.FactorLitrosAKilos);
+            decimal litrosRealesTractor = CalcularGasServicio.ObtenerLitrosEnElTanque(descarga.CapacidadTanqueLt.Value, descarga.PorcenMagnatelOcularTractorINI.Value);
+            decimal kilogramosRealesTractor = CalcularGasServicio.ObtenerKilogramosDesdeLitros(litrosRealesTractor, empresa.FactorLitrosAKilos);
+            decimal kilogramosRemanentes = CalcularGasServicio.ObtenerDiferenciaKilogramos(kilogramosRealesTractor, kilogramosPapeletaTractor);
+            decimal litrosRemanentes = CalcularGasServicio.ObtenerLitrosDesdeKilos(kilogramosRemanentes, empresa.FactorLitrosAKilos);
+
+            unidadEntrada.CantidadActualKg = CalcularGasServicio.SumarKilogramos(unidadEntrada.CantidadActualKg, kilogramosRealesTractor);
+            unidadEntrada.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdeKilos(unidadEntrada.CantidadActualKg, empresa.FactorLitrosAKilos);
+            unidadEntrada.PorcentajeActual = descarga.PorcenMagnatelOcularAlmacenFIN.Value;
+
+            return new AplicaDescargaDto()
+            {
+                Descarga = descarga,
+                DescargaSinNavigationProperties = AlmacenGasAdapter.FromEmtity(descarga),
+                unidadEntrada = AlmacenGasAdapter.FromEmtity(unidadEntrada),
+                identidadUE = IdentificarTipoUnidadAlamcenGas(unidadEntrada),
+                PorcentajeUE = unidadEntrada.PorcentajeActual,
+                CantidadSINRemanenteKg = kilogramosPapeletaTractor,
+                CantidadSINRemanenteLt = litrosPapeletaTractor,
+                RemanenteKg = kilogramosRemanentes,
+                RemanenteLt = litrosRemanentes,
+                CantidadCONRemanenteKg = kilogramosRealesTractor,
+                CantidadCONRemanenteLt = litrosRealesTractor,
+            };
         }
     }
 }

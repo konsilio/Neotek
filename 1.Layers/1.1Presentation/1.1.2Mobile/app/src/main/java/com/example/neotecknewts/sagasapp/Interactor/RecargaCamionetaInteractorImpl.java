@@ -38,22 +38,25 @@ public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteracto
         RestClient restClient = retrofit.create(RestClient.class);
         Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
                 false,
+                false,
                 true,
                 false,
-                false,
-                token
+                token,
+                "application/json"
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 
         call.enqueue(new Callback<DatosTomaLecturaDto>() {
             @Override
             public void onResponse(Call<DatosTomaLecturaDto> call, Response<DatosTomaLecturaDto> response) {
+
                 if (response.isSuccessful()) {
                     DatosTomaLecturaDto data = response.body();
                     Log.w("Estatus","Success");
                     recargaCamionetaPresenter.onSuccessCamionetas(data);
                 }
                 else {
+                    String mensaje = "";
                     switch (response.code()) {
                         case 404:
                             Log.w("Error","not found");
@@ -68,7 +71,8 @@ public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteracto
 
                             break;
                     }
-                    recargaCamionetaPresenter.onError();
+                    mensaje = "Se ha generado un error: "+response.message();
+                    recargaCamionetaPresenter.onError(mensaje);
                 }
 
             }
@@ -76,7 +80,7 @@ public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteracto
             @Override
             public void onFailure(Call<DatosTomaLecturaDto> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
-                recargaCamionetaPresenter.onError();
+                recargaCamionetaPresenter.onError("Se ha generado un error: "+t.getMessage());
             }
         });
     }

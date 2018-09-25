@@ -64,6 +64,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                                                     ).ToList();
         }
+        public List<AlmacenGasTomaLectura> BuscarLecturas(short idCAlmacenGas, bool noProcesados)
+        {
+            return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
+                                                                && x.DatosProcesados.Equals(noProcesados)
+                                                    ).ToList();
+        }
         public RespuestaDto Insertar(AlmacenGasTomaLectura _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -162,6 +168,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                       && x.Activo).ToList();
+        }
+        public UnidadAlmacenGas BuscarUnidadAlamcenGas(short idCAlmacenGas)
+        {
+            return uow.Repository<UnidadAlmacenGas>().GetSingle(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
+                                                         && x.Activo);
         }
         public List<UnidadAlmacenGas> BuscarTodas(short idEmpresa)
         {

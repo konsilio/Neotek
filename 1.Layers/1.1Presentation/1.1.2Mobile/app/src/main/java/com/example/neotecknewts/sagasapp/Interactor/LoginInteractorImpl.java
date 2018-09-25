@@ -64,20 +64,22 @@ public class LoginInteractorImpl implements LoginInteractor {
                     loginPresenter.onSuccessGetEmpresas(data);
                 }
                 else {
+                    List<EmpresaDTO>  repon = response.body();
                     switch (response.code()) {
                         case 404:
                             Log.w(TAG,"not found");
-                            loginPresenter.onError();
+                            loginPresenter.onError(response.message());
                             break;
                         case 500:
                             Log.w(TAG, "server broken");
-                            loginPresenter.onError();
+                            loginPresenter.onError(response.message());
                             break;
                         default:
                             Log.w(TAG, "desconocido");
-                            loginPresenter.onError();
+                            loginPresenter.onError(response.message());
                             break;
                     }
+                    loginPresenter.onError(response.message());
                 }
 
             }
@@ -85,7 +87,7 @@ public class LoginInteractorImpl implements LoginInteractor {
             @Override
             public void onFailure(Call<List<EmpresaDTO>> call, Throwable t) {
                 Log.e("error", t.toString());
-                loginPresenter.onError();
+                loginPresenter.onError(t.toString());
             }
         });
     }
@@ -119,21 +121,33 @@ public class LoginInteractorImpl implements LoginInteractor {
 
                 }
                 else {
+                    UsuarioDTO data = response.body();
                     switch (response.code()) {
                         case 404:
                             Log.w(TAG,"not found");
-                            loginPresenter.onError();
+                            //loginPresenter.onError(data.getMensaje());
                             break;
                         case 500:
                             Log.w(TAG, "server broken");
-                            loginPresenter.onError();
+                            //loginPresenter.onError(data.getMensaje());
+                            break;
+                        case 400:
+                            Log.w(TAG,"Bad request");
                             break;
                         default:
                             Log.w(TAG, "desconocido: "+response.code());
-                            loginPresenter.onError();
+                            //loginPresenter.onError(data.getMensaje());
                             break;
                     }
-                    loginPresenter.onError();
+                    if(data!=null){
+                        if(response.code()==400){
+                            loginPresenter.onError("El usuario o la contraseña es incorrecta" +
+                                    "\n o no es de esta empresa.");
+                        }
+                        loginPresenter.onError(data.getMensaje());
+                    }else {
+                        loginPresenter.onError(response.message());
+                    }
                 }
 
             }
@@ -141,7 +155,8 @@ public class LoginInteractorImpl implements LoginInteractor {
             @Override
             public void onFailure(Call<UsuarioDTO> call, Throwable t) {
                 Log.e("error", t.toString());
-                loginPresenter.onError();
+                Log.e("error", t.getLocalizedMessage());
+                loginPresenter.onError(t.getMessage());
             }
         });
     }

@@ -1,11 +1,14 @@
 package com.example.neotecknewts.sagasapp.Interactor;
 
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
@@ -33,4 +36,19 @@ public interface SubirImagenesInteractor {
 
     void registrarLecturaFinalAlmacen(SAGASSql sagasSql, String token,
                                       LecturaAlmacenDTO lecturaAlmacenDTO);
+
+    void registrarRecargaEstacion(SAGASSql sagasSql, String token, RecargaDTO recargaDTO,
+                                  boolean EsRecargaEstacionInicial);
+
+    void registrarRecargaPipa(SAGASSql sagasSql, String token, RecargaDTO recargaDTO, boolean esRecargaPipaFinal);
+
+    void registrarAutoconsumoEstacion(SAGASSql sagasSql, String token, AutoconsumoDTO autoconsumoDTO, boolean esAutoconsumoEstacionFinal);
+
+    void registrarAutoconsumoInventario(SAGASSql sagasSql, String token, AutoconsumoDTO autoconsumoDTO, boolean esAutoconsumoInventarioFinal);
+
+    void registrarAutoconsumoPipa(SAGASSql sagasSql, String token, AutoconsumoDTO autoconsumoDTO, boolean esAutoconsumoPipaFinal);
+
+    void registrarTraspasoEstacion(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO, boolean esTraspasoEstacionFinal);
+
+    void registrarTraspasoPipa(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO, boolean esTraspasoPipaFinal);
 }

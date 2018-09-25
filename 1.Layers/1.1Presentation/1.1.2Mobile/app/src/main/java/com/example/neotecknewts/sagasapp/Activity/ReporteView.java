@@ -3,12 +3,15 @@ package com.example.neotecknewts.sagasapp.Activity;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ReporteView {
     void VermificarCampos();
     void MensajeError(ArrayList<String> mensaje);
-    void onSuccessGetUnidades(ArrayList<UnidadesDTO> data);
+    void onSuccessGetUnidades(List<UnidadesDTO> data);
     void onErrorMessage(String mensaje);
-    void onShowProgress();
+    void onShowProgress(int mensaje);
     void hiddeProgress();
+
+    void onSuccessReport(Object reporteDTO);
 }

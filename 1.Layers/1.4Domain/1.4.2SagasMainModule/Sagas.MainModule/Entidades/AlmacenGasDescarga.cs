@@ -49,6 +49,7 @@ namespace Sagas.MainModule.Entidades
         public Nullable<decimal> CapacidadTanqueLt { get; set; }
         public Nullable<decimal> CapacidadTanqueKg { get; set; }
         public Nullable<decimal> PorcenMagnatelPapeleta { get; set; }
+        public Nullable<decimal> MasaKg { get; set; }
         public Nullable<decimal> PresionTanque { get; set; }
         public string Sello { get; set; }
         public Nullable<decimal> ValorCarga { get; set; }

@@ -25,10 +25,10 @@ public class RecargaDTO implements Serializable {
     private int IdTipoEvento;
 
     @SerializedName("P5000Salida")
-    private double P5000Salida;
+    private int P5000Salida;
 
     @SerializedName("P5000Entrada")
-    private double P5000Entrada;
+    private int P5000Entrada;
 
     @SerializedName("ClaveOperacion")
     private String  ClaveOperacion;
@@ -41,6 +41,24 @@ public class RecargaDTO implements Serializable {
 
     @SerializedName("Cilindros")
     private List<int[]> Cilindros;
+
+    @SerializedName("NombreMedidorEntrada")
+    private String NombreMedidorEntrada;
+
+    @SerializedName("NombreMedidorSalida")
+    private String NombreMedidorSalida;
+
+    @SerializedName("ProcentajeEntrada")
+    private double ProcentajeEntrada;
+
+    @SerializedName("ProcentajeSalida")
+    private double ProcentajeSalida;
+
+    @SerializedName("CantidadFotosEntrada")
+    private int CantidadFotosEntrada;
+
+    @SerializedName("CantidadFotosSalida")
+    private int CantidadFotosSalida;
 
     public RecargaDTO(){
         this.Imagenes = new ArrayList<>();
@@ -88,19 +106,19 @@ public class RecargaDTO implements Serializable {
         IdTipoEvento = idTipoEvento;
     }
 
-    public double getP5000Salida() {
+    public int getP5000Salida() {
         return P5000Salida;
     }
 
-    public void setP5000Salida(double p5000Salida) {
+    public void setP5000Salida(int p5000Salida) {
         P5000Salida = p5000Salida;
     }
 
-    public double getP5000Entrada() {
+    public int getP5000Entrada() {
         return P5000Entrada;
     }
 
-    public void setP5000Entrada(double p5000Entrada) {
+    public void setP5000Entrada(int p5000Entrada) {
         P5000Entrada = p5000Entrada;
     }
 
@@ -134,5 +152,53 @@ public class RecargaDTO implements Serializable {
 
     public void setCilindros(List<int[]> cilindros) {
         Cilindros = cilindros;
+    }
+
+    public String getNombreMedidorEntrada() {
+        return NombreMedidorEntrada;
+    }
+
+    public void setNombreMedidorEntrada(String nombreMedidorEntrada) {
+        NombreMedidorEntrada = nombreMedidorEntrada;
+    }
+
+    public String getNombreMedidorSalida() {
+        return NombreMedidorSalida;
+    }
+
+    public void setNombreMedidorSalida(String nombreMedidorSalida) {
+        NombreMedidorSalida = nombreMedidorSalida;
+    }
+
+    public double getProcentajeEntrada() {
+        return ProcentajeEntrada;
+    }
+
+    public void setProcentajeEntrada(double procentajeEntrada) {
+        ProcentajeEntrada = procentajeEntrada;
+    }
+
+    public double getProcentajeSalida() {
+        return ProcentajeSalida;
+    }
+
+    public void setProcentajeSalida(double procentajeSalida) {
+        ProcentajeSalida = procentajeSalida;
+    }
+
+    public int getCantidadFotosEntrada() {
+        return CantidadFotosEntrada;
+    }
+
+    public void setCantidadFotosEntrada(int cantidadFotosEntrada) {
+        CantidadFotosEntrada = cantidadFotosEntrada;
+    }
+
+    public int getCantidadFotosSalida() {
+        return CantidadFotosSalida;
+    }
+
+    public void setCantidadFotosSalida(int cantidadFotosSalida) {
+        CantidadFotosSalida = cantidadFotosSalida;
     }
 }

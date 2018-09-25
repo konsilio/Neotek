@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,65 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             return luDTO;
         }
 
-        public static ClienteLocacion FromDto(ClienteLocacionDTO cteDTO)
+        public static ClienteLocacionDTO ToDTOL(ClienteLocacion _loc)
+        {
+            var p = PaisServicio.Obtener(_loc.IdPais);
+            var e = EstadosrepServicio.Obtener(_loc.IdEstadoRep.Value);
+
+            ClienteLocacionDTO usDTO = new ClienteLocacionDTO()
+            {
+                IdCliente = _loc.IdCliente,
+                Orden = _loc.Orden,
+                IdPais = _loc.IdPais,
+                IdEstadoRep = _loc.IdEstadoRep,
+                EstadoProvincia = _loc.EstadoProvincia,
+                Municipio = _loc.Municipio,
+                CodigoPostal = _loc.CodigoPostal,
+                Colonia = _loc.Colonia,
+                Calle = _loc.Calle,
+                NumExt = _loc.NumExt,
+                NumInt = _loc.NumInt,
+                formatted_address = _loc.formatted_address,
+                location_lat = _loc.location_lat,
+                location_lng = _loc.location_lng,
+                place_id = _loc.place_id,
+                TipoLocacion = _loc.TipoLocacion,
+                Pais = p.PaisNombre,
+                Estado = e.Estado,
+
+            };
+            return usDTO;
+        }
+        public static List<ClienteLocacionDTO> ToDTOLoc(List<ClienteLocacion> _loc)
+        {          
+            List<ClienteLocacionDTO> locDto = _loc.ToList().Select(x => ToDTOL(x)).ToList();
+
+            return locDto;
+        }
+      
+        public static ClienteLocacion FromDtox(ClienteLocacionDTO cteDTO)
+        {
+            return new ClienteLocacion()
+            {
+                IdCliente = cteDTO.IdCliente,
+                Orden = cteDTO.Orden,
+                IdPais = cteDTO.IdPais,
+                IdEstadoRep = cteDTO.IdEstadoRep,
+                EstadoProvincia = cteDTO.EstadoProvincia,
+                Municipio = cteDTO.Municipio,
+                CodigoPostal = cteDTO.CodigoPostal,
+                Colonia = cteDTO.Colonia,
+                Calle = cteDTO.Calle,
+                NumExt = cteDTO.NumExt,
+                NumInt = cteDTO.NumInt,
+                formatted_address = cteDTO.Calle + cteDTO.Colonia + cteDTO.NumExt,//cteDTO.formatted_address,
+                location_lat = "1",//cteDTO.location_lat,
+                location_lng = "1",//cteDTO.location_lng,
+                place_id = "1",//cteDTO.place_id,
+                TipoLocacion = "1"//cteDTO.TipoLocacion,
+            };
+        }
+        public static ClienteLocacion FromDtocteLoc(ClienteLocacionDTO cteDTO)
         {
             return new ClienteLocacion()
             {
@@ -84,8 +143,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 TipoLocacion = cteDTO.TipoLocacion,
             };
         }
-
-        public static Cliente FromDto(ClienteCrearDto cteDTO)
+        public static Cliente FromDtoMod(ClienteCrearDto cteDTO)
         {
             return new Cliente()
             {
@@ -126,7 +184,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             };
         }
 
-        public static Cliente FromDto(ClienteCrearDto Ctedto, Cliente catCte)
+        public static Cliente FromDtoEditar(ClienteCrearDto Ctedto, Cliente catCte)
         {
             var catCliente = FromEntity(catCte);
             if (Ctedto.IdEmpresa != 0) { catCliente.IdEmpresa = Ctedto.IdEmpresa; } else { catCliente.IdEmpresa = catCliente.IdEmpresa; }
@@ -166,24 +224,24 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             return catCliente;
         }
 
-        public static Cliente FromDto(ClienteLocacionDTO Ctedto, Cliente catCte)
+        public static ClienteLocacion FromDto(ClienteLocacionDTO Ctedto, ClienteLocacion catCte)
         {
-            var catCliente = FromEntity(catCte);
+            var catCliente = FromEntityLoc(catCte);
             //if (Ctedto.Orden != 0) { catCliente.Orden = Ctedto.Orden; } else { catCliente.Orden = catCliente.Orden; }
-            //if (Ctedto.IdPais != 0) { catCliente.IdPais = Ctedto.IdPais; } else catCliente.IdPais = catCliente.IdPais;
-            //if (Ctedto.IdEstadoRep != 0) catCliente.IdEstadoRep = Ctedto.IdEstadoRep; else catCliente.IdEstadoRep = catCliente.IdEstadoRep;
-            //if (Ctedto.EstadoProvincia != null) catCliente.EstadoProvincia = Ctedto.EstadoProvincia; else catCliente.EstadoProvincia = catCliente.EstadoProvincia;
-            //if (Ctedto.Municipio != null) catCliente.Municipio = Ctedto.Municipio; else catCliente.Municipio = catCliente.Municipio;
-            //if (Ctedto.CodigoPostal != null) catCliente.CodigoPostal = Ctedto.CodigoPostal; else catCliente.CodigoPostal = catCliente.CodigoPostal;
-            //if (Ctedto.Colonia != null) catCliente.Colonia = Ctedto.Colonia; else catCliente.Colonia = catCliente.Colonia;
-            //if (Ctedto.Calle != null) catCliente.Calle = Ctedto.Calle; else catCliente.Calle = catCliente.Calle;
-            //if (Ctedto.NumExt != null) catCliente.NumExt = Ctedto.NumExt; else catCliente.NumExt = catCliente.NumExt;
-            //if (Ctedto.NumInt != null) catCliente.NumInt = Ctedto.NumInt; else catCliente.NumInt = catCliente.NumInt;
-            //if (Ctedto.formatted_address != null) catCliente.formatted_address = Ctedto.formatted_address; else catCliente.formatted_address = catCliente.formatted_address;
-            //if (Ctedto.location_lat != null) catCliente.location_lat = Ctedto.location_lat; else catCliente.location_lat = catCliente.location_lat;
-            //if (Ctedto.location_lng != null) catCliente.location_lng = Ctedto.location_lng; else catCliente.location_lng = catCliente.location_lng;
-            //if (Ctedto.place_id != null) catCliente.place_id = Ctedto.place_id; else catCliente.place_id = catCliente.place_id;
-            //if (Ctedto.TipoLocacion != null) catCliente.TipoLocacion = Ctedto.TipoLocacion; else catCliente.TipoLocacion = catCliente.TipoLocacion;
+            if (Ctedto.IdPais != 0) { catCliente.IdPais = Ctedto.IdPais; } else catCliente.IdPais = catCliente.IdPais;
+            if (Ctedto.IdEstadoRep != 0) catCliente.IdEstadoRep = Ctedto.IdEstadoRep; else catCliente.IdEstadoRep = catCliente.IdEstadoRep;
+            if (Ctedto.EstadoProvincia != null) catCliente.EstadoProvincia = Ctedto.EstadoProvincia; else catCliente.EstadoProvincia = catCliente.EstadoProvincia;
+            if (Ctedto.Municipio != null) catCliente.Municipio = Ctedto.Municipio; else catCliente.Municipio = catCliente.Municipio;
+            if (Ctedto.CodigoPostal != null) catCliente.CodigoPostal = Ctedto.CodigoPostal; else catCliente.CodigoPostal = catCliente.CodigoPostal;
+            if (Ctedto.Colonia != null) catCliente.Colonia = Ctedto.Colonia; else catCliente.Colonia = catCliente.Colonia;
+            if (Ctedto.Calle != null) catCliente.Calle = Ctedto.Calle; else catCliente.Calle = catCliente.Calle;
+            if (Ctedto.NumExt != null) catCliente.NumExt = Ctedto.NumExt; else catCliente.NumExt = catCliente.NumExt;
+            if (Ctedto.NumInt != null) catCliente.NumInt = Ctedto.NumInt; else catCliente.NumInt = catCliente.NumInt;
+            if (Ctedto.formatted_address != null) catCliente.formatted_address = Ctedto.formatted_address; else catCliente.formatted_address = catCliente.formatted_address;
+            if (Ctedto.location_lat != null) catCliente.location_lat = Ctedto.location_lat; else catCliente.location_lat = catCliente.location_lat;
+            if (Ctedto.location_lng != null) catCliente.location_lng = Ctedto.location_lng; else catCliente.location_lng = catCliente.location_lng;
+            if (Ctedto.place_id != null) catCliente.place_id = Ctedto.place_id; else catCliente.place_id = catCliente.place_id;
+            if (Ctedto.TipoLocacion != null) catCliente.TipoLocacion = Ctedto.TipoLocacion; else catCliente.TipoLocacion = catCliente.TipoLocacion;
 
             return catCliente;
         }
@@ -272,6 +330,29 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 //location_lng =
                 //place_id =
                 //TipoLocacion =
+
+            };
+        }
+        public static ClienteLocacion FromEntityLoc(ClienteLocacion cte)
+        {
+            return new ClienteLocacion()
+            {
+                IdCliente = cte.IdCliente,
+                Orden = cte.Orden,
+                IdPais =cte.IdPais,
+                IdEstadoRep = cte.IdEstadoRep,
+                EstadoProvincia = cte.EstadoProvincia,
+                Municipio = cte.Municipio,
+                CodigoPostal =cte.CodigoPostal,
+                Colonia = cte.Colonia,
+                Calle = cte.Calle,
+                NumExt = cte.NumExt,
+                NumInt = cte.NumInt,
+                formatted_address = cte.formatted_address,
+                location_lat = cte.location_lat,
+                location_lng = cte.location_lng,
+                place_id = cte.place_id,
+                TipoLocacion = cte.TipoLocacion
 
             };
         }

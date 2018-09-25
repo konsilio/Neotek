@@ -1,7 +1,10 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
+import com.example.neotecknewts.sagasapp.Model.DatosTraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
@@ -20,6 +23,9 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
+import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
@@ -31,6 +37,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -164,36 +171,101 @@ public interface RestClient {
     );
 
     @POST(Constantes.POST_LECTURA_INICIAL)
-    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialAlmacen(LecturaAlmacenDTO lecturaAlmacenDTO,
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialAlmacen(@Body LecturaAlmacenDTO lecturaAlmacenDTO,
                                                                    @Header("Authorization")String token,
                                                                    @Header("Content-Type") String contentType
     );
 
     @POST(Constantes.POST_LECTURA_FINAL)
-    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalAlmacen(LecturaAlmacenDTO lecturaAlmacenDTO,
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalAlmacen(@Body LecturaAlmacenDTO lecturaAlmacenDTO,
                                                                  @Header("Authorization")String token,
                                                                  @Header("Content-Type") String contentType
     );
 
     @POST(Constantes.POST_LECTURA_INICIAL_CAMIONETA)
-    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialCamioneta(LecturaCamionetaDTO lecturaAlmacenDTO,
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaInicialCamioneta(@Body LecturaCamionetaDTO lecturaAlmacenDTO,
                                                                    @Header("Authorization")String token,
                                                                    @Header("Content-Type") String contentType
     );
 
     @POST(Constantes.POST_LECTURA_FINAL_CAMIONETA)
-    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalCamioneta(LecturaCamionetaDTO  lecturaAlmacenDTO,
+    Call<RespuestaLecturaInicialDTO> postTomaLecturaFinalCamioneta(@Body LecturaCamionetaDTO  lecturaAlmacenDTO,
                                                                  @Header("Authorization")String token,
                                                                  @Header("Content-Type") String contentType
     );
     @GET(Constantes.LISTA_TIPO_ALMACEN)
     Call<DatosTomaLecturaDto> getEstacionesCarburacion(
-            @Query("esEstacion") boolean esEstacion,
-            @Query("esPipa") boolean esPipa,
-            @Query("esCamioneta") boolean esCamioneta,
-            @Query("esFinalizar") boolean esFinalizar,
-            @Header("Authorization")String token
+            @Path(value = "esEstacion", encoded=true) boolean esEstacion,
+            @Path(value = "esPipa", encoded=true) boolean esPipa,
+            @Path(value = "esCamioneta", encoded=true) boolean esCamioneta,
+            @Path(value = "esFinalizar", encoded=true) boolean esFinalizar,
+            @Header("Authorization")String token,
+            @Header("Content-Type") String contentType
     );
     @POST(Constantes.POST_RECARGA)
-    Call<RespuestaRecargaDTO> postRecarga(RecargaDTO recargaDTO, String token, String s);
+    Call<RespuestaRecargaDTO> postRecarga(@Body RecargaDTO recargaDTO,
+                                          @Header("Authorization")String token,
+                                          @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_RECARGA_INCIAL)
+    Call<RespuestaRecargaDTO> postRecargaInicial(@Body RecargaDTO recargaDTO,
+                                          @Header("Authorization")String token,
+                                          @Header("Content-Type") String contentType
+    );
+
+    @POST(Constantes.POST_RECARGA_FINAL)
+    Call<RespuestaRecargaDTO> postRecargaFinal(@Body RecargaDTO recargaDTO,
+                                                 @Header("Authorization")String token,
+                                                 @Header("Content-Type") String contentType
+    );
+
+    @GET(Constantes.GET_UNIDADES)
+    Call<List<UnidadesDTO>> getUnidades(@Header("Authorization") String token,
+                                        @Header("Content-Type") String contentType);
+    @GET(Constantes.GET_CATALOGO_RECARGAS)
+    Call<Object> getCatalogsRecarga(
+            @Path(value = "esEstacion", encoded=true) boolean esEstacion,
+            @Path(value = "esPipa", encoded=true)boolean esPipa,
+            @Path(value = "esCamioneta", encoded=true)boolean esCamioneta,
+            @Path(value = "esFinalizar", encoded=true)boolean esFinalizar,
+            @Header("Authorization")String token,
+            @Header("Content-Type") String contentType
+    );
+    @GET(Constantes.GETCATALOGO_AUTOCONSUMO)
+    Call<DatosAutoconsumoDTO> getDatosAutoconsumo(
+                                                  @Path(value = "esEstacion",encoded = true)
+                                                          boolean esEstacion,
+                                                  @Path(value = "esInventario",encoded = true)
+                                                          boolean esInventario,
+                                                  @Path(value =  "esPipa",encoded = true)
+                                                          boolean esPipa,
+                                                  @Path(value = "esFinalizar",encoded = true)
+                                                          boolean esFinalizar,
+                                                  @Header("Authorization") String token,
+                                                  @Header("Content-Type") String contentType
+                                                  );
+    @POST(Constantes.POST_AUTOCONSUMO)
+    Call<RespuestaRecargaDTO> postAutorconsumo(@Body AutoconsumoDTO autoconsumoDTO,
+                                               @Path(value = "esEstacion") boolean esEstacion,
+                                               @Path(value = "esIventario") boolean esInventario,
+                                               @Path(value = "esPipa") boolean esPipa,
+                                               @Path(value = "esFinal") boolean esFinal,
+                                               @Header("Authorization") String token,
+                                               @Header("Content-type") String contentType
+    );
+    @GET(Constantes.GET_CATALOGO_TRASPASO)
+    Call<DatosTraspasoDTO> getDatosTraspaso(@Path(value = "esTraspaso") boolean esTraspaso,
+                                            @Path(value = "esPipa")boolean esPipa,
+                                            @Header("Authorization") String token,
+                                            @Header("Content-type") String contentType
+    );
+    @POST(Constantes.POST_TRASPASO)
+    Call<RespuestaTraspasoDTO> postTraspaso(@Body TraspasoDTO traspasoDTO,
+                                            @Path(value = "esEstacion") boolean esEstacion,
+                                            @Path(value = "esPipa") boolean esPipa,
+                                            @Path(value = "esFinal") boolean esFinal,
+                                            @Header("Authorization") String token,
+                                            @Header("Content-type") String contentType
+    );
 }
