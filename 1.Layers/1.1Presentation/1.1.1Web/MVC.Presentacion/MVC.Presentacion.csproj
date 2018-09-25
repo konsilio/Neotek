@@ -489,6 +489,8 @@
     <Content Include="Views\Clientes\EditarClienteLoc.cshtml" />
     <Content Include="Views\PrecioVenta\Index.cshtml" />
     <Content Include="Views\PuntoVenta\Index.cshtml" />
+    <Content Include="Views\Clientes\NuevoCliente.cshtml" />
+    <Content Include="Views\Clientes\EditarCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

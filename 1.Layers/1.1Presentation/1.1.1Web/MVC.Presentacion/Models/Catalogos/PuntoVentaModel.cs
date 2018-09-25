@@ -19,4 +19,3 @@ namespace MVC.Presentacion.Models.Catalogos
         public string Empresa { get; set; }
     }
 }
-}

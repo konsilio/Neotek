@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,9 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaModificacion = pv.FechaModificacion,
                 Activo = pv.Activo,
                 FechaRegistro = pv.FechaRegistro,
-                UnidadesAlmacen = pv.UnidadesAlmacen,
-                OperadorChofer = pv.OperadorChofer,
-                Empresa = pv.Empresa,
+                UnidadesAlmacen = EquipoTransporteServicio.ObtenerNumero(pv.IdEmpresa),//pv.UnidadesAlmacen,
+                OperadorChofer = "",//pv.OperadorChofer,
+                Empresa = "",//pv.Empresa,
             };
             return usDTO;
         }

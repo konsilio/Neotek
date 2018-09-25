@@ -6,6 +6,19 @@
 }
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#RegresaIndex").click(function () {
+            var form = $(this).parent("form");
+            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Empresas", Action = "Index" }) %>');
+            form.attr('method', 'post');
+
+        });
+
+    });
+
+</script>
+
 @using (Html.BeginForm("Actualiza", "Empresas", FormMethod.Post)) 
 {
     <section class="content home">
@@ -148,13 +161,10 @@
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            @*<input type="submit" value="Regresar" class="btn btn-raised btn-primary float-left" formaction="Index" />*@
-                            @*<button class="btn btn-raised btn-primary float-left" formaction="Index" onclick="catalogo.fnEjecutar('Carga', null );  return false;" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>Regresar</button>*@
-
-
+                           <input type="submit" value="Regresar" id="RegresaIndex" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary float-left" />
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="col-lg-7 col-md-7 col-sm-7">
                         <div class="form-group">
                             <button class="btn btn-raised btn-primary float-right" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>  Actualizar</button>
 
