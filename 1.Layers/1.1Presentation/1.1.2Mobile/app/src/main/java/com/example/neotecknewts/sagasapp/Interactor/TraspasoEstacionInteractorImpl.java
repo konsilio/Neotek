@@ -2,12 +2,11 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
-import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
-import com.example.neotecknewts.sagasapp.Presenter.AutoconsumoPipaPresenter;
-import com.example.neotecknewts.sagasapp.Presenter.AutoconsumoPipaPresenterImpl;
+import com.example.neotecknewts.sagasapp.Model.DatosTraspasoDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
+import com.example.neotecknewts.sagasapp.Presenter.TraspasoEstacionPresenter;
+import com.example.neotecknewts.sagasapp.Presenter.TraspasoEstacionPresenterImpl;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
-import com.example.neotecknewts.sagasapp.Util.Session;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,15 +17,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class AutoconsumoPipasInteractorImpl implements AutoconsumoPipaInteractor {
-    AutoconsumoPipaPresenter presenter;
-    public AutoconsumoPipasInteractorImpl(AutoconsumoPipaPresenterImpl autoconsumoPipaPresenter) {
-        this.presenter = autoconsumoPipaPresenter;
+public class TraspasoEstacionInteractorImpl implements TraspasoEstacionInteractor {
+    TraspasoEstacionPresenter presenter;
+    public TraspasoEstacionInteractorImpl(TraspasoEstacionPresenterImpl presenter) {
+        this.presenter = presenter;
     }
 
     @Override
-    public void getList(Session session, boolean esAutoconsumoPipaFinal) {
-        DatosAutoconsumoDTO dto = new DatosAutoconsumoDTO();
+    public void GetList(String token) {
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
@@ -39,20 +37,18 @@ public class AutoconsumoPipasInteractorImpl implements AutoconsumoPipaInteractor
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<DatosAutoconsumoDTO> call = restClient.getDatosAutoconsumo(
-                false,
-                false,
+        Call<DatosTraspasoDTO> call = restClient.getDatosTraspaso(
                 true,
-                esAutoconsumoPipaFinal,
-                session.getToken(),
+                false,
+                token,
                 "application/json"
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 
-        call.enqueue(new Callback<DatosAutoconsumoDTO>() {
+        call.enqueue(new Callback<DatosTraspasoDTO>() {
             @Override
-            public void onResponse(Call<DatosAutoconsumoDTO> call, Response<DatosAutoconsumoDTO> response) {
-                DatosAutoconsumoDTO data = response.body();
+            public void onResponse(Call<DatosTraspasoDTO> call, Response<DatosTraspasoDTO> response) {
+                DatosTraspasoDTO data = response.body();
                 if (response.isSuccessful()) {
                     Log.w("Estatus","Success");
                     presenter.onSuccess(data);
@@ -72,17 +68,14 @@ public class AutoconsumoPipasInteractorImpl implements AutoconsumoPipaInteractor
 
                             break;
                     }
-                    if(data!= null){
-                        presenter.onError(data.getMensajesError());
-                    }else{
-                        presenter.onError(response.message());
-                    }
+                    presenter.onError(response.message());
+
                 }
 
             }
 
             @Override
-            public void onFailure(Call<DatosAutoconsumoDTO> call, Throwable t) {
+            public void onFailure(Call<DatosTraspasoDTO> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
                 presenter.onError(t.getLocalizedMessage());
             }

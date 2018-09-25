@@ -16,6 +16,7 @@ import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5000View,
@@ -30,12 +31,15 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
     public LecturaPipaDTO lecturaPipaDTO;
     public RecargaDTO recargaDTO;
     public AutoconsumoDTO autoconsumoDTO;
+    public TraspasoDTO traspasoDTO;
 
     public int max_p5000,p5000;
     public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsAutoconsumoEstacionInicial,EsAutoconsumoEstacionFinal;
     public boolean EsAutoconsumoInvetarioInicial, EsAutoconsumoInventarioFinal;
     public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
+    public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
+    public boolean EsTraspasoPipaInicial,EsTraspasoPipaFinal,EsPasoIniciaLPipa;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -57,6 +61,12 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             EsAutoconsumoInventarioFinal = b.getBoolean("EsAutoconsumoInventarioFinal",false);
             EsAutoconsumoPipaInicial = b.getBoolean("EsAutoconsumoPipaInicial",false);
             EsAutoconsumoPipaFinal = b.getBoolean("EsAutoconsumoPipaFinal",false);
+            EsTraspasoEstacionInicial = b.getBoolean("EsTraspasoEstacionInicial",false);
+            EsTraspasoEstacionFinal = b.getBoolean("EsTraspasoEstacionFinal",false);
+            EsPrimeraParteTraspaso = b.getBoolean("EsPrimeraParteTraspaso",true);
+            EsTraspasoPipaInicial = b.getBoolean("EsTraspasoPipaInicial",false);
+            EsTraspasoPipaFinal = b.getBoolean("EsTraspasoPipaFinal",false);
+            EsPasoIniciaLPipa = b.getBoolean("EsPasoIniciaLPipa",true);
 
             if(EsLecturaInicial){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
@@ -90,6 +100,14 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 p5000 = 5000;
             }else if (EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
                 autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
+                max_p5000 = 5000;
+                p5000 = 5000;
+            }else if (EsTraspasoEstacionInicial|| EsTraspasoEstacionFinal){
+                traspasoDTO = (TraspasoDTO) b.getSerializable("traspasoDTO");
+                max_p5000 = 5000;
+                p5000 = 5000;
+            }else if(EsTraspasoPipaInicial||EsTraspasoPipaFinal){
+                traspasoDTO = (TraspasoDTO) b.getSerializable("traspasoDTO");
                 max_p5000 = 5000;
                 p5000 = 5000;
             }
@@ -158,6 +176,33 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     "P5000 - Pipa"
             );
             TVLecturaP5000Registro.setText(getString(R.string.registra_la_lectura_del_p500_de_la_pipa));
+        }
+
+        if(EsTraspasoEstacionInicial||EsTraspasoEstacionFinal){
+            TVLecturaP5000Titulo.setText((EsAutoconsumoPipaInicial) ?
+                    getString(R.string.trasferencia_de_gas) + " - Inicial" :
+                    getString(R.string.trasferencia_de_gas) + " - Final");
+            if(EsPrimeraParteTraspaso) {
+                TVLecturaP5000Tipo.setText(
+                        "P5000 - " + getString(R.string.Estacion)
+                );
+                TVLecturaP5000Registro.setText(getString(R.string.registra_la_lectura_del_p500_de_la_estaci_n));
+            }else{
+                TVLecturaP5000Tipo.setText(
+                        "P5000 - " + getString(R.string.Pipa)
+                );
+                TVLecturaP5000Registro.setText(getString(R.string.registra_la_lectura_del_p500_de_la_pipa));
+            }
+        }
+
+        if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
+            TVLecturaP5000Titulo.setText((EsTraspasoPipaInicial) ?
+                    getString(R.string.trasferencia_de_gas) + " - Inicial" :
+                    getString(R.string.trasferencia_de_gas) + " - Final");
+            TVLecturaP5000Tipo.setText(
+                    "P5000 - " + getString(R.string.Pipa)
+            );
+            TVLecturaP5000Registro.setText("Registra la lectura del P5000 de Pipa");
         }
 
         NPLecturaP500CantidadLectura = findViewById(R.id.NPLecturaP500CantidadLectura);
@@ -291,6 +336,25 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 intent.putExtra("EsAutoconsumoPipaFinal",EsAutoconsumoPipaFinal);
                 intent.putExtra("autoconsumoDTO",autoconsumoDTO);
                 startActivity(intent);
+            }else if(EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
+                if(EsPrimeraParteTraspaso)
+                    traspasoDTO.setP5000Salida(CantidadP500);
+                else
+                    traspasoDTO.setP5000Entrada(CantidadP500);
+                intent.putExtra("EsTraspasoEstacionInicial",EsTraspasoEstacionInicial);
+                intent.putExtra("EsTraspasoEstacionFinal",EsTraspasoEstacionFinal);
+                intent.putExtra("EsPrimeraParteTraspaso",EsPrimeraParteTraspaso);
+                intent.putExtra("traspasoDTO",traspasoDTO);
+            }else if(EsTraspasoPipaInicial||EsTraspasoPipaFinal){
+                if (EsPasoIniciaLPipa)
+                    traspasoDTO.setP5000Salida(CantidadP500);
+                else
+                    traspasoDTO.setP5000Entrada(CantidadP500);
+                intent.putExtra("EsTraspasoPipaInicial",EsTraspasoPipaInicial);
+                intent.putExtra("EsTraspasoPipaFinal",EsTraspasoPipaFinal);
+                intent.putExtra("EsPasoIniciaLPipa", EsPasoIniciaLPipa);
+                intent.putExtra("EsPasoInicial",EsPasoIniciaLPipa);
+                intent.putExtra("traspasoDTO",traspasoDTO);
             }
             startActivity(intent);
         }

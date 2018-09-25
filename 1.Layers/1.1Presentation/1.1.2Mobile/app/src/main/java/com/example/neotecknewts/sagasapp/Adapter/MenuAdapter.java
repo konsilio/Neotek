@@ -24,6 +24,8 @@ import com.example.neotecknewts.sagasapp.Activity.RecargaEstacionCarburacionActi
 import com.example.neotecknewts.sagasapp.Activity.RecargaPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaActivity;
 import com.example.neotecknewts.sagasapp.Activity.ReporteActivity;
+import com.example.neotecknewts.sagasapp.Activity.TraspasoEstacionActivity;
+import com.example.neotecknewts.sagasapp.Activity.TraspasoPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.VistaOrdenCompraActivity;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.R;
@@ -224,7 +226,42 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsAutoconsumoPipaInicial",false);
                     intent.putExtra("EsAutoconsumoPipaFinal",true);
                     view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Traspaso - Gas") &&
+                        menuItem.getName().equals("Estación Carb. (Inicial)")
+                        ){
+                    Intent intent = new Intent(view.getContext(),
+                            TraspasoEstacionActivity.class);
+                    intent.putExtra("EsTraspasoEstacionInicial",true);
+                    intent.putExtra("EsTraspasoEstacionFinal",false);
+                    intent.putExtra("EsPrimeraParteTraspaso",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Traspaso - Gas") &&
+                        menuItem.getName().equals("Estación Crb. (Final)")){
+                    Intent intent = new Intent(view.getContext(),
+                            TraspasoEstacionActivity.class);
+                    intent.putExtra("EsTraspasoEstacionInicial",false);
+                    intent.putExtra("EsTraspasoEstacionFinal",true);
+                    intent.putExtra("EsPrimeraParteTraspaso",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Traspaso - Gas") &&
+                        menuItem.getName().equals("Pipa (Inicial)")
+                        ){
+                    Intent intent = new Intent(view.getContext(),
+                            TraspasoPipaActivity.class);
+                    intent.putExtra("EsTraspasoPipaInicial",true);
+                    intent.putExtra("EsTraspasoPipaFinal",false);
+                    intent.putExtra("EsPasoIniciaLPipa",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Traspaso - Gas") &&
+                        menuItem.getName().equals("Pipa (Final)")){
+                    Intent intent = new Intent(view.getContext(),
+                            TraspasoPipaActivity.class);
+                    intent.putExtra("EsTraspasoPipaInicial",false);
+                    intent.putExtra("EsTraspasoPipaFinal",true);
+                    intent.putExtra("EsPasoIniciaLPipa",true);
+                    view.getContext().startActivity(intent);
                 }
+
 
             }
         });

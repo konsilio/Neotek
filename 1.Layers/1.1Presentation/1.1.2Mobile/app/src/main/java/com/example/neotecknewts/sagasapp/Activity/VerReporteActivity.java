@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.io.IOException;
@@ -28,7 +29,10 @@ import java.util.UUID;
 public class VerReporteActivity extends AppCompatActivity {
     private boolean EsReporteDelDia;
     private boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
+    public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
+    public boolean EsTraspasoPipaInicial,EsTraspasoPipaFinal,EsPasoIniciaLPipa;
     RecargaDTO recargaDTO;
+    TraspasoDTO traspasoDTO;
     private String StringReporte,HtmlReporte;
 
     // android built in classes for bluetooth operations
@@ -57,6 +61,15 @@ public class VerReporteActivity extends AppCompatActivity {
             EsRecargaEstacionFinal = bundle.getBoolean("EsRecargaEstacionFinal",
                     false);
             EsPrimeraLectura = bundle.getBoolean("EsPrimeraLectura",false);
+            EsTraspasoEstacionInicial = bundle.getBoolean("EsTraspasoEstacionInicial",
+                    false);
+            EsTraspasoEstacionInicial = bundle.getBoolean("EsTraspasoEstacionInicial",
+                    false);
+            EsTraspasoEstacionFinal = bundle.getBoolean("EsTraspasoEstacionFinal",
+                    false);
+            EsTraspasoPipaInicial = bundle.getBoolean("EsTraspasoPipaInicial",false);
+            EsTraspasoEstacionFinal = bundle.getBoolean("EsTraspasoPipaFinal",false);
+            EsPasoIniciaLPipa = bundle.getBoolean("EsPasoIniciaLPipa",false);
             if(EsReporteDelDia) {
                 StringReporte = (String) bundle.get("StringReporte");
                 HtmlReporte = (String) bundle.get("HtmlReporte");
@@ -64,6 +77,14 @@ public class VerReporteActivity extends AppCompatActivity {
             if(EsRecargaEstacionFinal){
                 recargaDTO = (RecargaDTO) bundle.getSerializable("recargaDTO");
                 GenerarReporteRecargaFinal(recargaDTO);
+            }
+            if(EsTraspasoEstacionInicial ||EsTraspasoEstacionFinal){
+                traspasoDTO = (TraspasoDTO) bundle.getSerializable("traspasoDTO");
+                GenerarReporteTraspaso(traspasoDTO);
+            }
+            if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
+                traspasoDTO = (TraspasoDTO) bundle.getSerializable("traspasoDTO");
+                GenerarReporteTraspasoPipa(traspasoDTO);
             }
         }
         WebView WVVerReporteActivityReporte = findViewById(R.id.WVVerReporteActivityReporte);
@@ -82,12 +103,27 @@ public class VerReporteActivity extends AppCompatActivity {
                 intent.putExtra("EsRecargaEstacionFinal", EsRecargaEstacionFinal);
                 intent.putExtra("recargaDTO", recargaDTO);
                 startActivity(intent);
+            }else if(EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
+                Intent intent = new Intent(VerReporteActivity.this,
+                        SubirImagenesActivity.class);
+                intent.putExtra("EsTraspasoEstacionInicial", EsTraspasoEstacionInicial);
+                intent.putExtra("EsTraspasoEstacionFinal", EsTraspasoEstacionFinal);
+                intent.putExtra("EsPrimeraParteTraspaso", EsPrimeraParteTraspaso);
+                intent.putExtra("traspasoDTO", traspasoDTO);
+                startActivity(intent);
+            }else if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
+                Intent intent = new Intent(VerReporteActivity.this,
+                        SubirImagenesActivity.class);
+                intent.putExtra("EsTraspasoPipaInicial", EsTraspasoPipaInicial);
+                intent.putExtra("EsTraspasoPipaFinal", EsTraspasoPipaFinal);
+                intent.putExtra("traspasoDTO", traspasoDTO);
+                startActivity(intent);
             }
         });
         btnReporteActivityImprimir.setOnClickListener((View v) -> {
             listDevices();
             btnVerReporteActivityTerminar.setVisibility(View.VISIBLE);
-            /*new Imprimir(this,this).starPrint(StringReporte)*/
+            /*new Imprimir(this,this).starPrint(StringReporte);*/
         });
         WVVerReporteActivityReporte.setWebViewClient(new WebViewClient(){
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -101,6 +137,82 @@ public class VerReporteActivity extends AppCompatActivity {
         WVVerReporteActivityReporte.loadDataWithBaseURL(null, HtmlReporte,
                 "text/HTML", "UTF-8", null);
 
+
+    }
+
+    private void GenerarReporteTraspasoPipa(TraspasoDTO traspasoDTO) {
+        HtmlReporte = "<body>" +
+                "<h3>Reporte-Traspaso-[{Pipa}]</h3>" +
+                "<table>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Clave Traspaso</td>" +
+                "<td>[{ClaveTraspaso}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Fecha</td>" +
+                "<td>[{Fecha}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Hora</td>" +
+                "<td>[{Hora}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table>" +
+                "<hr>" +
+                "<h4>Lectura P5000</h4>" +
+                "<table>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>&nbsp;</td>"+
+                "<td>Inicial: </td>" +
+                "<td>Final</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>[{PipaNombre}]</td>" +
+                "<td>[{P5000Inicio}]</td>" +
+                "<td>[{P5000Fin}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>[{PipaNombre2}]</td>" +
+                "<td>[{P5000Inicio2}]</td>" +
+                "<td>[{P5000Fin2}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table>" +
+                "<tr>" +
+                "<td>Litros traspasados: </td>" +
+                "<td>[{LitrosTraspasados}]</td>" +
+                "</tr>" +
+                "</table>" +
+                "</body>";
+
+        StringReporte = "\n Rep-Traspaso - [{Estacion}] \n" +
+                "\n Clave Traspaso" +
+                "\t [{ClaveTraspaso}]" +
+                "\n Fecha " +
+                "\t [{Fecha}]" +
+                "\n Hora" +
+                "\t [{Hora}]\n" +
+                "------------------------------------" +
+                "\n Lectura P5000 " +
+                "\n  "+
+                "\t Inicial: " +
+                "\t Final" +
+                "\n[{PipaNombre}]"+
+                "\t[{P5000Inicial}]" +
+                "\t[{P5000Final}]" +
+                "\n[{PipaNombre2}]"+
+                "\t[{P5000Inicial2}]" +
+                "\t[{P5000Final2}]" +
+                "\n------------------------------------" +
+                "\nLitros traspasados: \t" +
+                "[{LitrosTraspasados}]\n"+
+                "\t\tFirma\n"+
+                "[{NombrePipaTraspaso}](Traspasé)--------\n"+
+                "[{NombreUsuarioTraspaso}]\n"+
+                "[{NombrePipaRecibi}](Recibí)\n"+
+                "[{NombreUsuarioRecivi}]------------------\n";
 
     }
 
@@ -197,6 +309,102 @@ public class VerReporteActivity extends AppCompatActivity {
 
     }
 
+    private void GenerarReporteTraspaso(TraspasoDTO traspasoDTO){
+        HtmlReporte = "<body>" +
+                "<h3>Reporte-Traspaso-[{Estracion}]</h3>" +
+                "<table>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Clave Traspaso</td>" +
+                "<td>[{ClaveTraspaso}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Fecha</td>" +
+                "<td>[{Fecha}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Hora</td>" +
+                "<td>[{Hora}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table>" +
+                "<hr>" +
+                "<h4>Porcentaje Estación (%)</h4>" +
+                "<table>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Inicial: </td>" +
+                "<td>Final</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>[{PorcentajeInicial}]</td>" +
+                "<td>[{PorcentajeFinal}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table>" +
+                "<hr>" +
+                "<h4>Lectura P5000</h4>" +
+                "<table>" +
+                "<tr>" +
+                "<td>&nbsp;</td>" +
+                "<td>Inicial: </td>" +
+                "<td>Final</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<tr>" +
+                "<td>[{NombreEstacion}]</td>" +
+                "<td>[{LecturaIncialEstacion}]</td>" +
+                "<td>[{LecturaFinalEstacion}]</td>" +
+                "</tr>" +
+
+                "<td>[{NombrePipa}]</td>" +
+                "<td>[{LecturaInicialPipa}]</td>" +
+                "<td>[{LecturaFinalPipa}]</td>" +
+                "</tr>" +
+
+                "<tr>" +
+                "<td>Litros traspasados: </td>" +
+                "<td>[{LitrosTraspasados}]</td>" +
+                "</tr>" +
+                "</table>" +
+                "</body>";
+
+        StringReporte = "\n Rep-Traspaso - [{Estacion}] \n" +
+                "\n Clave Traspaso" +
+                "\t [{ClaveTraspaso}]" +
+                "\n Fecha " +
+                "\t [{Fecha}]" +
+                "\n Hora" +
+                "\t [{Hora}]\n" +
+                "------------------------------------" +
+                "\n Porcentaje Estación (%) " +
+                "\n Inicial: " +
+                "\t Final" +
+                "\n[{PorcentajeInicial}]" +
+                "\t[{PorcentajeFinal}]" +
+                "\n------------------------------------" +
+                "\n Lectura P5000" +
+                "\n\t" +
+                "Inicial:\t" +
+                "Final\n" +
+
+                "[{NombreEstacion}] \t" +
+                "[{LecturaIncialEstacion}] \t" +
+                "[{LecturaFinalEstacion}] \n" +
+
+                "[{NombrePipa}] \t" +
+                "[{LecturaInicialPipa}] \t" +
+                "[{LecturaFinalPipa}] \n" +
+                "Litros traspasados: \t" +
+                "[{LitrosTraspasados}]\n"+
+                "\t\tFirma\n"+
+                "[{NombrePipaTraspaso}](Traspasé)--------\n"+
+                "[{NombreUsuarioTraspaso}]\n"+
+                "[{NombrePipaRecibi}](Recibí)\n"+
+                "[{NombreUsuarioRecivi}]------------------\n";
+
+    }
+
     void listDevices(){
         try {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -219,6 +427,12 @@ public class VerReporteActivity extends AppCompatActivity {
                 ArrayList<String> adevices = new ArrayList<>();
                 for (BluetoothDevice device : pairedDevices){
                     adevices.add(device.getName());
+                }
+                if(adevices.size()<=0){
+                    AlertDialog.Builder builder= new AlertDialog.Builder(this);
+                    builder.setTitle(R.string.error_titulo);
+                    builder.setMessage("No se ha podido encontra ninguna impresora, verique:\n"+
+                    " - La impreso este encendida\n - Que la impresora este vinculada al dispositivo");
                 }
                 for (int x = 0;x<adevices.size();x++){
                     lista[x] = adevices.get(x);
