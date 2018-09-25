@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs.Almacen;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
@@ -70,6 +71,59 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
             }
             return _respuesta;
+        }
+
+        public void Actualizar(List<AplicaDescargaDto> aplicacionesDto)
+        {
+            if(aplicacionesDto.Count > 0)
+                using (uow)
+                {
+                    try
+                    {
+                        foreach (var desDto in aplicacionesDto)
+                        {
+                            if(desDto.unidadEntrada != null)
+                                uow.Repository<UnidadAlmacenGas>().Update(desDto.unidadEntrada);
+
+                            if (desDto.unidadSalida != null)
+                                uow.Repository<UnidadAlmacenGas>().Update(desDto.unidadSalida);
+
+                            if (desDto.AlmacenGas != null)
+                                uow.Repository<AlmacenGas>().Update(desDto.AlmacenGas);
+
+                            if (desDto.OCExpedidor != null)
+                                uow.Repository<OrdenCompra>().Update(desDto.OCExpedidor);
+
+                            if (desDto.OCPorteador != null)
+                                uow.Repository<OrdenCompra>().Update(desDto.OCPorteador);
+
+                            // Agregar al modelo de dominio AlmacenGasMovimiento
+                            //if (desDto.AGMovimiento != null)
+                            //    uow.Repository<AlmacenGasMovimiento>().Insert(desDto.MovInventario);
+
+                            if (desDto.DescargaSinNavigationProperties != null)
+                                uow.Repository<AlmacenGasDescarga>().Update(desDto.DescargaSinNavigationProperties);
+                        }
+                        uow.SaveChanges();
+                        //_respuesta.Id = _almDes.IdAlmacenEntradaGasDescarga;
+                        //_respuesta.Exito = true;
+                        //_respuesta.EsActulizacion = true;
+                        //_respuesta.ModeloValido = true;
+                        //_respuesta.Mensaje = Exito.OK;
+                    }
+                    catch (Exception ex)
+                    {
+                        //_respuesta.Exito = false;
+                        //_respuesta.Mensaje = string.Format(Error.C0003, "de la descargar de gas"); ;
+                        //_respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                    }
+                }
+            //return _respuesta;
+        }
+
+        public List<AlmacenGasDescarga> BuscarTodas()
+        {
+            return uow.Repository<AlmacenGasDescarga>().GetAll().ToList();
         }
 
         public AlmacenGasDescarga Buscar(int idAlmacenEntradaGasDescarga)
