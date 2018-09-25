@@ -279,6 +279,8 @@ namespace Application.MainModule.Servicios.Almacen
             unidadEntrada.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdeKilos(unidadEntrada.CantidadActualKg, empresa.FactorLitrosAKilos);
             unidadEntrada.PorcentajeActual = descarga.PorcenMagnatelOcularAlmacenFIN.Value;
 
+            descarga = GenerarImagenes(descarga);
+
             return new AplicaDescargaDto()
             {
                 Descarga = descarga,
