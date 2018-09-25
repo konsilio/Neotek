@@ -9,60 +9,36 @@ namespace MVC.Presentacion.Models.Requisicion
 {
     [Serializable]
     public class RequisicionDTO
-    {
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "IdRequisicion")]
-        public int IdRequisicion { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "IdUsuarioSolicitante")]
+    {       
+        public int IdRequisicion { get; set; }       
         public int IdUsuarioSolicitante { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "UsuarioSolicitante")]
-        public string UsuarioSolicitante { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "IdEmpresa")]
-        public short IdEmpresa { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "NombreComercial")]
-        public string NombreComercial { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "NumeroRequisicion")]
-        public string NumeroRequisicion { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoRequisicion")]
-        public string MotivoRequisicion { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "RequeridoEn")]
-        public string RequeridoEn { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "IdRequisicionEstatus")]
-        public byte IdRequisicionEstatus { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "RequisicionEstatus")]
-        public string RequisicionEstatus { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "FechaRequerida")]
-        public DateTime FechaRequerida { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "FechaRegistro")]
-        public DateTime FechaRegistro { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "IdUsuarioRevision")]
-        public int IdUsuarioRevision { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "OpinionAlmacen")]
-        public string OpinionAlmacen { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "FechaRevision")]
-        public DateTime FechaRevision { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "MotivoCancelacion")]
-        public string MotivoCancelacion { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "IdUsuarioAutorizacion")]
         public int IdUsuarioAutorizacion { get; set; }
-        [Required(ErrorMessage = Error.S0001)]
-        [Display(Name = "FechaAutorizacion")]
-        public DateTime FechaAutorizacion { get; set; }
+        public int IdUsuarioRevision { get; set; }
+        public string UsuarioSolicitante { get; set; }       
+        public short IdEmpresa { get; set; }       
+        public string NombreComercial { get; set; }     
+        public string NumeroRequisicion { get; set; }      
+        public string MotivoRequisicion { get; set; }       
+        public string RequeridoEn { get; set; }
+        public string OpinionAlmacen { get; set; }
+        public string MotivoCancelacion { get; set; }
+        public byte IdRequisicionEstatus { get; set; }       
+        public string RequisicionEstatus { get; set; }     
+        public DateTime FechaRequerida { get; set; }
+        public DateTime FechaRegistro { get; set; }
+        public DateTime FechaRevision { get; set; }
+        public DateTime FechaAutorizacion { get; set; }            
+        public List<RequisicionProductoDTO> Productos { get; set; }
+        public int IdProducto { get; set; }       
+        public string Producto { get; set; }        
+        public int IdTipoProducto { get; set; }
+        public string TipoProducto { get; set; }
+        public int IdCentroCosto { get; set; }
+        public string CentroCosto { get; set; }
+        public int IdUnidad { get; set; }
+        public string Unidad { get; set; }
+        public decimal Cantidad { get; set; }
+        public string Aplicacion { get; set; }
+
     }
 }

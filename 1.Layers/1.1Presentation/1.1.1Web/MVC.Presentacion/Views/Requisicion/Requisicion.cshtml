@@ -1,13 +1,13 @@
-﻿@using MVC.Presentacion.Models.Requisicion
-@model RequisicionModel
+﻿@model MVC.Presentacion.Models.Requisicion.RequisicionDTO
 @{
     string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdminCentral).Equals(false) ? "disabled" : "";
     string EnabledEsNueva = Convert.ToBoolean(ViewBag.EsNueva).Equals(true) ? "" : "disabled";
     string txtbutton = ViewBag.BtnCrear == null ? "Crear" : ViewBag.BtnCrear;
     int index = 0;
 }
+<script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
-<link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
 <div class="page-loader-wrapper">
     <div class="loader">
         <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="50" height="50" alt="Alpino"></div>
@@ -15,55 +15,48 @@
     </div>
 </div>
 <script type="text/javascript">
-    function mostrarUnidad() {
-        var idProd = document.getElementById("IdProducto").value;
-        var ArrProd = [{}];
-        var unidad = "";
+    $(document).ready(function () {
+        $("#selectTipo").on('change', function () {
+            var url = "/Requisicion/GetProductos";
+            var id = $('#selectTipo').find('option:selected').val();
+            document.getElementById("unidadPord").innerHTML = "";
+            $.getJSON(url, { idTipo: id }, function (data) {
+                var $select = $('#productos');
+                if (data == "[]") {
+                    $select.find('option').remove().end().append('<option selected="selected" value="0">No haty productos</option>').val('0')
+                    $select.selectpicker("refresh")
+                }
+                else {
+                    $select.find('option').remove().end().append('<option selected="selected" value="0">Seleccione un producto</option>').val('0')
+                    $.each(JSON.parse(data), function (key, val) {
+                        $select.append($('<option />', { value: (val['IdProducto']), text: val['Descripcion'] }));
+                    });
+                    $select.selectpicker("refresh");
+                }
+            });
+        });
 
-        @if (Model.Productos != null) {
-            foreach (var p in Model.Productos) {
-            @:ArrProd.push({ id: "@p.IdProducto", unidad: "@p.UnidadMedida" });
-                                    }
-        }
-        for (var i = 0; i < ArrProd.length; i += 1) {
-            if (ArrProd[i].id == idProd) {
-                unidad = ArrProd[i].unidad;
+        $("#productos").on('change', function () {
+            var url = "/Requisicion/GetUnidadMedida";
+            var id = $('#productos').find('option:selected').val();
+            if (id == '0') {
+                document.getElementById("unidadPord").innerHTML = "";
             }
-        }
-        document.getElementById("unidadPord").innerHTML = unidad;
-    }
-
-    function filtrarProd() {
-        var keyword = document.getElementById("selectTipo").value;
-        var select = document.getElementById("IdProducto");
-        var cantidad = document.getElementById("Cantidad");
-        var ArrProd = [{}];
-
-        @if (Model.Productos != null) {
-            foreach (var p in Model.Productos) {
-            @:ArrProd.push({ IdProducto: "@p.IdProducto", Descripcion: "@p.Descripcion", IdTipoServicio: "@p.IdProductoServicioTipo" });
-                                    }
-        }
-
-        for (var p = 0; p < ArrProd.length; p++) {
-            for (var i = 0; i < select.length; i++) {
-                var val = select.options[i].value;
-                if (val == ArrProd[p].IdProducto) {
-                    if (ArrProd[p].IdTipoServicio !== keyword) {
-                        select.options[i].style.display = 'none';
+            else {
+                $.getJSON(url, { idPord: id }, function (data) {
+                    var $unidad = $('#unidadPord');
+                    if (data == "[]") {
+                        document.getElementById("unidadPord").innerHTML = "";
                     }
                     else {
-                        select.options[i].style.display = 'list-item';
+                        document.getElementById("unidadPord").innerHTML = data;
                     }
-                    if (keyword == 3) {
-                        cantidad.disabled = true;
-                    }
-                }
+                });
             }
-        }
-    }
+        });
+    });     
 </script>
-<body style="padding-top:10px" onload='filtrarProd()'>
+<body>
     @using (Html.BeginForm("CrearRequisicion", "Requisicion", FormMethod.Post))
     {
         <section class="content home">
@@ -95,6 +88,7 @@
                                                         <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                     }
                                                 </select>
+                                                @Html.HiddenFor(m => m.IdEmpresa)
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -112,8 +106,8 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
                                                 @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })
-                                                </div>
                                             </div>
+                                        </div>
                                         <div class="col-lg-3">
                                             <b>Solicitante:</b>
                                             <select id="ddlSoliciante" name="IdUsuarioSolicitante" class="form-control show-tick" @EnabledAdminCentral data-live-search="true">
@@ -122,14 +116,19 @@
                                                     <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1</option>
                                                 }
                                             </select>
+                                            @Html.HiddenFor(m => m.IdUsuarioSolicitante)
                                         </div>
                                         <div class="col-lg-3">
                                             <b>Motivo de compra:</b>
-                                            <textarea name="MotivoRequisicion" class="form-control  no-resize" @EnabledEsNueva placeholder="Motivo de la compra..." rows="4">@Model.MotivoRequisicion</textarea>
+                                            <div class="blockquote blockquote-info btn-round">
+                                                <textarea name="MotivoRequisicion" class="form-control  no-resize" @EnabledEsNueva placeholder="Motivo de la compra..." rows="4">@Model.MotivoRequisicion</textarea>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3 ">
                                             <b>Se requiere en:</b>
-                                            <textarea name="RequeridoEn" class="form-control no-resize" @EnabledEsNueva placeholder="Se requiere en..." rows="4">@Model.RequeridoEn</textarea>
+                                            <div class="blockquote blockquote-info btn-round">
+                                                <textarea name="RequeridoEn" class="form-control no-resize" @EnabledEsNueva placeholder="Se requiere en..." rows="4">@Model.RequeridoEn</textarea>
+                                            </div>
                                         </div>
                                     </div>
                                     @if (!string.IsNullOrEmpty(ViewBag.MensajeError))
@@ -151,7 +150,6 @@
                                     {
                                         <div class="row clearfix">
                                             <div class="col-lg-2">
-
                                                 <b>Tipo de compra:</b>
                                                 <select name="IdTipoProducto" id="selectTipo" class="form-control show-tick" onchange='filtrarProd()'>
                                                     <option value="2">Producto</option>
@@ -160,15 +158,22 @@
                                             </div>
                                             <div class="col-lg-4">
                                                 <b>Producto:</b>
-                                                <select id="IdProducto" name="IdProducto" class="form-control z-index show-tick selectpicker" data-live-search="true" onchange='mostrarUnidad()'>
+                                                <select id="productos" name="IdProducto" class="form-control z-index show-tick selectpicker" data-live-search="true">
                                                     <option value="0">Seleccione uno</option>
-                                                    @if (Model.Productos != null)
+                                                    @if (ViewBag.Productos != null)
                                                     {
-                                                        foreach (var lst in Model.Productos)
+                                                        foreach (var lst in ViewBag.Productos)
                                                         {
-                                                            if (lst.IdProducto.Equals(Model.IdProducto))
+                                                            if (Model != null)
                                                             {
-                                                                <option value="@lst.IdProducto" selected>@lst.Descripcion</option>
+                                                                if (lst.IdProducto == Model.IdProducto)
+                                                                {
+                                                                    <option value="@lst.IdProducto" selected>@lst.Descripcion</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@lst.IdProducto">@lst.Descripcion</option>
+                                                                }
                                                             }
                                                             else
                                                             {
@@ -191,11 +196,18 @@
                                                 <b>Centro de costo:</b>
                                                 <select class="form-control z-index show-tick selectpicker" data-live-search="true" name="IdCentroCosto">
                                                     <option value="0">Seleccione uno</option>
-                                                    @foreach (var lst in Model.CentrosCostos)
+                                                    @foreach (var lst in ViewBag.CentrosCostos)
                                                     {
-                                                        if (lst.IdCentroCosto.Equals(Model.IdCentroCosto))
+                                                        if (Model != null)
                                                         {
-                                                            <option value="@lst.IdCentroCosto" selected>@lst.Descripcion</option>
+                                                            if (lst.IdCentroCosto == Model.IdCentroCosto)
+                                                            {
+                                                                <option value="@lst.IdCentroCosto" selected>@lst.Descripcion</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@lst.IdCentroCosto">@lst.Descripcion</option>
+                                                            }
                                                         }
                                                         else
                                                         {
@@ -218,7 +230,7 @@
                                                 <label>&nbsp; </label>
                                                 <div class="form-group">
                                                     <input type="submit" value="Agregar" formaction="Agregar" class="btn btn-danger btn-simple btn-round btn-sm" />
-                                                    @* <button id="btnAgregar" class="btn btn-danger btn-simple btn-round btn-sm" onclick="location.href='@Url.Action("Agregar", "Requisicion")'" ></button>*@
+                                                    @* <button id="btnAgregar" class="btn btn-danger btn-simple btn-round btn-sm" onclick="location.href='@Url.Action(" Agregar", "Requisicion" )'"></button>*@
                                                 </div>
                                             </div>
                                         </div>
@@ -237,7 +249,7 @@
                                         </div>
                                     }
                                     <!--Grid productos agregados nueva requisicion-->
-                                    @if (Model.RequisicionProductos != null)
+                                    @if (Model.Productos != null)
                                     {
                                         <div class="row clearfix">
                                             <div class="table-responsive">
@@ -254,7 +266,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach (var prodReq in Model.RequisicionProductos)
+                                                        @foreach (var prodReq in Model.Productos)
                                                         {
 
                                                             <tr>
@@ -265,11 +277,11 @@
                                                                 <td>@prodReq.Aplicacion</td>
                                                                 <td>@prodReq.CentroCosto</td>
                                                                 <td>
-                                                                    <a ID="lbEdit" href="@Url.Action("Editar", "Requisicion", new { id = prodReq.IdProducto })">
+                                                                    <a ID="lbEdit" href="@Url.Action(" Editar", "Requisicion" , new { id=prodReq.IdProducto })">
                                                                         <i class="material-icons">edit</i>
                                                                         <span class="icon-name"></span>
                                                                     </a>
-                                                                    <a ID="lbBorrar" href="@Url.Action("Borrar", "Requisicion", new { id = prodReq.IdProducto })">
+                                                                    <a ID="lbBorrar" href="@Url.Action(" Borrar", "Requisicion" , new { id=prodReq.IdProducto })">
                                                                         <i class="material-icons">delete</i>
                                                                         <span class="icon-name"></span>
                                                                     </a>
@@ -281,14 +293,14 @@
                                             </div>
                                         </div>
                                     }
-                                   
+
                                     @if (ViewBag.reqGrid != null)
                                     {
                                         <Label id="reqGrid" class="alert-danger">ViewBag.reqGrid</Label>
-                                    }                                   
+                                    }
                                     <div class="row clearfix">
                                         <div class="col-lg-4 col-md-8 text-center">
-                                            <a href="@Url.Action("Requisiciones", "Requisicion")" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
+                                            <a href="@Url.Action(" Requisiciones", "Requisicion" )" ID="btnRegresar" class="btn btn-raised btn-primary btn-round" Text="Regresar">
                                                 Regresar
                                             </a>
                                         </div>
@@ -338,7 +350,7 @@
             </div>
         </div>
         <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm margin-0" role="document">
+            <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
@@ -351,14 +363,14 @@
                         else
                         {
                             if (ViewBag.OtraAccion == "R")
-                            {                                
+                            {
                                 <input type="submit" value="Si" formaction="Revision" class="btn btn-raised btn-primary btn-round waves-effect" />
                             }
                             else
                             {
-                                @*<a href="@Url.Action("Revision", "Requisicion")"  class="btn btn-raised btn-primary btn-round" >
-                                    Si
-                                </a>*@
+                                @*<a href="@Url.Action(" Revision", "Requisicion" )" class="btn btn-raised btn-primary btn-round">
+                                        Si
+                                    </a>*@
                                 @*<input type="submit" value="Si" formaction='@Url.Action("Revision", "Requisicion")' class="btn btn-raised btn-primary btn-round waves-effect" />*@
                                 @*<input type="submit" value="Si" formaction="CrearRequisicion" class="btn btn-raised btn-primary btn-round waves-effect" />*@
                             }

@@ -18,28 +18,15 @@ namespace MVC.Presentacion.Controllers
         #region Categorías Producto
         public ActionResult Categoria(int? page, CategoriaProductoDTO model = null)
         {
-            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             RespuestaDTO Resp = new RespuestaDTO();
             tkn = Session["StringToken"].ToString();
             var Pagina = page ?? 1;
             ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn).ToPagedList(Pagina, 20); ;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null)
-                Resp = (RespuestaDTO)TempData["RespuestaDTO"];
-            ModelState.Clear();
-            if (model != null)
-                if (model.IdCategoria != 0)
-                    ViewBag.EsEdicion = true;
-            if (Resp != null)
-            {
-                if (Resp.ModelStatesStandar != null)
-                    foreach (var error in Resp.ModelStatesStandar.ToList())
-                    {
-                        ModelState.AddModelError(error.Key, error.Value);
-                    }
-                if (Resp.MensajesError != null)
-                    ViewBag.MensajeError = Resp.MensajesError[0];
-            }
+            if (TempData["RespuestaDTO"] != null) Resp = (RespuestaDTO)TempData["RespuestaDTO"];
+            if (model != null && model.IdCategoria != 0) ViewBag.EsEdicion = true;
+            ViewBag.MensajeError = Validar(Resp);
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -60,7 +47,6 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Categoria", new { respuesta, model });
             }
         }
-
         public ActionResult EliminarCategoria(short id)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -99,28 +85,15 @@ namespace MVC.Presentacion.Controllers
         #region Linea Producto
         public ActionResult LineaProducto(int? page, LineaProductoDTO model = null)
         {
-            if (Session["StringToken"] == null) return View("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             RespuestaDTO Resp = new RespuestaDTO();
             var Pagina = page ?? 1;
             ViewBag.Lineas = CatalogoServicio.ListaLineasProducto(tkn).ToPagedList(Pagina, 20); ;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null)
-                Resp = (RespuestaDTO)TempData["RespuestaDTO"];
-            ModelState.Clear();
-            if (model != null)
-                if (model.IdProductoLinea != 0)
-                    ViewBag.EsEdicion = true;
-            if (Resp != null)
-            {
-                if (Resp.ModelStatesStandar != null)
-                    foreach (var error in Resp.ModelStatesStandar.ToList())
-                    {
-                        ModelState.AddModelError(error.Key, error.Value);
-                    }
-                if (Resp.MensajesError != null)
-                    ViewBag.MensajeError = Resp.MensajesError[0];
-            }
+            if (TempData["RespuestaDTO"] != null) Resp = (RespuestaDTO)TempData["RespuestaDTO"];
+            if (model != null && model.IdProductoLinea != 0) ViewBag.EsEdicion = true;
+            ViewBag.MensajeError = Validar(Resp);
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -179,29 +152,15 @@ namespace MVC.Presentacion.Controllers
         #region Unidada de Medida
         public ActionResult UnidadMedida(int? page, UnidadMedidaDTO model = null)
         {
-
-            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             RespuestaDTO Resp = new RespuestaDTO();
             var Pagina = page ?? 1;
             ViewBag.Unidades = CatalogoServicio.ListaUnidadesMedida(tkn).ToPagedList(Pagina, 20); ;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null)
-                Resp = (RespuestaDTO)TempData["RespuestaDTO"];
-            ModelState.Clear();
-            if (model != null)
-                if (model.IdUnidadMedida != 0)
-                    ViewBag.EsEdicion = true;
-            if (Resp != null)
-            {
-                if (Resp.ModelStatesStandar != null)
-                    foreach (var error in Resp.ModelStatesStandar.ToList())
-                    {
-                        ModelState.AddModelError(error.Key, error.Value);
-                    }
-                if (Resp.MensajesError != null)
-                    ViewBag.MensajeError = Resp.MensajesError[0];
-            }
+            if (TempData["RespuestaDTO"] != null) Resp = (RespuestaDTO)TempData["RespuestaDTO"];
+            if (model != null && model.IdUnidadMedida != 0) ViewBag.EsEdicion = true;
+            ViewBag.MensajeError = Validar(Resp);
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -261,7 +220,7 @@ namespace MVC.Presentacion.Controllers
         public ActionResult Producto(int? page, short? idempresa, ProductoDTO model = null)
         {
             RespuestaDTO Resp = new RespuestaDTO();
-            if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var Pagina = page ?? 1;
             ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).ToPagedList(Pagina, 20);
@@ -274,22 +233,9 @@ namespace MVC.Presentacion.Controllers
             ViewBag.UnidadesMedida = CatalogoServicio.ListaUnidadesMedida(tkn);
             ViewBag.UnidadesMedida2 = CatalogoServicio.ListaUnidadesMedida(tkn);
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null)
-                Resp = (RespuestaDTO)TempData["RespuestaDTO"];
-            ModelState.Clear();
-            if (model != null)
-                if (model.IdProducto != 0)
-                    ViewBag.EsEdicion = true;
-            if (Resp != null)
-            {
-                if (Resp.ModelStatesStandar != null)
-                    foreach (var error in Resp.ModelStatesStandar.ToList())
-                    {
-                        ModelState.AddModelError(error.Key, error.Value);
-                    }
-                if (Resp.MensajesError != null)
-                    ViewBag.MensajeError = Resp.MensajesError[0];
-            }
+            if (TempData["RespuestaDTO"] != null) Resp = (RespuestaDTO)TempData["RespuestaDTO"];
+            if (model != null && model.IdProducto != 0) ViewBag.EsEdicion = true;
+            ViewBag.MensajeError = Validar(Resp);
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -299,8 +245,6 @@ namespace MVC.Presentacion.Controllers
         public JsonResult GetBuscarCuentasCtbls(short idEmpresa)
         {
             tkn = Session["StringToken"].ToString();
-            //var jsonSerialiser = new JavaScriptSerializer();
-            //var contactInfo = jsonSerialiser.Serialize(CatalogoServicio.ListaCtaCtble(tkn).Select(x => x.IdEmpresa.Equals(idEmpresa)).ToList());
             var list = CatalogoServicio.ListaCtaCtble(tkn).Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
             var JsonInfo = JsonConvert.SerializeObject(list);
             return Json(JsonInfo, JsonRequestBehavior.AllowGet);
@@ -386,25 +330,14 @@ namespace MVC.Presentacion.Controllers
             ViewBag.TipoPersonas = CatalogoServicio.ObtenerTiposPersona(tkn);
             if (TempData["RespuestaDTO"] != null)
                 Resp = (RespuestaDTO)TempData["RespuestaDTO"];
-            ModelState.Clear();
             if (model != null)
                 if (model.IdProveedor != 0)
                     ViewBag.EsEdicion = true;
-            if (Resp != null)
-            {
-                if (Resp.ModelStatesStandar != null)
-                    foreach (var error in Resp.ModelStatesStandar.ToList())
-                    {
-                        ModelState.AddModelError(error.Key, error.Value);
-                    }
-                if (Resp.MensajesError != null)
-                    ViewBag.MensajeError = Resp.MensajesError[0];
-            }
+            ViewBag.MensajeError = Validar(Resp);
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
-
             return View(model);
         }
         [HttpPost]
@@ -421,7 +354,6 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Proveedor", model);
             }
         }
-
         public ActionResult EliminarProveedor(short id)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new LoginModel()));
@@ -455,7 +387,22 @@ namespace MVC.Presentacion.Controllers
                 }
             }
         }
-        #endregion      
-
+        #endregion
+        private string Validar(RespuestaDTO Resp = null)
+        {
+            string Mensaje = string.Empty;
+            ModelState.Clear();
+            if (Resp != null)
+            {
+                if (Resp.ModelStatesStandar != null)
+                    foreach (var error in Resp.ModelStatesStandar.ToList())
+                    {
+                        ModelState.AddModelError(error.Key, error.Value);
+                    }
+                if (Resp.MensajesError != null)
+                    Mensaje = Resp.MensajesError[0];
+            }
+            return Mensaje;
+        }
     }
 }

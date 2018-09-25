@@ -1,7 +1,6 @@
 ﻿@using MVC.Presentacion.Models.Requisicion
 @model RequisicionesModel
-<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
-<link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
@@ -17,11 +16,11 @@
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
-                            <h2>Compras</h2>
+                            <h2>Requisición</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item active">
-                                    <label id="lblRuta">Requisición</label>
+                                    <label id="lblRuta">Requisiciones</label>
                                 </li>
                             </ul>
                         </div>
@@ -41,18 +40,15 @@
                                                     <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                 }
                                             </select>
-                                            @*<asp:DropDownList runat="server" ID="ddlEmpresas" data-live-search="true" AutoPostBack="true" CssClass="form-control z-index show-tick" OnSelectedIndexChanged="ddlEmpresas_SelectedIndexChanged">
-                                                </asp:DropDownList>*@
+                                     
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <input type="text" id="txtNumRequisicion" CssClass="form-control" placeholder="N° de Requisición" />
-                                                @*<asp:TextBox runat="server" ID="txtNoRequisicion" CssClass="form-control" placeholder="N° de Requisición" AutoPostBack="true" OnTextChanged="txtNoRequisicion_TextChanged" />*@
+                                                <input type="text" id="txtNumRequisicion" class="form-control" placeholder="N° de Requisición" />
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <input id="BtnNuevaReq" type="submit" onclick="location.href='@Url.Action("Requisicion", "Requisicion")'" value="Requisicion" class="btn btn-primary btn-round btn-block" />
-                                            @*<asp:Button runat="server" ID="btnNuevaReq" Text="Nueva Requisición" CssClass="btn btn-primary btn-round btn-block btn-icon" OnClick="btnNuevaReq_Click" />*@
                                         </div>
                                     </div>
                                 </div>
@@ -77,9 +73,9 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <label>Fecha de registro</label>
-                                            <div class="from-group">
+                                            <div class="form-group">
                                                 <div>
-                                                    @Html.EditorFor(model => model.FechaCreacionDe, new { htmlAttributes = new { @class = "from-control" } })
+                                                    @Html.EditorFor(model => model.FechaCreacionDe, new { htmlAttributes = new { @class = "form-control" } })
                                                     @Html.ValidationMessageFor(model => model.FechaCreacionDe, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -88,9 +84,9 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <label>&nbsp; </label>
-                                            <div class="from-group">
+                                            <div class="form-group">
                                                 <div>
-                                                    @Html.EditorFor(model => model.FechaCreacionA, new { htmlAttributes = new { @class = "from-control" } })
+                                                    @Html.EditorFor(model => model.FechaCreacionA, new { htmlAttributes = new { @class = "form-control" } })
                                                     @Html.ValidationMessageFor(model => model.FechaCreacionA, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -98,9 +94,9 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <label>Fecha de requisición</label>
-                                            <div class="from-group">
+                                            <div class="form-group">
                                                 <div>
-                                                    @Html.EditorFor(model => model.FechaRequeridaDe, new { htmlAttributes = new { @class = "from-control" } })
+                                                    @Html.EditorFor(model => model.FechaRequeridaDe, new { htmlAttributes = new { @class = "form-control" } })
                                                     @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -108,9 +104,9 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <label>&nbsp; </label>
-                                            <div class="from-group">
+                                            <div class="form-group">
                                                 <div>
-                                                    @Html.EditorFor(model => model.FechaRequeridaA, new { htmlAttributes = new { @class = "from-control" } })
+                                                    @Html.EditorFor(model => model.FechaRequeridaA, new { htmlAttributes = new { @class = "form-control" } })
                                                     @Html.ValidationMessageFor(model => model.FechaRequeridaA, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>

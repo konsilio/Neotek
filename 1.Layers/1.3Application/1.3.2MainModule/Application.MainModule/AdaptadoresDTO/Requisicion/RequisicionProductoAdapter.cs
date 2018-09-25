@@ -88,6 +88,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
             {
                 IdRequisicion = _reqProducto.IdRequisicion,
                 IdProducto = _reqProducto.IdProducto,
+                Orden = _reqProducto.Orden,
                 IdTipoProducto = _reqProducto.IdTipoProducto,
                 IdCentroCosto = _reqProducto.IdCentroCosto,
                 Cantidad = _reqProducto.Cantidad,
