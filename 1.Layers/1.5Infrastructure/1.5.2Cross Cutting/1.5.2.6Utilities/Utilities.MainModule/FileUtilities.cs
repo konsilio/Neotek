@@ -31,6 +31,34 @@ namespace Utilities.MainModule
 
         //******** ARCHIVOS EN GENERAL
 
+        //******** IMAGENES
+
+        public static Image ObtenerImagen(byte[] byteArrayIn)
+        {
+            using (MemoryStream mStream = new MemoryStream(byteArrayIn))
+            {
+                return Image.FromStream(mStream);
+            }
+        }
+
+        public static Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            Image image;
+            try
+            {
+                MemoryStream ms = new MemoryStream(byteArrayIn, 0, byteArrayIn.Length);
+                ms.Write(byteArrayIn, 0, byteArrayIn.Length);
+                image = Image.FromStream(ms, true);
+            }
+            catch
+            {
+                image = null;
+            }
+            return image;
+        }
+
+        //******** IMAGENES
+
         //******** ARCHIVOS ZIP
 
         public static string CrearArchivoZip(string rutaDirectorio, string rutaZip, bool crearDirectorio = false, bool eliminarDirectorio = false)
@@ -147,21 +175,5 @@ namespace Utilities.MainModule
         }
 
         //******** ARCHIVOS XML
-
-        public static Image byteArrayToImage(byte[] byteArrayIn)
-        {
-            Image image;
-            try
-            {
-                MemoryStream ms = new MemoryStream(byteArrayIn, 0, byteArrayIn.Length);
-                ms.Write(byteArrayIn, 0, byteArrayIn.Length);
-                image = Image.FromStream(ms, true);
-            }
-            catch
-            {
-                image = null;
-            }
-            return image;
-        }
     }
 }

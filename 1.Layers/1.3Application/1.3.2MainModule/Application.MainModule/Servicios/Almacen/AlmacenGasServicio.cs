@@ -14,6 +14,8 @@ using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.AdaptadoresDTO.Almacen;
 using Application.MainModule.Servicios.Compras;
+using Security.MainModule.Criptografia;
+using Utilities.MainModule;
 
 namespace Application.MainModule.Servicios.Almacen
 {
@@ -291,6 +293,21 @@ namespace Application.MainModule.Servicios.Almacen
                 CantidadCONRemanenteKg = kilogramosRealesTractor,
                 CantidadCONRemanenteLt = litrosRealesTractor,
             };
+        }
+
+        public static AlmacenGasDescarga GenerarImagenes(AlmacenGasDescarga descarga)
+        {
+            int i = 0;
+            foreach (var foto in descarga.Fotos)
+            {
+                var img = ImagenServicio.ObtenerImagen(foto);
+
+                descarga.Fotos.ElementAt(i).CadenaBase64 = null;
+                descarga.Fotos.ElementAt(i).PathImagen = img.PathImagen;
+                descarga.Fotos.ElementAt(i).UrlImagen = img.UrlImagen;
+                i++;
+            }
+            return descarga;
         }
     }
 }

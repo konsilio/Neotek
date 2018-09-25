@@ -264,6 +264,9 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Imagenes\imagenes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="PlantillasHtml\OrdenCompraNueva.html" />
     <Content Include="PlantillasHtml\RequisicionNueva.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
