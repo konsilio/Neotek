@@ -205,6 +205,17 @@ namespace Application.MainModule.Flujos
             return PuntoVentaServicio.Obtener().ToList();
         }
 
+        public List<PuntoVentaDTO> PuntosVentaIdEmpresa(short IdEmpresa)
+        {
+            return PuntoVentaServicio.Obtener().ToList();
+        }
+
+        //OperadorChofer
+        //public OperadorChoferDTO GetOperador(int IdOperadorChofer)
+        //{
+        //    return PuntoVentaServicio.ObtenerOperador(IdOperadorChofer);
+        //}
+
         #endregion
 
         #region Productos

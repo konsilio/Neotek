@@ -22,7 +22,7 @@ namespace Application.MainModule.Servicios.Catalogos
 
         public static string ObtenerNumero(short idEmpresa)
         {
-            if (idEmpresa != null)
+            if (idEmpresa != 0)
                 return new EquipoTransporteDataAccess().BuscarUnidades(idEmpresa).Numero;
           
             return null;

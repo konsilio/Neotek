@@ -17,5 +17,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public string UnidadesAlmacen { get; set; }
         public string OperadorChofer { get; set; }
         public string Empresa { get; set; }
+
+
     }
 }

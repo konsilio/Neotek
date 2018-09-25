@@ -741,7 +741,7 @@ namespace MVC.Presentacion.App_Code
         public static List<ClientesDto> ListaClientes(int id, string rfc, string nombre, string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaClientes(id,rfc,nombre, token);
+            agente.BuscarListaClientes(id, rfc, nombre, token);
             return agente._lstaClientes;
         }
 
@@ -792,33 +792,48 @@ namespace MVC.Presentacion.App_Code
         }
         public static ClienteLocacionMod ObtenerModel(short idOrden, int IdCliente, string tkn)
         {
-           
-              var cat = ObtenerLocaciones(IdCliente, tkn).SingleOrDefault(x => x.Orden.Equals(idOrden));
-                return new ClienteLocacionMod()
-                {
-                    IdCliente = cat.IdCliente,
-                    Orden = cat.Orden,
-                    IdPais = cat.IdPais,
-                    IdEstadoRep = cat.IdEstadoRep,
-                    EstadoProvincia = cat.EstadoProvincia,
-                    Municipio = cat.Municipio,
-                    CodigoPostal = cat.CodigoPostal,
-                    Colonia = cat.Colonia,
-                    Calle = cat.Calle,
-                    NumExt = cat.NumExt,
-                    NumInt = cat.NumInt,
-                    formatted_address = cat.formatted_address,
-                    location_lat = cat.location_lat,
-                    location_lng = cat.location_lng,
-                    place_id = cat.place_id,
-                    TipoLocacion = cat.TipoLocacion
 
-                };       
+            var cat = ObtenerLocaciones(IdCliente, tkn).SingleOrDefault(x => x.Orden.Equals(idOrden));
+            return new ClienteLocacionMod()
+            {
+                IdCliente = cat.IdCliente,
+                Orden = cat.Orden,
+                IdPais = cat.IdPais,
+                IdEstadoRep = cat.IdEstadoRep,
+                EstadoProvincia = cat.EstadoProvincia,
+                Municipio = cat.Municipio,
+                CodigoPostal = cat.CodigoPostal,
+                Colonia = cat.Colonia,
+                Calle = cat.Calle,
+                NumExt = cat.NumExt,
+                NumInt = cat.NumInt,
+                formatted_address = cat.formatted_address,
+                location_lat = cat.location_lat,
+                location_lng = cat.location_lng,
+                place_id = cat.place_id,
+                TipoLocacion = cat.TipoLocacion
+
+            };
 
         }
-        public static List<ClienteLocacionMod> ObtenerModelList( int IdCliente, string tkn)
+        public static List<ClienteLocacionMod> ObtenerModelList(int IdCliente, string tkn)
         {
-            return ObtenerLocaciones(IdCliente, tkn);        
+            return ObtenerLocaciones(IdCliente, tkn);
+        }
+        #endregion
+
+        #region Puntos de Venta
+        public static List<PuntoVentaModel> ListaPuntosVenta(string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaPuntosVenta(token);
+            return agente._listaPuntosV;
+        }
+        public static List<PuntoVentaModel> ListaPuntosVentaId(short id,string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaPuntosVentaId(id,token);
+            return agente._listaPuntosV;
         }
         #endregion
 
@@ -939,7 +954,7 @@ namespace MVC.Presentacion.App_Code
         }
         public static ProductoDTO ActivarEditarProducto(short id, string tkn)
         {
-            return ListaProductos(tkn).SingleOrDefault(x => x.IdProducto.Equals(id));           
+            return ListaProductos(tkn).SingleOrDefault(x => x.IdProducto.Equals(id));
         }
 
         #endregion

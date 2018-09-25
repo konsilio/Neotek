@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
     {
         public static PuntoVentaDTO ToDTO(PuntoVenta pv)
         {
+            var idUser = OperadorChoferServicio.Obtener(pv.IdOperadorChofer);
             PuntoVentaDTO usDTO = new PuntoVentaDTO()
             {
                 IdPuntoVenta = pv.IdPuntoVenta,
@@ -23,8 +25,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 Activo = pv.Activo,
                 FechaRegistro = pv.FechaRegistro,
                 UnidadesAlmacen = EquipoTransporteServicio.ObtenerNumero(pv.IdEmpresa),//pv.UnidadesAlmacen,
-                OperadorChofer = "",//pv.OperadorChofer,
-                Empresa = "",//pv.Empresa,
+                OperadorChofer = idUser.Usuario.Nombre + " " + idUser.Usuario.Apellido1 + " " + idUser.Usuario.Apellido2,//UsuarioServicio.Obtener(idUser.IdUsuario).ToString(),
+                Empresa = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial,
             };
             return usDTO;
         }

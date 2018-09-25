@@ -88,6 +88,7 @@
     <Compile Include="DTOs\Almacen\AplicaDescargaDto.cs" />
     <Compile Include="DTOs\Catalogo\EstacionCarburacionDTO.cs" />
     <Compile Include="DTOs\Catalogo\FormaPagoDTO.cs" />
+    <Compile Include="DTOs\Catalogo\OperadorChoferDTO.cs" />
     <Compile Include="DTOs\Catalogo\PaisDTO.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoDto.cs" />
