@@ -3,7 +3,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
-import com.example.neotecknewts.sagasapp.Presenter.CalibracionEstacionPresenter;
+import com.example.neotecknewts.sagasapp.Presenter.CalibracionPipaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
@@ -16,14 +16,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CalibracionEstacionInteractorImpl implements CalibracionEstacionInteractor {
-    CalibracionEstacionPresenter presenter;
-    public CalibracionEstacionInteractorImpl(CalibracionEstacionPresenter presenter) {
+public class CalibracionPipaInteractorImpl implements CalibracionPipaInteractor {
+    CalibracionPipaPresenter presenter;
+    public CalibracionPipaInteractorImpl(CalibracionPipaPresenter presenter) {
         this.presenter = presenter;
     }
 
     @Override
-    public void getList(String token, boolean esCalibracionEstacionFinal) {
+    public void getList(String token, boolean esCalibracionPipaFinal) {
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
@@ -37,9 +37,9 @@ public class CalibracionEstacionInteractorImpl implements CalibracionEstacionInt
 
         RestClient restClient = retrofit.create(RestClient.class);
         Call<DatosCalibracionDTO> call = restClient.getDatosCalibracion(
-                true,
                 false,
-                esCalibracionEstacionFinal,
+                true,
+                esCalibracionPipaFinal,
                 token,
                 "application/json"
         );

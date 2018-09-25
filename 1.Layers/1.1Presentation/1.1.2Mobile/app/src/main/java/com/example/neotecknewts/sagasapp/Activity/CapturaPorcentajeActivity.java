@@ -70,6 +70,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
     public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
+    public boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
 
 
     @SuppressLint("SetTextI18n")
@@ -257,6 +258,18 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                         getString(R.string.Calibracion)+" - Final"
                 );
                 textView.setText("Registra el porcentaje del magnatel de la Estación");
+            }else if(extras.getBoolean("EsCalibracionPipaInicial",false) ||
+                    extras.getBoolean("EsCalibracionPipaFinal",false)){
+                EsCalibracionPipaInicial = extras.getBoolean("EsCalibracionPipaInicial",
+                        false);
+                EsCalibracionPipaFinal = extras.getBoolean("EsCalibracionPipaFinal",
+                        false);
+                calibracionDTO = (CalibracionDTO) extras.getSerializable("calibracionDTO");
+                textViewTitulo.setText((EsCalibracionEstacionInicial) ?
+                        getString( R.string.Calibracion)+" - Inicial":
+                        getString(R.string.Calibracion)+" - Final"
+                );
+                textView.setText("Registra el porcentaje del magnatel de la pipa");
             }
         }
 
@@ -322,6 +335,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         }else if(EsTraspasoEstacionInicial ||EsTraspasoEstacionFinal){
             traspasoDTO.setPorcentajeSalida(porcentaje);
         }else if (EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+            calibracionDTO.setPorcentaje(porcentaje);
+        }else if (EsCalibracionPipaInicial || EsCalibracionPipaFinal){
             calibracionDTO.setPorcentaje(porcentaje);
         }
         startActivity();
@@ -426,6 +441,22 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 intent.putExtra("EsPrimeraParteTraspaso",false);
                 intent.putExtra("EsCalibracionEstacionInicial",EsCalibracionEstacionInicial);
                 intent.putExtra("EsCalibracionEstacionFinal",EsCalibracionEstacionFinal);
+                intent.putExtra("calibracionDTO",calibracionDTO);
+            }else if (EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+                intent.putExtra("EsRecargaPipaFinal", false);
+                intent.putExtra("EsLecturaFinal", false);
+                intent.putExtra("EsLecturaInicialPipa", false);
+                intent.putExtra("EsLecturaFinalPipa", false);
+                intent.putExtra("EsRecargaEstacionInicial", false);
+                intent.putExtra("EsRecargaEstacionFinal", false);
+                intent.putExtra("EsPrimeraLectura", false);
+                intent.putExtra("EsTraspasoEstacionInicial",false);
+                intent.putExtra("EsTraspasoEstacionFinal",false);
+                intent.putExtra("EsPrimeraParteTraspaso",false);
+                intent.putExtra("EsCalibracionEstacionInicial",false);
+                intent.putExtra("EsCalibracionEstacionFinal",false);
+                intent.putExtra("EsCalibracionPipaInicial",EsCalibracionPipaInicial);
+                intent.putExtra("EsCalibracionPipaFinal",EsCalibracionPipaFinal);
                 intent.putExtra("calibracionDTO",calibracionDTO);
             }
             intent.putExtra("EsPapeleta", papeleta);

@@ -43,6 +43,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
     public boolean EsTraspasoPipaInicial,EsTraspasoPipaFinal,EsPasoIniciaLPipa;
     public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
+    public boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -73,6 +74,10 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             EsCalibracionEstacionInicial = b.getBoolean("EsCalibracionEstacionInicial",
                     false);
             EsCalibracionEstacionFinal = b.getBoolean("EsCalibracionEstacionFinal",
+                    false);
+            EsCalibracionPipaInicial = b.getBoolean("EsCalibracionPipaInicial",
+                    false);
+            EsCalibracionPipaFinal = b.getBoolean("EsCalibracionPipaFinal",
                     false);
 
             if(EsLecturaInicial){
@@ -118,6 +123,11 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 max_p5000 = 5000;
                 p5000 = 5000;
             }else if(EsCalibracionEstacionInicial||EsCalibracionEstacionFinal){
+                calibracionDTO = (CalibracionDTO) b.getSerializable("calibracionDTO");
+                max_p5000 = 5000;
+                p5000 = 5000;
+                //min_p5000= 5000;
+            }else if(EsCalibracionPipaInicial|| EsCalibracionPipaFinal){
                 calibracionDTO = (CalibracionDTO) b.getSerializable("calibracionDTO");
                 max_p5000 = 5000;
                 p5000 = 5000;
@@ -219,6 +229,17 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
 
         if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
             TVLecturaP5000Titulo.setText((EsCalibracionEstacionInicial) ?
+                    getString(R.string.Calibracion) + " - Inicial" :
+                    getString(R.string.Calibracion) + " - Final");
+            TVLecturaP5000Tipo.setText(
+                    "P5000 - " + calibracionDTO.getNombreCAlmacenGas()
+            );
+            TVLecturaP5000Registro.setText("Registra la lectura del P5000 de la "+
+                    calibracionDTO.getNombreCAlmacenGas());
+        }
+
+        if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+            TVLecturaP5000Titulo.setText((EsCalibracionPipaInicial) ?
                     getString(R.string.Calibracion) + " - Inicial" :
                     getString(R.string.Calibracion) + " - Final");
             TVLecturaP5000Tipo.setText(
@@ -382,6 +403,11 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 calibracionDTO.setP5000(CantidadP500);
                 intent.putExtra("EsCalibracionEstacionInicial",EsCalibracionEstacionInicial);
                 intent.putExtra("EsCalibracionEstacionFinal",EsCalibracionEstacionFinal);
+                intent.putExtra("calibracionDTO",calibracionDTO);
+            }else if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+                calibracionDTO.setP5000(CantidadP500);
+                intent.putExtra("EsCalibracionPipaInicial",EsCalibracionPipaInicial);
+                intent.putExtra("EsCalibracionPipaFinal",EsCalibracionPipaFinal);
                 intent.putExtra("calibracionDTO",calibracionDTO);
             }
             startActivity(intent);

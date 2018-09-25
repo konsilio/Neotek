@@ -72,6 +72,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal;
     public boolean EsTraspasoPipaInicial,EsTraspasoPipaFinal;
     public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
+    public boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
 
     public SubirImagenesPresenter presenter;
     public ProgressDialog progressDialog;
@@ -251,6 +252,11 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 EsCalibracionEstacionFinal = extras.getBoolean("EsCalibracionEstacionFinal",false);
                 calibracionDTO = (CalibracionDTO) extras.getSerializable("calibracionDTO");
                 setTitle("Calibración");
+            }else if(extras.getBoolean("EsCalibracionPipaInicial",false)|| extras.getBoolean("EsCalibracionPipaFinal",false)){
+                EsCalibracionPipaInicial = extras.getBoolean("EsCalibracionPipaInicial",false);
+                EsCalibracionPipaFinal = extras.getBoolean("EsCalibracionPipaFinal",false);
+                calibracionDTO = (CalibracionDTO) extras.getSerializable("calibracionDTO");
+                setTitle("Calibración");
             }
 
         }
@@ -281,6 +287,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
         }else if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
             sagasSql = new SAGASSql(getApplicationContext());
         }else if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+            sagasSql = new SAGASSql(getApplicationContext());
+        }else if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
             sagasSql = new SAGASSql(getApplicationContext());
         }
         //se ejecuta la tarea asincrona para procesar las imagenes
@@ -609,6 +617,24 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     e.printStackTrace();
                 }
             }
+        }else if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+            for (int i= 0; i<calibracionDTO.getImagenesUri().size();i++){
+                try {
+                    Uri uri = Uri.parse(calibracionDTO.getImagenesUri().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(),uri
+                    );
+                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    calibracionDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
 
     }
@@ -812,6 +838,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 presenter.registrarTraspasoEstracionPipa(sagasSql,session.getToken(),traspasoDTO,EsTraspasoPipaFinal);
             }else if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
                 presenter.registrarCalibracionEstacion(sagasSql,session.getToken(),calibracionDTO,EsCalibracionEstacionFinal);
+            }else if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+                presenter.registrarCalibracionPipa(sagasSql,session.getToken(),calibracionDTO,EsCalibracionPipaFinal);
             }
             textView.setText(R.string.cargando_imagenes_fin);
             //progressDialog.hide();

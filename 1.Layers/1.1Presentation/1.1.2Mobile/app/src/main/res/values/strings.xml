@@ -170,5 +170,7 @@
     <string name="selecciona_la_pipa_de_entrada">Selecciona la pipa de entrada:</string>
     <string name="Calibracion">Calibración</string>
     <string name="seleccione_la_estacion_de_carburacion_a_calibrar">Seleccione la estación de carburación a calibrar</string>
+    <string name="selecciona_la_pipa_de_salida_calibracion">Selecciona la Pipa de salida:</string>
+    <string name="selecciona_destino_de_las_pruebas">Selecciona destino de las pruebas:</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
 </resources>

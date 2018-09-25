@@ -87,6 +87,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
     public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
+    public boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -297,6 +298,31 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
                 textViewTitulo.setText("Fotografia del "+calibracionDTO.getNombreMedidor());
                 cantidadFotos = calibracionDTO.getCantidadFotografias();
+            }else if(extras.getBoolean("EsTraspasoEstacionInicial",false)||
+                    extras.getBoolean("EsTraspasoEstacionFinal",false)){
+                EsRecargaPipaFinal = false;
+                EsLecturaInicial = false;
+                EsLecturaFinal = false;
+                EsLecturaInicialPipa = false;
+                EsLecturaFinalPipa = false;
+                EsLecturaInicialAlmacen = false;
+                EsLecturaFinalAlmacen = false;
+                EsRecargaEstacionInicial = false;
+                EsRecargaEstacionFinal = false;
+                EsAutoconsumoPipaInicial = false;
+                EsAutoconsumoPipaFinal = false;
+                EsTraspasoEstacionInicial = false;
+                EsTraspasoEstacionFinal = false;
+                EsPrimeraParteTraspaso = false;
+                EsCalibracionEstacionInicial = false;
+                EsCalibracionEstacionFinal = false;
+                EsCalibracionPipaInicial = extras.getBoolean("EsCalibracionPipaInicial",
+                        false);
+                EsCalibracionPipaFinal = extras.getBoolean("EsCalibracionPipaFinal",
+                        false);
+                calibracionDTO = (CalibracionDTO) extras.getSerializable("calibracionDTO");
+                textViewTitulo.setText("Fotografia del "+calibracionDTO.getNombreMedidor());
+                cantidadFotos = calibracionDTO.getCantidadFotografias();
             }
 
         }
@@ -395,6 +421,9 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 }else if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
                     Log.v("Traspaso estacion","finalizar "+cantidadFotos);
                     calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                }else if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+                    Log.v("Traspaso pipa","finalizar "+cantidadFotos);
+                    calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
                 }
             }catch(Exception ex){
                 ex.printStackTrace();
@@ -472,6 +501,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                     startActivityTraspaso();
                 }else if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
                     Log.v("Traspaso estacion","finalizar "+cantidadFotos);
+                    calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                    startActivityCalibracion();
+                }else if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+                    Log.v("Traspaso pipa","finalizar "+cantidadFotos);
                     calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
                     startActivityCalibracion();
                 }
@@ -693,6 +726,13 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                     SubirImagenesActivity.class);
             intent.putExtra("EsCalibracionEstacionInicial",EsCalibracionEstacionInicial);
             intent.putExtra("EsCalibracionEstacionFinal",EsCalibracionEstacionFinal);
+            intent.putExtra("calibracionDTO",calibracionDTO);
+            startActivity(intent);
+        }else if (EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+            Intent intent = new Intent(CameraDescargaActivity.this,
+                    SubirImagenesActivity.class);
+            intent.putExtra("EsCalibracionPipaInicial",EsCalibracionPipaInicial);
+            intent.putExtra("EsCalibracionPipaFinal",EsCalibracionPipaFinal);
             intent.putExtra("calibracionDTO",calibracionDTO);
             startActivity(intent);
         }

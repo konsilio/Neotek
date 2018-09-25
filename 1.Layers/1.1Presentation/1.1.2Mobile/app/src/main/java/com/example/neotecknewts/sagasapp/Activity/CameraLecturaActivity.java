@@ -63,6 +63,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
     public boolean EsTraspasoPipaInicial,EsTraspasoPipaFinal,EsPasoIniciaLPipa;
     public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
+    public boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
 
     public Uri imageUri;
 
@@ -103,6 +104,8 @@ public class CameraLecturaActivity extends AppCompatActivity {
             EsCalibracionEstacionInicial = b.getBoolean("EsCalibracionEstacionInicial",false);
             EsCalibracionEstacionFinal = b.getBoolean("EsCalibracionEstacionFinal",false);
             calibracionDTO = (CalibracionDTO) b.getSerializable("calibracionDTO");
+            EsCalibracionPipaInicial = b.getBoolean("EsCalibracionPipaInicial",false);
+            EsCalibracionPipaFinal = b.getBoolean("EsCalibracionPipaFinal",false);
 
         }
 
@@ -161,6 +164,12 @@ public class CameraLecturaActivity extends AppCompatActivity {
             );
         }
         if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+            TVCameraLecturaActivityFotoEstacion.setText(
+                    getString(R.string.tomar_foto_estacion)
+                            +" - " +calibracionDTO.getNombreCAlmacenGas()
+            );
+        }
+        if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
                             +" - " +calibracionDTO.getNombreCAlmacenGas()
@@ -339,6 +348,18 @@ public class CameraLecturaActivity extends AppCompatActivity {
                         CapturaPorcentajeActivity.class);
                 intent.putExtra("EsCalibracionEstacionInicial",EsCalibracionEstacionInicial);
                 intent.putExtra("EsCalibracionEstacionFinal",EsCalibracionEstacionFinal);
+                intent.putExtra("calibracionDTO",calibracionDTO);
+            }catch (URISyntaxException e){
+                e.printStackTrace();
+            }
+        }else if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+            try {
+                calibracionDTO.getImagenes().add(imageurl);
+                calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                Intent intent = new Intent(CameraLecturaActivity.this,
+                        CapturaPorcentajeActivity.class);
+                intent.putExtra("EsCalibracionPipaInicial",EsCalibracionPipaInicial);
+                intent.putExtra("EsCalibracionPipaFinal",EsCalibracionPipaFinal);
                 intent.putExtra("calibracionDTO",calibracionDTO);
             }catch (URISyntaxException e){
                 e.printStackTrace();

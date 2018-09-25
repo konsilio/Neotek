@@ -149,7 +149,10 @@
         <activity
             android:name=".Activity.TraspasoPipaActivity"
             android:label="@string/Traspaso" />
-        <activity android:name=".Activity.CalibracionEstacionActivity"
+        <activity
+            android:name=".Activity.CalibracionEstacionActivity"
+            android:label="@string/Calibracion" />
+        <activity android:name=".Activity.CalibracionPipaActivity"
             android:label="@string/Calibracion"/>
     </application>
 
