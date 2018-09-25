@@ -168,5 +168,7 @@
     <string name="trasferencia_de_gas">Trasferencia de gas</string>
     <string name="selecciona_la_estacion_de_carburacion_de_salida">Selecciona la Estación de Carburación de salida:</string>
     <string name="selecciona_la_pipa_de_entrada">Selecciona la pipa de entrada:</string>
+    <string name="Calibracion">Calibración</string>
+    <string name="seleccione_la_estacion_de_carburacion_a_calibrar">Seleccione la estación de carburación a calibrar</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
 </resources>

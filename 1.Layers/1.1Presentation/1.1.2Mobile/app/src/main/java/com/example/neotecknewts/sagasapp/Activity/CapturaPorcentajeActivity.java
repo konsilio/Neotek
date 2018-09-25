@@ -16,6 +16,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -52,6 +53,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     RecargaDTO recargaDTO;
     AutoconsumoDTO autoconsumoDTO;
     TraspasoDTO traspasoDTO;
+    CalibracionDTO calibracionDTO;
 
     //banderas para saber que objeto utilizar
     public boolean papeleta;
@@ -67,6 +69,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
     public boolean EsRecargaPipaFinal,EsRecargaPipaInicial;
     public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
+    public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
 
 
     @SuppressLint("SetTextI18n")
@@ -242,6 +245,18 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 else
                     textView.setText("Registra el porcentaje del "+traspasoDTO.getNombreMedidor()+" de" +
                             "la Pipa");
+            }else if(extras.getBoolean("EsCalibracionEstacionInicial",false) ||
+                    extras.getBoolean("EsCalibracionEstacionFinal",false)){
+                EsCalibracionEstacionInicial = extras.getBoolean("EsCalibracionEstacionInicial",
+                        false);
+                EsCalibracionEstacionFinal = extras.getBoolean("EsCalibracionEstacionFinal",
+                        false);
+                calibracionDTO = (CalibracionDTO) extras.getSerializable("calibracionDTO");
+                textViewTitulo.setText((EsCalibracionEstacionInicial) ?
+                        getString( R.string.Calibracion)+" - Inicial":
+                        getString(R.string.Calibracion)+" - Final"
+                );
+                textView.setText("Registra el porcentaje del magnatel de la Estación");
             }
         }
 
@@ -306,6 +321,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
             autoconsumoDTO.setPorcentajeMedidor(porcentaje);
         }else if(EsTraspasoEstacionInicial ||EsTraspasoEstacionFinal){
             traspasoDTO.setPorcentajeSalida(porcentaje);
+        }else if (EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+            calibracionDTO.setPorcentaje(porcentaje);
         }
         startActivity();
     }
@@ -396,6 +413,20 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 intent.putExtra("EsTraspasoEstacionFinal",EsTraspasoEstacionFinal);
                 intent.putExtra("EsPrimeraParteTraspaso",EsPrimeraParteTraspaso);
                 intent.putExtra("traspasoDTO",traspasoDTO);
+            }else if (EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+                intent.putExtra("EsRecargaPipaFinal", false);
+                intent.putExtra("EsLecturaFinal", false);
+                intent.putExtra("EsLecturaInicialPipa", false);
+                intent.putExtra("EsLecturaFinalPipa", false);
+                intent.putExtra("EsRecargaEstacionInicial", false);
+                intent.putExtra("EsRecargaEstacionFinal", false);
+                intent.putExtra("EsPrimeraLectura", false);
+                intent.putExtra("EsTraspasoEstacionInicial",false);
+                intent.putExtra("EsTraspasoEstacionFinal",false);
+                intent.putExtra("EsPrimeraParteTraspaso",false);
+                intent.putExtra("EsCalibracionEstacionInicial",EsCalibracionEstacionInicial);
+                intent.putExtra("EsCalibracionEstacionFinal",EsCalibracionEstacionFinal);
+                intent.putExtra("calibracionDTO",calibracionDTO);
             }
             intent.putExtra("EsPapeleta", papeleta);
             intent.putExtra("EsDescargaIniciar", iniciar);

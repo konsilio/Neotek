@@ -24,6 +24,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
@@ -53,12 +54,15 @@ public class CameraLecturaActivity extends AppCompatActivity {
     public RecargaDTO recargaDTO;
     public AutoconsumoDTO autoconsumoDTO;
     public TraspasoDTO  traspasoDTO;
+    public CalibracionDTO calibracionDTO;
+
     public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsAutoconsumoEstacionInicial,EsAutoconsumoEstacionFinal;
     public boolean EsAutoconsumoInvetarioInicial, EsAutoconsumoInventarioFinal;
     public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
     public boolean EsTraspasoPipaInicial,EsTraspasoPipaFinal,EsPasoIniciaLPipa;
+    public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
 
     public Uri imageUri;
 
@@ -96,6 +100,9 @@ public class CameraLecturaActivity extends AppCompatActivity {
             EsTraspasoPipaFinal = b.getBoolean("EsTraspasoPipaFinal",false);
             EsPasoIniciaLPipa = b.getBoolean("EsPasoIniciaLPipa",true);
             traspasoDTO = (TraspasoDTO) b.getSerializable("traspasoDTO");
+            EsCalibracionEstacionInicial = b.getBoolean("EsCalibracionEstacionInicial",false);
+            EsCalibracionEstacionFinal = b.getBoolean("EsCalibracionEstacionFinal",false);
+            calibracionDTO = (CalibracionDTO) b.getSerializable("calibracionDTO");
 
         }
 
@@ -151,6 +158,12 @@ public class CameraLecturaActivity extends AppCompatActivity {
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
                             +" - " +getString(R.string.Pipa)
+            );
+        }
+        if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+            TVCameraLecturaActivityFotoEstacion.setText(
+                    getString(R.string.tomar_foto_estacion)
+                            +" - " +calibracionDTO.getNombreCAlmacenGas()
             );
         }
         BtnCameraLecturaTomarFoto.setOnClickListener(v -> {
@@ -315,6 +328,18 @@ public class CameraLecturaActivity extends AppCompatActivity {
                     intent.putExtra("traspasoDTO", traspasoDTO);
                     startActivity(intent);
                 }
+            }catch (URISyntaxException e){
+                e.printStackTrace();
+            }
+        }else if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+            try {
+                calibracionDTO.getImagenes().add(imageurl);
+                calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
+                Intent intent = new Intent(CameraLecturaActivity.this,
+                        CapturaPorcentajeActivity.class);
+                intent.putExtra("EsCalibracionEstacionInicial",EsCalibracionEstacionInicial);
+                intent.putExtra("EsCalibracionEstacionFinal",EsCalibracionEstacionFinal);
+                intent.putExtra("calibracionDTO",calibracionDTO);
             }catch (URISyntaxException e){
                 e.printStackTrace();
             }

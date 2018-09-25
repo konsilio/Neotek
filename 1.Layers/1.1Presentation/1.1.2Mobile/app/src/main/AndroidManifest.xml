@@ -146,9 +146,11 @@
         <activity
             android:name=".Activity.TraspasoEstacionActivity"
             android:label="@string/Traspaso" />
-        <activity android:name=".Activity.TraspasoPipaActivity"
-            android:label="@string/Traspaso"
-            />
+        <activity
+            android:name=".Activity.TraspasoPipaActivity"
+            android:label="@string/Traspaso" />
+        <activity android:name=".Activity.CalibracionEstacionActivity"
+            android:label="@string/Calibracion"/>
     </application>
 
 </manifest>

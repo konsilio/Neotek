@@ -13,6 +13,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
@@ -32,6 +33,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
     public RecargaDTO recargaDTO;
     public AutoconsumoDTO autoconsumoDTO;
     public TraspasoDTO traspasoDTO;
+    public CalibracionDTO calibracionDTO;
 
     public int max_p5000,p5000;
     public boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
@@ -40,6 +42,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
     public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
     public boolean EsTraspasoPipaInicial,EsTraspasoPipaFinal,EsPasoIniciaLPipa;
+    public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -67,6 +70,10 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             EsTraspasoPipaInicial = b.getBoolean("EsTraspasoPipaInicial",false);
             EsTraspasoPipaFinal = b.getBoolean("EsTraspasoPipaFinal",false);
             EsPasoIniciaLPipa = b.getBoolean("EsPasoIniciaLPipa",true);
+            EsCalibracionEstacionInicial = b.getBoolean("EsCalibracionEstacionInicial",
+                    false);
+            EsCalibracionEstacionFinal = b.getBoolean("EsCalibracionEstacionFinal",
+                    false);
 
             if(EsLecturaInicial){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
@@ -110,6 +117,11 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 traspasoDTO = (TraspasoDTO) b.getSerializable("traspasoDTO");
                 max_p5000 = 5000;
                 p5000 = 5000;
+            }else if(EsCalibracionEstacionInicial||EsCalibracionEstacionFinal){
+                calibracionDTO = (CalibracionDTO) b.getSerializable("calibracionDTO");
+                max_p5000 = 5000;
+                p5000 = 5000;
+                //min_p5000= 5000;
             }
         }
 
@@ -203,6 +215,17 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     "P5000 - " + getString(R.string.Pipa)
             );
             TVLecturaP5000Registro.setText("Registra la lectura del P5000 de Pipa");
+        }
+
+        if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+            TVLecturaP5000Titulo.setText((EsCalibracionEstacionInicial) ?
+                    getString(R.string.Calibracion) + " - Inicial" :
+                    getString(R.string.Calibracion) + " - Final");
+            TVLecturaP5000Tipo.setText(
+                    "P5000 - " + calibracionDTO.getNombreCAlmacenGas()
+            );
+            TVLecturaP5000Registro.setText("Registra la lectura del P5000 de la "+
+                    calibracionDTO.getNombreCAlmacenGas());
         }
 
         NPLecturaP500CantidadLectura = findViewById(R.id.NPLecturaP500CantidadLectura);
@@ -355,6 +378,11 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 intent.putExtra("EsPasoIniciaLPipa", EsPasoIniciaLPipa);
                 intent.putExtra("EsPasoInicial",EsPasoIniciaLPipa);
                 intent.putExtra("traspasoDTO",traspasoDTO);
+            }else if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+                calibracionDTO.setP5000(CantidadP500);
+                intent.putExtra("EsCalibracionEstacionInicial",EsCalibracionEstacionInicial);
+                intent.putExtra("EsCalibracionEstacionFinal",EsCalibracionEstacionFinal);
+                intent.putExtra("calibracionDTO",calibracionDTO);
             }
             startActivity(intent);
         }
