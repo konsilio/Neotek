@@ -22,12 +22,12 @@ namespace DS.MainModule
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            this.Timer();
+            //this.Timer();
         }
 
         public void EjecutaServicios(object source, ElapsedEventArgs e)
         {
-            //AlmacenGasServicio.ProcesarInventario();
+            AlmacenGasServicio.ProcesarInventario();
         }
 
         private void Timer()

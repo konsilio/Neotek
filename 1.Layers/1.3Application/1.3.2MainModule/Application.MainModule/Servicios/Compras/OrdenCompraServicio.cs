@@ -168,22 +168,22 @@ namespace Application.MainModule.Servicios.Compras
             OCExpedidor.MontBelvieuDlls = OCExpUltima.MontBelvieuDlls;
             OCExpedidor.TarifaServicioPorGalonDlls = OCExpUltima.TarifaServicioPorGalonDlls;
             OCExpedidor.TipoDeCambioDOF = OCExpUltima.TipoDeCambioDOF;
-            OCExpedidor.PrecioPorGalon = CalcularOrdenCompraServicio.ComplementoPrecioPorGalon(OCExpedidor.MontBelvieuDlls, OCExpedidor.TarifaServicioPorGalonDlls, OCExpedidor.TipoDeCambioDOF);
+            OCExpedidor.PrecioPorGalon = CalcularOrdenCompraServicio.ComplementoPrecioPorGalon(OCExpedidor.MontBelvieuDlls.Value, OCExpedidor.TarifaServicioPorGalonDlls.Value, OCExpedidor.TipoDeCambioDOF.Value);
             OCExpedidor.FactorGalonALitros = empresa.FactorGalonALitros;
-            OCExpedidor.ImporteEnLitros = CalcularOrdenCompraServicio.ComplementoImporteEnLitros(OCExpedidor.PrecioPorGalon, OCExpedidor.FactorGalonALitros);
+            OCExpedidor.ImporteEnLitros = CalcularOrdenCompraServicio.ComplementoImporteEnLitros(OCExpedidor.PrecioPorGalon.Value, OCExpedidor.FactorGalonALitros.Value);
             OCExpedidor.FactorCompraLitrosAKilos = empresa.FactorCompraLitroAKilos;
-            OCExpedidor.PVPM = CalcularOrdenCompraServicio.ComplementoPVPMKg(OCExpedidor.ImporteEnLitros, OCExpedidor.FactorCompraLitrosAKilos);
-            OCExpedidor.SubtotalSinIva = CalcularOrdenCompraServicio.Subtotal(OCExpedidor.PVPM, descarga.MasaKg);
-            OCExpedidor.Iva = CalcularOrdenCompraServicio.Iva(OCExpedidor.SubtotalSinIva, IvaEnum.p16);
-            OCExpedidor.Total = CalcularOrdenCompraServicio.Total(OCExpedidor.SubtotalSinIva, OCExpedidor.Iva, 0);
+            OCExpedidor.PVPM = CalcularOrdenCompraServicio.ComplementoPVPMKg(OCExpedidor.ImporteEnLitros.Value, OCExpedidor.FactorCompraLitrosAKilos.Value);
+            OCExpedidor.SubtotalSinIva = CalcularOrdenCompraServicio.Subtotal(OCExpedidor.PVPM.Value, descarga.MasaKg.Value);
+            OCExpedidor.Iva = CalcularOrdenCompraServicio.Iva(OCExpedidor.SubtotalSinIva.Value, IvaEnum.p16);
+            OCExpedidor.Total = CalcularOrdenCompraServicio.Total(OCExpedidor.SubtotalSinIva.Value, OCExpedidor.Iva.Value, 0);
             
             OCPorteador.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
             OCPorteador.FactorConvTransporte = empresa.FactorFleteGas;
-            OCPorteador.PrecioTransporte = CalcularOrdenCompraServicio.ComplementoPrecioTransporteDeGas(descarga.MasaKg, OCPorteador.FactorConvTransporte);
+            OCPorteador.PrecioTransporte = CalcularOrdenCompraServicio.ComplementoPrecioTransporteDeGas(descarga.MasaKg.Value, OCPorteador.FactorConvTransporte.Value);
             OCPorteador.Casetas = OCPorUltima.Casetas;
-            OCPorteador.SubtotalSinIva = CalcularOrdenCompraServicio.Subtotal(new List<decimal>() { OCPorteador.PrecioTransporte, OCPorteador.Casetas });
-            OCPorteador.Iva = CalcularOrdenCompraServicio.Iva(OCPorteador.SubtotalSinIva, IvaEnum.p16);
-            OCPorteador.Total = CalcularOrdenCompraServicio.Total(OCPorteador.SubtotalSinIva, OCPorteador.Iva, 0);
+            OCPorteador.SubtotalSinIva = CalcularOrdenCompraServicio.Subtotal(new List<decimal>() { OCPorteador.PrecioTransporte.Value, OCPorteador.Casetas.Value });
+            OCPorteador.Iva = CalcularOrdenCompraServicio.Iva(OCPorteador.SubtotalSinIva.Value, IvaEnum.p16);
+            OCPorteador.Total = CalcularOrdenCompraServicio.Total(OCPorteador.SubtotalSinIva.Value, OCPorteador.Iva.Value, 0);
 
             apDesDto.OCExpedidor = OCExpedidor;
             apDesDto.OCPorteador = OCPorteador;
