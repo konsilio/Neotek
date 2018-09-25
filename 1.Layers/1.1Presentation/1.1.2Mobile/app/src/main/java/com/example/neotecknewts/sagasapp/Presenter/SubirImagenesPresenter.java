@@ -8,6 +8,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.PapeletaSQL;
@@ -56,4 +57,8 @@ public interface SubirImagenesPresenter {
     void registrarAutoconsumoInventario(SAGASSql sagasSql, String token, AutoconsumoDTO autoconsumoDTO, boolean esAutoconsumoInventarioFinal);
 
     void registrarAutoconsumoPipa(SAGASSql sagasSql, String token, AutoconsumoDTO autoconsumoDTO, boolean esAutoconsumoPipaFinal);
+
+    void registrarTraspasoEstracion(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO, boolean esTraspasoEstacionFinal);
+
+    void registrarTraspasoEstracionPipa(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO, boolean esTraspasoPipaFinal);
 }

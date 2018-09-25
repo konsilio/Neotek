@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Almacen\AlmacenGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Almacen\AlmacenProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\BancoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\CentroCostoAdapter.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="DTOs\Catalogo\ClientesDto.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaModificaConfig.cs" />
     <Compile Include="DTOs\Catalogo\EstadosRepDTO.cs" />
+    <Compile Include="DTOs\Almacen\AplicaDescargaDto.cs" />
     <Compile Include="DTOs\Catalogo\EstacionCarburacionDTO.cs" />
     <Compile Include="DTOs\Catalogo\FormaPagoDTO.cs" />
     <Compile Include="DTOs\Catalogo\PaisDTO.cs" />
@@ -229,6 +231,7 @@
     <Compile Include="Servicios\AccesoADatos\TipoPerDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\TipoProveedorDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
+    <Compile Include="Servicios\Almacen\CalcularGasServicio.cs" />
     <Compile Include="Servicios\Almacen\ProductoAlmacenServicio.cs" />
     <Compile Include="Servicios\Almacen\AlmacenGasServicio.cs" />
     <Compile Include="Servicios\Catalogos\BancoServicio.cs" />
@@ -252,8 +255,10 @@
     <Compile Include="Servicios\Catalogos\TipoProveedorServicio.cs" />
     <Compile Include="Servicios\Seguridad\UsuarioServicio.cs" />
     <Compile Include="Servicios\Catalogos\ValidarCatalogoServicio.cs" />
+    <Compile Include="Servicios\Compras\CalcularOrdenCompraServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
+    <Compile Include="Servicios\FuncionIngresoGastoServicio.cs" />
     <Compile Include="Servicios\Mobile\GasServicio.cs" />
     <Compile Include="Servicios\Mobile\LecturaGasServicio.cs" />
     <Compile Include="Servicios\Mobile\RecargaGasServicio.cs" />
@@ -263,7 +268,7 @@
     <Compile Include="Servicios\Notificacion\NotificarServicio.cs" />
     <Compile Include="Servicios\Requisicion\RequisicionServicio.cs" />
     <Compile Include="Servicios\Mobile\MenuServicio.cs" />
-    <Compile Include="Servicios\Mobile\OrdenesCompraServicio.cs" />
+    <Compile Include="Servicios\Mobile\MobileOrdenesCompraServicio.cs" />
     <Compile Include="Servicios\Seguridad\AutenticarServicio.cs" />
     <Compile Include="Servicios\Seguridad\RolServicio.cs" />
     <Compile Include="Servicios\Seguridad\PermisosServicio.cs" />

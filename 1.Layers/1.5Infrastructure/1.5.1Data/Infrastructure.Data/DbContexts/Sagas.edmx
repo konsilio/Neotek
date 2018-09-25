@@ -80,6 +80,7 @@
           <Property Name="CapacidadTanqueLt" Type="decimal" Precision="18" Scale="4" />
           <Property Name="CapacidadTanqueKg" Type="decimal" Precision="18" Scale="4" />
           <Property Name="PorcenMagnatelPapeleta" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="MasaKg" Type="decimal" Precision="18" Scale="4" />
           <Property Name="PresionTanque" Type="decimal" Precision="10" Scale="2" />
           <Property Name="Sello" Type="varchar" MaxLength="25" />
           <Property Name="ValorCarga" Type="decimal" Precision="18" Scale="4" />
@@ -615,6 +616,43 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CCamionetaCilindro' no 
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="CPrecioVenta">
+          <Key>
+            <PropertyRef Name="IdPrecioVenta" />
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdPrecioVenta" Type="smallint" Nullable="false" />
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="IdPrecioVentaEstatus" Type="tinyint" Nullable="false" />
+          <Property Name="IdCategoria" Type="smallint" Nullable="false" />
+          <Property Name="IdProductoLinea" Type="smallint" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
+          <Property Name="Categoria" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Linea" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Producto" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="PrecioActual" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioPemexKg" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioPemexLt" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="UtilidadEsperadaKg" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="UtilidadEsperadaLt" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioSalida" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioSalidaKg" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioSalidaLt" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="EsGas" Type="bit" Nullable="false" />
+          <Property Name="FechaProgramada" Type="datetime" Nullable="false" />
+          <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
+          <Property Name="FechaVencimiento" Type="smalldatetime" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CPrecioVentaEstatus">
+          <Key>
+            <PropertyRef Name="IdPrecioVentaEstatus" />
+          </Key>
+          <Property Name="IdPrecioVentaEstatus" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripción" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Activo" Type="bit" Nullable="false" />
+          <Property Name="FechaRegsitro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="CProducto">
           <Key>
             <PropertyRef Name="IdProducto" />
@@ -946,6 +984,39 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Activo" Type="bit" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
           <Property Name="FechaAutorizacion" Type="smalldatetime" />
+          <Property Name="FechaComplemento" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="OrdenCompraCompExpedidor">
+          <Key>
+            <PropertyRef Name="IdOrdenCompra" />
+          </Key>
+          <Property Name="IdOrdenCompra" Type="int" Nullable="false" />
+          <Property Name="MontBelvieuDlls" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="TarifaServicioPorGalonDlls" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="TipoDeCambioDOF" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioPorGalon" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="FactorGalonALitros" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="ImporteEnLitros" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="FactorCompraLitrosAKilos" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="PVPM" Type="decimal" Precision="18" Scale="4" />
+        </EntityType>
+        <EntityType Name="OrdenCompraCompFactura">
+          <Key>
+            <PropertyRef Name="IdOrdenCompra" />
+          </Key>
+          <Property Name="IdOrdenCompra" Type="int" Nullable="false" />
+          <Property Name="FolioFiscalUUID" Type="varchar" MaxLength="50" />
+          <Property Name="FolioFactura" Type="varchar" MaxLength="50" />
+          <Property Name="FechaResgistroFactura" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="OrdenCompraCompPorteador">
+          <Key>
+            <PropertyRef Name="IdOrdenCompra" />
+          </Key>
+          <Property Name="IdOrdenCompra" Type="int" Nullable="false" />
+          <Property Name="FactorConvTransporte" Type="decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioTransporte" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="Casetas" Type="decimal" Precision="18" Scale="4" />
         </EntityType>
         <EntityType Name="OrdenCompraEstatus">
           <Key>
@@ -966,6 +1037,21 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Iva" Type="decimal" Precision="18" Scale="4" />
           <Property Name="Ieps" Type="decimal" Precision="18" Scale="4" />
           <Property Name="Total" Type="decimal" Precision="18" Scale="4" />
+        </EntityType>
+        <EntityType Name="OrdenCompraPago">
+          <Key>
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdOrdenCompra" Type="int" Nullable="false" />
+          <Property Name="Orden" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdFormaPago" Type="tinyint" Nullable="false" />
+          <Property Name="IdBanco" Type="smallint" Nullable="false" />
+          <Property Name="CuentaBancaria" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="MontoPagado" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="UrlPathCapturaPantalla" Type="varchar" MaxLength="350" Nullable="false" />
+          <Property Name="PhysicalPathCapturaPantalla" Type="varchar" MaxLength="350" Nullable="false" />
+          <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <EntityType Name="OrdenCompraProducto">
           <Key>
@@ -2338,6 +2424,68 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CPrecioVenta_CPrecioVentaEstatus">
+          <End Role="CPrecioVentaEstatus" Type="Self.CPrecioVentaEstatus" Multiplicity="1" />
+          <End Role="CPrecioVenta" Type="Self.CPrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CPrecioVentaEstatus">
+              <PropertyRef Name="IdPrecioVentaEstatus" />
+            </Principal>
+            <Dependent Role="CPrecioVenta">
+              <PropertyRef Name="IdPrecioVentaEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPrecioVenta_CProducto">
+          <End Role="CProducto" Type="Self.CProducto" Multiplicity="1" />
+          <End Role="CPrecioVenta" Type="Self.CPrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProducto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="CPrecioVenta">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPrecioVenta_CProductoCategoria">
+          <End Role="CProductoCategoria" Type="Self.CProductoCategoria" Multiplicity="1" />
+          <End Role="CPrecioVenta" Type="Self.CPrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoCategoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="CPrecioVenta">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPrecioVenta_CProductoLinea">
+          <End Role="CProductoLinea" Type="Self.CProductoLinea" Multiplicity="1" />
+          <End Role="CPrecioVenta" Type="Self.CPrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CProductoLinea">
+              <PropertyRef Name="IdProductoLinea" />
+            </Principal>
+            <Dependent Role="CPrecioVenta">
+              <PropertyRef Name="IdProductoLinea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPrecioVenta_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CPrecioVenta" Type="Self.CPrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="CPrecioVenta">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CProducto_CCuentaContable">
           <End Role="CCuentaContable" Type="Self.CCuentaContable" Multiplicity="1" />
           <End Role="CProducto" Type="Self.CProducto" Multiplicity="*" />
@@ -2860,6 +3008,48 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrdenCompraCompExpedidor_OrdenCompra">
+          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrdenCompraCompExpedidor" Type="Self.OrdenCompraCompExpedidor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraCompExpedidor">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompraCompFactura_OrdenCompra">
+          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrdenCompraCompFactura" Type="Self.OrdenCompraCompFactura" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraCompFactura">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompraCompPorteador_OrdenCompra">
+          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrdenCompraCompPorteador" Type="Self.OrdenCompraCompPorteador" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraCompPorteador">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrdenCompraImporte_OrdenCompra">
           <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2870,6 +3060,20 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="IdOrdenCompra" />
             </Principal>
             <Dependent Role="OrdenCompraImporte">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompraPago_OrdenCompra">
+          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrdenCompraPago" Type="Self.OrdenCompraPago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraPago">
               <PropertyRef Name="IdOrdenCompra" />
             </Dependent>
           </ReferentialConstraint>
@@ -3278,6 +3482,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="COperadorChofer" EntityType="Self.COperadorChofer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CPais" EntityType="Self.CPais" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CPipa" EntityType="Self.CPipa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CPrecioVenta" EntityType="Self.CPrecioVenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CPrecioVentaEstatus" EntityType="Self.CPrecioVentaEstatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CProducto" EntityType="Self.CProducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CProductoCategoria" EntityType="Self.CProductoCategoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CProductoLinea" EntityType="Self.CProductoLinea" Schema="dbo" store:Type="Tables" />
@@ -3303,8 +3509,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="EmpresaImagen" EntityType="Self.EmpresaImagen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImagenDe" EntityType="Self.ImagenDe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrdenCompra" EntityType="Self.OrdenCompra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenCompraCompExpedidor" EntityType="Self.OrdenCompraCompExpedidor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenCompraCompFactura" EntityType="Self.OrdenCompraCompFactura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenCompraCompPorteador" EntityType="Self.OrdenCompraCompPorteador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrdenCompraEstatus" EntityType="Self.OrdenCompraEstatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrdenCompraImporte" EntityType="Self.OrdenCompraImporte" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrdenCompraPago" EntityType="Self.OrdenCompraPago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrdenCompraProducto" EntityType="Self.OrdenCompraProducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Requisicion" EntityType="Self.Requisicion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequisicionAlmacen" EntityType="Self.RequisicionAlmacen" Schema="dbo" store:Type="Tables" />
@@ -3716,6 +3926,26 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="CPipa" EntitySet="CPipa" />
           </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_CPrecioVentaEstatus" Association="Self.FK_CPrecioVenta_CPrecioVentaEstatus">
+            <End Role="CPrecioVentaEstatus" EntitySet="CPrecioVentaEstatus" />
+            <End Role="CPrecioVenta" EntitySet="CPrecioVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_CProducto" Association="Self.FK_CPrecioVenta_CProducto">
+            <End Role="CProducto" EntitySet="CProducto" />
+            <End Role="CPrecioVenta" EntitySet="CPrecioVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_CProductoCategoria" Association="Self.FK_CPrecioVenta_CProductoCategoria">
+            <End Role="CProductoCategoria" EntitySet="CProductoCategoria" />
+            <End Role="CPrecioVenta" EntitySet="CPrecioVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_CProductoLinea" Association="Self.FK_CPrecioVenta_CProductoLinea">
+            <End Role="CProductoLinea" EntitySet="CProductoLinea" />
+            <End Role="CPrecioVenta" EntitySet="CPrecioVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_Empresa" Association="Self.FK_CPrecioVenta_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="CPrecioVenta" EntitySet="CPrecioVenta" />
+          </AssociationSet>
           <AssociationSet Name="FK_CProducto_CCuentaContable" Association="Self.FK_CProducto_CCuentaContable">
             <End Role="CCuentaContable" EntitySet="CCuentaContable" />
             <End Role="CProducto" EntitySet="CProducto" />
@@ -3884,9 +4114,25 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="OrdenCompra" EntitySet="OrdenCompra" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompraCompExpedidor_OrdenCompra" Association="Self.FK_OrdenCompraCompExpedidor_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraCompExpedidor" EntitySet="OrdenCompraCompExpedidor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompraCompFactura_OrdenCompra" Association="Self.FK_OrdenCompraCompFactura_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraCompFactura" EntitySet="OrdenCompraCompFactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompraCompPorteador_OrdenCompra" Association="Self.FK_OrdenCompraCompPorteador_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraCompPorteador" EntitySet="OrdenCompraCompPorteador" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrdenCompraImporte_OrdenCompra" Association="Self.FK_OrdenCompraImporte_OrdenCompra">
             <End Role="OrdenCompra" EntitySet="OrdenCompra" />
             <End Role="OrdenCompraImporte" EntitySet="OrdenCompraImporte" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompraPago_OrdenCompra" Association="Self.FK_OrdenCompraPago_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraPago" EntitySet="OrdenCompraPago" />
           </AssociationSet>
           <AssociationSet Name="FK_OrdenCompraProducto_CCentroCosto" Association="Self.FK_OrdenCompraProducto_CCentroCosto">
             <End Role="CCentroCosto" EntitySet="CCentroCosto" />
@@ -4117,6 +4363,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="PuntosVenta" Relationship="Sagas.MainModuleModel.FK_CPuntoVenta_Empresa" FromRole="Empresa" ToRole="PuntoVenta" />
           <NavigationProperty Name="UnidadesAlmacenGasCilindro" Relationship="Sagas.MainModuleModel.FK_CAlmacenGasCilindro_Empresa" FromRole="Empresa" ToRole="UnidadAlmacenGasCilindro" />
           <NavigationProperty Name="OperadoresChoferes" Relationship="Sagas.MainModuleModel.FK_COperadorChofer_Empresa" FromRole="Empresa" ToRole="OperadorChofer" />
+          <NavigationProperty Name="PreciosVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_Empresa" FromRole="Empresa" ToRole="PrecioVenta" />
                     
           <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaFiscal_Empresa" FromRole="EmpresaFiscal" ToRole="Empresa" />          
@@ -5289,6 +5536,48 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Empresa" EntitySet="Empresa" />
             <End Role="OperadorChofer" EntitySet="OperadorChofer" />
           </AssociationSet>
+          <!--<EntitySet Name="OrdenCompraCompExpedidor" EntityType="Sagas.MainModuleModel.OrdenCompraCompExpedidor" />
+          <EntitySet Name="OrdenCompraCompFactura" EntityType="Sagas.MainModuleModel.OrdenCompraCompFactura" />
+          <EntitySet Name="OrdenCompraCompPorteador" EntityType="Sagas.MainModuleModel.OrdenCompraCompPorteador" />-->
+          <EntitySet Name="OrdenCompraPago" EntityType="Sagas.MainModuleModel.OrdenCompraPago" />
+          <!--<AssociationSet Name="FK_OrdenCompraCompExpedidor_OrdenCompra" Association="Sagas.MainModuleModel.FK_OrdenCompraCompExpedidor_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraCompExpedidor" EntitySet="OrdenCompraCompExpedidor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompraCompFactura_OrdenCompra" Association="Sagas.MainModuleModel.FK_OrdenCompraCompFactura_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraCompFactura" EntitySet="OrdenCompraCompFactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrdenCompraCompPorteador_OrdenCompra" Association="Sagas.MainModuleModel.FK_OrdenCompraCompPorteador_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraCompPorteador" EntitySet="OrdenCompraCompPorteador" />
+          </AssociationSet>-->
+          <AssociationSet Name="FK_OrdenCompraPago_OrdenCompra" Association="Sagas.MainModuleModel.FK_OrdenCompraPago_OrdenCompra">
+            <End Role="OrdenCompra" EntitySet="OrdenCompra" />
+            <End Role="OrdenCompraPago" EntitySet="OrdenCompraPago" />
+          </AssociationSet>
+          <EntitySet Name="PrecioVenta" EntityType="Sagas.MainModuleModel.PrecioVenta" />
+          <EntitySet Name="PrecioVentaEstatus" EntityType="Sagas.MainModuleModel.PrecioVentaEstatus" />
+          <AssociationSet Name="FK_CPrecioVenta_CPrecioVentaEstatus" Association="Sagas.MainModuleModel.FK_CPrecioVenta_CPrecioVentaEstatus">
+            <End Role="PrecioVentaEstatus" EntitySet="PrecioVentaEstatus" />
+            <End Role="PrecioVenta" EntitySet="PrecioVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_CProducto" Association="Sagas.MainModuleModel.FK_CPrecioVenta_CProducto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="PrecioVenta" EntitySet="PrecioVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_CProductoCategoria" Association="Sagas.MainModuleModel.FK_CPrecioVenta_CProductoCategoria">
+            <End Role="CategoriaProducto" EntitySet="CategoriaProducto" />
+            <End Role="PrecioVenta" EntitySet="PrecioVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_CProductoLinea" Association="Sagas.MainModuleModel.FK_CPrecioVenta_CProductoLinea">
+            <End Role="LineaProducto" EntitySet="LineaProducto" />
+            <End Role="PrecioVenta" EntitySet="PrecioVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CPrecioVenta_Empresa" Association="Sagas.MainModuleModel.FK_CPrecioVenta_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="PrecioVenta" EntitySet="PrecioVenta" />
+          </AssociationSet>
           <!--<AssociationSet Name="FK_RolAccionMovil_Rol" Association="Sagas.MainModuleModel.FK_RolAccionMovil_Rol">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="RolAccionMovil" EntitySet="RolAccionMovil" />
@@ -5568,6 +5857,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="RequisicionProducto" Relationship="Sagas.MainModuleModel.FK_RequisicionProducto_Producto" FromRole="Producto" ToRole="RequisicionProducto" />
           <NavigationProperty Name="OrdenCompraProducto" Relationship="Sagas.MainModuleModel.FK_OrdenCompraProducto_CProducto" FromRole="Producto" ToRole="OrdenCompraProducto" />          
           <NavigationProperty Name="CuentaContable" Relationship="Sagas.MainModuleModel.FK_CProducto_CCuentaContable" FromRole="Producto" ToRole="CuentaContable" />
+          <NavigationProperty Name="PrecioVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProducto" FromRole="Producto" ToRole="PrecioVenta" />
                  
         </EntityType>
         <EntityType Name="CategoriaProducto">
@@ -5582,6 +5872,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Productos" Relationship="Sagas.MainModuleModel.FK_Producto_CategoriaProducto" FromRole="CategoriaProducto" ToRole="Producto" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CategoriaProducto_Empresa" FromRole="CategoriaProducto" ToRole="Empresa" />
+          <NavigationProperty Name="PrecioVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProductoCategoria" FromRole="CategoriaProducto" ToRole="PrecioVenta" />
         </EntityType>
         <EntityType Name="LineaProducto">
           <Key>
@@ -5595,6 +5886,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Producto" Relationship="Sagas.MainModuleModel.FK_Producto_LineaProducto" FromRole="LineaProducto" ToRole="Producto" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_LineaProducto_Empresa" FromRole="LineaProducto" ToRole="Empresa" />
+          <NavigationProperty Name="PrecioVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProductoLinea" FromRole="LineaProducto" ToRole="PrecioVenta" />
         </EntityType>
         <EntityType Name="TipoServicioOProducto">
           <Key>
@@ -5734,6 +6026,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Activo" Type="Boolean" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaAutorizacion" Type="DateTime" Precision="0" />
+          <Property Name="FechaComplemento" Type="DateTime" Precision="0" />
 
           <!--"OrdenCompraImporte"
           <Property Name="IdOrdenCompra" Type="Int32" Nullable="false" />-->
@@ -5742,6 +6035,26 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="Iva" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="Ieps" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="Total" Type="Decimal" Precision="18" Scale="4" />
+          
+          <!--<EntityType Name="OrdenCompraCompExpedidor">-->
+          <Property Name="MontBelvieuDlls" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="TarifaServicioPorGalonDlls" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="TipoDeCambioDOF" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioPorGalon" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="FactorGalonALitros" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="ImporteEnLitros" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="FactorCompraLitrosAKilos" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="PVPM" Type="Decimal" Precision="18" Scale="4" />
+          
+          <!--"OrdenCompraCompFactura"-->
+          <Property Name="FolioFiscalUUID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FolioFactura" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaResgistroFactura" Type="DateTime" Precision="0" />
+          
+          <!--"OrdenCompraCompPorteador"-->
+          <Property Name="FactorConvTransporte" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioTransporte" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Casetas" Type="Decimal" Precision="18" Scale="4" />
           
           <NavigationProperty Name="Proveedor" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_Proveedor" FromRole="OrdenCompra" ToRole="Proveedor" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_Empresa" FromRole="OrdenCompra" ToRole="Empresa" />
@@ -5753,10 +6066,38 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="AlmacenGasDescarga1" Relationship="Sagas.MainModuleModel.FK_AlmacenGasDescarga_OrdenCompra_Porteador" FromRole="OrdenCompra" ToRole="AlmacenGasDescarga" />
           <NavigationProperty Name="EntradasAAlmacenMercancias" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_OrdenCompra" FromRole="OrdenCompra" ToRole="AlmacenEntradaProducto" />
           <NavigationProperty Name="UsuarioAutorizador" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_UsuarioAutorizador" FromRole="OrdenCompra" ToRole="Usuario" />
-          <NavigationProperty Name="UsuarioGenerador" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_UsuarioGenerador" FromRole="OrdenCompra" ToRole="Usuario" />
-                              
+          <NavigationProperty Name="UsuarioGenerador" Relationship="Sagas.MainModuleModel.FK_OrdenCompra_UsuarioGenerador" FromRole="OrdenCompra" ToRole="Usuario" />          
+          <!--<NavigationProperty Name="OrdenCompraCompExpedidor" Relationship="Sagas.MainModuleModel.FK_OrdenCompraCompExpedidor_OrdenCompra" FromRole="OrdenCompra" ToRole="OrdenCompraCompExpedidor" />
+          <NavigationProperty Name="OrdenCompraCompFactura" Relationship="Sagas.MainModuleModel.FK_OrdenCompraCompFactura_OrdenCompra" FromRole="OrdenCompra" ToRole="OrdenCompraCompFactura" />
+          <NavigationProperty Name="OrdenCompraCompPorteador" Relationship="Sagas.MainModuleModel.FK_OrdenCompraCompPorteador_OrdenCompra" FromRole="OrdenCompra" ToRole="OrdenCompraCompPorteador" />-->
+          <NavigationProperty Name="OrdenCompraPago" Relationship="Sagas.MainModuleModel.FK_OrdenCompraPago_OrdenCompra" FromRole="OrdenCompra" ToRole="OrdenCompraPago" />                              
           <!--<NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompraImporte_OrdenCompra" FromRole="OrdenCompraImporte" ToRole="OrdenCompra" />-->
+          <!--<NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompraCompExpedidor_OrdenCompra" FromRole="OrdenCompraCompExpedidor" ToRole="OrdenCompra" />
+          <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompraCompFactura_OrdenCompra" FromRole="OrdenCompraCompFactura" ToRole="OrdenCompra" />
+          <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompraCompPorteador_OrdenCompra" FromRole="OrdenCompraCompPorteador" ToRole="OrdenCompra" />-->
         </EntityType>
+        <EntityType Name="OrdenCompraPago">
+          <Key>
+            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdOrdenCompra" Type="Int32" Nullable="false" />
+          <Property Name="Orden" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdFormaPago" Type="Byte" Nullable="false" />
+          <Property Name="IdBanco" Type="Int16" Nullable="false" />
+          <Property Name="CuentaBancaria" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="MontoPagado" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="UrlPathCapturaPantalla" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="PhysicalPathCapturaPantalla" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompraPago_OrdenCompra" FromRole="OrdenCompraPago" ToRole="OrdenCompra" />
+        </EntityType>
+        
+        
+        
+        
+        
+        
         <EntityType Name="OrdenCompraProducto">
           <Key>
             <PropertyRef Name="IdOrdenCompra" />
@@ -6179,6 +6520,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CapacidadTanqueLt" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="CapacidadTanqueKg" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="PorcenMagnatelPapeleta" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="MasaKg" Type="Decimal" Precision="18" Scale="4" />          
           <Property Name="PresionTanque" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="Sello" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="ValorCarga" Type="Decimal" Precision="18" Scale="4" />
@@ -8251,6 +8593,168 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        
+        <!--<Association Name="FK_OrdenCompraCompExpedidor_OrdenCompra">
+          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.OrdenCompraCompExpedidor" Role="OrdenCompraCompExpedidor" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraCompExpedidor">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompraCompFactura_OrdenCompra">
+          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.OrdenCompraCompFactura" Role="OrdenCompraCompFactura" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraCompFactura">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrdenCompraCompPorteador_OrdenCompra">
+          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.OrdenCompraCompPorteador" Role="OrdenCompraCompPorteador" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraCompPorteador">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->
+        <Association Name="FK_OrdenCompraPago_OrdenCompra">
+          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.OrdenCompraPago" Role="OrdenCompraPago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrdenCompra">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Principal>
+            <Dependent Role="OrdenCompraPago">
+              <PropertyRef Name="IdOrdenCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PrecioVenta">
+          <Key>
+            <PropertyRef Name="IdPrecioVenta" />
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdPrecioVenta" Type="Int16" Nullable="false" />
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="IdPrecioVentaEstatus" Type="Byte" Nullable="false" />
+          <Property Name="IdCategoria" Type="Int16" Nullable="false" />
+          <Property Name="IdProductoLinea" Type="Int16" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
+          <Property Name="Categoria" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Linea" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Producto" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PrecioActual" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioPemexKg" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioPemexLt" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="UtilidadEsperadaKg" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="UtilidadEsperadaLt" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioSalida" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioSalidaKg" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="PrecioSalidaLt" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="EsGas" Type="Boolean" Nullable="false" />
+          <Property Name="FechaProgramada" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaVencimiento" Type="DateTime" Precision="0" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Estatus" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CPrecioVentaEstatus" FromRole="PrecioVenta" ToRole="PrecioVentaEstatus" />
+          <NavigationProperty Name="CProducto" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProducto" FromRole="PrecioVenta" ToRole="Producto" />
+          <NavigationProperty Name="CCategoria" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProductoCategoria" FromRole="PrecioVenta" ToRole="CategoriaProducto" />
+          <NavigationProperty Name="CLinea" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProductoLinea" FromRole="PrecioVenta" ToRole="LineaProducto" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_Empresa" FromRole="PrecioVenta" ToRole="Empresa" />
+        </EntityType>
+        <EntityType Name="PrecioVentaEstatus">
+          <Key>
+            <PropertyRef Name="IdPrecioVentaEstatus" />
+          </Key>
+          <Property Name="IdPrecioVentaEstatus" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripción" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="Boolean" Nullable="false" />
+          <Property Name="FechaRegsitro" Type="DateTime" Nullable="false" Precision="0" />
+          <!--<NavigationProperty Name="CPrecioVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CPrecioVentaEstatus" FromRole="CPrecioVentaEstatus" ToRole="CPrecioVenta" />-->
+        </EntityType>
+        <Association Name="FK_CPrecioVenta_CPrecioVentaEstatus">
+          <End Type="Sagas.MainModuleModel.PrecioVentaEstatus" Role="PrecioVentaEstatus" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.PrecioVenta" Role="PrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrecioVentaEstatus">
+              <PropertyRef Name="IdPrecioVentaEstatus" />
+            </Principal>
+            <Dependent Role="PrecioVenta">
+              <PropertyRef Name="IdPrecioVentaEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPrecioVenta_CProducto">
+          <End Type="Sagas.MainModuleModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.PrecioVenta" Role="PrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="PrecioVenta">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPrecioVenta_CProductoCategoria">
+          <End Type="Sagas.MainModuleModel.CategoriaProducto" Role="CategoriaProducto" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.PrecioVenta" Role="PrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CategoriaProducto">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="PrecioVenta">
+              <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPrecioVenta_CProductoLinea">
+          <End Type="Sagas.MainModuleModel.LineaProducto" Role="LineaProducto" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.PrecioVenta" Role="PrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LineaProducto">
+              <PropertyRef Name="IdProductoLinea" />
+            </Principal>
+            <Dependent Role="PrecioVenta">
+              <PropertyRef Name="IdProductoLinea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CPrecioVenta_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.PrecioVenta" Role="PrecioVenta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="PrecioVenta">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <!--<Association Name="FK_RolAccionMovil_Rol">
           <End Type="Sagas.MainModuleModel.Rol" Role="Rol" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -8766,6 +9270,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="OrdenCompra">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompra">
               <MappingFragment StoreEntitySet="OrdenCompra">
+                <ScalarProperty Name="FechaComplemento" ColumnName="FechaComplemento" />
                 <ScalarProperty Name="FechaAutorizacion" ColumnName="FechaAutorizacion" />
                 <ScalarProperty Name="IdUsuarioAutorizador" ColumnName="IdUsuarioAutorizador" />
                 <ScalarProperty Name="IdUsuarioGenerador" ColumnName="IdUsuarioGenerador" />
@@ -8792,8 +9297,36 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="SubtotalSinIva" ColumnName="SubtotalSinIva" />
                 <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
               </MappingFragment>
+
+              <MappingFragment StoreEntitySet="OrdenCompraCompExpedidor">
+                <ScalarProperty Name="PVPM" ColumnName="PVPM" />
+                <ScalarProperty Name="FactorCompraLitrosAKilos" ColumnName="FactorCompraLitrosAKilos" />
+                <ScalarProperty Name="ImporteEnLitros" ColumnName="ImporteEnLitros" />
+                <ScalarProperty Name="FactorGalonALitros" ColumnName="FactorGalonALitros" />
+                <ScalarProperty Name="PrecioPorGalon" ColumnName="PrecioPorGalon" />
+                <ScalarProperty Name="TipoDeCambioDOF" ColumnName="TipoDeCambioDOF" />
+                <ScalarProperty Name="TarifaServicioPorGalonDlls" ColumnName="TarifaServicioPorGalonDlls" />
+                <ScalarProperty Name="MontBelvieuDlls" ColumnName="MontBelvieuDlls" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+              </MappingFragment>
+
+              
+              <MappingFragment StoreEntitySet="OrdenCompraCompFactura">
+                <ScalarProperty Name="FechaResgistroFactura" ColumnName="FechaResgistroFactura" />
+                <ScalarProperty Name="FolioFactura" ColumnName="FolioFactura" />
+                <ScalarProperty Name="FolioFiscalUUID" ColumnName="FolioFiscalUUID" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+              </MappingFragment>
+
+
+              <MappingFragment StoreEntitySet="OrdenCompraCompPorteador">
+                <ScalarProperty Name="Casetas" ColumnName="Casetas" />
+                <ScalarProperty Name="PrecioTransporte" ColumnName="PrecioTransporte" />
+                <ScalarProperty Name="FactorConvTransporte" ColumnName="FactorConvTransporte" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+              </MappingFragment>
             </EntityTypeMapping>
-          </EntitySetMapping>
+          </EntitySetMapping>            
           <EntitySetMapping Name="OrdenCompraProducto">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompraProducto">
               <MappingFragment StoreEntitySet="OrdenCompraProducto">
@@ -8814,6 +9347,21 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="Categoria" ColumnName="Categoria" />
                 <ScalarProperty Name="Producto" ColumnName="Producto" />
                 <ScalarProperty Name="ProductoServicioTipo" ColumnName="ProductoServicioTipo" />
+                <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrdenCompraPago">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompraPago">
+              <MappingFragment StoreEntitySet="OrdenCompraPago">
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="PhysicalPathCapturaPantalla" ColumnName="PhysicalPathCapturaPantalla" />
+                <ScalarProperty Name="UrlPathCapturaPantalla" ColumnName="UrlPathCapturaPantalla" />
+                <ScalarProperty Name="MontoPagado" ColumnName="MontoPagado" />
+                <ScalarProperty Name="CuentaBancaria" ColumnName="CuentaBancaria" />
+                <ScalarProperty Name="IdBanco" ColumnName="IdBanco" />
+                <ScalarProperty Name="IdFormaPago" ColumnName="IdFormaPago" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
                 <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -8885,6 +9433,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
             
               <MappingFragment StoreEntitySet="AlmacenEntradaGasDescargaPuerta">
+                <ScalarProperty Name="MasaKg" ColumnName="MasaKg" />
                 <ScalarProperty Name="FechaEntraGas" ColumnName="FechaEntraGas" />
                 <ScalarProperty Name="PorcenMagnatelOcular" ColumnName="PorcenMagnatelOcular" />
                 <ScalarProperty Name="NombreResponsable" ColumnName="NombreResponsable" />
@@ -9499,6 +10048,44 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdTipoOperadorChofer" ColumnName="IdTipoOperadorChofer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrecioVenta">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.PrecioVenta">
+              <MappingFragment StoreEntitySet="CPrecioVenta">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaVencimiento" ColumnName="FechaVencimiento" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="FechaProgramada" ColumnName="FechaProgramada" />
+                <ScalarProperty Name="EsGas" ColumnName="EsGas" />
+                <ScalarProperty Name="PrecioSalidaLt" ColumnName="PrecioSalidaLt" />
+                <ScalarProperty Name="PrecioSalidaKg" ColumnName="PrecioSalidaKg" />
+                <ScalarProperty Name="PrecioSalida" ColumnName="PrecioSalida" />
+                <ScalarProperty Name="UtilidadEsperadaLt" ColumnName="UtilidadEsperadaLt" />
+                <ScalarProperty Name="UtilidadEsperadaKg" ColumnName="UtilidadEsperadaKg" />
+                <ScalarProperty Name="PrecioPemexLt" ColumnName="PrecioPemexLt" />
+                <ScalarProperty Name="PrecioPemexKg" ColumnName="PrecioPemexKg" />
+                <ScalarProperty Name="PrecioActual" ColumnName="PrecioActual" />
+                <ScalarProperty Name="Producto" ColumnName="Producto" />
+                <ScalarProperty Name="Linea" ColumnName="Linea" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdProductoLinea" ColumnName="IdProductoLinea" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="IdPrecioVentaEstatus" ColumnName="IdPrecioVentaEstatus" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdPrecioVenta" ColumnName="IdPrecioVenta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PrecioVentaEstatus">
+            <EntityTypeMapping TypeName="Sagas.MainModuleModel.PrecioVentaEstatus">
+              <MappingFragment StoreEntitySet="CPrecioVentaEstatus">
+                <ScalarProperty Name="FechaRegsitro" ColumnName="FechaRegsitro" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Descripción" ColumnName="Descripción" />
+                <ScalarProperty Name="IdPrecioVentaEstatus" ColumnName="IdPrecioVentaEstatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>          

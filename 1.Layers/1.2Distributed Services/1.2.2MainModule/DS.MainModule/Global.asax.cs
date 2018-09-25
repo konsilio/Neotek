@@ -8,6 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Timers;
 using System.Configuration;
+using Application.MainModule.Servicios.Almacen;
 
 namespace DS.MainModule
 {
@@ -21,13 +22,12 @@ namespace DS.MainModule
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            this.Timer();
+            //this.Timer();
         }
 
         public void EjecutaServicios(object source, ElapsedEventArgs e)
         {
-            //Notificacion24Hrs.MailDisponibilidad();
-            //servTipoCambio.GenerarTipoCambioDelDia();
+            AlmacenGasServicio.ProcesarInventario();
         }
 
         private void Timer()

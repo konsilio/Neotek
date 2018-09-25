@@ -43,6 +43,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 CapacidadTanqueLt = papeletaDto.CapacidadTanque,
                 //CapacidadTanqueKg = papeletaDto,
                 PorcenMagnatelPapeleta = papeletaDto.PorcentajeTanque,
+                MasaKg = Convert.ToDecimal(papeletaDto.Masa),
                 PresionTanque = papeletaDto.PresionTanque,
                 Sello = papeletaDto.Sello,
                 ValorCarga = papeletaDto.ValorCarga,

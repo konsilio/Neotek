@@ -130,31 +130,32 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             List<OrdenCompra> oc = ocDTO.Select(x => FromDTO(x)).ToList();
             return oc;
         }
-        public static OrdenCompra FromEntity(OrdenCompra ocDTO)
+        public static OrdenCompra FromEntity(OrdenCompra oc)
         {
-            OrdenCompra oc = new OrdenCompra
+            return new OrdenCompra
             {
-                IdEmpresa = ocDTO.IdEmpresa,
-                IdOrdenCompraEstatus = ocDTO.IdOrdenCompraEstatus,
-                IdRequisicion = ocDTO.IdRequisicion,
-                IdOrdenCompra = ocDTO.IdOrdenCompra,
-                NumOrdenCompra = ocDTO.NumOrdenCompra,
-                IdProveedor = ocDTO.IdProveedor,
-                IdUsuarioGenerador = ocDTO.IdUsuarioGenerador,
-                IdCentroCosto = ocDTO.IdCentroCosto,
-                FechaRegistro = ocDTO.FechaRegistro,
-                IdCuentaContable = ocDTO.IdCuentaContable,
-                EsActivoVenta = ocDTO.EsActivoVenta,
-                EsGas = ocDTO.EsGas,
-                Activo = ocDTO.Activo,
-                SubtotalSinIva = ocDTO.SubtotalSinIva,
-                SubtotalSinIeps = ocDTO.SubtotalSinIeps,
-                Iva = ocDTO.Iva,
-                Ieps = ocDTO.Ieps,
-                Total = ocDTO.Total,
-                EsTransporteGas = ocDTO.EsTransporteGas
-            };
-            return oc;
+                IdEmpresa = oc.IdEmpresa,
+                IdOrdenCompraEstatus = oc.IdOrdenCompraEstatus,
+                IdRequisicion = oc.IdRequisicion,
+                IdOrdenCompra = oc.IdOrdenCompra,                
+                IdProveedor = oc.IdProveedor,
+                IdUsuarioGenerador = oc.IdUsuarioGenerador,
+                IdUsuarioAutorizador = oc.IdUsuarioAutorizador,
+                IdCentroCosto = oc.IdCentroCosto,
+                IdCuentaContable = oc.IdCuentaContable,
+                FechaRegistro = oc.FechaRegistro,
+                NumOrdenCompra = oc.NumOrdenCompra,                
+                EsActivoVenta = oc.EsActivoVenta,
+                EsGas = oc.EsGas,
+                Activo = oc.Activo,
+                SubtotalSinIva = oc.SubtotalSinIva,
+                SubtotalSinIeps = oc.SubtotalSinIeps,
+                Iva = oc.Iva,
+                Ieps = oc.Ieps,
+                Total = oc.Total,
+                EsTransporteGas = oc.EsTransporteGas,
+                FechaAutorizacion = oc.FechaAutorizacion,                              
+            };            
         }
 
         public static OrdenCompraEstatusDTO ToDTO(OrdenCompraEstatus est)
