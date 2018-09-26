@@ -11,13 +11,15 @@ namespace Sagas.MainModule.Entidades
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class Rol
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Rol()
         {
             this.UsuariosRoles = new HashSet<UsuarioRol>();
+            this.Usuarios = this.UsuariosRoles.Select(x => x.Usuario).ToList();
         }
     
         public short IdRol { get; set; }

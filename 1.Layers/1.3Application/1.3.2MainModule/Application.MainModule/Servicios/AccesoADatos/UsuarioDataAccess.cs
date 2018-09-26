@@ -154,11 +154,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public Usuario Buscar(int idUsuario)
         {
-            return uow.Repository<Usuario>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
+            var usuario = uow.Repository<Usuario>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
                                                          && x.Activo);
-            //usuario.Roles = usuario.UsuarioRoles.Select(x => x.Roles).ToList(); /*uow.Repository<Rol>().Get(x=> x.IdRol.).;*/
+            usuario.Roles = usuario.UsuarioRoles.Select(x => x.Role).ToList(); /*uow.Repository<Rol>().Get(x=> x.IdRol.).;*/
 
-            //return usuario;
+            return usuario;
         }
 
         public Sagas.MainModule.Usuario BuscarUser(int idUsuario)

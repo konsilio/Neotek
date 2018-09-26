@@ -10,7 +10,7 @@ namespace Sagas.MainModule.Entidades
     {
         // Colocar en el constructor de la entidad autogenerada HASTA EL FINAL
         // using System.Linq;
-        //this.Usuarios = this.UsuariosRoles.Select(x => x.Usuarios).ToList();
+        //this.Usuario = this.UsuariosRoles.Select(x => x.Usuario).ToList();
         public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }
