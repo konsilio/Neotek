@@ -78,5 +78,18 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 ValorCarga = descarga.ValorCarga,
             };
         }
+
+        public static AlmacenGasDescargaFoto FromEmtity(AlmacenGasDescargaFoto img)
+        {
+            return new AlmacenGasDescargaFoto
+            {
+                IdAlmacenEntradaGasDescarga = img.IdAlmacenEntradaGasDescarga,
+                Orden = img.Orden,
+                IdImagenDe = img.IdImagenDe,
+                CadenaBase64 = img.CadenaBase64,
+                PathImagen = img.PathImagen,
+                UrlImagen = img.UrlImagen
+            };
+        }
     }
 }

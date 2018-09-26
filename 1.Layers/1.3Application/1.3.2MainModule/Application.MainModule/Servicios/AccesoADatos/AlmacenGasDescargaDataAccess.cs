@@ -102,7 +102,17 @@ namespace Application.MainModule.Servicios.AccesoADatos
                             //    uow.Repository<AlmacenGasMovimiento>().Insert(desDto.MovInventario);
 
                             if (desDto.DescargaSinNavigationProperties != null)
+                            {
+                                if (desDto.DescargaSinNavigationProperties.Fotos != null && desDto.DescargaSinNavigationProperties.Fotos.Count > 0)
+                                {
+                                    desDto.DescargaSinNavigationProperties.Fotos.ToList().ForEach(x =>
+                                        uow.Repository<AlmacenGasDescargaFoto>().Update(x)
+                                    );
+
+                                    desDto.DescargaSinNavigationProperties.Fotos = null;
+                                }
                                 uow.Repository<AlmacenGasDescarga>().Update(desDto.DescargaSinNavigationProperties);
+                            }
                         }
                         uow.SaveChanges();
                         //_respuesta.Id = _almDes.IdAlmacenEntradaGasDescarga;

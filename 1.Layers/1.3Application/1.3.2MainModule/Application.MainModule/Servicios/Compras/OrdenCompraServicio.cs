@@ -159,8 +159,6 @@ namespace Application.MainModule.Servicios.Compras
 
         public static AplicaDescargaDto AplicarDescarga(AplicaDescargaDto apDesDto, AlmacenGasDescarga descarga, Empresa empresa)
         {
-            descarga.Fotos.
-
             OrdenCompra OCExpedidor = OrdenComprasAdapter.FromEntity(BuscarOCExpedidor(descarga));
             OrdenCompra OCPorteador = OrdenComprasAdapter.FromEntity(BuscarOCPorteador(descarga));
             OrdenCompra OCExpUltima = BuscarUltimaOCGas(empresa);

@@ -20,6 +20,7 @@ namespace Application.MainModule.Servicios
             foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
             foto.PathImagen = GenerarNombre(foto.Orden.ToString(), foto.PathImagen);
             foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);
+            foto.CadenaBase64 = null;
             imagen.Save(foto.PathImagen);
             return foto;
         }

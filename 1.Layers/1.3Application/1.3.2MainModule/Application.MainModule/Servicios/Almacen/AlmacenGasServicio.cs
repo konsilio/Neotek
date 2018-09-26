@@ -72,7 +72,10 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().BuscarTodas(idEmpresa);
         }
-
+        public static List<AlmacenGasDescarga> ObtenerDescargasNoProcesadas()
+        {
+            return new AlmacenGasDataAccess().BuscarTodasNoProcesadas();
+        }
         public static List<UnidadAlmacenGas> ObtenerEstaciones(short idEmpresa)
         {            
             return new AlmacenGasDataAccess().BuscarTodosEstacionCarburacion(idEmpresa);
@@ -244,7 +247,7 @@ namespace Application.MainModule.Servicios.Almacen
         public static List<AplicaDescargaDto> AplicarDescargas()
         {
             List<AplicaDescargaDto> aplicaciones = new List<AplicaDescargaDto>();
-            List<AlmacenGasDescarga> descargasGas = ObtenerDescargasTodas();
+            List<AlmacenGasDescarga> descargasGas = ObtenerDescargasNoProcesadas();
 
             if (descargasGas != null && descargasGas.Count > 0)
             {                
@@ -279,9 +282,9 @@ namespace Application.MainModule.Servicios.Almacen
             unidadEntrada.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdeKilos(unidadEntrada.CantidadActualKg, empresa.FactorLitrosAKilos);
             unidadEntrada.PorcentajeActual = descarga.PorcenMagnatelOcularAlmacenFIN.Value;
 
-            descarga = GenerarImagenes(descarga);
+            descarga.DatosProcesados = true;
 
-            return new AplicaDescargaDto()
+            var aplicaDescarga = new AplicaDescargaDto()
             {
                 Descarga = descarga,
                 DescargaSinNavigationProperties = AlmacenGasAdapter.FromEmtity(descarga),
@@ -295,21 +298,28 @@ namespace Application.MainModule.Servicios.Almacen
                 CantidadCONRemanenteKg = kilogramosRealesTractor,
                 CantidadCONRemanenteLt = litrosRealesTractor,
             };
+
+            aplicaDescarga.DescargaSinNavigationProperties.Fotos = GenerarImagenes(descarga);
+            return aplicaDescarga;
         }
 
-        public static AlmacenGasDescarga GenerarImagenes(AlmacenGasDescarga descarga)
+        public static List<AlmacenGasDescargaFoto> GenerarImagenes(AlmacenGasDescarga descarga)
         {
-            int i = 0;
-            foreach (var foto in descarga.Fotos)
-            {
-                var img = ImagenServicio.ObtenerImagen(foto);
+            var fotos = new List<AlmacenGasDescargaFoto>();
 
-                descarga.Fotos.ElementAt(i).CadenaBase64 = null;
-                descarga.Fotos.ElementAt(i).PathImagen = img.PathImagen;
-                descarga.Fotos.ElementAt(i).UrlImagen = img.UrlImagen;
-                i++;
+            if (descarga.Fotos != null && descarga.Fotos.Count > 0)
+            {
+                int i = 0;
+                foreach (var imagen in descarga.Fotos)
+                {
+                    var img = ImagenServicio.ObtenerImagen(imagen);
+                    var foto = AlmacenGasAdapter.FromEmtity(img);
+                    fotos.Add(foto);
+                    i++;
+                }
             }
-            return descarga;
+
+            return fotos;
         }
     }
 }
