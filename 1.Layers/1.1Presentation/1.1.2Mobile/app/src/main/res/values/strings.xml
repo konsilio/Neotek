@@ -172,5 +172,9 @@
     <string name="seleccione_la_estacion_de_carburacion_a_calibrar">Seleccione la estación de carburación a calibrar</string>
     <string name="selecciona_la_pipa_de_salida_calibracion">Selecciona la Pipa de salida:</string>
     <string name="selecciona_destino_de_las_pruebas">Selecciona destino de las pruebas:</string>
+    <string name="calibracion_pipa"><u>Calibración-Pipa</u></string>
+    <string name="porcentaje_de_calibracion">Porcentaje de Calibración</string>
+    <string name="registra_el_porcentaje_de_calibracion_configurado">Registra el porcentaje de calibracion configurado</string>
+    <string name="confirmacion_configuracion"><![CDATA[El porcentaje configurado no coicide con la configuración predeterminada de la empresa <n>¿Desea continuar con esta configuración?<n>]]></string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
 </resources>

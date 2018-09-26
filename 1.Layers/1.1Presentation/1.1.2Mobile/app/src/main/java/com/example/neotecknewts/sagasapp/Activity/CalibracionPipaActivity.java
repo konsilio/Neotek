@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,12 +30,13 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
             SCalibracionPipaActivityPruebas;
     Button BtnCalibracionPipaActivityGuardar;
 
-    boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
+    boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal,EsTanquePipaFinalPruebas;
     CalibracionDTO calibracionDTO;
     DatosCalibracionDTO datosCalibracionDTO;
     Session session;
     ProgressDialog  progressDialog;
     CalibracionPipaPresenter presenter;
+    String[] list_pipa_salida,list_tipo_medidor,list_destino_pruebas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,9 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
         calibracionDTO = new CalibracionDTO();
         session = new Session(this);
         presenter = new CalibracionPipaPresenterImpl(this);
-        presenter.getList(session.getToken(),EsCalibracionPipaFinal);
+        list_pipa_salida = new String[]{"Pipa No. 1","Pipa No. 2"};
+        list_tipo_medidor = new String[]{"Magnatel","Rotogate"};
+        list_destino_pruebas = new String[]{"Tanque de la pipa","Tanque portatil"};
 
         TVCalibracionPipaActivityTitulo = findViewById(R.id.TVCalibracionPipaActivityTitulo);
         TVCalibracionPipaActivityTituloPipa = findViewById(R.id.TVCalibracionPipaActivityTituloPipa);
@@ -110,15 +114,34 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                if(SCalibracionPipaActivityPruebas.getSelectedItem().equals("Tanque de la pipa")){
+                    EsTanquePipaFinalPruebas = true;
+                }else{
+                    EsTanquePipaFinalPruebas = false;
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                EsTanquePipaFinalPruebas = true;
             }
         });
-
+        SCalibracionPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(
+                this,
+                R.layout.custom_spinner,
+                list_pipa_salida
+        ));
+        SCalibracionPipaActivityMedidor.setAdapter(new ArrayAdapter<>(
+                this,
+                R.layout.custom_spinner,
+                list_tipo_medidor
+        ));
+        SCalibracionPipaActivityPruebas.setAdapter(new ArrayAdapter<>(
+                this,
+                R.layout.custom_spinner,
+                list_destino_pruebas
+        ));
+        presenter.getList(session.getToken(),EsCalibracionPipaFinal);
 
         BtnCalibracionPipaActivityGuardar.setOnClickListener(v -> {
             validarForm();
@@ -172,11 +195,20 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
         builder.setMessage(R.string.message_continuar);
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
             dialog.dismiss();
-            Intent intent = new Intent(CalibracionPipaActivity.this,
-                    LecturaP5000Activity.class);
-            intent.putExtra("EsCalibracionPipaInicial",EsCalibracionPipaInicial);
-            intent.putExtra("EsCalibracionPipaFinal",EsCalibracionPipaFinal);
-            intent.putExtra("calibracionDTO",calibracionDTO);
+            if(EsCalibracionPipaInicial) {
+                Intent intent = new Intent(CalibracionPipaActivity.this,
+                        LecturaP5000Activity.class);
+                intent.putExtra("EsCalibracionPipaInicial", EsCalibracionPipaInicial);
+                intent.putExtra("EsCalibracionPipaFinal", EsCalibracionPipaFinal);
+                intent.putExtra("calibracionDTO", calibracionDTO);
+            }else{
+                Intent intent = new Intent(CalibracionPipaActivity.this,
+                        PorcentajeCalibracionActivity.class);
+                intent.putExtra("EsCalibracionPipaInicial", EsCalibracionPipaInicial);
+                intent.putExtra("EsCalibracionPipaFinal", EsCalibracionPipaFinal);
+                intent.putExtra("calibracionDTO", calibracionDTO);
+                intent.putExtra("EsTanquePipaFinalPruebas",EsTanquePipaFinalPruebas);
+            }
         }));
         builder.setNegativeButton(R.string.message_cancel,((dialog, which) -> dialog.dismiss()));
         builder.create().show();

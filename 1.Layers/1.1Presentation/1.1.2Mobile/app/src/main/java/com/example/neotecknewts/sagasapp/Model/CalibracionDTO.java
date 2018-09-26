@@ -10,7 +10,7 @@ public class CalibracionDTO implements Serializable {
     private String NombreCAlmacenGas;
     private int IdTipoMedidor;
     private String NombreMedidor;
-    private int PorcentajeCalibracion;
+    private double PorcentajeCalibracion;
     private int IdDestinoCalibracion;
     private int P5000;
     private double Porcentaje;
@@ -40,11 +40,11 @@ public class CalibracionDTO implements Serializable {
         IdTipoMedidor = idTipoMedidor;
     }
 
-    public int getPorcentajeCalibracion() {
+    public double getPorcentajeCalibracion() {
         return PorcentajeCalibracion;
     }
 
-    public void setPorcentajeCalibracion(int porcentajeCalibracion) {
+    public void setPorcentajeCalibracion(double porcentajeCalibracion) {
         PorcentajeCalibracion = porcentajeCalibracion;
     }
 

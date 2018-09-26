@@ -152,7 +152,10 @@
         <activity
             android:name=".Activity.CalibracionEstacionActivity"
             android:label="@string/Calibracion" />
-        <activity android:name=".Activity.CalibracionPipaActivity"
+        <activity
+            android:name=".Activity.CalibracionPipaActivity"
+            android:label="@string/Calibracion" />
+        <activity android:name=".Activity.PorcentajeCalibracionActivity"
             android:label="@string/Calibracion"/>
     </application>
 
