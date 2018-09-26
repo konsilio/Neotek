@@ -15,6 +15,8 @@ namespace Application.MainModule.DTOs.Requisicion
         [Display(Name = "IdProducto")]
         public int IdProducto { get; set; }
 
+        public short Orden { get; set; }
+
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "RevisionFisica")]
         public bool RevisionFisica { get; set; }

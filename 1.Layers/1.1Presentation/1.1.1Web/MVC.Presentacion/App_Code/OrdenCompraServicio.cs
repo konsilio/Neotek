@@ -20,7 +20,9 @@ namespace MVC.Presentacion.App_Code
                 FechaRequeridaA = DateTime.Now,
                 FechaRegistroDe = DateTime.Now,
                 FechaRegistroA = DateTime.Now,
-                Requisiciones = RequisicionServicio.BuscarRequisiciones(TokenServicio.ObtenerIdEmpresa(tkn), tkn),
+                Requisiciones = RequisicionServicio.BuscarRequisiciones(TokenServicio.ObtenerIdEmpresa(tkn), tkn)
+                    .Where(y => y.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Revision_exitosa))
+                    .OrderByDescending(x => x.IdRequisicion).ToList(),
                 OrdenesCompra = ObtenerOrdenesCompra(TokenServicio.ObtenerIdEmpresa(tkn), tkn)
             };
         }

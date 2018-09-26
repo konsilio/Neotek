@@ -1,9 +1,7 @@
-﻿using MVC.Presentacion.Models.Catalogos;
-using MVC.Presentacion.Models.Requisicion;
+﻿using MVC.Presentacion.Models.Requisicion;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using PagedList;
 
 namespace MVC.Presentacion.Models.OrdenCompra
 {

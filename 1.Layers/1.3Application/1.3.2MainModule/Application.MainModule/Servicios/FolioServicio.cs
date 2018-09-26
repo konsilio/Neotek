@@ -11,7 +11,7 @@ namespace Application.MainModule.Servicios
 {
     public static class FolioServicio
     {
-        public static string GenerarNumeroRequisicion(RequisicionEDTO _req)
+        public static string GenerarNumeroRequisicion(RequisicionDTO _req)
         {
             var contador = new AccesoADatos.RequisicionDataAccess().BuscarUltimaRequi() + 1;
 
