@@ -1,24 +1,31 @@
 ﻿@model MVC.Presentacion.Models.OrdenCompra.ProductoOCDTO
 @{
-
+    ViewBag.EsGasTransporte = false;
+    if (Model.EsGas || Model.EsTransporteGas)
+    {
+        ViewBag.EsGasTransporte = true;
+    }
 }
 @Html.HiddenFor(m => m.IdProducto)
 @Html.HiddenFor(m => m.IdCentroCosto)
-<tr> 
-        <td>@Model.TipoProducto</td>
-        <td>@Model.Producto</td>
-        <td>
-            @Html.LabelFor(m => m.CantidadAComprar, Model.CantidadAComprar.ToString())
-            @Html.HiddenFor(m => m.CantidadAComprar)
-        </td>
-        <td>@Model.Unidad</td>
-        <td>@Model.Aplicacion</td>
-        <td>@Model.CentroCosto</td>
-        <td>@Html.DropDownListFor(model => model.IdProdveedor, ViewBag.Proveedores as IEnumerable<SelectListItem>)</td>
-        <td>@Html.DropDownListFor(model => model.IdCuentaContable, ViewBag.CuentasContables as IEnumerable<SelectListItem>)</td>
+<tr>
+    <td>@Model.TipoProducto</td>
+    <td>@Model.Producto</td>
+    <td>
+        @Html.LabelFor(m => m.CantidadAComprar, Model.CantidadAComprar.ToString())
+        @Html.HiddenFor(m => m.CantidadAComprar)
+    </td>
+    <td>@Model.Unidad</td>
+    <td>@Model.Aplicacion</td>
+    <td>@Model.CentroCosto</td>
+    <td>@Html.DropDownListFor(model => model.IdProdveedor, ViewBag.Proveedores as IEnumerable<SelectListItem>, new { @class = "form-control", })</td>
+    <td>@Html.DropDownListFor(model => model.IdCuentaContable, ViewBag.CuentasContables as IEnumerable<SelectListItem>, new { @class = "form-control" })</td>
+    @if (ViewBag.EsGasTransporte == false)
+    {
         <td>@Html.TextBoxFor(m => m.Precio, new { @class = "form-control calculaPrecio ", @type = "number", @onkeyup = "javascript: CalcularImporte();", @style = "width:100px;" })</td>
         <td>@Html.TextBoxFor(m => m.Descuento, new { @type = "number", @class = "form-control calculaPrecio", @onkeyup = "javascript: CalcularImporte();", @style = "width:100px;" }) </td>
         <td>@Html.DropDownListFor(model => model.IVA, ViewBag.IVAs as IEnumerable<SelectListItem>, new { @class = "form-control calculaPrecio", @onchange = "javascript: CalcularImporte();" }) </td>
         <td>@Html.DropDownListFor(model => model.IEPS, ViewBag.IEPs as IEnumerable<SelectListItem>, new { @class = "form-control calculaPrecio", @onchange = "javascript: CalcularImporte();" })</td>
-        <td class="align-right">$@Html.LabelFor(m => m.Importe, Model.Importe.ToString())@Html.HiddenFor(m => m.Importe)</td>  
+        <td class="align-right">$@Html.LabelFor(m => m.Importe, Model.Importe.ToString())@Html.HiddenFor(m => m.Importe)</td>
+    }
 </tr>

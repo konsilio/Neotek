@@ -1,13 +1,10 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Controllers.Shared;
 using MVC.Presentacion.Models.OrdenCompra;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
 using System.Web.Mvc;
+using PagedList;
+using Newtonsoft.Json;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -54,7 +51,7 @@ namespace MVC.Presentacion.Controllers
             else
                 return View("Index", "Home");
         }
-        public ActionResult Ordenes()
+        public ActionResult Ordenes(int? pageO, int? pageR)
         {
             if (Session["StringToken"] != null)
             {
@@ -63,7 +60,12 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
                 ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
                 ViewBag.Estatus = OrdenCompraServicio.ListaEstatus(tkn);
-                return View(OrdenCompraServicio.InitOrdenesCompra(tkn));
+                var model = OrdenCompraServicio.InitOrdenesCompra(tkn);
+                if (pageO == null) pageO = 1;
+                if (pageR == null) pageR = 1;
+                ViewBag.Ordenes = model.OrdenesCompra.ToPagedList(pageO.Value, 20);
+                ViewBag.Requisiciones = model.Requisiciones.ToPagedList(pageR.Value, 20);
+                return View();
             }
             else
                 return View("Inicio", "Home");

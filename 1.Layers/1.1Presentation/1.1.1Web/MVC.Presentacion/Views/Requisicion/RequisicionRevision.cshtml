@@ -8,6 +8,8 @@
     <title>RequisicionRevision</title>
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
     <link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <style type="text/css">
+</style>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#btnFinalizar").click(function () {
@@ -17,8 +19,9 @@
             });
         });
     </script>
+
 </head>
-<body style="padding-top:10px">
+<body>
     @using (Html.BeginForm("Revision", "Requisicion", FormMethod.Post))
     {
         @Html.HiddenFor(m => m.IdRequisicion)
@@ -93,6 +96,7 @@
                                     </div>
                                     @if (ViewBag.MensajeError != null)
                                     {
+                                        <br />
                                         <div class="row clearfix">
                                             <div id="divCampos" class="container">
                                                 <div class="alert alert-danger">
@@ -106,6 +110,7 @@
                                             </div>
                                         </div>
                                     }
+                                    <br />
                                     <div class="row clearfix">
                                         <div class="table-responsive">
                                             <table id="ListaProductos" class="table table-hover">
@@ -130,8 +135,8 @@
                                     <div class="row clearfix">
                                         <div class="col-lg-12">
                                             <h2 class="card-inside-title">Opinión de Almacen</h2>
-                                            <div class="row clearfix">
-                                                <div class="col-sm-12">
+                                            <div class="row clearfix ">
+                                                <div class="col-sm-12 blockquote blockquote-info btn-round">
                                                     <div class="form-group">
                                                         <div class="form-line">
                                                             @*<textarea Rows="4" name="OpinionAlmacen" class="form-control no-resize" placeholder="Porfavor escriba su opinion">@Model.OpinionAlmacen</textarea>*@
@@ -187,7 +192,7 @@
             </div>
         </div>
         <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm margin-0" role="document">
+            <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>

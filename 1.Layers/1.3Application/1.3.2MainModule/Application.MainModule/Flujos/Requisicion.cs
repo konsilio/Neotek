@@ -12,9 +12,9 @@ namespace Application.MainModule.Flujos
 {
     public class Requisicion
     {
-        public RespuestaDto InsertRequisicionNueva(RequisicionEDTO _req)
+        public RespuestaDto InsertRequisicionNueva(RequisicionDTO _req)
         {
-            var _requisicion = RequisicionAdapter.FromEDTO(_req);
+            var _requisicion = RequisicionAdapter.FromDTO(_req);
             _requisicion = Servicios.Almacen.ProductoAlmacenServicio.CalcularAlmacenProcutos(_requisicion);
             var ListaRequisiciones = RequisicionServicio.IdentificarRequisicones(_requisicion);
             ListaRequisiciones = FolioServicio.GenerarNumeroRequisicion(ListaRequisiciones);

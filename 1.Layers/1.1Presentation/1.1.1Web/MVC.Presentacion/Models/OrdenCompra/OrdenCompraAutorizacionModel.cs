@@ -7,6 +7,6 @@ namespace MVC.Presentacion.Models.OrdenCompra
 {
     public class OrdenCompraAutorizacionModel : OrdenCompraDTO
     {
-        public List<OrdenCompraProductoCrearDTO> Productos { get; set; }
+        public List<OrdenCompraProductoCrearDTO> ProductosOC { get; set; }
     }
 }

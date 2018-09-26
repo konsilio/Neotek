@@ -90,7 +90,6 @@ namespace Application.MainModule.Servicios.Notificacion
             //var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
             //var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.CompraAutorizarOCompra).ToList();
             //var destinatarios = ObtenerDestinatarios(roles);
-
             //var correoDto = new CorreoDto()
             //{
             //    De = ObtenerCorreo(usuAplicacion),

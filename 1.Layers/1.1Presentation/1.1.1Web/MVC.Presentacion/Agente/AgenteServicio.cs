@@ -335,7 +335,6 @@ namespace MVC.Presentacion.Agente
         }
 
         #endregion
-
         #region Empresa
         public void ListaEmpresasLogin()
         {
@@ -433,7 +432,6 @@ namespace MVC.Presentacion.Agente
         }
 
         #endregion
-
         #region Usuarios
         public void BuscarListaUsuarios(short idEmpresa, string tkn)
         {
@@ -660,7 +658,6 @@ namespace MVC.Presentacion.Agente
         }
 
         #endregion
-
         #region Clientes
         public void SetEdoPais(List<ClienteLocacionMod> _obj, string tkn)
         {
@@ -1104,7 +1101,6 @@ namespace MVC.Presentacion.Agente
             }
         }
         #endregion
-
         #region Centros de costos
         public void BuscarCentrosCostos(string tkn)
         {
@@ -1881,146 +1877,26 @@ namespace MVC.Presentacion.Agente
                 _listaRequisicion = emp;
             }
         }
-        public void GuardarRequisicon(RequisicionEDTO _requi, string token)
+        public void GuardarRequisicon(RequisicionDTO dto, string token)
         {
-            this.ApiRequisicion = ConfigurationManager.AppSettings["PostRequisicion"];
-            SaveRequisicon(_requi, token).Wait();
-        }
-        private async Task SaveRequisicon(RequisicionEDTO _requi, string token)
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRequisicion"];
+            LLamada(dto, token, MetodoRestConst.Post).Wait();
+        }      
+        public void ActualizarRequisicionRevision(RequisicionRevPutDTO dto, string token)
         {
-            using (var client = new HttpClient())
-            {
-                RespuestaDTO resp = new RespuestaDTO();
-
-                client.BaseAddress = new Uri(UrlBase);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                try
-                {
-                    HttpResponseMessage response = await client.PostAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
-                    if (response.IsSuccessStatusCode)
-                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
-                    else
-                    {
-                        client.CancelPendingRequests();
-                        client.Dispose();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    resp.Mensaje = ex.Message;
-                    client.CancelPendingRequests();
-                    client.Dispose();
-                }
-                _RespuestaDTO = resp;
-            }
+            this.ApiRoute = ConfigurationManager.AppSettings["PutActulizarRevision"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
-        public void ActualizarRequisicionRevision(RequisicionRevPutDTO _requi, string token)
+        public void ActualizarRequisicionAutorizacion(RequisicionAutPutDTO dto, string token)
         {
-            this.ApiRequisicion = ConfigurationManager.AppSettings["PutActulizarRevision"];
-            UpdateRequisicon(_requi, token).Wait();
+            this.ApiRoute = ConfigurationManager.AppSettings["PutActulizarAutorizacion"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
-        public void ActualizarRequisicionAutorizacion(RequisicionAutPutDTO _requi, string token)
+        public void ActualizarRequisicionCancelar(RequisicionCancelaDTO dto, string token)
         {
-            this.ApiRequisicion = ConfigurationManager.AppSettings["PutActulizarAutorizacion"];
-            UpdateRequisicon(_requi, token).Wait();
-        }
-        public void ActualizarRequisicionCancelar(RequisicionCancelaDTO _requi, string token)
-        {
-            this.ApiRequisicion = ConfigurationManager.AppSettings["PutCancelarRequisicion"];
-            UpdateRequisicon(_requi, token).Wait();
-        }
-        private async Task UpdateRequisicon(RequisicionCancelaDTO _requi, string token)
-        {
-            using (var client = new HttpClient())
-            {
-                RespuestaRequisicionDTO resp = new RespuestaRequisicionDTO();
-
-                client.BaseAddress = new Uri(UrlBase);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                try
-                {
-                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
-                    if (response.IsSuccessStatusCode)
-                        resp = await response.Content.ReadAsAsync<RespuestaRequisicionDTO>();
-                    else
-                    {
-                        client.CancelPendingRequests();
-                        client.Dispose();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    resp.Mensaje = ex.Message;
-                    client.CancelPendingRequests();
-                    client.Dispose();
-                }
-                _respuestaRequisicion = resp;
-            }
-        }
-        private async Task UpdateRequisicon(RequisicionAutPutDTO _requi, string token)
-        {
-            using (var client = new HttpClient())
-            {
-                RespuestaRequisicionDTO resp = new RespuestaRequisicionDTO();
-
-                client.BaseAddress = new Uri(UrlBase);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                try
-                {
-                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
-                    if (response.IsSuccessStatusCode)
-                        resp = await response.Content.ReadAsAsync<RespuestaRequisicionDTO>();
-                    else
-                    {
-                        client.CancelPendingRequests();
-                        client.Dispose();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    resp.Mensaje = ex.Message;
-                    client.CancelPendingRequests();
-                    client.Dispose();
-                }
-                _respuestaRequisicion = resp;
-            }
-        }
-        private async Task UpdateRequisicon(RequisicionRevPutDTO _requi, string token)
-        {
-            using (var client = new HttpClient())
-            {
-                RespuestaDTO resp = new RespuestaDTO();
-
-                client.BaseAddress = new Uri(UrlBase);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                try
-                {
-                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiRequisicion, _requi).ConfigureAwait(false);
-                    if (response.IsSuccessStatusCode)
-                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
-                    else
-                    {
-                        client.CancelPendingRequests();
-                        client.Dispose();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    resp.Mensaje = ex.Message;
-                    client.CancelPendingRequests();
-                    client.Dispose();
-                }
-                _RespuestaDTO = resp;
-            }
-        }
+            this.ApiRoute = ConfigurationManager.AppSettings["PutCancelarRequisicion"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }     
         public void RequisicionRevision(int IdRequisicion, string tkn)
         {
             ApiRequisicion = ConfigurationManager.AppSettings["GetRequisicionByNumRequisicion"];
