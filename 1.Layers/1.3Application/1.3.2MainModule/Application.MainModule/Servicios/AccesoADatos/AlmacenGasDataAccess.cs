@@ -221,8 +221,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<AlmacenGasRecarga>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
         }
         public List<AlmacenGasDescarga> BuscarTodasNoProcesadas()
-        {
-            return uow.Repository<AlmacenGasDescarga>().Get(x => x.DatosProcesados.Equals(false)).ToList();
+        {            
+            return uow.Repository<AlmacenGasDescarga>().Get(x => !x.DatosProcesados.Value).ToList();
         }
     }
 }

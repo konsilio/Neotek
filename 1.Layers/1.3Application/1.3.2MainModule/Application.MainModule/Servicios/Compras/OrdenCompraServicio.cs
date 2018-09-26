@@ -188,6 +188,9 @@ namespace Application.MainModule.Servicios.Compras
             apDesDto.OCExpedidor = OCExpedidor;
             apDesDto.OCPorteador = OCPorteador;
 
+            apDesDto.DescargaSinNavigationProperties.IdRequisicion = OCExpedidor.IdRequisicion;
+            apDesDto.DescargaSinNavigationProperties.DatosProcesados = true;
+
             return apDesDto;
         }
 

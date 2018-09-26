@@ -281,13 +281,12 @@ namespace Application.MainModule.Servicios.Almacen
             unidadEntrada.CantidadActualKg = CalcularGasServicio.SumarKilogramos(unidadEntrada.CantidadActualKg, kilogramosRealesTractor);
             unidadEntrada.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdeKilos(unidadEntrada.CantidadActualKg, empresa.FactorLitrosAKilos);
             unidadEntrada.PorcentajeActual = descarga.PorcenMagnatelOcularAlmacenFIN.Value;
-
-            descarga.DatosProcesados = true;
-
-            var aplicaDescarga = new AplicaDescargaDto()
+            
+            return new AplicaDescargaDto()
             {
                 Descarga = descarga,
                 DescargaSinNavigationProperties = AlmacenGasAdapter.FromEmtity(descarga),
+                DescargaFotos = GenerarImagenes(descarga),
                 unidadEntrada = AlmacenGasAdapter.FromEmtity(unidadEntrada),
                 identidadUE = IdentificarTipoUnidadAlamcenGas(unidadEntrada),
                 PorcentajeUE = unidadEntrada.PorcentajeActual,
@@ -298,9 +297,6 @@ namespace Application.MainModule.Servicios.Almacen
                 CantidadCONRemanenteKg = kilogramosRealesTractor,
                 CantidadCONRemanenteLt = litrosRealesTractor,
             };
-
-            aplicaDescarga.DescargaSinNavigationProperties.Fotos = GenerarImagenes(descarga);
-            return aplicaDescarga;
         }
 
         public static List<AlmacenGasDescargaFoto> GenerarImagenes(AlmacenGasDescarga descarga)
