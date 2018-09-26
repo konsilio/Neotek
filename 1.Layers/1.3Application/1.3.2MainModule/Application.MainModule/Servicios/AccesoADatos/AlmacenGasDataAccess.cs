@@ -94,7 +94,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         internal RespuestaDto Insertar(AlmacenGasRecarga _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -220,10 +219,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasRecarga>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
         }
-        public List<AlmacenGasDescarga> BuscarTodasNoProcesadas()
-        {            
-            return uow.Repository<AlmacenGasDescarga>().Get(x => !x.DatosProcesados.Value).ToList();
-        }
     }
 }
-      
+      
