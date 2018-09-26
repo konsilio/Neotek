@@ -121,7 +121,6 @@
     <Compile Include="Entidades\Empresa.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entidades\EmpresaPartial.cs" />
     <Compile Include="Entidades\EquipoTransporte.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>

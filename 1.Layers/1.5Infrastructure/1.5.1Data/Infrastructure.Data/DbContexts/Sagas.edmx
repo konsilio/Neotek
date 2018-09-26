@@ -862,6 +862,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="InventarioSano" Type="tinyint" Nullable="false" />
           <Property Name="InventarioCrítico" Type="tinyint" Nullable="false" />
           <Property Name="MaxRemaGaseraMensual" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CalibracionEstacionCarburacion" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CalibracionPipa" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CalibracionCamioneta" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="EmpresaContacto">
           <Key>
@@ -4209,7 +4212,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="MaxRemaGaseraMensual" Type="Decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="FactorGalonALitros" Type="Decimal" Nullable="false" Precision="8" Scale="5" />
           <Property Name="FactorCompraLitroAKilos" Type="Decimal" Nullable="false" Precision="8" Scale="5" />
-          <Property Name="FactorFleteGas" Type="Decimal" Nullable="false" Precision="8" Scale="5" />          
+          <Property Name="FactorFleteGas" Type="Decimal" Nullable="false" Precision="8" Scale="5" />
+          <Property Name="CalibracionEstacionCarburacion" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="CalibracionPipa" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="CalibracionCamioneta" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           
           <!--"EmpresaImagen">
           <Property Name="IdEmpresa" Type="Int16" Nullable="false" />-->
@@ -4251,7 +4257,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="EquiposTransporte" Relationship="Sagas.MainModuleModel.FK_CEquipoTransporte_Empresa" FromRole="Empresa" ToRole="EquipoTransporte" />
           <NavigationProperty Name="PuntosVenta" Relationship="Sagas.MainModuleModel.FK_CPuntoVenta_Empresa" FromRole="Empresa" ToRole="PuntoVenta" />
           <NavigationProperty Name="UnidadesAlmacenGasCilindro" Relationship="Sagas.MainModuleModel.FK_CAlmacenGasCilindro_Empresa" FromRole="Empresa" ToRole="UnidadAlmacenGasCilindro" />
-          <NavigationProperty Name="OperadoresChoferes" Relationship="Sagas.MainModuleModel.FK_COperadorChofer_Empresa" FromRole="Empresa" ToRole="OperadorChofer" />
+          <NavigationProperty Name="OperadoresChoferes" Relationship="Sagas.MainModuleModel.FK_COperadorChofer_Empresa" FromRole="Empresa" ToRole="OperadorChofer" />          
                     
           <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaFiscal_Empresa" FromRole="EmpresaFiscal" ToRole="Empresa" />          
@@ -8584,6 +8590,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
             
               <MappingFragment StoreEntitySet="EmpresaConfiguracion">
+                <ScalarProperty Name="CalibracionCamioneta" ColumnName="CalibracionCamioneta" />
+                <ScalarProperty Name="CalibracionPipa" ColumnName="CalibracionPipa" />
+                <ScalarProperty Name="CalibracionEstacionCarburacion" ColumnName="CalibracionEstacionCarburacion" />
                 <ScalarProperty Name="FactorFleteGas" ColumnName="FactorFleteGas" />
                 <ScalarProperty Name="FactorCompraLitroAKilos" ColumnName="FactorCompraLitroAKilos" />
                 <ScalarProperty Name="FactorGalonALitros" ColumnName="FactorGalonALitros" />
