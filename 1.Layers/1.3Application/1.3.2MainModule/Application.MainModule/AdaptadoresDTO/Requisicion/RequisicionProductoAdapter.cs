@@ -38,9 +38,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 Cantidad = _reqProducto.Cantidad,
                 Aplicacion = _reqProducto.Aplicacion,
                 CantidadAlmacenActual = _reqProducto.CantidadAlmacenActual.Value,
-                CantidadAComprar = _reqProducto.CantidadAComprar.Value,
-                //AutorizaEntrega = _reqProducto.AutorizaEntrega.Value,
-                //AutorizaCompra = _reqProducto.AutorizaCompra.Value,
+                CantidadAComprar = _reqProducto.CantidadAComprar.Value,            
                 EsActivoVenta = _reqProducto.EsActivoVenta,
                 EsGas = _reqProducto.EsGas,
                 EsTransporteGas = _reqProducto.EsTransporteGas
@@ -69,6 +67,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 IdProducto = _reqProducto.IdProducto,
                 Producto = _reqProducto.Producto.Descripcion,
                 IdTipoProducto = _reqProducto.IdTipoProducto,
+                Orden = _reqProducto.Orden,
                 TipoProducto = _reqProducto.Producto.TipoServicioOProducto.Nombre,
                 IdUnidad = _reqProducto.Producto.IdUnidadMedida,
                 Unidad = _reqProducto.Producto.UnidadMedida.Nombre,
@@ -148,7 +147,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
         }
         public static List<RequisicionProducto> FromDTO(List<RequisicionProdReviPutDTO> _reqProductos, List<RequisicionProducto> _prodEntidadAnteriro)
         {
-            List<RequisicionProducto> _lproducto = _reqProductos.ToList().Select(x => FromDTO(x, _prodEntidadAnteriro.ToList().SingleOrDefault(y => y.IdProducto.Equals(x.IdProducto)))).ToList();
+            List<RequisicionProducto> _lproducto = _reqProductos.ToList().Select(x => FromDTO(x, _prodEntidadAnteriro.ToList().SingleOrDefault(y => y.IdProducto.Equals(x.IdProducto) && y.Orden.Equals(x.Orden)))).ToList();
             return _lproducto;
 
         }
@@ -175,6 +174,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 IdRequisicion = _prodEntity.IdRequisicion,
                 IdProducto = _prodEntity.IdProducto,
                 IdCentroCosto = _prodEntity.IdCentroCosto,
+                Orden = _prodEntity.Orden,
                 IdTipoProducto = _prodEntity.IdTipoProducto,
                 Cantidad = _prodEntity.Cantidad,
                 Aplicacion = _prodEntity.Aplicacion,

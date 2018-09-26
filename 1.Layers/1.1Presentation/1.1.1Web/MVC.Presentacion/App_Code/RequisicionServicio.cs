@@ -207,6 +207,7 @@ namespace MVC.Presentacion.App_Code
                         LProdPutDTO.Add(new RequisicionProdReviPutDTO
                         {
                             IdProducto = _row.IdProducto,
+                            Orden = _row.Orden,
                             RevisionFisica = true,
                         });
                 }
@@ -244,7 +245,7 @@ namespace MVC.Presentacion.App_Code
             {
                 var _resp = ActualizarRequisicionAutorizacion(CrearAut(model, _tok), _tok);
                 if (_resp.Exito)                
-                    return new RespuestaDTO { Exito = true, Id = _resp.IdRequisicion };                
+                    return new RespuestaDTO { Exito = true, Id = _resp.Id };                
                 else                
                     return new RespuestaDTO { Exito = false, Mensaje = _resp.Mensaje };              
             }
@@ -290,11 +291,11 @@ namespace MVC.Presentacion.App_Code
             _aut.ListaProductos = GenerarAutorizados(model);
             return _aut;
         }
-        private static RespuestaRequisicionDTO ActualizarRequisicionAutorizacion(RequisicionAutPutDTO Req, string tkn)
+        private static RespuestaDTO ActualizarRequisicionAutorizacion(RequisicionAutPutDTO Req, string tkn)
         {
             var respuestaReq = new AgenteServicio();
             respuestaReq.ActualizarRequisicionAutorizacion(Req, tkn);
-            return respuestaReq._respuestaRequisicion;
+            return respuestaReq._RespuestaDTO;
         }
         public static RequisicionAutorizacionDTO BuscarRequisicionByNumRequiAuto(int numreq, string token)
         {

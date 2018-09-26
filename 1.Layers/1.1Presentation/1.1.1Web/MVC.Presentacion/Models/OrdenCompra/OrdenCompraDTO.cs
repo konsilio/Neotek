@@ -18,7 +18,6 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public string Proveedor { get; set; }
         public Nullable<int> IdUsuarioGenerador { get; set; }
         public Nullable<int> IdUsuarioAutorizador { get; set; }
-        public int IdCentroCosto { get; set; }
         public int IdCuentaContable { get; set; }
         public string NumOrdenCompra { get; set; }
         public bool EsActivoVenta { get; set; }

@@ -1,11 +1,7 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.Seguridad;
-using System.Web.Script.Serialization;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using Newtonsoft.Json;
@@ -218,8 +214,7 @@ namespace MVC.Presentacion.Controllers
         #endregion
         #region Producto
         public ActionResult Producto(int? page, short? idempresa, ProductoDTO model = null)
-        {
-            RespuestaDTO Resp = new RespuestaDTO();
+        {          
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var Pagina = page ?? 1;
@@ -233,9 +228,8 @@ namespace MVC.Presentacion.Controllers
             ViewBag.UnidadesMedida = CatalogoServicio.ListaUnidadesMedida(tkn);
             ViewBag.UnidadesMedida2 = CatalogoServicio.ListaUnidadesMedida(tkn);
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null) Resp = (RespuestaDTO)TempData["RespuestaDTO"];
-            if (model != null && model.IdProducto != 0) ViewBag.EsEdicion = true;
-            ViewBag.MensajeError = Validar(Resp);
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            if (model != null && model.IdProducto != 0) ViewBag.EsEdicion = true;            
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else

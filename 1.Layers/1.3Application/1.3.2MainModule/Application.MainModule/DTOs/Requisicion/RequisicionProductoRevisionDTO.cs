@@ -27,6 +27,8 @@ namespace Application.MainModule.DTOs.Requisicion
         [Display(Name = "IdCentroCosto")]
         public int IdCentroCosto { get; set; }
 
+        public short Orden { get; set; }
+
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "CentroCosto")]
         public string CentroCosto { get; set; }

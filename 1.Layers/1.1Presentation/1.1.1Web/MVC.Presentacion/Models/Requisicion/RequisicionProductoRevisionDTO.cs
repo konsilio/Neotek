@@ -8,18 +8,8 @@ using System.Web;
 namespace MVC.Presentacion.Models.Requisicion
 {
     [Serializable]
-    public class RequisicionProductoRevisionDTO : RequisicionProductoNuevoDTO
+    public class RequisicionProductoRevisionDTO : RequisicionProductoDTO
     {     
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "RevisionFisica")]
-        public bool RevisionFisica { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "CantidadAlmacenActual")]
-        public decimal CantidadAlmacenActual { get; set; }
-
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "CantidadAComprar")]
-        public decimal CantidadAComprar { get; set; }
+        
     }
 }

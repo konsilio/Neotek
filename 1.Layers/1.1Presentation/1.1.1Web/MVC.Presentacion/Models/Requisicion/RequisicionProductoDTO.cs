@@ -20,10 +20,10 @@ namespace MVC.Presentacion.Models.Requisicion
         public string Unidad { get; set; }
         public decimal Cantidad { get; set; }
         public string Aplicacion { get; set; }
-        public Nullable<bool> RevisionFisica { get; set; }
-        public Nullable<decimal> CantidadAlmacenActual { get; set; }
-        public Nullable<decimal> CantidadAComprar { get; set; }
-        public Nullable<bool> AutorizaEntrega { get; set; }
-        public Nullable<bool> AutorizaCompra { get; set; }
+        public bool RevisionFisica { get; set; }
+        public decimal CantidadAlmacenActual { get; set; }
+        public decimal CantidadAComprar { get; set; }
+        public bool AutorizaEntrega { get; set; }
+        public bool AutorizaCompra { get; set; }
     }
 }
