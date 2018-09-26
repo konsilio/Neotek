@@ -187,5 +187,17 @@ namespace Application.MainModule.Servicios.Mobile
 
             return alm;
         }
+        public static DatosTomaLecturaDto ConsultaDatosReporteDelDia()
+        {
+            var alms = ObtenerAlmacenesGas();
+            return AlmacenLecturaAdapter.ToDtoReporte(alms);
+        }
+
+        private static List<UnidadAlmacenGas>  ObtenerAlmacenesGas()
+        {
+            var alm = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
+            var acom = AcomodarUnidadAlmacenGasDelUsuario(alm);
+            return acom;
+        }
     }
 }

@@ -164,5 +164,10 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarRecarga(rfdto), Request);
         }
+        [Route("catalogos/unidades")]
+        public HttpResponseMessage GetCatalogoUnidades()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoUnidades(), Request);
+        }
     }
 }

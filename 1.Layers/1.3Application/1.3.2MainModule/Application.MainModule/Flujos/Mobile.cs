@@ -133,5 +133,10 @@ namespace Application.MainModule.Flujos
 
             return RecargaGasServicio.Recarga(rfdto, true);
         }
+
+        public DatosTomaLecturaDto CatalogoUnidades()
+        {
+            return LecturaGasServicio.ConsultaDatosReporteDelDia();
+        }
     }
 }
