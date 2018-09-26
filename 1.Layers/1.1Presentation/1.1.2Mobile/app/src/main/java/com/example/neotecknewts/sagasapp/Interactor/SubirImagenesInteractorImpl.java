@@ -296,6 +296,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
                     if (response.isSuccessful()&& data.isExito()) {
                         Log.w("IniciarDescarga", "Success");
+                        registra_descarga = true;
                         subirImagenesPresenter.onRegistrarIniciarDescarga();
                     } else {
                         switch (response.code()) {
@@ -311,6 +312,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
+                        registra_descarga = false;
                         //subirImagenesPresenter.errorSolicitud(data.getMensaje());
                     }
                 }
@@ -318,6 +320,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 @Override
                 public void onFailure(Call<RespuestaIniciarDescargaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
+                    registra_descarga = false;
                 }
             });
             intentos_post++;
