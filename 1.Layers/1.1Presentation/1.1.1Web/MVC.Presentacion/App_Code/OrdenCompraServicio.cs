@@ -51,6 +51,16 @@ namespace MVC.Presentacion.App_Code
             }
             return model;
         }
+        public static OrdenCompraDTO BuscarOrdenCompra(int id, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.BuscarOrdenCompra(id, tkn);
+            return agente._ordeCompraDTO;
+        }
+        private static bool EsGasTransp(List<ProductoOCDTO> lprod)
+        {
+            return lprod.Select(x => x.EsGas || x.EsTransporteGas).SingleOrDefault();
+        }
         public static List<OrdenCompraEstatusDTO> ListaEstatus(string tkn)
         {
             var agente = new AgenteServicio();

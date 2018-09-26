@@ -11357,9 +11357,9 @@
     <Content Include="Views\Requisicion\RequisicionAutorizacion.cshtml" />
     <Content Include="Views\OrdenCompra\OrdenCompraAutorizacion.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RequisicionProductoRevisionDTO.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\RequisicionProductoAutorizacionDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RequisicionProductoAutrizacionDTO.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ProductoOCDTO.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\OrdenCompraProductoCrearDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrdenCompraProductoDTO.cshtml" />
     <Content Include="Views\CentroCosto\CentroCosto.cshtml" />
     <Content Include="Views\CuentaContable\CuentaContable.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CuentaContableDTO.cshtml" />

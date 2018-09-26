@@ -1,4 +1,4 @@
-﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraAutorizacionModel
+﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraDTO
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +53,7 @@
                         <div class="col-lg-3 col-md-12">
                             <div class="form-group form-float">
                                 <b>Fecha requerida:</b>
-                                <dtp:DateTimePicker ID="txtFechaRequerida" CssClass="dataTxt" Enabled="false" />
+                                @Html.TextBoxFor(m => m.FechaRequerida, new { @class = "form-control diseabled" })
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-12">
@@ -65,14 +65,14 @@
                         <div class="col-lg-3 col-md-12 form-float">
                             <div class="form-group">
                                 <b>Motivo de compra:</b>
-                                <textarea name="MotivoCompra" class="form-control  no-resize disabled" placeholder="Error de carga" rows="4">@Model.MotivoRequisicion</textarea>
+                                @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control  no-resize disabled", @placeholder = "Error de carga", @rows = "4" })
+
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-12">
                             <div class="form-group form-float">
-                                <%--Se requiere en--%>
                                 <b>Se requiere en:</b>
-                                <textarea name="RequeridoEn" class="form-control  no-resize disabled" placeholder="Error de carga" rows="4">@Model.RequeridoEn</textarea>
+                                @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control  no-resize disabled", @placeholder = "Error de carga", @rows = "4" })
                             </div>
                         </div>
                     </div>
@@ -86,34 +86,47 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <dtp:DateTimePicker ID="dtpFechaEntrada" />
-                        </div>
                     </div>
                     <div class="row clearfix">
                         <div class="body table-responsive">
                             <table class="table table-hover">
                                 <thead>
-
+                                    <tr>
+                                        <td><b>Tipo</b></td>
+                                        <td><b>Producto</b></td>
+                                        <td><b>Requeridos</b></td>
+                                        <td><b>Unidad</b></td>
+                                        <td><b>Detalle</b></td>
+                                        <td><b>Centro de costo</b></td>
+                                        <td><b>Cuenta Contable</b></td>
+                                        <td><b>Cantidada</b></td>
+                                        <td><b>Precio</b></td>
+                                        <td><b>%Desc</b></td>
+                                        <td><b>%IVA</b></td>
+                                        <td><b>Importe</b></td>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    @Html.EditorForModel(Model.Productos)
+                                    @Html.EditorFor(m => m.Productos)
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="row clearfix">
-                        <div id="divMensajeError" class="container">
-                            <div class="alert alert-danger">
-                                <div class="alert-icon">
-                                    <i class="zmdi zmdi-block"></i>
+                    @if (ViewBag.MensajeError != null)
+                    {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MensajeError</label>
+                                    </strong>
                                 </div>
-                                <strong>
-                                    <label>@ViewBag.MensajeError</label>
-                                </strong>
                             </div>
                         </div>
-                    </div>
+                    }
                     <div class="row clearfix">
                         <div class="col-sm-4 center">
                             <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
@@ -134,7 +147,7 @@
         </div>
     </section>
     <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm margin-0" role="document">
+        <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>

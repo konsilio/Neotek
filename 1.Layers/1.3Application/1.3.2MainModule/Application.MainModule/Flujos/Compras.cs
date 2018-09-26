@@ -118,14 +118,15 @@ namespace Application.MainModule.Flujos
             List<OrdenCompraDTO> loc = OrdenComprasAdapter.ToDTO(_locEntity);
             return loc;
         }
-        public OrdenCompraCrearDTO BuscarOrdenCompra(int idOrdeCompra)
+        public OrdenCompraDTO BuscarOrdenCompra(int idOrdeCompra)
         { 
             //Valida permiso para consultar orden de compra
             var resp = PermisosServicio.PuedeConsultarOrdenCompra();
             if (!resp.Exito) return new OrdenCompraCrearDTO();
-                     
+
             //Se busca el id en la base y se genera DTO para enviar
-            return OrdenComprasAdapter.ToCDTO(OrdenCompraServicio.Buscar(idOrdeCompra));
+            var oc = OrdenCompraServicio.Buscar(idOrdeCompra);
+            return OrdenComprasAdapter.ToDTO(oc);
         }
         public ComplementoGasDTO BuscarComplementoGas(int idOrdenCompra)
         {
