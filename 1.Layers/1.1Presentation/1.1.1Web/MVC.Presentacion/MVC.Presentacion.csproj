@@ -311,7 +311,7 @@
     <Compile Include="Models\Requisicion\RequisicionAutPutDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionCancelaDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionDTO.cs" />
-    <Compile Include="Models\Requisicion\RequisicionEDTO.cs" />
+    <!--<Compile Include="Models\Requisicion\RequisicionEDTO.cs" />-->
     <Compile Include="Models\Requisicion\RequisicionesModel.cs" />
     <Compile Include="Models\Requisicion\RequisicionEstatusDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionEstatusEnum.cs" />
