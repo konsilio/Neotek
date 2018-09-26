@@ -82,6 +82,9 @@ namespace Sagas.MainModule.Entidades
         public decimal FactorGalonALitros { get; set; }
         public decimal FactorCompraLitroAKilos { get; set; }
         public decimal FactorFleteGas { get; set; }
+        public decimal CalibracionEstacionCarburacion { get; set; }
+        public decimal CalibracionPipa { get; set; }
+        public decimal CalibracionCamioneta { get; set; }
         public string UrlLogotipoMenu { get; set; }
         public string UrlLogotipoLogin { get; set; }
         public string UrlLogotipo180px { get; set; }
