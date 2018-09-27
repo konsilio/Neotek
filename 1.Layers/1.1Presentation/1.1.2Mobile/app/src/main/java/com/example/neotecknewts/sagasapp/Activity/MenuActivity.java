@@ -75,7 +75,10 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         }else{
             presenter.getMenu(session.getTokenWithBearer());
         }
-
+        MenuDTO mA = new MenuDTO();
+        mA.setHeaderMenu("Disposición de efectivo - Anticipo");
+        mA.setName("Estación Carburación");
+        menu.add(mA);
         //se agrega la lista al adapter y se agrega el adapter al recylcer view
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MenuAdapter(menu);

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Activity.AnticipoEstacionCarburacionActivity;
 import com.example.neotecknewts.sagasapp.Activity.AutoconsumoEstacionActivity;
 import com.example.neotecknewts.sagasapp.Activity.AutoconsumoInventarioActivity;
 import com.example.neotecknewts.sagasapp.Activity.AutoconsumoPipaActivity;
@@ -290,6 +291,21 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                             TraspasoPipaActivity.class);
                     intent.putExtra("EsCalibracionPipaInicial",false);
                     intent.putExtra("EsCalibracionPipaFinal",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Disposición de efectivo - Anticipo")
+                        && menuItem.getName().equals("Estación Carburación")){
+                    Intent intent = new Intent(view.getContext(),
+                            AnticipoEstacionCarburacionActivity.class);
+                    intent.putExtra("EsAnticipo",true);
+                    intent.putExtra("EsCorte",false);
+                    view.getContext().startActivity(intent);
+
+                }else if(menuItem.getHeaderMenu().equals("Disposición de efectivo - Corte de caja")
+                        && menuItem.getName().equals("Estación Carburación")){
+                    Intent intent = new Intent(view.getContext(),
+                            AnticipoEstacionCarburacionActivity.class);
+                    intent.putExtra("EsAnticipo",false);
+                    intent.putExtra("EsCorte",true);
                     view.getContext().startActivity(intent);
                 }
             }

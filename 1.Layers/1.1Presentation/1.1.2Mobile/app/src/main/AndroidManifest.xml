@@ -155,8 +155,15 @@
         <activity
             android:name=".Activity.CalibracionPipaActivity"
             android:label="@string/Calibracion" />
-        <activity android:name=".Activity.PorcentajeCalibracionActivity"
-            android:label="@string/Calibracion"/>
+        <activity
+            android:name=".Activity.PorcentajeCalibracionActivity"
+            android:label="@string/Calibracion" />
+        <activity
+            android:name=".Activity.AnticipoEstacionCarburacionActivity"
+            android:label="@string/Anticipo" />
+        <activity android:name=".Activity.AnticipoTablaActivity"
+            android:label="@string/Anticipo"
+            />
     </application>
 
 </manifest>
