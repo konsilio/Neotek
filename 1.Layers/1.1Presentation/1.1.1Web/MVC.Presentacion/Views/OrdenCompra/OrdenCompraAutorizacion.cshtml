@@ -1,20 +1,9 @@
-﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraAutorizacionModel
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>OrdenCompraAutorizacion</title>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#btnFinalizar").click(function () {
-                var form = $(this).parent("form");
-                form.attr('action', '<%= Url.RouteUrl(new { Controller = "OrdenCompra", Action = "Autorizacion" }) %>');
-                form.attr('method', 'post');
-            });
-        });
-    </script>
-</head>
+﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraDTO
+
 <body>
+    @using (Html.BeginForm("Autorizar", "OrdenCompra", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.IdOrdenCompra)
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
@@ -53,26 +42,26 @@
                         <div class="col-lg-3 col-md-12">
                             <div class="form-group form-float">
                                 <b>Fecha requerida:</b>
-                                <dtp:DateTimePicker ID="txtFechaRequerida" CssClass="dataTxt" Enabled="false" />
+                                @Html.TextBoxFor(m => m.FechaRequerida, new { @class = "form-control", @disabled = "disabled" })
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-12">
                             <div class="form-group form-float">
                                 <b>Solicitante:</b>
-                                <input name="Solicitante" value="@Model.usuarioSolicitante" class="form-control disabled" />
+                                 @Html.TextBoxFor(m => m.usuarioSolicitante, new { @class = "form-control", @disabled = "disabled" })
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-12 form-float">
                             <div class="form-group">
                                 <b>Motivo de compra:</b>
-                                <textarea name="MotivoCompra" class="form-control  no-resize disabled" placeholder="Error de carga" rows="4">@Model.MotivoRequisicion</textarea>
+                                @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control  no-resize", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
+
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-12">
                             <div class="form-group form-float">
-                                <%--Se requiere en--%>
                                 <b>Se requiere en:</b>
-                                <textarea name="RequeridoEn" class="form-control  no-resize disabled" placeholder="Error de carga" rows="4">@Model.RequeridoEn</textarea>
+                                @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control  no-resize", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
                             </div>
                         </div>
                     </div>
@@ -86,34 +75,63 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <dtp:DateTimePicker ID="dtpFechaEntrada" />
-                        </div>
                     </div>
                     <div class="row clearfix">
                         <div class="body table-responsive">
                             <table class="table table-hover">
                                 <thead>
-
+                                    <tr>
+                                        <td><b>Tipo</b></td>
+                                        <td><b>Producto</b></td>
+                                        <td><b>Requeridos</b></td>
+                                        <td><b>Unidad</b></td>
+                                        <td><b>Detalle</b></td>
+                                        <td><b>Centro de costo</b></td>
+                                        <td><b>Cuenta Contable</b></td>
+                                        <td><b>Cantidada</b></td>
+                                        <td><b>Precio</b></td>
+                                        <td><b>%Desc</b></td>
+                                        <td><b>%IVA</b></td>
+                                        <td><b>Importe</b></td>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    @Html.EditorForModel(Model.Productos)
+                                    @foreach (var m in Model.Productos)
+                                    {
+                                    <tr>
+                                        <td>@m.TipoProducto</td>
+                                        <td>@m.Producto</td>
+                                        <td>@m.CantidadAComprar</td>
+                                        <td>@m.UnidadMedida</td>
+                                        <td>@m.Aplicacion</td>
+                                        <td>@m.CentroCosto</td>
+                                        <td>@m.CuentaContable</td>
+                                        <td>@m.Precio</td>
+                                        <td>@m.Descuento</td>
+                                        <td>@m.IVA</td>
+                                        <td>@m.IEPS</td>
+                                        <td>@m.Importe</td>
+                                    </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="row clearfix">
-                        <div id="divMensajeError" class="container">
-                            <div class="alert alert-danger">
-                                <div class="alert-icon">
-                                    <i class="zmdi zmdi-block"></i>
+                    @if (ViewBag.MensajeError != null)
+                    {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MensajeError</label>
+                                    </strong>
                                 </div>
-                                <strong>
-                                    <label>@ViewBag.MensajeError</label>
-                                </strong>
                             </div>
                         </div>
-                    </div>
+                    }
                     <div class="row clearfix">
                         <div class="col-sm-4 center">
                             <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
@@ -134,14 +152,13 @@
         </div>
     </section>
     <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm margin-0" role="document">
+        <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" value="Si" id="btnCrear" class="btn btn-raised btn-primary btn-round" />
-
+                    <input id="btnAutorizar" type="submit" value="Si" class="btn btn-raised btn-primary btn-round" />
                     <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
@@ -187,5 +204,5 @@
             </div>
         </div>
     </div>
+    }
 </body>
-</html>

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using MVC.Presentacion.Models.Requisicion;
 using Exceptions.MainModule.Validaciones;
 using MVC.Presentacion.Models.Seguridad;
+using PagedList;
 using Newtonsoft.Json;
 
 namespace MVC.Presentacion.Controllers
@@ -16,7 +17,7 @@ namespace MVC.Presentacion.Controllers
     public class RequisicionController : MainController
     {
         string tkn = string.Empty;
-        public ActionResult Requisiciones()
+        public ActionResult Requisiciones(int? page)
         {
             if (Session["StringToken"] == null) return View("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
             tkn = Session["StringToken"].ToString();
@@ -25,7 +26,10 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
-            return View(RequisicionServicio.InitRequisiciones(Session["StringToken"].ToString()));
+            var Pagina = page ?? 1;
+            var model = RequisicionServicio.InitRequisiciones(Session["StringToken"].ToString());
+            ViewBag.Requisiciones = model.Requisiciones.ToPagedList(Pagina, 20);
+            return View(model);
         }
         public ActionResult Requisicion(RequisicionDTO model = null)
         {

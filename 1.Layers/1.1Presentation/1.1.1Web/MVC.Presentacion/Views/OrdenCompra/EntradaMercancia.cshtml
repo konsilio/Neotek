@@ -1,0 +1,106 @@
+﻿@model MVC.Presentacion.Models.OrdenCompra.EntradaMercanciaModel
+
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        @using (Html.BeginForm("CrearCategoria", "Producto", FormMethod.Post))
+        {
+            <div class="block-header">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Entradas</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item active">Compras</li>
+                            <li class="breadcrumb-item active">Orden de Compra</li>
+                            <li class="breadcrumb-item active">Entrada de Mercancia</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Crear</strong> nueva categoría</h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Empresa)
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <b>Número de Requisición:</b>&nbsp;
+                                                @Html.LabelFor(m => m.NumeroRequisicion)
+                                            </div>
+                                            <div class="input-group">
+                                                <b>Número de Orden de Compra:</b>&nbsp;
+                                                @Html.LabelFor(m => m.NumOrdenCompra)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-lg-3 col-md-12">
+                                        <div class="form-group form-float">
+                                            <b>Fecha requerida:</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+                                                @Html.TextBoxFor(m => m.FechaRequerida, new { @class = "form-control", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-12">
+                                        <div class="form-group form-float">
+                                            <b>Solicitante:</b>
+                                            @Html.TextBoxFor(m => m.UsuarioSolicitante, new { @class = "form-control", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-12 form-float">
+                                        <div class="form-group">
+                                            <b>Motivo de compra:</b>
+                                            @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control  no-resize", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-12">
+                                        <div class="form-group form-float">
+                                            <b>Se requiere en:</b>
+                                            @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control  no-resize", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <b>Proveedor:</b>&nbsp;
+                                                @Html.TextBoxFor(m => m.Proveedor, new { @class = "form-control", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <b>Date</b>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+                                            @Html.TextBoxFor(m => m.FechaEntrada, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+

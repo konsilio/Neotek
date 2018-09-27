@@ -19,6 +19,8 @@ namespace Application.MainModule.DTOs
         public int IdRequisicion { get; set; }
         public string NumeroRequisicion { get; set; }
         public string usuarioSolicitante { get; set; }
+        public string MotivoRequisicion { get; set; }
+        public string RequeridoEn { get; set; }
         public int IdProveedor { get; set; }
         public string Proveedor { get; set; }
         public Nullable<int> IdUsuarioGenerador { get; set; }
@@ -30,13 +32,14 @@ namespace Application.MainModule.DTOs
         public bool EsGas { get; set; }
         public bool EsTransporteGas { get; set; }
         public bool Activo { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-        public Nullable<System.DateTime> FechaAutorizacion { get; set; }
+        public DateTime FechaRegistro { get; set; }
+        public DateTime FechaAutorizacion { get; set; }
         public DateTime FechaRequerida { get; set; }
         public Nullable<decimal> SubtotalSinIva { get; set; }
         public Nullable<decimal> SubtotalSinIeps { get; set; }
         public Nullable<decimal> Iva { get; set; }
         public Nullable<decimal> Ieps { get; set; }
         public Nullable<decimal> Total { get; set; }
+        public List<OrdenCompraProductoDTO> Productos { get; set; }
     }
 }
