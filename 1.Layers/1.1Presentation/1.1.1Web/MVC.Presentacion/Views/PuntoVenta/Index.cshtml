@@ -8,16 +8,86 @@
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnBuscar").click(function () {
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "Buscar" }) %>');
-            form.attr('method', 'post');
+    //$(document).ready(function () {     
+    //});
+
+    function GetListInit() {
+        //debugger
+        //var _lstInit = [];
+        //$('#tblChoferes tbody tr').each(function () {
+          
+        //   //var value = $(this).find('td option:selected').val();
+        //    var value = $(this).find('td:nth-child(4)').text();
+        //    _lstInit.push(value);
+        //});
+        //alert(_lstId);
+              
+           }
+    $(function () {
+        $('select').on('change', function () {
+            debugger
+            var _lstId = [];
+           // var _lstrows = [];
+            ////collect the values from selected;
+            $('#tblChoferes tbody tr').each(function () {
+                // var customerId = $(this).find("#idtd").html();
+                var value = $(this).find('td option:selected').val();
+                //var idRow = $(this.id);
+                //_lstrows.push(idRow);
+                _lstId.push(value);
+            });
+            alert(_lstId);
+           // alert(_lstrows);
+            var uniq = _lstId.map((name) => { return { count: 1, name: name } }).reduce((a, b) => {
+                a[b.name] = (a[b.name] || 0) + b.count
+                return a
+            }, {})
+  
+            var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1)
+                    
+            var isMyObjectEmpty = !Object.keys(duplicates).length;
+
+            if (!isMyObjectEmpty) {
+               
+                var currentSelect = $('#tblChoferes tbody tr').find('td option:selected').val()
+                var currentId = $('#tblChoferes tbody tr')[0].rowIndex;
+               // $(this).closest('tr')[0].rowIndex
+               
+                if (duplicates == currentSelect) {
+                    myFunction(currentSelect);
+                    //$("#tblChoferes tr td:nth-child(4):first").css("background-color", "red");
+                    //$("#tblChoferes tbody tr td option[value=0]").attr('selected', 'selected');
+                }
+            }
+
+            /********************************/
+            //get new value selected
+
+
+            //var tr = $(this).closest("tr");
+            //tr.find("select option").attr("disabled", ""); //enable everything
+
+            ////collect the values from selected;
+            //var arr = $.map
+            //(
+            //   tr.find("select option:selected"), function (n) {
+            //       return n.value;
+            //   }
+            // );
+
+
         });
+
     });
 
+    function myFunction(x) {
+        alert(x);
+    }
+
 </script>
+
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
@@ -39,7 +109,7 @@
                                     <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
                                         @foreach (var lst in ViewBag.Empresas)
                                         {
-                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                         }
                                     </select>
                                 </div>
@@ -53,7 +123,7 @@
                         <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="table-responsive">
-                                    <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
+                                    <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" id="tblChoferes">
                                         <thead>
                                             <tr>
                                                 <th>Gasera</th>
@@ -69,27 +139,35 @@
                                                 <tr>
                                                     <td>@item.Empresa</td>
                                                     <td>@item.UnidadesAlmacen</td>
-                                                    <td>@item.UnidadesAlmacen</td>                                                                                         
-                                                    @if(ViewBag.Usuarios != null)
+                                                    <td>@item.PuntoVenta</td>
+                                                    @if (ViewBag.Usuarios != null)
                                                     {
-                                                    <td>
-                                                        <select name="IdUsuario" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                                            @foreach (var lst in ViewBag.Usuarios)
-                                                            {
-                                                                <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1 @lst.Apellido2</option>
-                                                            }
-                                                        </select>
-                                                    </td>}
+                                                        <td id="idtd">
+                                                            <select name="IdUsuario" class="form-control selectpicker z-index show-tick">
+                                                                <option value="0">Seleccione...</option>
+                                                                @foreach (var lst in ViewBag.Usuarios)
+                                                                {
+                                                                    if (@lst.IdUsuario == item.IdUsuario)
+                                                                    {
+                                                                        <option value="@lst.IdUsuario" selected>@lst.Nombre @lst.Apellido1 @lst.Apellido2</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1 @lst.Apellido2</option>
+                                                                    }
+                                                                }
+                                                            </select>
+                                                        </td>}
                                                     else
                                                     {
-                                                    <td>@item.OperadorChofer</td>
+                                                        <td>@item.OperadorChofer</td>
                                                     }
                                                     <td>
-                                                        <a ID="lbEdit" href="@Url.Action("AsignarChofer", "PuntoVenta" , new { idE = item.IdEmpresa,id=item.IdPuntoVenta })">
+                                                        <a ID="lbEdit" onclick="GetListInit()" href="@Url.Action("AsignarChofer", "PuntoVenta" , new { idE = item.IdEmpresa,id=item.IdPuntoVenta })">
                                                             <i class="material-icons">edit</i>
                                                             <span class="icon-name"></span>
                                                         </a>
-                                                        <a ID="lbBorrar" href="@Url.Action("BorrarPuntpVenta", "PuntoVenta" , new {idE = item.IdEmpresa, id=item.IdPuntoVenta })">
+                                                        <a ID="lbBorrar" href="@Url.Action("BorrarPuntoVenta", "PuntoVenta" , new {idE = item.IdEmpresa, id=item.IdPuntoVenta })">
                                                             <i class="material-icons">delete</i>
                                                             <span class="icon-name"></span>
                                                         </a>

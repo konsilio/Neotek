@@ -823,10 +823,10 @@ namespace MVC.Presentacion.App_Code
         #endregion
 
         #region Puntos de Venta
-        public static List<PuntoVentaModel> ListaPuntosVenta(string token)
+        public static List<PuntoVentaModel> ListaPuntosVenta(int idPV,string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaPuntosVenta(token);
+            agente.BuscarListaPuntosVenta(idPV, token);
             return agente._listaPuntosV;
         }
         public static List<PuntoVentaModel> ListaPuntosVentaId(short id,string token)
@@ -834,6 +834,13 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.BuscarListaPuntosVentaId(id,token);
             return agente._listaPuntosV;
+        }
+
+        public static RespuestaDTO EliminarPuntosVenta(PuntoVentaModel cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarPuntosVenta(cc, tkn);
+            return agente._RespuestaDTO;
         }
         #endregion
 

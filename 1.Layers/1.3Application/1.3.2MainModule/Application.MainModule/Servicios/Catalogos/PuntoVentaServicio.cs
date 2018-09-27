@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Sagas.MainModule.Entidades;
 using System;
@@ -50,6 +51,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             var operadorChofer = OperadorChoferServicio.ObtenerPorUsuarioAplicacion();
             return Obtener(operadorChofer);
+        }
+        public static RespuestaDto Eliminar(PuntoVenta cteLoc)
+        {
+            return new PuntoVentaDataAccess().Eliminar(cteLoc);
         }
     }
 }

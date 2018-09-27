@@ -243,6 +243,12 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPuntosVenta());
         }
+
+        [Route("elimina/puntoventa")]
+        public HttpResponseMessage PutEliminaPuntosVenta(PuntoVentaDTO cteLoc)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaPuntosVenta(cteLoc), Request);
+        }
         #endregion
 
 

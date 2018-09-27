@@ -20,10 +20,10 @@ namespace Application.MainModule.Servicios.Catalogos
             return null;
         }
 
-        public static string ObtenerNumero(short idEmpresa)
+        public static string ObtenerNumero(short idEmpresa, short idCAlmacenGas)
         {
             if (idEmpresa != 0)
-                return new EquipoTransporteDataAccess().BuscarUnidades(idEmpresa).Numero;
+                return new EquipoTransporteDataAccess().BuscarUnidades(idEmpresa, idCAlmacenGas).Numero;
           
             return null;
         }
@@ -54,10 +54,12 @@ namespace Application.MainModule.Servicios.Catalogos
             return null;
             
         }
+
         public static List<EquipoTransporte> BuscarEquipoTransporte()
         {
             return new EquipoTransporteDataAccess().BuscarEquipoTransporte();
         }
+
         public static List<EquipoTransporte> BuscarEquipoTransporte(short IdEmpresa)
         {
             return new EquipoTransporteDataAccess().BuscarEquipoTransporte(IdEmpresa);

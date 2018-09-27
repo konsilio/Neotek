@@ -893,12 +893,12 @@ namespace MVC.Presentacion.Agente
         #endregion
         #region Puntos de Venta
 
-        public void BuscarListaPuntosVenta(string tkn)//short idEmpresa, 
+        public void BuscarListaPuntosVenta(int idPV, string tkn)//short idEmpresa, 
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetPuntosVenta"];
-            GetListaPV(tkn).Wait();
+            GetListaPV(idPV, tkn).Wait();
         }
-        private async Task GetListaPV(string Token)
+        private async Task GetListaPV(int idPV, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -923,6 +923,10 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
+
+                if (idPV != 0)
+                    _listaPuntosV = (from x in lus where x.IdPuntoVenta == idPV select x).ToList();
+
                 _listaPuntosV = lus;
             }
         }
@@ -959,6 +963,12 @@ namespace MVC.Presentacion.Agente
                 }
                 _listaPuntosV = lus;
             }
+        }
+
+        public void EliminarPuntosVenta(PuntoVentaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaPuntosVenta"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
 
