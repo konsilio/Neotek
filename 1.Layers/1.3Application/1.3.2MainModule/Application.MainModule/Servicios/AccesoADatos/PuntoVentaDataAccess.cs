@@ -62,7 +62,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Format(Error.C0003, "del centro de costo"); ;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del punto de venta"); ;
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
@@ -81,6 +81,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public PuntoVenta Buscar(int idPuntoVenta)
         {
             return uow.Repository<PuntoVenta>().GetSingle(x => x.IdPuntoVenta.Equals(idPuntoVenta)
+                                                         && x.Activo);
+        }
+        public OperadorChofer BuscarOperador(int idOperador)
+        {
+            return uow.Repository<OperadorChofer>().GetSingle(x => x.IdOperadorChofer.Equals(idOperador)
+                                                         && x.Activo);
+        }
+        public OperadorChofer BuscarPorUsuario(int idUsuario)
+        {
+            return uow.Repository<OperadorChofer>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
                                                          && x.Activo);
         }
 
@@ -112,5 +122,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        
+
     }
 }

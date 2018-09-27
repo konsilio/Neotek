@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Application.MainModule.DTOs.Catalogo
+namespace MVC.Presentacion.Models.Catalogos
 {
-   public class OperadorChoferDTO
+    public class OperadorChoferModel
     {
         public int IdOperadorChofer { get; set; }
         public byte IdTipoOperadorChofer { get; set; }
@@ -18,9 +17,5 @@ namespace Application.MainModule.DTOs.Catalogo
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
 
-        //public virtual TipoOperadorChofer TipoOperadorChofer { get; set; }
-        //public virtual Usuario Usuario { get; set; }
-        // public virtual ICollection<PuntoVenta> PuntosVenta { get; set; }
-        //public virtual Empresa Empresa { get; set; }
     }
 }

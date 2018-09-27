@@ -66,6 +66,8 @@ namespace MVC.Presentacion.Agente
         public List<BancoDTO> _listaBanco;
         public List<FormaPagoDTO> _listaFormaPago;
         public List<PuntoVentaModel> _listaPuntosV;
+        public OperadorChoferModel Operador;
+        public List<OperadorChoferModel> _listaOperadoresUsuarios;
 
         public AgenteServicio()
         {
@@ -500,6 +502,7 @@ namespace MVC.Presentacion.Agente
                 _lstUserEmp = (from x in lus where x.IdUsuario == id select x).ToList();
             }
         }
+
         public void BuscarTodosUsuarios(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
@@ -922,9 +925,13 @@ namespace MVC.Presentacion.Agente
                 }
 
                 if (idPV != 0)
+                {
                     _listaPuntosV = (from x in lus where x.IdPuntoVenta == idPV select x).ToList();
-
-                _listaPuntosV = lus;
+                }
+                else
+                {
+                    _listaPuntosV = lus;
+                }
             }
         }
         
@@ -965,6 +972,82 @@ namespace MVC.Presentacion.Agente
         public void EliminarPuntosVenta(PuntoVentaModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaPuntosVenta"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+
+        public void BuscarUsarioOperador(short id, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetUsuariosPuntoVenta"];
+            GetUsuariosOpe(id, tkn).Wait();
+        }
+
+        private async Task GetUsuariosOpe(short id, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<OperadorChoferModel> lus = new List<OperadorChoferModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<OperadorChoferModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<OperadorChoferModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaOperadoresUsuarios = lus;
+            }
+        }
+
+        public void BuscarIdChofer(int id, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetOperadorIdUsuario"];
+            GetIdChofer(id, tkn).Wait();
+        }
+
+        private async Task GetIdChofer(int id, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                OperadorChoferModel lus = new OperadorChoferModel();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<OperadorChoferModel>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new OperadorChoferModel();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                Operador = lus;
+            }
+        }
+
+        public void EditarPuntoVenta(PuntoVentaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaOperador"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion

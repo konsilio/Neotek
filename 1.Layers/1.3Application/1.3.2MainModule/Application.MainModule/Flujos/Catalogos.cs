@@ -225,13 +225,29 @@ namespace Application.MainModule.Flujos
             
             var puntoV = PuntoVentaAdapter.FromDto(cteDto);
             return PuntoVentaServicio.Eliminar(puntoV);
-        }
-        //OperadorChofer
-        //public OperadorChoferDTO GetOperador(int IdOperadorChofer)
-        //{
-        //    return PuntoVentaServicio.ObtenerOperador(IdOperadorChofer);
-        //}
+        }              
 
+        public OperadorChoferDTO GetOperador(int idUsuario)
+        {
+            return PuntoVentaServicio.ObtenerOperador(idUsuario);
+        }
+
+        public List<OperadorChoferDTO> GetUsuariosIdEmpesa(short idEmpresa)
+        {
+            return PuntoVentaServicio.ObtenerUsuariosOperador(idEmpresa);
+        }
+        public RespuestaDto ModificaOperador(PuntoVentaDTO pvDto)
+        {
+            var resp = PermisosServicio.PuedeConsultarPuntoVenta();
+            if (!resp.Exito) return resp;
+
+            var clientes = PuntoVentaServicio.Obtener(pvDto.IdPuntoVenta);
+            if (clientes == null) return PuntoVentaServicio.NoExiste();
+
+            var cte = PuntoVentaAdapter.FromDtoEditar(pvDto, clientes);
+            cte.FechaRegistro = cte.FechaRegistro;
+            return PuntoVentaServicio.Modificar(cte);
+        }
         #endregion
 
         #region Productos
