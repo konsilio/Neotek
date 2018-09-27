@@ -146,6 +146,20 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.IdEstacionCarburacion != null
                                                             && x.Activo).ToList();
         }
+
+        public UnidadAlmacenGas ObtenerUnidadAlmacenGasAlterno(short idEmpresa)
+        {
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                  && x.Activo 
+                                                                  && x.EsAlterno).FirstOrDefault();
+        }
+        public List<UnidadAlmacenGas> ObtenerUnidadesAlmacenGasAlterno(short idEmpresa)
+        {
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                  && x.Activo
+                                                                  && x.EsAlterno).ToList();
+        }
+
         public List<UnidadAlmacenGas> BuscarTodosPipas(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)

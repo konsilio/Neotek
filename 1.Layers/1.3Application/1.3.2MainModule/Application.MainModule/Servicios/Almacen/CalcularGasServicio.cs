@@ -35,5 +35,10 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return cantidadActualKg + ingresoKg;   
         }
+
+        internal static decimal SumarLitros(decimal cantidadActualLt, decimal ingresoLt)
+        {
+            return cantidadActualLt + ingresoLt;
+        }
     }
 }

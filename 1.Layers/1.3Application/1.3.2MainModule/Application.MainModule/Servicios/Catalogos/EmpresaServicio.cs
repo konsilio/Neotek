@@ -46,6 +46,14 @@ namespace Application.MainModule.Servicios.Catalogos
 
             return Obtener(unidad.IdEmpresa);
         }
+        public static Empresa Obtener(AlmacenGasDescarga descarga)
+        {         
+            if (descarga.OCompraExpedidor != null)
+                if (descarga.OCompraExpedidor.Empresa != null)
+                    return descarga.OCompraExpedidor.Empresa;
+
+            return Obtener(descarga.OCompraExpedidor.IdEmpresa);
+        }
 
         public static RespuestaDto RegistrarEmpresa(Empresa emp)
         {
