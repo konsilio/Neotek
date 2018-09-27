@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Flujos;
 using DS.MainModule.Results;
 using System;
@@ -21,7 +22,7 @@ namespace DS.MainModule.Controllers
             _almacen = new Almacen();
         }
         [Route("entrada/producto")]
-        public HttpResponseMessage PostGuardarEntradas(List<AlmacenCrearEntradaDTO> Entradas)
+        public HttpResponseMessage PostGuardarEntradas(OrdenCompraEntradasDTO Entradas)
         {
             return RespuestaHttp.crearRespuesta(_almacen.GenerarEntradaProducto(Entradas), Request);
         }

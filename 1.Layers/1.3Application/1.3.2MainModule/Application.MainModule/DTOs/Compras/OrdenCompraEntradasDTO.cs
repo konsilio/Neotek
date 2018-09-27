@@ -25,6 +25,6 @@ namespace Application.MainModule.DTOs.Compras
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Fecha de entrada")]
         public DateTime FechaEntrada { get; set; }
-        public List<AlmacenEntradaDTO> Producto;
+        public List<AlmacenEntradaDTO> Productos { get; set; }
     }
 }
