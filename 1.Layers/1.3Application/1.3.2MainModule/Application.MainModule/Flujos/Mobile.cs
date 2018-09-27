@@ -138,5 +138,10 @@ namespace Application.MainModule.Flujos
         {
             return LecturaGasServicio.ConsultaDatosReporteDelDia();
         }
+
+        public RespuestaDto CatalogoEstaciones(bool esAnticipo, bool esCorteCaja)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

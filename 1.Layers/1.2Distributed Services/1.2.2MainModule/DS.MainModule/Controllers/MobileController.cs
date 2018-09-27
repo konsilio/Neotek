@@ -169,5 +169,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoUnidades(), Request);
         }
+
+        [Route("catalogos/anticipos/{esAnticipo}/{esCorteCaja}")]
+        public HttpResponseMessage GetEstacionesDeposito(bool esAnticipo,bool esCorteCaja)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoEstaciones(esAnticipo, esCorteCaja),Request);
+        }
     }
 }
