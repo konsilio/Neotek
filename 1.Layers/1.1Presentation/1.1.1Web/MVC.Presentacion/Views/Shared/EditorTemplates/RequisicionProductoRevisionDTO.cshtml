@@ -1,5 +1,6 @@
 ﻿@model MVC.Presentacion.Models.Requisicion.RequisicionProductoRevisionDTO
 @Html.HiddenFor(m => m.IdProducto)
+@Html.HiddenFor(m => m.Orden)
 <tr>
     <td>@Model.TipoProducto</td>
     <td>@Model.Producto</td>
@@ -8,7 +9,7 @@
     <td>@Model.Aplicacion</td>
     <td>@Model.CentroCosto</td>
     <td>@Model.CantidadAlmacenActual</td>
-    <td>@Html.CheckBoxFor(x => x.RevisionFisica)</td>
+    <td>@Html.CheckBoxFor(x => x.RevisionFisica, new { @style = "width: 20px; height: 20px; " })</td>
 </tr>
 
 

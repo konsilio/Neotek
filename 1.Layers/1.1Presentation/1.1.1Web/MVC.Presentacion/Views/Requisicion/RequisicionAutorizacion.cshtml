@@ -17,7 +17,7 @@
         });
     </script>
 </head>
-<body style="padding-top:10px">
+<body>
     @using (Html.BeginForm("Autorizacion", "Requisicion", FormMethod.Post))
     {
         @Html.HiddenFor(m => m.IdRequisicion)
@@ -188,7 +188,7 @@
             </div>
         </div>
         <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm margin-0" role="document">
+            <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>

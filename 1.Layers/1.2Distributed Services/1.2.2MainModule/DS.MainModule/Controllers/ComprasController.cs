@@ -72,7 +72,7 @@ namespace DS.MainModule.Controllers
         /// <param name="idOrdenCompra"></param>
         /// <returns></returns>
         [Route("autoroizar/ordencompra")]
-        public HttpResponseMessage PutAutorizarCompra(OrdenCompraAutorizacionDTO oc)
+        public HttpResponseMessage PutAutorizarCompra(OrdenCompraDTO oc)
         {
             return RespuestaHttp.crearRespuesta(_compras.AutorizarOrdenCompra(oc), Request);
         }

@@ -150,30 +150,15 @@ namespace Application.MainModule.Servicios.Seguridad
         public static RespuestaDto PuedeConsultarPuntoVenta()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarCliente).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarPuntoVenta).ToList();
 
             return EvaluarPermiso(roles, Error.P0001, "PuntoVenta");
-        }
-        public static RespuestaDto PuedeRegistrarPuntoVenta()
-        {
-            var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarUsuario).ToList();
-
-            return EvaluarPermiso(roles, Error.P0001, "PuntoVenta");
-        }
-
-        public static RespuestaDto PuedeModificarPuntoVenta()
-        {
-            var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatModificarUsuario).ToList();
-
-            return EvaluarPermiso(roles, Error.P0002, "PuntoVenta");
-        }
+        } 
 
         public static RespuestaDto PuedeEliminarPuntoVenta()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarUsuario).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarPuntoVenta).ToList();
 
             return EvaluarPermiso(roles, Error.P0003, "PuntoVenta");
         }

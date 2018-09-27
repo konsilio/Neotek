@@ -1,13 +1,10 @@
-﻿@using MVC.Presentacion.Models.OrdenCompra;
-@model OrdenCompraModel
+﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraModel
 <!DOCTYPE html>
 
 <html>
 <head>
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
-    <link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
-
-    <style>
+        <style>
         .calculaPrecio {
         }
     </style>
@@ -70,7 +67,7 @@
 
     </script>
 </head>
-<body style="padding-top:10px;padding-bottom:0px;height:100%">
+<body style="height:100%">
     @using (Html.BeginForm("CrearOrdenCompra", "OrdenCompra", FormMethod.Post))
     {
         @Html.HiddenFor(m => m.IdEmpresa)
@@ -78,9 +75,9 @@
         @Html.HiddenFor(m => m.IdEmpresa)
         @Html.HiddenFor(m => m.FechaRequisicion)
         @Html.HiddenFor(m => m.IdRequisicion)
-        <section class="content home" style="height:100%">
-            <div class="container-fluid" style="height:100%">
-                <div class="block-header" style="height:100%">
+        <section class="content home" >
+            <div class="container-fluid" >
+                <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
                             <h2>Compras</h2>
@@ -93,7 +90,7 @@
                         </div>
                     </div>
                     <div class="card" style="height:100%">
-                        <div class="body" style="height:100%">
+                        <div class="body">
                             <div class="row clearfix">
                                 <div class="col-sm-4">
                                     <div class="form-group">
@@ -106,19 +103,13 @@
                                             <b>Número de Requisición:</b>&nbsp;
                                             <label> @Model.NumRequisicion</label>
                                         </div>
-
-                                        @*<div class="input-group">
-                                                <b>Número de Orden de Compra:</b>&nbsp;
-                                                <label>@Model.NumOrdenCompra</label>
-                                            </div>*@
                                     </div>
                                 </div>
                             </div>
                             <div class="row clearfix">
                                 <div class="col-lg-3 col-md-12">
                                     <div class="form-group form-float">
-                                        <b>Fecha requerida:</b>
-                                        @*<dtp:DateTimePicker ID="txtFechaRequerida" CssClass="dataTxt" Enabled="false" />*@
+                                        <b>Fecha requerida:</b>                                       
                                         <input type="text" value="@Model.FechaRequisicion" class="form-control" disabled />
                                     </div>
                                 </div>
@@ -198,136 +189,7 @@
 
                                     </table>
                                 </div>
-                            </div>
-                            @*<div class="row clearfix" id="divEntrada">
-                                            <div class="body table-responsive">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <td><b>Tipo</b></td>
-                                                            <td><b>Producto</b></td>
-                                                            <td><b>Requeridos</b></td>
-                                                            <td><b>Unidad</b></td>
-                                                            <td><b>Aplicación</b></td>
-                                                            <td><b>Cantidad</b></td>
-                                                            <td hidden><b>Justificación</b></td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach (var prod in Model.OrdenCompraProductos)
-                                                        {
-                                                            <tr>
-                                                                <td>@prod.TipoProducto</td>
-                                                                <td>@prod.Producto</td>
-                                                                <td>@prod.CantidadAComprar</td>
-                                                        <td>@prod.Unidad</td>
-                                                        <td>@prod.Aplicacion</td>
-                                                        <td>@prod.Importe</td>
-                                                        <td hidden><input id="Cantidad" type="text" class="form-control" /></td>
-                                                    </tr>
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                @if (ViewBag.Complementogas != null)
-                                {
-
-                                    <div class="card" id="divGvvComplementoGas">
-                                        <div class="body">
-                                            <div class="row clearfix">
-                                                <div class="row clearfix">
-                                                    <div class="table-responsive">
-                                                        <asp:GridView CssClass="table table-hover" OnRowEditing="dgListaproductos_RowEditing" ID="gvComplementoGas" Width="100%" AutoGenerateColumns="false" OnRowDataBound="dgListaproductos_RowDataBound">
-                                                            <Columns>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <b>Tipo</b>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <asp:Label ID="lbldgTipo" Text='<%# Bind("TipoProducto") %>' />
-                                                                    </ItemTemplate>
-                                                                    <ItemStyle CssClass="text-sm-center" />
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-
-                                                                    <HeaderTemplate>
-                                                                        <b>Producto</b>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <asp:Label ID="lbldgProducto" Text='<%# Bind("Producto") %>' />
-                                                                        <asp:Label ID="lblidProducto" Text='<%# Bind("IdProducto") %>' />
-                                                                    </ItemTemplate>
-                                                                    <ItemStyle CssClass="text-sm-center" />
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-
-                                                                    <HeaderTemplate>
-                                                                        <b>Cantidad</b>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <asp:Label ID="lbldgCantidad" Text='<%# Bind("CantidadAComprar") %>' />
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-
-                                                                    <HeaderTemplate>
-                                                                        <b>Unidad</b>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <asp:Label ID="lbldgUnidad" Text='<%# Bind("Unidad") %>' />
-                                                                    </ItemTemplate>
-                                                                    <ItemStyle CssClass="text-sm-center" />
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-
-                                                                    <HeaderTemplate>
-                                                                        <b>Aplicación</b>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <asp:Label ID="lbldgAplicacion" Text='<%# Bind("Aplicacion") %>' />
-                                                                    </ItemTemplate>
-                                                                    <ItemStyle CssClass="text-sm-center" />
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-
-                                                                    <HeaderTemplate>
-                                                                        <b>Centro de costo</b>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <asp:Label ID="lbldgCentroCosto" Text='<%# Bind("CentroCosto") %>' />
-                                                                        <asp:Label ID="lbldgidCentroCosto" Text='<%# Bind("IdCentroCosto") %>' />
-                                                                    </ItemTemplate>
-                                                                    <ItemStyle CssClass="text-sm-center" />
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-
-                                                                    <HeaderTemplate>
-                                                                        Proveedor
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <asp:DropDownList ID="ddlProveedor"></asp:DropDownList>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-
-                                                                    <HeaderTemplate>
-                                                                        Cuenta Contable
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <asp:DropDownList ID="ddlCuentaContable"></asp:DropDownList>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                            </Columns>
-                                                        </asp:GridView>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>*@
+                            </div>                        
                             <div hidden="hidden" class="card" id="divDatosComplementoGas">
                                 <div class="body">
                                     <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
@@ -817,7 +679,7 @@
             </div>
         </section>
         <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-sm margin-0" role="document">
+            <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>

@@ -14,6 +14,7 @@ namespace MVC.Presentacion.Controllers
         // GET: Usuarios
         public ActionResult Index()
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
@@ -22,7 +23,16 @@ namespace MVC.Presentacion.Controllers
             {
                 Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0,_tkn)
             };
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.MessageExito = TempData["RespuestaDTO"];
+            }
+            if (TempData["RespuestaDTOError"] != null)
+            {
+                ViewBag.MessageError = TempData["RespuestaDTOError"];
+            }
 
+            ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View(rolCat);
         }
 
@@ -41,13 +51,25 @@ namespace MVC.Presentacion.Controllers
         [HttpPost]
         public ActionResult GuardarUsuario(UsuarioDTO _ojUs)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            var respuesta = CatalogoServicio.CrearUsuario(_ojUs, _tok);
+            //}
+
+            if (respuesta.Exito)
             {
-                CatalogoServicio.CrearUsuario(_ojUs, _tok);
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index", _ojUs);
             }
 
-            return RedirectToAction("Index", _ojUs);
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index", _ojUs);
+            }       
         }
 
         //vista ActualizaCredenciales-View
@@ -61,13 +83,25 @@ namespace MVC.Presentacion.Controllers
         //guarda credenciales - operacion
         public ActionResult GuardarCredenciales(UsuarioDTO objUser)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+                var respuesta = CatalogoServicio.ActualizaCredencialesUser(objUser, _tok);
+            //}
+            if (respuesta.Exito)
             {
-                CatalogoServicio.ActualizaCredencialesUser(objUser, _tok);
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index", objUser);
             }
 
-            return RedirectToAction("Index", objUser);
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index", objUser);
+            }
+          
         }
 
         //vista altas y bajas de Roles - View
@@ -83,18 +117,31 @@ namespace MVC.Presentacion.Controllers
         //guarda Roles asignado al usuario - operacion
         public ActionResult GuardarRol(UsuariosModel objUser)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            var respuesta = CatalogoServicio.AgregarRolAlUsuario(objUser, _tok);
+            //}
+            if (respuesta.Exito)
             {
-                CatalogoServicio.AgregarRolAlUsuario(objUser, _tok);
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index", objUser);
             }
 
-            return RedirectToAction("Index", objUser);
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index", objUser);
+            }
+       
         }
 
         //muestra vista para edicion de usuario seleccionado
         public ActionResult EditarUsuario(int id)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
             //Se obtienen los paises         
             ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tok);
@@ -109,21 +156,47 @@ namespace MVC.Presentacion.Controllers
         [HttpPost]
         public ActionResult GuardaEdicionUsuario(UsuarioDTO _Obj)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            var respuesta = CatalogoServicio.ActualizaEdicionUsuario(_Obj, _tok);
+            //}
+
+            if (respuesta.Exito)
             {
-                CatalogoServicio.ActualizaEdicionUsuario(_Obj, _tok);
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index", _Obj);
             }
 
-            return RedirectToAction("Index", _Obj);
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index", _Obj);
+            }
+       
         }
 
         public ActionResult BorrarUsuario(short id)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-            CatalogoServicio.EliminaUsuarioSel(id, _tkn);
+            var respuesta = CatalogoServicio.EliminaUsuarioSel(id, _tkn);
+            if (respuesta.Exito)
+            {
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index");
+            }
 
-            return RedirectToAction("Index");
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index");
+            }
+
+          
         }
 
         //BorrarRol
@@ -131,13 +204,26 @@ namespace MVC.Presentacion.Controllers
         [HttpPost]
         public ActionResult BorrarRol(UsuariosModel objUser)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            var respuesta = CatalogoServicio.EliminarRolAlUsuario(objUser, _tok);
+            //}
+
+            if (respuesta.Exito)
             {
-                CatalogoServicio.EliminarRolAlUsuario(objUser, _tok);
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index",objUser);
             }
 
-            return RedirectToAction("Index", objUser);           
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index", objUser);
+            }
+                   
         }
 
         //[HttpPost]

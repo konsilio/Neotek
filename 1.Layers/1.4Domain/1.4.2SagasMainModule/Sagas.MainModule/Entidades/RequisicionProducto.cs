@@ -16,6 +16,7 @@ namespace Sagas.MainModule.Entidades
     {
         public int IdRequisicion { get; set; }
         public int IdProducto { get; set; }
+        public short Orden { get; set; }
         public int IdTipoProducto { get; set; }
         public int IdCentroCosto { get; set; }
         public decimal Cantidad { get; set; }

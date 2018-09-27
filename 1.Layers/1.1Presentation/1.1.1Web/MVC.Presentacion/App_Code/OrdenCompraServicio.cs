@@ -20,7 +20,9 @@ namespace MVC.Presentacion.App_Code
                 FechaRequeridaA = DateTime.Now,
                 FechaRegistroDe = DateTime.Now,
                 FechaRegistroA = DateTime.Now,
-                Requisiciones = RequisicionServicio.BuscarRequisiciones(TokenServicio.ObtenerIdEmpresa(tkn), tkn),
+                Requisiciones = RequisicionServicio.BuscarRequisiciones(TokenServicio.ObtenerIdEmpresa(tkn), tkn)
+                    .Where(y => y.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Revision_exitosa))
+                    .OrderByDescending(x => x.IdRequisicion).ToList(),
                 OrdenesCompra = ObtenerOrdenesCompra(TokenServicio.ObtenerIdEmpresa(tkn), tkn)
             };
         }
@@ -48,6 +50,16 @@ namespace MVC.Presentacion.App_Code
                 model.OrdenCompraProductos = datos.Productos;
             }
             return model;
+        }
+        public static OrdenCompraDTO BuscarOrdenCompra(int id, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.BuscarOrdenCompra(id, tkn);
+            return agente._ordeCompraDTO;
+        }
+        private static bool EsGasTransp(List<ProductoOCDTO> lprod)
+        {
+            return lprod.Select(x => x.EsGas || x.EsTransporteGas).SingleOrDefault();
         }
         public static List<OrdenCompraEstatusDTO> ListaEstatus(string tkn)
         {
@@ -79,7 +91,7 @@ namespace MVC.Presentacion.App_Code
         {
             List<OrdenCompraProductoCrearDTO> lp = new List<OrdenCompraProductoCrearDTO>();
             foreach (var _prd in Prods)
-            {               
+            {
                 OrdenCompraProductoCrearDTO p = new OrdenCompraProductoCrearDTO();
                 p.IdProducto = _prd.IdProducto;
                 p.IdCentroCosto = _prd.IdCentroCosto;
@@ -94,11 +106,18 @@ namespace MVC.Presentacion.App_Code
                 decimal subtotal = (p.Precio * p.Cantidad) - (_descuento);
                 decimal iva = ((subtotal) * (p.IVA / 100));
                 decimal ieps = ((subtotal) * (p.IEPS / 100));
-                p.Importe = subtotal + iva + ieps;              
+                p.Importe = subtotal + iva + ieps;
                 lp.Add(p);
             }
             return lp;
         }
+        public static RespuestaDTO AutorizarOrdenCompra(OrdenCompraDTO dto, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.AutorizarOrdenCompra(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+
         #region Adaptadores
 
         #endregion

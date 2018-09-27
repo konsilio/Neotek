@@ -20,29 +20,34 @@ namespace Application.MainModule.Servicios.AccesoADatos
             uow = new SagasDataUow();
         }
 
+        public Usuario Buscar(int idUsuario)
+        {
+            return IntegrarRoles(uow.Repository<Usuario>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
+                                                         && x.Activo));
+        }
+
         public Usuario Buscar(short idEmpresa, int idUsuario)
         {
-            return uow.Repository<Usuario>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
+            return IntegrarRoles(uow.Repository<Usuario>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
                                                          && x.IdUsuario.Equals(idUsuario)
-                                                         && x.Activo);
+                                                         && x.Activo));
+        }
+        public Usuario Buscar(short idEmpresa, string NombreUsuario, string password)
+        {
+            return IntegrarRoles(uow.Repository<Usuario>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
+                                                         && x.NombreUsuario.Equals(NombreUsuario)
+                                                         && x.Password.Equals(password)
+                                                         && x.Activo));
         }
         public List<Usuario> Buscar(short idEmpresa)
         {
-            return uow.Repository<Usuario>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+            return IntegrarRoles(uow.Repository<Usuario>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                          && x.EsAdministracionCentral.Equals(false)
-                                                         && x.Activo).ToList();
+                                                         && x.Activo));
         }
         public List<Usuario> BuscarTodos()
         {
-            return uow.Repository<Usuario>().Get(x => x.Activo).ToList();
-        }
-
-        public Usuario Buscar(short idEmpresa, string NombreUsuario, string password)
-        {
-            return uow.Repository<Usuario>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
-                                                         && x.NombreUsuario.Equals(NombreUsuario)
-                                                         && x.Password.Equals(password)
-                                                         && x.Activo);
+            return IntegrarRoles(uow.Repository<Usuario>().Get(x => x.Activo));
         }
 
         public RespuestaDto Actualizar(Usuario usuario)
@@ -140,30 +145,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
-        public Usuario Buscar(Empresa _empresa, int idUsuario)
+        private Usuario IntegrarRoles(Usuario usuario)
         {
-            if (_empresa.Usuario != null)
-            {
-                return _empresa.Usuario.SingleOrDefault(x => x.IdUsuario.Equals(idUsuario) && x.Activo);
-            }
-            else
-            {
-                return Buscar(_empresa.IdEmpresa ,idUsuario);
-            }
+            usuario.Roles = usuario.UsuarioRoles.Select(x => x.Role).ToList();
+
+            return usuario;
         }
-        public Usuario Buscar(int idUsuario)
+        private List<Usuario> IntegrarRoles(IEnumerable<Usuario> usuarios)
         {
-            return uow.Repository<Usuario>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
-                                                         && x.Activo);
-            //usuario.Roles = usuario.UsuarioRoles.Select(x => x.Roles).ToList(); /*uow.Repository<Rol>().Get(x=> x.IdRol.).;*/
-
-            //return usuario;
-        }
-
-        public Sagas.MainModule.Usuario BuscarUser(int idUsuario)
-        {
-            return uow.Repository<Sagas.MainModule.Usuario>().GetSingle(x => x.IdUsuario.Equals(idUsuario));
+            return usuarios.Select(x => IntegrarRoles(x)).ToList();
         }
     }
 }

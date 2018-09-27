@@ -1,18 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Exceptions.MainModule.Validaciones;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.MainModule.DTOs.Almacen
 {
+    [Serializable]
     public class AlmacenEntradaDTO
-    {
-        public int IdRequisicion { get; set; }
-        public int IdOrdenCompra { get; set; }
+    {        
         public int IdAlmacen { get; set; }
-        public int IdProduto { get; set; }
+        public int IdProduto { get; set; }    
+        public string TipoProducto { get; set; }
+        public string Descripcion { get; set; }
+        public decimal Requeridos { get; set; }
+        public string UnidadMedida { get; set; }
+        public string Aplicacion { get; set; }
         public int IdUsuarioRecibe { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Cantidad")]
         public decimal Cantidad { get; set; }
         public string UrlDocEntrada { get; set; }
         public string PathDocEntrada { get; set; }

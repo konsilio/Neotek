@@ -51,7 +51,7 @@
 
     });
 </script>
-@using (Html.BeginForm((ViewBag.IdCliente == null) ? "GuardarCliente" : "GuardaEdicionCliente", "Clientes", FormMethod.Post))
+@using (Html.BeginForm("GuardarCliente", "Clientes", FormMethod.Post))
 {
     <section class="content home">
         <div class="container-fluid">
@@ -100,41 +100,11 @@
 
                                     <div class="col-lg-8 col-md-8 col-sm-8">
                                         <div class="form-group">
-                                            Regimen Fiscal:*
-                                            <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
-                                                @foreach (var lstrf in ViewBag.RegimenFiscal)
+                                            Regimen Fiscal:*  <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
+                                                @foreach (var lst in ViewBag.Regimen)
                                                 {
-                                                    <option value="1">General de Ley Personas Morales</option>
+                                                    <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
                                                 }
-
-                                                @*@{int x = 0;}*@
-
-                                                @*@foreach (var lst in ViewBag.RegimenFiscal)
-                                                    {
-                                                        //if (ViewBag.RegimenFiscal != null && ViewBag.RegimenFiscal[x].Descripcion != null)
-                                                        //{
-                                                        <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
-                                                        //x = x++;
-                                                        //}
-                                                    }*@
-
-                                                @*@{int x = ViewBag.RegimenFiscal.Count-1;}
-                                                    @{var obj = new string[] { ViewBag.RegimenFiscal[x].Descripcion };}
-
-                                                    @for (var index = 0; index < obj.Length; index++)
-                                                    {
-                                                        x++;
-                                                        if (index < x)
-                                                        {
-                                                            var item = obj[index];
-                                                            <option value="index">@item</option>
-                                                                @*/**/
-                                                                foreach (var lst in ViewBag.RegimenFiscal)
-                                                                {
-                                                                    <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
-                                                                }
-                                                        }
-                                                    }*@
                                             </select>
 
                                         </div>
@@ -146,13 +116,13 @@
                                 <div class="col-lg-8 col-md-8 col-sm-8">
                                     <div class="form-group" id="hide_razonS">
                                         Razón social:*
-                                        <input type="text" name="RazonSocial" id="txtRS" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].RazonSocial)" />
+                                        <input type="text" name="RazonSocial" id="txtRS" class="form-control"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         Rfc:*
-                                        <input type="text" name="Rfc" id="txtRfc" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Rfc)" />
+                                        <input type="text" name="Rfc" id="txtRfc" class="form-control"  />
                                     </div>
                                 </div>
 
@@ -167,7 +137,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                                     <div class="form-group">
-                                                        Nombre completo: <input type="text" name="RepresentanteLegal" id="txtNomCom" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].RepresentanteLegal)" />
+                                                        Nombre completo: <input type="text" name="RepresentanteLegal" id="txtNomCom" class="form-control" />
 
                                                     </div>
                                                 </div>
@@ -176,7 +146,7 @@
                                                     <div class="form-group">
                                                         <div>
                                                             Teléfono:
-                                                            <input type="text" name="Telefono" id="txtTel" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Telefono)" />
+                                                            <input type="text" name="Telefono" id="txtTel" class="form-control" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -188,14 +158,14 @@
                                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                                     <div class="form-group">
                                                         Dirección:
-                                                        <input type="text" name="Domicilio" id="txtNomCom" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Domicilio)" />
+                                                        <input type="text" name="Domicilio" id="txtNomCom" class="form-control" />
                                                     </div>
                                                 </div>
 
                                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                                     <div class="form-group">
                                                         Celular:
-                                                        <input type="text" name="Celular" id="txtTel" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Celular)" />
+                                                        <input type="text" name="Celular" id="txtTel" class="form-control" />
                                                     </div>
                                                 </div>
 
@@ -204,7 +174,7 @@
                                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                                     <div class="form-group">
                                                         Correo electrónico:
-                                                        <input type="text" name="CorreoElectronico" id="txtEmail" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].CorreoElectronico)" />
+                                                        <input type="text" name="CorreoElectronico" id="txtEmail" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -216,8 +186,8 @@
                             <div class="row clearfix" id="div_hidePM">
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
-                                        Nombres:* <input type="text" name="Nombre" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Nombre)" />
-                                        <input id="IdCliente" type="text" name="IdCliente" hidden="hidden" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].IdCliente)" />
+                                        Nombres:* <input type="text" name="Nombre" class="form-control" />
+                                        @*<input id="IdCliente" type="text" name="IdCliente" hidden="hidden" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].IdCliente)" />*@
 
                                     </div>
                                 </div>
@@ -226,7 +196,7 @@
                                     <div class="form-group">
                                         <div>
                                             Apellido 1:*
-                                            <input type="text" name="Apellido1" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Apellido1)" />
+                                            <input type="text" name="Apellido1" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -234,7 +204,7 @@
                                     <div class="form-group">
                                         <div>
                                             Apellido 2:
-                                            <input type="text" name="Apellido2" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Apellido2)" />
+                                            <input type="text" name="Apellido2" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -260,14 +230,15 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        Monto $ <input name="limiteCreditoMonto" step=".0000" min="0" pattern="^\d+(?:\.\d{1,4})?$" type="number" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].limiteCreditoMonto)" />
+                                        Monto $ <input name="limiteCreditoMonto" type="number" />
+
                                     </div>
                                 </div>
 
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
                                         <div>
-                                            Dias <input name="limiteCreditoDias" type="number" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].limiteCreditoDias)" />
+                                            Dias <input name="limiteCreditoDias" type="number"  />
                                         </div>
                                     </div>
                                 </div>
@@ -275,7 +246,8 @@
                                     <div class="form-group">
                                         <div>
                                             Descuento $ x kilo:
-                                            <input id="desc" required name="DescuentoXKilo" type="number" placeholder="0" min="0" step="0.000" pattern="^\d+(?:\.\d{1,4})?$" value="@((ViewBag.IdCliente[0].DescuentoXKilo==null)?"0":ViewBag.IdCliente[0].DescuentoXKilo)" />
+                                            <input name="DescuentoXKilo" type="number" />
+                                            @*step="0.0001" pattern="[0-9]+([\,|\.][0-9]+)?"*@
                                         </div>
                                     </div>
                                 </div>
@@ -296,7 +268,8 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <div class="col-lg-8 col-md-8 col-sm-8">
-                                            <input type="checkbox" id="checkAcceso" name="AccesoPortal" />
+                                            @*<input type="checkbox" id="checkAcceso" name="AccesoPortal" />*@
+                                            @Html.CheckBoxFor(m => m.AccesoPortal)
                                             <label for="checkAcceso">
                                                 Acceso al portal de facturación
                                             </label>
@@ -319,7 +292,7 @@
                             <div class="row clearfix">
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
-                                        Teléfono 1: <input id="txtTel1" name="Telefono1" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono1)" />
+                                        Teléfono 1: <input id="txtTel1" name="Telefono1" type="text" class="form-control"  />
                                     </div>
                                 </div>
 
@@ -327,7 +300,7 @@
                                     <div class="form-group">
                                         <div>
                                             Celular 1:
-                                            <input id="txtCel1" type="text" name="Celular1" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Celular1)" />
+                                            <input id="txtCel1" type="text" name="Celular1" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -335,7 +308,7 @@
                                     <div class="form-group">
                                         <div>
                                             Email 1:
-                                            <input id="txtEmail1" type="text" name="Email1" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Email1)" />
+                                            <input id="txtEmail1" type="text" name="Email1" class="form-control"  />
                                         </div>
                                     </div>
                                 </div>
@@ -345,7 +318,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         Teléfono 2:
-                                        <input id="txtTel2" name="Telefono2" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono2)" />
+                                        <input id="txtTel2" name="Telefono2" type="text" class="form-control" />
                                     </div>
                                 </div>
 
@@ -353,7 +326,7 @@
                                     <div class="form-group">
                                         <div>
                                             Celular 2:
-                                            <input id="txtCel2" name="Celular2" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Celular2)" />
+                                            <input id="txtCel2" name="Celular2" type="text" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -362,7 +335,7 @@
                                     <div class="form-group">
                                         <div>
                                             Email 2:
-                                            <input id="txtEmail2" type="text" name="Email2" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Email2)" />
+                                            <input id="txtEmail2" type="text" name="Email2" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -372,7 +345,7 @@
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         Teléfono 3:
-                                        <input id="txtTel3" name="Telefono3" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono3)" />
+                                        <input id="txtTel3" name="Telefono3" type="text" class="form-control" />
                                     </div>
                                 </div>
 
@@ -380,7 +353,7 @@
                                     <div class="form-group">
                                         <div>
                                             Celular 3:
-                                            <input id="txtCel3" type="text" name="Celular3" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Celular3)" />
+                                            <input id="txtCel3" type="text" name="Celular3" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -388,7 +361,7 @@
                                     <div class="form-group">
                                         <div>
                                             Email 3:
-                                            <input id="txtEmail3" type="text" name="Email3" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Email3)" />
+                                            <input id="txtEmail3" type="text" name="Email3" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -399,7 +372,7 @@
                                     <div class="form-group">
                                         <div>
                                             Sitio web 1:
-                                            <input id="txtweb1" name="SitioWeb1" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].SitioWeb1)" />
+                                            <input id="txtweb1" name="SitioWeb1" type="text" class="form-control" />
 
                                         </div>
                                     </div>
@@ -408,14 +381,14 @@
                                     <div class="form-group">
                                         <div>
                                             Sitio web 2:
-                                            <input id="txtweb2" name="SitioWeb2" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].SitioWeb2)" />
+                                            <input id="txtweb2" name="SitioWeb2" type="text" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
                                         Sitio web 3:
-                                        <input id="txtweb3" name="SitioWeb3" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].SitioWeb3)" />
+                                        <input id="txtweb3" name="SitioWeb3" type="text" class="form-control" />
                                     </div>
                                 </div>
 
@@ -430,19 +403,14 @@
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            <input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-left" formaction="Index" />
+                            <input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-left"/>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="col-lg-7 col-md-7 col-sm-7">
                         <div class="form-group">
-                            @if (@ViewBag.IdCliente == null)
-                            {
-                                <input type="submit" value="Crear" formaction="GuardarCliente" formmethod="post" class="btn btn-raised btn-primary float-right" />
-                            }
-                            else
-                            {
-                                <input type="submit" id="btnGuardaEdicion" value="Actualizar" formmethod="post" class="btn btn-raised btn-primary float-right" />
-                            }
+
+                            <input type="submit" value="Crear" formaction="GuardarCliente" formmethod="post" class="btn btn-raised btn-primary float-right" />
+
                         </div>
                     </div>
                 </div>
