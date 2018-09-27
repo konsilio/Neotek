@@ -1,5 +1,7 @@
-﻿@using MVC.Presentacion.Models.Requisicion
-@model RequisicionesModel
+﻿MVC.Presentacion.Models.Requisicion
+@using PagedList.Mvc;
+@using PagedList;
+@model MVC.Presentacion.Models.Requisicion.RequisicionesModel
 
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
@@ -135,7 +137,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach (var req in Model.Requisiciones)
+                                                    @foreach (var req in ViewBag.Requisiciones)
                                                     {
                                                         <tr>
                                                             <td>@req.NombreComercial</td>
@@ -171,6 +173,14 @@
                                                     }
                                                 </tbody>
                                             </table>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-6">
+                                            Pagina @(ViewBag.Requisiciones.PageCount < ViewBag.Requisiciones.PageNumber ? 0 : ViewBag.Requisiciones.PageNumber) de @ViewBag.Requisiciones.PageCount
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            @Html.PagedListPager((IPagedList)ViewBag.Requisiciones, page => Url.Action("Requisiciones", new { page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
                                         </div>
                                     </div>
                                 </div>

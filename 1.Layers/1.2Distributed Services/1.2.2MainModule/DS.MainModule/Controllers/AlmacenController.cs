@@ -4,6 +4,7 @@ using DS.MainModule.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
@@ -23,6 +24,11 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage PostGuardarEntradas(List<AlmacenCrearEntradaDTO> Entradas)
         {
             return RespuestaHttp.crearRespuesta(_almacen.GenerarEntradaProducto(Entradas), Request);
+        }
+        [Route("buscar/ordecompraentrada/{IdOrdenCompra}")]
+        public HttpResponseMessage GetOrdenCompraEntrada(int IdOrdenCompra)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.BuscarOrdenCompra(IdOrdenCompra));
         }
     }
 }

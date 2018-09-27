@@ -297,6 +297,8 @@
     <Compile Include="Models\Catalogos\UsuariosModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OrdenCompra\AlmacenEntradaDTO.cs" />
+    <Compile Include="Models\OrdenCompra\EntradaMercanciaModel.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraAutorizacionModel.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraCrearDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraDTO.cs" />
@@ -11359,9 +11361,9 @@
     <Content Include="Views\Requisicion\RequisicionAutorizacion.cshtml" />
     <Content Include="Views\OrdenCompra\OrdenCompraAutorizacion.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RequisicionProductoRevisionDTO.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\RequisicionProductoAutorizacionDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RequisicionProductoAutrizacionDTO.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ProductoOCDTO.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\OrdenCompraProductoCrearDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrdenCompraProductoDTO.cshtml" />
     <Content Include="Views\CentroCosto\CentroCosto.cshtml" />
     <Content Include="Views\CuentaContable\CuentaContable.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CuentaContableDTO.cshtml" />
@@ -11394,6 +11396,7 @@
     <Content Include="Views\PrecioVenta\Index.cshtml" />
     <Content Include="Views\PuntoVenta\Index.cshtml" />
     <Content Include="Views\Clientes\EditarCliente.cshtml" />
+    <Content Include="Views\OrdenCompra\EntradaMercancia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

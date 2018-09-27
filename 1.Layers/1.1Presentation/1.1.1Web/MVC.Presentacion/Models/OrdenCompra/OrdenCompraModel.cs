@@ -15,6 +15,7 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public string NombreEmpresa { get; set; }           
         public string MotivoCompra { get; set; }
         public string RequeridoEn { get; set; }     
+        public bool EsGasTransporte { get; set; }
         public DateTime FechaRequisicion { get; set; }
         public List<ProductoOCDTO> OrdenCompraProductos { get; set; }
      }

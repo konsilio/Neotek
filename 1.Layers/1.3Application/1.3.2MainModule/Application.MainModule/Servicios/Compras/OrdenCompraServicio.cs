@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs;
 
 namespace Application.MainModule.Servicios.Compras
 {
@@ -218,6 +219,13 @@ namespace Application.MainModule.Servicios.Compras
                 return null;
 
             return listaOCs.LastOrDefault();
+        }
+        public static OrdenCompraDTO AgregarDatosRequisicion(OrdenCompraDTO dto)
+        {
+            var datosreq = Requisicion.RequisicionServicio.BuscarRequisicionPorId(dto.IdRequisicion);
+            dto.MotivoRequisicion = datosreq.MotivoRequisicion;
+            dto.RequeridoEn = datosreq.RequeridoEn;
+            return dto;
         }
     }
 }
