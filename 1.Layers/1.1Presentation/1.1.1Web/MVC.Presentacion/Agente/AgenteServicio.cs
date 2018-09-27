@@ -33,6 +33,7 @@ namespace MVC.Presentacion.Agente
         public CatalogoRespuestaDTO _respuestaCatalogos;
         public RequisicionDTO _requisicion;
         public RequisicionOCDTO _requisicionOrdenCompra;
+        public EntradaMercanciaModel _entradaMercancia;
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
         public List<EmpresaDTO> _listaEmpresas;
@@ -66,12 +67,10 @@ namespace MVC.Presentacion.Agente
         public List<BancoDTO> _listaBanco;
         public List<FormaPagoDTO> _listaFormaPago;
 
-
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
         }
-
         #region Catalogos
         #region roles
         public void BuscarRolesRequisicion(string tkn)
@@ -2068,6 +2067,39 @@ namespace MVC.Presentacion.Agente
                 _listaOrdenCompra = emp;
             }
         }
+        public void BuscarOrdenesCompraEntrada(short idEmpresa, string tkn)
+        {
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetOrdenCompraEntrada"];
+            GetOrdenCompraEntrada(idEmpresa, tkn).Wait();
+        }
+        private async Task GetOrdenCompraEntrada(short idEmpresa, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                EntradaMercanciaModel emp = new EntradaMercanciaModel();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idEmpresa.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<EntradaMercanciaModel>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    emp = new EntradaMercanciaModel();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _entradaMercancia = emp;
+            }
+        }
         public void CancelarOrdenCompra(OrdenCompraDTO _oc, string token)
         {
             this.ApiOrdenCompra = ConfigurationManager.AppSettings["PutCancelarOrdenCompra"];
@@ -2126,7 +2158,7 @@ namespace MVC.Presentacion.Agente
                 {
                     HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idOrdenCompra.ToString())).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        emp = await response.Content.ReadAsAsync<OrdenCompraCrearDTO>();
+                        emp = await response.Content.ReadAsAsync<OrdenCompraDTO>();
                     else
                     {
                         client.CancelPendingRequests();

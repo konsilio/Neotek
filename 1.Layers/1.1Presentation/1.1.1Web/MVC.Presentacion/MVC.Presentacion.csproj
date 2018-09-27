@@ -295,6 +295,8 @@
     <Compile Include="Models\Catalogos\UsuariosModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OrdenCompra\AlmacenEntradaDTO.cs" />
+    <Compile Include="Models\OrdenCompra\EntradaMercanciaModel.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraAutorizacionModel.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraCrearDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraDTO.cs" />
@@ -11388,6 +11390,7 @@
     <Content Include="Views\Clientes\EditarLocaciones.cshtml" />
     <Content Include="Views\Producto\Proveedor.cshtml" />
     <Content Include="Views\Producto\Proveedores.cshtml" />
+    <Content Include="Views\OrdenCompra\EntradaMercancia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

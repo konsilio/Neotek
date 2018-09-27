@@ -9,6 +9,8 @@ using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.DTOs.Compras;
+using Application.MainModule.AdaptadoresDTO.Almacen;
 
 namespace Application.MainModule.Servicios.Almacen
 {
@@ -52,18 +54,11 @@ namespace Application.MainModule.Servicios.Almacen
         }
         public static AlmacenEntradaProducto GenerarAlmacenEntradaProcuto(AlmacenCrearEntradaDTO dto, Sagas.MainModule.Entidades.Almacen _alm)
         {
-            return new AlmacenEntradaProducto()
-            {
-                IdOrdenCompra = dto.IdOrdenCompra,
-                IdRequisicion = new OrdenCompraDataAccess().Buscar(dto.IdOrdenCompra).IdRequisicion,
-                IdAlmacen = _alm.IdAlmacen,
-                IdProduto = dto.IdProduto,
-                IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
-                Cantidad = dto.Cantidad,
-                Observaciones_ = dto.Observaciones,
-                FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
-                FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
-            };
+            return AlmacenProductoAdapter.FromDTO(dto, _alm);
+        }
+        public static OrdenCompraEntradasDTO AlmacenEntrada(OrdenCompra oc, Sagas.MainModule.Entidades.Requisicion req)
+        {
+            return AlmacenProductoAdapter.ToDTO(oc, req);           
         }
     }
 }

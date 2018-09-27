@@ -82,7 +82,7 @@ namespace Application.MainModule.Flujos
         /// </summary>
         /// <param name="_oc"></param>
         /// <returns></returns>
-        public RespuestaDto AutorizarOrdenCompra(OrdenCompraAutorizacionDTO _oc)
+        public RespuestaDto AutorizarOrdenCompra(OrdenCompraDTO _oc)
         {
             var resp = PermisosServicio.PuedeAutorizarOrdenCompra();
             if (!resp.Exito) return resp;
@@ -125,8 +125,8 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return new OrdenCompraCrearDTO();
 
             //Se busca el id en la base y se genera DTO para enviar
-            var oc = OrdenCompraServicio.Buscar(idOrdeCompra);
-            return OrdenComprasAdapter.ToDTO(oc);
+            var oc = OrdenComprasAdapter.ToDTO(OrdenCompraServicio.Buscar(idOrdeCompra));           
+            return OrdenCompraServicio.AgregarDatosRequisicion(oc) ;
         }
         public ComplementoGasDTO BuscarComplementoGas(int idOrdenCompra)
         {

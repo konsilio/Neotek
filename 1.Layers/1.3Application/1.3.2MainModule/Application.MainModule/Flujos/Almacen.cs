@@ -1,8 +1,11 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Almacen;
 using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Compras;
+using Application.MainModule.Servicios.Requisicion;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -38,6 +41,12 @@ namespace Application.MainModule.Flujos
                 entradas.Add(EntradaProd);
             }
             return ProductoAlmacenServicio.EntradaAlmcacenProductos(_almacen, entradas);
+        }
+        public OrdenCompraEntradasDTO BuscarOrdenCompra(int Id)
+        {
+            var oc = OrdenCompraServicio.Buscar(Id);
+            var req = RequisicionServicio.Buscar(oc.IdRequisicion);
+            return ProductoAlmacenServicio.AlmacenEntrada(oc, req);
         }
     }
 }

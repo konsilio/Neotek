@@ -1,20 +1,9 @@
 ﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraDTO
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>OrdenCompraAutorizacion</title>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#btnFinalizar").click(function () {
-                var form = $(this).parent("form");
-                form.attr('action', '<%= Url.RouteUrl(new { Controller = "OrdenCompra", Action = "Autorizacion" }) %>');
-                form.attr('method', 'post');
-            });
-        });
-    </script>
-</head>
+
 <body>
+    @using (Html.BeginForm("Autorizar", "OrdenCompra", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.IdOrdenCompra)
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
@@ -53,26 +42,26 @@
                         <div class="col-lg-3 col-md-12">
                             <div class="form-group form-float">
                                 <b>Fecha requerida:</b>
-                                @Html.TextBoxFor(m => m.FechaRequerida, new { @class = "form-control diseabled" })
+                                @Html.TextBoxFor(m => m.FechaRequerida, new { @class = "form-control", @disabled = "disabled" })
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-12">
                             <div class="form-group form-float">
                                 <b>Solicitante:</b>
-                                <input name="Solicitante" value="@Model.usuarioSolicitante" class="form-control disabled" />
+                                 @Html.TextBoxFor(m => m.usuarioSolicitante, new { @class = "form-control", @disabled = "disabled" })
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-12 form-float">
                             <div class="form-group">
                                 <b>Motivo de compra:</b>
-                                @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control  no-resize disabled", @placeholder = "Error de carga", @rows = "4" })
+                                @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control  no-resize", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
 
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-12">
                             <div class="form-group form-float">
                                 <b>Se requiere en:</b>
-                                @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control  no-resize disabled", @placeholder = "Error de carga", @rows = "4" })
+                                @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control  no-resize", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
                             </div>
                         </div>
                     </div>
@@ -107,7 +96,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @Html.EditorFor(m => m.Productos)
+                                    @foreach (var m in Model.Productos)
+                                    {
+                                    <tr>
+                                        <td>@m.TipoProducto</td>
+                                        <td>@m.Producto</td>
+                                        <td>@m.CantidadAComprar</td>
+                                        <td>@m.UnidadMedida</td>
+                                        <td>@m.Aplicacion</td>
+                                        <td>@m.CentroCosto</td>
+                                        <td>@m.CuentaContable</td>
+                                        <td>@m.Precio</td>
+                                        <td>@m.Descuento</td>
+                                        <td>@m.IVA</td>
+                                        <td>@m.IEPS</td>
+                                        <td>@m.Importe</td>
+                                    </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -153,8 +158,7 @@
                     <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" value="Si" id="btnCrear" class="btn btn-raised btn-primary btn-round" />
-
+                    <input id="btnAutorizar" type="submit" value="Si" class="btn btn-raised btn-primary btn-round" />
                     <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
@@ -200,5 +204,5 @@
             </div>
         </div>
     </div>
+    }
 </body>
-</html>

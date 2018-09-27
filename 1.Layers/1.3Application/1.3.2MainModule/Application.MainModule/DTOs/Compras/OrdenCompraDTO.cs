@@ -19,6 +19,8 @@ namespace Application.MainModule.DTOs
         public int IdRequisicion { get; set; }
         public string NumeroRequisicion { get; set; }
         public string usuarioSolicitante { get; set; }
+        public string MotivoRequisicion { get; set; }
+        public string RequeridoEn { get; set; }
         public int IdProveedor { get; set; }
         public string Proveedor { get; set; }
         public Nullable<int> IdUsuarioGenerador { get; set; }

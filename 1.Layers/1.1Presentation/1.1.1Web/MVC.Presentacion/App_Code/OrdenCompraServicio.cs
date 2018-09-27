@@ -91,7 +91,7 @@ namespace MVC.Presentacion.App_Code
         {
             List<OrdenCompraProductoCrearDTO> lp = new List<OrdenCompraProductoCrearDTO>();
             foreach (var _prd in Prods)
-            {               
+            {
                 OrdenCompraProductoCrearDTO p = new OrdenCompraProductoCrearDTO();
                 p.IdProducto = _prd.IdProducto;
                 p.IdCentroCosto = _prd.IdCentroCosto;
@@ -106,11 +106,18 @@ namespace MVC.Presentacion.App_Code
                 decimal subtotal = (p.Precio * p.Cantidad) - (_descuento);
                 decimal iva = ((subtotal) * (p.IVA / 100));
                 decimal ieps = ((subtotal) * (p.IEPS / 100));
-                p.Importe = subtotal + iva + ieps;              
+                p.Importe = subtotal + iva + ieps;
                 lp.Add(p);
             }
             return lp;
         }
+        public static RespuestaDTO AutorizarOrdenCompra(OrdenCompraDTO dto, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.AutorizarOrdenCompra(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+
         #region Adaptadores
 
         #endregion

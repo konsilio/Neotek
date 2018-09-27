@@ -140,6 +140,7 @@
     <Compile Include="DTOs\Compras\ComplementoGasDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraCrearDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraDTO.cs" />
+    <Compile Include="DTOs\Compras\OrdenCompraEntradasDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraEstatusDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraProductoDTO.cs" />
