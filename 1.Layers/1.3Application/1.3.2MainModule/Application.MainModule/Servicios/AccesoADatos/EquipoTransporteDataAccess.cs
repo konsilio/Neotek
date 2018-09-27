@@ -80,6 +80,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.Activo)
                                                          .ToList();
         }
+        public UnidadAlmacenGas BuscarUnidades(short idEmpresa, short idCAlmacenGas)
+        {
+            return uow.Repository<UnidadAlmacenGas>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa) 
+                                               && x.IdCAlmacenGas.Equals(idCAlmacenGas) && x.Activo)
+                                                        ;
+        }
         public Camioneta BuscarCamioneta(int idCamioneta)
         {
             return uow.Repository<Camioneta>().GetSingle(x => x.IdCamioneta.Equals(idCamioneta)

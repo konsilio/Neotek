@@ -1,22 +1,20 @@
-﻿using Exceptions.MainModule.Validaciones;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-namespace Application.MainModule.DTOs.Almacen
+namespace MVC.Presentacion.Models.OrdenCompra
 {
-    [Serializable]
     public class AlmacenEntradaDTO
-    {        
+    {
         public int IdAlmacen { get; set; }
-        public int IdProduto { get; set; }    
+        public int IdProduto { get; set; }
         public string TipoProducto { get; set; }
         public string Descripcion { get; set; }
         public decimal Requeridos { get; set; }
         public string UnidadMedida { get; set; }
         public string Aplicacion { get; set; }
-        public int IdUsuarioRecibe { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Cantidad")]
+        public int IdUsuarioRecibe { get; set; }       
         public decimal Cantidad { get; set; }
         public string UrlDocEntrada { get; set; }
         public string PathDocEntrada { get; set; }

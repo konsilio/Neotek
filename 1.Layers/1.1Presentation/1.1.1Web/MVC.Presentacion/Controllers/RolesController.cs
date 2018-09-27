@@ -14,6 +14,7 @@ namespace MVC.Presentacion.Controllers
         // GET: Roles
         public ActionResult Index()
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
             ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
             RolDto rol = new RolDto()
@@ -30,18 +31,41 @@ namespace MVC.Presentacion.Controllers
                 ListaMovilCompra = CatalogoServicio.ObtenerRolesMovilCompra(_tok),
 
             };
+
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.MessageExito = TempData["RespuestaDTO"];
+            }
+            if (TempData["RespuestaDTOError"] != null)
+            {
+                ViewBag.MessageError = TempData["RespuestaDTOError"];
+            }
+
+            ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View(rolCat);
         }
 
         public ActionResult AgregarNuevoRol(RolDto ObjRol)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            var respuesta = CatalogoServicio.AgregarRoles(ObjRol, _tok);
+            //}
+            if (respuesta.Exito)
             {
-                CatalogoServicio.AgregarRoles(ObjRol, _tok);
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index", ObjRol);
             }
 
-            return RedirectToAction("Index", ObjRol);
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index", ObjRol);
+            }
+            
         }
 
         //vista editar Roles - View
@@ -55,30 +79,67 @@ namespace MVC.Presentacion.Controllers
         //Operacion borrar roles
         public ActionResult BorrarRol(short id)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-            CatalogoServicio.EliminaRolSel(id, _tkn);
-            return RedirectToAction("Index");
+            var respuesta = CatalogoServicio.EliminaRolSel(id, _tkn);
+            if (respuesta.Exito)
+            {
+                TempData["RespuestaDTO"] = "Baja Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index");
+            }
+            
         }
 
         //Actualizar nombre ROL- funcionalidad --evento Guardar--
         public ActionResult GuardarCambioRol(RolDto rol)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            var respuesta = CatalogoServicio.ActualizaNombreRol(rol, _tok);
+            //}
+            if (respuesta.Exito)
             {
-                CatalogoServicio.ActualizaNombreRol(rol, _tok);
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index");
+            }           
         }
 
         public ActionResult GuardarPermisos(RolDto objrol)
         {
             _tok = Session["StringToken"].ToString();
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+                var respuesta = CatalogoServicio.ActualizaPermisos(objrol, _tok);
+            //}
+            if (respuesta.Exito)
             {
-                CatalogoServicio.ActualizaPermisos(objrol, _tok);
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index");
+            }
+           
         }
 
         [HttpPost]

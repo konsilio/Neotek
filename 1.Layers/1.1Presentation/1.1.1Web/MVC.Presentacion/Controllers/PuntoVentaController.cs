@@ -1,0 +1,93 @@
+﻿using MVC.Presentacion.App_Code;
+using MVC.Presentacion.Models.Catalogos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace MVC.Presentacion.Controllers
+{
+    public class PuntoVentaController : Controller
+    {
+        // GET: PuntoVenta
+        public ActionResult Index()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+            ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
+            if (ViewBag.EsSuperUser)
+            {
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+                ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0,_tkn);
+
+            }
+            else
+            {
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
+                ViewBag.ListaPV = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            }
+            ViewBag.Usuarios = TempData["Users"];
+            //List<UsuarioDTO> ids = new List<UsuarioDTO>();
+            //ids.AddRange(ViewBag.Usuarios);
+            //ViewBag.ItemsSelect = (new SelectList(ids,));// "ItemId", "ItemName", selectedId );
+
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.MessageExito = TempData["RespuestaDTO"];
+            }
+            if (TempData["RespuestaDTOError"] != null)
+            {
+                ViewBag.MessageError = TempData["RespuestaDTOError"];
+            }
+
+            ViewBag.MessageError = TempData["RespuestaDTOError"];
+            return View();
+        }
+
+        public ActionResult AsignarChofer(PuntoVentaModel model, short idE, int id)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+            var lst = CatalogoServicio.ListaUsuarios(idE, _tkn);
+            if (lst.Count >= 1)
+            {
+                ViewBag.Usuarios = lst;
+            }
+            TempData["Users"] = lst;
+            ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
+            if (ViewBag.EsSuperUser)
+            {
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+                ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0,_tkn);
+            }
+            else
+            {
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
+                ViewBag.ListaPV = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            }
+            return View("Index");
+        }
+
+        public ActionResult BorrarPuntoVenta(List<PuntoVentaModel> _ObjModel, short idE, int id)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+            _ObjModel = CatalogoServicio.ListaPuntosVenta(id, _tkn);
+            var respuesta = CatalogoServicio.EliminarPuntosVenta(_ObjModel[0], _tkn);
+            if (respuesta.Exito)
+            {
+                TempData["RespuestaDTO"] = "Baja Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index");
+            }
+
+        }
+    }
+}

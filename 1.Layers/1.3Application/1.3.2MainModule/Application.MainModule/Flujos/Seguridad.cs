@@ -49,7 +49,7 @@ namespace Application.MainModule.Flujos
 
         public List<UsuarioDTO> ListaUsuarios(short idEmpresa)
         {
-            if (TokenServicio.ObtenerEsAdministracionCentral())
+            if (TokenServicio.EsSuperUsuario())
                 return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
             else
                 return UsuarioServicio.ListaUsuarios().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();

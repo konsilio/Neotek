@@ -231,6 +231,27 @@ namespace DS.MainModule.Controllers
         //}
         #endregion
 
+        #region Punto de Venta
+        [Route("puntoventa/listapuntosventa/{idEmpresa}")]
+        public HttpResponseMessage GetListaPuntosVentaId(short idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.PuntosVentaIdEmpresa(idEmpresa));
+        }
+
+        [Route("puntoventa/listapuntosventa")]
+        public HttpResponseMessage GetListaPuntosVenta()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPuntosVenta());
+        }
+
+        [Route("elimina/puntoventa")]
+        public HttpResponseMessage PutEliminaPuntosVenta(PuntoVentaDTO cteLoc)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaPuntosVenta(cteLoc), Request);
+        }
+        #endregion
+
+
         #region Productos
 
         #region Categoria Productos

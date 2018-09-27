@@ -252,6 +252,10 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraCompFactura_OrdenCompra" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraCompPorteador_OrdenCompra" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_OrdenCompraPago_OrdenCompra" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CPrecioVenta" Width="1.5" PointX="5.25" PointY="41" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CPrecioVentaEstatus" Width="1.5" PointX="3" PointY="53.125" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CPrecioVenta_CPrecioVentaEstatus" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_CPrecioVenta_Empresa" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

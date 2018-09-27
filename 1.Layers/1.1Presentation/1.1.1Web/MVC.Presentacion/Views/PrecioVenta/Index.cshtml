@@ -45,84 +45,132 @@
                                 </div>
                             </div>
                         </div>
-                        <br />                   
-                        <div class="card">
-                            <div class="body">
-                                <div class="row clearfix">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="col-sm-3">
-                                            <b>Tipo de Fecha:</b>
-                                            <select name="IdFecha" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">                                               
-                                                    <option value="0">Fecha Programada</option>                                                
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="dtpFechaPapeleta">De:</label>
-                                            <dtp:DateTimePicker ID="dtpFechaProgramadaDE" CssClass="dataTxt form-control-sm" Enabled="True" />
-                                        </div>
+                    </div>
+                </div>
 
-                                        <div class="col-sm-3">
-                                            <b>A:</b>
-                                            <dtp:DateTimePicker ID="dtpFechaProgramadaA" CssClass="dataTxt form-control-sm" Enabled="True" />
-                                        </div>
-                                    </div>
+                <div class="card">
+                    <div class="header">
+                        <h2><strong>Registrar precio de salida</strong></h2>
+                    </div>
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    Precio PEMEX: <input name="" type="text" />kg.
                                 </div>
-                                <div class="row clearfix">
-                                    <div class="col-lg-12 col-md-12 col-sm-12">
-                                        <div class="table-responsive">
-                                            <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Gasera</th>
-                                                        <th>Precio PEMEX(kg)</th>
-                                                        <th>Utilidad Esperada(kg)</th>
-                                                        <th>Precio Salida</th>
-                                                        <th>Fecha Programada</th>
-                                                        <th>FechaRegistro</th>
-                                                        <th>FechaVencimiento</th>
-                                                        <th>Estatus</th>                                                      
-                                                        <th>Acciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @*@foreach (var item in @ViewBag.Clientes)
-                                                    {
-
-                                                        <tr>
-
-                                                            <td>@item.Empresa</td>
-                                                            <td>@item.TipoPersonaFiscal</td>
-                                                            <td>@item.RegimenFiscal</td>
-                                                            <td>@item.RazonSocial</td>
-                                                            <td>@item.Rfc</td>
-                                                            <td>@item.limiteCreditoMonto</td>
-                                                            <td>@item.limiteCreditoDias</td>
-                                                            <td>@item.DescuentoXKilo</td>
-                                                            <td>@item.Celular</td>
-                                                            <td>@item.Telefono1</td>
-                                                            <td>@item.Email1</td>
-                                                            <td>                                                             
-                                                                <a ID="lbEdit" href="@Url.Action("EditarLocaciones", "Clientes", new { id = item.IdCliente })">
-                                                                    <i class="material-icons">edit</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                                <a ID="lbBorrar" href="@Url.Action("BorrarClientes", "Clientes", new { id = item.IdCliente })">
-                                                                    <i class="material-icons">delete</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    }*@
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                            </div>
+                            @*<div class="col-sm-3">
+                                
+                            </div>*@
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                    Utilidad esperada: <input name="" type="text" />kg.
                                 </div>
-
+                            </div>
+                            @*<div class="col-sm-3">
+                               
+                            </div>*@
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    Precio salida:  $14.70 kg.  $27.22 Lt.
+                                </div>
+                            </div>
+                            @*<div class="col-sm-2">
+                                <label name="" class="form-control" value="$14.70 kg."></label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label name="" class="form-control" value="$27.22 Lt."></label>
+                            </div>*@
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-2">
+                                <b>Fecha programada:</b>
+                            </div>
+                            <div class="col-sm-3">
+                                <dtp:DateTimePicker ID="dtpFechaProgramadaDE" CssClass="dataTxt form-control-sm" Enabled="True" />
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-primary float-right" />
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <br />
+                <div class="card">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-sm-3">
+                                <b>Tipo de Fecha:</b>
+                                <select name="IdFecha" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                    <option value="0">Fecha Programada</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <b>De:</b>
+                                <dtp:DateTimePicker ID="dtpFechaProgramadaDE" CssClass="dataTxt form-control-sm" Enabled="True" />
+                            </div>
+
+                            <div class="col-sm-3">
+                                <b>A:</b>
+                                <dtp:DateTimePicker ID="dtpFechaProgramadaA" CssClass="dataTxt form-control-sm" Enabled="True" />
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
+                                        <thead>
+                                            <tr>
+                                                <th>Gasera</th>
+                                                <th>Precio PEMEX(kg)</th>
+                                                <th>Utilidad Esperada(kg)</th>
+                                                <th>Precio Salida</th>
+                                                <th>Fecha Programada</th>
+                                                <th>FechaRegistro</th>
+                                                <th>FechaVencimiento</th>
+                                                <th>Estatus</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @*@foreach (var item in @ViewBag.Clientes)
+                                                {
+
+                                                <tr>
+
+                                                    <td>@item.Empresa</td>
+                                                    <td>@item.TipoPersonaFiscal</td>
+                                                    <td>@item.RegimenFiscal</td>
+                                                    <td>@item.RazonSocial</td>
+                                                    <td>@item.Rfc</td>
+                                                    <td>@item.limiteCreditoMonto</td>
+                                                    <td>@item.limiteCreditoDias</td>
+                                                    <td>@item.DescuentoXKilo</td>
+                                                    <td>@item.Celular</td>
+                                                    <td>@item.Telefono1</td>
+                                                    <td>@item.Email1</td>
+                                                    <td>
+                                                        <a ID="lbEdit" href="@Url.Action(" EditarLocaciones", "Clientes" , new { id=item.IdCliente })">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                        <a ID="lbBorrar" href="@Url.Action(" BorrarClientes", "Clientes" , new { id=item.IdCliente })">
+                                                            <i class="material-icons">delete</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                }*@
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>

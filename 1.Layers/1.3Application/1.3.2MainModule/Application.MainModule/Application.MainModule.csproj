@@ -66,6 +66,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\PuntoVentaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\TipoCentroCostoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\TipoProveedorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\UnidadAlmacenAdapter.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="DTOs\Almacen\AplicaDescargaDto.cs" />
     <Compile Include="DTOs\Catalogo\EstacionCarburacionDTO.cs" />
     <Compile Include="DTOs\Catalogo\FormaPagoDTO.cs" />
+    <Compile Include="DTOs\Catalogo\OperadorChoferDTO.cs" />
     <Compile Include="DTOs\Catalogo\PaisDTO.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoDto.cs" />
@@ -99,6 +101,7 @@
     <Compile Include="DTOs\Catalogo\ProductoCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoModificarDto.cs" />
+    <Compile Include="DTOs\Catalogo\PuntoVentaDTO.cs" />
     <Compile Include="DTOs\Catalogo\TipoCentroCostoDto.cs" />
     <Compile Include="DTOs\Catalogo\TipoProveedorDTO.cs" />
     <Compile Include="DTOs\Catalogo\UnidadAlmacenGasDTO.cs" />
@@ -140,6 +143,7 @@
     <Compile Include="DTOs\Compras\ComplementoGasDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraCrearDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraDTO.cs" />
+    <Compile Include="DTOs\Compras\OrdenCompraEntradasDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraEstatusDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraProductoDTO.cs" />
@@ -153,7 +157,7 @@
     <Compile Include="DTOs\Mobile\LecturaDTO.cs" />
     <Compile Include="DTOs\Mobile\LoginFbDTO.cs" />
     <Compile Include="DTOs\Mobile\RecargaDTO.cs" />
-    <Compile Include="DTOs\NotificacionDTO.cs" />
+    <Compile Include="Servicios\NotificacionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEstatusDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\CorreoDto.cs" />

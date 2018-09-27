@@ -160,6 +160,12 @@
     <Compile Include="Entidades\Pipa.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\PrecioVenta.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\PrecioVentaEstatus.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Producto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -247,6 +253,7 @@
     <Compile Include="IRepositorios\IUsuarioRepositorio.cs" />
     <Compile Include="ObjetosValor\Constantes\NotificacionPushConst.cs" />
     <Compile Include="ObjetosValor\Enum\enumIVA.cs" />
+    <Compile Include="ObjetosValor\Enum\EstatusPrecioVentaEnum.cs" />
     <Compile Include="ObjetosValor\Enum\IdentidadUnidadAlmacenGasEnum.cs" />
     <Compile Include="ObjetosValor\Enum\ImagenDeEnum.cs" />
     <Compile Include="ObjetosValor\Enum\RequisicionEstatusEnum.cs" />

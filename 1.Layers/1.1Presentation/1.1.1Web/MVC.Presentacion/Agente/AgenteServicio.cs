@@ -33,6 +33,7 @@ namespace MVC.Presentacion.Agente
         public CatalogoRespuestaDTO _respuestaCatalogos;
         public RequisicionDTO _requisicion;
         public RequisicionOCDTO _requisicionOrdenCompra;
+        public EntradaMercanciaModel _entradaMercancia;
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
         public List<EmpresaDTO> _listaEmpresas;
@@ -65,13 +66,12 @@ namespace MVC.Presentacion.Agente
         public List<TipoProveedorDTO> _listaTipoProveedor;
         public List<BancoDTO> _listaBanco;
         public List<FormaPagoDTO> _listaFormaPago;
-
+        public List<PuntoVentaModel> _listaPuntosV;
 
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
         }
-
         #region Catalogos
         #region roles
         public void BuscarRolesRequisicion(string tkn)
@@ -625,7 +625,7 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
 
-        
+
         private async Task EliminarUsuarioSeleccionado(short _pcDTO, string token)
         {
             using (var client = new HttpClient())
@@ -659,12 +659,7 @@ namespace MVC.Presentacion.Agente
 
         #endregion
         #region Clientes
-        public void SetEdoPais(List<ClienteLocacionMod> _obj, string tkn)
-        {
-            List<PaisModel> _pais = new List<PaisModel>();//BuscarPaises(tkn);
 
-
-        }
         public void BuscarTiposPersona(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetTiposPersona"];
@@ -740,7 +735,7 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetClientes"];
             GetListaClientes(id, rfc, nombre, tkn).Wait();
         }
-        private async Task GetListaClientes(int id, string rfc, string nombre,string Token)
+        private async Task GetListaClientes(int id, string rfc, string nombre, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -788,7 +783,6 @@ namespace MVC.Presentacion.Agente
                     _lstaClientes = lus;
             }
         }
-
         public void BuscarListaLocaciones(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaLocacion"];
@@ -819,10 +813,10 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-               
-                    _cteLocacion = lus;
 
-              //  SetEdoPais(lus,Token);
+                _cteLocacion = lus;
+
+                //  SetEdoPais(lus,Token);
             }
         }
 
@@ -894,6 +888,87 @@ namespace MVC.Presentacion.Agente
         }
 
         #endregion
+        #region Puntos de Venta
+
+        public void BuscarListaPuntosVenta(int idPV, string tkn)//short idEmpresa, 
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetPuntosVenta"];
+            GetListaPV(idPV, tkn).Wait();
+        }
+        private async Task GetListaPV(int idPV, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PuntoVentaModel> lus = new List<PuntoVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<PuntoVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<PuntoVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+                if (idPV != 0)
+                    _listaPuntosV = (from x in lus where x.IdPuntoVenta == idPV select x).ToList();
+
+                _listaPuntosV = lus;
+            }
+        }
+        
+        public void BuscarListaPuntosVentaId(short idEmpresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetPuntosVentaId"];
+            GetListaPVId(tkn, idEmpresa).Wait();
+        }
+        private async Task GetListaPVId(string Token, short idEmpresa)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PuntoVentaModel> lus = new List<PuntoVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<PuntoVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<PuntoVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaPuntosV = lus;
+            }
+        }
+
+        public void EliminarPuntosVenta(PuntoVentaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaPuntosVenta"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        #endregion
+
         #region Paises
         public void BuscarPaises(string tkn)
         {
@@ -2059,13 +2134,46 @@ namespace MVC.Presentacion.Agente
                         client.Dispose();
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     emp = new List<OrdenCompraDTO>();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
                 _listaOrdenCompra = emp;
+            }
+        }
+        public void BuscarOrdenesCompraEntrada(short idEmpresa, string tkn)
+        {
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetOrdenCompraEntrada"];
+            GetOrdenCompraEntrada(idEmpresa, tkn).Wait();
+        }
+        private async Task GetOrdenCompraEntrada(short idEmpresa, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                EntradaMercanciaModel emp = new EntradaMercanciaModel();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idEmpresa.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<EntradaMercanciaModel>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    emp = new EntradaMercanciaModel();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _entradaMercancia = emp;
             }
         }
         public void CancelarOrdenCompra(OrdenCompraDTO _oc, string token)
@@ -2104,75 +2212,44 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
-        //public void AutorizarOrdenCompra(OrdenCompraAutorizacionDTO _oc, string token)
-        //{
-        //    this.ApiOrdenCompra = ConfigurationManager.AppSettings["PutAutorizarCompra"];
-        //    AutorizarOC(_oc, token).Wait();
-        //}
-        //private async Task AutorizarOC(OrdenCompraAutorizacionDTO _oc, string token)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        RespuestaDTO resp = new RespuestaDTO();
-
-        //        client.BaseAddress = new Uri(UrlBase);
-        //        client.DefaultRequestHeaders.Accept.Clear();
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
-        //        try
-        //        {
-        //            HttpResponseMessage response = await client.PutAsJsonAsync(ApiOrdenCompra, _oc).ConfigureAwait(false);
-        //            if (response.IsSuccessStatusCode)
-        //                resp = await response.Content.ReadAsAsync<RespuestaDTO>();
-        //            else
-        //            {
-        //                _RespuestaDTO = resp;
-        //                client.CancelPendingRequests();
-        //                client.Dispose();
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            resp.Mensaje = ex.Message;
-        //            client.CancelPendingRequests();
-        //            client.Dispose();
-        //        }
-        //        _RespuestaDTO = resp;
-        //    }
-        //}
-        //public void BuscarOrdenCompra(int idOC, string tkn)
-        //{
-        //    this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetBuscarOrdenCompra"];
-        //    OrdenCompra(idOC, tkn).Wait();
-        //}
-        //private async Task OrdenCompra(int idOrdenCompra, string token)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        OrdenCompraCrearDTO emp = new OrdenCompraCrearDTO();
-        //        client.BaseAddress = new Uri(UrlBase);
-        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
-        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
-        //        try
-        //        {
-        //            HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idOrdenCompra.ToString())).ConfigureAwait(false);
-        //            if (response.IsSuccessStatusCode)
-        //                emp = await response.Content.ReadAsAsync<OrdenCompraCrearDTO>();
-        //            else
-        //            {
-        //                client.CancelPendingRequests();
-        //                client.Dispose();
-        //            }
-        //        }
-        //        catch (Exception)
-        //        {
-        //            emp = new OrdenCompraCrearDTO();
-        //            client.CancelPendingRequests();
-        //            client.Dispose(); ;
-        //        }
-        //        _ordenCompraCrearDTO = emp;
-        //    }
-        //}
+        public void AutorizarOrdenCompra(OrdenCompraDTO _oc, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutAutorizarCompra"];
+            LLamada(_oc, token, MetodoRestConst.Put).Wait();
+        }
+        public void BuscarOrdenCompra(int idOC, string tkn)
+        {
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetBuscarOrdenCompra"];
+            OrdenCompra(idOC, tkn).Wait();
+        }
+        private async Task OrdenCompra(int idOrdenCompra, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                OrdenCompraDTO emp = new OrdenCompraDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idOrdenCompra.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<OrdenCompraDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    emp = new OrdenCompraCrearDTO();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _ordeCompraDTO = emp;
+            }
+        }
         public void BuscarOrdenCompraEstatus(string tkn)
         {
             this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetOrdenCompraEstatus"];
