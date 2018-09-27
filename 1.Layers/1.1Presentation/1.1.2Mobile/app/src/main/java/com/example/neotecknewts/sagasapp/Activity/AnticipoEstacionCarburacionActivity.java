@@ -35,6 +35,8 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity {
                 EsAnticipo,
                 EsCorte
         );
+        setTitle((EsCorte)?getString(R.string.corte_de_caja):
+                getString(R.string.Anticipo));
         RVAnticipoEstacionesCarburacionActivityContainer.setAdapter(adatper);
     }
 

@@ -56,6 +56,9 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
         final DatosEstacionesDTO mObject = getItem(position);
         if(holder instanceof HeaderViewHolder){
             ((HeaderViewHolder)holder).header.setText(mObject.getNombreCAlmacen());
+            ((HeaderViewHolder) holder).title.setText((EsCorte) ?
+                    context.getString(R.string.corte_de_caja):
+                    context.getString(R.string.Anticipo));
         }else if (holder instanceof ItemViewHolder){
             ((ItemViewHolder)holder).item.setText(mObject.getNombreCAlmacen());
             ((ItemViewHolder)holder).cardView.setOnClickListener(v -> {
@@ -86,10 +89,10 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder {
-        TextView header;
+        TextView header,title;
         HeaderViewHolder(View view) {
             super(view);
-
+            title = itemView.findViewById(R.id.EstacionesCarburacionHeaderTitle);
             header = itemView.findViewById(R.id.EstacionesCarburacionHeaderInstructions);
         }
     }

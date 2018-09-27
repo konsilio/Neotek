@@ -90,9 +90,12 @@ public class VerReporteActivity extends AppCompatActivity {
                 traspasoDTO = (TraspasoDTO) bundle.getSerializable("traspasoDTO");
                 GenerarReporteTraspasoPipa(traspasoDTO);
             }
-            if(EsAnticipo || EsCorte){
+            if(EsAnticipo){
                 GenerarReporteAnticipo();
+            }else if (EsCorte){
+                GenerarReporteCorteCaja();
             }
+
         }
         WebView WVVerReporteActivityReporte = findViewById(R.id.WVVerReporteActivityReporte);
         Button btnVerReporteActivityTerminar= findViewById(R.id.BtnVerReporteActivityTerminar);
@@ -156,6 +159,141 @@ public class VerReporteActivity extends AppCompatActivity {
                 "text/HTML", "UTF-8", null);
 
 
+    }
+
+    private void GenerarReporteCorteCaja() {
+        HtmlReporte = "<body>" +
+                "<h3>Reporte-Corte de caja</h3>" +
+                "<table>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Clave Anticipo</td>" +
+                "<td>[{ClaveTraspaso}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Fecha</td>" +
+                "<td>[{Fecha}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Hora</td>" +
+                "<td>[{Hora}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table>" +
+                "<hr>" +
+                "<table>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Estación</td>"+
+                "<td>[{Estacion}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Fecha de venta</td>"+
+                "<td>[{Fecha-venta}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<tr>" +
+                "<td>Venta Total</td>"+
+                "<td>[{Venta-total}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<tr>" +
+                "<td>Anticipos</td>"+
+                "<td>[{Anticipos}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<tr>" +
+                "<td>Monto de corte</td>"+
+                "<td>[{Monto-corte}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table>"+
+                "<hr>"+
+                "<h3>P5000</h3>"+
+                "<table>"+
+                "<tbody>"+
+                "<tr>" +
+                "<td>Inicial: </td>" +
+                "<td>[{Inicial}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Final: </td>" +
+                "<td>[{Final}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Litros vendidos: </td>" +
+                "<td>[{Litros-vendidos}]</td>" +
+                "</tr>" +
+                "</tbody>"+
+                "</table>"+
+                "</body>";
+
+        StringReporte =
+                "<body>" +
+                        "<h3>Reporte-Corte de caja</h3>" +
+                        "<table>" +
+                        "<tbody>" +
+                        "<tr>" +
+                        "<td>Clave Anticipo</td>" +
+                        "<td>[{ClaveTraspaso}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>Fecha</td>" +
+                        "<td>[{Fecha}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>Hora</td>" +
+                        "<td>[{Hora}]</td>" +
+                        "</tr>" +
+                        "</tbody>" +
+                        "</table>" +
+                        "<hr>" +
+                        "<table>" +
+                        "<tbody>" +
+                        "<tr>" +
+                        "<td>Estación</td>"+
+                        "<td>[{Estacion}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>Fecha de venta</td>"+
+                        "<td>[{Fecha-venta}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<tr>" +
+                        "<td>Venta Total</td>"+
+                        "<td>[{Venta-total}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<tr>" +
+                        "<td>Anticipos</td>"+
+                        "<td>[{Anticipos}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<tr>" +
+                        "<td>Monto de corte</td>"+
+                        "<td>[{Monto-corte}]</td>" +
+                        "</tr>" +
+                        "</tbody>" +
+                        "</table>"+
+                        "<hr>"+
+                        "<h3>P5000</h3>"+
+                        "<table>"+
+                        "<tbody>"+
+                        "<tr>" +
+                        "<td>Inicial: </td>" +
+                        "<td>[{Inicial}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>Final: </td>" +
+                        "<td>[{Final}]</td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td>Litros vendidos: </td>" +
+                        "<td>[{Litros-vendidos}]</td>" +
+                        "</tr>" +
+                        "</tbody>"+
+                        "</table>"+
+                        "</body>";
     }
 
     private void GenerarReporteAnticipo() {
