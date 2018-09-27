@@ -89,5 +89,28 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<PuntoVenta>().Get(x => x.IdOperadorChofer.Equals(OperadorChofer)
                                                          && x.Activo).ToList();
         }
+
+        public RespuestaDto Eliminar(PuntoVenta cteL)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<PuntoVenta>().Delete(cteL);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "Eliminar el punto de venta");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
     }
 }

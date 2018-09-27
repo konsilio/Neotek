@@ -1,4 +1,6 @@
-﻿using Application.MainModule.Servicios.AccesoADatos;
+﻿using Application.MainModule.DTOs.Catalogo;
+using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.Servicios.AccesoADatos;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,24 @@ namespace Application.MainModule.Servicios.Catalogos
 {
     public static class PuntoVentaServicio
     {
+        public static List<PuntoVentaDTO> Obtener()
+        {            
+            List<PuntoVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PuntoVentaAdapter.ToDTO(new PuntoVentaDataAccess().BuscarTodos());
+            return lPventas;
+        }
+
         public static PuntoVenta Obtener(int idPuntoVenta)
         {
             return new PuntoVentaDataAccess().Buscar(idPuntoVenta);
+        }
+
+        //public static OperadorChofer ObtenerOperador(int idOperadorChofer)
+        //{
+        //    return new PuntoVentaDataAccess().Buscar(idPuntoVenta);
+        //}
+        public static List<PuntoVenta> ObtenerIdEmp(short IdEmpresa)
+        {
+            return new PuntoVentaDataAccess().BuscarTodos(IdEmpresa);
         }
 
         public static PuntoVenta Obtener(OperadorChofer opCh)
@@ -34,6 +51,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             var operadorChofer = OperadorChoferServicio.ObtenerPorUsuarioAplicacion();
             return Obtener(operadorChofer);
+        }
+        public static RespuestaDto Eliminar(PuntoVenta cteLoc)
+        {
+            return new PuntoVentaDataAccess().Eliminar(cteLoc);
         }
     }
 }

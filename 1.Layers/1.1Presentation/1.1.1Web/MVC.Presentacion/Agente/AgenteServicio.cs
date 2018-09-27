@@ -65,7 +65,7 @@ namespace MVC.Presentacion.Agente
         public List<TipoProveedorDTO> _listaTipoProveedor;
         public List<BancoDTO> _listaBanco;
         public List<FormaPagoDTO> _listaFormaPago;
-
+        public List<PuntoVentaModel> _listaPuntosV;
 
         public AgenteServicio()
         {
@@ -625,7 +625,7 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
 
-        
+
         private async Task EliminarUsuarioSeleccionado(short _pcDTO, string token)
         {
             using (var client = new HttpClient())
@@ -659,12 +659,7 @@ namespace MVC.Presentacion.Agente
 
         #endregion
         #region Clientes
-        public void SetEdoPais(List<ClienteLocacionMod> _obj, string tkn)
-        {
-            List<PaisModel> _pais = new List<PaisModel>();//BuscarPaises(tkn);
 
-
-        }
         public void BuscarTiposPersona(string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetTiposPersona"];
@@ -740,7 +735,7 @@ namespace MVC.Presentacion.Agente
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetClientes"];
             GetListaClientes(id, rfc, nombre, tkn).Wait();
         }
-        private async Task GetListaClientes(int id, string rfc, string nombre,string Token)
+        private async Task GetListaClientes(int id, string rfc, string nombre, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -788,7 +783,6 @@ namespace MVC.Presentacion.Agente
                     _lstaClientes = lus;
             }
         }
-
         public void BuscarListaLocaciones(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaLocacion"];
@@ -819,10 +813,10 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-               
-                    _cteLocacion = lus;
 
-              //  SetEdoPais(lus,Token);
+                _cteLocacion = lus;
+
+                //  SetEdoPais(lus,Token);
             }
         }
 
@@ -894,6 +888,87 @@ namespace MVC.Presentacion.Agente
         }
 
         #endregion
+        #region Puntos de Venta
+
+        public void BuscarListaPuntosVenta(int idPV, string tkn)//short idEmpresa, 
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetPuntosVenta"];
+            GetListaPV(idPV, tkn).Wait();
+        }
+        private async Task GetListaPV(int idPV, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PuntoVentaModel> lus = new List<PuntoVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<PuntoVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<PuntoVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+                if (idPV != 0)
+                    _listaPuntosV = (from x in lus where x.IdPuntoVenta == idPV select x).ToList();
+
+                _listaPuntosV = lus;
+            }
+        }
+        
+        public void BuscarListaPuntosVentaId(short idEmpresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetPuntosVentaId"];
+            GetListaPVId(tkn, idEmpresa).Wait();
+        }
+        private async Task GetListaPVId(string Token, short idEmpresa)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PuntoVentaModel> lus = new List<PuntoVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<PuntoVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<PuntoVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaPuntosV = lus;
+            }
+        }
+
+        public void EliminarPuntosVenta(PuntoVentaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaPuntosVenta"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        #endregion
+
         #region Paises
         public void BuscarPaises(string tkn)
         {

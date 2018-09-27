@@ -116,11 +116,15 @@ namespace Application.MainModule.Flujos
         }
         public List<ClientesDto> ListaClientes()
         {
+            var resp = PermisosServicio.PuedeConsultarCliente();
+            if (!resp.Exito) return null;
             return ClienteServicio.ListaClientes().ToList();
         }
 
         public List<ClienteLocacionDTO> ListaLocaciones(int id)
         {
+            var resp = PermisosServicio.PuedeConsultarCliente();
+            if (!resp.Exito) return null;
             return ClienteServicio.ObtenerLoc(id).ToList();
         }
 
@@ -197,6 +201,37 @@ namespace Application.MainModule.Flujos
            var clientes = ClientesAdapter.FromDtocteLoc(cteDto);           
             return ClienteServicio.Eliminar(clientes);
         }
+        #endregion
+
+        #region PuntosdeVenta
+        public List<PuntoVentaDTO> ListaPuntosVenta()
+        {
+            var resp = PermisosServicio.PuedeConsultarPuntoVenta();
+            if (!resp.Exito) return null;
+
+            return PuntoVentaServicio.Obtener().ToList();
+        }
+
+        public List<PuntoVentaDTO> PuntosVentaIdEmpresa(short IdEmpresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarPuntoVenta();
+            if (!resp.Exito) return null;
+            return PuntoVentaServicio.Obtener().ToList();
+        }
+        public RespuestaDto EliminaPuntosVenta(PuntoVentaDTO cteDto)
+        {
+            var resp = PermisosServicio.PuedeEliminarPuntoVenta();
+            if (!resp.Exito) return resp;
+            
+            var puntoV = PuntoVentaAdapter.FromDto(cteDto);
+            return PuntoVentaServicio.Eliminar(puntoV);
+        }
+        //OperadorChofer
+        //public OperadorChoferDTO GetOperador(int IdOperadorChofer)
+        //{
+        //    return PuntoVentaServicio.ObtenerOperador(IdOperadorChofer);
+        //}
+
         #endregion
 
         #region Productos

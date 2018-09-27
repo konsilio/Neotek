@@ -243,6 +243,7 @@
     <Compile Include="Controllers\OrdenCompraController.cs" />
     <Compile Include="Controllers\PrecioVentaController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\PuntoVentaController.cs" />
     <Compile Include="Controllers\RequisicionController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\Shared\MainController.cs" />
@@ -282,6 +283,7 @@
     <Compile Include="Models\Catalogos\PartialViewModel.cs" />
     <Compile Include="Models\Catalogos\ProductoDTO.cs" />
     <Compile Include="Models\Catalogos\ProveedorDTO.cs" />
+    <Compile Include="Models\Catalogos\PuntoVentaModel.cs" />
     <Compile Include="Models\Catalogos\TipoProveedorDTO.cs" />
     <Compile Include="Models\Catalogos\UnidadAlmacenGasDTO.cs" />
     <Compile Include="Models\Catalogos\RegimenFiscalModel.cs" />
@@ -11388,6 +11390,10 @@
     <Content Include="Views\Clientes\EditarLocaciones.cshtml" />
     <Content Include="Views\Producto\Proveedor.cshtml" />
     <Content Include="Views\Producto\Proveedores.cshtml" />
+    <Content Include="Views\Clientes\EditarClienteLoc.cshtml" />
+    <Content Include="Views\PrecioVenta\Index.cshtml" />
+    <Content Include="Views\PuntoVenta\Index.cshtml" />
+    <Content Include="Views\Clientes\EditarCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
