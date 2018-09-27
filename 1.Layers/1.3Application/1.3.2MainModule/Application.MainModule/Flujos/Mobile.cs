@@ -141,7 +141,7 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto CatalogoEstaciones(bool esAnticipo, bool esCorteCaja)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }
