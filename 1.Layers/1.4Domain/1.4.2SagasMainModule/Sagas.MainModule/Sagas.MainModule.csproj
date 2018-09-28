@@ -240,6 +240,7 @@
     <Compile Include="IRepositorios\IRequisicionRepositorio.cs" />
     <Compile Include="IRepositorios\IRolRepositorio.cs" />
     <Compile Include="IRepositorios\IUsuarioRepositorio.cs" />
+    <Compile Include="ObjetosValor\Constantes\AlmacenGasConst.cs" />
     <Compile Include="ObjetosValor\Constantes\NotificacionPushConst.cs" />
     <Compile Include="ObjetosValor\Enum\enumIVA.cs" />
     <Compile Include="ObjetosValor\Enum\IdentidadUnidadAlmacenGasEnum.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="ObjetosValor\Enum\TipoEventoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoPersonaFiscalEnum.cs" />
     <Compile Include="ObjetosValor\Enum\TipoProveedorEnum.cs" />
+    <Compile Include="ObjetosValor\Enum\TipoUnidadAlmacenGasEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

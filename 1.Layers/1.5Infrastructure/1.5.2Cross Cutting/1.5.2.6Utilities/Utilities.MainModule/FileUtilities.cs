@@ -33,22 +33,33 @@ namespace Utilities.MainModule
 
         //******** IMAGENES
 
-        public static Image ObtenerImagen(byte[] byteArrayIn)
+        public static Image GuardarImagen(byte[] byteArrayIn)
         {
+            Image image;
             using (MemoryStream mStream = new MemoryStream(byteArrayIn))
             {
-                return Image.FromStream(mStream);
+                image = Image.FromStream(mStream);                
             }
+
+            return image;
         }
 
-        public static Image byteArrayToImage(byte[] byteArrayIn)
+        public static Image GuardarImagen(string base64, string ruta)
+        {
+            return GuardarImagen(Convert.FromBase64String(base64), ruta);
+        }
+        
+        public static Image GuardarImagen(byte[] byteArrayIn, string ruta)
         {
             Image image;
             try
             {
-                MemoryStream ms = new MemoryStream(byteArrayIn, 0, byteArrayIn.Length);
-                ms.Write(byteArrayIn, 0, byteArrayIn.Length);
-                image = Image.FromStream(ms, true);
+                using (MemoryStream ms = new MemoryStream(byteArrayIn, 0, byteArrayIn.Length))
+                {
+                    ms.Write(byteArrayIn, 0, byteArrayIn.Length);
+                    image = Image.FromStream(ms, true);
+                    image.Save(ruta, System.Drawing.Imaging.ImageFormat.Jpeg);
+                }
             }
             catch
             {

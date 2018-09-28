@@ -9,7 +9,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
 {
     public class AlmacenGasAdapter
     {
-        public static UnidadAlmacenGas FromEmtity(UnidadAlmacenGas unidad)
+        public static UnidadAlmacenGas FromEntity(UnidadAlmacenGas unidad)
         {
             return new UnidadAlmacenGas()
             {
@@ -36,7 +36,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
             };
         }
 
-        public static AlmacenGasDescarga FromEmtity(AlmacenGasDescarga descarga)
+        public static AlmacenGasDescarga FromEntity(AlmacenGasDescarga descarga)
         {
             return new AlmacenGasDescarga
             {
@@ -79,7 +79,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
             };
         }
 
-        public static AlmacenGasDescargaFoto FromEmtity(AlmacenGasDescargaFoto img)
+        public static AlmacenGasDescargaFoto FromEntity(AlmacenGasDescargaFoto img)
         {
             return new AlmacenGasDescargaFoto
             {

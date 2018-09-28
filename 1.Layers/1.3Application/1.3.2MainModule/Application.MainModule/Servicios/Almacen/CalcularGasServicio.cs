@@ -10,17 +10,17 @@ namespace Application.MainModule.Servicios.Almacen
     {
         public static decimal ObtenerLitrosEnElTanque(decimal capacidadTanque, decimal porcentaje)
         {
-            return capacidadTanque * porcentaje;
+            return capacidadTanque * (porcentaje / 100);
         }
 
         public static decimal ObtenerKilogramosDesdeLitros(decimal litros, decimal factor)
         {
-            return litros / factor;
+            return litros * factor;
         }
 
         public static decimal ObtenerLitrosDesdeKilos(decimal kilogramos, decimal factor)
         {
-            return kilogramos * factor;
+            return kilogramos / factor;
         }
 
         public static decimal ObtenerDiferenciaKilogramos(decimal cantidadMayor, decimal cantidadMenor)

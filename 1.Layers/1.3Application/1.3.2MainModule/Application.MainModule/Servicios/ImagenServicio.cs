@@ -15,32 +15,35 @@ namespace Application.MainModule.Servicios
         private static string rutaImagenes = ConfigurationManager.AppSettings["RutaImagenes"];
 
         public static AlmacenGasDescargaFoto ObtenerImagen(AlmacenGasDescargaFoto foto)
-        {
-            var imagen = ObtenerImagenDeBase64(foto.CadenaBase64);
+        {            
             foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
-            foto.PathImagen = GenerarNombre(foto.Orden.ToString(), foto.PathImagen);
-            foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);
+            foto.PathImagen = GenerarNombre(".jpg", foto.Orden.ToString(), foto.PathImagen);
+            foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);            
+
+            FileUtilities.GuardarImagen(foto.CadenaBase64, foto.PathImagen);
             foto.CadenaBase64 = null;
-            imagen.Save(foto.PathImagen);
+
+            //var imagen = ObtenerImagenDeBase64(foto.CadenaBase64);
+            //imagen.Save(foto.PathImagen, System.Drawing.Imaging.ImageFormat.Jpeg);
             return foto;
         }
 
         public static Image ObtenerImagenDeBase64(string base64)
         {
             var byteArray = Convert.FromBase64String(base64);
-            var imagen = FileUtilities.ObtenerImagen(byteArray);
+            var imagen = FileUtilities.GuardarImagen(byteArray);
 
             return imagen;
         }
 
-        public static string GenerarNombre(string orden)
+        public static string GenerarNombre(string extension, string orden)
         {
-            return string.Concat("Imagen_", orden);
+            return string.Concat("Imagen_", orden, extension.Contains(".") ? extension: "." + extension);
         }
 
-        public static string GenerarNombre(string orden, string ruta)
+        public static string GenerarNombre(string extension, string orden, string ruta)
         {
-            return string.Concat(ruta, "//Imagen_", orden);
+            return string.Concat(ruta, "\\", GenerarNombre(extension, orden));
         }
     }
 }
