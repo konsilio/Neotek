@@ -18,14 +18,22 @@
     <td>@Model.Unidad</td>
     <td>@Model.Aplicacion</td>
     <td>@Model.CentroCosto</td>
-    <td>@Html.DropDownListFor(model => model.IdProdveedor, ViewBag.Proveedores as IEnumerable<SelectListItem>, new { @class = "form-control", })</td>
-    <td>@Html.DropDownListFor(model => model.IdCuentaContable, ViewBag.CuentasContables as IEnumerable<SelectListItem>, new { @class = "form-control" })</td>
+    <td width="350px">@Html.DropDownListFor(model => model.IdProdveedor, ViewBag.Proveedores as IEnumerable<SelectListItem>, new { @class = "form-control widthInherit" })</td>
+    <td width="350px">@Html.DropDownListFor(model => model.IdCuentaContable, ViewBag.CuentasContables as IEnumerable<SelectListItem>, new { @class = "form-control widthInherit" })</td>
     @if (ViewBag.EsGasTransporte == false)
     {
-        <td>@Html.TextBoxFor(m => m.Precio, new { @class = "form-control calculaPrecio ", @type = "number", @onkeyup = "javascript: CalcularImporte();", @style = "width:100px;" })</td>
+        <td>@Html.TextBoxFor(m => m.Precio, new { @class = "form-control  calculaPrecio ", @type = "number", @onkeyup = "javascript: CalcularImporte();", @style = "width:100px;" })</td>
         <td>@Html.TextBoxFor(m => m.Descuento, new { @type = "number", @class = "form-control calculaPrecio", @onkeyup = "javascript: CalcularImporte();", @style = "width:100px;" }) </td>
-        <td>@Html.DropDownListFor(model => model.IVA, ViewBag.IVAs as IEnumerable<SelectListItem>, new { @class = "form-control calculaPrecio", @onchange = "javascript: CalcularImporte();" }) </td>
+        <td>@Html.DropDownListFor(model => model.IVA, ViewBag.IVAs as IEnumerable<SelectListItem>, new { @class = "form-control  calculaPrecio", @onchange = "javascript: CalcularImporte();" }) </td>
         <td>@Html.DropDownListFor(model => model.IEPS, ViewBag.IEPs as IEnumerable<SelectListItem>, new { @class = "form-control calculaPrecio", @onchange = "javascript: CalcularImporte();" })</td>
         <td class="align-right">$@Html.LabelFor(m => m.Importe, Model.Importe.ToString())@Html.HiddenFor(m => m.Importe)</td>
+    }
+    else
+    {
+        <td>N/A</td>
+        <td>N/A</td>
+        <td>N/A</td>
+        <td>N/A</td>
+        <td>N/A</td>
     }
 </tr>

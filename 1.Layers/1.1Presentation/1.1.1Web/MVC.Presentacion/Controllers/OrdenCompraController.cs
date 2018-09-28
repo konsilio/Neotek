@@ -49,7 +49,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
                 ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
                 ViewBag.Estatus = OrdenCompraServicio.ListaEstatus(tkn);
-                return View(OrdenCompraServicio.InitOrdenesCompra(tkn));
+                return RedirectToAction("Ordenes");
             }
             else
             {
@@ -100,7 +100,7 @@ namespace MVC.Presentacion.Controllers
                 model = OrdenCompraServicio.EntradaMercancialModel(idOC, tkn);
             model.FechaEntrada = Convert.ToDateTime(DateTime.Now.ToShortDateString());
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-                        
+
             return View(model);
         }
         public ActionResult RegistrarEntrada(EntradaMercanciaModel model)
@@ -108,21 +108,13 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = OrdenCompraServicio.RegistrarEntrada(model, tkn);
-            if (respuesta.Exito && respuesta.Mensaje.Equals("OK"))            
-                return RedirectToAction("Ordenes");//Registro de entradas  
+            if (respuesta.Exito && respuesta.Mensaje.Equals("OK"))
+                return RedirectToAction("Ordenes");
             else
             {
-                if (respuesta.Exito)
-                {
-                    //La orden se actualizo correctamente pero no se cerro
-                }
-                else
-                {
-                    TempData["RespuestaDTO"] = respuesta;
-                    RedirectToAction("EntradaMercancia", model);
-                }
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("EntradaMercancia", model);
             }
-            return View();
         }
         private string Validar(RespuestaDTO Resp = null)
         {

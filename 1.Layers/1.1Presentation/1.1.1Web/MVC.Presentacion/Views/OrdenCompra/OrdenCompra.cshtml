@@ -3,8 +3,8 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
-        <style>
+
+    <style>
         .calculaPrecio {
         }
     </style>
@@ -56,18 +56,18 @@
             total = subtotal + iva + ieps;
             $("label[for = '" + idTotlaImporte + "']").text(total.toFixed(2));
         }
-        
+
         $(document).ready(function () {
             $("#btnCrear").click(function () {
                 var form = $(this).parent("form");
                 form.attr('action', '<%= Url.RouteUrl(new { Controller = "OrdenCompra", Action = "CrearOrdenCompra" }) %>');
                 form.attr('method', 'post');
-            });
+            });      
         });
 
     </script>
 </head>
-<body style="height:100%">
+<body>
     @using (Html.BeginForm("CrearOrdenCompra", "OrdenCompra", FormMethod.Post))
     {
         @Html.HiddenFor(m => m.IdEmpresa)
@@ -75,8 +75,8 @@
         @Html.HiddenFor(m => m.IdEmpresa)
         @Html.HiddenFor(m => m.FechaRequisicion)
         @Html.HiddenFor(m => m.IdRequisicion)
-        <section class="content home" >
-            <div class="container-fluid" >
+        <section class="content home">
+            <div class="container-fluid">
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
@@ -89,7 +89,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="card" style="height:100%">
+                    <div class="card">
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-sm-4">
@@ -109,7 +109,7 @@
                             <div class="row clearfix">
                                 <div class="col-lg-3 col-md-12">
                                     <div class="form-group form-float">
-                                        <b>Fecha requerida:</b>                                       
+                                        <b>Fecha requerida:</b>
                                         <input type="text" value="@Model.FechaRequisicion" class="form-control" disabled />
                                     </div>
                                 </div>
@@ -121,14 +121,18 @@
                                 </div>
                                 <div class="col-lg-3 col-md-12 form-float">
                                     <div class="form-group">
-                                        <b>Motivo de compra:</b>
-                                        <textarea name="MotivoCompra" class="form-control  no-resize" disabled placeholder="Error de carga" rows="4">@Model.MotivoCompra</textarea>
+                                        <div class="form-group">
+                                            <b>Motivo de compra:</b>
+                                            <textarea name="MotivoCompra" class="form-control  no-resize btn-round" disabled placeholder="Error de carga" rows="4">@Model.MotivoCompra</textarea>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-12">
                                     <div class="form-group form-float">
-                                        <b>Se requiere en:</b>
-                                        <textarea name="RequeridoEn" class="form-control  no-resize" disabled placeholder="Error de carga" rows="4">@Model.RequeridoEn</textarea>
+                                        <div class="form-group">
+                                            <b>Se requiere en:</b>
+                                            <textarea name="RequeridoEn" class="form-control  no-resize btn-round" disabled placeholder="Error de carga" rows="4">@Model.RequeridoEn</textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -163,9 +167,9 @@
                                     </div>
                                 </div>
                             }
-                            <div class="row clearfix" id="divCrearOC">
+                            <div class="row clearfix">
                                 <div class="table-responsive">
-                                    <table class="table table-hover" style="height:100%">
+                                    <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <td><b>Tipo</b></td>
@@ -186,10 +190,9 @@
                                         <tbody>
                                             @Html.EditorFor(m => m.OrdenCompraProductos)
                                         </tbody>
-
                                     </table>
                                 </div>
-                            </div>                        
+                            </div>
                             <div hidden="hidden" class="card" id="divDatosComplementoGas">
                                 <div class="body">
                                     <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">

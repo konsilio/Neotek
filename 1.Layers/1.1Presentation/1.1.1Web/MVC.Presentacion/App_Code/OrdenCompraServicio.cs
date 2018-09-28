@@ -21,7 +21,7 @@ namespace MVC.Presentacion.App_Code
                 FechaRegistroDe = DateTime.Now,
                 FechaRegistroA = DateTime.Now,
                 Requisiciones = RequisicionServicio.BuscarRequisiciones(TokenServicio.ObtenerIdEmpresa(tkn), tkn)
-                    .Where(y => y.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Revision_exitosa))
+                    .Where(y => y.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Autorizacion_finalizada))
                     .OrderByDescending(x => x.IdRequisicion).ToList(),
                 OrdenesCompra = ObtenerOrdenesCompra(TokenServicio.ObtenerIdEmpresa(tkn), tkn)
             };
@@ -101,7 +101,7 @@ namespace MVC.Presentacion.App_Code
                 p.Descuento = _prd.Descuento;
                 p.IVA = _prd.IVA;
                 p.IEPS = _prd.IEPS;
-                p.Cantidad = _prd.IEPS;
+                p.Cantidad = _prd.CantidadAComprar;
                 decimal _descuento = ((p.Precio * p.Cantidad) * (p.Descuento / 100));
                 decimal subtotal = (p.Precio * p.Cantidad) - (_descuento);
                 decimal iva = ((subtotal) * (p.IVA / 100));

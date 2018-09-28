@@ -56,7 +56,7 @@ namespace Application.MainModule.Flujos
             respuesta.Exito = true;
             List<OrdenCompra> locDTO = OrdenCompraServicio.IdentificarOrdenes(oc);
             locDTO = OrdenCompraServicio.AsignarProductos(oc.Productos, locDTO);
-            locDTO = OrdenCompraServicio.CalcularTotales(locDTO);
+            locDTO = CalcularOrdenCompraServicio.CalcularTotales(locDTO);
             foreach (var ocDTO in locDTO)
             {                
                 ocDTO.NumOrdenCompra = FolioServicio.GeneraNumerOrdenCompra(ocDTO);
@@ -107,6 +107,15 @@ namespace Application.MainModule.Flujos
 
             var entity = OrdenComprasAdapter.FromEntity(oc);
             entity.IdOrdenCompraEstatus = 5;
+            return OrdenCompraServicio.Actualizar(entity);
+        }
+        public RespuestaDto FinalizarOrdenCompra(OrdenCompraDTO dto)
+        {
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            if (oc == null) return OrdenCompraServicio.NoExiste();
+
+            var entity = OrdenComprasAdapter.FromEntity(oc);
+            entity.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
             return OrdenCompraServicio.Actualizar(entity);
         }
         public List<OrdenCompraDTO> ListaOrdenCompra(short IdEmpresa)

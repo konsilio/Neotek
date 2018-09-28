@@ -29,7 +29,7 @@ namespace Application.MainModule.Servicios.Notificacion
                 ParaLista = ObtenerCorreo(destinatarios),
                 Asunto = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], req.NumeroRequisicion),
                 Mensaje = CorreoHtmlServicio.RequisicionNueva(req),
-            };        
+            };
             Enviar(correoDto);
             if (!incluirMensajePush)
             {
@@ -121,7 +121,13 @@ namespace Application.MainModule.Servicios.Notificacion
         private static List<Usuario> ObtenerDestinatarios(List<Rol> roles)
         {
             var destinatarios = new List<Usuario>();
-            roles.ToList().ForEach(x => destinatarios.AddRange(x.Usuarios));//.ListaUsuarios));
+            foreach (var rol in roles)
+            {
+                if (rol.UsuariosRoles != null && rol.UsuariosRoles.Count > 0)
+                {
+                    destinatarios.AddRange(rol.UsuariosRoles.Select(ru => ru.Usuario).ToList());
+                }
+            }            
             return destinatarios.Distinct().ToList();
         }
         private static List<string> ObtenerCorreo(List<Usuario> usuarios)
@@ -144,16 +150,20 @@ namespace Application.MainModule.Servicios.Notificacion
                 return usuario.Email3;
 
             return string.Empty;
-        }        
+        }
         private static void Enviar(CorreoDto dto)
         {
-            EnviarCorreosServicio.Enviar(dto);
+            if (string.IsNullOrEmpty(dto.De) && dto.ParaLista.Count > 0)
+            {
+                EnviarCorreosServicio.Enviar(dto);
+            }
+
         }
         private static FBNotificacionDTO Enviar(FBNotificacionDTO dto, KeyValuePair<string, string> Autorizacion)
         {
-            var agente = new AgenteServicio();   
+            var agente = new AgenteServicio();
             agente.PostMethod(dto, "https://fcm.googleapis.com/", "fcm/send", Autorizacion);
-            return dto;       
+            return dto;
 
         }
     }

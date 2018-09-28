@@ -11,7 +11,17 @@
     <td>@Model.Aplicacion</td>
     <td>@Model.CentroCosto</td>
     <td>@Model.CantidadAlmacenActual</td>
-    <td class="text-center">@Html.CheckBoxFor(x => x.AutorizaEntrega, new { @style = "width: 20px; height: 20px;" })</td>
-    <td>@Html.EditorFor(x => x.CantidadAComprar, new { @class = "form-control" }) </td>
+    
+    <td class="text-center">
+    @if (Model.CantidadAlmacenActual == Decimal.Parse("0"))
+    {
+        @Html.CheckBoxFor(x => x.AutorizaEntrega, new { @disabled = "disabled", @style = "width: 20px; height: 20px;" })
+    }
+    else
+    {
+        @Html.CheckBoxFor(x => x.AutorizaEntrega, new { @style = "width: 20px; height: 20px;" })
+    }
+    </td>
+    <td>@Html.TextBoxFor(x => x.CantidadAComprar, new { @class = "form-control", @type = "numeric" }) </td>
     <td class="text-center">@Html.CheckBoxFor(x => x.AutorizaCompra, new { @style = "width: 20px; height: 20px;" })</td>
 </tr>

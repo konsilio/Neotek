@@ -73,35 +73,7 @@ namespace Application.MainModule.Servicios.Compras
                 }
             }
             return _ocs;
-        }
-        /// <summary>
-        /// Calcula los totales de la orden de compra sumando los importes de los productos
-        /// </summary>
-        /// <param name="ocs"></param>
-        /// <returns></returns>
-        public static List<OrdenCompra> CalcularTotales(List<OrdenCompra> ocs)
-        {
-            foreach (var oc in ocs)
-            {
-                foreach (var prod in oc.Productos)
-                {
-                    //Se validan valores nulos para inicialicar
-                    if (oc.Iva == null) oc.Iva = 0;
-                    if (oc.Ieps == null) oc.Ieps = 0;
-                    if (oc.SubtotalSinIeps == null) oc.SubtotalSinIeps = 0;
-                    if (oc.SubtotalSinIva == null) oc.SubtotalSinIva = 0;
-                    if (oc.Total == null) oc.Total = 0;
-                    oc.Iva += (prod.Precio * (prod.IVA / 100));
-                    oc.Ieps += (prod.Precio * (prod.IEPS / 100));
-                    oc.SubtotalSinIeps = prod.Importe - oc.Ieps;
-                    oc.SubtotalSinIva = prod.Importe - oc.Iva;
-                    oc.Total += prod.Importe;
-                    if (prod.EsGas) oc.EsGas = true;
-                    if (prod.EsActivoVenta) oc.EsActivoVenta = true;
-                }
-            }
-            return ocs;
-        }
+        }       
         /// <summary>
         /// Busca todos las ordene de compra por ID de empresa
         /// En caso de no ser administracion central se tomara el ID de la empresa del token para filtrar.

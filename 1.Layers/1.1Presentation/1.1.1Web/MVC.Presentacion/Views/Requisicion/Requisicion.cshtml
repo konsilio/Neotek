@@ -52,7 +52,7 @@
                 });
             }
         });
-    });     
+    });
 </script>
 <body>
     @using (Html.BeginForm("CrearRequisicion", "Requisicion", FormMethod.Post))
@@ -62,12 +62,11 @@
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
-                            <h2>Compras</h2>
+                            <h2>Requisición</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item active">
-                                    <label id="lblRuta">Requisición / Nueva </label>
-                                </li>
+                                <li class="breadcrumb-item">Requisición</li>
+                                <li class="breadcrumb-item active"> Nueva </li>
                             </ul>
                         </div>
                     </div>
@@ -75,6 +74,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="card">
                                 <div class="header">
+                                   <strong>Crear</strong> nueva requisición
                                 </div>
                                 <div class="body">
                                     <div class="row clearfix">

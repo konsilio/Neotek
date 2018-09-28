@@ -33,5 +33,7 @@ textarea {
     background-color: #ffffff;
     border: 1px solid #dddddd;
 }
-
+.widthInherit.btn-group.bootstrap-select.form-control{
+    width:inherit
+}
 
