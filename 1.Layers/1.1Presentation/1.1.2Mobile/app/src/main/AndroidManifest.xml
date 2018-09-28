@@ -146,9 +146,29 @@
         <activity
             android:name=".Activity.TraspasoEstacionActivity"
             android:label="@string/Traspaso" />
-        <activity android:name=".Activity.TraspasoPipaActivity"
-            android:label="@string/Traspaso"
-            />
+        <activity
+            android:name=".Activity.TraspasoPipaActivity"
+            android:label="@string/Traspaso" />
+        <activity
+            android:name=".Activity.CalibracionEstacionActivity"
+            android:label="@string/Calibracion" />
+        <activity
+            android:name=".Activity.CalibracionPipaActivity"
+            android:label="@string/Calibracion" />
+        <activity
+            android:name=".Activity.PorcentajeCalibracionActivity"
+            android:label="@string/Calibracion" />
+        <activity
+            android:name=".Activity.AnticipoEstacionCarburacionActivity"
+            android:label="@string/Anticipo" />
+        <activity
+            android:name=".Activity.AnticipoTablaActivity"
+            android:label="@string/Anticipo" />
+        <activity
+            android:name=".Activity.PuntoVentaSolicitarActivity"
+            android:label="@string/Punto_de_venta" />
+        <activity android:name=".Activity.RegistroClienteActivity"
+            android:label="@string/Punto_de_venta"/>
     </application>
 
 </manifest>

@@ -31,6 +31,7 @@ public class VerReporteActivity extends AppCompatActivity {
     private boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
     public boolean EsTraspasoPipaInicial,EsTraspasoPipaFinal,EsPasoIniciaLPipa;
+    boolean EsAnticipo,EsCorte;
     RecargaDTO recargaDTO;
     TraspasoDTO traspasoDTO;
     private String StringReporte,HtmlReporte;
@@ -70,6 +71,9 @@ public class VerReporteActivity extends AppCompatActivity {
             EsTraspasoPipaInicial = bundle.getBoolean("EsTraspasoPipaInicial",false);
             EsTraspasoEstacionFinal = bundle.getBoolean("EsTraspasoPipaFinal",false);
             EsPasoIniciaLPipa = bundle.getBoolean("EsPasoIniciaLPipa",false);
+            EsAnticipo = bundle.getBoolean("EsAnticipo",false);
+            EsCorte = bundle.getBoolean("EsCorte",false);
+
             if(EsReporteDelDia) {
                 StringReporte = (String) bundle.get("StringReporte");
                 HtmlReporte = (String) bundle.get("HtmlReporte");
@@ -86,6 +90,13 @@ public class VerReporteActivity extends AppCompatActivity {
                 traspasoDTO = (TraspasoDTO) bundle.getSerializable("traspasoDTO");
                 GenerarReporteTraspasoPipa(traspasoDTO);
             }
+            if(EsAnticipo){
+                GenerarReporteAnticipo();
+            }else if (EsCorte){
+                setTitle("Nota de corte de caja");
+                GenerarReporteCorteCaja();
+            }
+
         }
         WebView WVVerReporteActivityReporte = findViewById(R.id.WVVerReporteActivityReporte);
         Button btnVerReporteActivityTerminar= findViewById(R.id.BtnVerReporteActivityTerminar);
@@ -118,6 +129,17 @@ public class VerReporteActivity extends AppCompatActivity {
                 intent.putExtra("EsTraspasoPipaFinal", EsTraspasoPipaFinal);
                 intent.putExtra("traspasoDTO", traspasoDTO);
                 startActivity(intent);
+            }else if(EsCorte || EsAnticipo){
+                Intent intent = new Intent(VerReporteActivity.this,
+                        MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+
+                /*intent.putExtra("EsTraspasoPipaInicial", EsTraspasoPipaInicial);
+                intent.putExtra("EsTraspasoPipaFinal", EsTraspasoPipaFinal);
+                intent.putExtra("traspasoDTO", traspasoDTO);
+                startActivity(intent);*/
             }
         });
         btnReporteActivityImprimir.setOnClickListener((View v) -> {
@@ -138,6 +160,162 @@ public class VerReporteActivity extends AppCompatActivity {
                 "text/HTML", "UTF-8", null);
 
 
+    }
+
+    private void GenerarReporteCorteCaja() {
+        HtmlReporte = "<body>" +
+                "<h3 style='text-align: center;'><u>Reporte-Corte de caja</u></h3>" +
+                "<table style='font-size:25px; width:100%; margin-left:5px;margin-rigth:5px;'>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Clave Corte</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{ClaveTraspaso}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Fecha</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Fecha}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Hora</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Hora}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table >" +
+                "<hr>" +
+                "<table style='font-size:25px; width:100%;margin-left:5px;margin-rigth:5px;'>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Estación</td>"+
+                "<td style='text-align: right; font-weight:bold;'>[{Estacion}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Fecha de venta</td>"+
+                "<td style='text-align: right; font-weight:bold;'>[{Fecha-venta}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<tr>" +
+                "<td>Venta Total</td>"+
+                "<td style='text-align: right; font-weight:bold;'>[{Venta-total}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<tr>" +
+                "<td>Anticipos</td>"+
+                "<td style='text-align: right; font-weight:bold;'>[{Anticipos}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<tr>" +
+                "<td>Monto de corte</td>"+
+                "<td style='text-align: right; font-weight:bold;'>[{Monto-corte}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table >"+
+                "<hr>"+
+                "<h3 style='text-align: center;'>P5000</h3>"+
+                "<table style='font-size:25px; width:100%;margin-left:5px;margin-rigth:5px;'>"+
+                "<tbody>"+
+                "<tr>" +
+                "<td>Inicial: </td>" +
+                "<td style='text-align: right; font-weight:bold;'> [{Inicial}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Final: </td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Final}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Litros vendidos: </td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Litros-vendidos}]</td>" +
+                "</tr>" +
+                "</tbody>"+
+                "</table>"+
+                "</body>";
+
+        StringReporte =
+                        "Reporte-Corte de caja\n" +
+
+                        "Clave Anticipo\t" +
+                        "[{ClaveTraspaso}]\n" +
+                        "Fecha\t" +
+                        "[{Fecha}]\n" +
+                        "Hora\t" +
+                        "[{Hora}]\n" +
+                        "----------------------\n" +
+                        "Estación\t"+
+                        "[{Estacion}]\n" +
+                        "Fecha de venta\t"+
+                        "[{Fecha-venta}]\n" +
+                        "Venta Total\t"+
+                        "[{Venta-total}]\n" +
+                        "Anticipos\t"+
+                        "[{Anticipos}]\n" +
+                        "Monto de corte\t"+
+                        "[{Monto-corte}]\n" +
+                        "-----------------------\n"+
+                        "\tP5000"+
+                        "Inicial: \t" +
+                        "[{Inicial}]\n" +
+                        "Final: \t" +
+                        "[{Final}]\n" +
+                        "Litros vendidos: \t" +
+                        "[{Litros-vendidos}]\n" +
+                        "Entregué\n"+
+                        "[{Entrego-nombre}]\n\n" +
+                        "________________________\n"+
+                        "Recibi:\n"+
+                        "[{Recibio}]\n\n"+
+                        "________________________\n"
+                        ;
+    }
+
+    private void GenerarReporteAnticipo() {
+        HtmlReporte = "<body>" +
+                "<h3>Reporte-Anticipo</h3>" +
+                "<table>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Clave Anticipo</td>" +
+                "<td>[{ClaveTraspaso}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Fecha</td>" +
+                "<td>[{Fecha}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Hora</td>" +
+                "<td>[{Hora}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</table>" +
+                "<hr>" +
+                "<table>" +
+                "<tbody>" +
+                "<tr>" +
+                "<td>Estación</td>"+
+                "<td>[{Estacion}]</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td>Monto anticipado: </td>" +
+                "<td>[{Monto-anticipo}]</td>" +
+                "</tr>" +
+                "</tbody>" +
+                "</body>";
+
+        StringReporte =
+                "\t Reporte-Anticipo\n" +
+                "Clave Anticipo\t" +
+                "[{ClaveTraspaso}]\n" +
+                "Fecha\t" +
+                "[{Fecha}]\n" +
+                "Hora\t" +
+                "[{Hora}]\n" +
+                "-----------------------------\n" +
+                "Estación\t"+
+                "[{Estacion}]\n" +
+                "Monto anticipado: \t" +
+                "[{Monto-anticipo}]\n\n"+
+                "Entregué:\n"+
+                "[{Usuario-entrego}]__________\n\n"+
+                "Recibí\n"+
+                        "[{Usuario-recibi}]__________\n\n";
     }
 
     private void GenerarReporteTraspasoPipa(TraspasoDTO traspasoDTO) {
