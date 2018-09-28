@@ -99,6 +99,7 @@
     <Compile Include="DTOs\Catalogo\LineaProductoDto.cs" />
     <Compile Include="DTOs\Catalogo\LineaProductoEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\LineaProductoModificarDto.cs" />
+    <Compile Include="DTOs\Catalogo\PrecioVentaDTO.cs" />
     <Compile Include="DTOs\Catalogo\ProductoCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoModificarDto.cs" />
@@ -277,6 +278,7 @@
     <Compile Include="Servicios\Seguridad\PermisosServicio.cs" />
     <Compile Include="Servicios\Seguridad\TokenServicio.cs" />
     <Compile Include="Servicios\Seguridad\UsuarioAplicacionServicio.cs" />
+    <Compile Include="Servicios\Ventas\CalcularPreciosVentaServicio.cs" />
     <Compile Include="UnitOfWork\GenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\IGenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\SagasDataUow.cs" />

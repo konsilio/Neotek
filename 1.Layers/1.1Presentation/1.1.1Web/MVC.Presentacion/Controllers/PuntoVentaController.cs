@@ -28,10 +28,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.ListaPV = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             }
             ViewBag.Usuarios = TempData["Users"];
-            //List<UsuarioDTO> ids = new List<UsuarioDTO>();
-            //ids.AddRange(ViewBag.Usuarios);
-            //ViewBag.ItemsSelect = (new SelectList(ids,));// "ItemId", "ItemName", selectedId );
-
+        
             if (TempData["RespuestaDTO"] != null)
             {
                 ViewBag.MessageExito = TempData["RespuestaDTO"];
