@@ -129,10 +129,5 @@ namespace MVC.Presentacion.App_Code
             agente.RegistrarEntrada(model, tkn);
             return agente._RespuestaDTO;
         }
-
-        #region Adaptadores
-
-        #endregion
-
     }
 }

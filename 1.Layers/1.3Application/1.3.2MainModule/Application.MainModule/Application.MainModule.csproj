@@ -157,6 +157,7 @@
     <Compile Include="DTOs\Mobile\LecturaDTO.cs" />
     <Compile Include="DTOs\Mobile\LoginFbDTO.cs" />
     <Compile Include="DTOs\Mobile\RecargaDTO.cs" />
+    <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
     <Compile Include="Servicios\NotificacionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEstatusDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />

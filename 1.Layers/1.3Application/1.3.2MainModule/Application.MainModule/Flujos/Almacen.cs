@@ -25,7 +25,7 @@ namespace Application.MainModule.Flujos
             {
                 var Almacen = ProductoAlmacenServicio.ObtenerAlmacen(prod.IdProducto, dto.IdEmpresa);
                 var AlmacenActualizar = ProductoAlmacenServicio.AlmacenEmtity(Almacen);
-                AlmacenActualizar.Cantidad = +prod.Cantidad;
+                AlmacenActualizar.Cantidad = CalcularAlmacenServicio.ObtenerSumaEntradaAlmacen(AlmacenActualizar.Cantidad, prod.Cantidad);
                 _almacen.Add(AlmacenActualizar);
 
                 var EntradaProd = ProductoAlmacenServicio.GenerarAlmacenEntradaProcuto(prod, dto.IdOrdenCompra, Almacen);
