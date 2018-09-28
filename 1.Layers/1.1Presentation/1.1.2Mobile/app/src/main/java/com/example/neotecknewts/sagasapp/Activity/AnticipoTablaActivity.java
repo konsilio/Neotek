@@ -2,9 +2,11 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -16,12 +18,13 @@ import com.example.neotecknewts.sagasapp.Util.Tabla;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
-public class AnticipoTablaActivity extends AppCompatActivity {
+public class AnticipoTablaActivity extends AppCompatActivity implements AnticipoTablaView{
     Button BtnAnticipoTablaActivityRegresar,BtnAnticipoTablaActivityHacerAnticipo;
     TableLayout TLAnticipoTablaActivityTabla,TLAnticipoTablaActivityResultadosCorteDeCaja;
     TextView TVAnticipoTablaActivityTotal,TVAnticipoTablaActivityTitulo,TVAnticipoTablaActivityP5000;
     Spinner SPAnticipoTablaActivityFechaCorte;
     TableRow TRAnticipoTablaActivityTituloAnticipo,TRAnticipoTablaActivityFormAnticipar;
+    EditText ETAnticipoTablaActivityAnticipo;
 
     float total;
     ArrayList<String[]> elementos;
@@ -44,6 +47,7 @@ public class AnticipoTablaActivity extends AppCompatActivity {
         SPAnticipoTablaActivityFechaCorte.setVisibility((EsCorte)?View.VISIBLE:View.GONE);
         TVAnticipoTablaActivityTitulo = findViewById(R.id.TVAnticipoTablaActivityTitulo);
         TVAnticipoTablaActivityP5000 = findViewById(R.id.TVAnticipoTablaActivityP5000);
+        ETAnticipoTablaActivityAnticipo = findViewById(R.id.ETAnticipoTablaActivityAnticipo);
         TLAnticipoTablaActivityResultadosCorteDeCaja = findViewById(R.id.
                 TLAnticipoTablaActivityResultadosCorteDeCaja);
         TLAnticipoTablaActivityResultadosCorteDeCaja.setVisibility((EsCorte)?View.VISIBLE:View.GONE);
@@ -59,11 +63,7 @@ public class AnticipoTablaActivity extends AppCompatActivity {
                 getString(R.string.Anticipo));
         BtnAnticipoTablaActivityRegresar.setOnClickListener(V->finish());
         BtnAnticipoTablaActivityHacerAnticipo.setOnClickListener(V->{
-            Intent intent = new Intent(AnticipoTablaActivity.this,
-                    VerReporteActivity.class);
-            intent.putExtra("EsAnticipo",EsAnticipo);
-            intent.putExtra("EsCorte",EsCorte);
-            startActivity(intent);
+            VerificarCampos();
         });
         BtnAnticipoTablaActivityHacerAnticipo.setText((EsCorte)?getString(R.string.hacer_corte):
         getString(R.string.hacer_anticipo));
@@ -83,5 +83,46 @@ public class AnticipoTablaActivity extends AppCompatActivity {
         tabla.agregarFila(elementos);
 
         TVAnticipoTablaActivityTotal.setText(format.format(total));
+    }
+
+    @Override
+    public void VerificarCampos() {
+        if(EsAnticipo){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            if(ETAnticipoTablaActivityAnticipo.getText().toString().equals("")){
+
+                builder.setTitle(R.string.error_titulo);
+                builder.setMessage("El total del anticipo es un valor requerido");
+                builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
+                    dialog.dismiss();
+                    ETAnticipoTablaActivityAnticipo.setFocusable(true);
+                }));
+                builder.create().show();
+            }else{
+                String cantidad = ETAnticipoTablaActivityAnticipo.getText().toString();
+                if(Double.parseDouble(cantidad)<=0){
+                    builder.setTitle(R.string.error_titulo);
+                    builder.setMessage("El total del anticipo es un positivo requerido");
+                    builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
+                        dialog.dismiss();
+                        ETAnticipoTablaActivityAnticipo.setFocusable(true);
+                    }));
+                    builder.create().show();
+                }else{
+                    Intent intent = new Intent(AnticipoTablaActivity.this,
+                            VerReporteActivity.class);
+                    intent.putExtra("EsAnticipo",EsAnticipo);
+                    intent.putExtra("EsCorte",EsCorte);
+                    startActivity(intent);
+                }
+            }
+        }
+        else{
+            Intent intent = new Intent(AnticipoTablaActivity.this,
+                    VerReporteActivity.class);
+            intent.putExtra("EsAnticipo",EsAnticipo);
+            intent.putExtra("EsCorte",EsCorte);
+            startActivity(intent);
+        }
     }
 }

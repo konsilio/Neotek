@@ -93,6 +93,7 @@ public class VerReporteActivity extends AppCompatActivity {
             if(EsAnticipo){
                 GenerarReporteAnticipo();
             }else if (EsCorte){
+                setTitle("Nota de corte de caja");
                 GenerarReporteCorteCaja();
             }
 
@@ -163,137 +164,106 @@ public class VerReporteActivity extends AppCompatActivity {
 
     private void GenerarReporteCorteCaja() {
         HtmlReporte = "<body>" +
-                "<h3>Reporte-Corte de caja</h3>" +
-                "<table>" +
+                "<h3 style='text-align: center;'><u>Reporte-Corte de caja</u></h3>" +
+                "<table style='font-size:25px; width:100%; margin-left:5px;margin-rigth:5px;'>" +
                 "<tbody>" +
                 "<tr>" +
-                "<td>Clave Anticipo</td>" +
-                "<td>[{ClaveTraspaso}]</td>" +
+                "<td>Clave Corte</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{ClaveTraspaso}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td>Fecha</td>" +
-                "<td>[{Fecha}]</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Fecha}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td>Hora</td>" +
-                "<td>[{Hora}]</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Hora}]</td>" +
                 "</tr>" +
                 "</tbody>" +
-                "</table>" +
+                "</table >" +
                 "<hr>" +
-                "<table>" +
+                "<table style='font-size:25px; width:100%;margin-left:5px;margin-rigth:5px;'>" +
                 "<tbody>" +
                 "<tr>" +
                 "<td>Estación</td>"+
-                "<td>[{Estacion}]</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Estacion}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td>Fecha de venta</td>"+
-                "<td>[{Fecha-venta}]</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Fecha-venta}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<tr>" +
                 "<td>Venta Total</td>"+
-                "<td>[{Venta-total}]</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Venta-total}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<tr>" +
                 "<td>Anticipos</td>"+
-                "<td>[{Anticipos}]</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Anticipos}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<tr>" +
                 "<td>Monto de corte</td>"+
-                "<td>[{Monto-corte}]</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Monto-corte}]</td>" +
                 "</tr>" +
                 "</tbody>" +
-                "</table>"+
+                "</table >"+
                 "<hr>"+
-                "<h3>P5000</h3>"+
-                "<table>"+
+                "<h3 style='text-align: center;'>P5000</h3>"+
+                "<table style='font-size:25px; width:100%;margin-left:5px;margin-rigth:5px;'>"+
                 "<tbody>"+
                 "<tr>" +
                 "<td>Inicial: </td>" +
-                "<td>[{Inicial}]</td>" +
+                "<td style='text-align: right; font-weight:bold;'> [{Inicial}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td>Final: </td>" +
-                "<td>[{Final}]</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Final}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td>Litros vendidos: </td>" +
-                "<td>[{Litros-vendidos}]</td>" +
+                "<td style='text-align: right; font-weight:bold;'>[{Litros-vendidos}]</td>" +
                 "</tr>" +
                 "</tbody>"+
                 "</table>"+
                 "</body>";
 
         StringReporte =
-                "<body>" +
-                        "<h3>Reporte-Corte de caja</h3>" +
-                        "<table>" +
-                        "<tbody>" +
-                        "<tr>" +
-                        "<td>Clave Anticipo</td>" +
-                        "<td>[{ClaveTraspaso}]</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<td>Fecha</td>" +
-                        "<td>[{Fecha}]</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<td>Hora</td>" +
-                        "<td>[{Hora}]</td>" +
-                        "</tr>" +
-                        "</tbody>" +
-                        "</table>" +
-                        "<hr>" +
-                        "<table>" +
-                        "<tbody>" +
-                        "<tr>" +
-                        "<td>Estación</td>"+
-                        "<td>[{Estacion}]</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<td>Fecha de venta</td>"+
-                        "<td>[{Fecha-venta}]</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<tr>" +
-                        "<td>Venta Total</td>"+
-                        "<td>[{Venta-total}]</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<tr>" +
-                        "<td>Anticipos</td>"+
-                        "<td>[{Anticipos}]</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<tr>" +
-                        "<td>Monto de corte</td>"+
-                        "<td>[{Monto-corte}]</td>" +
-                        "</tr>" +
-                        "</tbody>" +
-                        "</table>"+
-                        "<hr>"+
-                        "<h3>P5000</h3>"+
-                        "<table>"+
-                        "<tbody>"+
-                        "<tr>" +
-                        "<td>Inicial: </td>" +
-                        "<td>[{Inicial}]</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<td>Final: </td>" +
-                        "<td>[{Final}]</td>" +
-                        "</tr>" +
-                        "<tr>" +
-                        "<td>Litros vendidos: </td>" +
-                        "<td>[{Litros-vendidos}]</td>" +
-                        "</tr>" +
-                        "</tbody>"+
-                        "</table>"+
-                        "</body>";
+                        "Reporte-Corte de caja\n" +
+
+                        "Clave Anticipo\t" +
+                        "[{ClaveTraspaso}]\n" +
+                        "Fecha\t" +
+                        "[{Fecha}]\n" +
+                        "Hora\t" +
+                        "[{Hora}]\n" +
+                        "----------------------\n" +
+                        "Estación\t"+
+                        "[{Estacion}]\n" +
+                        "Fecha de venta\t"+
+                        "[{Fecha-venta}]\n" +
+                        "Venta Total\t"+
+                        "[{Venta-total}]\n" +
+                        "Anticipos\t"+
+                        "[{Anticipos}]\n" +
+                        "Monto de corte\t"+
+                        "[{Monto-corte}]\n" +
+                        "-----------------------\n"+
+                        "\tP5000"+
+                        "Inicial: \t" +
+                        "[{Inicial}]\n" +
+                        "Final: \t" +
+                        "[{Final}]\n" +
+                        "Litros vendidos: \t" +
+                        "[{Litros-vendidos}]\n" +
+                        "Entregué\n"+
+                        "[{Entrego-nombre}]\n\n" +
+                        "________________________\n"+
+                        "Recibi:\n"+
+                        "[{Recibio}]\n\n"+
+                        "________________________\n"
+                        ;
     }
 
     private void GenerarReporteAnticipo() {
