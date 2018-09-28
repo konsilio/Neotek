@@ -11399,6 +11399,8 @@
     <Content Include="Views\PuntoVenta\Index.cshtml" />
     <Content Include="Views\Clientes\EditarCliente.cshtml" />
     <Content Include="Views\OrdenCompra\EntradaMercancia.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AlmacenEntradaDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ClienteLocacionMod.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

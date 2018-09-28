@@ -11,8 +11,7 @@ namespace Sagas.MainModule.Entidades
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
+    
     public partial class Usuario
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,7 +24,7 @@ namespace Sagas.MainModule.Entidades
             this.OrdenesCompraAutorizadas = new HashSet<OrdenCompra>();
             this.OrdenesCompraGeneradas = new HashSet<OrdenCompra>();
             this.OperadoresChoferes = new HashSet<OperadorChofer>();
-            this.Roles = this.UsuarioRoles.Select(x => x.Role).ToList();
+            this.AlmacenSalidaProducto1 = new HashSet<AlmacenSalidaProducto>();
         }
     
         public int IdUsuario { get; set; }
@@ -79,5 +78,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<OrdenCompra> OrdenesCompraGeneradas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OperadorChofer> OperadoresChoferes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenSalidaProducto> AlmacenSalidaProducto1 { get; set; }
     }
 }

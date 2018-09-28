@@ -5,6 +5,7 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.OrdenCompra
 {
+    [Serializable]
     public class EntradaMercanciaModel
     {
         public int IdOrdenCompra { get; set; }
@@ -21,6 +22,6 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public string Proveedor { get; set; }       
         public DateTime FechaRequerida { get; set; }
         public DateTime FechaEntrada { get; set; }
-        public List<AlmacenEntradaDTO> Producto;
+        public List<AlmacenEntradaDTO> Productos { get; set; }
     }
 }

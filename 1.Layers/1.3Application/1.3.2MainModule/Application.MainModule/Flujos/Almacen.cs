@@ -17,27 +17,18 @@ namespace Application.MainModule.Flujos
 {
     public class Almacen
     {
-        public RespuestaDto GenerarEntradaProducto(AlmacenCrearEntradaDTO _entrada)
-        {
-            var Almacen = new AlmacenDataAccess().ProductoAlmacen(_entrada.IdProduto, _entrada.IdEmpresa);
-            var AlmacenActualizar = AlmacenAdapter.FromEmtity(Almacen);
-            AlmacenActualizar.Cantidad = +_entrada.Cantidad;
-            var EntradaProd = ProductoAlmacenServicio.GenerarAlmacenEntradaProcuto(_entrada, Almacen);
-
-            return ProductoAlmacenServicio.EntradaAlmcacenProductos(Almacen, EntradaProd);
-        }
-        public RespuestaDto GenerarEntradaProducto(List<AlmacenCrearEntradaDTO> _entradas)
+        public RespuestaDto GenerarEntradaProducto(OrdenCompraEntradasDTO dto)
         {
             List<Sagas.MainModule.Entidades.Almacen> _almacen = new List<Sagas.MainModule.Entidades.Almacen>();
             List<AlmacenEntradaProducto> entradas = new List<AlmacenEntradaProducto>();
-            foreach (var prod in _entradas)
+            foreach (var prod in dto.Productos)
             {
-                var Almacen = new AlmacenDataAccess().ProductoAlmacen(prod.IdProduto, prod.IdEmpresa);
-                var AlmacenActualizar = AlmacenAdapter.FromEmtity(Almacen);
-                AlmacenActualizar.Cantidad = +prod.Cantidad;
+                var Almacen = ProductoAlmacenServicio.ObtenerAlmacen(prod.IdProducto, dto.IdEmpresa);
+                var AlmacenActualizar = ProductoAlmacenServicio.AlmacenEmtity(Almacen);
+                AlmacenActualizar.Cantidad = CalcularAlmacenServicio.ObtenerSumaEntradaAlmacen(AlmacenActualizar.Cantidad, prod.Cantidad);
                 _almacen.Add(AlmacenActualizar);
 
-                var EntradaProd = ProductoAlmacenServicio.GenerarAlmacenEntradaProcuto(prod, Almacen);
+                var EntradaProd = ProductoAlmacenServicio.GenerarAlmacenEntradaProcuto(prod, dto.IdOrdenCompra, Almacen);
                 entradas.Add(EntradaProd);
             }
             return ProductoAlmacenServicio.EntradaAlmcacenProductos(_almacen, entradas);
