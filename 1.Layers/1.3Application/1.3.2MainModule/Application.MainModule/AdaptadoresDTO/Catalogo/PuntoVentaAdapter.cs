@@ -39,7 +39,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             List<PuntoVentaDTO> luDTO = lu.ToList().Select(x => ToDTO(x)).ToList();
             return luDTO;
-        }
+        }        
         public static PuntoVenta FromDto(PuntoVentaDTO pv)
         {
             return new PuntoVenta()
@@ -51,7 +51,29 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaModificacion = pv.FechaModificacion,
                 Activo = pv.Activo,
                 FechaRegistro = pv.FechaRegistro
-               
+
+            };
+        }
+
+        public static PuntoVenta FromDtoEditar(PuntoVentaDTO Ctedto, PuntoVenta catCte)
+        {
+            var catPuntoVenta = FromEntity(catCte);             
+            if (Ctedto.IdOperadorChofer != 0) { catPuntoVenta.IdOperadorChofer = Ctedto.IdOperadorChofer; } else { catPuntoVenta.IdOperadorChofer = catPuntoVenta.IdOperadorChofer; }
+          
+            return catPuntoVenta;
+        }
+
+        public static PuntoVenta FromEntity(PuntoVenta cte)
+        {
+            return new PuntoVenta()
+            {
+                IdPuntoVenta = cte.IdPuntoVenta,
+                IdEmpresa = cte.IdEmpresa,
+                IdCAlmacenGas = cte.IdCAlmacenGas,
+                IdOperadorChofer = cte.IdOperadorChofer,
+                FechaModificacion = cte.FechaModificacion,
+                Activo = cte.Activo,
+                FechaRegistro = cte.FechaRegistro,
             };
         }
     }

@@ -279,8 +279,10 @@
     <Compile Include="Models\Catalogos\LineaProductoDTO.cs" />
     <Compile Include="Models\Catalogos\EmpresaDTO.cs" />
     <Compile Include="Models\Catalogos\EstadosRepModel.cs" />
+    <Compile Include="Models\Catalogos\OperadorChoferModel.cs" />
     <Compile Include="Models\Catalogos\PaisModel.cs" />
     <Compile Include="Models\Catalogos\PartialViewModel.cs" />
+    <Compile Include="Models\Catalogos\PrecioVentaModel.cs" />
     <Compile Include="Models\Catalogos\ProductoDTO.cs" />
     <Compile Include="Models\Catalogos\ProveedorDTO.cs" />
     <Compile Include="Models\Catalogos\PuntoVentaModel.cs" />

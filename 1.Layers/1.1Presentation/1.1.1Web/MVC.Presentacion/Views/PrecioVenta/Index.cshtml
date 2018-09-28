@@ -1,5 +1,5 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
-@model  ClientesModel
+@model  PrecioVentaModel
 
 @{
     ViewBag.Title = "Index";
@@ -54,33 +54,33 @@
                     </div>
                     <div class="body">
                         <div class="row clearfix">
-                            <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="col-lg-2 col-md-2 col-sm-2">
                                 <div class="form-group">
-                                    Precio PEMEX: <input name="" type="text" />kg.
+                                    Precio PEMEX: <input name="" type="text" class="form-control"/>kg.
                                 </div>
                             </div>
-                            @*<div class="col-sm-3">
-                                
-                            </div>*@
-                            <div class="col-lg-4 col-md-4 col-sm-4">
+                          
+                            <div class="col-lg-2 col-md-2 col-sm-2">
                                 <div class="form-group">
-                                    Utilidad esperada: <input name="" type="text" />kg.
+                                    Utilidad esperada: <input name="" type="text" class="form-control"/>kg.
                                 </div>
                             </div>
-                            @*<div class="col-sm-3">
-                               
-                            </div>*@
-                            <div class="col-lg-3 col-md-3 col-sm-3">
+                           
+                            <div class="col-lg-2 col-md-2 col-sm-2">
                                 <div class="form-group">
-                                    Precio salida:  $14.70 kg.  $27.22 Lt.
+                                    Precio salida: 
                                 </div>
                             </div>
-                            @*<div class="col-sm-2">
-                                <label name="" class="form-control" value="$14.70 kg."></label>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="form-group">
+                                   <input name="CalculaSuma" type="text" class="form-control" value="$14.70 kg." readonly="readonly" />
+                                </div>
                             </div>
                             <div class="col-sm-2">
-                                <label name="" class="form-control" value="$27.22 Lt."></label>
-                            </div>*@
+                                <div class="form-group">
+                                    <input name="CaculaResta" type="text" class="form-control" value="$9.22 Lt." readonly="readonly" />
+                                </div>
+                            </div>
                         </div>
                         <div class="row clearfix">
                             <div class="col-sm-2">
@@ -171,10 +171,37 @@
                     </div>
                 </div>
 
+                @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                {
+
+                    <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
+                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                         bottom: 20px; left: 0px; right: 0px;">
+                        @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                        <span data-notify="icon"></span>
+                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
+                        <a href="#" target="_blank" data-notify="url"></a>
+                    </div>
+                }
+
+                @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
+                {
+                    <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
+                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                         bottom: 20px; left: 0px; right: 0px;">
+                        @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                        <span data-notify="icon"></span>
+                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
+                    </div>
+                }
             </div>
         </div>
     </section>
 
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 

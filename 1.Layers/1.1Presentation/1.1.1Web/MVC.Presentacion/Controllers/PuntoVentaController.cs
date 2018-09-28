@@ -19,7 +19,7 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsSuperUser)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0,_tkn);
+                ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0, _tkn);
 
             }
             else
@@ -28,10 +28,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.ListaPV = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             }
             ViewBag.Usuarios = TempData["Users"];
-            //List<UsuarioDTO> ids = new List<UsuarioDTO>();
-            //ids.AddRange(ViewBag.Usuarios);
-            //ViewBag.ItemsSelect = (new SelectList(ids,));// "ItemId", "ItemName", selectedId );
-
+        
             if (TempData["RespuestaDTO"] != null)
             {
                 ViewBag.MessageExito = TempData["RespuestaDTO"];
@@ -49,17 +46,17 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-            var lst = CatalogoServicio.ListaUsuarios(idE, _tkn);
-            if (lst.Count >= 1)
+            var lstusuarios = CatalogoServicio.ObtenerUsuarioOperador(idE, _tkn);
+            if (lstusuarios.Count() >= 1)
             {
-                ViewBag.Usuarios = lst;
-            }
-            TempData["Users"] = lst;
+                ViewBag.Usuarios = lstusuarios;
+            }           
+            TempData["Users"] = lstusuarios;
             ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
             if (ViewBag.EsSuperUser)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0,_tkn);
+                ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0, _tkn);
             }
             else
             {
@@ -69,6 +66,22 @@ namespace MVC.Presentacion.Controllers
             return View("Index");
         }
 
+
+        public JsonResult Guardar(short idEmpresa, int idChofer, int idPV)
+        {
+            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+
+            List<PuntoVentaModel> model = CatalogoServicio.ListaPuntosVenta(idPV, _tkn);
+            PuntoVentaModel nmodel = model[0];
+            var respuesta = CatalogoServicio.ModificarOperador(nmodel, idChofer, _tkn);
+
+            //    var JsonInfo = JsonConvert.SerializeObject(list);
+            //return Json(JsonInfo, JsonRequestBehavior.AllowGet);
+
+            return new JsonResult { Data = new { IsCorrect = respuesta, Message = respuesta } };
+
+        }
         public ActionResult BorrarPuntoVenta(List<PuntoVentaModel> _ObjModel, short idE, int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));

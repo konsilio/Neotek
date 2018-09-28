@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -23,10 +24,17 @@ namespace Application.MainModule.Servicios.Catalogos
             return new PuntoVentaDataAccess().Buscar(idPuntoVenta);
         }
 
-        //public static OperadorChofer ObtenerOperador(int idOperadorChofer)
-        //{
-        //    return new PuntoVentaDataAccess().Buscar(idPuntoVenta);
-        //}
+        public static OperadorChoferDTO ObtenerOperador(int idUsuario)
+        {
+            OperadorChoferDTO lPventas = AdaptadoresDTO.Catalogo.OperadorChoferAdapter.ToOperador(new PuntoVentaDataAccess().BuscarPorUsuario(idUsuario));
+            return lPventas;         
+        }
+
+        public static List<OperadorChoferDTO> ObtenerUsuariosOperador(short idEmpresa)
+        {
+            List<OperadorChoferDTO> lPventas = AdaptadoresDTO.Catalogo.OperadorChoferAdapter.ToUsuariosOpe(new OperadorChoferDataAccess().BuscarTodos(idEmpresa));
+            return lPventas;
+        }
         public static List<PuntoVenta> ObtenerIdEmp(short IdEmpresa)
         {
             return new PuntoVentaDataAccess().BuscarTodos(IdEmpresa);
@@ -55,6 +63,21 @@ namespace Application.MainModule.Servicios.Catalogos
         public static RespuestaDto Eliminar(PuntoVenta cteLoc)
         {
             return new PuntoVentaDataAccess().Eliminar(cteLoc);
+        }
+        public static RespuestaDto Modificar(PuntoVenta cte)
+        {
+            return new PuntoVentaDataAccess().Actualizar(cte);
+        }
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "El punto de venta");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }

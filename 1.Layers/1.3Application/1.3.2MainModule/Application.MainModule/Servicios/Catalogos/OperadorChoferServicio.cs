@@ -21,6 +21,11 @@ namespace Application.MainModule.Servicios.Catalogos
             return new OperadorChoferDataAccess().BuscarPorUsuario(idUsuario);
         }
 
+        public static List<OperadorChofer> ObtenerPorEmpresa(short idEmpresa)
+        {
+            return new OperadorChoferDataAccess().BuscarTodos(idEmpresa);
+        }
+
         public static OperadorChofer ObtenerPorUsuarioAplicacion()
         {
             return new OperadorChoferDataAccess().BuscarPorUsuario(TokenServicio.ObtenerIdUsuario());
