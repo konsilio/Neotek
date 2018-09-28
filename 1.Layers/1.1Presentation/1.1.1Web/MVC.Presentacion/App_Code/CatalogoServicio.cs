@@ -823,16 +823,44 @@ namespace MVC.Presentacion.App_Code
         #endregion
 
         #region Puntos de Venta
-        public static List<PuntoVentaModel> ListaPuntosVenta(int idPV,string token)
+
+        public static OperadorChoferModel ObtenerIdPorUsuario(int idUsuario, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarIdChofer(idUsuario, token);
+            return agente.Operador;
+        }   
+    
+        public static List<OperadorChoferModel> ObtenerUsuarioOperador(short idEmpresa, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarUsarioOperador(idEmpresa, token);
+            return agente._listaOperadoresUsuarios;
+        }
+        public static PuntoVentaModel guardarModelo(PuntoVentaModel Objemp, int idChofer, string token)
+        {
+            try
+            {
+                Objemp.IdOperadorChofer = ObtenerIdPorUsuario(idChofer, token).IdOperadorChofer;
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+
+            return Objemp;
+        }
+
+        public static List<PuntoVentaModel> ListaPuntosVenta(int idPV, string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarListaPuntosVenta(idPV, token);
             return agente._listaPuntosV;
         }
-        public static List<PuntoVentaModel> ListaPuntosVentaId(short id,string token)
+        public static List<PuntoVentaModel> ListaPuntosVentaId(short id, string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaPuntosVentaId(id,token);
+            agente.BuscarListaPuntosVentaId(id, token);
             return agente._listaPuntosV;
         }
 
@@ -840,6 +868,14 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.EliminarPuntosVenta(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+
+        public static RespuestaDTO ModificarOperador(PuntoVentaModel cc, int idChofer, string tkn)
+        {
+            guardarModelo(cc, idChofer, tkn);
+            var agente = new AgenteServicio();
+            agente.EditarPuntoVenta(cc, tkn);
             return agente._RespuestaDTO;
         }
         #endregion

@@ -28,13 +28,14 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 RequeridoEn = req.RequeridoEn,
                 Proveedor = oc.Proveedor.NombreComercial,
                 FechaRequerida = req.FechaRequerida,
-                Producto = ToDTO(req.Productos.ToList())
+                Productos = ToDTO(req.Productos.ToList())
             };
         }
         public static AlmacenEntradaDTO ToDTO(RequisicionProducto prod)
         {
             return new AlmacenEntradaDTO()
             {
+                IdProducto = prod.IdProducto,
                 TipoProducto = prod.Producto.TipoServicioOProducto.Nombre,
                 Descripcion = prod.Producto.Descripcion,
                 Requeridos = prod.Cantidad,
@@ -46,17 +47,17 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
         {
             return prod.Select(x => ToDTO(x)).ToList();
         }
-        public static AlmacenEntradaProducto FromDTO(AlmacenCrearEntradaDTO dto, Sagas.MainModule.Entidades.Almacen _alm)
+        public static AlmacenEntradaProducto FromDTO(AlmacenEntradaDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
         {
             return new AlmacenEntradaProducto()
             {
-                IdOrdenCompra = dto.IdOrdenCompra,
-                IdRequisicion = new OrdenCompraDataAccess().Buscar(dto.IdOrdenCompra).IdRequisicion,
+                IdOrdenCompra = idOC,
+                IdRequisicion = new OrdenCompraDataAccess().Buscar(idOC).IdRequisicion,
                 IdAlmacen = _alm.IdAlmacen,
-                IdProduto = dto.IdProduto,
+                IdProduto = dto.IdProducto,
                 IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
                 Cantidad = dto.Cantidad,
-                Observaciones_ = dto.Observaciones,
+                Observaciones_ = dto.Aplicacion,
                 FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
                 FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
             };

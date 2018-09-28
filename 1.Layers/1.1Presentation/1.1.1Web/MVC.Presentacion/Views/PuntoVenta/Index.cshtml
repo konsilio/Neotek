@@ -9,26 +9,11 @@
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 
-<script type="text/javascript">
-    //$(document).ready(function () {
-    //});
-
-    function GetListInit() {
-        //debugger
-        //var _lstInit = [];
-        //$('#tblChoferes tbody tr').each(function () {
-
-        //   //var value = $(this).find('td option:selected').val();
-        //    var value = $(this).find('td:nth-child(4)').text();
-        //    _lstInit.push(value);
-        //});
-        //alert(_lstId);
-
-    }
+<script type="text/javascript">  
     $(function () {
         $('select').on('change', function () {
-            debugger
-            $('#tblChoferes tbody tr td:eq(' + 3 + ')').css("background-color", "none");
+         
+        //    $('#tblChoferes tbody tr td:eq(' + 3 + ')').css("background-color", "none");
             
             var _lstId = [];
 
@@ -69,13 +54,14 @@
 
             var isMyObjectEmpty = !Object.keys(duplicates).length;
 
+
             //if (!isMyObjectEmpty) {
-            if (getIdRepeat >= 0) {
+
+           
+            if (getIdRepeat >= 0) {           
 
                 var currentSelect = $('#tblChoferes tbody tr').find('td option:selected').val()
                 var currentId = $('#tblChoferes tbody tr')[0].rowIndex;
-
-
                 //if (duplicates == currentSelect) {
                 //myFunction(currentSelect);
                 // $('#tblChoferes tbody tr:eq(' + getIdRepeat + ') td:eq(' + 3 + ') option[value=0]').attr('selected', 'selected');
@@ -103,16 +89,28 @@
             //       return n.value;
             //   }
             // );
+            /***********GUARDARChofer************/
+            debugger
+            var url = "/PuntoVenta/Guardar";
+            var idChofer = currentSelect;           
+            //var idEmpresa = $('#tblChoferes tbody tr:eq(' + currentIndexSelect + ') td:eq(' + 0 + ')').text();
+            var uri = $('#tblChoferes tbody tr:eq(' + currentIndexSelect + ') td:eq(' + 0 + ')').prevObject[0].activeElement.baseURI;
+            var idEmpresa = uri.substring(uri.lastIndexOf('=') + 1);
+            var idPV = uri.substring(uri.lastIndexOf('/') + 1).substring(0, 1);
+                   
 
-
+            $.getJSON(url, { idEmpresa: idEmpresa, idChofer: idChofer, idPV: idPV}, function (data) {
+               
+                if (data == "[]") {
+                   //get messages Error
+                }
+                else {
+                  //get message Sucess
+                }
+            });
         });
 
-    });
-
-    function myFunction(x) {
-        alert(x);
-    }
-
+    });   
 </script>
 
 <!-- Page Loader -->

@@ -67,6 +67,8 @@ namespace MVC.Presentacion.Agente
         public List<BancoDTO> _listaBanco;
         public List<FormaPagoDTO> _listaFormaPago;
         public List<PuntoVentaModel> _listaPuntosV;
+        public OperadorChoferModel Operador;
+        public List<OperadorChoferModel> _listaOperadoresUsuarios;
 
         public AgenteServicio()
         {
@@ -500,6 +502,7 @@ namespace MVC.Presentacion.Agente
                 _lstUserEmp = (from x in lus where x.IdUsuario == id select x).ToList();
             }
         }
+
         public void BuscarTodosUsuarios(int id, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaUsuarios"];
@@ -922,9 +925,13 @@ namespace MVC.Presentacion.Agente
                 }
 
                 if (idPV != 0)
+                {
                     _listaPuntosV = (from x in lus where x.IdPuntoVenta == idPV select x).ToList();
-
-                _listaPuntosV = lus;
+                }
+                else
+                {
+                    _listaPuntosV = lus;
+                }
             }
         }
         
@@ -965,6 +972,82 @@ namespace MVC.Presentacion.Agente
         public void EliminarPuntosVenta(PuntoVentaModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaPuntosVenta"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+
+        public void BuscarUsarioOperador(short id, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetUsuariosPuntoVenta"];
+            GetUsuariosOpe(id, tkn).Wait();
+        }
+
+        private async Task GetUsuariosOpe(short id, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<OperadorChoferModel> lus = new List<OperadorChoferModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<OperadorChoferModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<OperadorChoferModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaOperadoresUsuarios = lus;
+            }
+        }
+
+        public void BuscarIdChofer(int id, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetOperadorIdUsuario"];
+            GetIdChofer(id, tkn).Wait();
+        }
+
+        private async Task GetIdChofer(int id, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                OperadorChoferModel lus = new OperadorChoferModel();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<OperadorChoferModel>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new OperadorChoferModel();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                Operador = lus;
+            }
+        }
+
+        public void EditarPuntoVenta(PuntoVentaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaOperador"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
@@ -2143,12 +2226,12 @@ namespace MVC.Presentacion.Agente
                 _listaOrdenCompra = emp;
             }
         }
-        public void BuscarOrdenesCompraEntrada(short idEmpresa, string tkn)
+        public void BuscarOrdenesCompraEntrada(int idOC, string tkn)
         {
             this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetOrdenCompraEntrada"];
-            GetOrdenCompraEntrada(idEmpresa, tkn).Wait();
+            GetOrdenCompraEntrada(idOC, tkn).Wait();
         }
-        private async Task GetOrdenCompraEntrada(short idEmpresa, string token)
+        private async Task GetOrdenCompraEntrada(int idOC, string token)
         {
             using (var client = new HttpClient())
             {
@@ -2158,7 +2241,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idEmpresa.ToString())).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idOC.ToString())).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<EntradaMercanciaModel>();
                     else
@@ -2212,10 +2295,10 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
-        public void AutorizarOrdenCompra(OrdenCompraDTO _oc, string token)
+        public void AutorizarOrdenCompra(OrdenCompraDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutAutorizarCompra"];
-            LLamada(_oc, token, MetodoRestConst.Put).Wait();
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
         public void BuscarOrdenCompra(int idOC, string tkn)
         {
@@ -2282,6 +2365,12 @@ namespace MVC.Presentacion.Agente
                 }
                 _listaOrdenCompraEstatus = emp;
             }
+        }
+
+        public void RegistrarEntrada(EntradaMercanciaModel dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGuardarEntradas"];
+            LLamada(dto, token, MetodoRestConst.Post).Wait();
         }
         #endregion
 

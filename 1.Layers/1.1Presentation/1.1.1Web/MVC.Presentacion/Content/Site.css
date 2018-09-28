@@ -22,3 +22,16 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.pagination-container > ul > li > a {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.428571429;
+    text-decoration: none;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+}
+
+

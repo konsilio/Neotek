@@ -1,0 +1,11 @@
+﻿@model MVC.Presentacion.Models.OrdenCompra.AlmacenEntradaDTO
+
+    <tr>
+        @Html.HiddenFor(m => m.IdProducto)
+        <td>@Html.LabelFor(m => m.TipoProducto, Model.TipoProducto)</td>
+        <td>@Html.LabelFor(m => m.Descripcion, Model.Descripcion)</td>
+        <td>@Html.LabelFor(m => m.Requeridos, Model.Requeridos.ToString())</td>
+        <td>@Html.LabelFor(m => m.UnidadMedida, Model.UnidadMedida)</td>
+        <td>@Html.LabelFor(m => m.Aplicacion, Model.Aplicacion)</td>
+        <td>@Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", @type = "number" })</td>
+    </tr>

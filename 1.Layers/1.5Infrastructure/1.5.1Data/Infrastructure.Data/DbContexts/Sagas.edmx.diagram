@@ -256,6 +256,7 @@
         <EntityTypeShape EntityType="Sagas.MainModuleModel.CPrecioVentaEstatus" Width="1.5" PointX="3" PointY="53.125" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CPrecioVenta_CPrecioVentaEstatus" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CPrecioVenta_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Usuario1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
