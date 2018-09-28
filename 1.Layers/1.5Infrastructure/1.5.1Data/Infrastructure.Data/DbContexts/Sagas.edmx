@@ -88,18 +88,10 @@
           <Property Name="PorcenMagnatelOcular" Type="decimal" Precision="10" Scale="2" />
           <Property Name="FechaEntraGas" Type="datetime" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.AlmacenEntradaProducto' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AlmacenEntradaProducto">
           <Key>
             <PropertyRef Name="IdRequisicion" />
             <PropertyRef Name="IdOrdenCompra" />
-            <PropertyRef Name="IdAlmacen" />
-            <PropertyRef Name="IdProduto" />
-            <PropertyRef Name="IdUsuarioRecibe" />
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="FechaEntrada" />
-            <PropertyRef Name="FechaRegistro" />
           </Key>
           <Property Name="IdRequisicion" Type="int" Nullable="false" />
           <Property Name="IdOrdenCompra" Type="int" Nullable="false" />
@@ -3458,6 +3450,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="AlmacenEntradaGasDescargaFoto" EntityType="Self.AlmacenEntradaGasDescargaFoto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenEntradaGasDescargaIniciar" EntityType="Self.AlmacenEntradaGasDescargaIniciar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenEntradaGasDescargaPuerta" EntityType="Self.AlmacenEntradaGasDescargaPuerta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenEntradaProducto" EntityType="Self.AlmacenEntradaProducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenGas" EntityType="Self.AlmacenGas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenGasAutoConsumo" EntityType="Self.AlmacenGasAutoConsumo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenGasAutoConsumoFoto" EntityType="Self.AlmacenGasAutoConsumoFoto" Schema="dbo" store:Type="Tables" />
@@ -3546,21 +3539,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="UsuarioCredencial" EntityType="Self.UsuarioCredencial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioDireccion" EntityType="Self.UsuarioDireccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioRol" EntityType="Self.UsuarioRol" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AlmacenEntradaProducto" EntityType="Self.AlmacenEntradaProducto" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [AlmacenEntradaProducto].[IdRequisicion] AS [IdRequisicion], 
-    [AlmacenEntradaProducto].[IdOrdenCompra] AS [IdOrdenCompra], 
-    [AlmacenEntradaProducto].[IdAlmacen] AS [IdAlmacen], 
-    [AlmacenEntradaProducto].[IdProduto] AS [IdProduto], 
-    [AlmacenEntradaProducto].[IdUsuarioRecibe] AS [IdUsuarioRecibe], 
-    [AlmacenEntradaProducto].[Cantidad] AS [Cantidad], 
-    [AlmacenEntradaProducto].[UrlDocEntrada] AS [UrlDocEntrada], 
-    [AlmacenEntradaProducto].[PathDocEntrada] AS [PathDocEntrada], 
-    [AlmacenEntradaProducto].[Observaciones ] AS [Observaciones ], 
-    [AlmacenEntradaProducto].[FechaEntrada] AS [FechaEntrada], 
-    [AlmacenEntradaProducto].[FechaRegistro] AS [FechaRegistro]
-    FROM [dbo].[AlmacenEntradaProducto] AS [AlmacenEntradaProducto]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="AlmacenSalidaProducto" EntityType="Self.AlmacenSalidaProducto" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [AlmacenSalidaProducto].[IdRequisicion] AS [IdRequisicion], 
@@ -6756,13 +6734,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
         <EntityType Name="AlmacenEntradaProducto">
           <Key>
             <PropertyRef Name="IdRequisicion" />
-            <PropertyRef Name="IdOrdenCompra" />
-            <PropertyRef Name="IdAlmacen" />
-            <PropertyRef Name="IdProduto" />
-            <PropertyRef Name="IdUsuarioRecibe" />
-            <PropertyRef Name="Cantidad" />
-            <PropertyRef Name="FechaEntrada" />
-            <PropertyRef Name="FechaRegistro" />
+            <PropertyRef Name="IdOrdenCompra" />        
           </Key>
           <Property Name="IdRequisicion" Type="Int32" Nullable="false" />
           <Property Name="IdOrdenCompra" Type="Int32" Nullable="false" />

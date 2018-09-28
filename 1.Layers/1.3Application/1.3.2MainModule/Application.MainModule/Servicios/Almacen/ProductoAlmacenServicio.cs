@@ -52,13 +52,21 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, prod);
         }
-        public static AlmacenEntradaProducto GenerarAlmacenEntradaProcuto(AlmacenCrearEntradaDTO dto, Sagas.MainModule.Entidades.Almacen _alm)
+        public static AlmacenEntradaProducto GenerarAlmacenEntradaProcuto(AlmacenEntradaDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
         {
-            return AlmacenProductoAdapter.FromDTO(dto, _alm);
+            return AlmacenProductoAdapter.FromDTO(dto, idOC, _alm);
         }
         public static OrdenCompraEntradasDTO AlmacenEntrada(OrdenCompra oc, Sagas.MainModule.Entidades.Requisicion req)
         {
-            return AlmacenProductoAdapter.ToDTO(oc, req);           
+            return AlmacenProductoAdapter.ToDTO(oc, req);
+        }
+        public static Sagas.MainModule.Entidades.Almacen ObtenerAlmacen(int Idpord, short idEmpresa)
+        {
+            return new AlmacenDataAccess().ProductoAlmacen(Idpord, idEmpresa);
+        }
+        public static Sagas.MainModule.Entidades.Almacen AlmacenEmtity(Sagas.MainModule.Entidades.Almacen almacen)
+        {
+           return AlmacenAdapter.FromEmtity(almacen);
         }
     }
 }

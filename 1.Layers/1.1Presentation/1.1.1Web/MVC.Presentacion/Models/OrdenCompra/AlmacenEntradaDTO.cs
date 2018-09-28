@@ -5,10 +5,11 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.OrdenCompra
 {
+    [Serializable]
     public class AlmacenEntradaDTO
     {
         public int IdAlmacen { get; set; }
-        public int IdProduto { get; set; }
+        public int IdProducto { get; set; }
         public string TipoProducto { get; set; }
         public string Descripcion { get; set; }
         public decimal Requeridos { get; set; }

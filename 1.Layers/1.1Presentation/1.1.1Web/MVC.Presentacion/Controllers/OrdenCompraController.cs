@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using PagedList;
 using Newtonsoft.Json;
 using MVC.Presentacion.Models.Seguridad;
+using System;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -89,6 +90,55 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("OrdenCompraAutorizacion", new { id = model.IdOrdenCompra });
             }
+        }
+        public ActionResult EntradaMercancia(int? idOrden, EntradaMercanciaModel model = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            int idOC = idOrden ?? 0;
+            if (model == null || model.IdOrdenCompra == 0)
+                model = OrdenCompraServicio.EntradaMercancialModel(idOC, tkn);
+            model.FechaEntrada = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+                        
+            return View(model);
+        }
+        public ActionResult RegistrarEntrada(EntradaMercanciaModel model)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var respuesta = OrdenCompraServicio.RegistrarEntrada(model, tkn);
+            if (respuesta.Exito && respuesta.Mensaje.Equals("OK"))            
+                return RedirectToAction("Ordenes");//Registro de entradas  
+            else
+            {
+                if (respuesta.Exito)
+                {
+                    //La orden se actualizo correctamente pero no se cerro
+                }
+                else
+                {
+                    TempData["RespuestaDTO"] = respuesta;
+                    RedirectToAction("EntradaMercancia", model);
+                }
+            }
+            return View();
+        }
+        private string Validar(RespuestaDTO Resp = null)
+        {
+            string Mensaje = string.Empty;
+            ModelState.Clear();
+            if (Resp != null)
+            {
+                if (Resp.ModelStatesStandar != null)
+                    foreach (var error in Resp.ModelStatesStandar.ToList())
+                    {
+                        ModelState.AddModelError(error.Key, error.Value);
+                    }
+                if (Resp.MensajesError != null)
+                    Mensaje = Resp.MensajesError[0];
+            }
+            return Mensaje;
         }
     }
 }

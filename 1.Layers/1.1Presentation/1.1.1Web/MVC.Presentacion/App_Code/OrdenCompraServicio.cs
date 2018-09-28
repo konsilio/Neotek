@@ -117,6 +117,18 @@ namespace MVC.Presentacion.App_Code
             agente.AutorizarOrdenCompra(dto, tkn);
             return agente._RespuestaDTO;
         }
+        public static EntradaMercanciaModel EntradaMercancialModel(int idOC, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.BuscarOrdenesCompraEntrada(idOC, tkn);
+            return agente._entradaMercancia;           
+        }
+        public static RespuestaDTO RegistrarEntrada(EntradaMercanciaModel model, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.RegistrarEntrada(model, tkn);
+            return agente._RespuestaDTO;
+        }
 
         #region Adaptadores
 

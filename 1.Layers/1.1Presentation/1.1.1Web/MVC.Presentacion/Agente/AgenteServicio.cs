@@ -2226,12 +2226,12 @@ namespace MVC.Presentacion.Agente
                 _listaOrdenCompra = emp;
             }
         }
-        public void BuscarOrdenesCompraEntrada(short idEmpresa, string tkn)
+        public void BuscarOrdenesCompraEntrada(int idOC, string tkn)
         {
             this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetOrdenCompraEntrada"];
-            GetOrdenCompraEntrada(idEmpresa, tkn).Wait();
+            GetOrdenCompraEntrada(idOC, tkn).Wait();
         }
-        private async Task GetOrdenCompraEntrada(short idEmpresa, string token)
+        private async Task GetOrdenCompraEntrada(int idOC, string token)
         {
             using (var client = new HttpClient())
             {
@@ -2241,7 +2241,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idEmpresa.ToString())).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idOC.ToString())).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         emp = await response.Content.ReadAsAsync<EntradaMercanciaModel>();
                     else
@@ -2295,10 +2295,10 @@ namespace MVC.Presentacion.Agente
                 _RespuestaDTO = resp;
             }
         }
-        public void AutorizarOrdenCompra(OrdenCompraDTO _oc, string token)
+        public void AutorizarOrdenCompra(OrdenCompraDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutAutorizarCompra"];
-            LLamada(_oc, token, MetodoRestConst.Put).Wait();
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
         public void BuscarOrdenCompra(int idOC, string tkn)
         {
@@ -2365,6 +2365,12 @@ namespace MVC.Presentacion.Agente
                 }
                 _listaOrdenCompraEstatus = emp;
             }
+        }
+
+        public void RegistrarEntrada(EntradaMercanciaModel dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGuardarEntradas"];
+            LLamada(dto, token, MetodoRestConst.Post).Wait();
         }
         #endregion
 
