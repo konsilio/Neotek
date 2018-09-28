@@ -21,6 +21,7 @@ import com.example.neotecknewts.sagasapp.Activity.LecturaAlmacenActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaCamionetaActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaDatosActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaPipaActivity;
+import com.example.neotecknewts.sagasapp.Activity.PuntoVentaSolicitarActivity;
 import com.example.neotecknewts.sagasapp.Activity.RecargaCamionetaActivity;
 import com.example.neotecknewts.sagasapp.Activity.RecargaEstacionCarburacionActivity;
 import com.example.neotecknewts.sagasapp.Activity.RecargaPipaActivity;
@@ -306,6 +307,30 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                             AnticipoEstacionCarburacionActivity.class);
                     intent.putExtra("EsAnticipo",false);
                     intent.putExtra("EsCorte",true);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Estación de Carburación")&&
+                        menuItem.getName().equals("Punto de Venta")){
+                    Intent intent = new Intent(view.getContext(),
+                            PuntoVentaSolicitarActivity.class);
+                    intent.putExtra("EsVentaCarburacion",true);
+                    intent.putExtra("EsVentaCamioneta",false);
+                    intent.putExtra("EsVentaPipa",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Camioneta de cilindros")&&
+                        menuItem.getName().equals("Punto de Venta")){
+                    Intent intent = new Intent(view.getContext(),
+                            PuntoVentaSolicitarActivity.class);
+                    intent.putExtra("EsVentaCarburacion",false);
+                    intent.putExtra("EsVentaCamioneta",true);
+                    intent.putExtra("EsVentaPipa",false);
+                    view.getContext().startActivity(intent);
+                }else if(menuItem.getHeaderMenu().equals("Camioneta de cilindros")&&
+                        menuItem.getName().equals("Pipa")){
+                    Intent intent = new Intent(view.getContext(),
+                            PuntoVentaSolicitarActivity.class);
+                    intent.putExtra("EsVentaCarburacion",false);
+                    intent.putExtra("EsVentaCamioneta",false);
+                    intent.putExtra("EsVentaPipa",true);
                     view.getContext().startActivity(intent);
                 }
             }

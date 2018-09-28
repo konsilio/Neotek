@@ -189,10 +189,33 @@
     <string name="inicial">Inicial:</string>
     <string name="monto_corte">Monto corte:</string>
     <string name="litros">Litros:</string>
+    <string name="Punto_de_venta">Punto de venta</string>
+    <string name="en_caso_de_negativa_del_cliente">En caso de negativa del cliente</string>
+    <string name="seguir_sin_numero">Seguir sin número</string>
+    <string name="desea_que_lo_registre_como_cliente">¿Desea que lo registre como cliente?</string>
+    <string name="registrar_cliente">Registrar Cliente</string>
+    <string name="cual_es_su_numero_de_celular_telofono_fijo_o_rfc">¿Cuál es su número de celular,teléfono fijo o RFC?</string>
+    <string name="buscar_cliente">Buscar Cliente</string>
+    <string name="Buscar">Buscar</string>
+    <string name="pipa">Pipa</string>
+    <string name="tipo_de_persona_fiscal">Tipo de persona fiscal</string>
+    <string name="regimen_fiscal">Regimen fiscal</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido_1">Apellido 1 *</string>
+    <string name="apellido_2">Apellido 2</string>
+    <string name="celular">Celular</string>
+    <string name="telef_no_fijo">Telefóno fijo</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
     <string-array name="header_tabla_anticipo">
         <item># Tiket</item>
         <item>Fecha</item>
         <item>Monto</item>
+    </string-array>
+    <string-array name="Tipo_persona">
+        <item>Persona Fisica</item>
+        <item>Persona Moral</item>
+    </string-array>
+    <string-array name="Regimen_fiscal">
+        <item>Sin obligaciones fiscales</item>
     </string-array>
 </resources>

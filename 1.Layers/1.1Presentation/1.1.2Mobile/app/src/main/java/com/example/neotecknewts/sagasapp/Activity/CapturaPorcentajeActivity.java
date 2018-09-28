@@ -153,8 +153,8 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
                 if(porcentaje_inicial>0) {
                     String val_per = porcentaje_inicial.toString();
-                    numberPickerProcentaje.setValue(Integer.parseInt(val_per.split(".")[0]));
-                    numberPickerDecimal.setValue(Integer.parseInt(val_per.split(".")[1]));
+                    //numberPickerProcentaje.setValue(Integer.parseInt(val_per.split(".")[0]));
+                    //numberPickerDecimal.setValue(Integer.parseInt(val_per.split(".")[1]));
                 }
                 papeleta=false;
                 iniciar=false;
