@@ -95,7 +95,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                 uow.Repository<OrdenCompra>().Update(desDto.OCExpedidor);
 
                             if (desDto.OCPorteador != null)
-                                uow.Repository<OrdenCompra>().Update(desDto.OCPorteador);
+                                uow.RepositoryWithoutValidation<OrdenCompra>().Update(desDto.OCPorteador);
 
                             // Agregar al modelo de dominio AlmacenGasMovimiento
                             //if (desDto.AGMovimiento != null)

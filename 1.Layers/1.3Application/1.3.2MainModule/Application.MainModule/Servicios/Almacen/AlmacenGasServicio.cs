@@ -431,13 +431,11 @@ namespace Application.MainModule.Servicios.Almacen
 
             if (imagenes != null && imagenes.Count > 0)
             {
-                int i = 0;
                 foreach (var imagen in imagenes)
                 {
                     var img = ImagenServicio.ObtenerImagen(imagen);
                     var foto = AlmacenGasAdapter.FromEntity(img);
                     fotos.Add(foto);
-                    i++;
                 }
             }
 

@@ -165,9 +165,9 @@ namespace Application.MainModule.Servicios.Compras
             OrdenCompra OCPorUltima = BuscarUltimaOCTransporte(empresa);
 
             OCExpedidor.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
-            OCExpedidor.MontBelvieuDlls = OCExpUltima.MontBelvieuDlls;
-            OCExpedidor.TarifaServicioPorGalonDlls = OCExpUltima.TarifaServicioPorGalonDlls;
-            OCExpedidor.TipoDeCambioDOF = OCExpUltima.TipoDeCambioDOF;
+            OCExpedidor.MontBelvieuDlls = OCExpUltima != null ? OCExpUltima.MontBelvieuDlls : 0;
+            OCExpedidor.TarifaServicioPorGalonDlls = OCExpUltima != null ? OCExpUltima.TarifaServicioPorGalonDlls : 0;
+            OCExpedidor.TipoDeCambioDOF = OCExpUltima != null ? OCExpUltima.TipoDeCambioDOF : 0;
             OCExpedidor.PrecioPorGalon = CalcularOrdenCompraServicio.ComplementoPrecioPorGalon(OCExpedidor.MontBelvieuDlls.Value, OCExpedidor.TarifaServicioPorGalonDlls.Value, OCExpedidor.TipoDeCambioDOF.Value);
             OCExpedidor.FactorGalonALitros = empresa.FactorGalonALitros;
             OCExpedidor.ImporteEnLitros = CalcularOrdenCompraServicio.ComplementoImporteEnLitros(OCExpedidor.PrecioPorGalon.Value, OCExpedidor.FactorGalonALitros.Value);
@@ -180,7 +180,7 @@ namespace Application.MainModule.Servicios.Compras
             OCPorteador.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
             OCPorteador.FactorConvTransporte = empresa.FactorFleteGas;
             OCPorteador.PrecioTransporte = CalcularOrdenCompraServicio.ComplementoPrecioTransporteDeGas(descarga.MasaKg.Value, OCPorteador.FactorConvTransporte.Value);
-            OCPorteador.Casetas = OCPorUltima.Casetas;
+            OCPorteador.Casetas = OCPorUltima != null ? OCPorUltima.Casetas : 0;
             OCPorteador.SubtotalSinIva = CalcularOrdenCompraServicio.Subtotal(new List<decimal>() { OCPorteador.PrecioTransporte.Value, OCPorteador.Casetas.Value });
             OCPorteador.Iva = CalcularOrdenCompraServicio.Iva(OCPorteador.SubtotalSinIva.Value, IvaEnum.p16);
             OCPorteador.Total = CalcularOrdenCompraServicio.Total(OCPorteador.SubtotalSinIva.Value, OCPorteador.Iva.Value, 0);
