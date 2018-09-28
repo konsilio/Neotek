@@ -33,6 +33,11 @@ namespace Application.MainModule.Servicios.Mobile
         private static bool _AppRecargaCamionetaCilindro = false;
         private static bool _AppTraspasoEstacionCarb = false;
         private static bool _AppTraspasoPipa = false;
+        //private static bool _AppDisposicionEfectivo = false;
+        //private static bool _AppPuntoVenta = false;
+        //private static bool _AppCamionetaPuntoVenta = false;
+        //private static bool _AppEstacionCarbPuntoVenta = false;
+        //private static bool _AppPipaPuntoVenta = false;
         public static List<MenuDto> Crear(int idUsuario)
         {
             List<MenuDto> lista = new List<MenuDto>();
@@ -178,7 +183,31 @@ namespace Application.MainModule.Servicios.Mobile
                         lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppTraspasoPipaFinal"]));
                         _AppTraspasoPipa = true;
                     }
-
+                    //Diposición de efectivo
+                    //if(rol.AppDisposicionEfectivo && !_AppDisposicionEfectivo)
+                    //{
+                    //    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionAnticipoEstacionCarb"]));
+                    //    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppDisposicionCorteCajaEstacionCarb"]));
+                    //    _AppDisposicionEfectivo = true;
+                    //}
+                    //Punto de venta - Camioneta
+                    //if(rol.AppCamionetaPuntoVenta && !_AppCamionetaPuntoVenta)
+                    //{
+                    //    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCamionetaPuntoVenta"]));
+                    //    _AppCamionetaPuntoVenta = true;
+                    //}
+                    //Punto de venta - Estacion de carb.
+                    //if(rol.AppEstacionCarbPuntoVenta && !_AppEstacionCarbPuntoVenta)
+                    //{
+                    //    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppEstacionCarbPuntoVenta"]));
+                    //    _AppEstacionCarbPuntoVenta = true;
+                    //}
+                    //Punto de venta - Pipa
+                    //if(rol.AppPipaPuntoVenta && !_AppPipaPuntoVenta)
+                    //{
+                    //    lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppPipaPuntoVenta"]));
+                    //    _AppPipaPuntoVenta = true;
+                    //}
                 }
                 setFalse();
                 return lista;
@@ -223,6 +252,11 @@ namespace Application.MainModule.Servicios.Mobile
             _AppRecargaCamionetaCilindro = false;
             _AppTraspasoEstacionCarb = false;
             _AppTraspasoPipa = false;
+            //_AppDisposicionEfectivo = false;
+            //_AppPuntoVenta = false;
+            //_AppCamionetaPuntoVenta = false;
+            //_AppEstacionCarbPuntoVenta = false;
+            //_AppPipaPuntoVenta = false;
         }
     }
 }

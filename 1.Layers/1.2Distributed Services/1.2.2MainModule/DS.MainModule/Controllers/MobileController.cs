@@ -164,5 +164,22 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarRecarga(rfdto), Request);
         }
+        [Route("catalogos/unidades")]
+        public HttpResponseMessage GetCatalogoUnidades()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoUnidades(), Request);
+        }
+
+        [Route("catalogos/anticipos/{esAnticipo}/{esCorteCaja}")]
+        public HttpResponseMessage GetEstacionesDeposito(bool esAnticipo,bool esCorteCaja)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoEstaciones(esAnticipo, esCorteCaja),Request);
+        }
+
+        [Route("catalogos/tipo-persona")]
+        public HttpResponseMessage GetTipoPersona()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoTipoPersona(), Request);
+        }
     }
 }
