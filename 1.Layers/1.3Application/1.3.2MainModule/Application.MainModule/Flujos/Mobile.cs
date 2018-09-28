@@ -143,5 +143,10 @@ namespace Application.MainModule.Flujos
         {
             return null;
         }
+
+        public DatosTipoPersonaDto CatalogoTipoPersona()
+        {
+            return ClientesServicio.ConsultarTipoPersonas();
+        }
     }
 }

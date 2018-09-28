@@ -175,5 +175,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoEstaciones(esAnticipo, esCorteCaja),Request);
         }
+
+        [Route("catalogos/tipo-persona")]
+        public HttpResponseMessage GetTipoPersona()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoTipoPersona(), Request);
+        }
     }
 }
