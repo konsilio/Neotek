@@ -31,7 +31,7 @@ namespace Application.MainModule.Flujos
                 if (Almacen == null)
                 {
                     var nuevoAlmacen = ProductoAlmacenServicio.GenaraAlmacenNuevo(prod.IdProducto, dto.IdEmpresa, prod.Cantidad );
-                    nuevoAlmacen = ProductoAlmacenServicio.GenerarAlmacenConEntradaProcuto(prod, dto.IdOrdenCompra, Almacen);                    
+                    nuevoAlmacen = ProductoAlmacenServicio.GenerarAlmacenConEntradaProcuto(prod, dto.IdOrdenCompra, nuevoAlmacen);                    
                     _almacenCrear.Add(nuevoAlmacen);
                 }
                 else
