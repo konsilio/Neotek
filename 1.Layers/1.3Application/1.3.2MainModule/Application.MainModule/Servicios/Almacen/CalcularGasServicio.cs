@@ -31,6 +31,21 @@ namespace Application.MainModule.Servicios.Almacen
             return cantidadMayor - cantidadMenor;
         }
 
+        public static decimal ObtenerDiferenciaLitros(decimal cantidadMayor, decimal cantidadMenor)
+        {
+            return ObtenerDiferenciaKilogramos(cantidadMayor, cantidadMenor);
+        }
+
+        public static decimal ObtenerDiferenciaPorcentaje(decimal cantidadMayor, decimal cantidadMenor)
+        {
+            return ObtenerDiferenciaKilogramos(cantidadMayor, cantidadMenor);
+        }
+
+        public static decimal ObtenerDiferenciaLectura(decimal cantidadMayor, decimal cantidadMenor)
+        {
+            return ObtenerDiferenciaKilogramos(cantidadMayor, cantidadMenor);
+        }
+
         public static decimal SumarKilogramos(decimal cantidadActualKg, decimal ingresoKg)
         {
             return cantidadActualKg + ingresoKg;   

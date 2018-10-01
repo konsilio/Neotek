@@ -8,7 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Timers;
 using System.Configuration;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios;
 
 namespace DS.MainModule
 {
@@ -30,7 +30,7 @@ namespace DS.MainModule
             //QUITAR ESTA LINEA EN PRODUCCION/////////////
             myTimer.Stop();
             //QUITAR ESTA LINEA EN PRODUCCION/////////////
-            AlmacenGasServicio.ProcesarInventario();
+            ActualizarSistemaServicio.Actualizar();
         }
 
         private void Timer()

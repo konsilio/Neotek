@@ -72,6 +72,7 @@
     <Compile Include="DTOs\Almacen\AlmacenEntradaDTO.cs" />
     <Compile Include="DTOs\Almacen\AlmacenDTO.cs" />
     <Compile Include="DTOs\Almacen\AplicaDescargaDto.cs" />
+    <Compile Include="DTOs\Almacen\AplicaRecargaDto.cs" />
     <Compile Include="DTOs\Catalogo\EstacionCarburacionDTO.cs" />
     <Compile Include="DTOs\Catalogo\PaisDTO.cs" />
     <Compile Include="DTOs\Catalogo\CategoriaProductoCrearDto.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Servicios\AccesoADatos\TipoCentroCostoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\TipoMedidorGasDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
+    <Compile Include="Servicios\ActualizarSistemaServicio.cs" />
     <Compile Include="Servicios\Almacen\CalcularGasServicio.cs" />
     <Compile Include="Servicios\Almacen\ProductoAlmacenServicio.cs" />
     <Compile Include="Servicios\Almacen\AlmacenGasServicio.cs" />

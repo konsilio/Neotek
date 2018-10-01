@@ -95,7 +95,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                 uow.Repository<OrdenCompra>().Update(desDto.OCExpedidor);
 
                             if (desDto.OCPorteador != null)
-                                uow.RepositoryWithoutValidation<OrdenCompra>().Update(desDto.OCPorteador);
+                                uow.Repository<OrdenCompra>().Update(desDto.OCPorteador);
 
                             // Agregar al modelo de dominio AlmacenGasMovimiento
                             //if (desDto.AGMovimiento != null)
@@ -149,6 +149,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<AlmacenGasDescargaFoto> BuscarImagenes(int idAlmacenEntradaGasDescarga)
         {
             return uow.Repository<AlmacenGasDescargaFoto>().Get(x => x.IdAlmacenEntradaGasDescarga.Equals(idAlmacenEntradaGasDescarga)).ToList();
+        }
+
+        public List<AlmacenGasDescargaFoto> BuscarImagenesSinVigencia(DateTime fechaVigencia)
+        {
+            //Agregar FechaRegistro en las imagenes
+            //return uow.Repository<AlmacenGasDescargaFoto>().Get(x => x.FechaRegistro < fechaVigencia).ToList();
+            return new List<AlmacenGasDescargaFoto>();
         }
     }
 }

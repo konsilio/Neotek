@@ -304,6 +304,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasRecarga>().Get(x => !x.DatosProcesados).ToList();
         }
+        public List<AlmacenGasRecarga> BuscarTodasRecargasNoProcesadas(byte idTipoEvento)
+        {
+            return uow.Repository<AlmacenGasRecarga>().Get(x => !x.DatosProcesados && x.IdTipoEvento.Equals(idTipoEvento)).ToList();
+        }
         public List<AlmacenGasTomaLectura> BuscarTodasLecturasNoProcesadas()
         {
             return uow.Repository<AlmacenGasTomaLectura>().Get(x => !x.DatosProcesados).ToList();
