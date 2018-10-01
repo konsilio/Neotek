@@ -683,6 +683,7 @@ namespace Application.MainModule.Flujos
             return TipoProveedorAdapter.ToDTO(TipoProveedorServicio.Obtener());
         }
         #endregion
+
         #region Banco
         public List<BancoDTO> ListaBanco()
         {
@@ -692,6 +693,7 @@ namespace Application.MainModule.Flujos
             return BancoAdapter.ToDTO(BancoServicio.Obtener());
         }
         #endregion
+
         #region Forma de pago
         public List<FormaPagoDTO> ListaFormaPago()
         {
@@ -700,7 +702,6 @@ namespace Application.MainModule.Flujos
 
             return FormaPagoAdapter.ToDTO(FormaPagoServicio.Obtener());
         }
-        #endregion
-      
+        #endregion      
     }
 }

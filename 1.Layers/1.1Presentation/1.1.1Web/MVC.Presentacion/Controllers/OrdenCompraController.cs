@@ -116,6 +116,38 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("EntradaMercancia", model);
             }
         }
+        public ActionResult OrdenCompraComplemento()
+        {
+            
+            return View();
+        }
+        public ActionResult OrdenCompraPago(int id)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var ocp = OrdenCompraServicio.InitOrdenCompraPago(id, tkn);
+            ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(tkn);
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);        
+            return View(ocp);
+        }
+        public ActionResult ConfirmarPago(OrdenCompraPagoDTO dto = null)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var respuesta = OrdenCompraServicio.ConfirmarPago(dto, tkn);
+            if (respuesta.Exito)            
+                return RedirectToAction("Ordenes");            
+            else
+            {
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("OrdenCompraPago", new { id = dto.IdOrdenCompra });
+            }
+        }
+        public ActionResult OrdenCompraComplementoGas()
+        {
+            
+            return View();
+        }
         private string Validar(RespuestaDTO Resp = null)
         {
             string Mensaje = string.Empty;

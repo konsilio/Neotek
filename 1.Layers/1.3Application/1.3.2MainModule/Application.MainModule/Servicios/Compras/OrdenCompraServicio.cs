@@ -57,6 +57,9 @@ namespace Application.MainModule.Servicios.Compras
                     nOC.IdOrdenCompraEstatus = ocInicial.IdOrdenCompraEstatus;
                     nOC.FechaRegistro = DateTime.Today;
                     nOC.IdUsuarioGenerador = TokenServicio.ObtenerIdUsuario();
+                    nOC.EsGas = _prod.EsGas;
+                    nOC.EsTransporteGas = _prod.EsTransporte;
+                    nOC.EsActivoVenta = _prod.EsActivoVenta;
                     nlist.Add(nOC);
                 }
             }
@@ -120,7 +123,7 @@ namespace Application.MainModule.Servicios.Compras
                 MensajesError = new List<string>() { mensaje },
             };
         }
-        public static ComplementoGasDTO BuscarComplemento(OrdenCompra oc)
+        public static ComplementoGasDTO BuscarComplementoGas(OrdenCompra oc)
         {
             var descarga = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
             return ComplementoGasAdapter.ToDTO(descarga);
@@ -198,6 +201,10 @@ namespace Application.MainModule.Servicios.Compras
             dto.MotivoRequisicion = datosreq.MotivoRequisicion;
             dto.RequeridoEn = datosreq.RequeridoEn;
             return dto;
+        }
+        public static RespuestaDto GuardarConfirmacionPago(OrdenCompraPago pago)
+        {
+            return new OrdenCompraPagoDataAccess().Insertar(pago);
         }
     }
 }

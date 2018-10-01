@@ -65,24 +65,7 @@ namespace Application.MainModule.Servicios.Almacen
                 FechaActualizacion = DateTime.Now,
                 Cantidad = cantidad,
                 Ubicacion = AlmacenConst.UbicacionPendiente,
-                Entradas = new List<AlmacenEntradaProducto>()
-                //Entradas = new List<AlmacenEntradaProducto>()
-                //{
-                //    new AlmacenEntradaProducto
-                //    {
-                //        Cantidad = ,
-                //        FechaEntrada = ,
-                //        FechaRegistro = ,
-                //        IdOrdenCompra = ,
-                //        IdProduto = ,
-                //        IdRequisicion = ,
-                //        IdUsuarioRecibe = ,
-                //        Observaciones_ = ,
-                //        PathDocEntrada = ,
-                //        UrlDocEntrada = ,
-                        
-                //    }
-                //}
+                Entradas = new List<AlmacenEntradaProducto>()               
             };
         }        
     }

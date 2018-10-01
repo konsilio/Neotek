@@ -302,11 +302,14 @@
     <Compile Include="Models\OrdenCompra\AlmacenEntradaDTO.cs" />
     <Compile Include="Models\OrdenCompra\EntradaMercanciaModel.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraAutorizacionModel.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraComplementoDTO.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraComplementoGasDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraCrearDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraEstatusDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraEstatusEnum.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraModel.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraPagoDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraProductoDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenesCompraModel.cs" />
@@ -11401,6 +11404,9 @@
     <Content Include="Views\OrdenCompra\EntradaMercancia.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AlmacenEntradaDTO.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ClienteLocacionMod.cshtml" />
+    <Content Include="Views\OrdenCompra\OrdenCompraComplemento.cshtml" />
+    <Content Include="Views\OrdenCompra\OrdenCompraPago.cshtml" />
+    <Content Include="Views\OrdenCompra\OrdenCompraComplementoGas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

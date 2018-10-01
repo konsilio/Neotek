@@ -10,6 +10,7 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public int IdRequisicion { get; set; }
         public string NumeroRequisicion { get; set; }
         public int IdOrdenCompra { get; set; }       
+        public short IdEmpresa { get; set; }
         public string Empresa { get; set; }
         public byte IdOrdenCompraEstatus { get; set; }
         public string OrdenCompraEstatus { get; set; }

@@ -1,0 +1,210 @@
+﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraPagoDTO
+<script>
+    (function ($) {
+        var defaults;
+        $.event.fix = (function (originalFix) {
+            return function (event) {
+                event = originalFix.apply(this, arguments);
+                if (event.type.indexOf('copy') === 0 || event.type.indexOf('paste') === 0) {
+                    event.clipboardData = event.originalEvent.clipboardData;
+                }
+                return event;
+            };
+        })($.event.fix);
+        defaults = {
+            callback: $.noop,
+            matchType: /image.*/
+        };
+        return $.fn.pasteImageReader = function (options) {
+            if (typeof options === "function") {
+                options = {
+                    callback: options
+                };
+            }
+            options = $.extend({}, defaults, options);
+            return this.each(function () {
+                var $this, element;
+                element = this;
+                $this = $(this);
+                return $this.bind('paste', function (event) {
+                    var clipboardData, found;
+                    found = false;
+                    clipboardData = event.clipboardData;
+                    return Array.prototype.forEach.call(clipboardData.types, function (type, i) {
+                        var file, reader;
+                        if (found) {
+                            return;
+                        }
+                        if (type.match(options.matchType) || clipboardData.items[i].type.match(options.matchType)) {
+                            file = clipboardData.items[i].getAsFile();
+                            reader = new FileReader();
+                            reader.onload = function (evt) {
+                                return options.callback.call(element, {
+                                    dataURL: evt.target.result,
+                                    event: evt,
+                                    file: file,
+                                    name: file.name
+                                });
+                            };
+                            reader.readAsDataURL(file);
+                            return found = true;
+                        }
+                    });
+                });
+            });
+        };
+    })(jQuery);
+    var loaded = function () {
+        $("html").pasteImageReader(function (results) {
+            var filename = results.filename, dataURL = results.dataURL, results;
+            $('#img').attr('src', dataURL)
+            document.getElementById('UrlPathCapturaPantalla').value = dataURL;
+        });
+    }
+    $(document).ready(loaded)
+</script>
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        @using (Html.BeginForm("ConfirmarPago", "OrdenCompra", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.UrlPathCapturaPantalla)
+            @Html.HiddenFor(m => m.IdOrdenCompra)
+            @Html.HiddenFor(m => m.NumOrdenCompra)
+            @Html.HiddenFor(m => m.IdProveedor)
+            @Html.HiddenFor(m => m.IdBanco)
+            @Html.HiddenFor(m => m.CuentaBancaria)
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Confirmacion de Pago</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href=""><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Compras</li>
+                            <li class="breadcrumb-item">Orden de Compra</li>
+                            <li class="breadcrumb-item active">Confirmar Pago</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-12">
+                    @if (ViewBag.MensajeError != null)
+                    {
+                        <br />
+                        <div id="DivAlerta" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    @ViewBag.MensajeError
+                                </strong>
+                            </div>
+                        </div>
+                    }
+                    <div class="row clearfix">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="header">
+                                    <h2>Confirmar<strong> Pago</strong></h2>
+                                </div>
+                                <div class="body">
+                                    <div class="row clearfix">
+                                        <div class="form-group">
+                                            <strong>@Html.LabelFor(m => m.Empresa, Model.Empresa) </strong>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <label>Numero de orde de compra</label>
+                                    </div>
+                                    <div class="row clearfix text-center">
+                                        <div class="form-group">
+                                            <strong>@Html.LabelFor(m => m.NumOrdenCompra, Model.NumOrdenCompra)</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <label>Proveedor</label>
+                                    </div>
+                                    <div class="row clearfix text-center">
+                                        <div class="form-group">
+                                            <strong>@Html.LabelFor(m => m.Proveedor, Model.Proveedor)</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <label>Banco</label>
+                                    </div>
+                                    <div class="row clearfix text-center">
+                                        <div class="form-group">
+                                            <strong>@Html.LabelFor(m => m.Banco, Model.Banco)</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <label>Cuenta</label>
+                                    </div>
+                                    <div class="row clearfix text-center">
+                                        <div class="form-group">
+                                            <strong>@Html.LabelFor(m => m.CuentaBancaria, Model.CuentaBancaria)</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <label>Forma Pago</label>
+                                    </div>
+                                    <div class="row clearfix text-center">
+                                        <select name="IdFormaPago" class="form-control">
+                                            @foreach (var fp in ViewBag.FormasPago)
+                                            {
+                                                <option value="@fp.IdFormaPago">@fp.Descripcion </option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <label>Comprobante de pago</label>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-12  blockquote blockquote-info btn-round">
+                                            <div class="form-group">
+                                                <textarea class="form-control textarea-container" placeholder="Coloca la captura de pantalla" rows="2"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix col-md-12">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                Pagar:
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            $<strong>@Html.LabelFor(m => m.MontoPagado, Model.MontoPagado.ToString("N2", new System.Globalization.CultureInfo("en-US")))</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <button type="submit" id="btnCofirmar" class="btn btn-primary btn-round btn-block">Confirmar Pago</button>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <button type="button" class="btn btn-primary btn-round btn-block">Regresar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="header">
+                                    <h2><strong>Vista</strong> Previa</h2>
+                                </div>
+                                <div class="body">
+                                    <img id="img" src="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

@@ -140,7 +140,7 @@ namespace Application.MainModule.Flujos
         public ComplementoGasDTO BuscarComplementoGas(int idOrdenCompra)
         {
             var oc = OrdenCompraServicio.Buscar(idOrdenCompra);
-            var cg = OrdenCompraServicio.BuscarComplemento(oc);
+            var cg = OrdenCompraServicio.BuscarComplementoGas(oc);
 
 
             return cg;
@@ -148,6 +148,12 @@ namespace Application.MainModule.Flujos
         public List<OrdenCompraEstatusDTO> ListaEstatus()
         {
             return OrdenComprasAdapter.ToDTO(OrdenCompraServicio.ListaEstatus());
+        }
+        public RespuestaDto ConfirmarPago(OrdenCompraPagoDTO dto)
+        {
+            var Pago = OrdenCompraPagoAdapter.FromDTO(dto);
+            var respuesta = OrdenCompraServicio.GuardarConfirmacionPago(Pago);
+            return respuesta;
         }
     }
 }

@@ -1227,7 +1227,7 @@ namespace MVC.Presentacion.Agente
         #region Forma de Pago
         public void ListaFormaPago(string tkn)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaFormaPagos"];
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaFormasPago"];
             GetListaFormaPago(tkn).Wait();
         }
         private async Task GetListaFormaPago(string Token)
@@ -2366,11 +2366,15 @@ namespace MVC.Presentacion.Agente
                 _listaOrdenCompraEstatus = emp;
             }
         }
-
         public void RegistrarEntrada(EntradaMercanciaModel dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostGuardarEntradas"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
+        }
+        public void EnviarConfirmarPago (OrdenCompraPagoDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings[""];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
         #endregion
 

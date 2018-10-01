@@ -85,6 +85,40 @@ namespace Application.MainModule.Servicios.Notificacion
                 Enviar(js, Autorizacion);
             }
         }
+        public static void ConfirmacionPago(OrdenCompra oc, bool incluirMensajePush = false)
+        {
+            var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
+            var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.CompraAutorizarOCompra).ToList();
+            var destinatarios = ObtenerDestinatarios(roles);
+
+            var correoDto = new CorreoDto()
+            {
+                De = ObtenerCorreo(usuAplicacion),
+                ParaLista = ObtenerCorreo(destinatarios),
+                Asunto = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], oc.NumOrdenCompra),
+                Mensaje = CorreoHtmlServicio.OrdenCompraNueva(oc),
+            };
+            Enviar(correoDto);
+            if (!incluirMensajePush)
+            {
+                var Autorizacion = new KeyValuePair<string, string>("key", string.Concat("=", ConfigurationManager.AppSettings["AppNotificacionKeyAutorizacion"]));
+                var js = new FBNotificacionDTO()
+                {
+                    registration_ids = ObtenerKeysMovile(destinatarios).ToArray(),
+                    data = new Data
+                    {
+                        OrderNo = oc.NumOrdenCompra.ToString(),
+                        Tipo = NotificacionPushConst.RT001
+                    },
+                    notification = new Notification
+                    {
+                        text = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], oc.NumOrdenCompra),
+                        title = NotificacionPushConst.R0001
+                    }
+                };
+                Enviar(js, Autorizacion);
+            }
+        }
         public static void ProductoAutorizado(Sagas.MainModule.Entidades.Requisicion req, bool incluirMensajePush = false)
         {
             //var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();

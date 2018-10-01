@@ -166,7 +166,10 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             var respuesta = RequisicionServicio.GuardarRequisicion(model, tkn);
             if (respuesta.Exito)
+            {
+                TempData["ListProductosRequisicion"] = null;
                 return RedirectToAction("Requisiciones");
+            }
             else
             {
                 ViewBag.EsNueva = true;

@@ -86,5 +86,9 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_compras.ListaEstatus(), Request);
         }
+        public HttpResponseMessage PutConfirmarPago(OrdenCompraPagoDTO oc)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.ConfirmarPago(oc), Request);
+        }
     }
 }

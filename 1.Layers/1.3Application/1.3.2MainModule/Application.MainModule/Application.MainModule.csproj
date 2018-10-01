@@ -72,6 +72,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\TipoProveedorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\UnidadAlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\RegimenAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Seguridad\RolAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\TipoPerAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\ComplementoGasAdapter.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="DTOs\Compras\OrdenCompraDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraEntradasDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraEstatusDTO.cs" />
+    <Compile Include="DTOs\Compras\OrdenCompraPagoDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraProductoDTO.cs" />
     <Compile Include="DTOs\Compras\ProductoOCDTO.cs" />
@@ -159,8 +161,9 @@
     <Compile Include="DTOs\Mobile\LecturaDTO.cs" />
     <Compile Include="DTOs\Mobile\LoginFbDTO.cs" />
     <Compile Include="DTOs\Mobile\RecargaDTO.cs" />
+    <Compile Include="Servicios\AccesoADatos\OrdenCompraPagoDataAccess.cs" />
     <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
-    <Compile Include="Servicios\NotificacionDTO.cs" />
+    <Compile Include="DTOs\NotificacionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEstatusDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\CorreoDto.cs" />
