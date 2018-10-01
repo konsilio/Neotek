@@ -10,6 +10,9 @@ namespace Application.MainModule.DTOs.Almacen
 {
     public class AplicaRecargaDto
     {
+        public Empresa Empresa { get; set; }
+
+
         public AlmacenGasRecarga RecargaLecturaInicial { get; set; }
         public List<AlmacenGasRecargaCilindro> RecargaLecturaInicialCilindros { get; set; }
         public List<AlmacenGasRecargaFoto> RecargaLecturaInicialFotos { get; set; }

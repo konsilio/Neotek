@@ -8,9 +8,14 @@ namespace Application.MainModule.Servicios.Almacen
 {
     public static class CalcularGasServicio
     {
-        public static decimal ObtenerLitrosEnElTanque(decimal capacidadTanque, decimal porcentaje)
+        public static decimal ObtenerLitrosEnElTanque(decimal capacidadTanqueLt, decimal porcentaje)
         {
-            return capacidadTanque * (porcentaje / 100);
+            return capacidadTanqueLt * (porcentaje / 100);
+        }
+
+        public static decimal ObtenerLitrosPorPorcentaje(decimal capacidadTanqueLt, decimal porcentaje)
+        {
+            return capacidadTanqueLt * (porcentaje / 100);
         }
 
         public static decimal ObtenerKilogramosDesdeLitros(decimal litros, decimal factor)

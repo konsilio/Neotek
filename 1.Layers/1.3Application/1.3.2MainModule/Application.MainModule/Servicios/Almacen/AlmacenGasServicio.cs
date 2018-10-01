@@ -496,23 +496,7 @@ namespace Application.MainModule.Servicios.Almacen
 
             return fotos;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
         public static List<AplicaRecargaDto> AplicarRecargas()
         {
             List<AplicaRecargaDto> aplicaciones = new List<AplicaRecargaDto>();
@@ -543,21 +527,20 @@ namespace Application.MainModule.Servicios.Almacen
                 unidadEntrada = AlmacenGasServicio.ObtenerUnidadAlamcenGas(recargaInicial, false),
             };
 
-            Empresa empresa = EmpresaServicio.Obtener(apReDto.unidadEntrada);
-
-            apReDto = AplicarRecarga(apReDto, empresa);
+            apReDto.Empresa = EmpresaServicio.Obtener(apReDto.unidadEntrada);
+            apReDto = AplicarRecarga(apReDto);
 
             return apReDto;
         }
 
-        public static AplicaRecargaDto AplicarRecarga(AplicaRecargaDto apReDto, Empresa empresa)
+        public static AplicaRecargaDto AplicarRecarga(AplicaRecargaDto apReDto)
         {
             apReDto.identidadUS = IdentificarTipoUnidadAlamcenGas(apReDto.unidadSalida);
             apReDto.identidadUE = IdentificarTipoUnidadAlamcenGas(apReDto.unidadEntrada);
 
             switch (apReDto.identidadUE)
             {
-                case identidadUnidadAlmacenGas.Pipa: apReDto = AplicarRecargaPipa(apReDto, empresa); break;
+                case identidadUnidadAlmacenGas.Pipa: apReDto = AplicarRecargaPipa(apReDto); break;
                 case identidadUnidadAlmacenGas.EstacionCarburacion: break;
                 case identidadUnidadAlmacenGas.Camioneta: break;
             }
@@ -565,10 +548,17 @@ namespace Application.MainModule.Servicios.Almacen
             return apReDto;
         }
 
-        public static AplicaRecargaDto AplicarRecargaPipa(AplicaRecargaDto apReDto, Empresa empresa)
+        public static AplicaRecargaDto AplicarRecargaPipa(AplicaRecargaDto apReDto)
         {
-            //decimal porcentajeRecargado = CalcularGasServicio.ObtenerDiferenciaPorcentaje(apReDto.Recarga.ProcentajeEntrada);
-            return null;
+            decimal porcentajeRecargadoEnUnidadEntrada = CalcularGasServicio.ObtenerDiferenciaPorcentaje(apReDto.RecargaLecturaFinal.ProcentajeEntrada.Value, apReDto.RecargaLecturaInicial.ProcentajeEntrada.Value);
+            decimal LitrosRecargadosEnUnidadEntrada = CalcularGasServicio.ObtenerLitrosPorPorcentaje(apReDto.unidadEntrada.CapacidadTanqueLt.Value, porcentajeRecargadoEnUnidadEntrada);
+            decimal KilosRecargadosEnUnidadEntrada = CalcularGasServicio.ObtenerKilogramosDesdeLitros(LitrosRecargadosEnUnidadEntrada, apReDto.Empresa.FactorLitrosAKilos);
+
+            apReDto.unidadEntrada.CantidadActualLt = CalcularGasServicio.SumarLitros(apReDto.unidadEntrada.CantidadActualLt, LitrosRecargadosEnUnidadEntrada);
+            apReDto.unidadEntrada.CantidadActualKg = CalcularGasServicio.SumarKilogramos(apReDto.unidadEntrada.CantidadActualKg, KilosRecargadosEnUnidadEntrada);
+            apReDto.unidadEntrada.PorcentajeActual = apReDto.RecargaLecturaFinal.ProcentajeEntrada.Value;
+
+            return apReDto;
         }        
     }
 }
