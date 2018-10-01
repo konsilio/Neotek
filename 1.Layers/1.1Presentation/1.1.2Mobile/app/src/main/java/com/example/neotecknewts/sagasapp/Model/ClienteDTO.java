@@ -17,10 +17,10 @@ public class ClienteDTO implements Serializable {
     @SerializedName("Nombre")
     private String Nombre;
 
-    @SerializedName("Apellido_uno")
+    @SerializedName("Apellido1")
     private String Apellido_uno;
 
-    @SerializedName("Apellido_dos")
+    @SerializedName("Apellido2")
     private String Apellido_dos;
 
     @SerializedName("Celular")
@@ -31,6 +31,9 @@ public class ClienteDTO implements Serializable {
 
     @SerializedName("RFC")
     private String RFC;
+
+    @SerializedName("RazonSocial")
+    private String RazonSocial;
 
     public int getIdCliente() {
         return IdCliente;
@@ -102,5 +105,13 @@ public class ClienteDTO implements Serializable {
 
     public void setRFC(String RFC) {
         this.RFC = RFC;
+    }
+
+    public String getRazonSocial() {
+        return RazonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        RazonSocial = razonSocial;
     }
 }

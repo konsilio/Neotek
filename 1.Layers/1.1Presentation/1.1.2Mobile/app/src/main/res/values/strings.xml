@@ -205,6 +205,11 @@
     <string name="apellido_2">Apellido 2</string>
     <string name="celular">Celular</string>
     <string name="telef_no_fijo">Telefóno fijo</string>
+    <string name="razon_social">Razón Social</string>
+    <string name="cel">CEL</string>
+    <string name="nom">NOM</string>
+    <string name="rfc">RFC</string>
+    <string name="factura">FACTURA</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
     <string-array name="header_tabla_anticipo">
         <item># Tiket</item>

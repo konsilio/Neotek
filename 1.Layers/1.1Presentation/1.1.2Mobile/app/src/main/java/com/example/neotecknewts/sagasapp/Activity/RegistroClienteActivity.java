@@ -4,12 +4,17 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.neotecknewts.sagasapp.Model.ClienteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTipoPersonaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaClienteDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RegistroClientePresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RegistroClientePresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
@@ -21,13 +26,14 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
     Spinner SRegistroClienteActivityTipoPersona,SRegistroClienteActivityRegimenFiscal;
     EditText ETRegistroClienteActivityNombre,ETRegistroClienteActivityApellidoPaterno,
             ETRegistroClienteActivityApellidoMaterno,ETRegistroClienteActivityCelular,
-            ETRegistroClienteActivityTelefonoFijo;
+            ETRegistroClienteActivityTelefonoFijo,ETRegistroClienteActivityRazonSocial;
     Button BtnRegistroClienteActivityRegistrarCliente,BtnRegistroClienteActivityRegresar;
     boolean EsVentaCarburacion,EsVentaCamioneta,EsVentaPipa;
     ProgressDialog progressDialog;
     RegistroClientePresenter presenter;
     Session session;
     DatosTipoPersonaDTO datos;
+    ClienteDTO clienteDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             EsVentaPipa = bundle.getBoolean("EsVentaPipa",false);
         }
         session = new Session(this);
+        clienteDTO = new ClienteDTO();
         SRegistroClienteActivityTipoPersona = findViewById(R.id.
                 SRegistroClienteActivityTipoPersona);
         SRegistroClienteActivityRegimenFiscal = findViewById(R.id.
@@ -52,6 +59,8 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
         ETRegistroClienteActivityCelular = findViewById(R.id.ETRegistroClienteActivityCelular);
         ETRegistroClienteActivityTelefonoFijo = findViewById(R.id.
                 ETRegistroClienteActivityTelefonoFijo);
+        ETRegistroClienteActivityRazonSocial = findViewById(R.id.
+                ETRegistroClienteActivityRazonSocial);
         BtnRegistroClienteActivityRegistrarCliente = findViewById(R.id.
                 BtnRegistroClienteActivityRegistrarCliente);
         BtnRegistroClienteActivityRegresar = findViewById(R.id.BtnRegistroClienteActivityRegresar);
@@ -67,6 +76,35 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
                 R.layout.custom_spinner,
                 getResources().getStringArray(R.array.Regimen_fiscal)
         ));
+
+        SRegistroClienteActivityTipoPersona.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                clienteDTO.setIdTipoPersona(1);
+                Log.w("Persona",parent.getItemAtPosition(position).toString());
+                ETRegistroClienteActivityRazonSocial.setVisibility(
+
+                        parent.getItemAtPosition(position).toString().equals("Persona Moral")?
+                                View.VISIBLE: View.GONE
+                );
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                clienteDTO.setIdTipoPersona(0);
+            }
+        });
+        SRegistroClienteActivityRegimenFiscal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                clienteDTO.setIdTipoRegimen(1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                clienteDTO.setIdTipoRegimen(0);
+            }
+        });
         presenter = new RegistroClientePresenterImpl(this);
         presenter.getLista(session.getToken());
         BtnRegistroClienteActivityRegistrarCliente.setOnClickListener(v -> verificarForm());
@@ -75,7 +113,13 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
 
     @Override
     public void registrarCliente() {
-
+        clienteDTO.setNombre(ETRegistroClienteActivityNombre.getText().toString());
+        clienteDTO.setApellido_uno(ETRegistroClienteActivityApellidoPaterno.getText().toString());
+        clienteDTO.setApellido_dos(ETRegistroClienteActivityApellidoMaterno.getText().toString());
+        clienteDTO.setCelular(ETRegistroClienteActivityCelular.getText().toString());
+        clienteDTO.setTelefono_fijo(ETRegistroClienteActivityTelefonoFijo.getText().toString());
+        clienteDTO.setRazonSocial(ETRegistroClienteActivityRazonSocial.getText().toString());
+        presenter.registrarCliente(clienteDTO,session.getToken());
     }
 
     @Override
@@ -187,5 +231,26 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
         }));
         builder.create();
         builder.show();
+    }
+
+    @Override
+    public void onErrorRegistro(RespuestaClienteDTO data) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.error_titulo));
+        if(data!=null) {
+            builder.setMessage(data.getMensaje());
+        }else{
+            builder.setMessage("No se ha podido realizar el registro,intente nuevamente");
+        }
+        builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
+            dialog.dismiss();
+        }));
+        builder.create();
+        builder.show();
+    }
+
+    @Override
+    public void setIdCliente(RespuestaClienteDTO data) {
+        //clienteDTO.setIdCliente();
     }
 }

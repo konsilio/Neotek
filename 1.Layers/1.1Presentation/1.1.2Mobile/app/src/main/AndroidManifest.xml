@@ -167,8 +167,10 @@
         <activity
             android:name=".Activity.PuntoVentaSolicitarActivity"
             android:label="@string/Punto_de_venta" />
-        <activity android:name=".Activity.RegistroClienteActivity"
-            android:label="@string/Punto_de_venta"/>
+        <activity
+            android:name=".Activity.RegistroClienteActivity"
+            android:label="@string/Punto_de_venta" />
+        <activity android:name=".Activity.BuscarClienteActivity"></activity>
     </application>
 
 </manifest>

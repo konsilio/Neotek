@@ -73,12 +73,12 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
 
     @Override
     public void Buscar() {
-        /*Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
+        Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                 BuscarClienteActivity.class);
         intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
         intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
         intent.putExtra("EsVentaPipa",EsVentaPipa);
-        startActivity(intent);*/
+        startActivity(intent);
     }
 
     @Override
