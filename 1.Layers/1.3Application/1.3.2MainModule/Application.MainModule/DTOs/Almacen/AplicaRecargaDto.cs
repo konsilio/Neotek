@@ -8,20 +8,29 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.DTOs.Almacen
 {
-    public class AplicaDescargaDto
+    public class AplicaRecargaDto
     {
-        public AlmacenGasDescarga Descarga { get; set; }
-        public AlmacenGasDescarga DescargaSinNavigationProperties { get; set; }
-        public List<AlmacenGasDescargaFoto> DescargaFotos { get; set; }
+        public AlmacenGasRecarga RecargaLecturaInicial { get; set; }
+        public List<AlmacenGasRecargaCilindro> RecargaLecturaInicialCilindros { get; set; }
+        public List<AlmacenGasRecargaFoto> RecargaLecturaInicialFotos { get; set; }
+        public AlmacenGasRecarga RecargaLecturaInicialSinNavProp { get; set; }
 
 
-        public OrdenCompra OCExpedidor { get; set; }
-        public OrdenCompra OCPorteador { get; set; }
+        public AlmacenGasRecarga RecargaLecturaFinal { get; set; }
+        public List<AlmacenGasRecargaCilindro> RecargaLecturaFinalCilindros { get; set; }
+        public List<AlmacenGasRecargaFoto> RecargaLecturaFinalFotos { get; set; }
+        public AlmacenGasRecarga RecargaLecturaFinalSinNavProp { get; set; }
+        
 
 
 
         public AlmacenGas AlmacenGas { get; set; }
 
+
+        public UnidadAlmacenGas unidadSalida { get; set; }
+        public identidadUnidadAlmacenGas identidadUS { get; set; }
+        public decimal P5000US { get; set; }
+        public decimal PorcentajeUS { get; set; }
 
 
         public UnidadAlmacenGas unidadEntrada { get; set; }
@@ -39,12 +48,5 @@ namespace Application.MainModule.DTOs.Almacen
         public decimal RemanenteLt { get; set; }
         public decimal CantidadCONRemanenteKg { get; set; }
         public decimal CantidadCONRemanenteLt { get; set; }
-
-
-
-        public UnidadAlmacenGas unidadSalida { get; set; }
-        public identidadUnidadAlmacenGas identidadUS { get; set; }        
-        public decimal P5000US { get; set; }
-        public decimal PorcentajeUS { get; set; }
     }
 }

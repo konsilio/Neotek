@@ -34,15 +34,22 @@ namespace Utilities.MainModule
             if (physicalPath == null)
                 return null;
 
-            if (!physicalPath.StartsWith(HttpContext.Current.Request.PhysicalApplicationPath))
+            string basePartUrl = GetUrlBasePath();
+            string lastPartUrl = string.Empty;
+            string appPath = string.Empty;
+
+            if (HttpContext.Current != null)
+                appPath = HttpContext.Current.Request.PhysicalApplicationPath;
+            else
+                appPath = HttpRuntime.AppDomainAppPath;
+
+            if (!physicalPath.StartsWith(appPath))
             {
                 throw new InvalidOperationException("La dirección capturada no es parte de la ruta de la aplicación");
             }
-
-            string basePartUrl = GetUrlBasePath();
-            string lastPartUrl = physicalPath.Replace(HttpContext.Current.Request.PhysicalApplicationPath, string.Empty)
+            lastPartUrl = physicalPath.Replace(appPath, string.Empty)
                                              .Replace("\\", "/");
-            
+
             Uri newUri = new Uri(basePartUrl + lastPartUrl);
 
             return newUri.AbsoluteUri;

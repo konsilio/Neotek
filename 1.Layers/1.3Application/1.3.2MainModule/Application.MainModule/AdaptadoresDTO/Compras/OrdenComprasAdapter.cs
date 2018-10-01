@@ -115,7 +115,22 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Ieps = oc.Ieps,
                 Total = oc.Total,
                 EsTransporteGas = oc.EsTransporteGas,
-                FechaAutorizacion = oc.FechaAutorizacion,                              
+                FechaAutorizacion = oc.FechaAutorizacion,                
+                Casetas = oc.Casetas,
+                FactorCompraLitrosAKilos = oc.FactorCompraLitrosAKilos,
+                FactorConvTransporte = oc.FactorConvTransporte,
+                FactorGalonALitros = oc.FactorGalonALitros,
+                FechaResgistroFactura = oc.FechaResgistroFactura,
+                FolioFactura = oc.FolioFactura,
+                FolioFiscalUUID = oc.FolioFiscalUUID,
+                FechaComplemento = oc.FechaComplemento,
+                ImporteEnLitros = oc.ImporteEnLitros,
+                MontBelvieuDlls = oc.MontBelvieuDlls, 
+                PrecioPorGalon = oc.PrecioPorGalon,
+                PrecioTransporte = oc.PrecioTransporte,
+                PVPM = oc.PVPM,
+                TarifaServicioPorGalonDlls = oc.TarifaServicioPorGalonDlls,
+                TipoDeCambioDOF = oc.TipoDeCambioDOF,
             };            
         }
 

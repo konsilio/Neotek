@@ -8,7 +8,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Timers;
 using System.Configuration;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios;
 
 namespace DS.MainModule
 {
@@ -22,17 +22,20 @@ namespace DS.MainModule
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //this.Timer();
+            this.Timer();
         }
 
         public void EjecutaServicios(object source, ElapsedEventArgs e)
         {
-            AlmacenGasServicio.ProcesarInventario();
+            //QUITAR ESTA LINEA EN PRODUCCION/////////////
+            myTimer.Stop();
+            //QUITAR ESTA LINEA EN PRODUCCION/////////////
+            ActualizarSistemaServicio.Actualizar();
         }
 
         private void Timer()
         {
-            Timer myTimer = new Timer()
+            myTimer = new Timer()
             {
                 // Los milisegundos estan declarados en el web.config 
                 Interval = Convert.ToDouble(ConfigurationManager.AppSettings["GlobalTimerTime"]),
@@ -42,5 +45,7 @@ namespace DS.MainModule
 
             myTimer.Elapsed += new ElapsedEventHandler(EjecutaServicios);
         }
+
+        private Timer myTimer;
     }
 }

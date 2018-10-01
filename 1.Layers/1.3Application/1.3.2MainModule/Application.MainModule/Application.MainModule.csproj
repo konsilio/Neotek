@@ -42,6 +42,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -89,6 +90,7 @@
     <Compile Include="DTOs\Catalogo\EmpresaModificaConfig.cs" />
     <Compile Include="DTOs\Catalogo\EstadosRepDTO.cs" />
     <Compile Include="DTOs\Almacen\AplicaDescargaDto.cs" />
+    <Compile Include="DTOs\Almacen\AplicaRecargaDto.cs" />
     <Compile Include="DTOs\Catalogo\EstacionCarburacionDTO.cs" />
     <Compile Include="DTOs\Catalogo\FormaPagoDTO.cs" />
     <Compile Include="DTOs\Catalogo\OperadorChoferDTO.cs" />
@@ -241,6 +243,7 @@
     <Compile Include="Servicios\AccesoADatos\TipoPerDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\TipoProveedorDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
+    <Compile Include="Servicios\ActualizarSistemaServicio.cs" />
     <Compile Include="Servicios\Almacen\CalcularGasServicio.cs" />
     <Compile Include="Servicios\Almacen\ProductoAlmacenServicio.cs" />
     <Compile Include="Servicios\Almacen\AlmacenGasServicio.cs" />
@@ -269,6 +272,7 @@
     <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
     <Compile Include="Servicios\FuncionIngresoGastoServicio.cs" />
+    <Compile Include="Servicios\ImagenServicio.cs" />
     <Compile Include="Servicios\Mobile\GasServicio.cs" />
     <Compile Include="Servicios\Mobile\LecturaGasServicio.cs" />
     <Compile Include="Servicios\Mobile\RecargaGasServicio.cs" />
