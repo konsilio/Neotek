@@ -181,5 +181,24 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoTipoPersona(), Request);
         }
+        /// <summary>
+        /// Permite realizar el registro del cliente, realizara una busqueda para verificar 
+        /// si este ya este registrado, en caso de que si tomara el id y lo steara en el 
+        /// DTO para luego realizar un update, en caso de que no encuentre el id realizara 
+        /// un registro normal , retornando un obtjeto RespuestaDTO
+        /// </summary>
+        /// <param name="cliente">Objeto DTO con los datos del cliente</param>
+        /// <returns>Respuesta del registro</returns>
+        [Route("cliente/registrar")]
+        public HttpResponseMessage PostRegistrarCliente(ClienteDTO cliente)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.registrarCliente(cliente), Request);
+        }
+
+        [Route("cliente/lista-clientes/{criterio}")]
+        public HttpResponseMessage GetListaClientes(String criterio)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.BuscadorClientes(criterio), Request);
+        }
     }
 }
