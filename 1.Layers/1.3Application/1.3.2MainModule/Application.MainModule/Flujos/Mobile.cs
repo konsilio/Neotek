@@ -148,5 +148,19 @@ namespace Application.MainModule.Flujos
         {
             return ClientesServicio.ConsultarTipoPersonas();
         }
+
+        public RespuestaDto registrarCliente(ClienteDTO cliente)
+        {
+            var resp = ClientesServicio.EvaluarCliente(cliente);
+            if (resp.IdCliente!=0)
+                return ClientesServicio.Modificar(cliente);
+            else
+                return ClientesServicio.Registar(cliente);
+        }
+
+        public List<ClienteDTO> BuscadorClientes(string criterio)
+        {
+            return ClientesServicio.BuscadorClientes(criterio);
+        }
     }
 }

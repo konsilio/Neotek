@@ -72,6 +72,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\TipoProveedorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\UnidadAlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\RegimenAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\ClienteAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\TipoPersonaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\TipoRegimenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Seguridad\RolAdapter.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="DTOs\Compras\RequisicionOCDTO.cs" />
     <Compile Include="DTOs\Catalogo\EquipoTransporteDTO.cs" />
     <Compile Include="DTOs\Mobile\CilindroDto.cs" />
+    <Compile Include="DTOs\Mobile\ClienteDTO.cs" />
     <Compile Include="DTOs\Mobile\DatosTipoPersonaDto .cs" />
     <Compile Include="DTOs\Mobile\DatosTomaLecturaDto.cs" />
     <Compile Include="DTOs\Mobile\LecturaAlmacenDto.cs" />
