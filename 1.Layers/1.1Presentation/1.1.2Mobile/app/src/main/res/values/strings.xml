@@ -60,7 +60,7 @@
     <string name="fecha_embarque">Fecha de embarque</string>
     <string name="seleccionar_fecha">Seleccione fecha...</string>
     <string name="abr_cantidad">Cant.</string>
-    <string name="cantidad">Cantidad</string>
+    <string name="cantidad_venta">Cantidad</string>
     <string name="abr_unidad_medida">UM</string>
     <string name="precio">Precio</string>
     <string name="importe">Importe</string>
@@ -205,6 +205,21 @@
     <string name="apellido_2">Apellido 2</string>
     <string name="celular">Celular</string>
     <string name="telef_no_fijo">Telefóno fijo</string>
+    <string name="razon_social">Razón Social</string>
+    <string name="cel">CEL</string>
+    <string name="nom">NOM</string>
+    <string name="rfc">RFC</string>
+    <string name="factura">FACTURA</string>
+    <string name="gas_lp">GAS LP</string>
+    <string name="cilindro_con_gas_btn">CILINDRO CON GAS</string>
+    <string name="cilindro">CILINDRO</string>
+    <string name="otros">Otros</string>
+    <string name="pagar">Pagar</string>
+    <string name="venta_de">Venta de:</string>
+    <string name="existencia">Existencia:</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="opciones">Opciones</string>
+    <string name="agregar">Agregar</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
     <string-array name="header_tabla_anticipo">
         <item># Tiket</item>
@@ -217,5 +232,12 @@
     </string-array>
     <string-array name="Regimen_fiscal">
         <item>Sin obligaciones fiscales</item>
+    </string-array>
+    <string-array name="condepto_venta">
+        <item>Concepto</item>
+        <item>Cant.</item>
+        <item>P.Uni</item>
+        <item>Desc</item>
+        <item>Subt.</item>
     </string-array>
 </resources>

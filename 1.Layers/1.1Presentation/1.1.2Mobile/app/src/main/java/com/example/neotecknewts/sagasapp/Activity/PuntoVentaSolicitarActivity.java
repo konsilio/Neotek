@@ -3,12 +3,13 @@ package com.example.neotecknewts.sagasapp.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 public class PuntoVentaSolicitarActivity extends AppCompatActivity implements PuntoVentaSolicitarView {
@@ -19,6 +20,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
             BtnPuntoVentaSolicitarActivityBuscarCliente;
     EditText ETPuntoVentaSolicitarActivityBuscador;
     ProgressDialog progressDialog;
+    VentaDTO ventaDTO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,20 +47,22 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         }else if(EsVentaPipa){
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.pipa));
         }
-
+        ventaDTO = new VentaDTO();
         BtnPuntoVentaSolicitarActivitySeguirSinNumero.setOnClickListener(v -> SeguirSinNumero());
         BtnPuntoVentaSolicitarActivityRegistrarCliente.setOnClickListener(v -> RegistrarCliente());
-        ETPuntoVentaSolicitarActivityBuscador.setOnClickListener(v-> Buscar());
+        BtnPuntoVentaSolicitarActivityBuscarCliente.setOnClickListener(v-> Buscar());
     }
 
     @Override
     public void SeguirSinNumero() {
-        /*Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
+        Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                 VentaGasActivity.class);
+        ventaDTO.setIdCliente(1);
         intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
         intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
         intent.putExtra("EsVentaPipa",EsVentaPipa);
-        startActivity(intent);*/
+        intent.putExtra("ventaDTO",ventaDTO);
+        startActivity(intent);
     }
 
     @Override
@@ -68,17 +72,22 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
         intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
         intent.putExtra("EsVentaPipa",EsVentaPipa);
+        intent.putExtra("ventaDTO",ventaDTO);
         startActivity(intent);
     }
 
     @Override
     public void Buscar() {
-        /*Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
-                BuscarClienteActivity.class);
-        intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
-        intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
-        intent.putExtra("EsVentaPipa",EsVentaPipa);
-        startActivity(intent);*/
+        if(ETPuntoVentaSolicitarActivityBuscador.getText().length()>0) {
+            Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
+                    BuscarClienteActivity.class);
+            intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa", EsVentaPipa);
+            intent.putExtra("criterio", ETPuntoVentaSolicitarActivityBuscador.getText().toString());
+            intent.putExtra("ventaDTO",ventaDTO);
+            startActivity(intent);
+        }
     }
 
     @Override
