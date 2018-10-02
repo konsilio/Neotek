@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Respuesta;
+﻿using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.UnitOfWork;
 using Exceptions.MainModule;
 using Exceptions.MainModule.Validaciones;
@@ -189,6 +190,54 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public void Actualizar(AplicaRecargaDto aplicaRecarga)
+        {            
+            using (uow)
+            {
+                try
+                {
+                    if (aplicaRecarga.unidadEntrada != null)
+                        uow.Repository<UnidadAlmacenGas>().Update(aplicaRecarga.unidadEntrada);
+
+                    if (aplicaRecarga.unidadSalida != null)
+                        uow.Repository<UnidadAlmacenGas>().Update(aplicaRecarga.unidadSalida);
+                                        
+                    if (aplicaRecarga.RecargaLecturaInicialSinNavProp != null)
+                        uow.Repository<AlmacenGasRecarga>().Update(aplicaRecarga.RecargaLecturaInicialSinNavProp);
+
+                    if (aplicaRecarga.RecargaLecturaInicialFotos != null && aplicaRecarga.RecargaLecturaInicialFotos.Count > 0)
+                        aplicaRecarga.RecargaLecturaInicialFotos.ToList().ForEach(x =>
+                            uow.Repository<AlmacenGasRecargaFoto>().Update(x)
+                        );
+
+                    if (aplicaRecarga.RecargaLecturaFinalSinNavProp != null)
+                        uow.Repository<AlmacenGasRecarga>().Update(aplicaRecarga.RecargaLecturaFinalSinNavProp);
+
+                    if (aplicaRecarga.RecargaLecturaFinalFotos != null && aplicaRecarga.RecargaLecturaFinalFotos.Count > 0)
+                        aplicaRecarga.RecargaLecturaFinalFotos.ToList().ForEach(x =>
+                            uow.Repository<AlmacenGasRecargaFoto>().Update(x)
+                        );
+
+                    // Agregar al modelo de dominio AlmacenGasMovimiento
+                    //if (aplicaRecarga.AGMovimiento != null)
+                    //    uow.Repository<AlmacenGasMovimiento>().Insert(aplicaRecarga.MovInventario);
+
+                    uow.SaveChanges();
+                    //_respuesta.Id = aplicaRecarga.IdCAlmacenGas;
+                    //_respuesta.Exito = true;
+                    //_respuesta.EsActulizacion = true;
+                    //_respuesta.ModeloValido = true;
+                    //_respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    //_respuesta.Exito = false;
+                    //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
+                    //_respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+        }
+        
         public List<UnidadAlmacenGas> BuscarTodosEstacionCarburacion(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -229,9 +278,17 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<UnidadAlmacenGasCilindro>().GetSingle(x => x.IdCilindro.Equals(idCilindro));
         }
+        public CamionetaCilindro BuscarCilindroEnCamioneta(int idCilindro)
+        {
+            return uow.Repository<CamionetaCilindro>().GetSingle(x => x.IdCilindro.Equals(idCilindro));
+        }
         public List<UnidadAlmacenGasCilindro> BuscarTodosCilindros(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGasCilindro>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+        }
+        public List<CamionetaCilindro> BuscarTodosCilindros(int idCamioneta)
+        {
+            return uow.Repository<CamionetaCilindro>().Get(x => x.IdCamioneta.Equals(idCamioneta)).ToList();
         }
         public List<AlmacenGas> BuscarTodos(short idEmpresa)
         {

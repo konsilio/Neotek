@@ -52,9 +52,9 @@ namespace Application.MainModule.Servicios.Almacen
             return ObtenerDiferenciaKilogramos(cantidadMayor, cantidadMenor);
         }
 
-        public static decimal ObtenerPorcentajeDesdeLitros(decimal capacidadTanqueLt, decimal litrosRecargados)
+        public static decimal ObtenerPorcentajeDesdeLitros(decimal capacidadTanqueLt, decimal litros)
         {
-            return (litrosRecargados / capacidadTanqueLt) * 100;
+            return (litros / capacidadTanqueLt) * 100;
         }
 
         public static decimal SumarKilogramos(decimal cantidadActualKg, decimal ingresoKg)
@@ -86,6 +86,11 @@ namespace Application.MainModule.Servicios.Almacen
         {
             //Key: Capacidad cilindro Value: Cantidad de cilindros con esa capacidad
             return cilindros.Select(x => x.Key * x.Value).Sum();
+        }
+
+        public static decimal SumarKilogramos(decimal cantidadActualKg, decimal capacidadKg, decimal cantidad)
+        {
+            return cantidadActualKg + (capacidadKg * cantidad);
         }
     }
 }

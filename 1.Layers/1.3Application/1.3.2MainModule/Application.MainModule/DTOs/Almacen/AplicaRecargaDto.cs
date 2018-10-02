@@ -19,6 +19,7 @@ namespace Application.MainModule.DTOs.Almacen
         public AlmacenGasRecarga RecargaLecturaInicialSinNavProp { get; set; }
 
 
+        public List<AlmacenGasRecarga> RecargasFinales { get; set; }
         public AlmacenGasRecarga RecargaLecturaFinal { get; set; }
         public List<AlmacenGasRecargaCilindro> RecargaLecturaFinalCilindros { get; set; }
         public List<AlmacenGasRecargaFoto> RecargaLecturaFinalFotos { get; set; }
@@ -37,6 +38,10 @@ namespace Application.MainModule.DTOs.Almacen
 
 
         public UnidadAlmacenGas unidadEntrada { get; set; }
+        public List<CamionetaCilindro> CilindrosEnCamionetaInsertar { get; set; }
+        public List<CamionetaCilindro> CilindrosEnCamionetaModificar { get; set; }
+        public List<CamionetaCilindro> CilindrosEnCamionetaEliminar { get; set; }
+        
         public identidadUnidadAlmacenGas identidadUE { get; set; }
         public decimal P5000UE { get; set; }
         public decimal PorcentajeUE { get; set; }

@@ -9,6 +9,22 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
 {
     public class AlmacenGasAdapter
     {
+        public static AlmacenGas FromEntity(AlmacenGas almacenTotal)
+        {
+            return new AlmacenGas
+            {
+                IdAlmacenGas = almacenTotal.IdAlmacenGas,
+                IdEmpresa = almacenTotal.IdEmpresa,
+                CapacidadTotalLt = almacenTotal.CapacidadTotalLt,
+                CapacidadTotalKg = almacenTotal.CapacidadTotalKg,
+                CantidadActualLt = almacenTotal.CantidadActualLt,
+                CantidadActualKg = almacenTotal.CantidadActualKg,
+                PorcentajeActual = almacenTotal.PorcentajeActual,
+                Activo = almacenTotal.Activo,
+                FechaRegistro = almacenTotal.FechaRegistro,
+            };
+        }
+
         public static UnidadAlmacenGas FromEntity(UnidadAlmacenGas unidad)
         {
             return new UnidadAlmacenGas()
@@ -33,6 +49,28 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 Activo = unidad.Activo,
                 FechaRegistro = unidad.FechaRegistro,
                 PorcentajeCalibracionPlaneada = unidad.PorcentajeCalibracionPlaneada,
+            };
+        }
+
+        public static CamionetaCilindro FromEntity(CamionetaCilindro cilindro)
+        {
+            return new CamionetaCilindro
+            {
+                IdEmpresa = cilindro.IdEmpresa,
+                IdCamioneta = cilindro.IdCamioneta,
+                IdCilindro = cilindro.IdCilindro,
+                Cantidad = cilindro.Cantidad,
+            };
+        }
+
+        public static CamionetaCilindro FromEntity(AlmacenGasRecargaCilindro cilindro, UnidadAlmacenGas unidad, UnidadAlmacenGasCilindro cilindroUA)
+        {
+            return new CamionetaCilindro
+            {
+                IdEmpresa = cilindroUA.IdEmpresa,
+                IdCamioneta = unidad.IdCamioneta.Value,
+                IdCilindro = cilindroUA.IdCilindro,
+                Cantidad = cilindro.Cantidad,
             };
         }
 
