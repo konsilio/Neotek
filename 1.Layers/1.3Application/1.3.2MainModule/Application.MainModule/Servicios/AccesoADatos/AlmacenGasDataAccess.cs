@@ -44,6 +44,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        public RespuestaDto Insertar(UnidadAlmacenGas _alm)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<UnidadAlmacenGas>().Insert(_alm);
+                    uow.SaveChanges();
+                    _respuesta.Id = _alm.IdCAlmacenGas;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "de la unidad de almacén");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
         public AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, int idOrden)
         {
             return uow.Repository<AlmacenGasTomaLectura>().GetSingle(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
@@ -110,7 +135,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             catch (Exception ex)
             {
                 _respuesta.Exito = false;
-                _respuesta.Mensaje = string.Format(Error.C0002, "de la recarga del Almacen");
+                _respuesta.Mensaje = string.Format(Error.C0002, "de la recarga del Almacén");
                 _respuesta.MensajesError = CatchInnerException.Obtener(ex);
             }
             return _respuesta;
@@ -123,7 +148,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.AlmacenGas>().Update(_alm);
+                    uow.Repository<AlmacenGas>().Update(_alm);
                     uow.SaveChanges();
                     _respuesta.Id = _alm.IdAlmacenGas;
                     _respuesta.Exito = true;
@@ -134,7 +159,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje = string.Format(Error.C0003, "del Almacen"); ;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del Almacén"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto Actualizar(UnidadAlmacenGas _alm)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<UnidadAlmacenGas>().Update(_alm);
+                    uow.SaveChanges();
+                    _respuesta.Id = _alm.IdCAlmacenGas;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
@@ -146,6 +195,26 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.IdEstacionCarburacion != null
                                                             && x.Activo).ToList();
         }
+
+        public UnidadAlmacenGas ObtenerUnidadAlmacenGasAlterno(short idEmpresa)
+        {
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                  && x.Activo 
+                                                                  && x.EsAlterno).FirstOrDefault();
+        }
+        public List<UnidadAlmacenGas> ObtenerUnidadesAlmacenGasAlterno(short idEmpresa)
+        {
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                  && x.Activo
+                                                                  && x.EsAlterno).ToList();
+        }
+        public List<UnidadAlmacenGas> ObtenerUnidadesAlmacenGasAlternoNoActivos(short idEmpresa)
+        {
+            return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                  && !x.Activo
+                                                                  && x.EsAlterno).ToList();
+        }
+
         public List<UnidadAlmacenGas> BuscarTodosPipas(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -206,6 +275,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<AlmacenGas>().GetSingle(x => x.IdAlmacenGas.Equals(idAlmacenGas)
                                                          && x.Activo);
         }
+        public AlmacenGas BuscarPorEmpresa(short idEmpresa)
+        {
+            var alms = uow.Repository<AlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                         && x.Activo).ToList();
+
+            return alms.FirstOrDefault();
+        }
         public AlmacenGas ProductoAlmacenGas(short idEmpresa)
         {
             return uow.Repository<AlmacenGas>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa));
@@ -219,6 +295,35 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasRecarga>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
         }
+
+        public List<AlmacenGasDescarga> BuscarTodasDescargasNoProcesadas()
+        {
+            return uow.Repository<AlmacenGasDescarga>().Get(x => !x.DatosProcesados.Value).ToList();
+        }
+        public List<AlmacenGasRecarga> BuscarTodasRecargasNoProcesadas()
+        {
+            return uow.Repository<AlmacenGasRecarga>().Get(x => !x.DatosProcesados).ToList();
+        }
+        public List<AlmacenGasRecarga> BuscarTodasRecargasNoProcesadas(byte idTipoEvento)
+        {
+            return uow.Repository<AlmacenGasRecarga>().Get(x => !x.DatosProcesados && x.IdTipoEvento.Equals(idTipoEvento)).ToList();
+        }
+        public List<AlmacenGasTomaLectura> BuscarTodasLecturasNoProcesadas()
+        {
+            return uow.Repository<AlmacenGasTomaLectura>().Get(x => !x.DatosProcesados).ToList();
+        }
+        public List<AlmacenGasAutoConsumo> BuscarTodasAutoConsumosNoProcesadas()
+        {
+            return uow.Repository<AlmacenGasAutoConsumo>().Get(x => !x.DatosProcesados).ToList();
+        }
+        public List<AlmacenGasTraspaso> BuscarTodasTraspasosNoProcesadas()
+        {
+            return uow.Repository<AlmacenGasTraspaso>().Get(x => !x.DatosProcesados).ToList();
+        }
+        public List<AlmacenGasCalibracion> BuscarTodasCalibracionesNoProcesadas()
+        {
+            return uow.Repository<AlmacenGasCalibracion>().Get(x => !x.DatosProcesados).ToList();
+        }
     }
 }
-      
+      

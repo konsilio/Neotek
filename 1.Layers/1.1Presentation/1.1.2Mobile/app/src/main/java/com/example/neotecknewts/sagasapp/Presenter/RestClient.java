@@ -1,8 +1,14 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
+import android.content.Context;
+
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosEmpresaConfiguracionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosTipoPersonaDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosTraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
@@ -267,5 +273,31 @@ public interface RestClient {
                                             @Path(value = "esFinal") boolean esFinal,
                                             @Header("Authorization") String token,
                                             @Header("Content-type") String contentType
+    );
+    @GET(Constantes.GET_CATALOGO_CALIBRACION)
+    Call<DatosCalibracionDTO> getDatosCalibracion(@Path(value = "esEstacion") boolean esEstacion,
+                                                  @Path(value = "esPipa") boolean esPipa,
+                                                  @Path(value = "esFinal") boolean esFinal,
+                                                  @Header("Authorization") String token,
+                                                  @Header("Content-type") String contentType
+    );
+    @POST(Constantes.POST_CALIBRACION)
+    Call<RespuestaTraspasoDTO> postCalibracion(@Body CalibracionDTO calibracionDTO,
+                                               @Path(value = "esEstacion") boolean esEstacion,
+                                               @Path(value = "esPipa") boolean esPipa,
+                                               @Path(value= "esFinal") boolean esFinal,
+                                               @Header("Authorization") String token,
+                                               @Header("Content-type") String contentType
+    );
+
+    @GET(Constantes.GET_CONFIGURACION_EMPRESA)
+    Call<DatosEmpresaConfiguracionDTO> getDatosConfiguracionEmpresa(
+            @Header("Authorization") String token,
+            @Header("Content-type") String contentType
+    );
+
+    @GET(Constantes.GET_CATALOGO_RAZON)
+    Call<DatosTipoPersonaDTO> getDatosTipoRason(@Header("Authorization") String token,
+                                                @Header("Content-type") String contentType
     );
 }

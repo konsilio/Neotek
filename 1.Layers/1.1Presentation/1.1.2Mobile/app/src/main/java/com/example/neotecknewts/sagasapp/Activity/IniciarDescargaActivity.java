@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -219,14 +220,24 @@ public class IniciarDescargaActivity extends AppCompatActivity implements Inicia
     @Override
     public void onSuccessGetOrdenesCompra(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO) {
         Log.w("VIEW", respuestaOrdenesCompraDTO.getOrdenesCompra().size()+"");
-        this.ordenesCompraDTO = respuestaOrdenesCompraDTO.getOrdenesCompra();
-        String[] ordenes = new String[ordenesCompraDTO.size()];
-        for (int i =0; i<ordenes.length; i++){
-            //se asignan al arreglo que se pone en el spinner los nombres de las ordenes de compra
-            ordenes[i]=ordenesCompraDTO.get(i).getNumOrdenCompra();
-        }
+        if(respuestaOrdenesCompraDTO.isExito()) {
+            this.ordenesCompraDTO = respuestaOrdenesCompraDTO.getOrdenesCompra();
+            String[] ordenes = new String[ordenesCompraDTO.size()];
+            for (int i = 0; i < ordenes.length; i++) {
+                //se asignan al arreglo que se pone en el spinner los nombres de las ordenes de compra
+                ordenes[i] = ordenesCompraDTO.get(i).getNumOrdenCompra();
+            }
 
-        spinnerOrdenCompra.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
+            spinnerOrdenCompra.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.error_titulo);
+            builder.setMessage(respuestaOrdenesCompraDTO.getMensaje());
+            builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
+                dialog.dismiss();
+            }));
+            builder.create().show();
+        }
         //se hace el lamado al web service para obtener medidores
         presenter.getMedidores(session.getTokenWithBearer());
     }

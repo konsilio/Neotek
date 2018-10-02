@@ -90,5 +90,14 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 Medidores = TipoMedidorAdapter.ToDto(meds),
             };
         }
+
+        internal static DatosTomaLecturaDto ToDtoReporte(List<UnidadAlmacenGas> alms)
+        {
+            return new DatosTomaLecturaDto()
+            {
+                Almacenes = AlmacenAdapter.ToDto(alms)
+
+            };
+        }
     }
 }

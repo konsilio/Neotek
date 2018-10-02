@@ -103,6 +103,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
                             if (desDto.DescargaSinNavigationProperties != null)
                                 uow.Repository<AlmacenGasDescarga>().Update(desDto.DescargaSinNavigationProperties);
+
+                            if (desDto.DescargaFotos != null && desDto.DescargaFotos.Count > 0)
+                                desDto.DescargaFotos.ToList().ForEach(x =>
+                                    uow.Repository<AlmacenGasDescargaFoto>().Update(x)
+                                );
                         }
                         uow.SaveChanges();
                         //_respuesta.Id = _almDes.IdAlmacenEntradaGasDescarga;
@@ -139,6 +144,18 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public AlmacenGasDescarga BuscarClaveOperacion(string claveOperacion)
         {
             return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
+        }
+
+        public List<AlmacenGasDescargaFoto> BuscarImagenes(int idAlmacenEntradaGasDescarga)
+        {
+            return uow.Repository<AlmacenGasDescargaFoto>().Get(x => x.IdAlmacenEntradaGasDescarga.Equals(idAlmacenEntradaGasDescarga)).ToList();
+        }
+
+        public List<AlmacenGasDescargaFoto> BuscarImagenesSinVigencia(DateTime fechaVigencia)
+        {
+            //Agregar FechaRegistro en las imagenes
+            //return uow.Repository<AlmacenGasDescargaFoto>().Get(x => x.FechaRegistro < fechaVigencia).ToList();
+            return new List<AlmacenGasDescargaFoto>();
         }
     }
 }

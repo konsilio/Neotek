@@ -42,6 +42,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -72,6 +73,8 @@
     <Compile Include="AdaptadoresDTO\Catalogo\TipoProveedorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\UnidadAlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\RegimenAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\TipoPersonaAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\TipoRegimenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="Servicios\OrdenCompraPagoServicio.cs" />
     <Compile Include="AdaptadoresDTO\Seguridad\RolAdapter.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="DTOs\Catalogo\EmpresaModificaConfig.cs" />
     <Compile Include="DTOs\Catalogo\EstadosRepDTO.cs" />
     <Compile Include="DTOs\Almacen\AplicaDescargaDto.cs" />
+    <Compile Include="DTOs\Almacen\AplicaRecargaDto.cs" />
     <Compile Include="DTOs\Catalogo\EstacionCarburacionDTO.cs" />
     <Compile Include="DTOs\Catalogo\FormaPagoDTO.cs" />
     <Compile Include="DTOs\Catalogo\OperadorChoferDTO.cs" />
@@ -156,6 +160,7 @@
     <Compile Include="DTOs\Compras\RequisicionOCDTO.cs" />
     <Compile Include="DTOs\Catalogo\EquipoTransporteDTO.cs" />
     <Compile Include="DTOs\Mobile\CilindroDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosTipoPersonaDto .cs" />
     <Compile Include="DTOs\Mobile\DatosTomaLecturaDto.cs" />
     <Compile Include="DTOs\Mobile\LecturaAlmacenDto.cs" />
     <Compile Include="DTOs\Mobile\LecturaCamionetaDTO.cs" />
@@ -164,6 +169,9 @@
     <Compile Include="DTOs\Mobile\RecargaDTO.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraPagoDataAccess.cs" />
     <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
+    <Compile Include="DTOs\Mobile\TipoPersonaDto.cs" />
+    <Compile Include="DTOs\Mobile\TipoRegimenFiscalDto.cs" />
+    <Compile Include="Servicios\Mobile\ClientesServicio.cs" />
     <Compile Include="DTOs\NotificacionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEstatusDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />
@@ -239,6 +247,7 @@
     <Compile Include="Servicios\AccesoADatos\TipoPerDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\TipoProveedorDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\UsuarioDataAccess.cs" />
+    <Compile Include="Servicios\ActualizarSistemaServicio.cs" />
     <Compile Include="Servicios\Almacen\CalcularGasServicio.cs" />
     <Compile Include="Servicios\Almacen\ProductoAlmacenServicio.cs" />
     <Compile Include="Servicios\Almacen\AlmacenGasServicio.cs" />
@@ -267,6 +276,7 @@
     <Compile Include="Servicios\Compras\OrdenCompraServicio.cs" />
     <Compile Include="Servicios\FolioServicio.cs" />
     <Compile Include="Servicios\FuncionIngresoGastoServicio.cs" />
+    <Compile Include="Servicios\ImagenServicio.cs" />
     <Compile Include="Servicios\Mobile\GasServicio.cs" />
     <Compile Include="Servicios\Mobile\LecturaGasServicio.cs" />
     <Compile Include="Servicios\Mobile\RecargaGasServicio.cs" />

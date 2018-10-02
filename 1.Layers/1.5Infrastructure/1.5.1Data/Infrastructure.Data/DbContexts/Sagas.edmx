@@ -7777,8 +7777,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="ClaveOperacion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="DatosProcesados" Type="Boolean" Nullable="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="CAlmacenGas" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CAlmacenGas" FromRole="AlmacenGasRecarga" ToRole="UnidadAlmacenGas" />
-          <NavigationProperty Name="CAlmacenGas1" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CAlmacenGas1" FromRole="AlmacenGasRecarga" ToRole="UnidadAlmacenGas" />
+          <NavigationProperty Name="UnidadAlmacenSalida" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CAlmacenGas" FromRole="AlmacenGasRecarga" ToRole="UnidadAlmacenGas" />
+          <NavigationProperty Name="UnidadAlmacenEntrada" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CAlmacenGas1" FromRole="AlmacenGasRecarga" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Cilindros" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecargaCilindro_AlmacenGasRecarga" FromRole="AlmacenGasRecarga" ToRole="AlmacenGasRecargaCilindro" />
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecargaFoto_AlmacenGasRecarga" FromRole="AlmacenGasRecarga" ToRole="AlmacenGasRecargaFoto" />
           <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CTipoEvento" FromRole="AlmacenGasRecarga" ToRole="TipoEvento" />
