@@ -289,6 +289,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public AlmacenGasTomaLectura BuscarClaveOperacion(string claveOperacion)
         {
             return uow.Repository<AlmacenGasTomaLectura>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
+        }        
+        public List<AlmacenGasRecargaFoto> BuscarImagenes(int idAlmacenGasRecarga)
+        {
+            return uow.Repository<AlmacenGasRecargaFoto>().Get(x => x.IdAlmacenGasRecarga.Equals(idAlmacenGasRecarga)).ToList();
         }
 
         public AlmacenGasRecarga BuscarRecargaClaveOperacion(string claveOperacion)

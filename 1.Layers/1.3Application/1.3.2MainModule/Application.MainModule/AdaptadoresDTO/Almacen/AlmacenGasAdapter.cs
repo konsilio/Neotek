@@ -91,5 +91,38 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 UrlImagen = img.UrlImagen
             };
         }
+
+        public static AlmacenGasRecarga FromEntity(AlmacenGasRecarga recarga)
+        {
+            return new AlmacenGasRecarga
+            {
+                IdAlmacenGasRecarga = recarga.IdAlmacenGasRecarga,
+                IdCAlmacenGasSalida = recarga.IdCAlmacenGasSalida,
+                IdCAlmacenGasEntrada = recarga.IdCAlmacenGasEntrada,
+                IdTipoMedidorSalida = recarga.IdTipoMedidorSalida,
+                IdTipoMedidorEntrada = recarga.IdTipoMedidorEntrada,
+                IdTipoEvento = recarga.IdTipoEvento,
+                P5000Salida = recarga.P5000Salida,
+                P5000Entrada = recarga.P5000Entrada,
+                PorcentajeSalida = recarga.PorcentajeSalida,
+                ProcentajeEntrada = recarga.ProcentajeEntrada,
+                ClaveOperacion = recarga.ClaveOperacion,
+                DatosProcesados = recarga.DatosProcesados,
+                FechaRegistro = recarga.FechaRegistro,
+            };
+        }
+
+        public static AlmacenGasRecargaFoto FromEntity(AlmacenGasRecargaFoto img)
+        {
+            return new AlmacenGasRecargaFoto
+            {
+                IdAlmacenGasRecarga = img.IdAlmacenGasRecarga,
+                IdOrden = img.IdOrden,
+                IdImagenDe = img.IdImagenDe,
+                CadenaBase64 = img.CadenaBase64,
+                PathImagen = img.PathImagen,
+                UrlImagen = img.UrlImagen
+            };
+        }
     }
 }
