@@ -121,7 +121,7 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarTomaDeLecturaCamioneta(lfcdto), Request);
         }
         /// <summary>
-        /// Permite obtener el catalogo de eestaciones filtrando por el tipo 
+        /// Permite obtener el catalogo de estaciones filtrando por el tipo 
         /// </summary>
         /// <param name="EsEstacion">Es una estacion</param>
         /// <param name="EsAlmacen">Es un almacen</param>
@@ -170,6 +170,11 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoUnidades(), Request);
         }
 
+        [Route("reportes/reporte-dia/{fecha}/{idCAlmacenGas}")]
+        public HttpResponseMessage GetReporteDia(DateTime fecha, short idCAlmacenGas)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.ReporteDia(fecha, idCAlmacenGas),Request);
+        }
         [Route("catalogos/anticipos/{esAnticipo}/{esCorteCaja}")]
         public HttpResponseMessage GetEstacionesDeposito(bool esAnticipo,bool esCorteCaja)
         {

@@ -138,6 +138,13 @@ namespace Application.MainModule.Servicios.Almacen
             return EstacionCarburacionServicio.ObtenerNombre(uAG);
         }
 
+        public static object ReporteDia(DateTime fecha, short idCAlmacenGas)
+        {
+            var almacen = ObtenerAlmacen(idCAlmacenGas);
+            var tipoMedidor = TipoMedidorGasServicio.Obtener(almacen.IdTipoMedidor.Value);
+            return null;
+        }
+
         public static decimal ObtenerCantidadActualAlmacenGeneral(short IdEmpresa, bool EnLitros = true)
         {
             var almacenGas = new AlmacenGasDataAccess().ProductoAlmacenGas(IdEmpresa);
@@ -186,6 +193,10 @@ namespace Application.MainModule.Servicios.Almacen
         {
             var al = new AlmacenGasDataAccess().BuscarTodas(idEmpresa);
             return al.Where(x => (x.IdPipa != null || x.IdCamioneta != null || x.IdEstacionCarburacion != null)).ToList();
+        }
+        public static UnidadAlmacenGas ObtenerAlmacen(short idCAlmacenGas)
+        {
+            return new AlmacenGasDataAccess().BuscarAlmacen(idCAlmacenGas);
         }
 
         public static List<UnidadAlmacenGasCilindro> AdaptarCilindro(decimal cantidad)
