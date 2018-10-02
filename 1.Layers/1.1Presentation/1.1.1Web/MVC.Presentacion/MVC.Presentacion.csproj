@@ -11408,6 +11408,7 @@
     <Content Include="Views\OrdenCompra\OrdenCompraPago.cshtml" />
     <Content Include="Views\OrdenCompra\OrdenCompraComplementoGas.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrdenCompraPagoDTO.cshtml" />
+    <Content Include="Views\Almacen\SalidaMercancia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -76,7 +76,8 @@
     <Compile Include="AdaptadoresDTO\Mobile\TipoPersonaAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\TipoRegimenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
-    <Compile Include="Servicios\OrdenCompraPagoServicio.cs" />
+    <Compile Include="Servicios\Compras\CalcularPagoServicio.cs" />
+    <Compile Include="Servicios\Compras\OrdenCompraPagoServicio.cs" />
     <Compile Include="AdaptadoresDTO\Seguridad\RolAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\TipoPerAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\ComplementoGasAdapter.cs" />

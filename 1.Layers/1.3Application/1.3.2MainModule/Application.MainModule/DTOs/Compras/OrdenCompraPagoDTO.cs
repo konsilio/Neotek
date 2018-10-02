@@ -19,6 +19,8 @@ namespace Application.MainModule.DTOs.Compras
         public string Banco { get; set; }
         public string CuentaBancaria { get; set; }
         public decimal MontoPagado { get; set; }
+        public decimal TotalImporte { get; set; }
+        public decimal SaldoInsoluto { get; set; }
         public string CadenaBase64 { get; set; }
         public string UrlPathCapturaPantalla { get; set; }
         public string PhysicalPathCapturaPantalla { get; set; }

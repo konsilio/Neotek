@@ -43,7 +43,7 @@ namespace MVC.Presentacion.App_Code
                 model.IdSolicitante = datos.IdUsuarioSolicitante;
                 model.Solicitante = datos.UsuarioSolicitante;
                 model.RequeridoEn = datos.RequeridoEn;
-                model.MotivoRequisicion= datos.MotivoRequisicion;
+                model.MotivoRequisicion = datos.MotivoRequisicion;
                 model.IdEmpresa = datos.IdEmpresa;
                 model.Empresa = datos.NombreComercial;
                 model.FechaRequisicion = datos.FechaRequerida;
@@ -159,6 +159,21 @@ namespace MVC.Presentacion.App_Code
             AgenteServicio agente = new AgenteServicio();
             agente.EnviarConfirmarPago(dto, tkn);
             return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO SolicitarPago(OrdenCompraPagoDTO dto, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.EnviarSolicitudPago(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO GenerarPago(OrdenCompraComplementoDTO oc, string tkn)
+        {
+            return SolicitarPago(new OrdenCompraPagoDTO()
+            {
+                IdOrdenCompra = oc.IdOrdenCompra,
+                IdProveedor = oc.IdProveedor,
+                MontoPagado = oc.MontoAPagar
+            }, tkn);
         }
     }
 }

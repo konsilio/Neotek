@@ -124,6 +124,20 @@ namespace MVC.Presentacion.Controllers
 
             return View(complemeto);
         }
+        public ActionResult Solicitar()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var respuesta = OrdenCompraServicio.SolicitarPago(model, tkn);
+            if (respuesta.Exito && respuesta.Mensaje.Equals("OK"))
+                return RedirectToAction("Ordenes");
+            else
+            {
+                TempData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("EntradaMercancia", model);
+            }
+            return RedirectToAction("OrdenCompraComplemento");
+        }
         public ActionResult OrdenCompraPago(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");

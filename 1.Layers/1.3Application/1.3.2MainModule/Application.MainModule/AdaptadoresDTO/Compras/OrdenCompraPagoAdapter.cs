@@ -34,7 +34,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             {
                 IdOrdenCompra = pago.IdOrdenCompra,
                 IdBanco = pago.IdBanco,
-                IdFormaPago = pago.IdFormaPago,
+                IdFormaPago = pago.IdFormaPago ?? 0,
                 CuentaBancaria = pago.CuentaBancaria,
                 FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
                 MontoPagado = pago.MontoPagado,

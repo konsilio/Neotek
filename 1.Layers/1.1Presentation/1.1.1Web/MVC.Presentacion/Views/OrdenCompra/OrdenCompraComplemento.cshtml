@@ -1,4 +1,4 @@
-﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraDTO
+﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraComplementoDTO
 
 <style>
     .calculaPrecio {
@@ -247,7 +247,7 @@
                                 </div>
                                 <div class="row clearfix">
                                     <label>Pagar: </label>
-                                    @*texto pagar*@
+                                    @Html.TextBoxFor(m => m.MontoAPagar) 
                                     <input type="button" value="Solisitar Pago" formaction="OrdenCompraPago" class="btn btn-default btn-round" />
                                 </div>
                             </div>
