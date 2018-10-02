@@ -46,7 +46,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 IdCentroCosto = oc.IdCentroCosto,
                 IdCuentaContable = oc.IdCuentaContable,
                 IdUsuarioGenerador = oc.IdUsuarioGenerador,
-                usuarioSolicitante = string.Concat(oc.UsuarioGenerador.Nombre, " ", oc.UsuarioGenerador.Apellido1),
+                Solicitante = string.Concat(oc.UsuarioGenerador.Nombre, " ", oc.UsuarioGenerador.Apellido1),
                 IdUsuarioAutorizador = oc.IdUsuarioAutorizador,
                 EsActivoVenta = oc.EsActivoVenta,
                 EsGas = oc.EsGas,

@@ -569,6 +569,6 @@ namespace Application.MainModule.Servicios.Almacen
         {
             //decimal porcentajeRecargado = CalcularGasServicio.ObtenerDiferenciaPorcentaje(apReDto.Recarga.ProcentajeEntrada);
             return null;
-        }        
+        }
     }
 }

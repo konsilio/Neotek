@@ -21,7 +21,7 @@ namespace MVC.Presentacion.App_Code
                 FechaRegistroDe = DateTime.Now,
                 FechaRegistroA = DateTime.Now,
                 Requisiciones = RequisicionServicio.BuscarRequisiciones(TokenServicio.ObtenerIdEmpresa(tkn), tkn)
-                    .Where(y => y.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Revision_exitosa))
+                    .Where(y => y.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Autorizacion_finalizada))
                     .OrderByDescending(x => x.IdRequisicion).ToList(),
                 OrdenesCompra = ObtenerOrdenesCompra(TokenServicio.ObtenerIdEmpresa(tkn), tkn)
             };
@@ -39,13 +39,13 @@ namespace MVC.Presentacion.App_Code
             if (datos != null)
             {
                 model.IdRequisicion = datos.IdRequisicion;
-                model.NumRequisicion = datos.NumeroRequisicion;
+                model.NumeroRequisicion = datos.NumeroRequisicion;
                 model.IdSolicitante = datos.IdUsuarioSolicitante;
                 model.Solicitante = datos.UsuarioSolicitante;
                 model.RequeridoEn = datos.RequeridoEn;
-                model.MotivoCompra = datos.MotivoRequisicion;
+                model.MotivoRequisicion= datos.MotivoRequisicion;
                 model.IdEmpresa = datos.IdEmpresa;
-                model.NombreEmpresa = datos.NombreComercial;
+                model.Empresa = datos.NombreComercial;
                 model.FechaRequisicion = datos.FechaRequerida;
                 model.OrdenCompraProductos = datos.Productos;
             }
@@ -96,18 +96,21 @@ namespace MVC.Presentacion.App_Code
                 p.IdProducto = _prd.IdProducto;
                 p.IdCentroCosto = _prd.IdCentroCosto;
                 p.IdCuentaContable = _prd.IdCuentaContable;
-                p.IdProveedor = _prd.IdProdveedor;
+                p.IdProveedor = _prd.IdProveedor;
                 p.Precio = _prd.Precio;
                 p.Descuento = _prd.Descuento;
                 p.IVA = _prd.IVA;
                 p.IEPS = _prd.IEPS;
-                p.Cantidad = _prd.IEPS;
+                p.Cantidad = _prd.CantidadAComprar;
                 decimal _descuento = ((p.Precio * p.Cantidad) * (p.Descuento / 100));
                 decimal subtotal = (p.Precio * p.Cantidad) - (_descuento);
                 decimal iva = ((subtotal) * (p.IVA / 100));
                 decimal ieps = ((subtotal) * (p.IEPS / 100));
                 p.Importe = subtotal + iva + ieps;
                 lp.Add(p);
+                p.EsGas = _prd.EsGas;
+                p.EsTransporte = _prd.EsTransporteGas;
+                p.EsActivoVenta = _prd.EsActivoVenta;
             }
             return lp;
         }
@@ -121,12 +124,40 @@ namespace MVC.Presentacion.App_Code
         {
             AgenteServicio agente = new AgenteServicio();
             agente.BuscarOrdenesCompraEntrada(idOC, tkn);
-            return agente._entradaMercancia;           
+            return agente._entradaMercancia;
         }
         public static RespuestaDTO RegistrarEntrada(EntradaMercanciaModel model, string tkn)
         {
             AgenteServicio agente = new AgenteServicio();
             agente.RegistrarEntrada(model, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static OrdenCompraDTO InitComplemento(int id, string tkn)
+        {
+            return BuscarOrdenCompra(id, tkn);
+        }
+        public static OrdenCompraPagoDTO InitOrdenCompraPago(int idOC, string tkn)
+        {
+            var oc = BuscarOrdenCompra(idOC, tkn);
+            var prov = CatalogoServicio.ListaProveedores(tkn).FirstOrDefault(x => x.IdProveedor.Equals(oc.IdProveedor));
+            var banco = CatalogoServicio.ListaBanco(tkn).FirstOrDefault(b => b.IdBanco.Equals(prov.IdBanco));
+            return new OrdenCompraPagoDTO()
+            {
+                IdOrdenCompra = oc.IdOrdenCompra,
+                NumOrdenCompra = oc.NumOrdenCompra,
+                IdProveedor = oc.IdProveedor,
+                Proveedor = oc.Proveedor,
+                IdBanco = banco.IdBanco,
+                Banco = banco.NombreCorto,
+                CuentaBancaria = prov.Cuenta,
+                Empresa = oc.Empresa,
+                MontoPagado = oc.Total.Value
+            };
+        }
+        public static RespuestaDTO ConfirmarPago(OrdenCompraPagoDTO dto, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.EnviarConfirmarPago(dto, tkn);
             return agente._RespuestaDTO;
         }
     }

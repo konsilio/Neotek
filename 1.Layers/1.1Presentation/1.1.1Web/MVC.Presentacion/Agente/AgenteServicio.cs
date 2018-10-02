@@ -69,7 +69,7 @@ namespace MVC.Presentacion.Agente
         public List<PuntoVentaModel> _listaPuntosV;
         public OperadorChoferModel Operador;
         public List<OperadorChoferModel> _listaOperadoresUsuarios;
-
+        public List<OrdenCompraPagoDTO> _listaOrdenCompraPago;
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -1227,7 +1227,7 @@ namespace MVC.Presentacion.Agente
         #region Forma de Pago
         public void ListaFormaPago(string tkn)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaFormaPagos"];
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaFormasPago"];
             GetListaFormaPago(tkn).Wait();
         }
         private async Task GetListaFormaPago(string Token)
@@ -2366,11 +2366,53 @@ namespace MVC.Presentacion.Agente
                 _listaOrdenCompraEstatus = emp;
             }
         }
-
         public void RegistrarEntrada(EntradaMercanciaModel dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostGuardarEntradas"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
+        }
+        public void EnviarConfirmarPago (OrdenCompraPagoDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostConfirmarPago"];
+            LLamada(dto, token, MetodoRestConst.Post).Wait();
+        }
+        public void EnviarDatosFactura(OrdenCompraDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutDatosFactura"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void BuscarListaPagos(int oc, string tkn)
+        {
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetListaFormasPago"];
+            GetListaPago(oc, tkn).Wait();
+        }
+        private async Task GetListaPago(int idoc, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<OrdenCompraPagoDTO> list = new List<OrdenCompraPagoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idoc.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<OrdenCompraPagoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<OrdenCompraPagoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaOrdenCompraPago = list;
+            }
         }
         #endregion
 

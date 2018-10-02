@@ -10,10 +10,11 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public int IdRequisicion { get; set; }
         public string NumeroRequisicion { get; set; }
         public int IdOrdenCompra { get; set; }       
+        public short IdEmpresa { get; set; }
         public string Empresa { get; set; }
         public byte IdOrdenCompraEstatus { get; set; }
         public string OrdenCompraEstatus { get; set; }
-        public string usuarioSolicitante { get; set; }
+        public string Solicitante { get; set; }
         public string MotivoRequisicion { get; set; }
         public string RequeridoEn { get; set; }
         public int IdProveedor { get; set; }
@@ -33,6 +34,9 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public Nullable<decimal> Iva { get; set; }
         public Nullable<decimal> Ieps { get; set; }
         public Nullable<decimal> Total { get; set; }
+        public string FolioFiscalUUID { get; set; }
+        public string FolioFactura { get; set; }
+        public Nullable<System.DateTime> FechaResgistroFactura { get; set; }
         public List<OrdenCompraProductoDTO> Productos { get; set; }
     }
 }
