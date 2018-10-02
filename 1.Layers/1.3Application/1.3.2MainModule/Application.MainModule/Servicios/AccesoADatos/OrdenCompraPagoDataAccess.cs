@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.UnitOfWork;
+using Exceptions.MainModule;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
@@ -34,12 +35,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 catch (Exception ex)
                 {
                     _respuesta.Exito = false;
-                    _respuesta.MensajesError.Add(ex.Message);
-                    if(ex.InnerException != null)
-                        _respuesta.MensajesError.Add(ex.InnerException.Message);
+                    _respuesta.Mensaje = string.Format(Error.C0002, "de la solicitud de pago");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
             return _respuesta;
+        }
+        public OrdenCompraPago Buscar(int idoc, short orden)
+        {
+            return uow.Repository<OrdenCompraPago>().GetAll().FirstOrDefault(x => x.IdOrdenCompra.Equals(idoc) && x.Orden.Equals(orden));
         }
         public List<OrdenCompraPago> Buscar(int  idoc)
         {
@@ -48,6 +52,29 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<OrdenCompraPago> BuscarTodo()
         {
             return uow.Repository<OrdenCompraPago>().GetAll().ToList();
+        }
+        public RespuestaDto Actualizar(OrdenCompraPago ocp)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<OrdenCompraPago>().Update(ocp);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "de la confirmación de pago");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
         }
     }
 }

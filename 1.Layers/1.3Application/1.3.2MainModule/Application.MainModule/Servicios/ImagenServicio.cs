@@ -14,6 +14,7 @@ namespace Application.MainModule.Servicios
     public static class ImagenServicio
     {
         private static string rutaImagenes = ConfigurationManager.AppSettings["RutaImagenesInventario"];
+        private static string rutaImagenesPagos = ConfigurationManager.AppSettings["RutaImagenesPagos"];
 
         public static AlmacenGasDescargaFoto ObtenerImagen(AlmacenGasDescargaFoto foto)
         {
@@ -31,6 +32,24 @@ namespace Application.MainModule.Servicios
 
             FileUtilities.GuardarImagen(foto.CadenaBase64, foto.PathImagen);
             foto.CadenaBase64 = null;
+            campos.Clear();
+            return foto;
+        }
+
+        public static OrdenCompraPago ObtenerImagen(OrdenCompraPago foto)
+        {
+            //La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
+            //string a = "CadenaBase64|NumeroOrdenCompra|.jpeg";
+            var b64 = foto.PhysicalPathCapturaPantalla;
+            List<string> campos = FilterFunciones.ObtenerFields(b64);
+            string nombre = string.Concat(campos.ElementAt(1), "_", foto.Orden, "_", ".png");
+            string extension = campos.ElementAt(2);           
+
+            foto.PhysicalPathCapturaPantalla = Convertir.GetPhysicalPath(rutaImagenesPagos);
+            foto.PhysicalPathCapturaPantalla = GenerarNombre(nombre, extension, b64);
+            foto.UrlPathCapturaPantalla = Convertir.PhysicalPathToUrlPath(b64);
+
+            FileUtilities.GuardarImagen(b64, foto.PhysicalPathCapturaPantalla);            
             campos.Clear();
             return foto;
         }

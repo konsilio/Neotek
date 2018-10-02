@@ -21,6 +21,7 @@ namespace Application.MainModule.DTOs
         public string UnidadMedida { get; set; }
         public string UnidadMedida2 { get; set; }
         public string Aplicacion { get; set; }
+        public string Descripcion { get; set; }
         public decimal Cantidad { get; set; }
         public decimal CantidadAComprar { get; set; }
         public decimal Precio { get; set; }
