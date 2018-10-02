@@ -69,6 +69,9 @@ namespace MVC.Presentacion.Agente
         public List<PuntoVentaModel> _listaPuntosV;
         public OperadorChoferModel Operador;
         public List<OperadorChoferModel> _listaOperadoresUsuarios;
+        public List<PrecioVentaModel> _listaPreciosV;
+        public List<EstatusTipoFechaModel> _listaEstatus;
+        
 
         public AgenteServicio()
         {
@@ -1051,7 +1054,136 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
+        #region Precio de Venta Gas
 
+        public void BuscarListaPrecioVenta(int idPrecioV, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPrecioVenta"];
+            GetListaPreciosV(idPrecioV, tkn).Wait();
+        }
+        private async Task GetListaPreciosV(int idPV, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PrecioVentaModel> lus = new List<PrecioVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<PrecioVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<PrecioVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+                if (idPV != 0)
+                {
+                    _listaPreciosV = (from x in lus where x.IdPrecioVenta == idPV select x).ToList();
+                }
+                else
+                {
+                    _listaPreciosV = lus;
+                }
+            }
+        }
+
+        public void BuscarListaEstatus(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaEstatusPV"];
+            GetListaEstatus(tkn).Wait();
+        }
+        private async Task GetListaEstatus(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<EstatusTipoFechaModel> lus = new List<EstatusTipoFechaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<EstatusTipoFechaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<EstatusTipoFechaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+                _listaEstatus = lus;
+                
+            }
+        }
+        public void BuscarListaPreciosVentaIdEmpresa(short idEmpresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPrecioVIdEmpresa"];
+            GetListaPrecioVIdE(tkn, idEmpresa).Wait();
+        }
+        private async Task GetListaPrecioVIdE(string Token, short idEmpresa)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PrecioVentaModel> lus = new List<PrecioVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<PrecioVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<PrecioVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaPreciosV = lus;
+            }
+        }
+
+        public void EliminarPrecioVenta(PrecioVentaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaPreciosVenta"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void GuardarPrecioVenta(PrecioVentaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraPrecioVenta"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+
+        public void ModificarPrecioVenta(PrecioVentaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaPreciosVenta"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        #endregion
         #region Paises
         public void BuscarPaises(string tkn)
         {

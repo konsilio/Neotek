@@ -66,7 +66,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             List<EmpresaDTO> empreasDT = empresas.ToList().Select(x => ToDTO(x)).ToList();
             return empreasDT;
         }
-
+                
         public static Empresa FromDTO(EmpresaDTO empresadto)
         {
             Empresa empresa = new Empresa()

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.Servicios.Ventas;
 
 namespace Application.MainModule.Flujos
 {
@@ -49,7 +50,7 @@ namespace Application.MainModule.Flujos
         {
             return EmpresaServicio.BuscarEmpresas(conAC);
         }
-
+               
         public RespuestaDto RegistraEmpresa(EmpresaCrearDTO empDto)
         {
             var resp = PermisosServicio.PuedeRegistrarEmpresa();
@@ -209,7 +210,11 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarPuntoVenta();
             if (!resp.Exito) return null;
 
-            return PuntoVentaServicio.Obtener().ToList();
+            if (TokenServicio.EsSuperUsuario())
+                return PuntoVentaServicio.Obtener().ToList();
+            else
+                return PuntoVentaServicio.Obtener().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();       
+
         }
 
         public List<PuntoVentaDTO> PuntosVentaIdEmpresa(short IdEmpresa)
@@ -248,6 +253,68 @@ namespace Application.MainModule.Flujos
             cte.FechaRegistro = cte.FechaRegistro;
             return PuntoVentaServicio.Modificar(cte);
         }
+        
+        #endregion
+
+        #region Precio de venta
+
+        public List<PrecioVentaDTO> ListaPreciosVenta()
+        {
+            var resp = PermisosServicio.PuedeConsultarPrecioVentaGas();
+            if (!resp.Exito) return null;
+
+            if (TokenServicio.EsSuperUsuario())
+                return PrecioVentaGasServicio.Obtener().ToList();
+            else
+                return PrecioVentaGasServicio.Obtener().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
+        }
+
+        public List<PrecioVentaEstatusDTO> TipoFecha()
+        {
+            var resp = PermisosServicio.PuedeConsultarPrecioVentaGas();
+            if (!resp.Exito) return null;
+
+                return PrecioVentaGasServicio.ObtenerListEstatus().ToList();
+        }
+
+        public List<PrecioVentaDTO> PreciosVentaIdEmpresa(short IdEmpresa)
+        {
+            var resp = PermisosServicio.PuedeConsultarPrecioVentaGas();
+            if (!resp.Exito) return null;
+
+            return PrecioVentaGasServicio.ObtenerPreciosVentaIdEmp(IdEmpresa).ToList();
+        }
+        public RespuestaDto EliminaPreciosVenta(PrecioVentaDTO cteDto)
+        {
+            var resp = PermisosServicio.PuedeEliminarPrecioVentaGas();
+            if (!resp.Exito) return resp;
+
+            var precioV = PrecioVentaGasAdapter.FromTo(cteDto);
+            return PrecioVentaGasServicio.Eliminar(precioV);
+        }
+        public RespuestaDto RegistraPrecioVentaGas(PrecioVentaDTO cteDto)
+        {
+            var resp = PermisosServicio.PuedeRegistrarPrecioVentaGas();
+            if (!resp.Exito) return resp;
+
+            //  var precio = PrecioVentaGasAdapter.FromTo(cteDto);          
+            var precio = PrecioVentaGasAdapter.FromDTO(cteDto);
+            return PrecioVentaGasServicio.AltaPrecioVentaGas(precio);
+        }
+
+        public RespuestaDto ModificaPrecioVentaGas(PrecioVentaDTO cteDto)
+        {
+            var resp = PermisosServicio.PuedeModificarPrecioVentaGas();
+            if (!resp.Exito) return resp;
+
+            var precioventa = PrecioVentaGasServicio.Obtener(cteDto.IdPrecioVenta);
+            if (precioventa == null) return PrecioVentaGasServicio.NoExiste();
+
+            var cte = PrecioVentaGasAdapter.FromDtoEditar(cteDto, precioventa);
+            cte.FechaRegistro = cte.FechaRegistro;
+            return PrecioVentaGasServicio.Modificar(cte);
+        }
+
         #endregion
 
         #region Productos
