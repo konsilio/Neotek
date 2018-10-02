@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import com.example.neotecknewts.sagasapp.Model.ClienteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTipoPersonaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaClienteDTO;
+import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RegistroClientePresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RegistroClientePresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
@@ -34,6 +35,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
     Session session;
     DatosTipoPersonaDTO datos;
     ClienteDTO clienteDTO;
+    VentaDTO ventaDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             EsVentaCarburacion = bundle.getBoolean("EsVentaCarburacion",false);
             EsVentaCamioneta = bundle.getBoolean("EsVentaCamioneta",false);
             EsVentaPipa = bundle.getBoolean("EsVentaPipa",false);
+            ventaDTO = (VentaDTO) bundle.getSerializable("ventaDTO");
         }
         session = new Session(this);
         clienteDTO = new ClienteDTO();

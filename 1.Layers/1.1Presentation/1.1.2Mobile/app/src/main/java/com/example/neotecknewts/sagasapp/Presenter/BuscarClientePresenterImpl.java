@@ -3,10 +3,8 @@ package com.example.neotecknewts.sagasapp.Presenter;
 import com.example.neotecknewts.sagasapp.Activity.BuscarClienteView;
 import com.example.neotecknewts.sagasapp.Interactor.BuscarClienteInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.BuscarClienteInteractorImpl;
-import com.example.neotecknewts.sagasapp.Model.ClienteDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosClientesDTO;
 import com.example.neotecknewts.sagasapp.R;
-
-import java.util.List;
 
 public class BuscarClientePresenterImpl implements BuscarClientePresenter {
     BuscarClienteView view;
@@ -29,7 +27,7 @@ public class BuscarClientePresenterImpl implements BuscarClientePresenter {
     }
 
     @Override
-    public void onSuccess(List<ClienteDTO> clienteDTOS) {
+    public void onSuccess(DatosClientesDTO clienteDTOS) {
         view.onHiddeProgress();
         view.onSuccessList(clienteDTOS);
     }

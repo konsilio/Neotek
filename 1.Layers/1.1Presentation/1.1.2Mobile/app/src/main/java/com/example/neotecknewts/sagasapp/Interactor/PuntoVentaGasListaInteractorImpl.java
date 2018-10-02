@@ -2,8 +2,9 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
-import com.example.neotecknewts.sagasapp.Model.DatosClientesDTO;
-import com.example.neotecknewts.sagasapp.Presenter.BuscarClientePresenter;
+import com.example.neotecknewts.sagasapp.Model.DatosPuntoVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.ExistenciasDTO;
+import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaGasListaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 import com.google.gson.FieldNamingPolicy;
@@ -16,14 +17,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class BuscarClienteInteractorImpl implements BuscarClienteInteractor {
-    BuscarClientePresenter presenter;
-    public BuscarClienteInteractorImpl(BuscarClientePresenter presenter) {
+public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInteractor {
+    PuntoVentaGasListaPresenter presenter;
+    public PuntoVentaGasListaInteractorImpl(PuntoVentaGasListaPresenter presenter) {
         this.presenter = presenter;
     }
 
     @Override
-    public void getClientes(String criterio, String token) {
+    public void getListaCamionetaCilindros(String token, boolean esGasLP,
+                                           boolean esCilindroConGas, boolean esCilindro) {
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
@@ -36,22 +38,26 @@ public class BuscarClienteInteractorImpl implements BuscarClienteInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<DatosClientesDTO> call = restClient.getListaClientes(
-                criterio,
+        Call<DatosPuntoVentaDTO> call = restClient.getListaExistencias(
+                esGasLP,
+                esCilindroConGas,
+                esCilindro,
                 token,
                 "application/json"
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 
-        call.enqueue(new Callback<DatosClientesDTO>() {
+        call.enqueue(new Callback<DatosPuntoVentaDTO>() {
             @Override
-            public void onResponse(Call<DatosClientesDTO> call, Response<DatosClientesDTO> response) {
-                DatosClientesDTO data = response.body();
+            public void onResponse(Call<DatosPuntoVentaDTO> call, Response<DatosPuntoVentaDTO> response) {
+                DatosPuntoVentaDTO data = response.body();
                 if (response.isSuccessful()) {
+
                     Log.w("Estatus","Success");
                     presenter.onSuccess(data);
                 }
                 else {
+                    String mensaje = "";
                     switch (response.code()) {
                         case 404:
                             Log.w("Error","not found");
@@ -66,17 +72,22 @@ public class BuscarClienteInteractorImpl implements BuscarClienteInteractor {
 
                             break;
                     }
-                    presenter.onError(response.message());
-
+                    mensaje = "Se ha generado un error: "+response.message();
+                    if(data.getMensaje().isEmpty()) {
+                        presenter.onError(mensaje);
+                    }else{
+                        presenter.onError(data.getMensaje());
+                    }
                 }
 
             }
 
             @Override
-            public void onFailure(Call<DatosClientesDTO> call, Throwable t) {
+            public void onFailure(Call<DatosPuntoVentaDTO> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
-                presenter.onError(t.getLocalizedMessage());
+                presenter.onError("Se ha generado un error: "+t.getMessage());
             }
         });
+
     }
 }

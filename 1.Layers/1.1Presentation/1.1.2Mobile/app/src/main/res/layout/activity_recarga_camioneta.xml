@@ -46,6 +46,23 @@
                 android:layout_marginRight="15dp"
                 android:padding="25dp" />
 
+            <TextView
+                android:id="@+id/TVRecargaCamionetaActivityTituloGasSalida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:text="Selecciona el almacen"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/SRecargaCamionetaEstacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="25dp" />
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="85sp"
