@@ -22,8 +22,31 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 MontoPagado = dto.MontoPagado,
                 Orden = 1,
                 PhysicalPathCapturaPantalla = dto.PhysicalPathCapturaPantalla,
-                UrlPathCapturaPantalla = dto.UrlPathCapturaPantalla               
+                UrlPathCapturaPantalla = dto.UrlPathCapturaPantalla
             };
+        }
+        public static List<OrdenCompraPago> FromDTO(List<OrdenCompraPagoDTO> pago)
+        {
+            return pago.Select(x => FromDTO(x)).ToList();
+        }
+        public static OrdenCompraPagoDTO ToDTO(OrdenCompraPago pago)
+        {
+            return new OrdenCompraPagoDTO()
+            {
+                IdOrdenCompra = pago.IdOrdenCompra,
+                IdBanco = pago.IdBanco,
+                IdFormaPago = pago.IdFormaPago,
+                CuentaBancaria = pago.CuentaBancaria,
+                FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
+                MontoPagado = pago.MontoPagado,
+                Orden = 1,
+                PhysicalPathCapturaPantalla = pago.PhysicalPathCapturaPantalla,
+                UrlPathCapturaPantalla = pago.UrlPathCapturaPantalla
+            };
+        }
+        public static List<OrdenCompraPagoDTO> ToDTO(List<OrdenCompraPago> pago)
+        {
+            return pago.Select(x => ToDTO(x)).ToList();
         }
     }
 }

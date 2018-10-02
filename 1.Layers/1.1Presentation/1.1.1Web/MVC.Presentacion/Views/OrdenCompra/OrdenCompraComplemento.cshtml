@@ -1,4 +1,4 @@
-﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraComplementoDTO
+﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraDTO
 
 <style>
     .calculaPrecio {
@@ -6,7 +6,6 @@
 </style>
 <script type="text/javascript">
     var CalcularImporte = function () {
-
         var index;
         var idtxtPrec;
         var idtxtDesc;
@@ -107,7 +106,7 @@
                             <div class="col-lg-3 col-md-12">
                                 <div class="form-group form-float">
                                     <b>Solicitante:</b>
-                                    <input name="Solicitante" value="@Model.usuarioSolicitante" class="form-control" disabled />
+                                    <input name="Solicitante" value="@Model.Solicitante" class="form-control" disabled />
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-12 form-float">
@@ -258,5 +257,4 @@
             </div>
         }
     </div>
-
 </section>

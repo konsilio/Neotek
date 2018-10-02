@@ -132,7 +132,6 @@ namespace Application.MainModule.Servicios.Compras
         {
             return new OrdenCompraDataAccess().Estatus();
         }
-
         public static AplicaDescargaDto AplicarDescarga(AplicaDescargaDto apDesDto, AlmacenGasDescarga descarga, Empresa empresa)
         {
             OrdenCompra OCExpedidor = OrdenComprasAdapter.FromEntity(BuscarOCExpedidor(descarga));
@@ -201,10 +200,6 @@ namespace Application.MainModule.Servicios.Compras
             dto.MotivoRequisicion = datosreq.MotivoRequisicion;
             dto.RequeridoEn = datosreq.RequeridoEn;
             return dto;
-        }
-        public static RespuestaDto GuardarConfirmacionPago(OrdenCompraPago pago)
-        {
-            return new OrdenCompraPagoDataAccess().Insertar(pago);
-        }
+        }             
     }
 }

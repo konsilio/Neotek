@@ -41,5 +41,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public List<OrdenCompraPago> Buscar(int  idoc)
+        {
+            return uow.Repository<OrdenCompraPago>().Get(x => x.IdOrdenCompra.Equals(idoc)).ToList();
+        }
+        public List<OrdenCompraPago> BuscarTodo()
+        {
+            return uow.Repository<OrdenCompraPago>().GetAll().ToList();
+        }
     }
 }

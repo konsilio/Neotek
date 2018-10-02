@@ -116,10 +116,13 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("EntradaMercancia", model);
             }
         }
-        public ActionResult OrdenCompraComplemento()
+        public ActionResult OrdenCompraComplemento(int id)
         {
-            
-            return View();
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var complemeto = OrdenCompraServicio.InitComplemento(id, tkn);
+
+            return View(complemeto);
         }
         public ActionResult OrdenCompraPago(int id)
         {

@@ -39,13 +39,13 @@ namespace MVC.Presentacion.App_Code
             if (datos != null)
             {
                 model.IdRequisicion = datos.IdRequisicion;
-                model.NumRequisicion = datos.NumeroRequisicion;
+                model.NumeroRequisicion = datos.NumeroRequisicion;
                 model.IdSolicitante = datos.IdUsuarioSolicitante;
                 model.Solicitante = datos.UsuarioSolicitante;
                 model.RequeridoEn = datos.RequeridoEn;
-                model.MotivoCompra = datos.MotivoRequisicion;
+                model.MotivoRequisicion= datos.MotivoRequisicion;
                 model.IdEmpresa = datos.IdEmpresa;
-                model.NombreEmpresa = datos.NombreComercial;
+                model.Empresa = datos.NombreComercial;
                 model.FechaRequisicion = datos.FechaRequerida;
                 model.OrdenCompraProductos = datos.Productos;
             }
@@ -96,7 +96,7 @@ namespace MVC.Presentacion.App_Code
                 p.IdProducto = _prd.IdProducto;
                 p.IdCentroCosto = _prd.IdCentroCosto;
                 p.IdCuentaContable = _prd.IdCuentaContable;
-                p.IdProveedor = _prd.IdProdveedor;
+                p.IdProveedor = _prd.IdProveedor;
                 p.Precio = _prd.Precio;
                 p.Descuento = _prd.Descuento;
                 p.IVA = _prd.IVA;
@@ -132,10 +132,10 @@ namespace MVC.Presentacion.App_Code
             agente.RegistrarEntrada(model, tkn);
             return agente._RespuestaDTO;
         }
-        //public static OrdenCompraComplementoDTO InitComplemento(string tkn)
-        //{
-
-        //}
+        public static OrdenCompraDTO InitComplemento(int id, string tkn)
+        {
+            return BuscarOrdenCompra(id, tkn);
+        }
         public static OrdenCompraPagoDTO InitOrdenCompraPago(int idOC, string tkn)
         {
             var oc = BuscarOrdenCompra(idOC, tkn);

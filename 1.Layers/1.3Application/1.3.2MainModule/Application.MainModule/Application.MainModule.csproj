@@ -73,6 +73,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\UnidadAlmacenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\RegimenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
+    <Compile Include="Servicios\OrdenCompraPagoServicio.cs" />
     <Compile Include="AdaptadoresDTO\Seguridad\RolAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\TipoPerAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\ComplementoGasAdapter.cs" />

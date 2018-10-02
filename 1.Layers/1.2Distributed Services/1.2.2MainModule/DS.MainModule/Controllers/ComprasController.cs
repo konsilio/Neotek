@@ -86,9 +86,20 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_compras.ListaEstatus(), Request);
         }
-        public HttpResponseMessage PutConfirmarPago(OrdenCompraPagoDTO oc)
+        [Route("actualiza/ordencompra/datosfactura")]
+        public HttpResponseMessage PutDatosFactura(OrdenCompraDTO oc)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.ActualizarOrdenCompraFactura(oc), Request);
+        }
+        [Route("guardar/confirmacionpago/")]
+        public HttpResponseMessage PostConfirmarPago(OrdenCompraPagoDTO oc)
         {
             return RespuestaHttp.crearRespuesta(_compras.ConfirmarPago(oc), Request);
+        }
+        [Route("guardar/confirmacionpago/{idOC}")]
+        public HttpResponseMessage GetListaPagos(int idOC)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _compras.BuscarPagos(idOC));
         }
     }
 }

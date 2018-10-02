@@ -118,6 +118,18 @@ namespace Application.MainModule.Flujos
             entity.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
             return OrdenCompraServicio.Actualizar(entity);
         }
+        public RespuestaDto ActualizarOrdenCompraFactura(OrdenCompraDTO dto)
+        {
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            if (oc == null) return OrdenCompraServicio.NoExiste();
+
+            var entity = OrdenComprasAdapter.FromEntity(oc);
+            entity.FolioFactura = dto.FolioFactura;
+            entity.FolioFiscalUUID = dto.FolioFiscalUUID;
+            entity.FechaResgistroFactura = Convert.ToDateTime(DateTime.Today.ToShortDateString());
+
+            return OrdenCompraServicio.Actualizar(entity);
+        }
         public List<OrdenCompraDTO> ListaOrdenCompra(short IdEmpresa)
         {
             var resp = PermisosServicio.PuedeConsultarOrdenCompra();
@@ -142,7 +154,6 @@ namespace Application.MainModule.Flujos
             var oc = OrdenCompraServicio.Buscar(idOrdenCompra);
             var cg = OrdenCompraServicio.BuscarComplementoGas(oc);
 
-
             return cg;
         }
         public List<OrdenCompraEstatusDTO> ListaEstatus()
@@ -152,8 +163,13 @@ namespace Application.MainModule.Flujos
         public RespuestaDto ConfirmarPago(OrdenCompraPagoDTO dto)
         {
             var Pago = OrdenCompraPagoAdapter.FromDTO(dto);
-            var respuesta = OrdenCompraServicio.GuardarConfirmacionPago(Pago);
+            var respuesta = OrdenCompraPagoServicio.GuardarConfirmacionPago(Pago);
             return respuesta;
+        }
+        public List<OrdenCompraPagoDTO> BuscarPagos(int idOc)
+        {
+            var pagos = OrdenCompraPagoServicio.BuscarPagos(idOc);
+            return OrdenCompraPagoAdapter.ToDTO(pagos);
         }
     }
 }
