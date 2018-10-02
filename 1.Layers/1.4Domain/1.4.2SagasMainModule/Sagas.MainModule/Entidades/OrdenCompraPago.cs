@@ -20,6 +20,8 @@ namespace Sagas.MainModule.Entidades
         public short IdBanco { get; set; }
         public string CuentaBancaria { get; set; }
         public decimal MontoPagado { get; set; }
+        public decimal TotalImporte { get; set; }
+        public decimal SaldoInsoluto { get; set; }
         public string UrlPathCapturaPantalla { get; set; }
         public string PhysicalPathCapturaPantalla { get; set; }
         public System.DateTime FechaRegistro { get; set; }
