@@ -7,24 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class AlmacenGasTraspaso
+namespace Sagas.MainModule.Entidades
 {
-    public short IdCAlmacenGasSalida { get; set; }
-    public short IdCAlmacenGasEntrada { get; set; }
-    public short IdTipoMedidorSalida { get; set; }
-    public byte IdTipoEvento { get; set; }
-    public decimal P5000Salida { get; set; }
-    public decimal P5000Entrada { get; set; }
-    public Nullable<decimal> PorcentajeSalida { get; set; }
-    public string ClaveOperacion { get; set; }
-    public bool DatosProcesados { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
-
-    public virtual UnidadAlmacenGas UnidadSalida { get; set; }
-    public virtual UnidadAlmacenGas UnidadEntrada { get; set; }
-    public virtual AlmacenGasTraspasoFoto Fotografias { get; set; }
-    public virtual TipoEvento TipoEvento { get; set; }
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class AlmacenGasTraspaso
+    {
+        public short IdCAlmacenGasSalida { get; set; }
+        public short IdCAlmacenGasEntrada { get; set; }
+        public short IdTipoMedidorSalida { get; set; }
+        public byte IdTipoEvento { get; set; }
+        public decimal P5000Salida { get; set; }
+        public decimal P5000Entrada { get; set; }
+        public Nullable<decimal> PorcentajeSalida { get; set; }
+        public string ClaveOperacion { get; set; }
+        public bool DatosProcesados { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    
+        public virtual UnidadAlmacenGas UnidadSalida { get; set; }
+        public virtual UnidadAlmacenGas UnidadEntrada { get; set; }
+        public virtual AlmacenGasTraspasoFoto Fotografias { get; set; }
+        public virtual TipoEvento TipoEvento { get; set; }
+    }
 }

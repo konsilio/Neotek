@@ -7,31 +7,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class Pipa
+namespace Sagas.MainModule.Entidades
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public Pipa()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class Pipa
     {
-        this.UnidadAlmacenGas = new HashSet<UnidadAlmacenGas>();
-        this.CCentroCosto = new HashSet<CentroCosto>();
-        this.EquipoTransporte = new HashSet<EquipoTransporte>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Pipa()
+        {
+            this.UnidadAlmacenGas = new HashSet<UnidadAlmacenGas>();
+            this.CCentroCosto = new HashSet<CentroCosto>();
+            this.EquipoTransporte = new HashSet<EquipoTransporte>();
+        }
+    
+        public int IdPipa { get; set; }
+        public short IdEmpresa { get; set; }
+        public string Numero { get; set; }
+        public string Nombre { get; set; }
+        public bool Activo { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UnidadAlmacenGas> UnidadAlmacenGas { get; set; }
+        public virtual Empresa Empresa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CentroCosto> CCentroCosto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EquipoTransporte> EquipoTransporte { get; set; }
     }
-
-    public int IdPipa { get; set; }
-    public short IdEmpresa { get; set; }
-    public string Numero { get; set; }
-    public string Nombre { get; set; }
-    public bool Activo { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<UnidadAlmacenGas> UnidadAlmacenGas { get; set; }
-    public virtual Empresa Empresa { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<CentroCosto> CCentroCosto { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<EquipoTransporte> EquipoTransporte { get; set; }
 }

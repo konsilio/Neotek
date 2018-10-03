@@ -7,31 +7,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class OrdenCompraProducto
+namespace Sagas.MainModule.Entidades
 {
-    public int IdOrdenCompra { get; set; }
-    public int IdProducto { get; set; }
-    public int IdCentroCosto { get; set; }
-    public string ProductoServicioTipo { get; set; }
-    public string Producto { get; set; }
-    public string Categoria { get; set; }
-    public string Linea { get; set; }
-    public string UnidadMedida { get; set; }
-    public string UnidadMedida2 { get; set; }
-    public string Descripcion { get; set; }
-    public decimal Cantidad { get; set; }
-    public decimal Precio { get; set; }
-    public decimal Descuento { get; set; }
-    public decimal IVA { get; set; }
-    public decimal IEPS { get; set; }
-    public decimal Importe { get; set; }
-    public bool EsActivoVenta { get; set; }
-    public bool EsGas { get; set; }
-
-    public virtual OrdenCompra OrdenCompra { get; set; }
-    public virtual CentroCosto CentroCosto { get; set; }
-    public virtual Producto CProducto { get; set; }
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class OrdenCompraProducto
+    {
+        public int IdOrdenCompra { get; set; }
+        public int IdProducto { get; set; }
+        public int IdCentroCosto { get; set; }
+        public string ProductoServicioTipo { get; set; }
+        public string Producto { get; set; }
+        public string Categoria { get; set; }
+        public string Linea { get; set; }
+        public string UnidadMedida { get; set; }
+        public string UnidadMedida2 { get; set; }
+        public string Descripcion { get; set; }
+        public decimal Cantidad { get; set; }
+        public decimal Precio { get; set; }
+        public decimal Descuento { get; set; }
+        public decimal IVA { get; set; }
+        public decimal IEPS { get; set; }
+        public decimal Importe { get; set; }
+        public bool EsActivoVenta { get; set; }
+        public bool EsGas { get; set; }
+    
+        public virtual OrdenCompra OrdenCompra { get; set; }
+        public virtual CentroCosto CentroCosto { get; set; }
+        public virtual Producto CProducto { get; set; }
+    }
 }

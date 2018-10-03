@@ -7,33 +7,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class AlmacenGasTomaLectura
+namespace Sagas.MainModule.Entidades
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public AlmacenGasTomaLectura()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class AlmacenGasTomaLectura
     {
-        this.Cilindros = new HashSet<AlmacenGasTomaLecturaCilindro>();
-        this.Fotografias = new HashSet<AlmacenGasTomaLecturaFoto>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AlmacenGasTomaLectura()
+        {
+            this.Cilindros = new HashSet<AlmacenGasTomaLecturaCilindro>();
+            this.Fotografias = new HashSet<AlmacenGasTomaLecturaFoto>();
+        }
+    
+        public short IdCAlmacenGas { get; set; }
+        public int IdOrden { get; set; }
+        public Nullable<short> IdTipoMedidor { get; set; }
+        public byte IdTipoEvento { get; set; }
+        public Nullable<decimal> P5000 { get; set; }
+        public Nullable<decimal> Porcentaje { get; set; }
+        public bool EsEncargadoPuerta { get; set; }
+        public bool EsEncargadoAnden { get; set; }
+        public string ClaveOperacion { get; set; }
+        public bool DatosProcesados { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    
+        public virtual UnidadAlmacenGas UnidadAlmacenGas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasTomaLecturaCilindro> Cilindros { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasTomaLecturaFoto> Fotografias { get; set; }
     }
-
-    public short IdCAlmacenGas { get; set; }
-    public int IdOrden { get; set; }
-    public Nullable<short> IdTipoMedidor { get; set; }
-    public byte IdTipoEvento { get; set; }
-    public Nullable<decimal> P5000 { get; set; }
-    public Nullable<decimal> Porcentaje { get; set; }
-    public bool EsEncargadoPuerta { get; set; }
-    public bool EsEncargadoAnden { get; set; }
-    public string ClaveOperacion { get; set; }
-    public bool DatosProcesados { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
-
-    public virtual UnidadAlmacenGas UnidadAlmacenGas { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<AlmacenGasTomaLecturaCilindro> Cilindros { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<AlmacenGasTomaLecturaFoto> Fotografias { get; set; }
 }

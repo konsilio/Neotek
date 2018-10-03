@@ -7,20 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class TipoCentroCosto
+namespace Sagas.MainModule.Entidades
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public TipoCentroCosto()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class TipoCentroCosto
     {
-        this.CentroCosto = new HashSet<CentroCosto>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TipoCentroCosto()
+        {
+            this.CentroCosto = new HashSet<CentroCosto>();
+        }
+    
+        public byte IdTipoCentroCosto { get; set; }
+        public string Descripcion { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CentroCosto> CentroCosto { get; set; }
     }
-
-    public byte IdTipoCentroCosto { get; set; }
-    public string Descripcion { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<CentroCosto> CentroCosto { get; set; }
 }

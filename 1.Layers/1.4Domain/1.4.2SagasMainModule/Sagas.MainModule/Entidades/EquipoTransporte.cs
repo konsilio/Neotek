@@ -7,20 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class EquipoTransporte
+namespace Sagas.MainModule.Entidades
 {
-    public int IdEquipoTransporte { get; set; }
-    public short IdEmpresa { get; set; }
-    public Nullable<int> IdVehiculoUtilitario { get; set; }
-    public Nullable<int> IdCamioneta { get; set; }
-    public Nullable<int> IdPipa { get; set; }
-    public bool Activo { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
-
-    public virtual Camioneta Camionetas { get; set; }
-    public virtual Pipa Pipas { get; set; }
-    public virtual Empresa Empresa { get; set; }
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class EquipoTransporte
+    {
+        public int IdEquipoTransporte { get; set; }
+        public short IdEmpresa { get; set; }
+        public Nullable<int> IdVehiculoUtilitario { get; set; }
+        public Nullable<int> IdCamioneta { get; set; }
+        public Nullable<int> IdPipa { get; set; }
+        public bool Activo { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    
+        public virtual Camioneta Camionetas { get; set; }
+        public virtual Pipa Pipas { get; set; }
+        public virtual Empresa Empresa { get; set; }
+    }
 }
