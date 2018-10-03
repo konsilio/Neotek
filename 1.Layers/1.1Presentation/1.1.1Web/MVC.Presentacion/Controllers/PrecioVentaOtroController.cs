@@ -69,5 +69,38 @@ namespace MVC.Presentacion.Controllers
             }
 
         }
+        public ActionResult EditarPrecioVentaOtro(int id)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+
+            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            ViewBag.ListaPV = CatalogoServicio.ListaPrecioVenta(id, _tkn);
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ActualizarPrecioVentaOtro(PrecioVentaModel _Obj)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tok = Session["StringToken"].ToString();
+
+            var respuesta = CatalogoServicio.ModificarPrecioVenta(_Obj, _tok);
+
+            if (respuesta.Exito)
+            {
+                TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index", _Obj);
+            }
+
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index", _Obj);
+            }
+        }
+
     }
 }
