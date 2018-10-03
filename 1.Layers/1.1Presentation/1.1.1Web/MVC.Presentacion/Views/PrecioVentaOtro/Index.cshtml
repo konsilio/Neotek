@@ -1,5 +1,5 @@
 ﻿@model  MVC.Presentacion.Models.Catalogos.PrecioVentaModel
-
+<!-- Otros-->
 <!DOCTYPE html>
 
 <html>
@@ -12,18 +12,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
-
-
     <script type="text/javascript">
         $(function () {
             $('select').on('change', function () {
-                debugger
+      
                 $('#tblfilterable tbody tr').each(function () {
                     var value = $('#IdTipoFecha').find('option:selected').text();//get value to filter of selected
                     var hiderow = $(this).find("td").eq(10).html();//get value of column status
@@ -35,6 +28,10 @@
                         var rowindex = $(this).index();
                         $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
                     }
+
+                    if (value == 'Seleccione') {
+                        $('#tblfilterable tbody tr').show();
+                    }
                 });
             });
         });
@@ -44,11 +41,8 @@
                 // debugger
 
                 var precio = $("#PrecioPMX").val();
-
                 var utilidad = $(this).val();
-
                 var operacion = parseFloat(precio) + parseFloat(utilidad);
-
                 $("#IdPrecioSalidaKg").val(operacion)
 
 
@@ -59,23 +53,32 @@
                     var factor = data;
                     $("#IdPrecioSalidaLt").val(factor)
                 });
-
-
                 /**********/
 
             });//key up.
 
+            $("#IdA").keyup(function () {
+                debugger
+                var from = $("#IdDe").val();
+                var To = $(this).val();
+
+                $('#tblfilterable tbody tr').each(function () {
+                    var filterdate = $(this).find("td").eq(7).html().split(" ", 1);//get value of column Fecha Programada
+
+                    if (from == filterdate || To == filterdate) {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
+                    }
+                    else {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
+                    }
+
+                });
+            });
         });
 
-    </script>
-
-    <script>
-        $(function () {
-
-            $(".datepicker").datepicker();
-        })
-
-    </script>
+    </script>   
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("Registrar", "PrecioVentaOtro", FormMethod.Post))
@@ -100,9 +103,7 @@
                             </div>
                         </div>
                     </div>
-                    @Html.EditorFor(m => m.FechaProgramada, new { htmlAttributes = new { @class = "datepicker" } })
 
-                    @Html.TextBoxFor(x => x.FechaProgramada, new { @class = "datepicker" })
                     <div class="card">
                         <div class="header">
                             <h2><strong>Registrar precio de salida</strong></h2>
@@ -246,7 +247,7 @@
                                                                 <td>@item.FechaVencimiento</td>
                                                                 <td>@item.PrecioVentaEstatus</td>
                                                                 <td>
-                                                                    <a ID="lbEdit" href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })">
+                                                                    <a ID="lbEdit" href="@Url.Action("EditarPrecioVentaOtro", "PrecioVentaOtro", new { id = item.IdPrecioVenta })">
                                                                         <i class="material-icons">edit</i>
                                                                         <span class="icon-name"></span>
                                                                     </a>
@@ -297,17 +298,3 @@
 @*<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
 </html>
-<link href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
-@*@section scripts{
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script>
-            $(function(){
-
-                $(".datepicker").datepicker();
-            })
-
-        </script>
-        }*@

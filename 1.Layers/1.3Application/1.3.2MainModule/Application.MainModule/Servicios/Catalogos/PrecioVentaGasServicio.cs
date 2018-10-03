@@ -21,9 +21,6 @@ namespace Application.MainModule.Servicios.Catalogos
 
         public static List<PrecioVentaDTO> Obtener()
         { 
-            /****Actualizar Estatus*****/
-
-            /***************************/
             List<PrecioVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PrecioVentaGasAdapter.ToDTO(new PrecioVentaDataAccess().BuscarTodos());
             return lPventas;
         }

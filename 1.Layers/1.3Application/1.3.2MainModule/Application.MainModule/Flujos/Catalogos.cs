@@ -257,50 +257,91 @@ namespace Application.MainModule.Flujos
         #endregion
 
         #region Precio de venta
-        public List<PrecioVentaDTO> UpdateStatus()
+        public void UpdateStatus(short idEmpresa)
         {
             List<PrecioVentaDTO> _lstCompleta = ListaPreciosVenta();
             PrecioVentaDTO entity = new PrecioVentaDTO();
 
             DateTime CurrentDate = DateTime.Now;
             string CurrentDateS = DateTime.Now.ToString("dd/MM/yyyy");
-            var _lstPorEmpresa = ListaPreciosVenta().GroupBy(x => x.IdEmpresa).ToList();
-
-            foreach (var item in _lstCompleta)
+            //  var _lstPorEmpresa = ListaPreciosVenta().GroupBy(x => x.IdEmpresa).ToList();
+            if (idEmpresa != 0)
             {
-                string FechaProgString = item.FechaProgramada.ToString("dd/MM/yyyy");
-                if (FechaProgString == CurrentDateS)
+                List<PrecioVentaDTO> _lstEmpresaId = LstPreciosVentaIdEmpresa(idEmpresa);//.Where(x => x.IdPrecioVentaEstatus.Equals(2)).ToList();
+                foreach (var item in _lstEmpresaId)
                 {
-                    entity.IdPrecioVenta = item.IdPrecioVenta;
-                    entity.FechaVencimiento = CurrentDate;
-
-                    /**Actualizar Estatus de Programado a Vigente***/
-                    if (item.IdPrecioVentaEstatus == 1)//1-Programado, 2-Vigente, 3-Vencido
+                    string FechaProgString = item.FechaProgramada.ToString("dd/MM/yyyy");
+                    if (FechaProgString == CurrentDateS)
                     {
-                        entity.IdPrecioVentaEstatus = 2;
+                        //entity.IdPrecioVenta = item.IdPrecioVenta;
+                        //entity.FechaVencimiento = CurrentDate;
+
+                        /**Actualizar Estatus de Programado a Vigente***/
+                        if (item.IdPrecioVentaEstatus == 1)//1-Programado, 2-Vigente, 3-Vencido
+                        {
+                            entity.IdEmpresa = item.IdEmpresa;
+                            entity.IdPrecioVentaEstatus = 2;//////2-Vigente
+                            entity.IdPrecioVenta = item.IdPrecioVenta;
+                            ModificaPrecioVentaGas(entity);
+                        }
+
+                        /****Actualizar Estatus de Vigente a Vencido*****/
+                        List<PrecioVentaDTO> _lstEmpresa = LstPreciosVentaIdEmpresa(item.IdEmpresa).Where(x => x.IdPrecioVentaEstatus.Equals(2)).ToList();
+                        if (_lstEmpresa.Count() > 1)
+                        {
+                            var x = (from z in _lstEmpresa orderby z.FechaRegistro ascending select z).FirstOrDefault();
+                            entity.FechaVencimiento = CurrentDate;
+                            entity.IdPrecioVenta = x.IdPrecioVenta;
+                            entity.IdPrecioVentaEstatus = 3;  //3-Vencido
+                            ModificaPrecioVentaGas(entity);
+                        }
+
+                        
                     }
 
-                    /****Actualizar Estatus de Vigente a Vencido*****/
-                    List<PrecioVentaDTO> _lstEmpresa = LstPreciosVentaIdEmpresa(item.IdPrecioVenta).Where(x=> x.IdPrecioVentaEstatus.Equals(2)).ToList();
-                    if (_lstEmpresa.Count()>1)
-                    {
-                        var x = (from z in _lstEmpresa orderby z.FechaRegistro ascending select z).FirstOrDefault();
-                        entity.FechaVencimiento = CurrentDate;
-                        entity.IdPrecioVenta = x.IdPrecioVenta;
-                        ModificaPrecioVentaGas(entity);
-                    }
-
-                    _lstCompleta.Add(entity);
                 }
-
-
             }
-            return _lstCompleta;
+            else
+            {
+                foreach (var item in _lstCompleta)
+                {
+                    string FechaProgString = item.FechaProgramada.ToString("dd/MM/yyyy");
+                    if (FechaProgString == CurrentDateS)
+                    {
+                        //entity.IdPrecioVenta = item.IdPrecioVenta;
+                        // entity.FechaVencimiento = CurrentDate;
+
+                        /**Actualizar Estatus de Programado a Vigente***/
+                        if (item.IdPrecioVentaEstatus == 1)//1-Programado, 2-Vigente, 3-Vencido
+                        {
+                            entity.IdEmpresa = item.IdEmpresa;
+                            entity.IdPrecioVentaEstatus = 2;//////2-Vigente
+                            entity.IdPrecioVenta = item.IdPrecioVenta;
+                            ModificaPrecioVentaGas(entity);
+                        }
+
+                        /****Actualizar Estatus de Vigente a Vencido*****/
+                        List<PrecioVentaDTO> _lstEmpresa = LstPreciosVentaIdEmpresa(item.IdEmpresa).Where(x => x.IdPrecioVentaEstatus.Equals(2)).ToList();
+                        if (_lstEmpresa.Count() > 1)
+                        {
+                            var x = (from z in _lstEmpresa orderby z.FechaRegistro ascending select z).FirstOrDefault();
+                            entity.FechaVencimiento = CurrentDate;
+                            entity.IdPrecioVenta = x.IdPrecioVenta;
+                            entity.IdPrecioVentaEstatus = 3;  //3-Vencido
+                            ModificaPrecioVentaGas(entity);
+                        }
+
+                        //     _lstCompleta.Add(entity);
+                    }
+
+
+                }
+            }
+            //  return _lstCompleta;
         }
 
         public List<PrecioVentaDTO> ListaPreciosVenta()
         {
-
             var resp = PermisosServicio.PuedeConsultarPrecioVentaGas();
             if (!resp.Exito) return null;
 
@@ -311,11 +352,10 @@ namespace Application.MainModule.Flujos
         }
         public List<PrecioVentaDTO> LstPreciosVentaIdEmpresa(short idEmpresa)
         {
-
             var resp = PermisosServicio.PuedeConsultarPrecioVentaGas();
             if (!resp.Exito) return null;
-            
-                return PrecioVentaGasServicio.Obtener().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+
+            return PrecioVentaGasServicio.Obtener().Where(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
         }
 
         public List<PrecioVentaEstatusDTO> TipoFecha()
