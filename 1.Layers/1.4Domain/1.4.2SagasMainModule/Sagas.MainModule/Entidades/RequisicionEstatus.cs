@@ -7,23 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class RequisicionEstatus
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class RequisicionEstatus
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public RequisicionEstatus()
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RequisicionEstatus()
-        {
-            this.Requisicion = new HashSet<Requisicion>();
-        }
-    
-        public byte IdRequisicionEstatus { get; set; }
-        public string Estatus { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Requisicion> Requisicion { get; set; }
+        this.Requisicion = new HashSet<Requisicion>();
     }
+
+    public byte IdRequisicionEstatus { get; set; }
+    public string Estatus { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<Requisicion> Requisicion { get; set; }
 }

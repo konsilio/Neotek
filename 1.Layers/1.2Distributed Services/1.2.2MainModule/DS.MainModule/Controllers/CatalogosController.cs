@@ -284,6 +284,8 @@ namespace DS.MainModule.Controllers
         [Route("consulta/precioventa")]
         public HttpResponseMessage GetListaPreciosVenta()
         {
+            /*******first Update Table Estatus*********/
+            _catalogos.UpdateStatus();
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPreciosVenta());
         }
 

@@ -17,6 +17,7 @@ namespace MVC.Presentacion.Controllers
             string _tkn = Session["StringToken"].ToString();
 
             ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
+
             if (ViewBag.EsSuperUser)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
@@ -39,6 +40,10 @@ namespace MVC.Presentacion.Controllers
             }
 
             ViewBag.MessageError = TempData["RespuestaDTOError"];
+
+            ViewBag.Categoria = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Categoria).Select(x => x.FirstOrDefault());
+            ViewBag.Linea = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Linea).Select(x => x.FirstOrDefault());
+            ViewBag.Producto = CatalogoServicio.ListaPrecioVenta(0, _tkn).GroupBy(x => x.Producto).Select(x => x.FirstOrDefault());
             return View();
         }
 

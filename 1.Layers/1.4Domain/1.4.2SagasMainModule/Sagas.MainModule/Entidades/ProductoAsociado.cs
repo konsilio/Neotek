@@ -7,19 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class ProductoAsociado
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class ProductoAsociado
-    {
-        public int IdProducto { get; set; }
-        public int IdProductoAsociado { get; set; }
-        public bool Activo { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-    
-        public virtual Producto Producto { get; set; }
-        public virtual Producto ProdAsociado { get; set; }
-    }
+    public int IdProducto { get; set; }
+    public int IdProductoAsociado { get; set; }
+    public bool Activo { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    public virtual Producto Producto { get; set; }
+    public virtual Producto ProdAsociado { get; set; }
 }

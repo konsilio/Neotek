@@ -7,20 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class AlmacenGasTomaLecturaCilindro
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class AlmacenGasTomaLecturaCilindro
-    {
-        public short IdCAlmacenGas { get; set; }
-        public int IdOrden { get; set; }
-        public short IdOrdenCilindro { get; set; }
-        public int IdCilindro { get; set; }
-        public decimal Cantidad { get; set; }
-    
-        public virtual AlmacenGasTomaLectura TomaLectura { get; set; }
-        public virtual UnidadAlmacenGasCilindro Cilindro { get; set; }
-    }
+    public short IdCAlmacenGas { get; set; }
+    public int IdOrden { get; set; }
+    public short IdOrdenCilindro { get; set; }
+    public int IdCilindro { get; set; }
+    public decimal Cantidad { get; set; }
+
+    public virtual AlmacenGasTomaLectura TomaLectura { get; set; }
+    public virtual UnidadAlmacenGasCilindro Cilindro { get; set; }
 }
