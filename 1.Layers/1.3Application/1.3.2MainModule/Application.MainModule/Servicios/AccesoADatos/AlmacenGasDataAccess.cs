@@ -221,8 +221,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     // Agregar al modelo de dominio AlmacenGasMovimiento
                     //if (aplicaRecarga.AGMovimiento != null)
                     //    uow.Repository<AlmacenGasMovimiento>().Insert(aplicaRecarga.MovInventario);
-
-                    uow.SaveChanges();
+                    if(uow.repositories.Count > 0)
+                        uow.SaveChanges();
                     //_respuesta.Id = aplicaRecarga.IdCAlmacenGas;
                     //_respuesta.Exito = true;
                     //_respuesta.EsActulizacion = true;
