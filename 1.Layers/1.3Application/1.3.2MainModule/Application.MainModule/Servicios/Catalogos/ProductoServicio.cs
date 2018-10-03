@@ -83,6 +83,19 @@ namespace Application.MainModule.Servicios.Catalogos
             else
                 return new ProductoDataAccess().ListaProductos(empresa.IdEmpresa);
         }
+
+        public static List<Producto> Obtener(short idEmpresa)
+        {
+            return new ProductoDataAccess().ListaProductos(idEmpresa).Where(x => x.EsActivoVenta == true & x.EsGas == true & x.Activo == true).ToList();
+        }
+
+        public static List<Producto> Obtener(Empresa empresa)
+        {
+            if (empresa.Productos != null & empresa.Productos.Count > 0)
+                return empresa.Productos.ToList().Where(x=> x.EsActivoVenta == true & x.EsGas == true & x.Activo == true).ToList();
+
+            return Obtener(empresa.IdEmpresa);
+        }
         public static CategoriaProducto ObtenerCategoria(short idCategoria)
         {
             return new ProductoDataAccess().BuscarCategoria(idCategoria);

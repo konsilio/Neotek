@@ -167,35 +167,35 @@ namespace Application.MainModule.Servicios.Seguridad
 
         #region Precio Venta
 
-        public static RespuestaDto PuedeConsultarPrecioVenta()
+        public static RespuestaDto PuedeConsultarPrecioVentaGas()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarCliente).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatConsultarPrecioVentaGas).ToList();
 
-            return EvaluarPermiso(roles, Error.P0001, "PrecioVenta");
+            return EvaluarPermiso(roles, Error.P0001, "PrecioVentaGas");
         }
-        public static RespuestaDto PuedeRegistrarPrecioVenta()
+        public static RespuestaDto PuedeRegistrarPrecioVentaGas()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarUsuario).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatInsertarPrecioVentaGas).ToList();
 
-            return EvaluarPermiso(roles, Error.P0001, "PrecioVenta");
-        }
-
-        public static RespuestaDto PuedeModificarPrecioVenta()
-        {
-            var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatModificarUsuario).ToList();
-
-            return EvaluarPermiso(roles, Error.P0002, "PrecioVenta");
+            return EvaluarPermiso(roles, Error.P0001, "PrecioVentaGas");
         }
 
-        public static RespuestaDto PuedeEliminarPrecioVenta()
+        public static RespuestaDto PuedeModificarPrecioVentaGas()
         {
             var usuario = UsuarioAplicacionServicio.Obtener();
-            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarUsuario).ToList();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatModificarPrecioVentaGas).ToList();
 
-            return EvaluarPermiso(roles, Error.P0003, "PrecioVenta");
+            return EvaluarPermiso(roles, Error.P0002, "PrecioVentaGas");
+        }
+
+        public static RespuestaDto PuedeEliminarPrecioVentaGas()
+        {
+            var usuario = UsuarioAplicacionServicio.Obtener();
+            var roles = usuario.UsuarioRoles.Where(x => x.Role.CatEliminarPrecioVentaGas).ToList();
+
+            return EvaluarPermiso(roles, Error.P0003, "PrecioVentaGas");
         }
 
         #endregion

@@ -66,6 +66,8 @@
     <Compile Include="AdaptadoresDTO\Catalogo\FormaPagoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\OperadorChoferAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
+    <Compile Include="DTOs\Catalogo\PrecioVentaEstatusDTO.cs" />
+    <Compile Include="AdaptadoresDTO\Catalogo\PrecioVentaGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProveedorAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PuntoVentaAdapter.cs" />
@@ -145,9 +147,6 @@
     <Compile Include="DTOs\Catalogo\ProductoDTO.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorEliminarDto.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorModificarDto.cs" />
-    <Compile Include="DTOs\Catalogo\UsuarioCrearDto.cs" />
-    <Compile Include="DTOs\Catalogo\UsuarioEliminarDto.cs" />
-    <Compile Include="DTOs\Catalogo\UsuarioModificarDto.cs" />
     <Compile Include="DTOs\Compras\ComplementoGasDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraCrearDTO.cs" />
     <Compile Include="DTOs\Compras\OrdenCompraDTO.cs" />
@@ -167,12 +166,14 @@
     <Compile Include="DTOs\Mobile\LecturaDTO.cs" />
     <Compile Include="DTOs\Mobile\LoginFbDTO.cs" />
     <Compile Include="DTOs\Mobile\RecargaDTO.cs" />
+    <Compile Include="Servicios\AccesoADatos\PrecioVentaDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\OrdenCompraPagoDataAccess.cs" />
     <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
     <Compile Include="DTOs\Mobile\TipoPersonaDto.cs" />
     <Compile Include="DTOs\Mobile\TipoRegimenFiscalDto.cs" />
     <Compile Include="Servicios\Mobile\ClientesServicio.cs" />
     <Compile Include="DTOs\NotificacionDTO.cs" />
+    <Compile Include="Servicios\Catalogos\PrecioVentaGasServicio.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEstatusDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />
     <Compile Include="DTOs\CorreoDto.cs" />

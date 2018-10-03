@@ -268,6 +268,44 @@ namespace DS.MainModule.Controllers
         }
         #endregion
 
+        #region Precio de Venta
+        [Route("consulta/listaprecioventa/{idEmpresa}")]
+        public HttpResponseMessage GetListaPreciosVentaIdEmpresa(short idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.PreciosVentaIdEmpresa(idEmpresa));
+        }
+
+        [Route("consulta/estatustipofecha")]
+        public HttpResponseMessage GetTiposFecha()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.TipoFecha());
+        }
+
+        [Route("consulta/precioventa")]
+        public HttpResponseMessage GetListaPreciosVenta()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPreciosVenta());
+        }
+
+        [Route("elimina/precioventa")]
+        public HttpResponseMessage PutEliminaPreciosVenta(PrecioVentaDTO cteLoc)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.EliminaPreciosVenta(cteLoc), Request);
+        }
+        [Route("registra/precioventa")]
+        public HttpResponseMessage PostRegistraPrecios(PrecioVentaDTO PVDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.RegistraPrecioVentaGas(PVDto), Request);
+        }
+
+        [Route("modifica/precioventa")]
+        public HttpResponseMessage PutModificaPreciosVenta(PrecioVentaDTO pvDto)
+        {
+            return RespuestaHttp.crearRespuesta(_catalogos.ModificaPrecioVentaGas(pvDto), Request);
+        }
+
+        #endregion
+
         #region Productos
 
         #region Categoria Productos

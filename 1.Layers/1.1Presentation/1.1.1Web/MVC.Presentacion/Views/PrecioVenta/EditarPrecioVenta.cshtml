@@ -1,0 +1,149 @@
+﻿@model  MVC.Presentacion.Models.Catalogos.PrecioVentaModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @{
+        ViewBag.Title = "Index";
+    }
+    <!-- Bootstrap Select Css -->
+    @*<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />*@
+
+    <!-- datetimepicker Css -->
+    @*<link href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />*@
+
+    <!-- datetimepicker Js -->
+    @*<script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+        <script src="~/assets/plugins/momentjs/moment.js"></script>*@
+    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnRegresarIndex").click(function () {
+                var form = $(this).parent("form");
+                form.attr('action', '<%= Url.RouteUrl(new { Controller = "PrecioVenta", Action = "Index" }) %>');
+                form.attr('method', 'post');
+            });
+
+            $("#txtUtilidad").keyup(function () {
+                var precio = $("#PrecioPMX").val();
+
+                var utilidad = $(this).val();
+
+                var operacion = parseFloat(precio) + parseFloat(utilidad);
+
+                $("#IdPrecioSalidaKg").val(operacion)
+
+                //$("#IDPrecioSalidaKg").val(operacion);
+                // alert($('#IdPrecioSalidaKg').val());
+            });//key up.
+
+        });
+
+    </script>
+</head>
+<body style="height:100%">
+    @using (Html.BeginForm("ActualizarPrecioVenta", "PrecioVenta", FormMethod.Post))
+    {
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
+
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Registrar precio de salida</strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div class="form-group">
+                                        Precio PEMEX: @* , id = "PrecioPMX" @Html.TextBoxFor(m => m.PrecioPemexKg, new { @class = "form-control"})kg.*@
+                                        <input name="PrecioPemexKg" id="PrecioPMX" type="text" class="form-control" value="@(ViewBag.ListaPV[0].PrecioPemexKg)" />kg.
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div class="form-group">
+                                        Utilidad esperada: @*@Html.TextBoxFor(m => m.UtilidadEsperadaKg, new { @class = "form-control"})kg., " *@
+                                        <input name="UtilidadEsperadaKg" id="txtUtilidad" type="text" class="form-control" value="@(ViewBag.ListaPV[0].UtilidadEsperadaKg)"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div class="form-group">
+                                        Precio salida:
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div class="form-group">
+                                        @* @Html.LabelFor(m => m.PrecioSalidaKg, new { @class = "form-control" }), *@
+                                        <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="text" class="form-control" readonly="readonly"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <input name="PrecioSalidaLt" type="text" class="form-control" readonly="readonly" />
+                                        <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
+                                        <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-2">
+                                    <b>Fecha programada:</b>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="zmdi zmdi-calendar"></i>
+                                        </span>
+                                        <input type="text" name="FechaProgramada" class="form-control datetimepicker" placeholder="Fecha programada" data-dtp="dtp_REMsB">
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <input type="submit" id="btnActualizaPrecio" value="Actualizar Precio" formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <div class="form-group">
+                                    <input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-left" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                {
+
+                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
+                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                         bottom: 20px; left: 0px; right: 0px;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                            <span data-notify="icon"></span>
+                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
+                            <a href="#" target="_blank" data-notify="url"></a>
+                        </div>
+                    }
+                    @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
+                {
+                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
+                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                         bottom: 20px; left: 0px; right: 0px;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                            <span data-notify="icon"></span>
+                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </section>
+    }
+
+</body>
+</html>
