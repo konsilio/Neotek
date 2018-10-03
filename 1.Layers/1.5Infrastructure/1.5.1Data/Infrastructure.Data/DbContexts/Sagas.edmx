@@ -279,6 +279,7 @@
           <Key>
             <PropertyRef Name="IdCAlmacenGasSalida" />
             <PropertyRef Name="IdCAlmacenGasEntrada" />
+            <PropertyRef Name="IdOrden" />
           </Key>
           <Property Name="IdCAlmacenGasSalida" Type="smallint" Nullable="false" />
           <Property Name="IdCAlmacenGasEntrada" Type="smallint" Nullable="false" />
@@ -1035,15 +1036,16 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdOrdenCompra" Type="int" Nullable="false" />
           <Property Name="Orden" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdFormaPago" Type="tinyint" Nullable="false" />
+          <Property Name="IdFormaPago" Type="tinyint" />
           <Property Name="IdBanco" Type="smallint" Nullable="false" />
           <Property Name="CuentaBancaria" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="TotalImporte" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="MontoPagado" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="SaldoInsoluto" Type="decimal" Precision="18" Scale="4" Nullable="false" />
-          <Property Name="UrlPathCapturaPantalla" Type="varchar" MaxLength="350" Nullable="false" />
-          <Property Name="PhysicalPathCapturaPantalla" Type="varchar" MaxLength="350" Nullable="false" />
+          <Property Name="UrlPathCapturaPantalla" Type="varchar" MaxLength="350" />
+          <Property Name="PhysicalPathCapturaPantalla" Type="varchar" MaxLength="350" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+          <Property Name="FechaConfirmacion" Type="smalldatetime" />
         </EntityType>
         <EntityType Name="OrdenCompraProducto">
           <Key>
@@ -1145,6 +1147,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdCentroCosto" Type="int" Nullable="false" />
           <Property Name="IdTipoProducto" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CantidadEntregada" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Aplicacion" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="EsActivoVenta" Type="bit" Nullable="false" />
           <Property Name="EsGas" Type="bit" Nullable="false" />
@@ -1860,7 +1863,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <End Role="AlmacenGasTraspaso" Type="Self.AlmacenGasTraspaso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AlmacenGasTraspasoFoto" Type="Self.AlmacenGasTraspasoFoto" Multiplicity="0..1" />
+          <End Role="AlmacenGasTraspasoFoto" Type="Self.AlmacenGasTraspasoFoto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AlmacenGasTraspaso">
               <PropertyRef Name="IdCAlmacenGasSalida" />
@@ -5682,6 +5685,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Requisicion" Relationship="Sagas.MainModuleModel.FK_RequisicionProducto_Requisicion" FromRole="RequisicionProducto" ToRole="Requisicion" />
           <NavigationProperty Name="Producto" Relationship="Sagas.MainModuleModel.FK_RequisicionProducto_Producto" FromRole="RequisicionProducto" ToRole="Producto" />
           <NavigationProperty Name="CentroCosto" Relationship="Sagas.MainModuleModel.FK_RequisicionProducto_CentroCosto" FromRole="RequisicionProducto" ToRole="CentroCosto" />
+          <Property Name="CantidadEntregada" Type="Decimal" Precision="18" Scale="2" />
       
           <!--<Property Name="Orden1" Type="Int16" Nullable="false" />
           <Property Name="Orden2" Type="Int16" Nullable="false" />-->
@@ -6089,16 +6093,17 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </Key>
           <Property Name="IdOrdenCompra" Type="Int32" Nullable="false" />
           <Property Name="Orden" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdFormaPago" Type="Byte" Nullable="false" />
+          <Property Name="IdFormaPago" Type="Byte" />
           <Property Name="IdBanco" Type="Int16" Nullable="false" />
           <Property Name="CuentaBancaria" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="MontoPagado" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
            <Property Name="TotalImporte" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="SaldoInsoluto" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="UrlPathCapturaPantalla" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="PhysicalPathCapturaPantalla" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="UrlPathCapturaPantalla" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="PhysicalPathCapturaPantalla" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />         
-          <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompraPago_OrdenCompra" FromRole="OrdenCompraPago" ToRole="OrdenCompra" />         
+          <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompraPago_OrdenCompra" FromRole="OrdenCompraPago" ToRole="OrdenCompra" />
+          <Property Name="FechaConfirmacion" Type="DateTime" Precision="0" />         
         </EntityType>
         <EntityType Name="OrdenCompraProducto">
           <Key>
@@ -7952,7 +7957,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="UrlImagen" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="PathImagen" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="CadenaBase64" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AlmacenGasTraspaso" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso" FromRole="AlmacenGasTraspasoFoto" ToRole="AlmacenGasTraspaso" />
+          <NavigationProperty Name="Traspaso" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso" FromRole="AlmacenGasTraspasoFoto" ToRole="AlmacenGasTraspaso" />
         </EntityType>
         <Association Name="FK_AlmacenGasAutoConsumo_CAlmacenGas">
           <End Type="Sagas.MainModuleModel.UnidadAlmacenGas" Role="UnidadAlmacenGas" Multiplicity="1" />
@@ -9088,6 +9093,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="RequisicionProducto">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.RequisicionProducto">
               <MappingFragment StoreEntitySet="RequisicionProducto">
+                <ScalarProperty Name="CantidadEntregada" ColumnName="CantidadEntregada" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
                 <ScalarProperty Name="EsTransporteGas" ColumnName="EsTransporteGas" />
                 <ScalarProperty Name="EsGas" ColumnName="EsGas" />
@@ -9366,6 +9372,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="OrdenCompraPago">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompraPago">
               <MappingFragment StoreEntitySet="OrdenCompraPago">
+                <ScalarProperty Name="FechaConfirmacion" ColumnName="FechaConfirmacion" />
                 <ScalarProperty Name="SaldoInsoluto" ColumnName="SaldoInsoluto" />
                 <ScalarProperty Name="TotalImporte" ColumnName="TotalImporte" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />

@@ -190,6 +190,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
         public void Actualizar(AplicaRecargaDto aplicaRecarga)
         {            
             using (uow)
@@ -368,6 +369,19 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<AlmacenGasRecarga> BuscarTodasRecargasNoProcesadas(byte idTipoEvento)
         {
             return uow.Repository<AlmacenGasRecarga>().Get(x => !x.DatosProcesados && x.IdTipoEvento.Equals(idTipoEvento)).ToList();
+        }
+        public List<AlmacenGasTraspaso> BuscarTodosTraspasosNoProcesadas()
+        {
+            return uow.Repository<AlmacenGasTraspaso>().Get(x => !x.DatosProcesados).ToList();
+        }
+        public List<AlmacenGasTraspaso> BuscarTodosTraspasosNoProcesadas(byte idTipoEvento)
+        {
+            return uow.Repository<AlmacenGasTraspaso>().Get(x => !x.DatosProcesados && x.IdTipoEvento.Equals(idTipoEvento)).ToList();
+        }
+        public List<AlmacenGasTraspasoFoto> BuscarImagenes(short idCAlmacenEntrada, short idCAlmacenSalida)
+        {
+            return uow.Repository<AlmacenGasTraspasoFoto>().Get(x => x.IdCAlmacenGasEntrada.Equals(idCAlmacenEntrada)
+                                                                  && x.IdCAlmacenGasSalida.Equals(idCAlmacenSalida)).ToList();
         }
         public List<AlmacenGasTomaLectura> BuscarTodasLecturasNoProcesadas()
         {

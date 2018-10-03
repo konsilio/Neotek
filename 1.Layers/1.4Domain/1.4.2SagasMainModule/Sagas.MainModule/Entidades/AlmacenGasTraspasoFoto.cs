@@ -22,6 +22,6 @@ namespace Sagas.MainModule.Entidades
         public string PathImagen { get; set; }
         public string CadenaBase64 { get; set; }
     
-        public virtual AlmacenGasTraspaso AlmacenGasTraspaso { get; set; }
+        public virtual AlmacenGasTraspaso Traspaso { get; set; }
     }
 }

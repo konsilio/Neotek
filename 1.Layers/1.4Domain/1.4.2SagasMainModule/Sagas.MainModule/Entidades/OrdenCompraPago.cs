@@ -16,7 +16,7 @@ namespace Sagas.MainModule.Entidades
     {
         public int IdOrdenCompra { get; set; }
         public short Orden { get; set; }
-        public byte IdFormaPago { get; set; }
+        public Nullable<byte> IdFormaPago { get; set; }
         public short IdBanco { get; set; }
         public string CuentaBancaria { get; set; }
         public decimal MontoPagado { get; set; }
@@ -25,6 +25,7 @@ namespace Sagas.MainModule.Entidades
         public string UrlPathCapturaPantalla { get; set; }
         public string PhysicalPathCapturaPantalla { get; set; }
         public System.DateTime FechaRegistro { get; set; }
+        public Nullable<System.DateTime> FechaConfirmacion { get; set; }
     
         public virtual OrdenCompra OrdenCompra { get; set; }
     }

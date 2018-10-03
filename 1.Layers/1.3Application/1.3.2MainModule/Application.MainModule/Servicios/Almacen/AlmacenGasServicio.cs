@@ -148,6 +148,10 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().BuscarTodasRecargasNoProcesadas();
         }
+        public static List<AlmacenGasTraspaso> ObtenertraspasosNoProcesadas()
+        {
+            return new AlmacenGasDataAccess().BuscarTodosTraspasosNoProcesadas();
+        }
         public static List<AlmacenGasRecarga> ObtenerRecargasNoProcesadas(byte idTipoEvento)
         {
             return new AlmacenGasDataAccess().BuscarTodasRecargasNoProcesadas(idTipoEvento);
@@ -223,6 +227,27 @@ namespace Application.MainModule.Servicios.Almacen
             else
                 return ObtenerUnidadAlamcenGas(recarga.IdCAlmacenGasSalida.Value);
         }
+        public static UnidadAlmacenGas ObtenerUnidadAlamcenGas(AlmacenGasTraspaso traspaso, bool deSalida)
+        {
+            if (traspaso != null)
+            {
+                if (!deSalida)
+                {
+                    if (traspaso.UnidadEntrada != null)
+                        return traspaso.UnidadEntrada;
+                }
+                else
+                {
+                    if (traspaso.UnidadSalida != null)
+                        return traspaso.UnidadSalida;
+                }
+            }
+
+            if (!deSalida)
+                return ObtenerUnidadAlamcenGas(traspaso.IdCAlmacenGasEntrada);
+            else
+                return ObtenerUnidadAlamcenGas(traspaso.IdCAlmacenGasSalida);
+        }
         public static UnidadAlmacenGas ObtenerUnidadAlmacenGasAlterno(short idEmpresa)
         {
             return new AlmacenGasDataAccess().ObtenerUnidadAlmacenGasAlterno(idEmpresa);
@@ -279,12 +304,19 @@ namespace Application.MainModule.Servicios.Almacen
 
             return new AlmacenGasDescargaDataAccess().BuscarImagenes(descarga.IdAlmacenEntradaGasDescarga);
         }
-        public static List<AlmacenGasRecargaFoto> ObtenerImagenes(AlmacenGasRecarga Rescarga)
+        public static List<AlmacenGasRecargaFoto> ObtenerImagenes(AlmacenGasRecarga recarga)
         {
-            if (Rescarga.Fotografias != null && Rescarga.Fotografias.Count > 0)
-                return Rescarga.Fotografias.ToList();
+            if (recarga.Fotografias != null && recarga.Fotografias.Count > 0)
+                return recarga.Fotografias.ToList();
 
-            return new AlmacenGasDataAccess().BuscarImagenes(Rescarga.IdAlmacenGasRecarga);
+            return new AlmacenGasDataAccess().BuscarImagenes(recarga.IdAlmacenGasRecarga);
+        }
+        public static List<AlmacenGasTraspasoFoto> ObtenerImagenes(AlmacenGasTraspaso traspaso)
+        {
+            if (traspaso.Fotografias != null && traspaso.Fotografias.Count > 0)
+                return traspaso.Fotografias.ToList();
+
+            return new AlmacenGasDataAccess().BuscarImagenes(traspaso.IdCAlmacenGasEntrada, traspaso.IdCAlmacenGasSalida);
         }
         public static string ObtenerNombreUnidadAlmacenGas(UnidadAlmacenGas uAG)
         {
@@ -720,6 +752,126 @@ namespace Application.MainModule.Servicios.Almacen
             List<AlmacenGasRecargaFoto> imagenes = ObtenerImagenes(recarga);
 
             var fotos = new List<AlmacenGasRecargaFoto>();
+
+            if (imagenes != null && imagenes.Count > 0)
+            {
+                foreach (var imagen in imagenes)
+                {
+                    var img = ImagenServicio.ObtenerImagen(imagen);
+                    var foto = AlmacenGasAdapter.FromEntity(img);
+                    fotos.Add(foto);
+                }
+            }
+
+            return fotos;
+        }
+
+        public static List<AplicaTraspasoDto> AplicarTraspaso()
+        {
+            List<AplicaTraspasoDto> aplicaciones = new List<AplicaTraspasoDto>();
+            List<AlmacenGasTraspaso> traspasosGas = ObtenertraspasosNoProcesadas();
+
+            List<AlmacenGasTraspaso> traspasosGasIniciales = traspasosGas.Where(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)).ToList();
+            List<AlmacenGasTraspaso> traspasosGasFinales = traspasosGas.Where(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final)).ToList();
+
+            if (traspasosGasIniciales != null && traspasosGasIniciales.Count > 0)
+            {
+                traspasosGasIniciales.ForEach(x => aplicaciones.Add(AplicarTraspaso(x, traspasosGasFinales)));
+                //new AlmacenGasTraspasoDataAccess().Actualizar(aplicaciones);
+            }
+
+            return aplicaciones;
+        }
+
+        public static AplicaTraspasoDto AplicarTraspaso(AlmacenGasTraspaso TraspasoInicial, List<AlmacenGasTraspaso> TraspasosFinales)
+        {
+            AplicaTraspasoDto apReDto = new AplicaTraspasoDto()
+            {
+                TraspasoLecturaInicial = TraspasoInicial,
+                TraspasosFinales = TraspasosFinales,
+                unidadSalida = AlmacenGasServicio.ObtenerUnidadAlamcenGas(TraspasoInicial, true),
+                unidadEntrada = AlmacenGasServicio.ObtenerUnidadAlamcenGas(TraspasoInicial, false),
+            };
+
+            apReDto.Empresa = EmpresaServicio.Obtener(apReDto.unidadEntrada);
+            apReDto = AplicarTraspaso(apReDto);
+
+            return apReDto;
+        }
+
+        public static AplicaTraspasoDto AplicarTraspaso(AplicaTraspasoDto apTrasDto)
+        {
+            apTrasDto.identidadUS = IdentificarTipoUnidadAlamcenGas(apTrasDto.unidadSalida);
+            apTrasDto.identidadUE = IdentificarTipoUnidadAlamcenGas(apTrasDto.unidadEntrada);
+
+            switch (apTrasDto.identidadUE)
+            {
+                case identidadUnidadAlmacenGas.Pipa: apTrasDto = AplicarTraspasoPipa(apTrasDto); break;
+                case identidadUnidadAlmacenGas.EstacionCarburacion: apTrasDto = AplicarTraspasoEstacion(apTrasDto); break;
+                case identidadUnidadAlmacenGas.Camioneta: apTrasDto = AplicarTraspasoCamioneta(apTrasDto); break;
+            }
+
+            new AlmacenGasDataAccess().Actualizar(apTrasDto);
+            return apTrasDto;
+        }
+
+        public static AplicaTraspasoDto AplicarTraspasoPipa(AplicaTraspasoDto apTrasDto)
+        {
+            apTrasDto.TraspasoLecturaFinal = apTrasDto.TraspasosFinales.FirstOrDefault(x => x.IdCAlmacenGasEntrada.Equals(apTrasDto.TraspasoLecturaInicial.IdCAlmacenGasEntrada));
+
+            if (apTrasDto.TraspasoLecturaFinal == null)
+                return new AplicaTraspasoDto();
+
+            decimal LitrosTraspasodos = CalcularGasServicio.ObtenerDiferenciaLecturaP5000(apTrasDto.TraspasoLecturaFinal.P5000Salida, apTrasDto.TraspasoLecturaInicial.P5000Salida);            
+            decimal KilosTraspasodos = CalcularGasServicio.ObtenerKilogramosDesdeLitros(LitrosTraspasodos, apTrasDto.Empresa.FactorLitrosAKilos);
+
+            apTrasDto = AplicarTraspaso(apTrasDto, LitrosTraspasodos, KilosTraspasodos);
+
+           
+
+            return apTrasDto;
+        }
+
+        public static AplicaTraspasoDto AplicarTraspaso(AplicaTraspasoDto apReDto, decimal LitrosTraspasodos, decimal KilosTraspasodos)
+        {
+            apReDto.unidadEntrada.CantidadActualLt = CalcularGasServicio.SumarLitros(apReDto.unidadEntrada.CantidadActualLt, LitrosTraspasodos);
+            apReDto.unidadEntrada.CantidadActualKg = CalcularGasServicio.SumarKilogramos(apReDto.unidadEntrada.CantidadActualKg, KilosTraspasodos);            
+            apReDto.unidadEntrada.PorcentajeActual = CalcularGasServicio.ObtenerPorcentajeDesdeLitros(apReDto.unidadEntrada.CapacidadTanqueLt.Value, apReDto.unidadEntrada.CantidadActualLt);
+            apReDto.unidadEntrada.P5000Actual = apReDto.TraspasoLecturaFinal.P5000Entrada;
+
+            apReDto.unidadSalida.CantidadActualLt = CalcularGasServicio.RestarLitros(apReDto.unidadSalida.CantidadActualLt, LitrosTraspasodos);
+            apReDto.unidadSalida.CantidadActualKg = CalcularGasServicio.RestarKilogramos(apReDto.unidadSalida.CantidadActualKg, KilosTraspasodos);
+            apReDto.unidadSalida.P5000Actual = apReDto.TraspasoLecturaFinal.P5000Salida;
+
+            if (apReDto.identidadUS.Equals(identidadUnidadAlmacenGas.EstacionCarburacion))
+                apReDto.unidadSalida.PorcentajeActual = apReDto.TraspasoLecturaInicial.PorcentajeSalida.Value;
+            if(apReDto.identidadUS.Equals(identidadUnidadAlmacenGas.Pipa))
+                apReDto.unidadSalida.PorcentajeActual = CalcularGasServicio.ObtenerPorcentajeDesdeLitros(apReDto.unidadSalida.CapacidadTanqueLt.Value, apReDto.unidadSalida.CantidadActualLt);
+                        
+            apReDto.TraspasoLecturaInicialFotos = GenerarImagenes(apReDto.TraspasoLecturaInicial);
+            apReDto.TraspasoLecturaInicial.DatosProcesados = true;
+
+            apReDto.unidadEntrada = AlmacenGasAdapter.FromEntity(apReDto.unidadEntrada);
+            apReDto.unidadSalida = AlmacenGasAdapter.FromEntity(apReDto.unidadSalida);
+
+            if (apReDto.identidadUE != identidadUnidadAlmacenGas.Camioneta)
+            {
+                apReDto.unidadEntrada.PorcentajeActual = apReDto.TraspasoLecturaFinal.ProcentajeEntrada.Value;
+                apReDto.TraspasoLecturaFinalFotos = GenerarImagenes(apReDto.TraspasoLecturaFinal);
+                apReDto.TraspasoLecturaFinal.DatosProcesados = true;
+                apReDto.TraspasoLecturaFinalSinNavProp = AlmacenGasAdapter.FromEntity(apReDto.TraspasoLecturaFinal);
+            }
+
+            apReDto.TraspasoLecturaInicialSinNavProp = AlmacenGasAdapter.FromEntity(apReDto.TraspasoLecturaInicial);
+
+            return apReDto;
+        }
+
+        public static List<AlmacenGasTraspasoFoto> GenerarImagenes(AlmacenGasTraspaso Traspaso)
+        {
+            List<AlmacenGasTraspasoFoto> imagenes = ObtenerImagenes(Traspaso);
+
+            var fotos = new List<AlmacenGasTraspasoFoto>();
 
             if (imagenes != null && imagenes.Count > 0)
             {
