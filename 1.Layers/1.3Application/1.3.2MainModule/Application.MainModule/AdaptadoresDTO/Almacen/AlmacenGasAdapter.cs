@@ -9,6 +9,22 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
 {
     public class AlmacenGasAdapter
     {
+        public static AlmacenGas FromEntity(AlmacenGas almacenTotal)
+        {
+            return new AlmacenGas
+            {
+                IdAlmacenGas = almacenTotal.IdAlmacenGas,
+                IdEmpresa = almacenTotal.IdEmpresa,
+                CapacidadTotalLt = almacenTotal.CapacidadTotalLt,
+                CapacidadTotalKg = almacenTotal.CapacidadTotalKg,
+                CantidadActualLt = almacenTotal.CantidadActualLt,
+                CantidadActualKg = almacenTotal.CantidadActualKg,
+                PorcentajeActual = almacenTotal.PorcentajeActual,
+                Activo = almacenTotal.Activo,
+                FechaRegistro = almacenTotal.FechaRegistro,
+            };
+        }
+
         public static UnidadAlmacenGas FromEntity(UnidadAlmacenGas unidad)
         {
             return new UnidadAlmacenGas()
@@ -33,6 +49,28 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 Activo = unidad.Activo,
                 FechaRegistro = unidad.FechaRegistro,
                 PorcentajeCalibracionPlaneada = unidad.PorcentajeCalibracionPlaneada,
+            };
+        }
+
+        public static CamionetaCilindro FromEntity(CamionetaCilindro cilindro)
+        {
+            return new CamionetaCilindro
+            {
+                IdEmpresa = cilindro.IdEmpresa,
+                IdCamioneta = cilindro.IdCamioneta,
+                IdCilindro = cilindro.IdCilindro,
+                Cantidad = cilindro.Cantidad,
+            };
+        }
+
+        public static CamionetaCilindro FromEntity(AlmacenGasRecargaCilindro cilindro, UnidadAlmacenGas unidad, UnidadAlmacenGasCilindro cilindroUA)
+        {
+            return new CamionetaCilindro
+            {
+                IdEmpresa = cilindroUA.IdEmpresa,
+                IdCamioneta = unidad.IdCamioneta.Value,
+                IdCilindro = cilindroUA.IdCilindro,
+                Cantidad = cilindro.Cantidad,
             };
         }
 
@@ -85,6 +123,39 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
             {
                 IdAlmacenEntradaGasDescarga = img.IdAlmacenEntradaGasDescarga,
                 Orden = img.Orden,
+                IdImagenDe = img.IdImagenDe,
+                CadenaBase64 = img.CadenaBase64,
+                PathImagen = img.PathImagen,
+                UrlImagen = img.UrlImagen
+            };
+        }
+
+        public static AlmacenGasRecarga FromEntity(AlmacenGasRecarga recarga)
+        {
+            return new AlmacenGasRecarga
+            {
+                IdAlmacenGasRecarga = recarga.IdAlmacenGasRecarga,
+                IdCAlmacenGasSalida = recarga.IdCAlmacenGasSalida,
+                IdCAlmacenGasEntrada = recarga.IdCAlmacenGasEntrada,
+                IdTipoMedidorSalida = recarga.IdTipoMedidorSalida,
+                IdTipoMedidorEntrada = recarga.IdTipoMedidorEntrada,
+                IdTipoEvento = recarga.IdTipoEvento,
+                P5000Salida = recarga.P5000Salida,
+                P5000Entrada = recarga.P5000Entrada,
+                PorcentajeSalida = recarga.PorcentajeSalida,
+                ProcentajeEntrada = recarga.ProcentajeEntrada,
+                ClaveOperacion = recarga.ClaveOperacion,
+                DatosProcesados = recarga.DatosProcesados,
+                FechaRegistro = recarga.FechaRegistro,
+            };
+        }
+
+        public static AlmacenGasRecargaFoto FromEntity(AlmacenGasRecargaFoto img)
+        {
+            return new AlmacenGasRecargaFoto
+            {
+                IdAlmacenGasRecarga = img.IdAlmacenGasRecarga,
+                IdOrden = img.IdOrden,
                 IdImagenDe = img.IdImagenDe,
                 CadenaBase64 = img.CadenaBase64,
                 PathImagen = img.PathImagen,
