@@ -7,6 +7,7 @@ using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.AdaptadoresDTO.Requisicion;
 using Application.MainModule.Servicios;
+using Application.MainModule.Servicios.Compras;
 
 namespace Application.MainModule.Flujos
 {
@@ -15,7 +16,7 @@ namespace Application.MainModule.Flujos
         public RespuestaDto InsertRequisicionNueva(RequisicionDTO _req)
         {
             var _requisicion = RequisicionAdapter.FromDTO(_req);
-            _requisicion = Servicios.Almacen.ProductoAlmacenServicio.CalcularAlmacenProcutos(_requisicion);
+            _requisicion = CalcularOrdenCompraServicio.CalcularAlmacenProcutos(_requisicion);
             var ListaRequisiciones = RequisicionServicio.IdentificarRequisicones(_requisicion);
             ListaRequisiciones = FolioServicio.GenerarNumeroRequisicion(ListaRequisiciones);
             RespuestaDto resp = new RespuestaDto();

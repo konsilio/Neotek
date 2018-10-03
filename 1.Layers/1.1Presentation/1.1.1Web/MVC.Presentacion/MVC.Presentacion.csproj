@@ -127,8 +127,36 @@
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Http, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.6\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.6\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
@@ -144,32 +172,8 @@
       <Private>True</Private>
       <HintPath>..\..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\..\..\..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\..\..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -242,6 +246,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdenCompraController.cs" />
     <Compile Include="Controllers\PrecioVentaController.cs" />
+    <Compile Include="Controllers\PrecioVentaOtroController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\PuntoVentaController.cs" />
     <Compile Include="Controllers\RequisicionController.cs" />
@@ -268,13 +273,13 @@
     <Compile Include="Models\Catalogos\ClienteLocacionMod.cs" />
     <Compile Include="Models\Catalogos\ClientesDto.cs" />
     <Compile Include="Models\Catalogos\ClientesModel.cs" />
-    <Compile Include="Models\Catalogos\EmpDto.cs" />
     <Compile Include="Models\Catalogos\Empresa.cs" />
     <Compile Include="Models\Catalogos\EmpresaConfiguracion.cs" />
     <Compile Include="Models\Catalogos\EmpresaModel.cs" />
     <Compile Include="Models\Catalogos\CentroCosto\CentroCostoDTO.cs" />
     <Compile Include="Models\Catalogos\EquipoTransporteDTO.cs" />
     <Compile Include="Models\Catalogos\EstacionCarburacionDTO.cs" />
+    <Compile Include="Models\Catalogos\EstatusTipoFechaModel.cs" />
     <Compile Include="Models\Catalogos\FormaPagoDTO.cs" />
     <Compile Include="Models\Catalogos\LineaProductoDTO.cs" />
     <Compile Include="Models\Catalogos\EmpresaDTO.cs" />
@@ -302,11 +307,14 @@
     <Compile Include="Models\OrdenCompra\AlmacenEntradaDTO.cs" />
     <Compile Include="Models\OrdenCompra\EntradaMercanciaModel.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraAutorizacionModel.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraComplementoDTO.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraComplementoGasDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraCrearDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraEstatusDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraEstatusEnum.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraModel.cs" />
+    <Compile Include="Models\OrdenCompra\OrdenCompraPagoDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraProductoDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenesCompraModel.cs" />
@@ -10649,6 +10657,13 @@
     <Content Include="assets\plugins\waitme\waitMe.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\bootstrap-1.1.0.css" />
+    <Content Include="Content\bootstrap-1.1.0.min.css" />
+    <Content Include="Content\bootstrap-datetimepicker.css" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap-material-datetimepicker.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
@@ -10663,6 +10678,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Resources\js\lib\jquery-1.9.1.js" />
     <Content Include="Resources\js\shared\jCatalogo.js" />
     <Content Include="Resources\js\shared\jLayout.js" />
     <Content Include="Resources\js\shared\jServices.js" />
@@ -10672,6 +10688,9 @@
     <Content Include="Resources\js\shared\TreeView.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap-material-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -11298,6 +11317,11 @@
     <Content Include="assets\scss\ui-kit\_variables.scss">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DatePickerReady.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -11309,6 +11333,11 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -11363,7 +11392,7 @@
     <Content Include="Views\Requisicion\RequisicionAutorizacion.cshtml" />
     <Content Include="Views\OrdenCompra\OrdenCompraAutorizacion.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RequisicionProductoRevisionDTO.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\RequisicionProductoAutrizacionDTO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\RequisicionProductoAutorizacionDTO.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ProductoOCDTO.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OrdenCompraProductoDTO.cshtml" />
     <Content Include="Views\CentroCosto\CentroCosto.cshtml" />
@@ -11401,19 +11430,21 @@
     <Content Include="Views\OrdenCompra\EntradaMercancia.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AlmacenEntradaDTO.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ClienteLocacionMod.cshtml" />
+    <Content Include="Views\OrdenCompra\OrdenCompraComplemento.cshtml" />
+    <Content Include="Views\OrdenCompra\OrdenCompraPago.cshtml" />
+    <Content Include="Views\OrdenCompra\OrdenCompraComplementoGas.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\OrdenCompraPagoDTO.cshtml" />
+    <Content Include="Views\PrecioVenta\EditarPrecioVenta.cshtml" />
+    <Content Include="Views\PrecioVentaOtro\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\css\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\js\i18n\" />
     <Folder Include="LogosEmpresa\" />
-    <Folder Include="Resources\js\lib\" />
     <Folder Include="Servicios\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />

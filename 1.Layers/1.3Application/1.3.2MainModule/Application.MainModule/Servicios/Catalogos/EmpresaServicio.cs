@@ -25,6 +25,7 @@ namespace Application.MainModule.Servicios.Catalogos
             List<EmpresaDTO> lEmpresas = new List<EmpresaDTO>(EmpresaAdapter.ToDTO(new EmpresaDataAccess().BuscarTodos(conAC)));
             return lEmpresas;
         }
+
         public static List<Empresa> BuscarEmpresasSinAdminCentral()
         {
             return new EmpresaDataAccess().BuscarTodos(false);
@@ -37,7 +38,8 @@ namespace Application.MainModule.Servicios.Catalogos
         public static Empresa Obtener(short IdEmpresa)
         {
             return new EmpresaDataAccess().Buscar(IdEmpresa);
-        }
+        }             
+        
         public static Empresa Obtener(UnidadAlmacenGas unidad)
         {
             if (unidad != null)

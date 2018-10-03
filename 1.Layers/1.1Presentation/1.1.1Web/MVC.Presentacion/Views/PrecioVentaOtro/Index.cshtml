@@ -1,0 +1,302 @@
+﻿@model  MVC.Presentacion.Models.Catalogos.PrecioVentaModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @{
+        ViewBag.Title = "Index";
+    }
+    <link href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('select').on('change', function () {
+
+                $('#tblfilterable tbody tr').each(function () {
+                    var value = $('#IdTipoFecha').find('option:selected').text();//get value to filter of selected
+                    var hiderow = $(this).find("td").eq(6).html();//get value of column status
+                    if (value != hiderow) {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
+                    }
+                    if (value == hiderow) {
+                        var rowindex = $(this).index();
+                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $("#txtUtilidad").keyup(function () {
+                // debugger
+
+                var precio = $("#PrecioPMX").val();
+
+                var utilidad = $(this).val();
+
+                var operacion = parseFloat(precio) + parseFloat(utilidad);
+
+                $("#IdPrecioSalidaKg").val(operacion)
+
+
+                /*****factorLitrosaKilos*****/
+                var url = "/PrecioVenta/GetConfiguracionEmpresa";
+                var id = $('#ddlEmpresas').find('option:selected').val();
+                $.getJSON(url, { idEmpresa: id }, function (data) {
+                    var factor = data;
+                    $("#IdPrecioSalidaLt").val(factor)
+                });
+
+
+                /**********/
+
+            });//key up.
+
+        });
+
+    </script>
+
+    <script>
+        $(function () {
+
+            $(".datepicker").datepicker();
+        })
+
+    </script>
+</head>
+<body style="height:100%">
+    @using (Html.BeginForm("Registrar", "PrecioVentaOtro", FormMethod.Post))
+    {
+       <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <div class="card">
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-sm-3">
+                                        <b>Gasera</b>
+                                        <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                            @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @Html.EditorFor(m => m.FechaProgramada, new { htmlAttributes = new { @class = "datepicker" } })
+
+                    @Html.TextBoxFor(x => x.FechaProgramada, new { @class= "datepicker" })
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Registrar precio de salida</strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Categoría:
+                                        <select name="IdCategoria" class="form-control selectpicker z-index show-tick">
+                                            <option value="0">Seleccione..</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Línea:
+                                        <select name="IdProductoLinea" class="form-control selectpicker z-index show-tick">
+                                            <option value="0">Seleccione..</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Producto:
+                                        <select name="IdProducto" class="form-control selectpicker z-index show-tick">
+                                            <option value="0">Seleccione..</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Precio Actual:
+                                        <input name="PrecioActual" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Precio Salida:
+                                        <input name="PrecioSalida" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Fecha programada:
+                                        <div class="input-group">
+                                            @*<span class="input-group-addon">
+                                                    <i class="zmdi zmdi-calendar"></i>
+                                                </span>*@
+                                            @*<input type="text" id="datepicker" class="form-control datepicker"/>*@
+                                            @Html.EditorFor(m => m.FechaProgramada, new { htmlAttributes =  new { @class = "datepicker" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="card">
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-sm-3">
+                                        <b>Tipo de Fecha:</b>
+                                        <select id="IdTipoFecha" class="form-control selectpicker z-index show-tick">
+                                            <option value="0">Seleccione</option>
+                                            @foreach (var lst in ViewBag.ListaStatus)
+                                            {
+                                            <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <b>De:</b>
+                                        <input type="text" class="form-control" />
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <b>A:</b>
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row clearfix">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="table-responsive">
+                                            <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" id="tblfilterable" name="PreciosVenta">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Gasera</th>
+                                                        <th>Precio PEMEX(kg)</th>
+                                                        <th>Utilidad Esperada(kg)</th>
+                                                        <th>Precio Salida</th>
+                                                        <th>Fecha Programada</th>
+                                                        <th>FechaVencimiento</th>
+                                                        <th>Estatus</th>
+                                                        <th>FechaRegistro</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (ViewBag.ListaPV != null)
+                                                    {
+                                                        foreach (var item in ViewBag.ListaPV)
+                                                        {
+                                                    <tr>
+                                                        <td>@item.Empresa</td>
+                                                        <td>@item.PrecioPemexKg</td>
+                                                        <td>@item.UtilidadEsperadaKg</td>
+                                                        <td>@item.PrecioSalidaKg</td>
+                                                        <td>@item.FechaProgramada</td>
+                                                        <td>@item.FechaVencimiento</td>
+                                                        <td>@item.PrecioVentaEstatus</td>
+                                                        <td>@item.FechaRegistro</td>
+                                                        @if (item.PrecioVentaEstatus == "Programado")
+                                                                {
+                                                                <td>
+                                                                    <a ID="lbEdit" href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })">
+                                                                        <i class="material-icons">edit</i>
+                                                                        <span class="icon-name"></span>
+                                                                    </a>
+                                                                    <a ID="lbBorrar" href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })">
+                                                                        <i class="material-icons">delete</i>
+                                                                        <span class="icon-name"></span>
+                                                                    </a>
+                                                                </td>
+                                                                }
+                                                    </tr>
+                                                        }
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                        {
+
+                            <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
+                                 role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                         bottom: 20px; left: 0px; right: 0px;">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                                <span data-notify="icon"></span>
+                                <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
+                                <a href="#" target="_blank" data-notify="url"></a>
+                            </div>
+                        }
+                        @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
+                        {
+                            <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
+                                 role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                         bottom: 20px; left: 0px; right: 0px;">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                                <span data-notify="icon"></span>
+                                <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+
+</body>
+@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+@Scripts.Render("~/Scripts/jquery-ui.js")
+@*<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+</html>
+<link href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+@*@section scripts{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(function(){
+
+                $(".datepicker").datepicker();
+            })
+
+        </script>
+        }*@

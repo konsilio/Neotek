@@ -214,6 +214,13 @@
                                                                 <span class="icon-name"></span>
                                                             </a>
                                                         }
+                                                        @if (_oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_exitosa))
+                                                        {
+                                                            <a ID="lbAutOC" href="@Url.Action("OrdenCompraPago", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
+                                                                <i class="material-icons">attach_money</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                        }
                                                     </td>
                                                 </tr>
                                             }

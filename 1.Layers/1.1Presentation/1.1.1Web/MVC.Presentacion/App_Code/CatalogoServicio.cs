@@ -850,7 +850,6 @@ namespace MVC.Presentacion.App_Code
 
             return Objemp;
         }
-
         public static List<PuntoVentaModel> ListaPuntosVenta(int idPV, string token)
         {
             var agente = new AgenteServicio();
@@ -878,6 +877,46 @@ namespace MVC.Presentacion.App_Code
             agente.EditarPuntoVenta(cc, tkn);
             return agente._RespuestaDTO;
         }
+        #endregion
+
+        #region Precios de Venta Gas
+        public static List<PrecioVentaModel> ListaPrecioVenta(int idPrecioV, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaPrecioVenta(idPrecioV, token);
+            return agente._listaPreciosV;
+        }
+        public static List<PrecioVentaModel> ListaPrecioVentaIdEmpresa(short id, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaPreciosVentaIdEmpresa(id, token);
+            return agente._listaPreciosV;
+        }
+        public static List<EstatusTipoFechaModel> ListaTipoFecha(string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaEstatus(token);
+            return agente._listaEstatus;
+        }
+        public static RespuestaDTO EliminarPrecioVenta(PrecioVentaModel cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.EliminarPrecioVenta(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO RegistrarPrecio(PrecioVentaModel cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarPrecioVenta(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ModificarPrecioVenta(PrecioVentaModel cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.ModificarPrecioVenta(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+
         #endregion
 
         #region Centro de Costo

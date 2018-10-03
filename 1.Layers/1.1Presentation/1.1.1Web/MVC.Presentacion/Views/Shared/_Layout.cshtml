@@ -6,19 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
 
+
     <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.min.css" />
-
+    <link href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+    <link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/assets/css/main.css">
     <link rel="stylesheet" href="~/assets/css/color_skins.css">
+
+    <script src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
+
 </head>
 <body class="theme-black menu_dark">
-    <div class="page-loader-wrapper">
+    @*<div class="page-loader-wrapper">
         <div class="loader">
             <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
             <p>Espere por favor</p>
         </div>
-    </div>
+    </div>*@
     @RenderBody()
     <div class="overlay_menu">
         <button class="btn btn-primary btn-icon btn-icon-mini btn-round"><i class="zmdi zmdi-close"></i></button>
@@ -513,9 +518,10 @@
                             <li>@Html.ActionLink("Gaseras", "Index", "Empresas")</li>
                             <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
                             <li>@Html.ActionLink("Roles", "Index", "Roles")</li>
-                            <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>
-                            <li>@Html.ActionLink("Precio de venta", "Index", "PrecioVenta")</li>
+                            <li>@Html.ActionLink("Clientes", "Index", "Clientes")</li>                            
                             <li>@Html.ActionLink("Puntos de venta", "Index", "PuntoVenta")</li>
+                            <li>@Html.ActionLink("Precio de venta", "Index", "PrecioVenta")</li>
+                            <li>@Html.ActionLink("Precio de venta Otros", "Index", "PrecioVentaOtro")</li>
                         </ul>
                     </li>
                 </ul>
@@ -524,7 +530,6 @@
     </aside>   
 </body>
 </html>
-<script src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>"
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="~/assets/plugins/bootstrap-select/js/bootstrap-select.min.js"></script>
@@ -533,3 +538,7 @@
 <script src="~/assets/bundles/vendorscripts.bundle.js"></script>
 <script src="~/assets/bundles/mainscripts.bundle.js"></script>
 @Styles.Render("~/Content/css")
+@*@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/moment")
+@Scripts.Render("~/bundles/bootstrap")*@
+@*@RenderSection("scripts", required:false)*@
