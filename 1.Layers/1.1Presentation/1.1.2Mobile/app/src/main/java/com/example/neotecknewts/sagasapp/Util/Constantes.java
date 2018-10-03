@@ -33,4 +33,8 @@ public class Constantes {
     public static final String POST_AUTOCONSUMO = "mobile/autoconsumo/{esEstacion}/{esIventario}/{esPipa}/{esFinal}";
     public static final String GET_CATALOGO_TRASPASO = "mobile/catalogos/traspaso/{esTraspaso}/{esPipa}";
     public static final String POST_TRASPASO = "mobile/traspaso/{esEstacion}/{esPipa}/{esFinal}";
+    public static final String GET_CATALOGO_CALIBRACION = "mobile/catalogos/calibracion/{esEstacion}/{esPipa}/{esFinal}";
+    public static final String POST_CALIBRACION = "mobile/calibracion/{esEstacion}/{esPipa}/{esFinal}";
+    public static final String GET_CONFIGURACION_EMPRESA = "mobile/empresas/configuracion";
+    public static final String GET_CATALOGO_RAZON = "mobile/catalogos/razon-social";
 }

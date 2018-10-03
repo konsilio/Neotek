@@ -40,7 +40,9 @@
                     android:drawableStart="@drawable/ic_go_back_dark"
                     android:text="@string/terminar"
                     android:textColor="@color/colorTextButtonLogin"
-                    android:visibility="gone" />
+                    android:textSize="30sp"
+                    android:visibility="gone"
+                    tools:ignore="ButtonStyle,UnusedAttribute" />
 
                 <Button
                     android:id="@+id/BtnReporteActivityImprimir"
@@ -48,9 +50,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:backgroundTint="@color/colorButtonLogin"
-                    android:textColor="@color/colorTextButtonLogin"
                     android:text="@string/imprimir_reporte"
-                    tools:ignore="UnusedAttribute" />
+                    android:textColor="@color/colorTextButtonLogin"
+                    android:textSize="30sp"
+                    tools:ignore="ButtonStyle,UnusedAttribute" />
             </LinearLayout>
 
         </LinearLayout>

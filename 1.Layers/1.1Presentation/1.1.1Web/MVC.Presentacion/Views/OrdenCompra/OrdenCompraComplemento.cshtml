@@ -1,0 +1,260 @@
+﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraDTO
+
+<style>
+    .calculaPrecio {
+    }
+</style>
+<script type="text/javascript">
+    var CalcularImporte = function () {
+        var index;
+        var idtxtPrec;
+        var idtxtDesc;
+        var idddlIVA;
+        var idddlIEPS;
+        var precio = 0;
+        var descuento = 0;
+        var cantidad = 0;
+        var iva;
+        var ieps;
+        var total;
+        var subtotal;
+        var id = $(".calculaPrecio").prevObject[0].activeElement.id;
+        if (id == "")
+            id = $(".calculaPrecio").prevObject[0].activeElement.dataset.id;
+
+        if (id.includes("Precio")) {
+            index = id.replace("OrdenCompraProductos_", "").replace("__Precio", "");
+        }
+        if (id.includes("Descuento")) {
+            index = id.replace("OrdenCompraProductos_", "").replace("__Descuento", "");
+        }
+        if (id.includes("IVA")) {
+            index = id.replace("OrdenCompraProductos_", "").replace("__IVA", "");
+        }
+        if (id.includes("IEPS")) {
+            index = id.replace("OrdenCompraProductos_", "").replace("__IEPS", "");
+        }
+
+        idtxtPrec = "#OrdenCompraProductos_" + index + "__Precio";
+        idtxtDesc = "#OrdenCompraProductos_" + index + "__Descuento";
+        idddlIVA = "#OrdenCompraProductos_" + index + "__IVA";
+        idddlIEPS = "#OrdenCompraProductos_" + index + "__IEPS";
+        idCantidad = "OrdenCompraProductos_" + index + "__CantidadAComprar";
+        idTotlaImporte = "OrdenCompraProductos_" + index + "__Importe";
+
+        precio = parseFloat($(idtxtPrec).val());
+        cantidad = parseFloat($("label[for = '" + idCantidad + "']").text());
+        descuento = ((precio * cantidad) * ($(idtxtDesc).val() / 100));
+        subtotal = (precio * cantidad) - (descuento);
+        iva = ((subtotal) * ($(idddlIVA + " option:selected").val().replace("IVA", "") / 100));
+        ieps = ((subtotal) * ($(idddlIEPS + " option:selected").val().replace("IEPS", "") / 100));
+        total = subtotal + iva + ieps;
+        $("label[for = '" + idTotlaImporte + "']").text(total.toFixed(2));
+    }
+
+    $(document).ready(function () {
+        $("#btnCrear").click(function () {
+            var form = $(this).parent("form");
+            form.attr('action', '<%= Url.RouteUrl(new { Controller = "OrdenCompra", Action = "CrearOrdenCompra" }) %>');
+            form.attr('method', 'post');
+        });
+    });
+</script>
+<section class="content home">
+    <div class="container-fluid">
+        @using (Html.BeginForm("OrdenCompraComplemento", "OrdenCompra", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.IdEmpresa)
+            @Html.HiddenFor(m => m.IdEmpresa)
+            @Html.HiddenFor(m => m.IdRequisicion)
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Compras</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Compras</li>
+                            <li class="breadcrumb-item">Ordern de Compra</li>
+                            <li class="breadcrumb-item">Nueva</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label> @Model.Empresa</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <b>Número de Requisición:</b>&nbsp;
+                                        <label> @Model.NumeroRequisicion</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-3 col-md-12">
+                                <div class="form-group form-float">
+                                    <b>Fecha requerida:</b>
+                                    <input type="text" value="@Model.FechaRequerida" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12">
+                                <div class="form-group form-float">
+                                    <b>Solicitante:</b>
+                                    <input name="Solicitante" value="@Model.Solicitante" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12 form-float">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <b>Motivo de compra:</b>
+                                        <textarea name="MotivoCompra" class="form-control  no-resize btn-round" disabled placeholder="Error de carga" rows="4">@Model.MotivoRequisicion</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12">
+                                <div class="form-group form-float">
+                                    <div class="form-group">
+                                        <b>Se requiere en:</b>
+                                        <textarea name="RequeridoEn" class="form-control  no-resize btn-round" disabled placeholder="Error de carga" rows="4">@Model.RequeridoEn</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (ViewBag.NombrePorvedor != null)
+                        {
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <b>Proveedor:</b>&nbsp;
+                                            <label>@ViewBag.NombrePorvedor</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <dtp:DateTimePicker ID="dtpFechaEntrada" />
+                                </div>
+                            </div>
+                        }
+                        @if (ViewBag.MensajeError != null)
+                        {
+                            <div class="row clearfix">
+                                <div id="divMensajeError" class="container">
+                                    <div class="alert alert-danger">
+                                        <div class="alert-icon">
+                                            <i class="zmdi zmdi-block"></i>
+                                        </div>
+                                        <strong>
+                                            <label>@ViewBag.MensajeError</label>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="row clearfix">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td><b>Tipo</b></td>
+                                            <td><b>Producto</b></td>
+                                            <td><b>Cantidad</b></td>
+                                            <td><b>Unidad</b></td>
+                                            <td><b>Aplicación</b></td>
+                                            <td><b>Centro de costo</b></td>
+                                            <td><b>Proveedor</b></td>
+                                            <td><b>Cuenta Contable</b></td>
+                                            <td><b>Precio</b></td>
+                                            <td><b>%Desc</b></td>
+                                            <td><b>%IVA</b></td>
+                                            <td><b>%IEPS</b></td>
+                                            <td><b>Importe</b></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @Html.EditorFor(m => m.Productos)
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Factura</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-md-3 col-sm-4 form-control-label">
+                                        <label>Folio Fiscal</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-8">
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.FolioFiscalUUID, new { @class = "form-control", @placeholder = "UUID de la factura" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-3 col-sm-4 form-control-label">
+                                        <label>Folio Factura</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-8">
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(m => m.FolioFactura, new { @class = "form-control", @placeholder = "Folio de la factura" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-sm-8 offset-md-3 offset-sm-2">
+                                        <input type="button" value="Guardar" formaction="" class="btn btn-raised btn-primary btn-round waves-effect" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Factura</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <td><b>Fecha Entrada</b></td>
+                                                    <td><b>Fecha Pago</b></td>
+                                                    <td><b>$ Total</b></td>
+                                                    <td><b>$ Pagado</b></td>
+                                                    <td><b>$ Por Pagar</b></td>
+                                                    <td><b>Forma Pago</b></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <label>Pagar: </label>
+                                    @*texto pagar*@
+                                    <input type="button" value="Solisitar Pago" formaction="OrdenCompraPago" class="btn btn-default btn-round" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

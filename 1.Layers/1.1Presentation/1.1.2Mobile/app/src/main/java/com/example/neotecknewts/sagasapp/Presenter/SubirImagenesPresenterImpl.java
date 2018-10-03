@@ -5,6 +5,7 @@ import com.example.neotecknewts.sagasapp.Activity.SubirImagenesView;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.SubirImagenesInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -248,5 +249,18 @@ public class SubirImagenesPresenterImpl implements SubirImagenesPresenter {
         subirImagenesView.showProgress(R.string.message_cargando);
         interactor.registrarTraspasoPipa(sagasSql,token,traspasoDTO,esTraspasoPipaFinal);
     }
+
+    @Override
+    public void registrarCalibracionEstacion(SAGASSql sagasSql, String token, CalibracionDTO calibracionDTO, boolean esCalibracionEstacionFinal) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarCalibracionEstacion(sagasSql,token,calibracionDTO,esCalibracionEstacionFinal);
+    }
+
+    @Override
+    public void registrarCalibracionPipa(SAGASSql sagasSql, String token, CalibracionDTO calibracionDTO, boolean esCalibracionPipaFinal) {
+        subirImagenesView.showProgress(R.string.message_cargando);
+        interactor.registrarCalibracionPipa(sagasSql,token,calibracionDTO,esCalibracionPipaFinal);
+    }
+
     //endregion
 }

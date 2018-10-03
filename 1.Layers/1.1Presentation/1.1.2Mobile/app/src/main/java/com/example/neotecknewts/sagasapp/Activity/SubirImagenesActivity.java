@@ -16,6 +16,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -55,6 +56,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public RecargaDTO recargaDTO;
     public AutoconsumoDTO autoconsumoDTO;
     public TraspasoDTO traspasoDTO;
+    public CalibracionDTO calibracionDTO;
 
     //banderas para indicar el objeto a utlizar
     public boolean papeleta;
@@ -69,6 +71,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     public boolean EsAutoconsumoPipaInicial,EsAutoconsumoPipaFinal;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal;
     public boolean EsTraspasoPipaInicial,EsTraspasoPipaFinal;
+    public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
+    public boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
 
     public SubirImagenesPresenter presenter;
     public ProgressDialog progressDialog;
@@ -243,6 +247,16 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 EsTraspasoPipaFinal = extras.getBoolean("EsTraspasoPipaFinal",false);
                 traspasoDTO = (TraspasoDTO) extras.getSerializable("traspasoDTO");
                 setTitle("Traspaso");
+            }else if(extras.getBoolean("EsCalibracionEstacionInicial",false)|| extras.getBoolean("EsCalibracionEstacionFinal",false)){
+                EsCalibracionEstacionInicial = extras.getBoolean("EsCalibracionEstacionInicial",false);
+                EsCalibracionEstacionFinal = extras.getBoolean("EsCalibracionEstacionFinal",false);
+                calibracionDTO = (CalibracionDTO) extras.getSerializable("calibracionDTO");
+                setTitle("Calibración");
+            }else if(extras.getBoolean("EsCalibracionPipaInicial",false)|| extras.getBoolean("EsCalibracionPipaFinal",false)){
+                EsCalibracionPipaInicial = extras.getBoolean("EsCalibracionPipaInicial",false);
+                EsCalibracionPipaFinal = extras.getBoolean("EsCalibracionPipaFinal",false);
+                calibracionDTO = (CalibracionDTO) extras.getSerializable("calibracionDTO");
+                setTitle("Calibración");
             }
 
         }
@@ -272,6 +286,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             sagasSql = new SAGASSql(getApplicationContext());
         }else if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
             sagasSql = new SAGASSql(getApplicationContext());
+        }else if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+            sagasSql = new SAGASSql(getApplicationContext());
+        }else if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+            sagasSql = new SAGASSql(getApplicationContext());
         }
         //se ejecuta la tarea asincrona para procesar las imagenes
         new AsyncTaskRunner().execute();
@@ -289,9 +307,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Uri uri = Uri.parse(papeletaDTO.getImagenesURI().get(i).toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(), uri);
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     papeletaDTO.getImagenes().add(image.trim());
@@ -309,9 +327,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Uri uri = Uri.parse(iniciarDescarga.getImagenesURI().get(i).toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(), uri);
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     iniciarDescarga.getImagenes().add(image.trim());
@@ -329,9 +347,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Uri uri = Uri.parse(finalizarDescarga.getImagenesURI().get(i).toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(), uri);
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     finalizarDescarga.getImagenes().add(image.trim());
@@ -346,9 +364,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Uri uri = Uri.parse(lecturaDTO.getImagenesURI().get(i).toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(), uri);
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     lecturaDTO.getImagenes().add(image.trim());
@@ -362,9 +380,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(
                         getContentResolver(), uri);
-                bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                 ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                 byte[] b = bs.toByteArray();
                 String image = Base64.encodeToString(b, Base64.DEFAULT);
                 lecturaDTO.setImagenP5000(image.trim());
@@ -379,7 +397,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Uri uri = Uri.parse(lecturaDTO.getImagenesURI().get(i).toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(), uri);
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
                     byte[] b = bs.toByteArray();
@@ -395,9 +413,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(
                         getContentResolver(), uri);
-                bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                 ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                 byte[] b = bs.toByteArray();
                 String image = Base64.encodeToString(b, Base64.DEFAULT);
                 lecturaDTO.setImagenP5000(image.trim());
@@ -412,9 +430,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Uri uri = Uri.parse(lecturaPipaDTO.getImagenesURI().get(i).toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(), uri);
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     lecturaPipaDTO.getImagenes().add(image.trim());
@@ -428,9 +446,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(
                         getContentResolver(), uri);
-                bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                 ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                 byte[] b = bs.toByteArray();
                 String image = Base64.encodeToString(b, Base64.DEFAULT);
                 lecturaPipaDTO.setImagenP5000(image.trim());
@@ -444,9 +462,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Uri uri = Uri.parse(lecturaAlmacenDTO.getImagenesURI().get(i).toString());
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(), uri);
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     lecturaAlmacenDTO.getImagenes().add(image.trim());
@@ -462,9 +480,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(),uri
                     );
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     recargaDTO.getImagenes().add(image.trim());
@@ -480,9 +498,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(),uri
                     );
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     recargaDTO.getImagenes().add(image.trim());
@@ -498,9 +516,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(),uri
                     );
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     autoconsumoDTO.getImagenes().add(image.trim());
@@ -516,9 +534,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(),uri
                     );
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     autoconsumoDTO.getImagenes().add(image.trim());
@@ -534,9 +552,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(),uri
                     );
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     autoconsumoDTO.getImagenes().add(image.trim());
@@ -552,9 +570,9 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(),uri
                     );
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     traspasoDTO.getImagenes().add(image.trim());
@@ -570,12 +588,48 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(
                             getContentResolver(),uri
                     );
-                    bitmap = Bitmap.createScaledBitmap(bitmap,800,bitmap.getHeight(),true);
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 40, bs);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
                     byte[] b = bs.toByteArray();
                     String image = Base64.encodeToString(b, Base64.DEFAULT);
                     traspasoDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }else if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+            for (int i= 0; i<calibracionDTO.getImagenesUri().size();i++){
+                try {
+                    Uri uri = Uri.parse(calibracionDTO.getImagenesUri().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(),uri
+                    );
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    calibracionDTO.getImagenes().add(image.trim());
+                    Log.w("Imagenes"+i,""+uri.toString());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }else if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+            for (int i= 0; i<calibracionDTO.getImagenesUri().size();i++){
+                try {
+                    Uri uri = Uri.parse(calibracionDTO.getImagenesUri().get(i).toString());
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(
+                            getContentResolver(),uri
+                    );
+                    bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),bitmap.getHeight(),true);
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 40, bs);
+                    byte[] b = bs.toByteArray();
+                    String image = Base64.encodeToString(b, Base64.DEFAULT);
+                    calibracionDTO.getImagenes().add(image.trim());
                     Log.w("Imagenes"+i,""+uri.toString());
                 }catch (Exception e){
                     e.printStackTrace();
@@ -782,6 +836,10 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 presenter.registrarTraspasoEstracion(sagasSql,session.getToken(),traspasoDTO,EsTraspasoEstacionFinal);
             }else if (EsTraspasoPipaInicial || EsTraspasoPipaFinal){
                 presenter.registrarTraspasoEstracionPipa(sagasSql,session.getToken(),traspasoDTO,EsTraspasoPipaFinal);
+            }else if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
+                presenter.registrarCalibracionEstacion(sagasSql,session.getToken(),calibracionDTO,EsCalibracionEstacionFinal);
+            }else if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
+                presenter.registrarCalibracionPipa(sagasSql,session.getToken(),calibracionDTO,EsCalibracionPipaFinal);
             }
             textView.setText(R.string.cargando_imagenes_fin);
             //progressDialog.hide();

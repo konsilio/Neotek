@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
     <link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
     <style type="text/css">
-</style>
+    </style>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#btnFinalizar").click(function () {
@@ -40,7 +40,7 @@
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item active">
-                                    <label id="lblRuta">Requisición / Nueva </label>
+                                    <label id="lblRuta">Requisición / Revisición </label>
                                 </li>
                             </ul>
                         </div>
@@ -86,12 +86,16 @@
                                             </select>
                                         </div>
                                         <div class="col-lg-3">
-                                            <b>Motivo de compra:</b>
-                                            <textarea name="MotivoRequisicion" class="form-control no-resize" disabled placeholder="Motivo de la compra..." rows="4">@Model.MotivoRequisicion</textarea>
+                                            <div class="form-group form-float">
+                                                <b>Motivo de compra:</b>
+                                                @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize btn-round", @disabled = "disabled", @placeholder = "Error de carga", @rows = "4" })
+                                            </div>
                                         </div>
                                         <div class="col-lg-3">
-                                            <b>Se requiere en:</b>
-                                            <textarea name="RequeridoEn" class="form-control no-resize" disabled placeholder="Se requiere en..." rows="4">@Model.RequeridoEn</textarea>
+                                            <div class="form-group form-float">
+                                                <b>Se requiere en:</b>
+                                                @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control no-resize btn-round", @disabled = "disabled", @placeholder = "Error de carga", @rows = "4" })
+                                            </div>
                                         </div>
                                     </div>
                                     @if (ViewBag.MensajeError != null)

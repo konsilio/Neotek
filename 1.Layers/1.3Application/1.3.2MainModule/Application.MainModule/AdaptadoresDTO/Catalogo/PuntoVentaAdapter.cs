@@ -17,8 +17,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         {
             var idUser = OperadorChoferServicio.Obtener(pv.IdOperadorChofer);
             var Unidad = AlmacenGasServicio.ObtenerUnidadAlamcenGas(pv.IdCAlmacenGas);
-            var result = AlmacenGasServicio.IdentificarTipoUnidadAlamcenGasString(Unidad);
-            PuntoVentaDTO usDTO = new PuntoVentaDTO()
+            var result = AlmacenGasServicio.IdentificarTipoUnidadAlamcenGasString(Unidad); 
+             PuntoVentaDTO usDTO = new PuntoVentaDTO()
             {
                 IdPuntoVenta = pv.IdPuntoVenta,
                 IdEmpresa = pv.IdEmpresa,

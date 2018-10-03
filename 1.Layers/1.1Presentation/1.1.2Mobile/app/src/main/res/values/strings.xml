@@ -168,5 +168,54 @@
     <string name="trasferencia_de_gas">Trasferencia de gas</string>
     <string name="selecciona_la_estacion_de_carburacion_de_salida">Selecciona la Estación de Carburación de salida:</string>
     <string name="selecciona_la_pipa_de_entrada">Selecciona la pipa de entrada:</string>
+    <string name="Calibracion">Calibración</string>
+    <string name="seleccione_la_estacion_de_carburacion_a_calibrar">Seleccione la estación de carburación a calibrar</string>
+    <string name="selecciona_la_pipa_de_salida_calibracion">Selecciona la Pipa de salida:</string>
+    <string name="selecciona_destino_de_las_pruebas">Selecciona destino de las pruebas:</string>
+    <string name="calibracion_pipa"><u>Calibración-Pipa</u></string>
+    <string name="porcentaje_de_calibracion">Porcentaje de Calibración</string>
+    <string name="registra_el_porcentaje_de_calibracion_configurado">Registra el porcentaje de calibracion configurado</string>
+    <string name="confirmacion_configuracion"><![CDATA[El porcentaje configurado no coicide con la configuración predeterminada de la empresa <n>¿Desea continuar con esta configuración?<n>]]></string>
+    <string name="Anticipo">Anticipo</string>
+    <string name="selecciona_la_estacion_de_carburacion">Selecciona la Estación de Carburación</string>
+    <string name="regresar">Regresar</string>
+    <string name="hacer_anticipo">Hacer anticipo</string>
+    <string name="anticipar">Anticipar</string>
+    <string name="corte_de_caja">Corte de caja</string>
+    <string name="hacer_corte">Hacer Corte</string>
+    <string name="p5000">P5000</string>
+    <string name="Final">Final:</string>
+    <string name="anticipos">Anticipos:</string>
+    <string name="inicial">Inicial:</string>
+    <string name="monto_corte">Monto corte:</string>
+    <string name="litros">Litros:</string>
+    <string name="Punto_de_venta">Punto de venta</string>
+    <string name="en_caso_de_negativa_del_cliente">En caso de negativa del cliente</string>
+    <string name="seguir_sin_numero">Seguir sin número</string>
+    <string name="desea_que_lo_registre_como_cliente">¿Desea que lo registre como cliente?</string>
+    <string name="registrar_cliente">Registrar Cliente</string>
+    <string name="cual_es_su_numero_de_celular_telofono_fijo_o_rfc">¿Cuál es su número de celular,teléfono fijo o RFC?</string>
+    <string name="buscar_cliente">Buscar Cliente</string>
+    <string name="Buscar">Buscar</string>
+    <string name="pipa">Pipa</string>
+    <string name="tipo_de_persona_fiscal">Tipo de persona fiscal</string>
+    <string name="regimen_fiscal">Regimen fiscal</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido_1">Apellido 1 *</string>
+    <string name="apellido_2">Apellido 2</string>
+    <string name="celular">Celular</string>
+    <string name="telef_no_fijo">Telefóno fijo</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
+    <string-array name="header_tabla_anticipo">
+        <item># Tiket</item>
+        <item>Fecha</item>
+        <item>Monto</item>
+    </string-array>
+    <string-array name="Tipo_persona">
+        <item>Persona Fisica</item>
+        <item>Persona Moral</item>
+    </string-array>
+    <string-array name="Regimen_fiscal">
+        <item>Sin obligaciones fiscales</item>
+    </string-array>
 </resources>
