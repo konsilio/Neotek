@@ -163,10 +163,10 @@ namespace Application.MainModule.Flujos
             return ClientesServicio.BuscadorClientes(criterio);
         }
 
-        public RespuestaDto ReporteDia(DateTime fecha, short idCAlmacenGas)
+        public ReporteDiaDTO ReporteDia(DateTime fecha, short idCAlmacenGas)
         {
             var ReporteAlmacen = AlmacenGasServicio.ReporteDia(fecha, idCAlmacenGas);
-            return null;
+            return ReporteAlmacen;
         }
     }
 }

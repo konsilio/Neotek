@@ -14,6 +14,7 @@ using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.AdaptadoresDTO.Almacen;
 using Application.MainModule.Servicios.Compras;
+using Application.MainModule.AdaptadoresDTO.Mobile;
 
 namespace Application.MainModule.Servicios.Almacen
 {
@@ -138,11 +139,38 @@ namespace Application.MainModule.Servicios.Almacen
             return EstacionCarburacionServicio.ObtenerNombre(uAG);
         }
 
-        public static object ReporteDia(DateTime fecha, short idCAlmacenGas)
+        public static ReporteDiaDTO ReporteDia(DateTime fecha, short idCAlmacenGas)
         {
             var almacen = ObtenerAlmacen(idCAlmacenGas);
-            var tipoMedidor = TipoMedidorGasServicio.Obtener(almacen.IdTipoMedidor.Value);
-            return null;
+            if (almacen.IdCamioneta !=null && almacen.IdCamioneta>0)
+            {
+                var cilindros = new AlmacenGasDataAccess().BuscarTodosCilindros(TokenServicio.ObtenerIdEmpresa());
+                //Falta agregar los datos de la venta de tanques
+                var reporte = new ReporteAdapter().ToDto(almacen);
+
+                reporte.Fecha = DateTime.Now;
+                reporte.ClaveReporte = "2018FG675DGD43";
+                return reporte;
+            }
+            else
+            {
+                var tipoMedidor = TipoMedidorGasServicio.Obtener(almacen.IdTipoMedidor.Value);
+                var linicial = BuscarLecturaPorFecha(idCAlmacenGas,TipoEventoEnum.Inicial,fecha);
+                var lfinal = BuscarLecturaPorFecha(idCAlmacenGas, TipoEventoEnum.Final,fecha);
+                var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
+                var ventas = PuntoVentaServicio.BuscarPorOperadorChofer(operador.IdOperadorChofer);
+                
+                //Falta agregar los valores de la venta de gas
+                var reporte = new ReporteAdapter().ToDto(almacen, tipoMedidor,linicial,lfinal);
+                reporte.Fecha = DateTime.Now;
+                reporte.ClaveReporte = "2018FG675DGD43";
+                return reporte;
+            }
+        }
+
+        public static AlmacenGasTomaLectura BuscarLecturaPorFecha(short idCAlmacenGas,byte tipoEvento,DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().BuscarLectura(idCAlmacenGas, tipoEvento, fecha);
         }
 
         public static decimal ObtenerCantidadActualAlmacenGeneral(short IdEmpresa, bool EnLitros = true)
