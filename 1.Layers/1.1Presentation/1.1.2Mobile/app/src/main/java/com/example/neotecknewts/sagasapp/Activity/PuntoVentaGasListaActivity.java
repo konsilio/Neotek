@@ -2,11 +2,16 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -38,6 +43,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
     VentaDTO ventaDTO;
     PuntoVentaAdapter adapter;
     boolean  EsVentaCamioneta,EsVentaCarburacion,EsVentaPipa;
+    Tabla tabla;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,14 +63,28 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         TVPuntoVentaGasListaActivityNombre = findViewById(R.id.TVPuntoVentaGasListaActivityNombre);
         TLPuntoVentaGasListaActivityConcepto = findViewById(R.id.
                 TLPuntoVentaGasListaActivityConcepto);
-        BtnPuntoVetaGasListActivityOpciones.setOnClickListener(V->finish());
+        BtnPuntoVetaGasListActivityOpciones.setOnClickListener(V->{
+            Intent intent = new Intent(PuntoVentaGasListaActivity.this,
+                    VentaGasActivity.class);
+            intent.putExtra("ventaDTO",ventaDTO);
+            intent.putExtra("esGasLP",true);
+            startActivity(intent);
+        });
 
         BtnPuntoVentaGasListaActivityGasListaAgregar.setOnClickListener(v->{
-
+            ConceptoDTO conceptoDTO = new ConceptoDTO();
+            conceptoDTO.setCantidad(30);
+            conceptoDTO.setConcepto("GAS LP");
+            conceptoDTO.setPUnitario(10.00);
+            conceptoDTO.setDescuento(0.10);
+            actualizarConceptos(conceptoDTO);
         });
         session = new Session(this);
         BtnPuntoVentaGasListActivityPagar.setOnClickListener(v->{
-            //Intent intent = new Intent(PuntoVentaGasListaActivity.this,PagarActivity.class);
+            Intent intent = new Intent(PuntoVentaGasListaActivity.this,
+                    PuntoVentaPagarActivity.class);
+            intent.putExtra("ventaDTO",ventaDTO);
+            startActivity(intent);
         });
         LinearLayoutManager linearLayout = new LinearLayoutManager(
                 PuntoVentaGasListaActivity.this);
@@ -80,7 +100,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
 
     @Override
     public void mostrarConsepto(List<ConceptoDTO> list) {
-        Tabla tabla = new Tabla(this,TLPuntoVentaGasListaActivityConcepto);
+        tabla = new Tabla(this,TLPuntoVentaGasListaActivityConcepto);
         if(list!=null && list.size()>0){
             tabla.Cabecera(R.array.condepto_venta);
             ArrayList<String[]> datos = new ArrayList<>();
@@ -89,11 +109,13 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 datos.add(new String[]{
                         concepto.getConcepto(),
                         String.valueOf(concepto.getCantidad()),
+                        format.format(concepto.getPUnitario()),
                         format.format(concepto.getDescuento()),
                         format.format(concepto.getSubtotal())
                 });
             }
             tabla.agregarFila(datos);
+
         }else{
             tabla.Cabecera(R.array.condepto_venta);
         }
@@ -132,15 +154,34 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             adapter = new PuntoVentaAdapter(data.getList());
             RVPuntoVentaGasActivityListaGas.setAdapter(adapter);
         }else{
-            ExistenciasDTO ex = new ExistenciasDTO();
-            ex.setDescuento(10.00);
-            ex.setExistencias(5);
-            ex.setId(1);
-            ex.setNombre("Gas LP 20kg.");
-            ex.setPrecioUnitario(8.90);
-            data.getList().add(ex);
             adapter = new PuntoVentaAdapter(data.getList());
             RVPuntoVentaGasActivityListaGas.setAdapter(adapter);
         }
+    }
+
+    public void actualizarConceptos(ConceptoDTO conceptoDTO){
+        double precio = conceptoDTO.getPUnitario();
+        if(conceptoDTO.getDescuento()>0){
+            precio = conceptoDTO.getPUnitario() - conceptoDTO.getDescuento();
+        }
+        precio = precio * conceptoDTO.getCantidad();
+        conceptoDTO.setSubtotal(precio);
+        ventaDTO.getConcepto().add(conceptoDTO);
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        TLPuntoVentaGasListaActivityConcepto.removeAllViews();
+        //
+        ArrayList<String[]> datos = new ArrayList<>();
+        NumberFormat formato = NumberFormat.getCurrencyInstance();
+        for (ConceptoDTO concepto:ventaDTO.getConcepto()){
+            datos.add(new String[]{
+                    concepto.getConcepto(),
+                    String.valueOf(concepto.getCantidad()),
+                    formato.format(concepto.getPUnitario()),
+                    formato.format(concepto.getDescuento()),
+                    formato.format(concepto.getSubtotal())
+            });
+        }
+        tabla.Cabecera(R.array.condepto_venta);
+        tabla.agregarFila(datos);
     }
 }

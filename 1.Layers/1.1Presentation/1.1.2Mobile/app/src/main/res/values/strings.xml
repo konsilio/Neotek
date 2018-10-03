@@ -220,6 +220,10 @@
     <string name="cantidad">Cantidad</string>
     <string name="opciones">Opciones</string>
     <string name="agregar">Agregar</string>
+    <string name="iva_16">I.V.A. (16%):</string>
+    <string name="credito">Crédito:</string>
+    <string name="efectivo">Efectivo($):</string>
+    <string name="confirmar">Confirmar</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
     <string-array name="header_tabla_anticipo">
         <item># Tiket</item>

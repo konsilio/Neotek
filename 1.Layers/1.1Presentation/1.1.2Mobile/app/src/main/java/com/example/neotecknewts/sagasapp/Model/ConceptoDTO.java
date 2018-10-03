@@ -2,8 +2,10 @@ package com.example.neotecknewts.sagasapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 public class
-ConceptoDTO {
+ConceptoDTO implements Serializable {
     @SerializedName("IdTipoGas")
     private int IdTipoGas;
 

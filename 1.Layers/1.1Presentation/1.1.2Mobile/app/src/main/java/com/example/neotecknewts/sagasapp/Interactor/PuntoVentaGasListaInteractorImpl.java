@@ -73,7 +73,7 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
                             break;
                     }
                     mensaje = "Se ha generado un error: "+response.message();
-                    if(data.getMensaje().isEmpty()) {
+                    if(data==null) {
                         presenter.onError(mensaje);
                     }else{
                         presenter.onError(data.getMensaje());

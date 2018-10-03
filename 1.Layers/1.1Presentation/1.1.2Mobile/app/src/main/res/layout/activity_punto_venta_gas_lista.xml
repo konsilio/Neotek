@@ -24,68 +24,68 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/RVPuntoVentaGasActivityListaGas"
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="200dp">
 
             </android.support.v7.widget.RecyclerView>
 
-            <TableLayout
-                android:id="@+id/TLPuntoVentaGasListaActivityConcepto"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:scrollbarAlwaysDrawVerticalTrack="false"
-                android:scrollbars="vertical"
-                tools:ignore="UselessLeaf">
-
-            </TableLayout>
 
             <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                        android:id="@+id/TLPuntoVentaGasListaActivityConcepto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isScrollContainer="true"
+                        android:scrollbarStyle="outsideOverlay"
+                        android:scrollbars="horizontal">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    </TableLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="15dp">
+
+                <Button
+                    android:id="@+id/BtnPuntoVetaGasListActivityOpciones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorButtonLogin"
                     android:gravity="center"
-                    tools:ignore="UselessParent">
+                    android:text="@string/opciones"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorTextButtonLogin"
+                    android:textSize="24sp"
+                    tools:ignore="ButtonStyle,UnusedAttribute" />
 
-                    <Button
-                        android:id="@+id/BtnPuntoVetaGasListActivityOpciones"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:backgroundTint="@color/colorButtonLogin"
-                        android:text="@string/opciones"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorTextButtonLogin"
-                        android:textSize="18sp"
-                        tools:ignore="ButtonStyle,UnusedAttribute" />
+                <Button
+                    android:id="@+id/BtnPuntoVentaGasListaActivityGasListaAgregar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorButtonLogin"
+                    android:gravity="center"
+                    android:text="@string/agregar"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorTextButtonLogin"
+                    android:textSize="24sp"
+                    tools:ignore="ButtonStyle,UnusedAttribute" />
 
-                    <Button
-                        android:id="@+id/BtnPuntoVentaGasListaActivityGasListaAgregar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:backgroundTint="@color/colorButtonLogin"
-                        android:text="@string/agregar"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorTextButtonLogin"
-                        android:textSize="18sp"
-                        tools:ignore="ButtonStyle,UnusedAttribute" />
+                <Button
+                    android:id="@+id/BtnPuntoVentaGasListActivityPagar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/colorButtonLogin"
+                    android:gravity="center"
+                    android:text="@string/pagar"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorTextButtonLogin"
+                    android:textSize="24sp"
+                    tools:ignore="ButtonStyle,UnusedAttribute" />
+            </LinearLayout>
 
-                    <Button
-                        android:id="@+id/BtnPuntoVentaGasListActivityPagar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:backgroundTint="@color/colorButtonLogin"
-                        android:text="@string/pagar"
-                        android:textAlignment="center"
-                        android:textColor="@color/colorTextButtonLogin"
-                        android:textSize="18sp"
-                        tools:ignore="ButtonStyle,UnusedAttribute" />
-                </TableRow>
-
-            </TableLayout>
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
