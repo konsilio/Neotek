@@ -10675,6 +10675,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Resources\js\lib\jquery-1.9.1.js" />
     <Content Include="Resources\js\shared\jCatalogo.js" />
     <Content Include="Resources\js\shared\jLayout.js" />
     <Content Include="Resources\js\shared\jServices.js" />
@@ -11434,7 +11435,6 @@
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\css\" />
     <Folder Include="assets\plugins\bootstrap-select\Respaldo\js\i18n\" />
     <Folder Include="LogosEmpresa\" />
-    <Folder Include="Resources\js\lib\" />
     <Folder Include="Servicios\" />
   </ItemGroup>
   <ItemGroup>

@@ -7,11 +7,19 @@
     @{
         ViewBag.Title = "Index";
     }
+    <link href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+
+
     <script type="text/javascript">
         $(function () {
             $('select').on('change', function () {
@@ -63,14 +71,16 @@
 
     <script>
         $(function () {
+
             $(".datepicker").datepicker();
-        });
+        })
+
     </script>
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("Registrar", "PrecioVentaOtro", FormMethod.Post))
     {
-        <section class="content home">
+       <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
                     <div class="card">
@@ -81,16 +91,18 @@
                                         <b>Gasera</b>
                                         <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
                                             @foreach (var lst in ViewBag.Empresas)
-                                            {
+                                                {
                                                 <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                            }
+                                                }
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @Html.EditorFor(m => m.FechaProgramada, new { htmlAttributes = new { @class = "datepicker" } })
 
+                    @Html.TextBoxFor(x => x.FechaProgramada, new { @class= "datepicker" })
                     <div class="card">
                         <div class="header">
                             <h2><strong>Registrar precio de salida</strong></h2>
@@ -145,15 +157,15 @@
                                         Fecha programada:
                                         <div class="input-group">
                                             @*<span class="input-group-addon">
-                                                <i class="zmdi zmdi-calendar"></i>
-                                            </span>*@
+                                                    <i class="zmdi zmdi-calendar"></i>
+                                                </span>*@
                                             @*<input type="text" id="datepicker" class="form-control datepicker"/>*@
-                                            @Html.EditorFor(m => m.FechaProgramada, new { htmlAttributes =  new { @class = "form-control datepicker" } })
+                                            @Html.EditorFor(m => m.FechaProgramada, new { htmlAttributes =  new { @class = "datepicker" } })
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">                              
+                            <div class="row clearfix">
                                 <div class="col-sm-12">
                                     <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-primary float-right" />
                                 </div>
@@ -169,18 +181,18 @@
                                             <option value="0">Seleccione</option>
                                             @foreach (var lst in ViewBag.ListaStatus)
                                             {
-                                                <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
+                                            <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
                                             }
                                         </select>
                                     </div>
                                     <div class="col-sm-3">
-                                        <b>De:</b>                                      
-                                         <input type="text" class="form-control"/>
+                                        <b>De:</b>
+                                        <input type="text" class="form-control" />
                                     </div>
 
                                     <div class="col-sm-3">
                                         <b>A:</b>
-                                        <input type="text"  class="form-control"/>
+                                        <input type="text" class="form-control" />
                                     </div>
                                 </div>
                                 <br />
@@ -206,29 +218,29 @@
                                                     {
                                                         foreach (var item in ViewBag.ListaPV)
                                                         {
-                                                            <tr>
-                                                                <td>@item.Empresa</td>
-                                                                <td>@item.PrecioPemexKg</td>
-                                                                <td>@item.UtilidadEsperadaKg</td>
-                                                                <td>@item.PrecioSalidaKg</td>
-                                                                <td>@item.FechaProgramada</td>
-                                                                <td>@item.FechaVencimiento</td>
-                                                                <td>@item.PrecioVentaEstatus</td>
-                                                                <td>@item.FechaRegistro</td>
-                                                                @if (item.PrecioVentaEstatus == "Programado")
+                                                    <tr>
+                                                        <td>@item.Empresa</td>
+                                                        <td>@item.PrecioPemexKg</td>
+                                                        <td>@item.UtilidadEsperadaKg</td>
+                                                        <td>@item.PrecioSalidaKg</td>
+                                                        <td>@item.FechaProgramada</td>
+                                                        <td>@item.FechaVencimiento</td>
+                                                        <td>@item.PrecioVentaEstatus</td>
+                                                        <td>@item.FechaRegistro</td>
+                                                        @if (item.PrecioVentaEstatus == "Programado")
                                                                 {
-                                                                    <td>
-                                                                        <a ID="lbEdit" href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })">
-                                                                            <i class="material-icons">edit</i>
-                                                                            <span class="icon-name"></span>
-                                                                        </a>
-                                                                        <a ID="lbBorrar" href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })">
-                                                                            <i class="material-icons">delete</i>
-                                                                            <span class="icon-name"></span>
-                                                                        </a>
-                                                                    </td>
+                                                                <td>
+                                                                    <a ID="lbEdit" href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })">
+                                                                        <i class="material-icons">edit</i>
+                                                                        <span class="icon-name"></span>
+                                                                    </a>
+                                                                    <a ID="lbBorrar" href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })">
+                                                                        <i class="material-icons">delete</i>
+                                                                        <span class="icon-name"></span>
+                                                                    </a>
+                                                                </td>
                                                                 }
-                                                            </tr>
+                                                    </tr>
                                                         }
                                                     }
                                                 </tbody>
@@ -274,3 +286,17 @@
 @*<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
 </html>
+<link href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+@*@section scripts{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(function(){
+
+                $(".datepicker").datepicker();
+            })
+
+        </script>
+        }*@
