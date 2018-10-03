@@ -7,31 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class EstadosRepublica
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class EstadosRepublica
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public EstadosRepublica()
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EstadosRepublica()
-        {
-            this.Empresa = new HashSet<Empresa>();
-            this.Usuarios = new HashSet<Usuario>();
-            this.Proveedores = new HashSet<Proveedor>();
-        }
-    
-        public byte IdEstadoRep { get; set; }
-        public string Estado { get; set; }
-        public string Abreviatura { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Empresa> Empresa { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Usuario> Usuarios { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Proveedor> Proveedores { get; set; }
+        this.Empresa = new HashSet<Empresa>();
+        this.Usuarios = new HashSet<Usuario>();
+        this.Proveedores = new HashSet<Proveedor>();
     }
+
+    public byte IdEstadoRep { get; set; }
+    public string Estado { get; set; }
+    public string Abreviatura { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<Empresa> Empresa { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<Usuario> Usuarios { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<Proveedor> Proveedores { get; set; }
 }

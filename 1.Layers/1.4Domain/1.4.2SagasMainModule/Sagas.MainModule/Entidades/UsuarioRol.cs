@@ -7,18 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class UsuarioRol
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class UsuarioRol
-    {
-        public int IdUsuario { get; set; }
-        public short IdRol { get; set; }
-        public string Descripcion { get; set; }
-    
-        public virtual Usuario Usuario { get; set; }
-        public virtual Rol Role { get; set; }
-    }
+    public int IdUsuario { get; set; }
+    public short IdRol { get; set; }
+    public string Descripcion { get; set; }
+
+    public virtual Usuario Usuario { get; set; }
+    public virtual Rol Role { get; set; }
 }

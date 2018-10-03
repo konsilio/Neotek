@@ -7,28 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class TipoServicioOProducto
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class TipoServicioOProducto
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public TipoServicioOProducto()
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TipoServicioOProducto()
-        {
-            this.Producto = new HashSet<Producto>();
-        }
-    
-        public short IdProductoServicioTipo { get; set; }
-        public short IdEmpresa { get; set; }
-        public string Nombre { get; set; }
-        public string Descripcion { get; set; }
-        public bool Activo { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Producto> Producto { get; set; }
-        public virtual Empresa Empresa { get; set; }
+        this.Producto = new HashSet<Producto>();
     }
+
+    public short IdProductoServicioTipo { get; set; }
+    public short IdEmpresa { get; set; }
+    public string Nombre { get; set; }
+    public string Descripcion { get; set; }
+    public bool Activo { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<Producto> Producto { get; set; }
+    public virtual Empresa Empresa { get; set; }
 }

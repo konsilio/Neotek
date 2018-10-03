@@ -7,3 +7,272 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+
+public partial class Almacen
+{
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public Almacen()
+    {
+        this.Entradas = new HashSet<AlmacenEntradaProducto>();
+        this.Salidas = new HashSet<AlmacenSalidaProducto>();
+    }
+
+    public int IdAlmacen { get; set; }
+    public short IdEmpresa { get; set; }
+    public int IdProduto { get; set; }
+    public decimal Cantidad { get; set; }
+    public string Ubicacion { get; set; }
+    public System.DateTime FechaActualizacion { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    public virtual Producto Producto { get; set; }
+    public virtual Empresa Empresa { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<AlmacenEntradaProducto> Entradas { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<AlmacenSalidaProducto> Salidas { get; set; }
+}
+
+public partial class AlmacenEntradaProducto
+{
+    public int IdRequisicion { get; set; }
+    public int IdOrdenCompra { get; set; }
+    public int IdAlmacen { get; set; }
+    public int IdProduto { get; set; }
+    public int IdUsuarioRecibe { get; set; }
+    public decimal Cantidad { get; set; }
+    public string UrlDocEntrada { get; set; }
+    public string PathDocEntrada { get; set; }
+    public string Observaciones_ { get; set; }
+    public System.DateTime FechaEntrada { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    public virtual Almacen Almacen { get; set; }
+    public virtual Producto Productos { get; set; }
+    public virtual OrdenCompra OrdenesCompra { get; set; }
+    public virtual Requisicion Requisiciones { get; set; }
+    public virtual Usuario UsuarioRecibe { get; set; }
+}
+
+public partial class AlmacenGas
+{
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public AlmacenGas()
+    {
+        this.EntradasGas = new HashSet<AlmacenGasDescarga>();
+        this.UnidadesAlmacenGas = new HashSet<UnidadAlmacenGas>();
+        this.CAlmacenGas = new HashSet<UnidadAlmacenGas>();
+    }
+
+    public short IdAlmacenGas { get; set; }
+    public short IdEmpresa { get; set; }
+    public decimal CapacidadTotalLt { get; set; }
+    public decimal CapacidadTotalKg { get; set; }
+    public decimal CantidadActualLt { get; set; }
+    public decimal CantidadActualKg { get; set; }
+    public decimal PorcentajeActual { get; set; }
+    public bool Activo { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<AlmacenGasDescarga> EntradasGas { get; set; }
+    public virtual Empresa Empresa { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<UnidadAlmacenGas> UnidadesAlmacenGas { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<UnidadAlmacenGas> CAlmacenGas { get; set; }
+}
+
+public partial class AlmacenGasAutoConsumo
+{
+    public short IdCAlmacenGasSalida { get; set; }
+    public short IdCAlmacenGasEntrada { get; set; }
+    public byte IdTipoEvento { get; set; }
+    public decimal P5000Salida { get; set; }
+    public string ClaveOperacion { get; set; }
+    public bool DatosProcesados { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    public virtual UnidadAlmacenGas UnidadSalida { get; set; }
+    public virtual UnidadAlmacenGas UnidadEntrada { get; set; }
+    public virtual AlmacenGasAutoConsumoFoto Fotografias { get; set; }
+    public virtual TipoEvento TipoEvento { get; set; }
+}
+
+public partial class AlmacenGasAutoConsumoFoto
+{
+    public short IdCAlmacenGasSalida { get; set; }
+    public short IdCAlmacenGasEntrada { get; set; }
+    public int IdOrden { get; set; }
+    public short IdImagenDe { get; set; }
+    public string UrlImagen { get; set; }
+    public string PathImagen { get; set; }
+    public string CadenaBase64 { get; set; }
+
+    public virtual AlmacenGasAutoConsumo AlmacenGasAutoConsumo { get; set; }
+}
+
+public partial class AlmacenGasCalibracion
+{
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public AlmacenGasCalibracion()
+    {
+        this.Fotografias = new HashSet<AlmacenGasCalibracionFoto>();
+    }
+
+    public short IdCAlmacenGas { get; set; }
+    public int IdOrden { get; set; }
+    public Nullable<short> IdTipoMedidor { get; set; }
+    public Nullable<byte> IdTipoEvento { get; set; }
+    public Nullable<byte> IdDestinoCalibracion { get; set; }
+    public Nullable<decimal> PorcentajeCalibracion { get; set; }
+    public Nullable<decimal> P5000 { get; set; }
+    public decimal Porcentaje { get; set; }
+    public string ClaveOperacion { get; set; }
+    public bool DatosProcesados { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    public virtual UnidadAlmacenGas UnidadAlmacenGas { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<AlmacenGasCalibracionFoto> Fotografias { get; set; }
+    public virtual TipoEvento TipoEvento { get; set; }
+}
+
+public partial class AlmacenGasCalibracionFoto
+{
+    public short IdCAlmacenGas { get; set; }
+    public int IdOrden { get; set; }
+    public short IdOrdenFoto { get; set; }
+    public short IdImagenDe { get; set; }
+    public string UrlImagen { get; set; }
+    public string PathImagen { get; set; }
+    public string CadenaBase64 { get; set; }
+}
+
+public partial class AlmacenGasDescarga
+{
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public AlmacenGasDescarga()
+    {
+        this.Fotos = new HashSet<AlmacenGasDescargaFoto>();
+    }
+
+    public int IdAlmacenEntradaGasDescarga { get; set; }
+    public Nullable<short> IdAlmacenGas { get; set; }
+    public Nullable<int> IdRequisicion { get; set; }
+    public Nullable<int> IdOrdenCompraExpedidor { get; set; }
+    public Nullable<int> IdOrdenCompraPorteador { get; set; }
+    public Nullable<int> IdProveedorExpedidor { get; set; }
+    public Nullable<int> IdProveedorPorteador { get; set; }
+    public Nullable<short> IdCAlmacenGas { get; set; }
+    public Nullable<short> IdTipoMedidorTractor { get; set; }
+    public Nullable<short> IdTipoMedidorAlmacen { get; set; }
+    public Nullable<bool> DatosProcesados { get; set; }
+    public string ClaveOperacion { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+    public Nullable<decimal> PorcenMagnatelOcularTractorFIN { get; set; }
+    public Nullable<decimal> PorcenMagnatelOcularAlmacenFIN { get; set; }
+    public Nullable<System.DateTime> FechaFinDescarga { get; set; }
+    public Nullable<bool> TanquePrestado { get; set; }
+    public Nullable<decimal> PorcenMagnatelOcularTractorINI { get; set; }
+    public Nullable<decimal> PorcenMagnatelOcularAlmacenINI { get; set; }
+    public Nullable<System.DateTime> FechaInicioDescarga { get; set; }
+    public Nullable<System.DateTime> FechaPapeleta { get; set; }
+    public Nullable<System.DateTime> FechaEmbarque { get; set; }
+    public string NumeroEmbarque { get; set; }
+    public string NombreOperador { get; set; }
+    public string PlacasTractor { get; set; }
+    public string NumTanquePG { get; set; }
+    public Nullable<decimal> CapacidadTanqueLt { get; set; }
+    public Nullable<decimal> CapacidadTanqueKg { get; set; }
+    public Nullable<decimal> PorcenMagnatelPapeleta { get; set; }
+    public Nullable<decimal> MasaKg { get; set; }
+    public Nullable<decimal> PresionTanque { get; set; }
+    public string Sello { get; set; }
+    public Nullable<decimal> ValorCarga { get; set; }
+    public string NombreResponsable { get; set; }
+    public Nullable<decimal> PorcenMagnatelOcular { get; set; }
+    public Nullable<System.DateTime> FechaEntraGas { get; set; }
+
+    public virtual AlmacenGas AlmacenGasTotal { get; set; }
+    public virtual UnidadAlmacenGas UnidadAlmacen { get; set; }
+    public virtual TipoMedidorUnidadAlmacenGas MedidorAlamcen { get; set; }
+    public virtual TipoMedidorUnidadAlmacenGas MedidorTractor { get; set; }
+    public virtual OrdenCompra OCompraExpedidor { get; set; }
+    public virtual OrdenCompra OCompraPorteador { get; set; }
+    public virtual Requisicion Requisicion { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<AlmacenGasDescargaFoto> Fotos { get; set; }
+    public virtual Proveedor Expedidor { get; set; }
+    public virtual Proveedor Porteador { get; set; }
+}
+
+public partial class AlmacenGasDescargaFoto
+{
+    public int IdAlmacenEntradaGasDescarga { get; set; }
+    public short Orden { get; set; }
+    public string UrlImagen { get; set; }
+    public string PathImagen { get; set; }
+    public short IdImagenDe { get; set; }
+    public string CadenaBase64 { get; set; }
+
+    public virtual AlmacenGasDescarga EntradaGas { get; set; }
+    public virtual ImagenDe Tipo { get; set; }
+}
+
+public partial class AlmacenGasRecarga
+{
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public AlmacenGasRecarga()
+    {
+        this.Cilindros = new HashSet<AlmacenGasRecargaCilindro>();
+        this.Fotografias = new HashSet<AlmacenGasRecargaFoto>();
+    }
+
+    public int IdAlmacenGasRecarga { get; set; }
+    public Nullable<short> IdCAlmacenGasSalida { get; set; }
+    public short IdCAlmacenGasEntrada { get; set; }
+    public Nullable<short> IdTipoMedidorSalida { get; set; }
+    public Nullable<short> IdTipoMedidorEntrada { get; set; }
+    public byte IdTipoEvento { get; set; }
+    public Nullable<decimal> P5000Salida { get; set; }
+    public Nullable<decimal> P5000Entrada { get; set; }
+    public Nullable<decimal> PorcentajeSalida { get; set; }
+    public Nullable<decimal> ProcentajeEntrada { get; set; }
+    public string ClaveOperacion { get; set; }
+    public bool DatosProcesados { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    public virtual UnidadAlmacenGas UnidadAlmacenSalida { get; set; }
+    public virtual UnidadAlmacenGas UnidadAlmacenEntrada { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<AlmacenGasRecargaCilindro> Cilindros { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<AlmacenGasRecargaFoto> Fotografias { get; set; }
+    public virtual TipoEvento TipoEvento { get; set; }
+}
+
+public partial class AlmacenGasRecargaCilindro
+{
+    public int IdAlmacenGasRecarga { get; set; }
+    public int IdOrden { get; set; }
+    public decimal Cantidad { get; set; }
+    public int IdCilindro { get; set; }
+
+    public virtual AlmacenGasRecarga Recarga { get; set; }
+    public virtual UnidadAlmacenGasCilindro UnidadAlmacenGasCilindro { get; set; }
+}
+
+public partial class AlmacenGasRecargaFoto
+{
+    public int IdAlmacenGasRecarga { get; set; }
+    public int IdOrden { get; set; }
+    public short IdImagenDe { get; set; }
+    public string UrlImagen { get; set; }
+    public string PathImagen { get; set; }
+    public string CadenaBase64 { get; set; }
+
+    public virtual AlmacenGasRecarga Recarga { get; set; }
+}

@@ -23,10 +23,10 @@
     <script type="text/javascript">
         $(function () {
             $('select').on('change', function () {
-
+                debugger
                 $('#tblfilterable tbody tr').each(function () {
                     var value = $('#IdTipoFecha').find('option:selected').text();//get value to filter of selected
-                    var hiderow = $(this).find("td").eq(6).html();//get value of column status
+                    var hiderow = $(this).find("td").eq(10).html();//get value of column status
                     if (value != hiderow) {
                         var rowindex = $(this).index();
                         $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
@@ -80,7 +80,7 @@
 <body style="height:100%">
     @using (Html.BeginForm("Registrar", "PrecioVentaOtro", FormMethod.Post))
     {
-       <section class="content home">
+        <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
                     <div class="card">
@@ -91,9 +91,9 @@
                                         <b>Gasera</b>
                                         <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
                                             @foreach (var lst in ViewBag.Empresas)
-                                                {
+                                            {
                                                 <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                                }
+                                            }
                                         </select>
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@
                     </div>
                     @Html.EditorFor(m => m.FechaProgramada, new { htmlAttributes = new { @class = "datepicker" } })
 
-                    @Html.TextBoxFor(x => x.FechaProgramada, new { @class= "datepicker" })
+                    @Html.TextBoxFor(x => x.FechaProgramada, new { @class = "datepicker" })
                     <div class="card">
                         <div class="header">
                             <h2><strong>Registrar precio de salida</strong></h2>
@@ -114,6 +114,10 @@
                                         Categoría:
                                         <select name="IdCategoria" class="form-control selectpicker z-index show-tick">
                                             <option value="0">Seleccione..</option>
+                                            @foreach (var lst in ViewBag.Categoria)
+                                            {
+                                                <option value="@lst.IdCategoria">@lst.Categoria</option>
+                                            }
                                         </select>
                                     </div>
                                 </div>
@@ -122,6 +126,10 @@
                                         Línea:
                                         <select name="IdProductoLinea" class="form-control selectpicker z-index show-tick">
                                             <option value="0">Seleccione..</option>
+                                            @foreach (var lst in ViewBag.Linea)
+                                            {
+                                                <option value="@lst.IdProductoLinea">@lst.Linea</option>
+                                            }
                                         </select>
                                     </div>
                                 </div>
@@ -130,6 +138,10 @@
                                         Producto:
                                         <select name="IdProducto" class="form-control selectpicker z-index show-tick">
                                             <option value="0">Seleccione..</option>
+                                            @foreach (var lst in ViewBag.Producto)
+                                            {
+                                                <option value="@lst.IdProducto">@lst.Producto</option>
+                                            }
                                         </select>
                                     </div>
                                 </div>
@@ -160,7 +172,7 @@
                                                     <i class="zmdi zmdi-calendar"></i>
                                                 </span>*@
                                             @*<input type="text" id="datepicker" class="form-control datepicker"/>*@
-                                            @Html.EditorFor(m => m.FechaProgramada, new { htmlAttributes =  new { @class = "datepicker" } })
+                                            @Html.EditorFor(m => m.FechaProgramada, new { htmlAttributes = new { @class = "datepicker" } })
                                         </div>
                                     </div>
                                 </div>
@@ -181,7 +193,7 @@
                                             <option value="0">Seleccione</option>
                                             @foreach (var lst in ViewBag.ListaStatus)
                                             {
-                                            <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
+                                                <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
                                             }
                                         </select>
                                     </div>
@@ -203,13 +215,16 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Gasera</th>
-                                                        <th>Precio PEMEX(kg)</th>
-                                                        <th>Utilidad Esperada(kg)</th>
+                                                        <th>Categoria</th>
+                                                        <th>Linea</th>
+                                                        <th>Producto</th>
+                                                        <th>Concepto</th>
+                                                        <th>Precio Actual</th>
                                                         <th>Precio Salida</th>
                                                         <th>Fecha Programada</th>
+                                                        <th>FechaRegistro</th>
                                                         <th>FechaVencimiento</th>
                                                         <th>Estatus</th>
-                                                        <th>FechaRegistro</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
@@ -218,29 +233,25 @@
                                                     {
                                                         foreach (var item in ViewBag.ListaPV)
                                                         {
-                                                    <tr>
-                                                        <td>@item.Empresa</td>
-                                                        <td>@item.PrecioPemexKg</td>
-                                                        <td>@item.UtilidadEsperadaKg</td>
-                                                        <td>@item.PrecioSalidaKg</td>
-                                                        <td>@item.FechaProgramada</td>
-                                                        <td>@item.FechaVencimiento</td>
-                                                        <td>@item.PrecioVentaEstatus</td>
-                                                        <td>@item.FechaRegistro</td>
-                                                        @if (item.PrecioVentaEstatus == "Programado")
-                                                                {
+                                                            <tr>
+                                                                <td>@item.Empresa</td>
+                                                                <td>@item.Categoria</td>
+                                                                <td>@item.Linea</td>
+                                                                <td>@item.Producto</td>                                                             
+                                                                <td>@item.CategoriaProducto</td>
+                                                                <td>@item.PrecioActual</td>
+                                                                <td>@item.PrecioSalida</td>
+                                                                <td>@item.FechaProgramada</td>
+                                                                <td>@item.FechaRegistro</td>
+                                                                <td>@item.FechaVencimiento</td>
+                                                                <td>@item.PrecioVentaEstatus</td>
                                                                 <td>
                                                                     <a ID="lbEdit" href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })">
                                                                         <i class="material-icons">edit</i>
                                                                         <span class="icon-name"></span>
                                                                     </a>
-                                                                    <a ID="lbBorrar" href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })">
-                                                                        <i class="material-icons">delete</i>
-                                                                        <span class="icon-name"></span>
-                                                                    </a>
                                                                 </td>
-                                                                }
-                                                    </tr>
+                                                            </tr>
                                                         }
                                                     }
                                                 </tbody>

@@ -7,25 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class FormaPago
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class FormaPago
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public FormaPago()
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FormaPago()
-        {
-            this.CProveedor = new HashSet<Proveedor>();
-        }
-    
-        public byte IdFormaPago { get; set; }
-        public string Descripcion { get; set; }
-        public bool Activo { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Proveedor> CProveedor { get; set; }
+        this.CProveedor = new HashSet<Proveedor>();
     }
+
+    public byte IdFormaPago { get; set; }
+    public string Descripcion { get; set; }
+    public bool Activo { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<Proveedor> CProveedor { get; set; }
 }

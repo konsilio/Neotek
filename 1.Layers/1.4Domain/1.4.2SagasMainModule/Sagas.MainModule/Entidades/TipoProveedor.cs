@@ -7,25 +7,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class TipoProveedor
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class TipoProveedor
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public TipoProveedor()
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TipoProveedor()
-        {
-            this.Proveedores = new HashSet<Proveedor>();
-        }
-    
-        public byte IdTipoProveedor { get; set; }
-        public string Tipo { get; set; }
-        public bool Activo { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Proveedor> Proveedores { get; set; }
+        this.Proveedores = new HashSet<Proveedor>();
     }
+
+    public byte IdTipoProveedor { get; set; }
+    public string Tipo { get; set; }
+    public bool Activo { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<Proveedor> Proveedores { get; set; }
 }

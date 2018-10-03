@@ -7,26 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class Banco
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class Banco
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public Banco()
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Banco()
-        {
-            this.CProveedor = new HashSet<Proveedor>();
-        }
-    
-        public short IdBanco { get; set; }
-        public string Clave { get; set; }
-        public string NombreCorto { get; set; }
-        public string NombreRazónSocial { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Proveedor> CProveedor { get; set; }
+        this.CProveedor = new HashSet<Proveedor>();
     }
+
+    public short IdBanco { get; set; }
+    public string Clave { get; set; }
+    public string NombreCorto { get; set; }
+    public string NombreRazónSocial { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<Proveedor> CProveedor { get; set; }
 }

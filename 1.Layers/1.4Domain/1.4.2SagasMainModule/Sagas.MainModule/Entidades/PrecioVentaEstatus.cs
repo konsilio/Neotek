@@ -7,16 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class PrecioVentaEstatus
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class PrecioVentaEstatus
-    {
-        public byte IdPrecioVentaEstatus { get; set; }
-        public string Descripción { get; set; }
-        public bool Activo { get; set; }
-        public System.DateTime FechaRegsitro { get; set; }
-    }
+    public byte IdPrecioVentaEstatus { get; set; }
+    public string Descripción { get; set; }
+    public bool Activo { get; set; }
+    public System.DateTime FechaRegsitro { get; set; }
 }

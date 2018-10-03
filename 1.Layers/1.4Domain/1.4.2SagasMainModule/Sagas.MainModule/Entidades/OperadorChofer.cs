@@ -7,30 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class OperadorChofer
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class OperadorChofer
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public OperadorChofer()
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OperadorChofer()
-        {
-            this.PuntosVenta = new HashSet<PuntoVenta>();
-        }
-    
-        public int IdOperadorChofer { get; set; }
-        public byte IdTipoOperadorChofer { get; set; }
-        public short IdEmpresa { get; set; }
-        public int IdUsuario { get; set; }
-        public bool Activo { get; set; }
-        public System.DateTime FechaRegistro { get; set; }
-    
-        public virtual TipoOperadorChofer TipoOperadorChofer { get; set; }
-        public virtual Usuario Usuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PuntoVenta> PuntosVenta { get; set; }
-        public virtual Empresa Empresa { get; set; }
+        this.PuntosVenta = new HashSet<PuntoVenta>();
     }
+
+    public int IdOperadorChofer { get; set; }
+    public byte IdTipoOperadorChofer { get; set; }
+    public short IdEmpresa { get; set; }
+    public int IdUsuario { get; set; }
+    public bool Activo { get; set; }
+    public System.DateTime FechaRegistro { get; set; }
+
+    public virtual TipoOperadorChofer TipoOperadorChofer { get; set; }
+    public virtual Usuario Usuario { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<PuntoVenta> PuntosVenta { get; set; }
+    public virtual Empresa Empresa { get; set; }
 }

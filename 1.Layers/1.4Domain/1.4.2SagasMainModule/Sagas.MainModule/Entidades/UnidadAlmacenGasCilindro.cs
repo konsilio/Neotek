@@ -7,37 +7,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sagas.MainModule.Entidades
+using System;
+using System.Collections.Generic;
+
+public partial class UnidadAlmacenGasCilindro
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class UnidadAlmacenGasCilindro
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+    public UnidadAlmacenGasCilindro()
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UnidadAlmacenGasCilindro()
-        {
-            this.CilindrosCamionetas = new HashSet<CamionetaCilindro>();
-            this.CentroCosto = new HashSet<CentroCosto>();
-            this.Recargas = new HashSet<AlmacenGasRecargaCilindro>();
-            this.TomasLectura = new HashSet<AlmacenGasTomaLecturaCilindro>();
-        }
-    
-        public int IdCilindro { get; set; }
-        public short IdEmpresa { get; set; }
-        public decimal Cantidad { get; set; }
-        public decimal CapacidadLt { get; set; }
-        public decimal CapacidadKg { get; set; }
-        public decimal Precio { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CamionetaCilindro> CilindrosCamionetas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CentroCosto> CentroCosto { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlmacenGasRecargaCilindro> Recargas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AlmacenGasTomaLecturaCilindro> TomasLectura { get; set; }
-        public virtual Empresa Empresa { get; set; }
+        this.CilindrosCamionetas = new HashSet<CamionetaCilindro>();
+        this.CentroCosto = new HashSet<CentroCosto>();
+        this.Recargas = new HashSet<AlmacenGasRecargaCilindro>();
+        this.TomasLectura = new HashSet<AlmacenGasTomaLecturaCilindro>();
     }
+
+    public int IdCilindro { get; set; }
+    public short IdEmpresa { get; set; }
+    public decimal Cantidad { get; set; }
+    public decimal CapacidadLt { get; set; }
+    public decimal CapacidadKg { get; set; }
+    public decimal Precio { get; set; }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<CamionetaCilindro> CilindrosCamionetas { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<CentroCosto> CentroCosto { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<AlmacenGasRecargaCilindro> Recargas { get; set; }
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+    public virtual ICollection<AlmacenGasTomaLecturaCilindro> TomasLectura { get; set; }
+    public virtual Empresa Empresa { get; set; }
 }

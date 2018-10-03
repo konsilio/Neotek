@@ -41,6 +41,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaRegistro = pv.FechaRegistro,
                 Empresa = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial,
                 PrecioVentaEstatus = PrecioVentaGasServicio.Obtener(pv.IdPrecioVentaEstatus).Descripción,
+                CategoriaProducto = ProductoServicio.ObtenerProducto((pv.IdProducto)).Descripcion,//Concepto
             };
             return usDTO;
         }
