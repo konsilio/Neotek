@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sagas.MainModule.Entidades;
 
 namespace Application.MainModule.Servicios.Almacen
 {
     public static class CalcularGasServicio
     {
-        public static decimal ObtenerLitrosEnElTanque(decimal capacidadTanque, decimal porcentaje)
+        public static decimal ObtenerLitrosEnElTanque(decimal capacidadTanqueLt, decimal porcentaje)
         {
-            return capacidadTanque * (porcentaje / 100);
+            return capacidadTanqueLt * (porcentaje / 100);
+        }
+
+        public static decimal ObtenerLitrosDesdePorcentaje(decimal capacidadTanqueLt, decimal porcentaje)
+        {
+            return capacidadTanqueLt * (porcentaje / 100);
         }
 
         public static decimal ObtenerKilogramosDesdeLitros(decimal litros, decimal factor)
@@ -41,9 +47,14 @@ namespace Application.MainModule.Servicios.Almacen
             return ObtenerDiferenciaKilogramos(cantidadMayor, cantidadMenor);
         }
 
-        public static decimal ObtenerDiferenciaLectura(decimal cantidadMayor, decimal cantidadMenor)
+        public static decimal ObtenerDiferenciaLecturaP5000(decimal cantidadMayor, decimal cantidadMenor)
         {
             return ObtenerDiferenciaKilogramos(cantidadMayor, cantidadMenor);
+        }
+
+        public static decimal ObtenerPorcentajeDesdeLitros(decimal capacidadTanqueLt, decimal litros)
+        {
+            return (litros / capacidadTanqueLt) * 100;
         }
 
         public static decimal SumarKilogramos(decimal cantidadActualKg, decimal ingresoKg)
@@ -51,9 +62,35 @@ namespace Application.MainModule.Servicios.Almacen
             return cantidadActualKg + ingresoKg;   
         }
 
-        internal static decimal SumarLitros(decimal cantidadActualLt, decimal ingresoLt)
+        public static decimal SumarLitros(decimal cantidadActualLt, decimal ingresoLt)
         {
             return cantidadActualLt + ingresoLt;
+        }
+
+        public static decimal RestarKilogramos(decimal cantidadActualKg, decimal salioKg)
+        {
+            return cantidadActualKg - salioKg;
+        }
+
+        public static decimal RestarLitros(decimal cantidadActualLt, decimal salioLt)
+        {
+            return cantidadActualLt - salioLt;
+        }
+
+        public static decimal RestarLitrosDesdePorcentaje(decimal litrosRecargadosP5000, decimal porcentajeCalibracionPlaneada)
+        {
+            return litrosRecargadosP5000 - (litrosRecargadosP5000 * (porcentajeCalibracionPlaneada / 100));
+        }
+
+        public static decimal ObtenerKilogramosEnCamioneta(Dictionary<decimal, decimal> cilindros)
+        {
+            //Key: Capacidad cilindro Value: Cantidad de cilindros con esa capacidad
+            return cilindros.Select(x => x.Key * x.Value).Sum();
+        }
+
+        public static decimal SumarKilogramos(decimal cantidadActualKg, decimal capacidadKg, decimal cantidad)
+        {
+            return cantidadActualKg + (capacidadKg * cantidad);
         }
     }
 }
