@@ -7949,6 +7949,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Key>
             <PropertyRef Name="IdCAlmacenGasSalida" />
             <PropertyRef Name="IdCAlmacenGasEntrada" />
+            <PropertyRef Name="IdOrden" />
           </Key>
           <Property Name="IdCAlmacenGasSalida" Type="Int16" Nullable="false" />
           <Property Name="IdCAlmacenGasEntrada" Type="Int16" Nullable="false" />
@@ -8055,7 +8056,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <End Type="Sagas.MainModuleModel.AlmacenGasTraspaso" Role="AlmacenGasTraspaso" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="Sagas.MainModuleModel.AlmacenGasTraspasoFoto" Role="AlmacenGasTraspasoFoto" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasTraspasoFoto" Role="AlmacenGasTraspasoFoto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AlmacenGasTraspaso">
               <PropertyRef Name="IdCAlmacenGasSalida" />
