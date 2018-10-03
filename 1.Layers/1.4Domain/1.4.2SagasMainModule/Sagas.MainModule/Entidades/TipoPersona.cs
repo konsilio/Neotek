@@ -7,27 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class TipoPersona
+namespace Sagas.MainModule.Entidades
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public TipoPersona()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class TipoPersona
     {
-        this.Proveedores = new HashSet<Proveedor>();
-        this.Clientes = new HashSet<Cliente>();
-        this.RegimenesFiscales = new HashSet<RegimenFiscal>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TipoPersona()
+        {
+            this.Proveedores = new HashSet<Proveedor>();
+            this.Clientes = new HashSet<Cliente>();
+            this.RegimenesFiscales = new HashSet<RegimenFiscal>();
+        }
+    
+        public byte IdTipoPersona { get; set; }
+        public string Descripcion { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Proveedor> Proveedores { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cliente> Clientes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RegimenFiscal> RegimenesFiscales { get; set; }
     }
-
-    public byte IdTipoPersona { get; set; }
-    public string Descripcion { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<Proveedor> Proveedores { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<Cliente> Clientes { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<RegimenFiscal> RegimenesFiscales { get; set; }
 }

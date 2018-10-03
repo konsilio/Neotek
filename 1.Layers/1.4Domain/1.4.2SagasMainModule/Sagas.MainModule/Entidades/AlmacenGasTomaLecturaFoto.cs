@@ -7,18 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class AlmacenGasTomaLecturaFoto
+namespace Sagas.MainModule.Entidades
 {
-    public short IdCAlmacenGas { get; set; }
-    public int IdOrden { get; set; }
-    public short IdOrdenFoto { get; set; }
-    public short IdImagenDe { get; set; }
-    public string UrlImagen { get; set; }
-    public string PathImagen { get; set; }
-    public string CadenaBase64 { get; set; }
-
-    public virtual AlmacenGasTomaLectura TomaLectura { get; set; }
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class AlmacenGasTomaLecturaFoto
+    {
+        public short IdCAlmacenGas { get; set; }
+        public int IdOrden { get; set; }
+        public short IdOrdenFoto { get; set; }
+        public short IdImagenDe { get; set; }
+        public string UrlImagen { get; set; }
+        public string PathImagen { get; set; }
+        public string CadenaBase64 { get; set; }
+    
+        public virtual AlmacenGasTomaLectura TomaLectura { get; set; }
+    }
 }

@@ -7,28 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class LineaProducto
+namespace Sagas.MainModule.Entidades
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public LineaProducto()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class LineaProducto
     {
-        this.Producto = new HashSet<Producto>();
-        this.PrecioVenta = new HashSet<PrecioVenta>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public LineaProducto()
+        {
+            this.Producto = new HashSet<Producto>();
+            this.PrecioVenta = new HashSet<PrecioVenta>();
+        }
+    
+        public short IdProductoLinea { get; set; }
+        public short IdEmpresa { get; set; }
+        public string Linea { get; set; }
+        public string Descripcion { get; set; }
+        public bool Activo { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Producto> Producto { get; set; }
+        public virtual Empresa Empresa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PrecioVenta> PrecioVenta { get; set; }
     }
-
-    public short IdProductoLinea { get; set; }
-    public short IdEmpresa { get; set; }
-    public string Linea { get; set; }
-    public string Descripcion { get; set; }
-    public bool Activo { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<Producto> Producto { get; set; }
-    public virtual Empresa Empresa { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<PrecioVenta> PrecioVenta { get; set; }
 }

@@ -7,23 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class TipoMedidorUnidadAlmacenGas
+namespace Sagas.MainModule.Entidades
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public TipoMedidorUnidadAlmacenGas()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class TipoMedidorUnidadAlmacenGas
     {
-        this.UnidadesAlmacen = new HashSet<UnidadAlmacenGas>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TipoMedidorUnidadAlmacenGas()
+        {
+            this.UnidadesAlmacen = new HashSet<UnidadAlmacenGas>();
+        }
+    
+        public short IdTipoMedidor { get; set; }
+        public string Medidor { get; set; }
+        public byte NumeroFotografias { get; set; }
+        public bool Activo { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UnidadAlmacenGas> UnidadesAlmacen { get; set; }
     }
-
-    public short IdTipoMedidor { get; set; }
-    public string Medidor { get; set; }
-    public byte NumeroFotografias { get; set; }
-    public bool Activo { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<UnidadAlmacenGas> UnidadesAlmacen { get; set; }
 }

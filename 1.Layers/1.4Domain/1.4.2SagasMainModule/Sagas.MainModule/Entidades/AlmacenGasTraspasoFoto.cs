@@ -7,18 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class AlmacenGasTraspasoFoto
+namespace Sagas.MainModule.Entidades
 {
-    public short IdCAlmacenGasSalida { get; set; }
-    public short IdCAlmacenGasEntrada { get; set; }
-    public int IdOrden { get; set; }
-    public short IdImagenDe { get; set; }
-    public string UrlImagen { get; set; }
-    public string PathImagen { get; set; }
-    public string CadenaBase64 { get; set; }
-
-    public virtual AlmacenGasTraspaso AlmacenGasTraspaso { get; set; }
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class AlmacenGasTraspasoFoto
+    {
+        public short IdCAlmacenGasSalida { get; set; }
+        public short IdCAlmacenGasEntrada { get; set; }
+        public int IdOrden { get; set; }
+        public short IdImagenDe { get; set; }
+        public string UrlImagen { get; set; }
+        public string PathImagen { get; set; }
+        public string CadenaBase64 { get; set; }
+    
+        public virtual AlmacenGasTraspaso AlmacenGasTraspaso { get; set; }
+    }
 }

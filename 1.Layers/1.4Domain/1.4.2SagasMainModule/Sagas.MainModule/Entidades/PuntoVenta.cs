@@ -7,20 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class PuntoVenta
+namespace Sagas.MainModule.Entidades
 {
-    public int IdPuntoVenta { get; set; }
-    public short IdEmpresa { get; set; }
-    public short IdCAlmacenGas { get; set; }
-    public int IdOperadorChofer { get; set; }
-    public System.DateTime FechaModificacion { get; set; }
-    public bool Activo { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
-
-    public virtual UnidadAlmacenGas UnidadesAlmacen { get; set; }
-    public virtual OperadorChofer OperadorChofer { get; set; }
-    public virtual Empresa Empresa { get; set; }
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class PuntoVenta
+    {
+        public int IdPuntoVenta { get; set; }
+        public short IdEmpresa { get; set; }
+        public short IdCAlmacenGas { get; set; }
+        public int IdOperadorChofer { get; set; }
+        public System.DateTime FechaModificacion { get; set; }
+        public bool Activo { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    
+        public virtual UnidadAlmacenGas UnidadesAlmacen { get; set; }
+        public virtual OperadorChofer OperadorChofer { get; set; }
+        public virtual Empresa Empresa { get; set; }
+    }
 }

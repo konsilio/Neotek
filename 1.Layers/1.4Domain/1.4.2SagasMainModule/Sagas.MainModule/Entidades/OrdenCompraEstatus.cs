@@ -7,22 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class OrdenCompraEstatus
+namespace Sagas.MainModule.Entidades
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public OrdenCompraEstatus()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class OrdenCompraEstatus
     {
-        this.OrdenCompra = new HashSet<OrdenCompra>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public OrdenCompraEstatus()
+        {
+            this.OrdenCompra = new HashSet<OrdenCompra>();
+        }
+    
+        public byte IdOrdenCompraEstatus { get; set; }
+        public string Descripcion { get; set; }
+        public bool Activo { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrdenCompra> OrdenCompra { get; set; }
     }
-
-    public byte IdOrdenCompraEstatus { get; set; }
-    public string Descripcion { get; set; }
-    public bool Activo { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<OrdenCompra> OrdenCompra { get; set; }
 }

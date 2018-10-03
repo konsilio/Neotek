@@ -7,57 +7,60 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class Cliente
+namespace Sagas.MainModule.Entidades
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public Cliente()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class Cliente
     {
-        this.Locaciones = new HashSet<ClienteLocacion>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Cliente()
+        {
+            this.Locaciones = new HashSet<ClienteLocacion>();
+        }
+    
+        public int IdCliente { get; set; }
+        public short IdEmpresa { get; set; }
+        public Nullable<byte> IdTipoPersona { get; set; }
+        public Nullable<short> IdRegimenFiscal { get; set; }
+        public Nullable<int> IdCuentaContable { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido1 { get; set; }
+        public string Apellido2 { get; set; }
+        public bool Activo { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+        public decimal DescuentoXKilo { get; set; }
+        public decimal limiteCreditoMonto { get; set; }
+        public short limiteCreditoDias { get; set; }
+        public string Telefono1 { get; set; }
+        public string Telefono2 { get; set; }
+        public string Telefono3 { get; set; }
+        public string Celular1 { get; set; }
+        public string Celular2 { get; set; }
+        public string Celular3 { get; set; }
+        public string Email1 { get; set; }
+        public string Email2 { get; set; }
+        public string Email3 { get; set; }
+        public string SitioWeb1 { get; set; }
+        public string SitioWeb2 { get; set; }
+        public string SitioWeb3 { get; set; }
+        public string Usuario { get; set; }
+        public string Password { get; set; }
+        public bool AccesoPortal { get; set; }
+        public string Rfc { get; set; }
+        public string RazonSocial { get; set; }
+        public string RepresentanteLegal { get; set; }
+        public string Telefono { get; set; }
+        public string Celular { get; set; }
+        public string CorreoElectronico { get; set; }
+        public string Domicilio { get; set; }
+    
+        public virtual RegimenFiscal RegimenFiscal { get; set; }
+        public virtual TipoPersona TipoPersonaFiscal { get; set; }
+        public virtual Empresa Empresa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ClienteLocacion> Locaciones { get; set; }
+        public virtual CuentaContable CuentaContable { get; set; }
     }
-
-    public int IdCliente { get; set; }
-    public short IdEmpresa { get; set; }
-    public Nullable<byte> IdTipoPersona { get; set; }
-    public Nullable<short> IdRegimenFiscal { get; set; }
-    public Nullable<int> IdCuentaContable { get; set; }
-    public string Nombre { get; set; }
-    public string Apellido1 { get; set; }
-    public string Apellido2 { get; set; }
-    public bool Activo { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
-    public decimal DescuentoXKilo { get; set; }
-    public decimal limiteCreditoMonto { get; set; }
-    public short limiteCreditoDias { get; set; }
-    public string Telefono1 { get; set; }
-    public string Telefono2 { get; set; }
-    public string Telefono3 { get; set; }
-    public string Celular1 { get; set; }
-    public string Celular2 { get; set; }
-    public string Celular3 { get; set; }
-    public string Email1 { get; set; }
-    public string Email2 { get; set; }
-    public string Email3 { get; set; }
-    public string SitioWeb1 { get; set; }
-    public string SitioWeb2 { get; set; }
-    public string SitioWeb3 { get; set; }
-    public string Usuario { get; set; }
-    public string Password { get; set; }
-    public bool AccesoPortal { get; set; }
-    public string Rfc { get; set; }
-    public string RazonSocial { get; set; }
-    public string RepresentanteLegal { get; set; }
-    public string Telefono { get; set; }
-    public string Celular { get; set; }
-    public string CorreoElectronico { get; set; }
-    public string Domicilio { get; set; }
-
-    public virtual RegimenFiscal RegimenFiscal { get; set; }
-    public virtual TipoPersona TipoPersonaFiscal { get; set; }
-    public virtual Empresa Empresa { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<ClienteLocacion> Locaciones { get; set; }
-    public virtual CuentaContable CuentaContable { get; set; }
 }

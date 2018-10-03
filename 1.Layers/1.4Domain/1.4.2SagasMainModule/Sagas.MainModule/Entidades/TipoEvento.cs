@@ -7,31 +7,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class TipoEvento
+namespace Sagas.MainModule.Entidades
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-    public TipoEvento()
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class TipoEvento
     {
-        this.AlmacenGasAutoConsumo = new HashSet<AlmacenGasAutoConsumo>();
-        this.AlmacenGasCalibracion = new HashSet<AlmacenGasCalibracion>();
-        this.AlmacenGasRecarga = new HashSet<AlmacenGasRecarga>();
-        this.AlmacenGasTraspaso = new HashSet<AlmacenGasTraspaso>();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TipoEvento()
+        {
+            this.AlmacenGasAutoConsumo = new HashSet<AlmacenGasAutoConsumo>();
+            this.AlmacenGasCalibracion = new HashSet<AlmacenGasCalibracion>();
+            this.AlmacenGasRecarga = new HashSet<AlmacenGasRecarga>();
+            this.AlmacenGasTraspaso = new HashSet<AlmacenGasTraspaso>();
+        }
+    
+        public byte IdTipoEvento { get; set; }
+        public string Evento { get; set; }
+        public bool Activo { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasAutoConsumo> AlmacenGasAutoConsumo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasCalibracion> AlmacenGasCalibracion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasRecarga> AlmacenGasRecarga { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasTraspaso> AlmacenGasTraspaso { get; set; }
     }
-
-    public byte IdTipoEvento { get; set; }
-    public string Evento { get; set; }
-    public bool Activo { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<AlmacenGasAutoConsumo> AlmacenGasAutoConsumo { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<AlmacenGasCalibracion> AlmacenGasCalibracion { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<AlmacenGasRecarga> AlmacenGasRecarga { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<AlmacenGasTraspaso> AlmacenGasTraspaso { get; set; }
 }

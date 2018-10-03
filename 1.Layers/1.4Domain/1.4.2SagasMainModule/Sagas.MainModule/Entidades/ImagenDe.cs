@@ -7,13 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-public partial class ImagenDe
+namespace Sagas.MainModule.Entidades
 {
-    public short IdImagenDe { get; set; }
-    public string ImagenDe1 { get; set; }
-    public bool Activo { get; set; }
-    public System.DateTime FechaRegistro { get; set; }
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class ImagenDe
+    {
+        public short IdImagenDe { get; set; }
+        public string ImagenDe1 { get; set; }
+        public bool Activo { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    }
 }
