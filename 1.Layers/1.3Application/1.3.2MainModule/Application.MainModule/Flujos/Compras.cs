@@ -6,6 +6,7 @@ using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Almacen;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.Requisicion;
@@ -153,6 +154,8 @@ namespace Application.MainModule.Flujos
         {
             var oc = OrdenCompraServicio.Buscar(idOrdenCompra);
             var cg = OrdenCompraServicio.BuscarComplementoGas(oc);
+            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
+            var imgs = AlmacenGasServicio.ObtenerImagenes(alamacen);
 
             return cg;
         }
