@@ -816,25 +816,22 @@ namespace Application.MainModule.Servicios.Almacen
             if (apTrasDto.TraspasoLecturaFinal == null)
                 return new AplicaTraspasoDto();
 
-            decimal LitrosTraspasodos = CalcularGasServicio.ObtenerDiferenciaLecturaP5000(apTrasDto.TraspasoLecturaFinal.P5000Salida, apTrasDto.TraspasoLecturaInicial.P5000Salida);            
-            decimal KilosTraspasodos = CalcularGasServicio.ObtenerKilogramosDesdeLitros(LitrosTraspasodos, apTrasDto.Empresa.FactorLitrosAKilos);
+            decimal LitrosTraspasados = CalcularGasServicio.ObtenerDiferenciaLecturaP5000(apTrasDto.TraspasoLecturaFinal.P5000Salida, apTrasDto.TraspasoLecturaInicial.P5000Salida);
+            decimal KilosTraspasados = CalcularGasServicio.ObtenerKilogramosDesdeLitros(LitrosTraspasados, apTrasDto.Empresa.FactorLitrosAKilos);
 
-            apTrasDto = AplicarTraspaso(apTrasDto, LitrosTraspasodos, KilosTraspasodos);
-
-           
-
+            apTrasDto = AplicarTraspaso(apTrasDto, LitrosTraspasados, KilosTraspasados);
             return apTrasDto;
         }
 
-        public static AplicaTraspasoDto AplicarTraspaso(AplicaTraspasoDto apTrasDto, decimal LitrosTraspasodos, decimal KilosTraspasodos)
+        public static AplicaTraspasoDto AplicarTraspaso(AplicaTraspasoDto apTrasDto, decimal LitrosTraspasados, decimal KilosTraspasados)
         {
-            apTrasDto.unidadEntrada.CantidadActualLt = CalcularGasServicio.SumarLitros(apTrasDto.unidadEntrada.CantidadActualLt, LitrosTraspasodos);
-            apTrasDto.unidadEntrada.CantidadActualKg = CalcularGasServicio.SumarKilogramos(apTrasDto.unidadEntrada.CantidadActualKg, KilosTraspasodos);            
+            apTrasDto.unidadEntrada.CantidadActualLt = CalcularGasServicio.SumarLitros(apTrasDto.unidadEntrada.CantidadActualLt, LitrosTraspasados);
+            apTrasDto.unidadEntrada.CantidadActualKg = CalcularGasServicio.SumarKilogramos(apTrasDto.unidadEntrada.CantidadActualKg, KilosTraspasados);            
             apTrasDto.unidadEntrada.PorcentajeActual = CalcularGasServicio.ObtenerPorcentajeDesdeLitros(apTrasDto.unidadEntrada.CapacidadTanqueLt.Value, apTrasDto.unidadEntrada.CantidadActualLt);
             apTrasDto.unidadEntrada.P5000Actual = apTrasDto.TraspasoLecturaFinal.P5000Entrada;
 
-            apTrasDto.unidadSalida.CantidadActualLt = CalcularGasServicio.RestarLitros(apTrasDto.unidadSalida.CantidadActualLt, LitrosTraspasodos);
-            apTrasDto.unidadSalida.CantidadActualKg = CalcularGasServicio.RestarKilogramos(apTrasDto.unidadSalida.CantidadActualKg, KilosTraspasodos);
+            apTrasDto.unidadSalida.CantidadActualLt = CalcularGasServicio.RestarLitros(apTrasDto.unidadSalida.CantidadActualLt, LitrosTraspasados);
+            apTrasDto.unidadSalida.CantidadActualKg = CalcularGasServicio.RestarKilogramos(apTrasDto.unidadSalida.CantidadActualKg, KilosTraspasados);
             apTrasDto.unidadSalida.P5000Actual = apTrasDto.TraspasoLecturaFinal.P5000Salida;
 
             if (apTrasDto.identidadUS.Equals(identidadUnidadAlmacenGas.EstacionCarburacion))
