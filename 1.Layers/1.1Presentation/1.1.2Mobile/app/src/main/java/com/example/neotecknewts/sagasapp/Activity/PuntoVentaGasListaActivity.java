@@ -3,22 +3,17 @@ package com.example.neotecknewts.sagasapp.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Point;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Adapter.PuntoVentaAdapter;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosPuntoVentaDTO;
-import com.example.neotecknewts.sagasapp.Model.ExistenciasDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaGasListaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaGasListaPresenterImpl;
@@ -43,6 +38,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
     VentaDTO ventaDTO;
     PuntoVentaAdapter adapter;
     boolean  EsVentaCamioneta,EsVentaCarburacion,EsVentaPipa;
+    boolean esGasLP,esCilindroGas,esCilindro;
     Tabla tabla;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +50,9 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             EsVentaCamioneta = extras.getBoolean("EsVentaCamioneta",false);
             EsVentaCarburacion = extras.getBoolean("EsVentaCarburacion",false);
             EsVentaPipa = extras.getBoolean("EsVentaPipa",false);
+            esGasLP = extras.getBoolean("esGasLP",false);
+            esCilindroGas = extras.getBoolean("esCilindroGas");
+            esCilindro = extras.getBoolean("esCilindro");
         }
         BtnPuntoVetaGasListActivityOpciones = findViewById(R.id.BtnPuntoVetaGasListActivityOpciones);
         BtnPuntoVentaGasListaActivityGasListaAgregar = findViewById(R.id.
@@ -67,7 +66,9 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                     VentaGasActivity.class);
             intent.putExtra("ventaDTO",ventaDTO);
-            intent.putExtra("esGasLP",true);
+            intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa",EsVentaPipa);
             startActivity(intent);
         });
 
@@ -81,10 +82,20 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         });
         session = new Session(this);
         BtnPuntoVentaGasListActivityPagar.setOnClickListener(v->{
-            Intent intent = new Intent(PuntoVentaGasListaActivity.this,
-                    PuntoVentaPagarActivity.class);
-            intent.putExtra("ventaDTO",ventaDTO);
-            startActivity(intent);
+            if(ventaDTO.getConcepto().size()>0) {
+                Intent intent = new Intent(PuntoVentaGasListaActivity.this,
+                        PuntoVentaPagarActivity.class);
+                intent.putExtra("ventaDTO", ventaDTO);
+                startActivity(intent);
+            }else{
+                AlertDialog.Builder builder = new
+                        AlertDialog.Builder(this);
+                builder.setTitle(R.string.error_titulo);
+                builder.setMessage(R.string.No_venta);
+                builder.setPositiveButton(R.string.message_acept,
+                        ((dialog, which) -> dialog.dismiss()));
+                builder.create().show();
+            }
         });
         LinearLayoutManager linearLayout = new LinearLayoutManager(
                 PuntoVentaGasListaActivity.this);
@@ -93,7 +104,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         presenter = new PuntoVentaGasListaPresenterImpl(this);
         //if(EsVentaCamioneta) {
             presenter.getListaCamionetaCilindros(session.getToken(),
-                    true,false,false);
+                    esGasLP,esCilindroGas,esCilindro);
             mostrarConsepto(ventaDTO.getConcepto());
         //}
     }

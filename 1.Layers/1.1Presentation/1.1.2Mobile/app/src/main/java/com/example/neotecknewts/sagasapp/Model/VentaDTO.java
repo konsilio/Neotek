@@ -31,8 +31,92 @@ public class VentaDTO implements Serializable {
     @SerializedName("Efectivo")
     private double Efectivo;
 
+    @SerializedName("Fecha")
+    private String Fecha;
+
+    @SerializedName("Hora")
+    private String Hora;
+
+    @SerializedName("Cambio")
+    private double Cambio;
+
+    @SerializedName("SinNumero")
+    private boolean SinNumero;
+
+    public String getFecha() {
+        return Fecha;
+    }
+
     public  VentaDTO(){
         this.Concepto = new ArrayList<>();
+    }
+
+    public void setFecha(String fecha) {
+        Fecha = fecha;
+    }
+
+    public String getHora() {
+        return Hora;
+    }
+
+    public void setHora(String hora) {
+        Hora = hora;
+    }
+
+    public double getCambio() {
+        return Cambio;
+    }
+
+    public void setCambio(double cambio) {
+        Cambio = cambio;
+    }
+
+    public double getSubtotal() {
+        return Subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        Subtotal = subtotal;
+    }
+
+    public double getIva() {
+        return Iva;
+    }
+
+    public void setIva(double iva) {
+        Iva = iva;
+    }
+
+    public double getTotal() {
+        return Total;
+    }
+
+    public void setTotal(double total) {
+        Total = total;
+    }
+
+    public boolean isFactura() {
+        return Factura;
+    }
+
+    public void setFactura(boolean factura) {
+        Factura = factura;
+    }
+
+    public boolean isCredito() {
+        return Credito;
+    }
+
+    public void setCredito(boolean credito) {
+        Credito = credito;
+    }
+
+    public double getEfectivo() {
+        return Efectivo;
+    }
+
+    public void setEfectivo(double efectivo) {
+        Efectivo = efectivo;
     }
 
     public List<ConceptoDTO> getConcepto() {
@@ -49,5 +133,13 @@ public class VentaDTO implements Serializable {
 
     public void setIdCliente(int idCliente) {
         IdCliente = idCliente;
+    }
+
+    public boolean isSinNumero() {
+        return SinNumero;
+    }
+
+    public void setSinNumero(boolean sinNumero) {
+        SinNumero = sinNumero;
     }
 }

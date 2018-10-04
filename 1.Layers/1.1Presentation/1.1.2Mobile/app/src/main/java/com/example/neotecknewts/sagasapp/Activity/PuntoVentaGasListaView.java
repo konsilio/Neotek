@@ -10,6 +10,5 @@ public interface PuntoVentaGasListaView {
     void onHideProgress();
     void onShowProgress(int message_cargando);
     void onError(String mensaje);
-
     void onSuccessListExistencia(DatosPuntoVentaDTO data);
 }

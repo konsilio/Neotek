@@ -175,12 +175,23 @@
             android:label="@string/Punto_de_venta" />
         <activity
             android:name=".Activity.VentaGasActivity"
-            android:label="@string/Punto_de_venta" />
+            android:configChanges="orientation"
+            android:label="@string/Punto_de_venta"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.PuntoVentaGasListaActivity"
-            android:label="@string/Punto_de_venta" />
-        <activity android:name=".Activity.PuntoVentaPagarActivity"
-            android:label="@string/Punto_de_venta"/>
+            android:configChanges="orientation"
+            android:label="@string/Punto_de_venta"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.PuntoVentaPagarActivity"
+            android:configChanges="orientation"
+            android:label="@string/Punto_de_venta"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activity.PuntoVentaOtrosActivity"
+            android:configChanges="orientation"
+            android:label="@string/Punto_de_venta"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

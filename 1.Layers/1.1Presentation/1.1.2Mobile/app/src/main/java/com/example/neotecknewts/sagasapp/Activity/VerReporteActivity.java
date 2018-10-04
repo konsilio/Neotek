@@ -6,9 +6,11 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.print.PrinterInfo;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Printer;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
+import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.io.IOException;
@@ -31,9 +34,11 @@ public class VerReporteActivity extends AppCompatActivity {
     private boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal,EsPrimeraLectura;
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
     public boolean EsTraspasoPipaInicial,EsTraspasoPipaFinal,EsPasoIniciaLPipa;
+    boolean  EsVentaCamioneta,EsVentaCarburacion,EsVentaPipa;
     boolean EsAnticipo,EsCorte;
     RecargaDTO recargaDTO;
     TraspasoDTO traspasoDTO;
+    VentaDTO ventaDTO;
     private String StringReporte,HtmlReporte;
 
     // android built in classes for bluetooth operations
@@ -74,6 +79,10 @@ public class VerReporteActivity extends AppCompatActivity {
             EsAnticipo = bundle.getBoolean("EsAnticipo",false);
             EsCorte = bundle.getBoolean("EsCorte",false);
 
+            EsVentaCamioneta = bundle.getBoolean("EsVentaCamioneta",false);
+            EsVentaCarburacion = bundle.getBoolean("EsVentaCarburacion",false);
+            EsVentaPipa = bundle.getBoolean("EsVentaPipa",false);
+
             if(EsReporteDelDia) {
                 StringReporte = (String) bundle.get("StringReporte");
                 HtmlReporte = (String) bundle.get("HtmlReporte");
@@ -95,6 +104,13 @@ public class VerReporteActivity extends AppCompatActivity {
             }else if (EsCorte){
                 setTitle("Nota de corte de caja");
                 GenerarReporteCorteCaja();
+            }
+            if(EsVentaCamioneta || EsVentaCarburacion || EsVentaPipa){
+                if(EsVentaCamioneta) {
+                    setTitle("Nota de venta");
+                    ventaDTO = (VentaDTO) bundle.getSerializable("ventaDTO");
+                    GenerarReporte(ventaDTO);
+                }
             }
 
         }
@@ -135,11 +151,12 @@ public class VerReporteActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
-
-                /*intent.putExtra("EsTraspasoPipaInicial", EsTraspasoPipaInicial);
-                intent.putExtra("EsTraspasoPipaFinal", EsTraspasoPipaFinal);
-                intent.putExtra("traspasoDTO", traspasoDTO);
-                startActivity(intent);*/
+            }else if(EsVentaCamioneta || EsVentaCarburacion || EsVentaPipa){
+                Intent intent = new Intent(VerReporteActivity.this,
+                        MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
         btnReporteActivityImprimir.setOnClickListener((View v) -> {
@@ -158,6 +175,106 @@ public class VerReporteActivity extends AppCompatActivity {
         });
         WVVerReporteActivityReporte.loadDataWithBaseURL(null, HtmlReporte,
                 "text/HTML", "UTF-8", null);
+
+
+    }
+
+    private void GenerarReporte(VentaDTO ventaDTO) {
+        HtmlReporte = "<body>" +
+                "<h3><u>Nota de venta</u></h3>" +
+                "<table>" +
+                "<tr>" +
+                "<td>Folio Venta: </td>" +
+                "<td>[{Clave-venta}]</td>"+
+                "</tr>"+
+                "<tr>" +
+                "<td>Fecha</td>"+
+                "<td>[{Fecha}]</td>"+
+                "</tr>"+
+                "<tr>" +
+                "<td>Hora</td>"+
+                "<td>[{Hora}]</td>"+
+                "</tr>"+
+                "</table>"+
+                "<hr>"+
+                "<h3>Cliente</h3>" +
+                "<table>" +
+                "<tr>" +
+                "<td>Razon Social</td>" +
+                "<td>[{Razon-social}]</td>" +
+                "</tr>"+
+                "<tr>" +
+                "<td>RFC</td>" +
+                "<td>[{RFC}]</td>" +
+                "</tr>"+
+                "</table>" +
+                "<table>" +
+                "<tr>" +
+                "<td>Concepto</td>"+
+                "<td>Cant.</td>"+
+                "<td>P.Uni.</td>"+
+                "<td>Desc</td>"+
+                "<td>Subt.</td>"+
+                "</tr>"+
+                "<tr>" +
+                "<td>[{Concepto}]</td>"+
+                "<td>[{Cant}]</td>"+
+                "<td>[{P-Uni}]</td>"+
+                "<td>[{Desc}]</td>"+
+                "<td>[{Subt}]</td>"+
+                "</tr>"+
+                "</table>"+
+                "<table>" +
+                "<tr>" +
+                "<td>I.V.A. (16%)</td>"+
+                "<td>[{iva}]</td>"+
+                "</tr>"+
+                "<tr>"+
+                "<td>Total</td>"+
+                "<td>[{Total}]</td>"+
+                "</tr>"+
+                "<tr>"+
+                "<td>Efectivo recibido:</td>"+
+                "<td>[{Efectivo}]</td>"+
+                "</tr>"+
+                "<tr>"+
+                "<td>Cambio</td>"+
+                "<td>[{Cambio}]</td>"+
+                "</tr>"+
+                "</table>"+
+                "</body>";
+        StringReporte = "\tTiket de venta\n" +
+                        "Gas Mundial de Guerrero\n\n"+
+                        "Tiket\t[{Clave-venta}]\n"+
+                        "Fecha\t[{Fecha}]\n"+
+                        "Hora\t[{Hora}]\n"+
+                        "---------------------------"+
+                        "\tCliente\n" +
+                        "Razon Social\t[{Razon-social}]\n" +
+                        "RFC\t[{RFC}]\n" +
+                        "---------------------------------\n"+
+                        "|Concepto|Cant.|P.Uni.|Desc|Subt|\n"+
+                        "---------------------------------\n"+
+                        "|[{Concepto}]|[{Cant}]|[{P-Uni}]|[{Desc}]|[{Subt}]|\n"+
+                        "________________________________\n"+
+                        "\tI.V.A. (16%) [{iva}]\n"+
+                        "\tTotal [{Total}]\n";
+        StringReporte = "\tEfectivo recibido: [{Efectivo}]\n"+
+                        "\tCambio [{Cambio}]\n";
+        StringReporte = "\tVenta Contado\n";
+        StringReporte = "Le atendio [{Usuario}]"+
+                        "----------------------------------\n"+
+                        "Gas Mundial de Guerrero S.A de C.V.\n"+
+                        "Av. Principal No. 5477 C.P. 56789\n"+
+                        "www.gasmundialdeguerrero.com.mx\n\n"+
+
+                        "Facturación electrónica en :\n"+
+                        "www.gasmundialdeguerrero.com.mx/\n"+
+                        "facturacion\n\n"+
+                        "Folio Factura: [{Folio-factura}]\n\n"+
+                        "Gracias por su confianza,¡vuelva\n" +
+                        "pronto!"
+                    ;
 
 
     }

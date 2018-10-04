@@ -50,7 +50,7 @@ public class Tabla {
                     TableRow.LayoutParams.WRAP_CONTENT);
             text.setText(aCabecera);
             text.setGravity(Gravity.LEFT);
-            text.setTextSize(30);
+            text.setTextSize(12);
             //text.setTextAppearance(activity, R.style.estilo_celda);
             //text.setBackgroundResource(R.drawable.tabla_celda_cabecera);
             text.setLayoutParams(layoutCelda);
@@ -74,7 +74,7 @@ public class Tabla {
                     TableRow.LayoutParams.WRAP_CONTENT);
             text.setText(aCabecera);
             text.setGravity(Gravity.LEFT);
-            text.setTextSize(30);
+            //text.setTextSize(30);
             //text.setTextAppearance(activity, R.style.estilo_celda);
             //text.setBackgroundResource(R.drawable.tabla_celda_cabecera);
             text.setLayoutParams(layoutCelda);
@@ -96,7 +96,7 @@ public class Tabla {
                 TextView texto = new TextView(activity);
                 texto.setText(String.valueOf(elemento[x]));
                 texto.setGravity(Gravity.LEFT);
-                texto.setTextSize(30);
+                //texto.setTextSize(14);
                 //texto.setTextAppearance(activity, R.style.estilo_celda);
                 //texto.setBackgroundResource(R.drawable.tabla_celda);
                 layoutCelda = new TableRow.LayoutParams(obtenerAnchoPixelesText(
@@ -124,7 +124,7 @@ public class Tabla {
                 TextView texto = new TextView(activity);
                 texto.setText(String.valueOf(anElemento));
                 texto.setGravity(Gravity.LEFT);
-                texto.setTextSize(30);
+                texto.setTextSize(12);
                 //texto.setTextAppearance(activity, R.style.estilo_celda);
                 //texto.setBackgroundResource(R.drawable.tabla_celda);
                 layoutCelda = new TableRow.LayoutParams(obtenerAnchoPixelesText(
@@ -142,7 +142,7 @@ public class Tabla {
     private int obtenerAnchoPixelesText(String cabecera) {
         Paint p = new Paint();
         Rect bounds = new Rect();
-        p.setTextSize(50);
+        p.setTextSize(30);
         p.getTextBounds(cabecera, 0, cabecera.length(), bounds);
         return bounds.width();
     }

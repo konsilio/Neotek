@@ -1,91 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true">
+<android.support.constraint.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".Activity.PuntoVentaGasListaActivity">
 
+    <TextView
+        android:id="@+id/TVPuntoVentaGasListaActivityNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="421dp"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/RVPuntoVentaGasActivityListaGas"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TVPuntoVentaGasListaActivityNombre">
+
+    </android.support.v7.widget.RecyclerView>
+
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/scrollView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/BtnPuntoVentaGasListaActivityGasListaAgregar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RVPuntoVentaGasActivityListaGas"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="NestedScrolling">
 
-        <LinearLayout
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/TVPuntoVentaGasListaActivityNombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="18sp" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/RVPuntoVentaGasActivityListaGas"
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
-
-            </android.support.v7.widget.RecyclerView>
-
-
-            <TableLayout
-                        android:id="@+id/TLPuntoVentaGasListaActivityConcepto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:isScrollContainer="true"
-                        android:scrollbarStyle="outsideOverlay"
-                        android:scrollbars="horizontal">
-
-                    </TableLayout>
+            android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="15dp">
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/BtnPuntoVetaGasListActivityOpciones"
+                <TableLayout
+                    android:id="@+id/TLPuntoVentaGasListaActivityConcepto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/colorButtonLogin"
-                    android:gravity="center"
-                    android:text="@string/opciones"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorTextButtonLogin"
-                    android:textSize="24sp"
-                    tools:ignore="ButtonStyle,UnusedAttribute" />
+                    android:isScrollContainer="true"
+                    android:scrollbarStyle="outsideOverlay"
+                    android:scrollbars="horizontal">
 
-                <Button
-                    android:id="@+id/BtnPuntoVentaGasListaActivityGasListaAgregar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/colorButtonLogin"
-                    android:gravity="center"
-                    android:text="@string/agregar"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorTextButtonLogin"
-                    android:textSize="24sp"
-                    tools:ignore="ButtonStyle,UnusedAttribute" />
-
-                <Button
-                    android:id="@+id/BtnPuntoVentaGasListActivityPagar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@color/colorButtonLogin"
-                    android:gravity="center"
-                    android:text="@string/pagar"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorTextButtonLogin"
-                    android:textSize="24sp"
-                    tools:ignore="ButtonStyle,UnusedAttribute" />
+                </TableLayout>
             </LinearLayout>
-
-        </LinearLayout>
+        </HorizontalScrollView>
     </ScrollView>
+
+    <Button
+        android:id="@+id/BtnPuntoVetaGasListActivityOpciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="17dp"
+        android:backgroundTint="@color/colorButtonLogin"
+        android:gravity="center"
+        android:text="@string/opciones"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextButtonLogin"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/BtnPuntoVentaGasListaActivityGasListaAgregar"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="ButtonStyle,UnusedAttribute" />
+
+    <Button
+        android:id="@+id/BtnPuntoVentaGasListaActivityGasListaAgregar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="17dp"
+        android:backgroundTint="@color/colorButtonLogin"
+        android:gravity="center"
+        android:text="@string/agregar"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextButtonLogin"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/BtnPuntoVentaGasListActivityPagar"
+        app:layout_constraintStart_toEndOf="@+id/BtnPuntoVetaGasListActivityOpciones"
+        tools:ignore="ButtonStyle,UnusedAttribute" />
+
+    <Button
+        android:id="@+id/BtnPuntoVentaGasListActivityPagar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="17dp"
+        android:backgroundTint="@color/colorButtonLogin"
+        android:gravity="center"
+        android:text="@string/pagar"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextButtonLogin"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/BtnPuntoVentaGasListaActivityGasListaAgregar"
+        tools:ignore="ButtonStyle,UnusedAttribute" />
+
 </android.support.constraint.ConstraintLayout>
+</ScrollView>

@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -43,14 +44,65 @@ public class VentaGasActivity extends AppCompatActivity implements VentaGasActiv
         BtnVentaGasActivityGasLp.setOnClickListener(v->{
             Intent intent = new Intent(VentaGasActivity.this,
                     PuntoVentaGasListaActivity.class);
+            intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa",EsVentaPipa);
             intent.putExtra("ventaDTO",ventaDTO);
             intent.putExtra("esGasLP",true);
+            intent.putExtra("esCilindroGas",false);
+            intent.putExtra("esCilindro",false);
             startActivity(intent);
             //intent.putExtra()
         });
-        //BtnVentaGasActivityGasLp.setOnClickListener(v->);
-        //BtnVentaGasActivityGasLp.setOnClickListener(v->);
-        //BtnVentagGasActivtyPagar.setOnClickListener(v->);
+        BtnVentaGasActivtiyCilindroConGas.setOnClickListener(v->{
+            Intent intent = new Intent(VentaGasActivity.this,
+                    PuntoVentaGasListaActivity.class);
+            intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa",EsVentaPipa);
+            intent.putExtra("ventaDTO",ventaDTO);
+            intent.putExtra("esGasLP",false);
+            intent.putExtra("esCilindroGas",true);
+            intent.putExtra("esCilindro",false);
+            startActivity(intent);
+        });
+        BtnVentaGasActivityCilindro.setOnClickListener(v->{
+            Intent intent = new Intent(VentaGasActivity.this,
+                    PuntoVentaGasListaActivity.class);
+            intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa",EsVentaPipa);
+            intent.putExtra("ventaDTO",ventaDTO);
+            intent.putExtra("esGasLP",false);
+            intent.putExtra("esCilindroGas",false);
+            intent.putExtra("esCilindro",true);
+            startActivity(intent);
+        });
+
+        BtnVentaGasActivityOtros.setOnClickListener(v->{
+            Intent intent = new Intent(VentaGasActivity.this,
+                    PuntoVentaOtrosActivity.class);
+            intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa",EsVentaPipa);
+            intent.putExtra("ventaDTO",ventaDTO);
+            startActivity(intent);
+        });
+        BtnVentagGasActivtyPagar.setOnClickListener(v->{
+            if(ventaDTO.getConcepto().size()>0) {
+                Intent intent = new Intent(VentaGasActivity.this,
+                        PuntoVentaPagarActivity.class);
+                intent.putExtra("ventaDTO", ventaDTO);
+                startActivity(intent);
+            }else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.error_titulo);
+                builder.setMessage(R.string.No_venta);
+                builder.setPositiveButton(R.string.message_acept,
+                        ((dialog, which) -> dialog.dismiss()));
+                builder.create().show();
+            }
+        });
         mostrarConcepto(ventaDTO.getConcepto());
     }
 
@@ -85,6 +137,7 @@ public class VentaGasActivity extends AppCompatActivity implements VentaGasActiv
                 datos.add(new String[]{
                         concepto.getConcepto(),
                         String.valueOf(concepto.getCantidad()),
+                        format.format(concepto.getPUnitario()),
                         format.format(concepto.getDescuento()),
                         format.format(concepto.getSubtotal())
                 });
