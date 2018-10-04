@@ -271,6 +271,12 @@
     <Content Include="Imagenes\Inventario\imagenes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Imagenes\Inventario\Imagen_5_1_Magnatel_Inicial.jpeg" />
+    <Content Include="Imagenes\Inventario\Imagen_5_2_Magnatel_Inicial.jpeg" />
+    <Content Include="Imagenes\Inventario\Imagen_5_3_Magnatel_Inicial.jpeg" />
+    <Content Include="Imagenes\Inventario\Imagen_5_4_Magnatel_Inicial.jpeg" />
+    <Content Include="Imagenes\Inventario\Imagen_5_5_Magnatel_Inicial.jpeg" />
+    <Content Include="Imagenes\Inventario\Imagen_5_6_Magnatel_Inicial.jpeg" />
     <Content Include="Imagenes\Pagos\imagenes.txt" />
     <Content Include="PlantillasHtml\OrdenCompraNueva.html" />
     <Content Include="PlantillasHtml\RequisicionNueva.html">

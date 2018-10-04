@@ -46,6 +46,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _compras.BuscarOrdenCompra(idOC));
         }
+        [Route("buscar/ordencompra/complemento/gas/{idOC}")]
+        public HttpResponseMessage GetOrdenCompraComplementoGas(int idOC)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _compras.BuscarComplementoGas(idOC));
+        }
         /// <summary>
         /// Genera las ordenes de compra y les asigna los productos necesarios segun los distintos proveedore y los guarda en la base de datos
         /// </summary>

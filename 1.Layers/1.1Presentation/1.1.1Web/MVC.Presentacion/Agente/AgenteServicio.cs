@@ -34,6 +34,9 @@ namespace MVC.Presentacion.Agente
         public RequisicionDTO _requisicion;
         public RequisicionOCDTO _requisicionOrdenCompra;
         public EntradaMercanciaModel _entradaMercancia;
+        public OperadorChoferModel Operador;
+        public OrdenCompraComplementoGasDTO _complementoGas;
+
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
         public List<EmpresaDTO> _listaEmpresas;
@@ -66,8 +69,7 @@ namespace MVC.Presentacion.Agente
         public List<TipoProveedorDTO> _listaTipoProveedor;
         public List<BancoDTO> _listaBanco;
         public List<FormaPagoDTO> _listaFormaPago;
-        public List<PuntoVentaModel> _listaPuntosV;
-        public OperadorChoferModel Operador;
+        public List<PuntoVentaModel> _listaPuntosV;      
         public List<OperadorChoferModel> _listaOperadoresUsuarios;
         public List<OrdenCompraPagoDTO> _listaOrdenCompraPago;
         public List<PrecioVentaModel> _listaPreciosV;
@@ -2548,6 +2550,39 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _listaOrdenCompraPago = list;
+            }
+        }
+        public void BuscarComplementoGas(int idoc, string token)
+        {
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetOrdenCompraComplementoGas"];
+            BuscarOrdenCompraComplementoGas(idoc, token).Wait();
+        }
+        private async Task BuscarOrdenCompraComplementoGas(int idOC, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                OrdenCompraComplementoGasDTO emp = new OrdenCompraComplementoGasDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idOC.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<OrdenCompraComplementoGasDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    emp = new OrdenCompraComplementoGasDTO();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _complementoGas = emp;
             }
         }
         #endregion

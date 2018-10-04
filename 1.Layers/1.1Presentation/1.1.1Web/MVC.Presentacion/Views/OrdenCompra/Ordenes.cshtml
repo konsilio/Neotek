@@ -184,7 +184,7 @@
                                                     <td>@_oc.Empresa</td>
                                                     <td>@_oc.NumeroRequisicion</td>
                                                     <td>@_oc.NumOrdenCompra</td>
-                                                    <td>@_oc.usuarioSolicitante</td>
+                                                    <td>@_oc.Solicitante</td>
                                                     <td>@_oc.Proveedor</td>
                                                     <td>@_oc.Total</td>
                                                     <td>@_oc.OrdenCompraEstatus</td>
@@ -218,6 +218,13 @@
                                                         {
                                                             <a ID="lbAutOC" href="@Url.Action("OrdenCompraPago", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
                                                                 <i class="material-icons">attach_money</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                        }
+                                                        @if (_oc.EsGas == true || _oc.EsTransporteGas == true)
+                                                        {
+                                                            <a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraComplementoGas", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
+                                                                <i class="material-icons">local_gas_station</i>
                                                                 <span class="icon-name"></span>
                                                             </a>
                                                         }

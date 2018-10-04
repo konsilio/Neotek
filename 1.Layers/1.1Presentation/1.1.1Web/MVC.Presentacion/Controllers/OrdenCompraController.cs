@@ -121,7 +121,6 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var complemeto = OrdenCompraServicio.InitComplemento(id, tkn);
-
             return View(complemeto);
         }
         public ActionResult Solicitar(OrdenCompraPagoDTO model)
@@ -159,10 +158,14 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("OrdenCompraPago", new { id = dto.IdOrdenCompra });
             }
         }
-        public ActionResult OrdenCompraComplementoGas()
+        public ActionResult OrdenCompraComplementoGas(int? id)
         {
-            
-            return View();
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            int IdOC = id ?? 0;
+            var complemeto = OrdenCompraServicio.InitComplementoGas(IdOC, tkn);
+            ViewBag.IVAs = CatalogoServicio.ListaIVA();
+            return View(complemeto);          
         }
         private string Validar(RespuestaDTO Resp = null)
         {

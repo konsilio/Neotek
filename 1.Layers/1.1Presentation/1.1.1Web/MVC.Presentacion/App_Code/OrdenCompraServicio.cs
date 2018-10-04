@@ -136,6 +136,12 @@ namespace MVC.Presentacion.App_Code
         {
             return BuscarOrdenCompra(id, tkn);
         }
+        public static OrdenCompraComplementoGasDTO InitComplementoGas(int id, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.BuscarComplementoGas(id, tkn);
+            return agente._complementoGas;
+        }
         public static OrdenCompraPagoDTO InitOrdenCompraPago(int idOC, string tkn)
         {
             var oc = BuscarOrdenCompra(idOC, tkn);

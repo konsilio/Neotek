@@ -18,7 +18,6 @@ namespace Application.MainModule.DTOs.Compras
         public string MotivoRequisicion { get; set; }
         public string RequeridoEn { get; set; }
         public DateTime FechaRequerida { get; set; }
-
         public DateTime FechaEntraGas { get; set; }
         public decimal PorcenMagnatelOcularTractorINI { get; set; }
         public decimal PorcenMagnatelOcularAlmacenINI { get; set; }

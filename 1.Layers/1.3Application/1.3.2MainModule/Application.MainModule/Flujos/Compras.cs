@@ -154,8 +154,9 @@ namespace Application.MainModule.Flujos
         {
             var oc = OrdenCompraServicio.Buscar(idOrdenCompra);
             var cg = OrdenCompraServicio.BuscarComplementoGas(oc);
-            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
-            var imgs = AlmacenGasServicio.ObtenerImagenes(alamacen);
+
+            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);          
+            cg.Imagenes = AlmacenGasServicio.ObtenerImagenes(alamacen).Select(x => x.UrlImagen).ToList();
 
             return cg;
         }
@@ -178,8 +179,7 @@ namespace Application.MainModule.Flujos
             var Pago = OrdenCompraPagoAdapter.FromDTO(dto);
             var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
 
-            Pago = CalcularPagoServicio.CalcularPago(Pago, oc);           
-            
+            Pago = CalcularPagoServicio.CalcularPago(Pago, oc);      
             return OrdenCompraPagoServicio.Guardar(Pago);
         }
         public List<OrdenCompraPagoDTO> BuscarPagos(int idOc)
