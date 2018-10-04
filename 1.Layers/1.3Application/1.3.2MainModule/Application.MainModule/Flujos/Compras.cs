@@ -155,8 +155,8 @@ namespace Application.MainModule.Flujos
             var oc = OrdenCompraServicio.Buscar(idOrdenCompra);
             var cg = OrdenCompraServicio.BuscarComplementoGas(oc);
 
-            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);          
-            cg.Imagenes = AlmacenGasServicio.ObtenerImagenes(alamacen).Select(x => x.UrlImagen).ToList();
+            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
+            cg.Fotos = ImagenServicio.BuscarImagenes(alamacen);
 
             return cg;
         }

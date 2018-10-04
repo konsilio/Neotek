@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Compras;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Servicios.Almacen;
 using Sagas.MainModule.Entidades;
 using System;
@@ -28,7 +29,7 @@ namespace Application.MainModule.Servicios
 
             foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
             foto.PathImagen = GenerarNombre(nombre, extension, foto.PathImagen);
-            foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);            
+            foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);
 
             FileUtilities.GuardarImagen(foto.CadenaBase64, foto.PathImagen);
             foto.CadenaBase64 = null;
@@ -43,13 +44,13 @@ namespace Application.MainModule.Servicios
             var b64 = foto.PhysicalPathCapturaPantalla;
             List<string> campos = FilterFunciones.ObtenerFields(b64);
             string nombre = string.Concat(campos.ElementAt(1), "_", foto.Orden, "_", ".png");
-            string extension = campos.ElementAt(2);           
+            string extension = campos.ElementAt(2);
 
             foto.PhysicalPathCapturaPantalla = Convertir.GetPhysicalPath(rutaImagenesPagos);
             foto.PhysicalPathCapturaPantalla = GenerarNombre(nombre, extension, b64);
             foto.UrlPathCapturaPantalla = Convertir.PhysicalPathToUrlPath(b64);
 
-            FileUtilities.GuardarImagen(b64, foto.PhysicalPathCapturaPantalla);            
+            FileUtilities.GuardarImagen(b64, foto.PhysicalPathCapturaPantalla);
             campos.Clear();
             return foto;
         }
@@ -82,7 +83,28 @@ namespace Application.MainModule.Servicios
             List<string> rutas = AlmacenGasServicio.ObtenerRutaImagenesSinVigencia(fechaVigencia);
             rutas.ForEach(x => FileUtilities.EliminarArchivo(x));
         }
+        public static List<ImagenDTO> BuscarImagenes(AlmacenGasDescarga descarga)
+        {
+            //Formato del nombre de la imagen Tractor_5_4_Magnatel_Inicial_90.jpeg
+            List<ImagenDTO> li = new List<ImagenDTO>();
+            var fotosAlacenGasDescarga = AlmacenGasServicio.ObtenerImagenes(descarga);
+            foreach (var foto in fotosAlacenGasDescarga)
+            {
+                ImagenDTO i = new ImagenDTO();
 
+                var t = FilterFunciones.ObtenerFields(foto.UrlImagen, '/').Count;
+                i.Nombre = foto.UrlImagen.Split('/')[t-1];
+                var nomPartes = FilterFunciones.ObtenerFields(i.Nombre, '_');
+                
+                i.UrlImg = foto.UrlImagen;
+                i.Oden = short.Parse(nomPartes.ElementAt(2));
+                i.Tipo = nomPartes.ElementAt(3);
+                i.Momento = nomPartes.ElementAt(4);
+                i.Lectura = string.Concat(nomPartes.ElementAt(5).Split('.')[0].Replace('-', '.'), " %");
+                li.Add(i);
+            }
+            return li;
+        }
         public static string EstructurarNombreImagen(string cadenaBase64, int idUA, string ObjetoFoto, bool inicial, string extension)
         {
             string deli = "|";
@@ -94,19 +116,18 @@ namespace Application.MainModule.Servicios
         {
             var byteArray = Convert.FromBase64String(base64);
             var imagen = FileUtilities.GuardarImagen(byteArray);
-
             return imagen;
         }
 
         public static string GenerarNombre(string nombre, string extension)
         {
-            return string.Concat("Imagen_", nombre, extension.Contains(".") ? extension: "." + extension);
+            return string.Concat("Imagen_", nombre, extension.Contains(".") ? extension : "." + extension);
         }
 
         public static string GenerarNombre(string nombre, string extension, string ruta)
         {
             return string.Concat(ruta, "\\", GenerarNombre(nombre, extension));
         }
-      
+
     }
 }

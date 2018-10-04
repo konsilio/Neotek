@@ -71,5 +71,6 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public decimal ImportePorteador { get; set; }
         public OrdenCompraDTO OrdenCompraExpedidor { get; set; }
         public OrdenCompraDTO OrdenCompraPorteador { get; set; }
+        public List<ImagenDTO> Fotos { get; set; }
     }
 }

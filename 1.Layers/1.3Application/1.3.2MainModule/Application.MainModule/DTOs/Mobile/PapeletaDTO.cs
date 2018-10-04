@@ -27,7 +27,7 @@ namespace Application.MainModule.DTOs.Mobile
         public String Sello { get; set; }
         public decimal ValorCarga { get; set; }
         public String NombreResponsable { get; set; }
-        public List<String> Imagenes { get; set; }
+        public List<string> Imagenes { get; set; }
         public decimal PorcentajeMedidor { get; set; }
         public String NombreTipoMedidorTractor { get; set; }
         public short IdTipoMedidorTractor { get; set; }

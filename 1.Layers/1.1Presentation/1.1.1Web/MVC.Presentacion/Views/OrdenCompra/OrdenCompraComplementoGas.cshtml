@@ -173,223 +173,231 @@
                     <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-primary">
                             <div class="panel-heading" role="tab" id="heading_Papeleta">
-                                <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapse_Papeleta" aria-expanded="true" aria-controls="collapse_Papeleta">Papeleta</a></h4>
+                                <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapse_Papeleta" aria-expanded="true" aria-controls="collapse_Papeleta">Datos de la descarga</a></h4>
                             </div>
                             <div id="collapse_Papeleta" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_Papeleta">
-                                <div class="panel-body blockquote blockquote-info">
-                                    <div class="row clearfix">
-                                        <div class="col-md-2">
-                                            <h6>Papeleta</h6>
+                                <div class="panel-body">
+                                    <div class="blockquote blockquote-info btn-round">
+                                        <div class="row clearfix">
+                                            <div class="col-md-2">
+                                                <h6>Papeleta</h6>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <hr />
+                                            </div>
                                         </div>
-                                        <div class="col-md-10">
-                                            <hr />
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="dtpFechaPapeleta">Fecha papeleta:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="zmdi zmdi-calendar"></i>
-                                                    </span>
-                                                    @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control datetimepicker" })
+                                        <div class="row clearfix">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="dtpFechaPapeleta">Fecha papeleta:</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="zmdi zmdi-calendar"></i>
+                                                        </span>
+                                                        @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control datetimepicker" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="dtpFechaEmbarque">Fecha embarque:</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="zmdi zmdi-calendar"></i>
+                                                        </span>
+                                                        @Html.TextBoxFor(m => m.FechaEmbarque, new { @class = "form-control datetimepicker" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Número embarque</label>
+                                                    @Html.TextBoxFor(m => m.NumeroEmbarque, new { @class = "form-control" })
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="dtpFechaEmbarque">Fecha embarque:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="zmdi zmdi-calendar"></i>
-                                                    </span>
-                                                    @Html.TextBoxFor(m => m.FechaEmbarque, new { @class = "form-control datetimepicker" })
+                                        <div class="row clearfix">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Valor Carga</label>
+                                                    @Html.TextBoxFor(m => m.ValorCarga, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Sello</label>
+                                                    @Html.TextBoxFor(m => m.Sello, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="">Nombre Responsable</label>
+                                                    @Html.TextBoxFor(m => m.NombreResponsable, new { @class = "form-control" })
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Número embarque</label>
-                                                @Html.TextBoxFor(m => m.NumeroEmbarque, new { @class = "form-control" })
+                                        <div class="row clearfix">
+                                            <div class="col-md-4">
+                                                <label>% Magnatel tractor (papeleta)</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    @Html.TextBoxFor(m => m.PorcentajeTanque, new { @class = "form-control" })
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Valor Carga</label>
-                                                @Html.TextBoxFor(m => m.ValorCarga, new { @class = "form-control" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Sello</label>
-                                                @Html.TextBoxFor(m => m.Sello, new { @class = "form-control" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="">Nombre Responsable</label>
-                                                @Html.TextBoxFor(m => m.NombreResponsable, new { @class = "form-control" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-4">
-                                            <label>% Magnatel tractor (papeleta)</label>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                @Html.TextBoxFor(m => m.PorcentajeMedidor, new { @class = "form-control" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-2">
-                                            <h6>Tractor</h6>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <hr />
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Placa tractor:</label>
-                                                @Html.TextBoxFor(m => m.PlacasTractor, new { @class = "form-control" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Nombre operador:</label>
-                                                @Html.TextBoxFor(m => m.NombreOperador, new { @class = "form-control" })
-                                            </div>
 
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Presión tanque tractor:</label>
-                                                @Html.TextBoxFor(m => m.PresionTanque, new { @class = "form-control" })
+                                        <div class="blockquote blockquote-info btn-round">
+                                            <div class="row clearfix">
+                                                <div class="col-md-2">
+                                                    <h6>Tractor</h6>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <hr />
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Número tanque tractor:</label>
-                                                @Html.TextBoxFor(m => m.NumeroTanque, new { @class = "form-control" })
+                                            <div class="row clearfix">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Placa tractor:</label>
+                                                        @Html.TextBoxFor(m => m.PlacasTractor, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Nombre operador:</label>
+                                                        @Html.TextBoxFor(m => m.NombreOperador, new { @class = "form-control" })
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Presión tanque tractor:</label>
+                                                        @Html.TextBoxFor(m => m.PresionTanque, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Capasidad (Ltr) tanque tractor:</label>
-                                                @Html.TextBoxFor(m => m.CapacidadTanque, new { @class = "form-control" })
+                                            <div class="row clearfix">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Número tanque tractor:</label>
+                                                        @Html.TextBoxFor(m => m.NumeroTanque, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Capasidad (Ltr) tanque tractor:</label>
+                                                        @Html.TextBoxFor(m => m.CapacidadTanque, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label>% Magnatel tractor (Ocultar)</label>
-                                                @Html.TextBoxFor(m => m.PorcentajeTanque, new { @class = "form-control" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-2">
-                                            <h6>Descarga</h6>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <hr />
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Fecha descarga:</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="zmdi zmdi-calendar"></i>
-                                                    </span>
-                                                    @Html.TextBoxFor(m => m.FechaEntraGas, new { @class = "form-control datetimepicker" })
+                                            <div class="row clearfix">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>% Magnatel tractor (Ocultar)</label>
+                                                        @Html.TextBoxFor(m => m.PorcentajeMedidor, new { @class = "form-control" })
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-3 content-center">
-                                            <div class="form-group">
-                                                <label>% Magnatel Tractor</label>
+                                    <div class="blockquote blockquote-info btn-round">
+                                        <div class="row clearfix">
+                                            <div class="col-md-2">
+                                                <h6>Descarga</h6>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <hr />
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Inicial</label>
-                                                @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorINI, new { @class = "form-control" })
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Final</label>
-                                                @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorFIN, new { @class = "form-control" })
-                                            </div>
-                                        </div>
-                                        @*<div class="col-md-3 content-center">
-                                                <div class="checkbox">
-                                                    <input id="chBoxAlmacenPrestado" type="checkbox">
-                                                    <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>
+                                        <div class="row clearfix">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Fecha descarga:</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                            <i class="zmdi zmdi-calendar"></i>
+                                                        </span>
+                                                        @Html.TextBoxFor(m => m.FechaEntraGas, new { @class = "form-control datetimepicker" })
+                                                    </div>
                                                 </div>
-                                            </div>*@
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-3 content-center">
-                                            <div class="form-group">
-                                                <label>% Magnatel Almacen</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Inicial</label>
-                                                @Html.TextBoxFor(m => m.PorcenMagnatelOcularAlmacenINI, new { @class = "form-control" })
+                                        <div class="row clearfix">
+                                            <div class="col-md-3 content-center">
+                                                <div class="form-group">
+                                                    <label>% Magnatel Tractor</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label>Final</label>
-                                                @Html.TextBoxFor(m => m.PorcenMagnatelOcularAlmacenFIN, new { @class = "form-control" })
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Inicial</label>
+                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorINI, new { @class = "form-control" })
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-2">
-                                            <h6>Kilos Finales</h6>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <hr />
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Papeleta</label>
-                                                @Html.TextBoxFor(m => m.KilosPapeleta, new { @class = "form-control" })
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Final</label>
+                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorFIN, new { @class = "form-control" })
+                                                </div>
                                             </div>
+                                            @*<div class="col-md-3 content-center">
+                                                    <div class="checkbox">
+                                                        <input id="chBoxAlmacenPrestado" type="checkbox">
+                                                        <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>
+                                                    </div>
+                                                </div>*@
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Descargados</label>
-                                                @Html.TextBoxFor(m => m.KilosDescargados, new { @class = "form-control" })
+                                        <div class="row clearfix">
+                                            <div class="col-md-3 content-center">
+                                                <div class="form-group">
+                                                    <label>% Magnatel Almacen</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Diferencia</label>
-                                                @Html.TextBoxFor(m => m.KilosDiferencia, new { @class = "form-control" })
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Inicial</label>
+                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularAlmacenINI, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Final</label>
+                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularAlmacenFIN, new { @class = "form-control" })
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <hr>
+                                    <div class="blockquote blockquote-info btn-round">
+                                        <div class="row clearfix">
+                                            <div class="col-md-2">
+                                                <h6>Kilos Finales</h6>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <hr />
+                                            </div>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Papeleta</label>
+                                                    @Html.TextBoxFor(m => m.KilosPapeleta, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Descargados</label>
+                                                    @Html.TextBoxFor(m => m.KilosDescargados, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Diferencia</label>
+                                                    @Html.TextBoxFor(m => m.KilosDiferencia, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row clearfix">
                                         <div class="col-md-2">
                                             <input type="submit" ID="btnGuardarDatosPapeleta" class="btn btn-raised btn-primary btn-round" value="Guardar" />
@@ -408,7 +416,7 @@
                             <div id="collapseCostos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCostos">
                                 <div class="panel-body">
                                     <div class="row">
-                                        <div class="col-md-6 blockquote blockquote-info">
+                                        <div class="col-md-6 blockquote blockquote-info btn-round">
                                             <div class="row clearfix">
                                                 <b>Pago al expedidor de gas </b>
                                             </div>
@@ -522,7 +530,7 @@
                                                         <select name="IVAExpedidor" class="form-control" data-live-search="true">
                                                             @foreach (var item in ViewBag.IVAs)
                                                             {
-                                                                <option value="@item.Value">@item.Text</option>
+                                                            <option value="@item.Value">@item.Text</option>
                                                             }
                                                         </select>
                                                     </div>
@@ -556,17 +564,17 @@
                                             <div class="row clearfix">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <asp:Button ID="btnguardarDatosExpedidor" CssClass="btn btn-raised btn-primary btn-round" Text="Guardar" />
+                                                        <input type="submit" ID="btnGuardarDatosExpedidor" class="btn btn-raised btn-primary btn-round" value="Guardar" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <asp:Button ID="btnSolicitarPagoExpedidor" CssClass="btn btn-raised btn-primary btn-round" Text="Solisitar pago" OnClick="btnSolicitarPagoExpedidor_Click" />
+                                                        <input type="submit" ID="btnSolicitarPagoExpedidor" class="btn btn-raised btn-primary btn-round" value="Solicitar Pago" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 blockquote blockquote-info">
+                                        <div class="col-md-6 blockquote blockquote-info btn-round">
                                             <div class="row clearfix">
                                                 <b>Pago al porteador de gas</b>
                                             </div>
@@ -629,7 +637,7 @@
                                                         <select name="IVAPorteador" class="form-control" data-live-search="true">
                                                             @foreach (var item in ViewBag.IVAs)
                                                             {
-                                                                <option value="@item.Value">@item.Text</option>
+                                                            <option value="@item.Value">@item.Text</option>
                                                             }
                                                         </select>
                                                     </div>
@@ -650,12 +658,12 @@
                                             <div class="row clearfix">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <asp:Button ID="btnGuardarDatosPorteador" CssClass="btn btn-raised btn-primary btn-round" Text="Guardar" OnClick="btnSolicitarPaogPorteador_Click" />
+                                                        <input type="submit" ID="btnGuardarDatosPorteador" class="btn btn-raised btn-primary btn-round" value="Guardar" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <asp:Button ID="btnSolicitarPaogPorteador" CssClass="btn btn-raised btn-primary btn-round" Text="Solicitar Pago" OnClick="btnSolicitarPaogPorteador_Click" />
+                                                        <input type="submit" ID="btnSolicitarPaogPorteador" class="btn btn-raised btn-primary btn-round" value="Solicitar Pago" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -664,48 +672,77 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" role="tab" id="headingImagenes">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseImagenes" aria-expanded="false"
+                                       aria-controls="collapseImagenes">Imagenes</a>
+                                </h4>
+                            </div>
+                            <div id="collapseImagenes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingImagenes">
+                                <div class="panel-body">
+                                  <div class="blockquote blockquote-info btn-round"></div>
+                                    <div id="aniimated-thumbnials" class="list-unstyled row clearfix">
+                                        <!-- Imagenes -->
+                                        @if (Model.Fotos != null)
+                                        {
+                                            foreach (var item in Model.Fotos)
+                                            {
+                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
+                                                    <a href="@item.UrlImg">
+                                                        <img class="img-fluid img-thumbnail" src="@item.UrlImg" alt="">
+                                                    </a>
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <strong>Nombre: </strong>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            @item.Tipo
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <strong>Evento: </strong>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            @item.Momento
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <strong>Lectura: </strong>
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            @item.Lectura
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="header">
-                <strong>Imagenes </strong> de la descarga
-            </div>
-            <div class="body">
-                <div id="aniimated-thumbnials" class="list-unstyled row clearfix">
-                    <!-- Imagenes -->
-                    @if (Model.Imagenes != null)
-                    {
-                        foreach (var item in Model.Imagenes)
-                        {
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
-                                <a href="@item">
-                                    <img class="img-fluid img-thumbnail" src="@item" alt="">
-                                </a>
-                            </div>
-                        }
-                    }
-
+            </div>         
+            <div class="row clearfix">
+                <div class="col-sm-4 center">
+                    <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
+                </div>
+                <div class="col-sm-4 center">
+                    <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
+                        Cancelar
+                    </a>
+                </div>
+                <div class="col-sm-4 center">
+                    <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
+                        Crear
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="row clearfix">
-            <div class="col-sm-4 center">
-                <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
-            </div>
-            <div class="col-sm-4 center">
-                <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
-                    Cancelar
-                </a>
-            </div>
-            <div class="col-sm-4 center">
-                <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
-                    Crear
-                </a>
-            </div>
-        </div>
-    </div>
 </section>
 
 <script src="~/assets/js/pages/medias/image-gallery.js"></script>

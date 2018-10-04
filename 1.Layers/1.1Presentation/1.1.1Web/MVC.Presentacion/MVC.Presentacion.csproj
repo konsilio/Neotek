@@ -307,6 +307,7 @@
     <Compile Include="Models\Catalogos\UsuarioDTO.cs" />
     <Compile Include="Models\Catalogos\UsuariosModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ImagenDTO.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrdenCompra\AlmacenEntradaDTO.cs" />
     <Compile Include="Models\OrdenCompra\EntradaMercanciaModel.cs" />
