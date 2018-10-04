@@ -267,7 +267,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             
             return catRol;           
         }
-        public static List<Rol> FromDto(List<RolDto> rolDTO)
+        public static List<Rol> FromDtoPer(List<RolDto> rolDTO)
         {
             return  rolDTO.ToList().Select(x => FromDtoPermiso(x)).ToList();
         }

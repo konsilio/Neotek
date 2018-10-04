@@ -294,7 +294,7 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
 
-        public void GuardarPermisos(RolDto dto, string tkn)
+        public void GuardarPermisos(List<RolDto> dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaPermisos"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
@@ -630,6 +630,11 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
 
+        public void EliminarRolesAsig(UsuarioRolModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaUsuarioRol"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
 
         private async Task EliminarUsuarioSeleccionado(short _pcDTO, string token)
         {

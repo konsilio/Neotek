@@ -142,6 +142,27 @@ namespace MVC.Presentacion.Controllers
            
         }
 
+        public ActionResult GuardarPermisosCompra(RolDto objrol)
+        {
+            _tok = Session["StringToken"].ToString();
+            //if (ModelState.IsValid)
+            //{
+            var respuesta = CatalogoServicio.ActualizaPermisosCompra(objrol, _tok);
+            //}
+            if (respuesta.Exito)
+            {
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index");
+            }
+
+        }
         [HttpPost]
         public JsonResult SaveList(string ItemList)
         {

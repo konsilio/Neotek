@@ -1,48 +1,48 @@
 ﻿@model MVC.Presentacion.Models.Catalogos.RolCat
 
 
-@Html.HiddenFor(m => m.IdRol)
-@Html.HiddenFor(m => m.IdEmpresa)
-@Html.HiddenFor(m => m.NombreRol)
-@Html.HiddenFor(m => m.Rol1)
-@Html.HiddenFor(m => m.Activo)
-@Html.HiddenFor(m => m.FechaRegistro)
 
 @*Hidden Fields*@
-
-@Html.HiddenFor(m => m.RequisicionVerRequisiciones)
-@Html.HiddenFor(m => m.RequisicionGenerarNueva)
-@Html.HiddenFor(m => m.RequisicionRevisarExistencia)
-@Html.HiddenFor(m => m.RequisicionAutorizar)
-@Html.HiddenFor(m => m.AppCompraVerOCompra)
-@Html.HiddenFor(m => m.AppCompraEntraGas)
-@Html.HiddenFor(m => m.AppCompraGasIniciarDescarga)
-@Html.HiddenFor(m => m.AppCompraGasFinalizarDescarga)
-@Html.HiddenFor(m => m.AppAutoconsumoInventarioGral)
-@Html.HiddenFor(m => m.AppAutoconsumoEstacionCarb)
-@Html.HiddenFor(m => m.AppAutoconsumoPipa)
-@Html.HiddenFor(m => m.AppCalibracionEstacionCarb)
-@Html.HiddenFor(m => m.AppCalibracionPipa)
-@Html.HiddenFor(m => m.AppCalibracionCamionetaCilindro)
-@Html.HiddenFor(m => m.AppRecargaEstacionCarb)
-@Html.HiddenFor(m => m.AppRecargaPipa)
-@Html.HiddenFor(m => m.AppRecargaCamionetaCilindro)
-@Html.HiddenFor(m => m.AppTomaLecturaAlmacenPral)
-@Html.HiddenFor(m => m.AppTomaLecturaEstacionCarb)
-@Html.HiddenFor(m => m.AppTomaLecturaPipa)
-@Html.HiddenFor(m => m.AppTomaLecturaCamionetaCilindro)
-@Html.HiddenFor(m => m.AppTomaLecturaReporteDelDia)
-@Html.HiddenFor(m => m.AppTraspasoEstacionCarb)
-@Html.HiddenFor(m => m.CompraVerOCompra)
-@Html.HiddenFor(m => m.CompraGenerarOCompra)
-@Html.HiddenFor(m => m.CompraAutorizarOCompra)
-@Html.HiddenFor(m => m.CompraEntraProductoOCompra)
-@Html.HiddenFor(m => m.CompraAtiendeServicioOCompra)
-
-@*Catalogos*@
-
+<tr class="hideControl">
+    <td>@Html.HiddenFor(m => m.RequisicionVerRequisiciones)</td>
+    <td>@Html.HiddenFor(m => m.RequisicionGenerarNueva)</td>
+    <td>@Html.HiddenFor(m => m.RequisicionRevisarExistencia)</td>
+    <td>@Html.HiddenFor(m => m.RequisicionAutorizar)</td>
+    <td>@Html.HiddenFor(m => m.AppCompraVerOCompra)</td>
+    <td>@Html.HiddenFor(m => m.AppCompraEntraGas)</td>
+    <td>@Html.HiddenFor(m => m.AppCompraGasIniciarDescarga)</td>
+    <td>@Html.HiddenFor(m => m.AppCompraGasFinalizarDescarga)</td>
+    <td>@Html.HiddenFor(m => m.AppAutoconsumoInventarioGral)</td>
+    <td>@Html.HiddenFor(m => m.AppAutoconsumoEstacionCarb)</td>
+    <td>@Html.HiddenFor(m => m.AppAutoconsumoPipa)</td>
+    <td>@Html.HiddenFor(m => m.AppCalibracionEstacionCarb)</td>
+    <td>@Html.HiddenFor(m => m.AppCalibracionPipa)</td>
+    <td>@Html.HiddenFor(m => m.AppCalibracionCamionetaCilindro)</td>
+    <td>@Html.HiddenFor(m => m.AppRecargaEstacionCarb)</td>
+    <td>@Html.HiddenFor(m => m.AppRecargaPipa)</td>
+    <td>@Html.HiddenFor(m => m.AppRecargaCamionetaCilindro)</td>
+    <td>@Html.HiddenFor(m => m.AppTomaLecturaAlmacenPral)</td>
+    <td>@Html.HiddenFor(m => m.AppTomaLecturaEstacionCarb)</td>
+    <td>@Html.HiddenFor(m => m.AppTomaLecturaPipa)</td>
+    <td>@Html.HiddenFor(m => m.AppTomaLecturaCamionetaCilindro)</td>
+    <td>@Html.HiddenFor(m => m.AppTomaLecturaReporteDelDia)</td>
+    <td>@Html.HiddenFor(m => m.AppTraspasoEstacionCarb)</td>
+    <td>@Html.HiddenFor(m => m.CompraVerOCompra)</td>
+    <td>@Html.HiddenFor(m => m.CompraGenerarOCompra)</td>
+    <td>@Html.HiddenFor(m => m.CompraAutorizarOCompra)</td>
+    <td>@Html.HiddenFor(m => m.CompraEntraProductoOCompra)</td>
+    <td>@Html.HiddenFor(m => m.CompraAtiendeServicioOCompra)</td>
+    <td>@Html.HiddenFor(m => m.IdRol)</td>
+    <td>@Html.HiddenFor(m => m.IdEmpresa)</td>
+    <td>@Html.HiddenFor(m => m.NombreRol)</td>
+    <td>@Html.HiddenFor(m => m.Rol1)</td>
+    <td>@Html.HiddenFor(m => m.Activo)</td>
+    <td>@Html.HiddenFor(m => m.FechaRegistro)</td>
+        
+    </tr>
 <tr>
     <td>@Model.NombreRol </td>
+
     <td>@Html.CheckBoxFor(m => m.CatInsertarUsuario)</td>
     <td>@Html.CheckBoxFor(m => m.CatModificarUsuario)</td>
     <td>@Html.CheckBoxFor(m => m.CatEliminarUsuario)</td>

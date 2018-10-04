@@ -1,5 +1,5 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
- 
+
 @model  UsuariosModel
 
 @{
@@ -26,7 +26,7 @@
         <p>Espere por favor</p>
     </div>
 </div>
-@using (Html.BeginForm("Nuevo", "Usuarios", FormMethod.Post)) 
+@using (Html.BeginForm("Nuevo", "Usuarios", FormMethod.Post))
 {
     <section class="content home">
         <div class="container-fluid">
@@ -91,7 +91,7 @@
                         <br />
                         <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12">
-                                <div class="table-responsive">                                  
+                                <div class="table-responsive">
                                     <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
                                         <thead>
                                             <tr>
@@ -106,32 +106,32 @@
                                         <tbody>
                                             @foreach (var item in Model.Listausuarios)
                                             {
-                                                <tr>
-                                                    <th>@item.Empresa</th>
-                                                    <td>@item.Nombre @item.Apellido1 @item.Apellido2 </td>
-                                                    <td>@item.Email1</td>
-                                                    <td>@item.Celular1</td>
-                                                    <td>@item.Telefono1</td>
-                                                    <td>
-                                                        <a ID="lblCrear" href="@Url.Action("EditarUsuario", "Usuarios", new { id = item.IdUsuario })">
-                                                            <i class="material-icons">edit</i>
-                                                            <span class="icon-name"></span>
-                                                        </a>
-                                                        <a ID="lbEdit" href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })">
-                                                            @*<i class="material-icons">edit</i>*@
-                                                            <i class="zmdi zmdi-settings"></i>
-                                                            <span class="icon-name"></span>
-                                                        </a>
-                                                        <a ID="lbEdit" href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })">
-                                                            <i class="material-icons">dashboard</i>
-                                                            <span class="icon-name"></span>
-                                                        </a>
-                                                        <a ID="lbBorrar" href="@Url.Action("BorrarUsuario", "Usuarios", new {  id=item.IdUsuario } )">
-                                                                <i class="material-icons">delete</i>
-                                                                <span class="icon-name"></span>
-                                                            </a>
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <th>@item.Empresa</th>
+                                                <td>@item.Nombre @item.Apellido1 @item.Apellido2 </td>
+                                                <td>@item.Email1</td>
+                                                <td>@item.Celular1</td>
+                                                <td>@item.Telefono1</td>
+                                                <td>
+                                                    <a ID="lblCrear" href="@Url.Action("EditarUsuario", "Usuarios", new { id = item.IdUsuario })">
+                                                        <i class="material-icons">edit</i>
+                                                        <span class="icon-name"></span>
+                                                    </a>
+                                                    <a ID="lbEdit" href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })">
+                                                        @*<i class="material-icons">edit</i>*@
+                                                        <i class="zmdi zmdi-settings"></i>
+                                                        <span class="icon-name"></span>
+                                                    </a>
+                                                    <a ID="lbEdit" href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })">
+                                                        <i class="material-icons">dashboard</i>
+                                                        <span class="icon-name"></span>
+                                                    </a>
+                                                    <a ID="lbBorrar" href="@Url.Action("BorrarUsuario", "Usuarios", new {  id=item.IdUsuario } )">
+                                                        <i class="material-icons">delete</i>
+                                                        <span class="icon-name"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>
