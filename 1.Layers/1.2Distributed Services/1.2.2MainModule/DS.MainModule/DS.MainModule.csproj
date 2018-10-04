@@ -271,6 +271,7 @@
     <Content Include="Imagenes\Inventario\imagenes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Imagenes\Pagos\imagenes.txt" />
     <Content Include="PlantillasHtml\OrdenCompraNueva.html" />
     <Content Include="PlantillasHtml\RequisicionNueva.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -331,7 +332,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Imagenes\Pagos\" />
     <Folder Include="LogosEmpresa\" />
   </ItemGroup>
   <ItemGroup>
