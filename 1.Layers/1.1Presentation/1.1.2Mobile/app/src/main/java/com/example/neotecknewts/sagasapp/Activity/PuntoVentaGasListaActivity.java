@@ -4,10 +4,14 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -31,6 +35,15 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
     Button BtnPuntoVetaGasListActivityOpciones,BtnPuntoVentaGasListaActivityGasListaAgregar,
             BtnPuntoVentaGasListActivityPagar;
     TableLayout TLPuntoVentaGasListaActivityConcepto;
+    ScrollView SVPuntoVentaGasListActivitiyConcepto;
+    //Variables del formulario de venta de camioneta y pipa
+    ConstraintLayout CLFormularioVentaCamionetaYPipaContenedor;
+    Switch SWFormularioVentaCamionetaYPipaCredito,SWFormularioVentaCamionetaYPipaFactura;
+    Button BtnFormularioVentaCamionetaYPipaCancelar,BtnFormularioVentaCamionetaYPipaPagar;
+    TextView TVFormularioVentaCamionetaYPipaPrecio,TVFormularioVentaCamionetaYPipaDescuento,
+            TVFormularioVentaCamionetaYPipaSubtotal,TVFormularioVentaCamionetaYPipaIva,
+            TVFormularioVentaCamionetaYPipaTotal;
+    //Variables del formulario de venta de camioneta y pipa
     PuntoVentaGasListaPresenter presenter;
     ProgressDialog progressDialog;
     Session session;
@@ -55,13 +68,22 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
             esCilindro = extras.getBoolean("esCilindro");
         }
         BtnPuntoVetaGasListActivityOpciones = findViewById(R.id.BtnPuntoVetaGasListActivityOpciones);
+        BtnPuntoVetaGasListActivityOpciones.setVisibility(EsVentaCamioneta? View.VISIBLE:View.GONE);
         BtnPuntoVentaGasListaActivityGasListaAgregar = findViewById(R.id.
                 BtnPuntoVentaGasListaActivityGasListaAgregar);
+        BtnPuntoVentaGasListaActivityGasListaAgregar.setVisibility(
+                EsVentaCamioneta? View.VISIBLE:View.GONE);
         BtnPuntoVentaGasListActivityPagar = findViewById(R.id.BtnPuntoVentaGasListActivityPagar);
+        BtnPuntoVentaGasListActivityPagar.setVisibility(
+                EsVentaCamioneta? View.VISIBLE:View.GONE);
         RVPuntoVentaGasActivityListaGas = findViewById(R.id.RVPuntoVentaGasActivityListaGas);
         TVPuntoVentaGasListaActivityNombre = findViewById(R.id.TVPuntoVentaGasListaActivityNombre);
         TLPuntoVentaGasListaActivityConcepto = findViewById(R.id.
                 TLPuntoVentaGasListaActivityConcepto);
+        SVPuntoVentaGasListActivitiyConcepto = findViewById(R.id.
+                SVPuntoVentaGasListActivitiyConcepto);
+        SVPuntoVentaGasListActivitiyConcepto.setVisibility(EsVentaCamioneta ?
+                View.VISIBLE:View.GONE);
         BtnPuntoVetaGasListActivityOpciones.setOnClickListener(V->{
             Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                     VentaGasActivity.class);
@@ -102,11 +124,52 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         RVPuntoVentaGasActivityListaGas.setLayoutManager(linearLayout);
         RVPuntoVentaGasActivityListaGas.setHasFixedSize(true);
         presenter = new PuntoVentaGasListaPresenterImpl(this);
-        //if(EsVentaCamioneta) {
-            presenter.getListaCamionetaCilindros(session.getToken(),
+        //Formulario de venta de pipas y estaciones
+        CLFormularioVentaCamionetaYPipaContenedor = findViewById(R.id.
+                CLFormularioVentaCamionetaYPipaContenedor);
+        CLFormularioVentaCamionetaYPipaContenedor.setVisibility(EsVentaCamioneta? View.GONE:
+                View.VISIBLE);
+        SWFormularioVentaCamionetaYPipaCredito = findViewById(R.id.
+                SWFormularioVentaCamionetaYPipaCredito);
+        SWFormularioVentaCamionetaYPipaFactura = findViewById(R.id.
+                SWFormularioVentaCamionetaYPipaFactura);
+        BtnFormularioVentaCamionetaYPipaCancelar = findViewById(R.id.
+                BtnFormularioVentaCamionetaYPipaCancelar);
+        BtnFormularioVentaCamionetaYPipaPagar = findViewById(R.id.
+                BtnFormularioVentaCamionetaYPipaPagar);
+        TVFormularioVentaCamionetaYPipaPrecio = findViewById(R.id.
+                TVFormularioVentaCamionetaYPipaPrecio);
+        TVFormularioVentaCamionetaYPipaDescuento = findViewById(R.id.
+                TVFormularioVentaCamionetaYPipaDescuento);
+        TVFormularioVentaCamionetaYPipaSubtotal = findViewById(R.id.
+                TVFormularioVentaCamionetaYPipaSubtotal);
+        TVFormularioVentaCamionetaYPipaIva  = findViewById(R.id.TVFormularioVentaCamionetaYPipaIva);
+        TVFormularioVentaCamionetaYPipaTotal = findViewById(R.id.
+                TVFormularioVentaCamionetaYPipaTotal);
+        BtnFormularioVentaCamionetaYPipaCancelar.setOnClickListener(V->{
+            Intent intent = new Intent(PuntoVentaGasListaActivity.this,
+                    MenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+        BtnFormularioVentaCamionetaYPipaPagar.setOnClickListener(V->{
+            SetearLitrosDespachados();
+            Intent intent = new Intent(PuntoVentaGasListaActivity.this,
+                    MenuActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+        //Formulario de venta de pipas y estaciones
+        presenter.getListaCamionetaCilindros(session.getToken(),
                     esGasLP,esCilindroGas,esCilindro);
-            mostrarConsepto(ventaDTO.getConcepto());
-        //}
+        mostrarConsepto(ventaDTO.getConcepto());
+    }
+
+    private void SetearLitrosDespachados() {
+        double total,subtotal, iva,precio,desc;
+        ventaDTO.setCredito(SWFormularioVentaCamionetaYPipaCredito.isChecked());
+        ventaDTO.setFactura(SWFormularioVentaCamionetaYPipaFactura.isChecked());
+        Intent intent= new Intent(PuntoVentaGasListaActivity.this,)
     }
 
     @Override
@@ -162,11 +225,11 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
     @Override
     public void onSuccessListExistencia(DatosPuntoVentaDTO data) {
         if(data.isExito()){
-            adapter = new PuntoVentaAdapter(data.getList());
+            adapter = new PuntoVentaAdapter(data.getList(),EsVentaCamioneta,this);
             RVPuntoVentaGasActivityListaGas.setAdapter(adapter);
         }else{
-            adapter = new PuntoVentaAdapter(data.getList());
-            RVPuntoVentaGasActivityListaGas.setAdapter(adapter);
+           // adapter = new PuntoVentaAdapter(data.getList());
+           // RVPuntoVentaGasActivityListaGas.setAdapter(adapter);
         }
     }
 

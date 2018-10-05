@@ -55,14 +55,35 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
 
     @Override
     public void SeguirSinNumero() {
-        Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
-                VentaGasActivity.class);
-        ventaDTO.setIdCliente(1);
-        intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
-        intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
-        intent.putExtra("EsVentaPipa",EsVentaPipa);
-        intent.putExtra("ventaDTO",ventaDTO);
-        startActivity(intent);
+        if(EsVentaCamioneta) {
+            Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
+                    VentaGasActivity.class);
+            ventaDTO.setIdCliente(1);
+            intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa", EsVentaPipa);
+            intent.putExtra("ventaDTO", ventaDTO);
+            startActivity(intent);
+        }else if(EsVentaCarburacion){
+            Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
+                    PuntoVentaGasListaActivity.class);
+            ventaDTO.setIdCliente(1);
+            intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa", EsVentaPipa);
+            intent.putExtra("ventaDTO", ventaDTO);
+            startActivity(intent);
+
+        }else  if (EsVentaPipa){
+            Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
+                    PuntoVentaGasListaActivity.class);
+            ventaDTO.setIdCliente(1);
+            intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa", EsVentaPipa);
+            intent.putExtra("ventaDTO", ventaDTO);
+            startActivity(intent);
+        }
     }
 
     @Override

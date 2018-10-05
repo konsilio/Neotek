@@ -1,10 +1,23 @@
 package com.example.neotecknewts.sagasapp.Model;
 
-public class ExistenciasDTO {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class ExistenciasDTO implements Serializable {
+    @SerializedName("Id")
     private int Id;
+
+    @SerializedName("Existencias")
     private int Existencias;
+
+    @SerializedName("PrecioUnitario")
     private double PrecioUnitario;
+
+    @SerializedName("Descuento")
     private double Descuento;
+
+    @SerializedName("Nombre")
     private String Nombre;
 
     public int getId() {

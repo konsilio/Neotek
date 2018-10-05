@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,13 @@ import com.example.neotecknewts.sagasapp.R;
 import java.util.List;
 
 public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    List<ExistenciasDTO> items;
-    public PuntoVentaAdapter(List<ExistenciasDTO>  items){
+    private List<ExistenciasDTO> items;
+    private boolean EsVentaCamioneta;
+    private Context context;
+    public PuntoVentaAdapter(List<ExistenciasDTO>  items,boolean EsVentaCamioneta,Context context){
         this.items = items;
+        this.EsVentaCamioneta = EsVentaCamioneta;
+        this.context = context;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -32,6 +37,10 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ((ExistenciasHolder)holder).PuntoVentaGasListaActivityTipoGas.setText(
                 this.items.get(position).getNombre()
         );
+        ((ExistenciasHolder) holder).PuntoVentaGasListActivityTituloCantidad.setText(
+                this.EsVentaCamioneta ? this.context.getString(R.string.cantidad):
+                        this.context.getString(R.string.litros_despachados)
+        );
     }
 
     @Override
@@ -40,13 +49,16 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private class ExistenciasHolder extends RecyclerView.ViewHolder {
-        TextView PuntoVentaGasListaActivityCantidadGas,PuntoVentaGasListaActivityTipoGas;
+        TextView PuntoVentaGasListaActivityCantidadGas,PuntoVentaGasListaActivityTipoGas,
+                PuntoVentaGasListActivityTituloCantidad;
         ExistenciasHolder(View view) {
             super(view);
             PuntoVentaGasListaActivityCantidadGas = view.findViewById(R.id.
                     PuntoVentaGasListaActivityCantidadExistencia);
             PuntoVentaGasListaActivityTipoGas = view.findViewById(R.id.
                     PuntoVentaGasListaActivityTipoGas);
+            PuntoVentaGasListActivityTituloCantidad = view.findViewById(R.id.
+                    PuntoVentaGasListActivityTituloCantidad);
         }
     }
 }
