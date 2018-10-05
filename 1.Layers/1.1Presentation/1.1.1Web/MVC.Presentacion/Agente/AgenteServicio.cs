@@ -2,6 +2,7 @@
 using MVC.Presentacion.Models.OrdenCompra;
 using MVC.Presentacion.Models.Requisicion;
 using MVC.Presentacion.Models.Seguridad;
+using MVC.Presentacion.Models.Ventas;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -1060,12 +1061,12 @@ namespace MVC.Presentacion.Agente
         #endregion
         #region Precio de Venta Gas
 
-        public void BuscarListaPrecioVenta(int idPrecioV, string tkn)
+        public void BuscarListaPrecioVenta(short idPrecioV, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPrecioVenta"];
             GetListaPreciosV(idPrecioV, tkn).Wait();
         }
-        private async Task GetListaPreciosV(int idPV, string Token)
+        private async Task GetListaPreciosV(short idPV, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -1187,6 +1188,14 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaPreciosVenta"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
+        #endregion
+        #region Caja General
+        public void GuardarLiquidacion(CajaGeneralModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings[""];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+
         #endregion
         #region Paises
         public void BuscarPaises(string tkn)

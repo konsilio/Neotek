@@ -7,16 +7,7 @@
     @{
         ViewBag.Title = "Index";
     }
-    <!-- Bootstrap Select Css -->
-    @*<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />*@
-
-    <!-- datetimepicker Css -->
-    @*<link href="~/assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />*@
-
-    <!-- datetimepicker Js -->
-    @*<script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-        <script src="~/assets/plugins/momentjs/moment.js"></script>*@
+   
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script type="text/javascript">
         $(function () {
@@ -89,6 +80,37 @@
         });
 
     </script>
+    <style type="text/css">
+        .col-sm-01 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 16.666667%;
+            flex: 0 0 16.666667%;
+            max-width: 2.666667%;
+            text-align: left;
+        }
+           .col-sm-013 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 16.666667%;
+            flex: 0 0 16.666667%;
+            max-width: 13.666667%;
+            text-align: right;
+        }
+        .col-sm-05 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 16.666667%;
+            flex: 0 0 16.666667%;
+            max-width: 8.666667%;
+            text-align: center;
+        }
+
+        .col-sm-005 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 16.666667%;
+            flex: 0 0 16.666667%;
+            max-width: 12.666667%;
+            text-align: center;
+        }
+    </style>
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("Registrar", "PrecioVenta", FormMethod.Post))
@@ -120,36 +142,65 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                @*<div class="col-sm-05">*@
+                                <div class="col-sm-005" style="text-align:center">
                                     <div class="form-group">
-                                        Precio PEMEX: @* , id = "PrecioPMX" @Html.TextBoxFor(m => m.PrecioPemexKg, new { @class = "form-control"})kg.*@
-                                        <input name="PrecioPemexKg" id="PrecioPMX" type="text" class="form-control" />kg.
+                                        Precio PEMEX:
                                     </div>
                                 </div>
-
-                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                @*<div class="col-lg-2 col-md-2 col-sm-2">*@
+                                <div class="col-sm-005">
                                     <div class="form-group">
-                                        Utilidad esperada: @*@Html.TextBoxFor(m => m.UtilidadEsperadaKg, new { @class = "form-control"})kg., " *@
+                                        <input name="PrecioPemexKg" id="PrecioPMX" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-01">
+                                    <div class="form-group">
+                                        kg.
+                                    </div>
+                                </div>
+                                @*<div class="col-sm-013">*@
+                                <div class="col-sm-005" style="text-align:center">
+                                    <div class="form-group">
+                                        Utilidad esperada:
+                                    </div>
+                                </div>
+                                @*<div class="col-lg-2 col-md-2 col-sm-2">*@
+                                <div class="col-sm-005">
+                                    <div class="form-group">
                                         <input name="UtilidadEsperadaKg" id="txtUtilidad" type="text" class="form-control" />
                                     </div>
                                 </div>
-
-                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="col-sm-01">
+                                    <div class="form-group">
+                                        kg.
+                                    </div>
+                                </div>
+                                <div class="col-sm-005" style="text-align:center">
                                     <div class="form-group">
                                         Precio salida:
                                     </div>
                                 </div>
-                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="col-sm-005">
                                     <div class="form-group">
-                                        @* @Html.LabelFor(m => m.PrecioSalidaKg, new { @class = "form-control" }), *@
                                         <input id="IdPrecioSalidaKg" name="PrecioSalidaKg" type="text" class="form-control" readonly="readonly" />
                                     </div>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-01">
+                                    <div class="form-group">
+                                        kg.
+                                    </div>
+                                </div>
+                                <div class="col-sm-005">
                                     <div class="form-group">
                                         <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="text" class="form-control" readonly="readonly" />
                                         <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
                                         <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-01">
+                                    <div class="form-group">
+                                        Lt.
                                     </div>
                                 </div>
                             </div>

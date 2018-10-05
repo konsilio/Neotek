@@ -7,5 +7,6 @@ namespace MVC.Presentacion.Models.Ventas
 {
     public class CajaGeneralModel
     {
+        public string Operador { get; set; }
     }
 }

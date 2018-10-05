@@ -65,7 +65,7 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = respuesta.Mensaje;
                 return RedirectToAction("Index", ObjRol);
             }
-            
+
         }
 
         //vista editar Roles - View
@@ -94,7 +94,7 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = respuesta.Mensaje;
                 return RedirectToAction("Index");
             }
-            
+
         }
 
         //Actualizar nombre ROL- funcionalidad --evento Guardar--
@@ -117,7 +117,7 @@ namespace MVC.Presentacion.Controllers
             {
                 TempData["RespuestaDTOError"] = respuesta.Mensaje;
                 return RedirectToAction("Index");
-            }           
+            }
         }
 
         public ActionResult GuardarPermisos(RolDto objrol)
@@ -125,7 +125,7 @@ namespace MVC.Presentacion.Controllers
             _tok = Session["StringToken"].ToString();
             //if (ModelState.IsValid)
             //{
-                var respuesta = CatalogoServicio.ActualizaPermisos(objrol, _tok);
+            var respuesta = CatalogoServicio.ActualizaPermisos(objrol, _tok);
             //}
             if (respuesta.Exito)
             {
@@ -139,7 +139,7 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = respuesta.Mensaje;
                 return RedirectToAction("Index");
             }
-           
+
         }
 
         public ActionResult GuardarPermisosCompra(RolDto objrol)
@@ -163,6 +163,50 @@ namespace MVC.Presentacion.Controllers
             }
 
         }
+
+        public ActionResult GuardarPerMovilCompra(RolDto objrol)
+        {
+            _tok = Session["StringToken"].ToString();
+            //if (ModelState.IsValid)
+            //{
+            var respuesta = CatalogoServicio.ActualizaPermisosMovilCompra(objrol, _tok);
+            //}
+            if (respuesta.Exito)
+            {
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index");
+            }
+
+        }
+        public ActionResult GuardarPermisoRequisicion(RolDto objrol)
+        {
+            _tok = Session["StringToken"].ToString();
+            //if (ModelState.IsValid)
+            //{
+            var respuesta = CatalogoServicio.ActualizaPermisosRequisicion(objrol, _tok);
+            //}
+            if (respuesta.Exito)
+            {
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                return RedirectToAction("Index");
+            }
+
+        }
+
         [HttpPost]
         public JsonResult SaveList(string ItemList)
         {

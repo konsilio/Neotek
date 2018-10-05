@@ -69,7 +69,7 @@ namespace MVC.Presentacion.Controllers
             }
 
         }
-        public ActionResult EditarPrecioVentaOtro(int id)
+        public ActionResult EditarPrecioVentaOtro(short id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();

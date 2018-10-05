@@ -84,13 +84,18 @@
             $('#gvwSistemaReq').css("display", "");
             $('#MovilRequsicion').css("display", "");
             $('#SistemaInventario').css("display", "none");
+            $('#MovilInventario').css("display", "none");
             $('#btnCatalogo').css("display", "none");
             $('#btnCompra').css("display", "none");
+            $('#btnMovilCompra').css("display", "mone");
+            $('#btnRrequisicion').css("display", "");
         });
         $("#homeCatalogos").click(function () {
             $('#MovilCompra').css("display", "none");
             $('#SistemaCompra').css("display", "none");
             $('#SistemaCatalogo').css("display", "");
+            $('#SistemaInventario').css("display", "none");
+            $('#MovilInventario').css("display", "none");
             $('#btnCatalogo').css("display", "");            
             $('#window_Compra').css("display", "none");
             $('#window_Ventas').css("display", "none");
@@ -105,6 +110,7 @@
             $('#SistemaVentas').css("display", "none");
             $('#MovilVentas').css("display", "none");
             $('#btnCompra').css("display", "none");
+            $('#btnRrequisicion').css("display", "none");
         });
 
         $("#homeCompra").click(function () {
@@ -123,15 +129,20 @@
             $('#catalogos_tabs').css("display", "none");
             $('#MovilCatalogo').css("display", "none");
             $('#SistemaInventario').css("display", "none");
+            $('#MovilInventario').css("display", "none");
             $('#btnCatalogo').css("display", "none");
             $('#btnCompra').css("display", "");
             $('#gvwSistemaReq').css("display", "none");
-            $('#MovilRequsicion').css("display", "mone");
+            $('#MovilRequsicion').css("display", "none");
+            $('#btnMovilCompra').css("display", "");
+            $('#btnRrequisicion').css("display", "none");
+           
         });
 
         $("#homeInventario").click(function () {
             $('#window_Inventario').css("display", "");
             $('#SistemaInventario').css("display", "");
+            $('#MovilInventario').css("display", "");
             $('#MovilCompra').css("display", "none");
             $('#SistemaCompra').css("display", "none");
             $('#SistemaCatalogo').css("display", "none");
@@ -150,6 +161,8 @@
             $('#DivgvwMovilCompra').css("display", "none");
             $('#btnCatalogo').css("display", "none");
             $('#btnCompra').css("display", "none");
+            $('#btnMovilCompra').css("display", "mone");
+            $('#btnRrequisicion').css("display", "none");
         });
 
         $("#homeVentas").click(function () {
@@ -158,6 +171,7 @@
             $('#MovilVentas').css("display", "");
             $('#window_Inventario').css("display", "none");
             $('#SistemaInventario').css("display", "none");
+            $('#MovilInventario').css("display", "none");            
             $('#MovilCompra').css("display", "none");
             $('#SistemaCompra').css("display", "none");
             $('#SistemaCatalogo').css("display", "none");
@@ -173,6 +187,8 @@
             $('#DivgvwMovilCompra').css("display", "none");
             $('#btnCatalogo').css("display", "none");
             $('#btnCompra').css("display", "none");
+            $('#btnMovilCompra').css("display", "mone");
+            $('#btnRrequisicion').css("display", "none");
         });
     });
 </script>
@@ -189,7 +205,7 @@
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
-
+                <!--Empresa-->
                 <div class="row clearfix">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="card">
@@ -219,7 +235,8 @@
                         </div>
                     </div>
                 </div>
-
+                <!---->
+                <!--Alta Rol-->
                 <div class="row clearfix">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="card">
@@ -251,7 +268,7 @@
                         </div>
                     </div>
                 </div>
-
+                <!---->
                 <div class="body">
                     <!-- Nav tabs all menu-->
                     <ul class="nav nav-tabs" role="tablist">
@@ -317,12 +334,11 @@
                             <div class="row clearfix" id="btnCatalogo" >
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="submit" id="btnGuardaP" name="Guardar" value="Guardar" formaction=@Url.Action("GuardarPermisos") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                        <input type="submit" id="btnGuardaP" name="Guardar" title="Catalogos" value="Guardar" formaction=@Url.Action("GuardarPermisos") formmethod="post" class="btn btn-raised btn-primary float-right" />
                                     </div>
                                 </div>
                             </div>
                             <div class="table-responsive" id="hide_divCat">
-
                                 <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" id="ItemList">
                                     <thead>
                                         <tr>
@@ -378,7 +394,7 @@
                             <div class="row clearfix" id="btnCompra">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <input type="submit" id="btnGuardaPCompra" name="Guardar" value="Guardar" formaction=@Url.Action("GuardarPermisosCompra") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                        <input type="submit" id="btnGuardaPCompra" name="Guardar" title="Compras" value="Guardar" formaction=@Url.Action("GuardarPermisosCompra") formmethod="post" class="btn btn-raised btn-primary float-right" />
                                     </div>
                                 </div>
                             </div>
@@ -397,13 +413,18 @@
                                     </thead>
                                     <tbody>
                                         @Html.EditorFor(m => m.ListaRolesCom)
-
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div id="MovilCompra" class="tab-pane">
-
+                            <div class="row clearfix" id="btnMovilCompra">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="submit" id="btnGuardaPCompra" name="Guardar" title="MovilCompra" value="Guardar" formaction=@Url.Action("GuardarPerMovilCompra") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="table-responsive" id="DivgvwMovilCompra">
                                 <table id="tabSisCompra" class="table table table-bordered table-striped table-hover js-basic-example dataTable">
                                     <thead>
@@ -440,7 +461,6 @@
                         </div>
                     </div>
 
-
                     <!--ventas tab content-->
                     <div class="tab-content">
                         <div id="SistemaVentas" class="tab-pane">
@@ -464,7 +484,13 @@
                     <!--Requisicion tab content-->
                     <div class="tab-content">
                         <div id="SistemaRequsicion" class="tab-pane">
-
+                            <div class="row clearfix" id="btnRrequisicion">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="submit" id="btnGuardaPCompra" name="Guardar" value="Guardar" title="Requisicion" formaction=@Url.Action("GuardarPermisoRequisicion") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="table-responsive" id="gvwSistemaReq">
                                 <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
                                     <thead>

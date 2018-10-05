@@ -1,5 +1,6 @@
 ﻿@model  MVC.Presentacion.Models.Ventas.CajaGeneralModel
-
+@using PagedList.Mvc;
+@using PagedList;
 <!DOCTYPE html>
 
 <html>
@@ -23,7 +24,7 @@
                                         <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick">
                                             @foreach (var lst in ViewBag.Empresas)
                                             {
-                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                             }
                                         </select>
                                     </div>
@@ -36,7 +37,7 @@
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-sm-1">
-                                    <b>Fecha:</b>                                  
+                                    <b>Fecha:</b>
                                 </div>
                                 <div class="col-sm-2">
                                     <b>De:</b>
@@ -51,9 +52,9 @@
                                     <select id="IdTipoFecha" class="form-control selectpicker z-index show-tick">
                                         <option value="0">Seleccione</option>
                                         @*@foreach (var lst in ViewBag.Entidad)
-                                        {
-                                            <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
-                                        }*@
+                                            {
+                                                <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
+                                            }*@
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
@@ -61,9 +62,9 @@
                                     <select id="IdTipoFecha" class="form-control selectpicker z-index show-tick">
                                         <option value="0">Seleccione</option>
                                         @*@foreach (var lst in ViewBag.Entidad)
-                                        {
-                                            <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
-                                        }*@
+                                            {
+                                                <option value="@lst.IdPrecioVentaEstatus">@lst.Descripción</option>
+                                            }*@
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
@@ -91,28 +92,38 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @*@if (ViewBag.ListaPV != null)
+                                                @if (ViewBag.CajaGralCamioneta != null)
+                                                {
+                                                    foreach (var item in ViewBag.CajaGralCamioneta)
                                                     {
-                                                        foreach (var item in ViewBag.ListaPV)
-                                                        {
-                                                            <tr>
-                                                                <td>@item.Empresa</td>
-                                                                <td>@item.PrecioPemexKg</td>
-                                                                <td>@item.UtilidadEsperadaKg</td>
-                                                                <td>@item.PrecioSalidaKg</td>
-                                                                <td>@item.FechaProgramada</td>
-                                                                <td>@item.FechaVencimiento</td>
-                                                                <td>@item.PrecioVentaEstatus</td>
-                                                                <td>@item.FechaRegistro</td>
-                                                            </tr>
-                                                        }
-                                                    }*@
+                                                <tr>
+                                                    <td>@item.Fecha</td>
+                                                    <td>@item.Entidad</td>
+                                                    <td>@item.Operador/Chofer</td>
+                                                    <td>@item.Concepto</td>
+                                                    <td>@item.Descripcion</td>
+                                                    <td>@item.Ingreso</td>
+                                                    <td>@item.Egreso</td>
+                                                    <td>@item.Saldo</td>
+                                                </tr>
+                                                    }
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="row clearfix">
+                                @if (ViewBag.CajaGralCamioneta != null)
+                                {
+                                    <div class="col-md-6">
+                                        Pagina @(ViewBag.CajaGralCamioneta.PageCount < ViewBag.CajaGralCamioneta.PageNumber ? 0 : ViewBag.CajaGralCamioneta.PageNumber) de @ViewBag.CajaGralCamioneta.PageCount
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        @Html.PagedListPager((IPagedList)ViewBag.CajaGralCamioneta, page => Url.Action("CajaGeneral", new { page, @class = "btn btn-primary btn-simple" }))
+                                    </div>
+                                }
+                            </div>
                         </div>
                     </div>
                     @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)

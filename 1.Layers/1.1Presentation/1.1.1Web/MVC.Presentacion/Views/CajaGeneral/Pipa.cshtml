@@ -15,7 +15,8 @@
             max-width: 8.666667%;
             text-align: center;
         }
-          .col-sm-005 {
+
+        .col-sm-005 {
             -webkit-box-flex: 0;
             -ms-flex: 0 0 16.666667%;
             flex: 0 0 16.666667%;
@@ -24,7 +25,7 @@
         }
     </style>
     <script type="text/javascript">
-        $(document).ready(function () {        
+        $(document).ready(function () {
             $('#Chkboxcorrecto').click(function () {
                 if (!$(this).is(':checked')) {
                     $("#btnLiquidar").prop("disabled", true);
@@ -32,9 +33,9 @@
                 else {
                     $("#btnLiquidar").prop("disabled", false);
                 }
-                  
-            });         
-    });
+
+            });
+        });
     </script>
 </head>
 <body style="height:100%">
@@ -66,24 +67,18 @@
                                     <b>Operador:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @*<input type="text" class="form-control" />*@
-                                    @*@Html.Label("Operador", "@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].IdCliente)", new { @class = "form-control" })
-                                        <input id="IdCliente" type="text" name="IdCliente" hidden="hidden" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].IdCliente)" />*@
                                     @Html.LabelFor(model => model.Operador, (string)((@ViewBag.CajaGeneral == null) ? "value" : @ViewBag.IdCliente[0].CajaGeneral), new { @class = "form-control" })
-
                                 </div>
                                 <div class="col-sm-05">
-                                    <b>Camioneta:</b>
+                                    <b>Pipa:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @*<input type="text" class="form-control" />*@
                                     @Html.Label("Camioneta", "value", new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-2">
                                     <b>Fecha de reporte:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @*<input type="text" class="form-control" />*@
                                     @Html.Label("FechaReporte", "value", new { @class = "form-control" })
                                 </div>
                             </div>
@@ -122,10 +117,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>Concepto</th>
-                                                    <th>Salidas</th>
-                                                    <th>Recepciones</th>
-                                                    <th>Ventas</th>
-                                                    <th>Total</th>
+                                                    <th>P5000 Inicial</th>
+                                                    <th>P5000 Final</th>
+                                                    <th>Cantidad(Lt)</th>
+                                                    <th>Venta</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

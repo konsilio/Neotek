@@ -53,7 +53,7 @@ namespace MVC.Presentacion.Controllers
             
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
+                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", _ObjModel);
             }
@@ -66,7 +66,7 @@ namespace MVC.Presentacion.Controllers
             
         }
 
-        public ActionResult EditarPrecioVenta(int id)
+        public ActionResult EditarPrecioVenta(short id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();        
@@ -77,7 +77,7 @@ namespace MVC.Presentacion.Controllers
             return View();
         }
 
-        public ActionResult BorrarPrecioVenta(PrecioVentaModel _Obj, int id)
+        public ActionResult BorrarPrecioVenta(PrecioVentaModel _Obj, short id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
@@ -102,8 +102,8 @@ namespace MVC.Presentacion.Controllers
         public ActionResult ActualizarPrecioVenta(PrecioVentaModel _Obj)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-           string _tok = Session["StringToken"].ToString();
-          
+            string _tok = Session["StringToken"].ToString();
+           // _Obj = CatalogoServicio.ListaPrecioVenta(id, _tok)[0];
             var respuesta = CatalogoServicio.ModificarPrecioVenta(_Obj, _tok);
          
             if (respuesta.Exito)

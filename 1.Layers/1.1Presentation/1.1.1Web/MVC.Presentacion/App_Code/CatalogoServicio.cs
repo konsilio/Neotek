@@ -15,6 +15,7 @@ using Utilities.MainModule;
 //using System.Web.Script.Serialization;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using MVC.Presentacion.Models.Ventas;
 
 namespace MVC.Presentacion.App_Code
 {
@@ -932,7 +933,7 @@ namespace MVC.Presentacion.App_Code
         #endregion
 
         #region Precios de Venta Gas
-        public static List<PrecioVentaModel> ListaPrecioVenta(int idPrecioV, string token)
+        public static List<PrecioVentaModel> ListaPrecioVenta(short idPrecioV, string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarListaPrecioVenta(idPrecioV, token);
@@ -966,6 +967,16 @@ namespace MVC.Presentacion.App_Code
         {
             var agente = new AgenteServicio();
             agente.ModificarPrecioVenta(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+
+        #endregion
+
+        #region Caja General
+        public static RespuestaDTO CrearGuardarLiquidacion(CajaGeneralModel cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarLiquidacion(cc, tkn);
             return agente._RespuestaDTO;
         }
 

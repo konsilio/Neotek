@@ -1,0 +1,186 @@
+﻿@model  MVC.Presentacion.Models.Ventas.CajaGeneralModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @{
+        ViewBag.Title = "Index";
+    }
+    <style type="text/css">
+        .col-sm-05 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 16.666667%;
+            flex: 0 0 16.666667%;
+            max-width: 8.666667%;
+            text-align: center;
+        }
+
+        .col-sm-005 {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 16.666667%;
+            flex: 0 0 16.666667%;
+            max-width: 10.666667%;
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#Chkboxcorrecto').click(function () {
+                if (!$(this).is(':checked')) {
+                    $("#btnLiquidar").prop("disabled", true);
+                }
+                else {
+                    $("#btnLiquidar").prop("disabled", false);
+                }
+
+            });
+    });
+    </script>
+</head>
+<body style="height:100%">
+    @using (Html.BeginForm("Corte", "CajaGeneral", FormMethod.Post))
+    {
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
+                    <div class="card">
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-sm-05">
+                                    <b>Clave Reporte:</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" name="Clave" class="form-control" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="submit" value="Buscar" formmethod="post" class="btn btn-raised btn-primary float-left" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="card">
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-sm-005">
+                                    <b>Jefe de estaciones:</b>
+                                </div>
+                                <div class="col-sm-4">
+                                    @Html.LabelFor(model => model.Operador, (string)((@ViewBag.CajaGeneral == null) ? "value" : @ViewBag.IdCliente[0].CajaGeneral), new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-05">
+                                    <b></b>
+                                </div>
+                                <div class="col-sm-2">
+                                    <b>Fecha de reporte:</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.Label("FechaReporte", "value", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row clearfix">
+                                <div class="col-sm-005">
+                                    <b>Anticipos total:</b>
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.Label("AnticipoTotal", "value", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row clearfix">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="table-responsive">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="table-responsive">
+                                        <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th># Anticipo</th>
+                                                    <th>Concepto</th>
+                                                    <th>Fecha</th>
+                                                    <th>Punto Venta</th>
+                                                    <th>Monto</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (ViewBag.CajaGralEstacion != null)
+                                                {
+                                                    foreach (var item in ViewBag.CajaGralEstacion)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Anticipo</td>
+                                                            <td>@item.Concepto</td>
+                                                            <td>@item.Fecha</td>
+                                                            <td>@item.PuntoVenta</td>
+                                                            <td>@item.Monto</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div><br />
+                                    <div class="row clearfix">
+                                        <div class="col-sm-8" style="text-align:right">
+                                            <b>Efectivo a recibir:</b>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" name="Efectivo" class="form-control" />
+                                        </div>
+                                    </div><br />
+                                    <div class="row clearfix">
+                                        <div class="col-sm-8" style="text-align:right">
+                                            <b>¿Todo esta correcto?:</b>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="checkbox" id="Chkboxcorrecto" name="Correcto" class="form-control" />
+                                        </div>
+                                    </div><br />
+                                    <div class="row clearfix">
+                                        <div class="col-sm-7">
+                                            <input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-right" />
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <input type="submit" id="btnLiquidar" disabled value="Liquidar Camioneta" formaction=@Url.Action("GuardarLiquidar") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                {
+
+                            <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
+                                 role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                         bottom: 20px; left: 0px; right: 0px;">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                                <span data-notify="icon"></span>
+                                <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
+                                <a href="#" target="_blank" data-notify="url"></a>
+                            </div>
+                        }
+                        @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
+                {
+                            <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
+                                 role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                         bottom: 20px; left: 0px; right: 0px;">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                                <span data-notify="icon"></span>
+                                <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+        </section>
+    }
+
+</body>
+
+@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+@Scripts.Render("~/Scripts/jquery-ui.js")
+</html>

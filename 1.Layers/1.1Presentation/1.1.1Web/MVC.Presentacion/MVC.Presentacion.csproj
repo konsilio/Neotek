@@ -11447,6 +11447,8 @@
     <Content Include="Views\PrecioVentaOtro\EditarPrecioVentaOtro.cshtml" />
     <Content Include="Views\CajaGeneral\Index.cshtml" />
     <Content Include="Views\CajaGeneral\Liquidar.cshtml" />
+    <Content Include="Views\CajaGeneral\Estacion.cshtml" />
+    <Content Include="Views\CajaGeneral\Pipa.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
