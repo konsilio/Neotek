@@ -165,6 +165,9 @@ namespace MVC.Presentacion.Controllers
             int IdOC = id ?? 0;
             var complemeto = OrdenCompraServicio.InitComplementoGas(IdOC, tkn);
             ViewBag.IVAs = CatalogoServicio.ListaIVA();
+            ViewBag.IEPs = CatalogoServicio.ListaIEPS();
+            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
+            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
             return View(complemeto);          
         }
         private string Validar(RespuestaDTO Resp = null)

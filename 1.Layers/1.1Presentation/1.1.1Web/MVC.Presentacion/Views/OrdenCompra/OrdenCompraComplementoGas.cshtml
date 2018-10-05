@@ -60,12 +60,73 @@
             form.attr('method', 'post');
         });
     });
+    var ObtenerLitrosDesdeKilos = function (kilogramos, factor) {
+        return kilogramos / factor;
+    };
+    var ObtenerLitrosEnElTanque = function (capacidadTanqueLt, porcentaje) {
+        return capacidadTanqueLt * (porcentaje / 100);
+    };
+    var ObtenerKilogramosDesdeLitros = function (litros, factor) {
+        return litros * factor;
+    };
+    var ObtenerDiferenciaKilogramos = function (cantidadMayor, cantidadMenor) {
+        if (cantidadMayor < cantidadMenor)
+            return cantidadMenor - cantidadMayor;
+        return cantidadMayor - cantidadMenor;
+    };
+    var CalcularKilosFinales = function () {
+        var Factor = $("#FactorLitrosAKilos").val();
+        var kilogramosPapeletaTractor = $("#KilosPapeleta").val();
+        var litrosPapeletaTractor = ObtenerLitrosDesdeKilos(kilogramosPapeletaTractor, Factor);
+        var litrosRealesTractor = ObtenerLitrosEnElTanque($("#CapacidadTanque").val(), $("#PorcenMagnatelOcularTractorINI").val());
+        var kilogramosRealesTractor = ObtenerKilogramosDesdeLitros(litrosRealesTractor, Factor);
+        var kilogramosRemanentes = ObtenerDiferenciaKilogramos(kilogramosRealesTractor, kilogramosPapeletaTractor);
+
+        $("#KilosDescargados").val(kilogramosRealesTractor);
+        $("#KilosDiferencia").val(kilogramosRemanentes);
+    };
+    var CalcularImporteExpedidor = function () {
+        var RPMMNTPG = $("#MontBelvieuDlls").val();
+        var TSG = $("#TarifaServicioPorGalonDlls").val();
+        var TC = $("#TipoDeCambioDOF").val();
+        var FactorCGalLtr = $("#FactorGalonALitros").val();
+        var FactorCaKg = $("#FactorCompraLitrosAKilos").val();
+        var kilogramosPapeleta = $("#KilosPapeleta").val();
+
+        var PrecioXGalon = (RPMMNTPG + TSP) * TC;
+        $("#PrecioPorGalon").val(PrecioXGalon);
+        var ImporteLitros = PrecioXGalon * FactorCGalLtr;
+        $("#ImporteEnLitros").val(ImporteLitros);
+        var PVPM = ImporteLitros / FactorCaKg;
+        $("#PVPM").val(PVPM);
+        var PVIva = PVPM * IVA + PVPM;
+        $("#PrecioConIVA").val(PVIva);
+        var ImportePagar = kilogramosPapeleta * PVIva;
+        $("#ImporteExpedidor").val(ImportePagar);
+    };
+    var CalcularImportePortador = function () {
+        var FactorConv = $("#FactorConvTransporte").val();
+        var kilogramosPapeleta = $("#KilosPapeleta").val();
+        var Casetas = $("#Casetas").val();
+        var Iva = $("#IVAPorteador").val();
+
+        var PrecioTransporte = FactorConv * kilogramosPapeleta;
+        $("#PrecioTransporte").val(PrecioTransporte);
+        var Subtotal = PrecioTransporte + Casetas;
+        $("#SubTotoalPorteador").val(Subtotal);
+        var ImportePagar = Subtotal * Iva + Subtotal;
+        $("#ImportePorteador").val(ImportePagar);
+    };
+    window.onload = function () {
+        CalcularKilosFinales();
+    }
 </script>
 <section class="content home">
+@Html.HiddenFor(m => m.FactorLitrosAKilos)
     <div class="container-fluid">
         <div class="block-header">
             <div class="row clearfix">
-                <div class="col-lg-5 col-md-5 col-sm-12">
+                <div class="col-md-12">
                     <h2>Compras</h2>
                     <ul class="breadcrumb padding-0">
                         <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
@@ -83,15 +144,19 @@
                     <div class="row clearfix">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label> @*@Model.NombreEmpresa*@</label>
+                                <label> @Model.NombreComercial</label>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <div class="input-group">
+                                <div>
                                     <b>Número de Requisición: </b> @Model.NumeroRequisicion
-                                    @*<b>Numero de Orden de Compra: </b> @Model.OrdenCompraExpedidor.NumOrdenCompra
-                                        <b>Numero de Orden de Compra: </b> @Model.OrdenCompraPorteador.NumOrdenCompra*@
+                                </div>
+                                <div>
+                                    <b>Numero de Orden de Compra Expedidor: </b> @Model.OrdenCompraExpedidor.NumOrdenCompra
+                                </div>
+                                <div>
+                                    <b>Numero de Orden de Compra Porteador: </b> @Model.OrdenCompraPorteador.NumOrdenCompra
                                 </div>
                             </div>
                         </div>
@@ -129,20 +194,20 @@
 
                     @if (ViewBag.MensajeError != null)
                     {
-                        <div class="row clearfix">
-                            <div id="divMensajeError" class="container">
-                                <div class="alert alert-danger">
-                                    <div class="alert-icon">
-                                        <i class="zmdi zmdi-block"></i>
-                                    </div>
-                                    <strong>
-                                        <label>@ViewBag.MensajeError</label>
-                                    </strong>
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
                                 </div>
+                                <strong>
+                                    <label>@ViewBag.MensajeError</label>
+                                </strong>
                             </div>
                         </div>
+                    </div>
                     }
-                    <div class="row clearfix">
+                    <div class="row clearfix blockquote blockquote-info btn-round">
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
@@ -158,7 +223,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @*@Html.EditorFor(m => m.Producto)*@
+                                    @Html.EditorFor(m => m.Productos)
                                 </tbody>
                             </table>
                         </div>
@@ -287,7 +352,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Capasidad (Ltr) tanque tractor:</label>
-                                                        @Html.TextBoxFor(m => m.CapacidadTanque, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(m => m.CapacidadTanque, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -332,13 +397,13 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Inicial</label>
-                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorINI, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorINI, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label>Final</label>
-                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorFIN, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorFIN, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
                                                 </div>
                                             </div>
                                             @*<div class="col-md-3 content-center">
@@ -381,7 +446,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Papeleta</label>
-                                                    @Html.TextBoxFor(m => m.KilosPapeleta, new { @class = "form-control" })
+                                                    @Html.TextBoxFor(m => m.KilosPapeleta, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -504,7 +569,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.FactorCompraLitrosAKilos, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(m => m.FactorCompraLitrosAKilos, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -530,7 +595,7 @@
                                                         <select name="IVAExpedidor" class="form-control" data-live-search="true">
                                                             @foreach (var item in ViewBag.IVAs)
                                                             {
-                                                            <option value="@item.Value">@item.Text</option>
+                                                                <option value="@item.Value">@item.Text</option>
                                                             }
                                                         </select>
                                                     </div>
@@ -681,68 +746,69 @@
                             </div>
                             <div id="collapseImagenes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingImagenes">
                                 <div class="panel-body">
-                                  <div class="blockquote blockquote-info btn-round"></div>
-                                    <div id="aniimated-thumbnials" class="list-unstyled row clearfix">
-                                        <!-- Imagenes -->
-                                        @if (Model.Fotos != null)
-                                        {
-                                            foreach (var item in Model.Fotos)
+                                    <div class="blockquote blockquote-info btn-round">
+                                        <div id="aniimated-thumbnials" class="list-unstyled row clearfix">
+                                            <!-- Imagenes -->
+                                            @if (Model.Fotos != null)
                                             {
-                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
-                                                    <a href="@item.UrlImg">
-                                                        <img class="img-fluid img-thumbnail" src="@item.UrlImg" alt="">
-                                                    </a>
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <strong>Nombre: </strong>
+                                                foreach (var item in Model.Fotos)
+                                                {
+                                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
+                                                        <a href="@item.UrlImg">
+                                                            <img class="img-fluid img-thumbnail" src="@item.UrlImg" alt="">
+                                                        </a>
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <strong>Nombre: </strong>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                @item.Tipo
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-7">
-                                                            @item.Tipo
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <strong>Evento: </strong>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                @item.Momento
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-5">
+                                                                <strong>Lectura: </strong>
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                @item.Lectura
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <strong>Evento: </strong>
-                                                        </div>
-                                                        <div class="col-md-7">
-                                                            @item.Momento
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <strong>Lectura: </strong>
-                                                        </div>
-                                                        <div class="col-md-7">
-                                                            @item.Lectura
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                }
                                             }
-                                        }
-                                    </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>         
-            <div class="row clearfix">
-                <div class="col-sm-4 center">
-                    <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
-                </div>
-                <div class="col-sm-4 center">
-                    <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
-                        Cancelar
-                    </a>
-                </div>
-                <div class="col-sm-4 center">
-                    <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
-                        Crear
-                    </a>
-                </div>
             </div>
         </div>
+        <div class="row clearfix">
+            <div class="col-sm-4 center">
+                <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
+            </div>
+            <div class="col-sm-4 center">
+                <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
+                    Cancelar
+                </a>
+            </div>
+            <div class="col-sm-4 center">
+                <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
+                    Crear
+                </a>
+            </div>
+        </div>
+    </div>
 </section>
 
 <script src="~/assets/js/pages/medias/image-gallery.js"></script>

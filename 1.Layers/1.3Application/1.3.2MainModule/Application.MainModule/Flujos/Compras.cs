@@ -152,13 +152,22 @@ namespace Application.MainModule.Flujos
         }
         public ComplementoGasDTO BuscarComplementoGas(int idOrdenCompra)
         {
-            var oc = OrdenCompraServicio.Buscar(idOrdenCompra);
-            var cg = OrdenCompraServicio.BuscarComplementoGas(oc);
+            var _OrdeCompra = OrdenCompraServicio.Buscar(idOrdenCompra);
+            var _ComplementoGas = OrdenCompraServicio.BuscarComplementoGas(_OrdeCompra);
+            var requisicion = new RequisicionDataAccess().BuscarPorIdRequisicion(_OrdeCompra.IdRequisicion);
+            foreach (var orden in requisicion.OrdenesCompra)
+            {
+                if (orden.EsGas)
+                    _ComplementoGas.OrdenCompraExpedidor = OrdenComprasAdapter.ToDTO(orden);                
+                if (orden.EsTransporteGas)
+                    _ComplementoGas.OrdenCompraPorteador = OrdenComprasAdapter.ToDTO(orden);
+                _ComplementoGas.Productos.AddRange(ProductosOCAdapter.ToDTO(orden.Productos.ToList()));
+            }
+            _ComplementoGas = OrdenCompraServicio.CargarDatosRequisicion(_ComplementoGas, requisicion);
+            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(_OrdeCompra.IdOrdenCompra);
+            _ComplementoGas.Fotos = ImagenServicio.BuscarImagenes(alamacen);
 
-            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
-            cg.Fotos = ImagenServicio.BuscarImagenes(alamacen);
-
-            return cg;
+            return _ComplementoGas;
         }
         public List<OrdenCompraEstatusDTO> ListaEstatus()
         {

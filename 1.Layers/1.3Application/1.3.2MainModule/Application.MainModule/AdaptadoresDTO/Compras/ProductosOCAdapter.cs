@@ -30,7 +30,28 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 EsGas = _prod.EsGas,
                 EsTransporteGas = _prod.EsTransporteGas
             };
-
+        }
+        public static List<ProductoOCDTO> ToDTO(List<OrdenCompraProducto> _prods)
+        {
+            List<ProductoOCDTO> Prods = _prods.ToList().Select(x => ToDTO(x)).ToList();
+            return Prods;
+        }
+        public static ProductoOCDTO ToDTO(OrdenCompraProducto _prod)
+        {
+            return new ProductoOCDTO()
+            {
+                IdProducto = _prod.IdProducto,
+                Producto = _prod.Producto,
+                ProductoServicioTipo = _prod.ProductoServicioTipo,
+                CantidadAComprar = _prod.Cantidad,
+                UnidadMedida = _prod.UnidadMedida,
+                Aplicacion = _prod.Descripcion,
+                CentroCosto = _prod.CentroCosto.Descripcion,
+                IdCentroCosto = _prod.CentroCosto.IdCentroCosto,
+                EsActivoVenta = _prod.EsActivoVenta,
+                EsGas = _prod.EsGas,
+                EsTransporteGas = _prod.CProducto.EsTransporteGas
+            };
         }
         public static List<ProductoOCDTO> ToDTO(List<RequisicionProducto> _prods)
         {
@@ -137,7 +158,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             };
             return _prodDTO;
         }
-        public static List<OrdenCompraProductoCrearDTO> ToDTO(List<OrdenCompraProducto> _prods)
+        public static List<OrdenCompraProductoCrearDTO> ToDTOc(List<OrdenCompraProducto> _prods)
         {
             List<OrdenCompraProductoCrearDTO> Prods = _prods.ToList().Select(x => ToDTOc(x)).ToList();
             return Prods;

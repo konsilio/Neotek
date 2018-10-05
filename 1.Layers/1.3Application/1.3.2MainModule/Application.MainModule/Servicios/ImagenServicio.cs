@@ -91,9 +91,9 @@ namespace Application.MainModule.Servicios
             foreach (var foto in fotosAlacenGasDescarga)
             {
                 ImagenDTO i = new ImagenDTO();
-
                 var t = FilterFunciones.ObtenerFields(foto.UrlImagen, '/').Count;
                 i.Nombre = foto.UrlImagen.Split('/')[t-1];
+
                 var nomPartes = FilterFunciones.ObtenerFields(i.Nombre, '_');
                 
                 i.UrlImg = foto.UrlImagen;

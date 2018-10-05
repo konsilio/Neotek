@@ -203,6 +203,10 @@ namespace Application.MainModule.Servicios.Compras
             dto.MotivoRequisicion = datosreq.MotivoRequisicion;
             dto.RequeridoEn = datosreq.RequeridoEn;
             return dto;
-        }             
+        }
+        public static ComplementoGasDTO CargarDatosRequisicion(ComplementoGasDTO dto, Sagas.MainModule.Entidades.Requisicion req)
+        {
+            return ComplementoGasAdapter.ToRequisicion(dto, req);
+        }            
     }
 }
