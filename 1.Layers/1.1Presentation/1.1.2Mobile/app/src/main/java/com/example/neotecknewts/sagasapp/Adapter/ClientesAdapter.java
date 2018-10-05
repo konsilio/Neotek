@@ -42,7 +42,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return this.items.size();
+        return this.items!=null ? this.items.size():0;
     }
 
     private class ClientesHolder extends RecyclerView.ViewHolder {

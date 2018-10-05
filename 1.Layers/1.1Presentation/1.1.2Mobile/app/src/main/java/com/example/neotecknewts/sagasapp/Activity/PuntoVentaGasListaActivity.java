@@ -154,10 +154,6 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         });
         BtnFormularioVentaCamionetaYPipaPagar.setOnClickListener(V->{
             SetearLitrosDespachados();
-            Intent intent = new Intent(PuntoVentaGasListaActivity.this,
-                    MenuActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
         });
         //Formulario de venta de pipas y estaciones
         presenter.getListaCamionetaCilindros(session.getToken(),
@@ -169,7 +165,20 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         double total,subtotal, iva,precio,desc;
         ventaDTO.setCredito(SWFormularioVentaCamionetaYPipaCredito.isChecked());
         ventaDTO.setFactura(SWFormularioVentaCamionetaYPipaFactura.isChecked());
-        Intent intent= new Intent(PuntoVentaGasListaActivity.this,)
+        ConceptoDTO conceptoDTO = new ConceptoDTO();
+        conceptoDTO.setConcepto("Litros de gas");
+        conceptoDTO.setCantidad(0);
+        conceptoDTO.setPUnitario(0);
+        conceptoDTO.setDescuento(0);
+        conceptoDTO.setSubtotal(0);
+        ventaDTO.getConcepto().add(conceptoDTO);
+        Intent intent = new Intent(PuntoVentaGasListaActivity.this,
+                VentaGasActivity.class);
+        intent.putExtra("ventaDTO",ventaDTO);
+        intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
+        intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
+        intent.putExtra("EsVentaPipa",EsVentaPipa);
+        startActivity(intent);
     }
 
     @Override
