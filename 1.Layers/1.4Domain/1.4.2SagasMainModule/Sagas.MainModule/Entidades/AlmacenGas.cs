@@ -19,7 +19,7 @@ namespace Sagas.MainModule.Entidades
         {
             this.EntradasGas = new HashSet<AlmacenGasDescarga>();
             this.UnidadesAlmacenGas = new HashSet<UnidadAlmacenGas>();
-            this.CAlmacenGas = new HashSet<UnidadAlmacenGas>();
+            this.Movimientos = new HashSet<AlmacenGasMovimiento>();
         }
     
         public short IdAlmacenGas { get; set; }
@@ -29,6 +29,11 @@ namespace Sagas.MainModule.Entidades
         public decimal CantidadActualLt { get; set; }
         public decimal CantidadActualKg { get; set; }
         public decimal PorcentajeActual { get; set; }
+        public decimal CapacidadGeneralLt { get; set; }
+        public decimal CapacidadGeneralKg { get; set; }
+        public decimal CantidadActualGeneralLt { get; set; }
+        public decimal CantidadActualGeneralKg { get; set; }
+        public decimal PorcentajeActualGeneral { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
     
@@ -38,6 +43,6 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UnidadAlmacenGas> UnidadesAlmacenGas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UnidadAlmacenGas> CAlmacenGas { get; set; }
+        public virtual ICollection<AlmacenGasMovimiento> Movimientos { get; set; }
     }
 }

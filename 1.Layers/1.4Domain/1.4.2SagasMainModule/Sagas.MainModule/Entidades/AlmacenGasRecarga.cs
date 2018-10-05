@@ -19,6 +19,7 @@ namespace Sagas.MainModule.Entidades
         {
             this.Cilindros = new HashSet<AlmacenGasRecargaCilindro>();
             this.Fotografias = new HashSet<AlmacenGasRecargaFoto>();
+            this.MovimientosGas = new HashSet<AlmacenGasMovimiento>();
         }
     
         public int IdAlmacenGasRecarga { get; set; }
@@ -42,5 +43,7 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasRecargaFoto> Fotografias { get; set; }
         public virtual TipoEvento TipoEvento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasMovimiento> MovimientosGas { get; set; }
     }
 }

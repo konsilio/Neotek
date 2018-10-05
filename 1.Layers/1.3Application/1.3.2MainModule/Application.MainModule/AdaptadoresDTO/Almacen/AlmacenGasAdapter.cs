@@ -167,20 +167,28 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
         {
             return new AlmacenGasTraspaso
             {
-                IdAlmacenGasTraspaso = traspaso.IdAlmacenGasTraspaso,
                 IdCAlmacenGasSalida = traspaso.IdCAlmacenGasSalida,
                 IdCAlmacenGasEntrada = traspaso.IdCAlmacenGasEntrada,
                 IdTipoMedidorSalida = traspaso.IdTipoMedidorSalida,
-                IdTipoMedidorEntrada = traspaso.IdTipoMedidorEntrada,
                 IdTipoEvento = traspaso.IdTipoEvento,
                 P5000Salida = traspaso.P5000Salida,
                 P5000Entrada = traspaso.P5000Entrada,
                 PorcentajeSalida = traspaso.PorcentajeSalida,
-                ProcentajeEntrada = traspaso.ProcentajeEntrada,
                 ClaveOperacion = traspaso.ClaveOperacion,
                 DatosProcesados = traspaso.DatosProcesados,
                 FechaRegistro = traspaso.FechaRegistro,
-            };
+
+                public short IdCAlmacenGasSalida { get; set; }
+        public short IdCAlmacenGasEntrada { get; set; }
+        public short IdTipoMedidorSalida { get; set; }
+        public byte IdTipoEvento { get; set; }
+        public decimal P5000Salida { get; set; }
+        public decimal P5000Entrada { get; set; }
+        public Nullable<decimal> PorcentajeSalida { get; set; }
+        public string ClaveOperacion { get; set; }
+        public bool DatosProcesados { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+    };
         }
 
         public static AlmacenGasTraspasoFoto FromEntity(AlmacenGasTraspasoFoto img)

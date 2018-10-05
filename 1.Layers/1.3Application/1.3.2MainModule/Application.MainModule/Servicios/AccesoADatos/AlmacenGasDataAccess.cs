@@ -238,7 +238,55 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
             }
         }
-        
+
+        public void Actualizar(AplicaTraspasoDto aplicaTraspaso)
+        {
+            using (uow)
+            {
+                try
+                {
+                    if (aplicaTraspaso.unidadEntrada != null)
+                        uow.Repository<UnidadAlmacenGas>().Update(aplicaTraspaso.unidadEntrada);
+
+                    if (aplicaTraspaso.unidadSalida != null)
+                        uow.Repository<UnidadAlmacenGas>().Update(aplicaTraspaso.unidadSalida);
+
+                    if (aplicaTraspaso.TraspasoLecturaInicialSinNavProp != null)
+                        uow.Repository<AlmacenGasTraspaso>().Update(aplicaTraspaso.TraspasoLecturaInicialSinNavProp);
+
+                    if (aplicaTraspaso.TraspasoLecturaInicialFotos != null && aplicaTraspaso.TraspasoLecturaInicialFotos.Count > 0)
+                        aplicaTraspaso.TraspasoLecturaInicialFotos.ToList().ForEach(x =>
+                            uow.Repository<AlmacenGasTraspasoFoto>().Update(x)
+                        );
+
+                    if (aplicaTraspaso.TraspasoLecturaFinalSinNavProp != null)
+                        uow.Repository<AlmacenGasTraspaso>().Update(aplicaTraspaso.TraspasoLecturaFinalSinNavProp);
+
+                    if (aplicaTraspaso.TraspasoLecturaFinalFotos != null && aplicaTraspaso.TraspasoLecturaFinalFotos.Count > 0)
+                        aplicaTraspaso.TraspasoLecturaFinalFotos.ToList().ForEach(x =>
+                            uow.Repository<AlmacenGasTraspasoFoto>().Update(x)
+                        );
+
+                    // Agregar al modelo de dominio AlmacenGasMovimiento
+                    //if (aplicaTraspaso.AGMovimiento != null)
+                    //    uow.Repository<AlmacenGasMovimiento>().Insert(aplicaTraspaso.MovInventario);
+                    if (uow.repositories.Count > 0)
+                        uow.SaveChanges();
+                    //_respuesta.Id = aplicaTraspaso.IdCAlmacenGas;
+                    //_respuesta.Exito = true;
+                    //_respuesta.EsActulizacion = true;
+                    //_respuesta.ModeloValido = true;
+                    //_respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    //_respuesta.Exito = false;
+                    //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
+                    //_respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+        }
+
         public List<UnidadAlmacenGas> BuscarTodosEstacionCarburacion(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)

@@ -257,6 +257,15 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CPrecioVenta_CPrecioVentaEstatus" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_CPrecioVenta_Empresa" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Usuario1" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasMovimiento" Width="1.5" PointX="20.625" PointY="11.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoAlmacenGeneral" Width="1.5" PointX="22.875" PointY="17.625" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoAlmacenTotal" Width="1.5" PointX="22.875" PointY="13.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoFoto" Width="1.5" PointX="22.875" PointY="9.25" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenGas" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenGasRecarga" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAlmacenGeneral_AlmacenGasMovimiento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAlmacenTotal_AlmacenGasMovimiento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoFoto_AlmacenGasMovimiento" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

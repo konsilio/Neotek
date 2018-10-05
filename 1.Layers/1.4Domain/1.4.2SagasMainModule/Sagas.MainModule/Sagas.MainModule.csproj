@@ -67,6 +67,12 @@
     <Compile Include="Entidades\AlmacenGasDescargaFoto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\AlmacenGasMovimiento.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\AlmacenGasMovimientoFoto.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\AlmacenGasRecarga.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
