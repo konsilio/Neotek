@@ -74,12 +74,13 @@ public class PuntoVentaPagarActivity extends AppCompatActivity {
             double  efectivio = Double.valueOf(ETPuntoVentaPagarActivityEfectivo
                     .getText().toString());
             ventaDTO.setEfectivo( efectivio);
-            Intent intent = new Intent(PuntoVentaPagarActivity.this,VerReporteActivity.class);
+            Intent intent = new Intent(PuntoVentaPagarActivity.this,
+                    VerReporteActivity.class);
             intent.putExtra("ventaDTO",ventaDTO);
             intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
             intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
             intent.putExtra("EsVentaPipa",EsVentaPipa);
-
+            startActivity(intent);
         });
         NumberFormat format = NumberFormat.getCurrencyInstance();
         lista = new ArrayList<>();

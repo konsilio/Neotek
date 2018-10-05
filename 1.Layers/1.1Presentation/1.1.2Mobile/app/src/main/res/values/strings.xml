@@ -228,7 +228,6 @@
     <string name="categoria">Categoria</string>
     <string name="linea">Linea</string>
     <string name="concepto">Concepto</string>
-    <string name="precio">Precio</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
     <string-array name="header_tabla_anticipo">
         <item># Tiket</item>

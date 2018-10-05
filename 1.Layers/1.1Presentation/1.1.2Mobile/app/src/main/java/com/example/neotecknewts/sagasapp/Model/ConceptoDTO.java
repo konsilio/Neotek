@@ -24,6 +24,16 @@ ConceptoDTO implements Serializable {
     @SerializedName("Subtotal")
     private double Subtotal;
 
+    @SerializedName("IdCategoria")
+    private int IdCategoria;
+
+    @SerializedName("IdLinea")
+    private int IdLinea;
+
+    @SerializedName("IdProducto")
+    private int IdProducto;
+
+
     public int getIdTipoGas() {
         return IdTipoGas;
     }
@@ -70,5 +80,29 @@ ConceptoDTO implements Serializable {
 
     public void setSubtotal(double subtotal) {
         Subtotal = subtotal;
+    }
+
+    public int getIdCategoria() {
+        return IdCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        IdCategoria = idCategoria;
+    }
+
+    public int getIdLinea() {
+        return IdLinea;
+    }
+
+    public void setIdLinea(int idLinea) {
+        IdLinea = idLinea;
+    }
+
+    public int getIdProducto() {
+        return IdProducto;
+    }
+
+    public void setIdProducto(int idProducto) {
+        IdProducto = idProducto;
     }
 }

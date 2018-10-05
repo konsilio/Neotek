@@ -12,6 +12,7 @@ import com.example.neotecknewts.sagasapp.Model.DatosPuntoVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTipoPersonaDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosTraspasoDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosVentaOtrosDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
@@ -321,4 +322,7 @@ public interface RestClient {
                                                  @Header("Authorization") String token,
                                                  @Header("Content-type") String contentType
     );
+    @GET(Constantes.GET_CATALOGO_PRODUCTO)
+    Call<DatosVentaOtrosDTO> getListasProductos( @Header("Authorization") String token,
+                                                 @Header("Content-type") String contentType);
 }
