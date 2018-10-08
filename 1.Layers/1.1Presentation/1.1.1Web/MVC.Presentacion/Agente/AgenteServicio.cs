@@ -2504,7 +2504,12 @@ namespace MVC.Presentacion.Agente
         }
         public void EnviarConfirmarPago (OrdenCompraPagoDTO dto, string token)
         {
-            this.ApiRoute = ConfigurationManager.AppSettings["PostConfirmarPago"];
+            this.ApiRoute = ConfigurationManager.AppSettings["PutConfirmarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void EnviarSolicitudPago(OrdenCompraPagoDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
         }
         public void EnviarDatosFactura(OrdenCompraDTO dto, string token)
@@ -2514,7 +2519,7 @@ namespace MVC.Presentacion.Agente
         }
         public void BuscarListaPagos(int oc, string tkn)
         {
-            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetListaFormasPago"];
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetListaPagos"];
             GetListaPago(oc, tkn).Wait();
         }
         private async Task GetListaPago(int idoc, string Token)

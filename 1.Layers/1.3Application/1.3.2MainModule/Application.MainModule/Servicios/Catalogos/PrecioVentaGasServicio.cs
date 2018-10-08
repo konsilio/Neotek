@@ -13,13 +13,14 @@ namespace Application.MainModule.Servicios.Catalogos
 {
     public class PrecioVentaGasServicio
     {
+    
         public static RespuestaDto AltaPrecioVentaGas(List<PrecioVenta> cte)
         {           
             return new PrecioVentaDataAccess().Insertar(cte);
         }
 
         public static List<PrecioVentaDTO> Obtener()
-        {
+        { 
             List<PrecioVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PrecioVentaGasAdapter.ToDTO(new PrecioVentaDataAccess().BuscarTodos());
             return lPventas;
         }

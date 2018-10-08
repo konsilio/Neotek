@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MVC.Presentacion.Models.OrdenCompra
 {
-    public class OrdenCompraComplementoGasDTO : OrdenCompraModel
+    public class OrdenCompraComplementoGasDTO
     {
+        public int IdRequisicion { get; set; }
+        public int IdUsuarioSolicitante { get; set; }
+        public short IdEmpresa { get; set; }
+        public string NombreComercial { get; set; }
+        public string NumeroRequisicion { get; set; }
+        public string UsuarioSolicitante { get; set; }
+        public string MotivoRequisicion { get; set; }
+        public string RequeridoEn { get; set; }
+        public DateTime FechaRequerida { get; set; }
+
         public DateTime FechaEntraGas { get; set; }
         public decimal PorcenMagnatelOcularTractorINI { get; set; }
         public decimal PorcenMagnatelOcularAlmacenINI { get; set; }
@@ -40,5 +48,28 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public String NombreTipoMedidorTractor { get; set; }
         public short IdTipoMedidorTractor { get; set; }
         public short CantidadFotosTractor { get; set; }
+        public Nullable<decimal> MontBelvieuDlls { get; set; }
+        public Nullable<decimal> TarifaServicioPorGalonDlls { get; set; }
+        public Nullable<decimal> TipoDeCambioDOF { get; set; }
+        public Nullable<decimal> PrecioPorGalon { get; set; }
+        public Nullable<decimal> FactorGalonALitros { get; set; }
+        public Nullable<decimal> ImporteEnLitros { get; set; }
+        public Nullable<decimal> FactorCompraLitrosAKilos { get; set; }
+        public Nullable<decimal> PVPM { get; set; }
+        public decimal IVAExpedidor { get; set; }
+        public decimal PrecioConIVA { get; set; }
+        public decimal SubTotoalExpedidor { get; set; }
+        public decimal ImporteExpedidor { get; set; }
+        public string FolioFiscalUUID { get; set; }
+        public string FolioFactura { get; set; }
+        public DateTime? FechaResgistroFactura { get; set; }
+        public Nullable<decimal> FactorConvTransporte { get; set; }
+        public Nullable<decimal> PrecioTransporte { get; set; }
+        public Nullable<decimal> Casetas { get; set; }
+        public decimal IVAPorteador { get; set; }
+        public decimal SubTotoalPorteador { get; set; }
+        public decimal ImportePorteador { get; set; }
+        public OrdenCompraDTO OrdenCompraExpedidor { get; set; }
+        public OrdenCompraDTO OrdenCompraPorteador { get; set; }
     }
 }

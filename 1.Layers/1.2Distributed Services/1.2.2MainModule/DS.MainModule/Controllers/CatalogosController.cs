@@ -272,6 +272,8 @@ namespace DS.MainModule.Controllers
         [Route("consulta/listaprecioventa/{idEmpresa}")]
         public HttpResponseMessage GetListaPreciosVentaIdEmpresa(short idEmpresa)
         {
+            /*******first Update Table Estatus*********/
+            _catalogos.UpdateStatus(idEmpresa);
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.PreciosVentaIdEmpresa(idEmpresa));
         }
 
@@ -284,6 +286,8 @@ namespace DS.MainModule.Controllers
         [Route("consulta/precioventa")]
         public HttpResponseMessage GetListaPreciosVenta()
         {
+            /*******first Update Table Estatus*********/
+            _catalogos.UpdateStatus(0);
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ListaPreciosVenta());
         }
 

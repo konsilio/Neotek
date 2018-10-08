@@ -1,0 +1,115 @@
+﻿@model  MVC.Presentacion.Models.Catalogos.PrecioVentaModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @{
+        ViewBag.Title = "Index";
+    }
+    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnRegresarIndex").click(function () {
+                var form = $(this).parent("form");
+                form.attr('action', '<%= Url.RouteUrl(new { Controller = "PrecioVentaOtro", Action = "Index" }) %>');
+                form.attr('method', 'post');
+            });
+
+            $("#txtUtilidad").keyup(function () {
+                var precio = $("#PrecioPMX").val();
+
+                var utilidad = $(this).val();
+
+                var operacion = parseFloat(precio) + parseFloat(utilidad);
+
+                $("#IdPrecioSalidaKg").val(operacion)
+
+                //$("#IDPrecioSalidaKg").val(operacion);
+                // alert($('#IdPrecioSalidaKg').val());
+            });//key up.
+
+        });
+
+    </script>
+</head>
+<body style="height:100%">
+    @using (Html.BeginForm("ActualizarPrecioVentaOtro", "PrecioVentaOtro", FormMethod.Post))
+    {
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
+
+                    <div class="card">
+                        <div class="header">
+                            <h2><strong>Registrar precio de salida</strong></h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Precio Actual:
+                                        <input name="PrecioActual" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Precio Salida:
+                                        <input name="PrecioSalida" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Fecha programada:
+                                        <div class="input-group">
+                                            @Html.EditorFor(m => m.FechaProgramada, new { htmlAttributes = new { @class = "datepicker" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-12">
+                                    <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <div class="form-group">
+                                    <input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-left" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                {
+
+                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
+                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                         bottom: 20px; left: 0px; right: 0px;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                            <span data-notify="icon"></span>
+                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
+                            <a href="#" target="_blank" data-notify="url"></a>
+                        </div>
+                    }
+                    @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
+                {
+                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
+                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                         bottom: 20px; left: 0px; right: 0px;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                            <span data-notify="icon"></span>
+                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </section>
+    }
+</body>
+</html>

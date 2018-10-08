@@ -1,19 +1,11 @@
-﻿using Application.MainModule.AdaptadoresDTO.Almacen;
-using Application.MainModule.DTOs.Almacen;
+﻿using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacen;
-using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Requisicion;
 using Sagas.MainModule.Entidades;
-using Sagas.MainModule.ObjetosValor.Constantes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.MainModule.Flujos
 {
@@ -56,5 +48,9 @@ namespace Application.MainModule.Flujos
             var req = RequisicionServicio.Buscar(oc.IdRequisicion);
             return ProductoAlmacenServicio.AlmacenEntrada(oc, req);
         }
+        //public RespuestaDto GenerarSalidaProducto(AlmacenSalidaProductoDTO dto)
+        //{
+            
+        //}
     }
 }

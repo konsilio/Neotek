@@ -41,6 +41,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
                 FechaRegistro = pv.FechaRegistro,
                 Empresa = EmpresaServicio.Obtener(pv.IdEmpresa).NombreComercial,
                 PrecioVentaEstatus = PrecioVentaGasServicio.Obtener(pv.IdPrecioVentaEstatus).Descripción,
+                CategoriaProducto = ProductoServicio.ObtenerProducto((pv.IdProducto)).Descripcion,//Concepto
             };
             return usDTO;
         }
@@ -73,9 +74,11 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             var Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(PVGasDTO.IdEmpresa));
             var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
+            var IdPreVenta = PVGasDTO.IdEmpresa == 0 ? 1 : PVGasDTO.IdEmpresa + 1;
 
             return new PrecioVenta()
             {
+                IdPrecioVenta = (short)IdPreVenta,
                 IdEmpresa = PVGasDTO.IdEmpresa,
                 IdPrecioVentaEstatus = IdStatus,
                 IdCategoria = PVGasDTO.IdCategoria,
@@ -174,7 +177,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             if (Ctedto.PrecioSalida != null) catPrecioVenta.PrecioSalida = Ctedto.PrecioSalida; else catPrecioVenta.PrecioSalida = catPrecioVenta.PrecioSalida;
             if (Ctedto.PrecioSalidaKg != null) catPrecioVenta.PrecioSalidaKg = Ctedto.PrecioSalidaKg; else catPrecioVenta.PrecioSalidaKg = catPrecioVenta.PrecioSalidaKg;
             if (Ctedto.PrecioSalidaLt != null) catPrecioVenta.PrecioSalidaLt = Ctedto.PrecioSalidaLt; else catPrecioVenta.PrecioSalidaLt = catPrecioVenta.PrecioSalidaLt;
-            if (Ctedto.FechaProgramada != null) catPrecioVenta.FechaProgramada = Ctedto.FechaProgramada; else catPrecioVenta.FechaProgramada = catPrecioVenta.FechaProgramada;
+            if (Ctedto.FechaProgramada.ToString() != "01/01/0001 0:00:00") catPrecioVenta.FechaProgramada = Ctedto.FechaProgramada; else catPrecioVenta.FechaProgramada = catPrecioVenta.FechaProgramada;
 
             return catPrecioVenta;
         }
