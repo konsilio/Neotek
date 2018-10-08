@@ -1,310 +1,140 @@
-﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraComplementoGasDTO
+﻿@using MVC.Presentacion.Models.OrdenCompra;
+@model OrdenCompraComplementoGasDTO
 
 <style>
     .calculaPrecio {
     }
 </style>
 <link rel="stylesheet" href="~/assets/plugins/light-gallery/css/lightgallery.css">
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnCrear").click(function () {
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "OrdenCompra", Action = "CrearOrdenCompra" }) %>');
-            form.attr('method', 'post');
-        });
-    });
-    function redondeo(numero, decimales) {
-        var flotante = parseFloat(numero);
-        var resultado = Math.round(flotante * Math.pow(10, decimales)) / Math.pow(10, decimales);
-        return resultado;
-    }
-    //Expedidor
-    var ObtenerPrecioXGalon = function (RPMMNTPG, TSG, TC) {
-        return (parseFloat(RPMMNTPG) + parseFloat(TSG)) * TC;
-    };
-    var ObtenerImporteLitros = function (PrecioXGalon, FactorCGalLtr) {
-        return PrecioXGalon / FactorCGalLtr;
-    };
-    var ObtenerPVPM = function (ImporteLitros, FactorCaKg) {
-        return ImporteLitros / FactorCaKg;
-    };
-    var ObtenerPVIva = function (PVPM, IVA) {
-        return (PVPM * (IVA / 100) + parseFloat(PVPM));
-    };
-    var ObtenerImportePagar = function (kilogramosPapeleta, PVIva) {
-        return kilogramosPapeleta * PVIva;
-    };
-
-
-    var ObtenerLitrosDesdeKilos = function (kilogramos, factor) {
-        return kilogramos / factor;
-    };
-    var ObtenerLitrosEnElTanque = function (capacidadTanqueLt, porcentaje) {
-        return capacidadTanqueLt * (porcentaje / 100);
-    };
-    var ObtenerKilogramosDesdeLitros = function (litros, factor) {
-        return litros * factor;
-    };
-    var ObtenerDiferenciaKilogramos = function (cantidadMayor, cantidadMenor) {
-        if (cantidadMayor < cantidadMenor)
-            return cantidadMenor - cantidadMayor;
-        return (cantidadMayor - cantidadMenor);
-    };
-    //Porteador
-    var ObtenerPrecioTransporte = function (Factor, KilosPapeleta) {
-        return (Factor * KilosPapeleta)
-    };
-    var ObtenerSubtotalTransporte = function (PrecioTransporte, Casetas) {
-        return (parseFloat(PrecioTransporte) + parseFloat(Casetas))
-    };
-    var ObtenerImporteTransporte = function (Subtotal, Iva) {
-        return (Subtotal * (Iva / 100)) + parseFloat(Subtotal);
-    };
-    var CalcularKilosFinales = function () {
-        var Factor = $("#FactorLitrosAKilos").val();
-        var kilogramosPapeletaTractor = $("#KilosPapeleta").val();
-        var litrosPapeletaTractor = ObtenerLitrosDesdeKilos(kilogramosPapeletaTractor, Factor);
-        var litrosRealesTractor = ObtenerLitrosEnElTanque($("#CapacidadTanque").val(), $("#PorcenMagnatelOcularTractorINI").val());
-        var kilogramosRealesTractor = ObtenerKilogramosDesdeLitros(litrosRealesTractor, Factor);
-        var kilogramosRemanentes = ObtenerDiferenciaKilogramos(kilogramosRealesTractor, kilogramosPapeletaTractor);
-
-        $("#KilosDescargados").val(redondeo(kilogramosRealesTractor, 5));
-        $("#KilosDiferencia").val(redondeo(kilogramosRemanentes, 5));
-    };
-    var CalcularImporteExpedidor = function () {
-        var RPMMNTPG = $("#MontBelvieuDlls").val();
-        var TSG = $("#TarifaServicioPorGalonDlls").val();
-        var TC = $("#TipoDeCambioDOF").val();
-        var FactorCGalLtr = $("#FactorGalonALitros").val();
-        var FactorCaKg = $("#FactorCompraLitrosAKilos").val();
-        var kilogramosPapeleta = $("#KilosPapeleta").val();
-        var Iva = $("#IVAExpedidor option:selected").val();
-
-        var PrecioXGalon = ObtenerPrecioXGalon(RPMMNTPG, TSG, TC);
-        var ImporteLitros = ObtenerImporteLitros(PrecioXGalon, FactorCGalLtr);
-        var PVPM = ObtenerPVPM(ImporteLitros, FactorCaKg);
-        var PVIva = redondeo(ObtenerPVIva(PVPM, Iva), 5);
-        var ImportePagar = ObtenerImportePagar(kilogramosPapeleta, PVIva);
-
-        $("#PrecioPorGalon")[0].textContent = Number.isNaN(PrecioXGalon) ? "0" : redondeo(PrecioXGalon, 5);
-        $("#ImporteEnLitros")[0].textContent = Number.isNaN(ImporteLitros) ? "0" : redondeo(ImporteLitros, 5);
-        $("#PVPM")[0].textContent = Number.isNaN(PVPM) ? "0" : redondeo(PVPM, 5);
-        $("#PrecioConIVA")[0].textContent = Number.isNaN(PVIva) ? "0" : redondeo(PVIva, 5);
-        $("#ImporteExpedidor")[0].textContent = new Intl.NumberFormat("es-MX").format(Number.isNaN(ImportePagar) ? "0" : ImportePagar);
-    };
-    var CalcularImportePortador = function () {
-        var FactorConv = $("#FactorConvTransporte").val();
-        var kilogramosPapeleta = $("#KilosPapeleta").val();
-        var Casetas = $("#Casetas").val();
-        var Iva = $("#IVAPorteador option:selected").val();
-
-        var PrecioTransporte = ObtenerPrecioTransporte(FactorConv, kilogramosPapeleta);
-        var Subtotal = ObtenerSubtotalTransporte(PrecioTransporte, Casetas);
-        var ImportePagar = ObtenerImporteTransporte(Subtotal, Iva);
-
-        $("#PrecioTransporte")[0].textContent = Number.isNaN(PrecioTransporte) ? "0" : redondeo(PrecioTransporte, 5);
-        $("#SubTotoalPorteador")[0].textContent = Number.isNaN(Subtotal) ? "0" : redondeo(Subtotal, 5);
-        $("#ImportePorteador")[0].textContent = new Intl.NumberFormat("es-MX").format(Number.isNaN(ImportePagar) ? "0" : redondeo(ImportePagar, 2));
-    };
-    window.onload = function () {
-        CalcularKilosFinales();
-    }
-</script>
 <section class="content home">
-    @Html.HiddenFor(m => m.FactorLitrosAKilos)
     <div class="container-fluid">
-        <div class="block-header">
-            <div class="row clearfix">
-                <div class="col-md-12">
-                    <h2>Compras</h2>
-                    <ul class="breadcrumb padding-0">
-                        <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                        <li class="breadcrumb-item">Compras</li>
-                        <li class="breadcrumb-item">Ordern de Compra</li>
-                        <li class="breadcrumb-item">Complemento para Gas</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card">
-                <div class="header">
-                    Datos <strong> generales</strong>
-                </div>
-                <div class="body">
-                    <div class="row clearfix">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label> @Model.NombreComercial</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div>
-                                    <b>Número de Requisición: </b> @Model.NumeroRequisicion
-                                </div>
-                                <div>
-                                    <b>Numero de Orden de Compra Expedidor: </b> @Model.OrdenCompraExpedidor.NumOrdenCompra
-                                </div>
-                                <div>
-                                    <b>Numero de Orden de Compra Porteador: </b> @Model.OrdenCompraPorteador.NumOrdenCompra
-                                </div>
-                            </div>
-                        </div>
+        @using (Html.BeginForm("ComplementoGas", "OrdenCompra", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.FactorLitrosAKilos)
+            @*@Html.HiddenFor(m => m.OrdenCompraExpedidor)
+                @Html.HiddenFor(m => m.OrdenCompraPorteador)*@
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <h2>Compras</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Compras</li>
+                            <li class="breadcrumb-item">Ordern de Compra</li>
+                            <li class="breadcrumb-item">Complemento para Gas</li>
+                        </ul>
                     </div>
-                    <div class="row clearfix">
-                        <div class="col-lg-3 col-md-12">
-                            <div class="form-group form-float">
-                                <b>Fecha requerida:</b>
-                                @Html.TextBoxFor(m => m.FechaRequerida, new { @class = "form-control", @disabled = "disabled" })
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-12">
-                            <div class="form-group form-float">
-                                <b>Solicitante:</b>
-                                @Html.TextBoxFor(m => m.UsuarioSolicitante, new { @class = "form-control", @disabled = "disabled" })
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-12 form-float">
-                            <div class="form-group">
-                                <div class="form-group">
-                                    <b>Motivo de compra:</b>
-                                    @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control  no-resize btn-round", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-12">
-                            <div class="form-group form-float">
-                                <div class="form-group">
-                                    <b>Se requiere en:</b>
-                                    @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control  no-resize btn-round", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div class="card">
+                    <div class="header">
+                        Datos <strong> generales</strong>
                     </div>
-
-                    @if (ViewBag.MensajeError != null)
-                    {
+                    <div class="body">
                         <div class="row clearfix">
-                            <div id="divMensajeError" class="container">
-                                <div class="alert alert-danger">
-                                    <div class="alert-icon">
-                                        <i class="zmdi zmdi-block"></i>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label> @Model.NombreComercial</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div>
+                                        <b>Número de Requisición: </b> @Model.NumeroRequisicion
                                     </div>
-                                    <strong>
-                                        <label>@ViewBag.MensajeError</label>
-                                    </strong>
+                                    <div>
+                                        <b>Numero de Orden de Compra Expedidor: </b> @Model.OrdenCompraExpedidor.NumOrdenCompra
+                                    </div>
+                                    <div>
+                                        <b>Numero de Orden de Compra Porteador: </b> @Model.OrdenCompraPorteador.NumOrdenCompra
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    }
-                    <div class="row clearfix blockquote blockquote-info btn-round">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <td><b>Tipo</b></td>
-                                        <td><b>Producto</b></td>
-                                        <td><b>Cantidad</b></td>
-                                        <td><b>Unidad</b></td>
-                                        <td><b>Aplicación</b></td>
-                                        <td><b>Centro de costo</b></td>
-                                        <td><b>Proveedor</b></td>
-                                        <td><b>Cuenta Contable</b></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @Html.EditorFor(m => m.Productos)
-                                </tbody>
-                            </table>
+                        <div class="row clearfix">
+                            <div class="col-lg-3 col-md-12">
+                                <div class="form-group form-float">
+                                    <b>Fecha requerida:</b>
+                                    @Html.TextBoxFor(m => m.FechaRequerida, new { @class = "form-control", @disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12">
+                                <div class="form-group form-float">
+                                    <b>Solicitante:</b>
+                                    @Html.TextBoxFor(m => m.UsuarioSolicitante, new { @class = "form-control", @disabled = "disabled" })
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12 form-float">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <b>Motivo de compra:</b>
+                                        @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control  no-resize btn-round", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12">
+                                <div class="form-group form-float">
+                                    <div class="form-group">
+                                        <b>Se requiere en:</b>
+                                        @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control  no-resize btn-round", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (ViewBag.MensajeError != null)
+                        {
+                            <div class="row clearfix">
+                                <div id="divMensajeError" class="container">
+                                    <div class="alert alert-danger">
+                                        <div class="alert-icon">
+                                            <i class="zmdi zmdi-block"></i>
+                                        </div>
+                                        <strong>
+                                            <label>@ViewBag.MensajeError</label>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="row clearfix blockquote blockquote-info btn-round">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td><b>Tipo</b></td>
+                                            <td><b>Producto</b></td>
+                                            <td><b>Cantidad</b></td>
+                                            <td><b>Unidad</b></td>
+                                            <td><b>Aplicación</b></td>
+                                            <td><b>Centro de costo</b></td>
+                                            <td><b>Proveedor</b></td>
+                                            <td><b>Cuenta Contable</b></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @Html.EditorFor(m => m.Productos)
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="header">
-                    Informacion de la <strong>descarga</strong>
-                </div>
-                <div class="body">
-                    <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading" role="tab" id="heading_Papeleta">
-                                <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapse_Papeleta" aria-expanded="true" aria-controls="collapse_Papeleta">Datos de la descarga</a></h4>
-                            </div>
-                            <div id="collapse_Papeleta" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_Papeleta">
-                                <div class="panel-body">
-                                    <div class="blockquote blockquote-info btn-round">
-                                        <div class="row clearfix">
-                                            <div class="col-md-2">
-                                                <h6>Papeleta</h6>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <hr />
-                                            </div>
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="dtpFechaPapeleta">Fecha papeleta:</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <i class="zmdi zmdi-calendar"></i>
-                                                        </span>
-                                                        @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control datetimepicker" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="dtpFechaEmbarque">Fecha embarque:</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <i class="zmdi zmdi-calendar"></i>
-                                                        </span>
-                                                        @Html.TextBoxFor(m => m.FechaEmbarque, new { @class = "form-control datetimepicker" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Número embarque</label>
-                                                    @Html.TextBoxFor(m => m.NumeroEmbarque, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Valor Carga</label>
-                                                    @Html.TextBoxFor(m => m.ValorCarga, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Sello</label>
-                                                    @Html.TextBoxFor(m => m.Sello, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="">Nombre Responsable</label>
-                                                    @Html.TextBoxFor(m => m.NombreResponsable, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="col-md-4">
-                                                <label>% Magnatel tractor (papeleta)</label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    @Html.TextBoxFor(m => m.PorcentajeTanque, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                        </div>
-
+                <div class="card">
+                    <div class="header">
+                        Informacion de la <strong>descarga</strong>
+                    </div>
+                    <div class="body">
+                        <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" role="tab" id="heading_Papeleta">
+                                    <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapse_Papeleta" aria-expanded="true" aria-controls="collapse_Papeleta">Datos de la descarga</a></h4>
+                                </div>
+                                <div id="collapse_Papeleta" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading_Papeleta">
+                                    <div class="panel-body">
                                         <div class="blockquote blockquote-info btn-round">
                                             <div class="row clearfix">
                                                 <div class="col-md-2">
-                                                    <h6>Tractor</h6>
+                                                    <h6>Papeleta</h6>
                                                 </div>
                                                 <div class="col-md-10">
                                                     <hr />
@@ -313,411 +143,580 @@
                                             <div class="row clearfix">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Placa tractor:</label>
-                                                        @Html.TextBoxFor(m => m.PlacasTractor, new { @class = "form-control" })
+                                                        <label for="dtpFechaPapeleta">Fecha papeleta:</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="zmdi zmdi-calendar"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control datetimepicker" })
+                                                            @Html.ValidationMessageFor(m => m.Fecha, "", new { @class = "alert-danger" })
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Nombre operador:</label>
-                                                        @Html.TextBoxFor(m => m.NombreOperador, new { @class = "form-control" })
+                                                        <label for="dtpFechaEmbarque">Fecha embarque:</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="zmdi zmdi-calendar"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(m => m.FechaEmbarque, new { @class = "form-control datetimepicker" })
+                                                            @Html.ValidationMessageFor(m => m.FechaEmbarque, "", new { @class = "alert-danger" })
+                                                        </div>
                                                     </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="">Número embarque</label>
+                                                        @Html.TextBoxFor(m => m.NumeroEmbarque, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => m.NumeroEmbarque, "", new { @class = "alert-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="">Valor Carga</label>
+                                                        @Html.TextBoxFor(m => m.ValorCarga, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => m.ValorCarga, "", new { @class = "alert-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="">Sello</label>
+                                                        @Html.TextBoxFor(m => m.Sello, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => m.Sello, "", new { @class = "alert-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="">Nombre Responsable</label>
+                                                        @Html.TextBoxFor(m => m.NombreResponsable, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => m.NombreResponsable, "", new { @class = "alert-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="col-md-4">
+                                                    <label>% Magnatel tractor (papeleta)</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        @Html.TextBoxFor(m => m.PorcentajeTanque, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => m.PorcentajeTanque, "", new { @class = "alert-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Presión tanque tractor:</label>
-                                                        @Html.TextBoxFor(m => m.PresionTanque, new { @class = "form-control" })
+                                            <div class="blockquote blockquote-info btn-round">
+                                                <div class="row clearfix">
+                                                    <div class="col-md-2">
+                                                        <h6>Tractor</h6>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <hr />
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Número tanque tractor:</label>
-                                                        @Html.TextBoxFor(m => m.NumeroTanque, new { @class = "form-control" })
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Capasidad (Ltr) tanque tractor:</label>
-                                                        @Html.TextBoxFor(m => m.CapacidadTanque, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>% Magnatel tractor (Ocultar)</label>
-                                                        @Html.TextBoxFor(m => m.PorcentajeMedidor, new { @class = "form-control" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="blockquote blockquote-info btn-round">
-                                        <div class="row clearfix">
-                                            <div class="col-md-2">
-                                                <h6>Descarga</h6>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <hr />
-                                            </div>
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Fecha descarga:</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                            <i class="zmdi zmdi-calendar"></i>
-                                                        </span>
-                                                        @Html.TextBoxFor(m => m.FechaEntraGas, new { @class = "form-control datetimepicker" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="col-md-3 content-center">
-                                                <div class="form-group">
-                                                    <label>% Magnatel Tractor</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Inicial</label>
-                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorINI, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Final</label>
-                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorFIN, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
-                                                </div>
-                                            </div>
-                                            @*<div class="col-md-3 content-center">
-                                                    <div class="checkbox">
-                                                        <input id="chBoxAlmacenPrestado" type="checkbox">
-                                                        <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>
-                                                    </div>
-                                                </div>*@
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="col-md-3 content-center">
-                                                <div class="form-group">
-                                                    <label>% Magnatel Almacen</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Inicial</label>
-                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularAlmacenINI, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label>Final</label>
-                                                    @Html.TextBoxFor(m => m.PorcenMagnatelOcularAlmacenFIN, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="blockquote blockquote-info btn-round">
-                                        <div class="row clearfix">
-                                            <div class="col-md-2">
-                                                <h6>Kilos Finales</h6>
-                                            </div>
-                                            <div class="col-md-10">
-                                                <hr />
-                                            </div>
-                                        </div>
-                                        <div class="row clearfix">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Papeleta</label>
-                                                    @Html.TextBoxFor(m => m.KilosPapeleta, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Descargados</label>
-                                                    @Html.TextBoxFor(m => m.KilosDescargados, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Diferencia</label>
-                                                    @Html.TextBoxFor(m => m.KilosDiferencia, new { @class = "form-control" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-md-2">
-                                            <input type="submit" ID="btnGuardarDatosPapeleta" class="btn btn-raised btn-primary btn-round" value="Guardar" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-primary">
-                            <div class="panel-heading" role="tab" id="headingCostos">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseCostos" aria-expanded="false"
-                                       aria-controls="collapseCostos">Costos</a>
-                                </h4>
-                            </div>
-                            <div id="collapseCostos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCostos">
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-6 blockquote blockquote-info btn-round">
-                                            <div class="row clearfix">
-                                                <b>Pago al expedidor de gas </b>
-                                            </div>
-                                            <hr>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtReferenciaPormedioMensualGallon">Referencia promedio mensual MB Non Tet Propano Gallon</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.MontBelvieuDlls, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="txtReferenciaPormedioMensualGallon">(En dolares)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtTarifaServicioGallon">Tarifa de Servicio por gallon</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.TarifaServicioPorGalonDlls, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="txtTarifaServicioGallon">(En dolares)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtTipoCambioDOF">Tipo de cambio DOF:</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.TipoDeCambioDOF, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="form-control-label">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="lbPlPrecioPorGalon">Precio por galon</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
-                                                    <div class="form-group">
+                                                <div class="row clearfix">
+                                                    <div class="col-md-4">
                                                         <div class="form-group">
-                                                            $ @Html.LabelFor(m => m.PrecioPorGalon, new { id = "PrecioPorGalon" })
+                                                            <label>Placa tractor:</label>
+                                                            @Html.TextBoxFor(m => m.PlacasTractor, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(m => m.PlacasTractor, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Nombre operador:</label>
+                                                            @Html.TextBoxFor(m => m.NombreOperador, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(m => m.NombreOperador, "", new { @class = "alert-danger" })
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Presión tanque tractor:</label>
+                                                            @Html.TextBoxFor(m => m.PresionTanque, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(m => m.PresionTanque, "", new { @class = "alert-danger" })
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="lbPlPrecioPorGalon">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-4 form-control-label">
-                                                    <label for="txtFactorConvercionGaL">Factor de convercion Galones a litros:</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.FactorGalonALitros, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
+                                                <div class="row clearfix">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Número tanque tractor:</label>
+                                                            @Html.TextBoxFor(m => m.NumeroTanque, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(m => m.NumeroTanque, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Capasidad (Ltr) tanque tractor:</label>
+                                                            @Html.TextBoxFor(m => m.CapacidadTanque, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
+                                                            @Html.ValidationMessageFor(m => m.CapacidadTanque, "", new { @class = "alert-danger" })
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="lblImporteLitros">Importe en Litros</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
-                                                    <div class="form-group">
-                                                        $ @Html.LabelFor(m => m.ImporteEnLitros, new { id = "ImporteEnLitros" })
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="lblImporteLitros">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-4 form-control-label">
-                                                    <label for="txtFactorConvercionaKg">Factor de conversion a Kilogramos:</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.FactorCompraLitrosAKilos, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtPVMP">PVPM($/Kg) CON DESCUENTO:</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
-                                                    <div class="form-group">
-                                                        $ @Html.LabelFor(m => m.PVPM, new { id = "PVPM" })
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="txtPVMP">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-4 form-control-label">
-                                                    <label for="ddlIVACostos">IVA</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <select name="IVAExpedidor" id="IVAExpedidor" class="form-control" data-live-search="true" onchange="javascript: CalcularImporteExpedidor()">
-                                                            @foreach (var item in ViewBag.IVAs)
-                                                            {
-                                                                <option value="@item.Value">@item.Text</option>
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtPrecioConIVA">PRECIO DE VENTA CON IVA:</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
-                                                    <div class="form-group">
-                                                        $ @Html.LabelFor(m => m.PrecioConIVA, new { id = "PrecioConIVA" })
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="txtPrecioConIVA">(En Pesos)</label>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="btnSolicitarPagoExpedidor">IMPORTE A PAGAR</label>
-                                                </div>
-                                                <div class="col-md-4 form-control-label text-right">
-                                                    $ @Html.LabelFor(m => m.ImporteExpedidor, new { id = "ImporteExpedidor" })
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="lblImporteAPagar">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="submit" ID="btnGuardarDatosExpedidor" class="btn btn-raised btn-primary btn-round" disabled value="Guardar" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="submit" ID="btnSolicitarPagoExpedidor" class="btn btn-raised btn-primary btn-round" value="Solicitar Pago" />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>% Magnatel tractor (Ocultar)</label>
+                                                            @Html.TextBoxFor(m => m.PorcentajeMedidor, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(m => m.PorcentajeMedidor, "", new { @class = "alert-danger" })
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 blockquote blockquote-info btn-round">
+                                        <div class="blockquote blockquote-info btn-round">
                                             <div class="row clearfix">
-                                                <b>Pago al porteador de gas</b>
-                                            </div>
-                                            <hr>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtFactorConversion">Factor de conversión</label>
+                                                <div class="col-md-2">
+                                                    <h6>Descarga</h6>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-10">
+                                                    <hr />
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="col-md-12">
                                                     <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.FactorConvTransporte, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
+                                                        <label>Fecha descarga:</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="zmdi zmdi-calendar"></i>
+                                                            </span>
+                                                            @Html.TextBoxFor(m => m.FechaEntraGas, new { @class = "form-control datetimepicker" })
+                                                            @Html.ValidationMessageFor(m => m.FechaEntraGas, "", new { @class = "alert-danger" })
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="lblPrecioTransporte">Precio del transporte:</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
+                                                <div class="col-md-3 content-center">
                                                     <div class="form-group">
-                                                      $ @Html.LabelFor(m => m.PrecioTransporte, new { id = "PrecioTransporte" })
+                                                        <label>% Magnatel Tractor</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3  form-control-label">
-                                                    <label for="lblPrecioTransporte">(En pesos)</label>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Inicial</label>
+                                                        @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorINI, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
+                                                        @Html.ValidationMessageFor(m => m.PorcenMagnatelOcularTractorINI, "", new { @class = "alert-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Final</label>
+                                                        @Html.TextBoxFor(m => m.PorcenMagnatelOcularTractorFIN, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
+                                                        @Html.ValidationMessageFor(m => m.PorcenMagnatelOcularTractorFIN, "", new { @class = "alert-danger" })
+                                                    </div>
+                                                </div>
+                                                @*<div class="col-md-3 content-center">
+                                                        <div class="checkbox">
+                                                            <input id="chBoxAlmacenPrestado" type="checkbox">
+                                                            <label for="chBoxAlmacenPrestado">¿Almacen alterno?</label>
+                                                        </div>
+                                                    </div>*@
+                                            </div>
+                                            <div class="row clearfix">
+                                                <div class="col-md-3 content-center">
+                                                    <div class="form-group">
+                                                        <label>% Magnatel Almacen</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Inicial</label>
+                                                        @Html.TextBoxFor(m => m.PorcenMagnatelOcularAlmacenINI, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => m.PorcenMagnatelOcularAlmacenINI, "", new { @class = "alert-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label>Final</label>
+                                                        @Html.TextBoxFor(m => m.PorcenMagnatelOcularAlmacenFIN, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => m.PorcenMagnatelOcularAlmacenFIN, "", new { @class = "alert-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="blockquote blockquote-info btn-round">
+                                            <div class="row clearfix">
+                                                <div class="col-md-2">
+                                                    <h6>Kilos Finales</h6>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <hr />
                                                 </div>
                                             </div>
                                             <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="txtCasetas">Casetas:</label>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Papeleta</label>
+                                                        @Html.TextBoxFor(m => m.KilosPapeleta, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
+                                                        @Html.ValidationMessageFor(m => m.KilosPapeleta, "", new { @class = "alert-danger" })
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.Casetas, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
+                                                        <label>Descargados</label>
+                                                        @Html.TextBoxFor(m => m.KilosDescargados, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => m.KilosDescargados, "", new { @class = "alert-danger" })
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="txtCasetas">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="lblSubtotal">Subtotal:</label>
-                                                </div>
-                                                <div class="col-md-4 text-right">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
-                                                       $ @Html.LabelFor(m => m.SubTotoalPorteador, new { id = "SubTotoalPorteador" })
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="lblSubtotal">(En pesos)</label>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-4 form-control-label">
-                                                    <label for="ddlIvaPorteador">IVA</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <select name="IVAPorteador" id="IVAPorteador" class="form-control" data-live-search="true" onchange="javascript: CalcularImportePortador()">
-                                                            @foreach (var item in ViewBag.IVAs)
-                                                            {
-                                                                <option value="@item.Value">@item.Text</option>
-                                                            }
-                                                        </select>
+                                                        <label>Diferencia</label>
+                                                        @Html.TextBoxFor(m => m.KilosDiferencia, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => m.KilosDiferencia, "", new { @class = "alert-danger" })
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr>
-                                            <div class="row clearfix">
-                                                <div class="col-md-5 form-control-label">
-                                                    <label for="btnSolicitarPaogPorteador">IMPORTE A PAGAR</label>
-                                                </div>
-                                                <div class="col-md-4 form-control-label text-right">
-                                                  $ @Html.LabelFor(m => m.ImportePorteador, new { id = "ImportePorteador" })
-                                                </div>
-                                                <div class="col-md-3 form-control-label">
-                                                    <label for="btnSolicitarPaogPorteador">(En pesos)</label>
-                                                </div>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-md-2">
+                                                <input type="submit" ID="btnGuardarDatosPapeleta" class="btn btn-raised btn-primary btn-round" value="Guardar" />
                                             </div>
-                                            <div class="row clearfix">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="submit" ID="btnGuardarDatosPorteador" class="btn btn-raised btn-primary btn-round" disabled value="Guardar" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" role="tab" id="headingCostos">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseCostos" aria-expanded="false"
+                                           aria-controls="collapseCostos">Costos</a>
+                                    </h4>
+                                </div>
+                                <div id="collapseCostos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCostos">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-6 blockquote blockquote-info btn-round">
+                                                <div class="row clearfix">
+                                                    <div class="col-md-12 text-center">
+                                                        Pago al <strong>expedidor</strong> de gas
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="submit" ID="btnSolicitarPaogPorteador" class="btn btn-raised btn-primary btn-round" value="Solicitar Pago" />
+                                                <hr>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtReferenciaPormedioMensualGallon">Referencia promedio mensual MB Non Tet Propano Gallon</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m => m.OrdenCompraExpedidor.MontBelvieuDlls, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="txtReferenciaPormedioMensualGallon">(En dolares)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtTarifaServicioGallon">Tarifa de Servicio por gallon</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m => m.OrdenCompraExpedidor.TarifaServicioPorGalonDlls, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.TarifaServicioPorGalonDlls, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="txtTarifaServicioGallon">(En dolares)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtTipoCambioDOF">Tipo de cambio DOF:</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m => m.OrdenCompraExpedidor.TipoDeCambioDOF, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.TipoDeCambioDOF, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="form-control-label">(En pesos)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="lbPlPrecioPorGalon">Precio por galon</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            <div class="form-group">
+                                                                $ @Html.LabelFor(m => m.OrdenCompraExpedidor.PrecioPorGalon, new { id = "PrecioPorGalon" })
+                                                                @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.PrecioPorGalon, "", new { @class = "alert-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="lbPlPrecioPorGalon">(En pesos)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-4 form-control-label">
+                                                        <label for="txtFactorConvercionGaL">Factor de convercion Galones a litros:</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m => m.OrdenCompraExpedidor.FactorGalonALitros, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.FactorGalonALitros, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="lblImporteLitros">Importe en Litros</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            $ @Html.LabelFor(m => m.OrdenCompraExpedidor.ImporteEnLitros, new { id = "ImporteEnLitros" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.ImporteEnLitros, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="lblImporteLitros">(En pesos)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-4 form-control-label">
+                                                        <label for="txtFactorConvercionaKg">Factor de conversion a Kilogramos:</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m => m.OrdenCompraExpedidor.FactorCompraLitrosAKilos, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.FactorCompraLitrosAKilos, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtPVMP">PVPM($/Kg) CON DESCUENTO:</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            $ @Html.LabelFor(m => m.OrdenCompraExpedidor.PVPM, new { id = "PVPM" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.PVPM, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="txtPVMP">(En pesos)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-4 form-control-label">
+                                                        <label for="ddlIVACostos">IVA</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <select name="OrdenCompraExpedidor.Iva" id="IVAExpedidor" class="form-control" data-live-search="true" onchange="javascript: CalcularImporteExpedidor()">
+                                                                @foreach (var item in ViewBag.IVAs)
+                                                                {
+                                                                    <option value="@item.Value">@item.Text</option>
+                                                                }
+                                                            </select>
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.Iva, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtPrecioConIVA">PRECIO DE VENTA CON IVA:</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            $ @Html.LabelFor(m => m.OrdenCompraPorteador.PVPM, new { id = "PrecioConIVA" })
+                                                            @Html.ValidationMessageFor(m => m.PrecioConIVA, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="txtPrecioConIVA">(En Pesos)</label>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="btnSolicitarPagoExpedidor">IMPORTE A PAGAR</label>
+                                                    </div>
+                                                    <div class="col-md-4 form-control-label text-right">
+                                                        $ @Html.LabelFor(m => m.OrdenCompraExpedidor.Total, new { id = "ImporteExpedidor" })
+                                                        @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.Total, "", new { @class = "alert-danger" })
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="lblImporteAPagar">(En pesos)</label>
+                                                    </div>
+                                                </div>
+
+                                                @if (Model.OrdenCompraExpedidor.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.PagoConfirmado))
+                                                {
+                                                    <br />
+                                                    <div class="row clearfix">
+                                                        <div class="col-md-3 col-sm-4 form-control-label">
+                                                            <label>Folio Fiscal</label>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-8">
+                                                            <div class="form-group">
+                                                                @Html.TextBoxFor(m => m.OrdenCompraExpedidor.FolioFiscalUUID, new { @class = "form-control", @placeholder = "UUID de la factura" })
+                                                                @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.FolioFiscalUUID, "", new { @class = "alert-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row clearfix">
+                                                        <div class="col-md-3 col-sm-4 form-control-label">
+                                                            <label>Folio Factura</label>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-8">
+                                                            <div class="form-group">
+                                                                @Html.TextBoxFor(m => m.OrdenCompraExpedidor.FolioFactura, new { @class = "form-control", @placeholder = "Folio de la factura" })
+                                                                @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.FolioFactura, "", new { @class = "alert-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                }
+                                                <div class="row clearfix">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="submit" ID="btnGuardarDatosExpedidor" class="btn btn-raised btn-primary btn-round" disabled value="Guardar" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="submit" ID="btnSolicitarPagoExpedidor" class="btn btn-raised btn-primary btn-round" formaction="SolicitarPagoExpedidor" value="Solicitar Pago" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @*---------------------------------------------------------------------------------------------------------------------------------------------*@
+                                            <div class="col-md-6 blockquote blockquote-info btn-round">
+                                                <div class="row clearfix text-center">
+                                                    <div class="col-md-12 text-center">
+                                                        Pago al <strong>porteador</strong> de gas
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtFactorConversion">Factor de conversión</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m => m.OrdenCompraPorteador.FactorConvTransporte, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.FactorConvTransporte, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="lblPrecioTransporte">Precio del transporte:</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            $ @Html.LabelFor(m => m.OrdenCompraPorteador.PrecioTransporte, new { id = "PrecioTransporte" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.PrecioTransporte, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3  form-control-label">
+                                                        <label for="lblPrecioTransporte">(En pesos)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="txtCasetas">Casetas:</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m => m.OrdenCompraPorteador.Casetas, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.Casetas, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="txtCasetas">(En pesos)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="lblSubtotal">Subtotal:</label>
+                                                    </div>
+                                                    <div class="col-md-4 text-right">
+                                                        <div class="form-group">
+                                                            $ @Html.LabelFor(m => m.OrdenCompraPorteador.SubtotalSinIva, new { id = "SubTotoalPorteador" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.SubtotalSinIva, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="lblSubtotal">(En pesos)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-4 form-control-label">
+                                                        <label for="ddlIvaPorteador">IVA</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <select name="IVAPorteador" id="IVAPorteador" class="form-control" data-live-search="true" onchange="javascript: CalcularImportePortador()">
+                                                                @foreach (var item in ViewBag.IVAs)
+                                                                {
+                                                                    <option value="@item.Value">@item.Text</option>
+                                                                }
+                                                            </select>
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.Iva, "", new { @class = "alert-danger" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-5 form-control-label">
+                                                        <label for="btnSolicitarPaogPorteador">IMPORTE A PAGAR</label>
+                                                    </div>
+                                                    <div class="col-md-4 form-control-label text-right">
+                                                        $ @Html.LabelFor(m => m.OrdenCompraPorteador.Total, new { id = "ImportePorteador" })
+                                                        @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.Total, "", new { @class = "alert-danger" })
+                                                    </div>
+                                                    <div class="col-md-3 form-control-label">
+                                                        <label for="btnSolicitarPaogPorteador">(En pesos)</label>
+                                                    </div>
+                                                </div>
+
+                                                @if (Model.OrdenCompraExpedidor.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.PagoConfirmado))
+                                                {
+                                                    <br />
+                                                    <div class="row clearfix">
+                                                        <div class="col-md-3 col-sm-4 form-control-label">
+                                                            <label>Folio Fiscal</label>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-8">
+                                                            <div class="form-group">
+                                                                @Html.TextBoxFor(m => m.OrdenCompraPorteador.FolioFiscalUUID, new { @class = "form-control", @placeholder = "UUID de la factura" })
+                                                                @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.FolioFiscalUUID, "", new { @class = "alert-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row clearfix">
+                                                        <div class="col-md-3 col-sm-4 form-control-label">
+                                                            <label>Folio Factura</label>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-8">
+                                                            <div class="form-group">
+                                                                @Html.TextBoxFor(m => m.OrdenCompraPorteador.FolioFactura, new { @class = "form-control", @placeholder = "Folio de la factura" })
+                                                                @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.FolioFactura, "", new { @class = "alert-danger" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                }
+                                                <div class="row clearfix">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="submit" ID="btnGuardarDatosPorteador" class="btn btn-raised btn-primary btn-round" disabled value="Guardar" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input type="submit" ID="btnSolicitarPaogPorteador" class="btn btn-raised btn-primary btn-round" formaction="SolisitarPagoPorteador" value="Solicitar Pago" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -725,54 +724,54 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="panel panel-primary">
-                            <div class="panel-heading" role="tab" id="headingImagenes">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseImagenes" aria-expanded="false"
-                                       aria-controls="collapseImagenes">Imagenes</a>
-                                </h4>
-                            </div>
-                            <div id="collapseImagenes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingImagenes">
-                                <div class="panel-body">
-                                    <div class="blockquote blockquote-info btn-round">
-                                        <div id="aniimated-thumbnials" class="list-unstyled row clearfix">
-                                            <!-- Imagenes -->
-                                            @if (Model.Fotos != null)
-                                            {
-                                                foreach (var item in Model.Fotos)
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" role="tab" id="headingImagenes">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseImagenes" aria-expanded="false"
+                                           aria-controls="collapseImagenes">Imagenes</a>
+                                    </h4>
+                                </div>
+                                <div id="collapseImagenes" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingImagenes">
+                                    <div class="panel-body">
+                                        <div class="blockquote blockquote-info btn-round">
+                                            <div id="aniimated-thumbnials" class="list-unstyled row clearfix">
+                                               @*Imagenes*@
+                                                @if (Model.Fotos != null)
                                                 {
-                                                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
-                                                        <a href="@item.UrlImg">
-                                                            <img class="img-fluid img-thumbnail" src="@item.UrlImg" alt="">
-                                                        </a>
-                                                        <div class="row">
-                                                            <div class="col-md-5">
-                                                                <strong>Nombre: </strong>
+                                                    foreach (var item in Model.Fotos)
+                                                    {
+                                                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 m-b-20">
+                                                            <a href="@item.UrlImg">
+                                                                <img class="img-fluid img-thumbnail" src="@item.UrlImg" alt="">
+                                                            </a>
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <strong>Nombre: </strong>
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                    @item.Tipo
+                                                                </div>
                                                             </div>
-                                                            <div class="col-md-7">
-                                                                @item.Tipo
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <strong>Evento: </strong>
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                    @item.Momento
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-5">
+                                                                    <strong>Lectura: </strong>
+                                                                </div>
+                                                                <div class="col-md-7">
+                                                                    @item.Lectura
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-md-5">
-                                                                <strong>Evento: </strong>
-                                                            </div>
-                                                            <div class="col-md-7">
-                                                                @item.Momento
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-5">
-                                                                <strong>Lectura: </strong>
-                                                            </div>
-                                                            <div class="col-md-7">
-                                                                @item.Lectura
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    }
                                                 }
-                                            }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -781,24 +780,26 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row clearfix">
-            <div class="col-sm-4 center">
-                <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
+            <div class="row clearfix">
+                <div class="col-sm-4 center">
+                    <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
+                </div>
+                <div class="col-sm-4 center">
+                    <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
+                        Cancelar
+                    </a>
+                </div>
+                <div class="col-sm-4 center">
+                    <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
+                        Crear
+                    </a>
+                </div>
             </div>
-            <div class="col-sm-4 center">
-                <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
-                    Cancelar
-                </a>
-            </div>
-            <div class="col-sm-4 center">
-                <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
-                    Crear
-                </a>
-            </div>
-        </div>
+        }
     </div>
 </section>
 
 <script src="~/assets/js/pages/medias/image-gallery.js"></script>
 <script src="~/assets/plugins/light-gallery/js/lightgallery-all.min.js"></script>
+<script src="~/Scripts/js/OrdenCompraComplementoGasJS.js"></script>
+<script src="~/Scripts/js/UtileriasJS.js"></script>

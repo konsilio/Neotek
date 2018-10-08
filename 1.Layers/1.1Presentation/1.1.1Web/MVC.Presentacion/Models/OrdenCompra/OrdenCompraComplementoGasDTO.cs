@@ -26,6 +26,7 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public decimal KilosPapeleta { get; set; }       
         public decimal KilosDescargados { get; set; }       
         public decimal KilosDiferencia { get; set; }
+        //Papepleta
         public string ClaveOperacion { get; set; }
         public int IdOrdenCompraExpedidor { get; set; }
         public int IdOrdenCompraPorteador { get; set; }
@@ -50,27 +51,7 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public String NombreTipoMedidorTractor { get; set; }
         public short IdTipoMedidorTractor { get; set; }
         public short CantidadFotosTractor { get; set; }       
-        public Nullable<decimal> MontBelvieuDlls { get; set; }       
-        public Nullable<decimal> TarifaServicioPorGalonDlls { get; set; }       
-        public Nullable<decimal> TipoDeCambioDOF { get; set; }       
-        public Nullable<decimal> PrecioPorGalon { get; set; }       
-        public Nullable<decimal> FactorGalonALitros { get; set; }       
-        public Nullable<decimal> ImporteEnLitros { get; set; }       
-        public Nullable<decimal> FactorCompraLitrosAKilos { get; set; }       
-        public Nullable<decimal> PVPM { get; set; }       
-        public decimal IVAExpedidor { get; set; }       
-        public decimal PrecioConIVA { get; set; }       
-        public decimal SubTotoalExpedidor { get; set; }       
-        public decimal ImporteExpedidor { get; set; }
-        public string FolioFiscalUUID { get; set; }
-        public string FolioFactura { get; set; }
-        public DateTime? FechaResgistroFactura { get; set; }       
-        public Nullable<decimal> FactorConvTransporte { get; set; }       
-        public Nullable<decimal> PrecioTransporte { get; set; }       
-        public Nullable<decimal> Casetas { get; set; }       
-        public decimal IVAPorteador { get; set; }       
-        public decimal SubTotoalPorteador { get; set; }       
-        public decimal ImportePorteador { get; set; }
+        //Papeleta
         public List<ProductoOCDTO> Productos { get; set; }
         public OrdenCompraDTO OrdenCompraExpedidor { get; set; }
         public OrdenCompraDTO OrdenCompraPorteador { get; set; }

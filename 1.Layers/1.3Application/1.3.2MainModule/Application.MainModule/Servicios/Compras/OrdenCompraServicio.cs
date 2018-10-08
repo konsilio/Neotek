@@ -123,6 +123,18 @@ namespace Application.MainModule.Servicios.Compras
                 MensajesError = new List<string>() { mensaje },
             };
         }
+        public static RespuestaDto EstatusIncorrecto()
+        {
+            string mensaje = string.Format(Error.EstatusIncorrecto, "la Orden de Compra");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+                Exito = false,
+            };
+        }
         public static ComplementoGasDTO BuscarComplementoGas(OrdenCompra oc)
         {
             var descarga = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
@@ -168,7 +180,6 @@ namespace Application.MainModule.Servicios.Compras
 
             return apDesDto;
         }
-
         public static OrdenCompra BuscarUltimaOCTransporte(Empresa empresa)
         {
             if (empresa.OrdenesCompra != null && empresa.OrdenesCompra.Count > 0)
@@ -182,7 +193,6 @@ namespace Application.MainModule.Servicios.Compras
 
             return listaOCs.LastOrDefault();
         }
-
         public static OrdenCompra BuscarUltimaOCGas(Empresa empresa)
         {
             if (empresa.OrdenesCompra != null && empresa.OrdenesCompra.Count > 0)
@@ -207,6 +217,15 @@ namespace Application.MainModule.Servicios.Compras
         public static ComplementoGasDTO CargarDatosRequisicion(ComplementoGasDTO dto, Sagas.MainModule.Entidades.Requisicion req)
         {
             return ComplementoGasAdapter.ToRequisicion(dto, req);
-        }            
+        }
+        public static OrdenCompra ObtenerOCExpedidordeComplemento(ComplementoGasDTO dto)
+        {
+            OrdenCompra oc = OrdenComprasAdapter.FromDTO(dto.OrdenCompraExpedidor);
+            oc.Total = dto.
+        }
+        //public static RespuestaDto SolicitarPagoExpedidor(ComplementoGasDTO dto)
+        //{
+
+        //}
     }
 }

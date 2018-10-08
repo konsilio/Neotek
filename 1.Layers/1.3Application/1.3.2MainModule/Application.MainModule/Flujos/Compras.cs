@@ -90,7 +90,9 @@ namespace Application.MainModule.Flujos
            
             var oc = OrdenCompraServicio.Buscar(_oc.IdOrdenCompra);
             if (oc == null) return OrdenCompraServicio.NoExiste();
-          
+
+            if (!oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion)) return OrdenCompraServicio.EstatusIncorrecto();
+
             var entity = OrdenComprasAdapter.FromEntity(oc);
             entity.IdUsuarioAutorizador = TokenServicio.ObtenerIdUsuario();
             entity.FechaAutorizacion = Convert.ToDateTime(DateTime.Today.ToShortDateString());
@@ -195,6 +197,10 @@ namespace Application.MainModule.Flujos
         {
             var pagos = OrdenCompraPagoServicio.BuscarPagos(idOc);
             return OrdenCompraPagoAdapter.ToDTO(pagos);
+        }
+        public RespuestaDto SolicitarPagoExipedidor(ComplementoGasDTO dto)
+        {
+            
         }
     }
 }

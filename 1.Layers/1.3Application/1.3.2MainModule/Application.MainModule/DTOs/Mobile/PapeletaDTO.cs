@@ -32,6 +32,5 @@ namespace Application.MainModule.DTOs.Mobile
         public String NombreTipoMedidorTractor { get; set; }
         public short IdTipoMedidorTractor { get; set; }
         public short CantidadFotosTractor { get; set; }
-
     }
 }
