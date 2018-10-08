@@ -499,31 +499,13 @@ namespace Application.MainModule.Servicios.Almacen
         }
 
         public static AplicaDescargaDto AplicarDescarga(UnidadAlmacenGas unidadEntrada, AlmacenGasDescarga descarga, Empresa empresa)
-        {
-            AlmacenGasMovimiento ultimoMovimiento = ObtenerUltimoMovimiento(descarga.FechaEntraGas.Value);
-
-            var hoy = DateTime.Now;
-            var aplicacion = new AplicaDescargaDto {
-                Movimiento = new AlmacenGasMovimiento {
-                    IdEmpresa = empresa.IdEmpresa,
-                    SalidaKg = 0,
-                    SalidaLt = 0,
-                    Year = (short)hoy.Year,
-                    Mes = (byte)hoy.Month,
-                    Dia = (byte)hoy.Day,
-                    Orden = ObtenerNumOrdenMovimiento(ultimoMovimiento)
-                }
-            };
-            
+        {            
             decimal kilogramosPapeletaTractor = descarga.MasaKg.Value;
             decimal litrosPapeletaTractor = CalcularGasServicio.ObtenerLitrosDesdeKilos(kilogramosPapeletaTractor, empresa.FactorLitrosAKilos);
             decimal litrosRealesTractor = CalcularGasServicio.ObtenerLitrosEnElTanque(descarga.CapacidadTanqueLt.Value, descarga.PorcenMagnatelOcularTractorINI.Value);
             decimal kilogramosRealesTractor = CalcularGasServicio.ObtenerKilogramosDesdeLitros(litrosRealesTractor, empresa.FactorLitrosAKilos);
-            aplicacion.Movimiento.RemanenteKg = CalcularGasServicio.ObtenerDiferenciaKilogramos(kilogramosRealesTractor, kilogramosPapeletaTractor);
-            aplicacion.Movimiento.RemanenteLt = CalcularGasServicio.ObtenerLitrosDesdeKilos(aplicacion.Movimiento.RemanenteKg.Value, empresa.FactorLitrosAKilos);
-            aplicacion.Movimiento.EntradaKg = kilogramosRealesTractor;
-            aplicacion.Movimiento.EntradaLt = litrosRealesTractor;
-            aplicacion.Movimiento.
+            decimal kilogramosRemanentes = CalcularGasServicio.ObtenerDiferenciaKilogramos(kilogramosRealesTractor, kilogramosPapeletaTractor);
+            decimal litrosRemanentes = CalcularGasServicio.ObtenerLitrosDesdeKilos(kilogramosRemanentes, empresa.FactorLitrosAKilos);
 
             unidadEntrada.CantidadActualKg = CalcularGasServicio.SumarKilogramos(unidadEntrada.CantidadActualKg, kilogramosRealesTractor);
             unidadEntrada.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdeKilos(unidadEntrada.CantidadActualKg, empresa.FactorLitrosAKilos);
@@ -577,55 +559,6 @@ namespace Application.MainModule.Servicios.Almacen
             }
 
             return almacen;
-        }
-
-        public static AlmacenGasMovimiento RegistrarMovimientoInventario(AplicaDescargaDto desDto)
-        {
-            return new AlmacenGasMovimiento
-            {                
-                IdTipoMovimiento = desDto,
-                IdTipoEvento = desDto,
-                IdOrdenVenta = desDto,
-                IdAlmacenGas = desDto.AlmacenGas.IdAlmacenGas,
-                IdCAlmacenGasPrincipal = desDto.unidadEntrada.IdCAlmacenGas,
-                IdCAlmacenGasReferencia = desDto,
-                IdAlmacenEntradaGasDescarga = desDto.Descarga.IdAlmacenEntradaGasDescarga,
-                IdAlmacenGasRecarga = desDto,
-                Hora = desDto,
-                CAlmacenPrincipalNombre = desDto.unidadEntrada.Numero,
-                CAlmacenReferenciaNombre = desDto.,
-                OperadorChoferNombre = desDto.Descarga.NombreOperador,
-                TipoEvento = desDto,
-                TipoMovimiento = TipoMovimientoEnum.Descarga,
-                RemanenteKg = desDto,
-                RemanenteLt = desDto,
-                EntradaKg = desDto,
-                EntradaLt = desDto,
-                SalidaKg = desDto,
-                SalidaLt = desDto,
-                CantidadActualKg = desDto,
-                CantidadActualLt = desDto,
-                CantidadAcumuladaDiaKg = desDto,
-                CantidadAcumuladaDiaLt = desDto,
-                CantidadAcumuladaMesKg = desDto,
-                CantidadAcumuladaMesLt = desDto,
-                CantidadAcumuladaAnioKg = desDto,
-                CantidadAcumuladaAnioLt = desDto,
-                FechaAplicacion = desDto,
-                FechaRegistro = desDto,
-                CantidadAnteriorGeneralKg = desDto,
-                CantidadAnteriorGeneralLt = desDto,
-                CantidadActualGeneralKg = desDto,
-                CantidadActualGeneralLt = desDto,
-                PorcentajeAnteriorGeneral = desDto,
-                PorcentajeActualGeneral = desDto,
-                CantidadAnteriorKg = desDto,
-                CantidadAnteriorLt = desDto,
-                CantidadActualTotalKg = desDto,
-                CantidadActualTotalLt = desDto,
-                PorcentajeAnterior = desDto,
-                PorcentajeActual = desDto,
-            };
         }
 
         public static List<AlmacenGasDescargaFoto> GenerarImagenes(AlmacenGasDescarga descarga)
