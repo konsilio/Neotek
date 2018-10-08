@@ -6,6 +6,7 @@ using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Almacen;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.Requisicion;
@@ -153,6 +154,8 @@ namespace Application.MainModule.Flujos
         {
             var oc = OrdenCompraServicio.Buscar(idOrdenCompra);
             var cg = OrdenCompraServicio.BuscarComplementoGas(oc);
+            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
+            var imgs = AlmacenGasServicio.ObtenerImagenes(alamacen);
 
             return cg;
         }
@@ -163,16 +166,21 @@ namespace Application.MainModule.Flujos
         public RespuestaDto ConfirmarPago(OrdenCompraPagoDTO dto)
         {
             var Pago = OrdenCompraPagoServicio.Buscar(dto.IdOrdenCompra, dto.Orden);
-            Pago = ImagenServicio.ObtenerImagen(Pago);
-            var respuesta = OrdenCompraPagoServicio.Guardar(Pago);
-            return respuesta;
+
+            var entity = OrdenCompraPagoAdapter.FromEntity(Pago);
+            entity.PhysicalPathCapturaPantalla = entity.PhysicalPathCapturaPantalla;
+            entity = ImagenServicio.ObtenerImagen(entity);          
+
+            return OrdenCompraPagoServicio.Actualiza(entity);            
         }
         public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)
         {
             var Pago = OrdenCompraPagoAdapter.FromDTO(dto);
-            Pago.Orden = OrdenCompraPagoServicio.ObtenerNumeroOrden(dto.IdOrdenCompra);
-            var respuesta = OrdenCompraPagoServicio.Actualiza(Pago);
-            return respuesta;
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+
+            Pago = CalcularPagoServicio.CalcularPago(Pago, oc);           
+            
+            return OrdenCompraPagoServicio.Guardar(Pago);
         }
         public List<OrdenCompraPagoDTO> BuscarPagos(int idOc)
         {

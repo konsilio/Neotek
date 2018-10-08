@@ -11445,6 +11445,7 @@
     <Content Include="Views\CajaGeneral\Liquidar.cshtml" />
     <Content Include="Views\CajaGeneral\Estacion.cshtml" />
     <Content Include="Views\CajaGeneral\Pipa.cshtml" />
+    <Content Include="Views\Almacen\SalidaMercancia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

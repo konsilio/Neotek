@@ -1,4 +1,5 @@
-﻿using Application.MainModule.Servicios.Almacen;
+﻿using Application.MainModule.DTOs.Compras;
+using Application.MainModule.Servicios.Almacen;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,6 @@ namespace Application.MainModule.Servicios
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
             //string a = "CadenaBase64|IdUA|Magnatel|Inicial|.jpeg";
-
             List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
             string nombre = string.Concat(campos.ElementAt(1), "_", foto.Orden, "_", campos.ElementAt(2), "_", campos.ElementAt(3));
             string extension = campos.ElementAt(4);
@@ -107,5 +107,6 @@ namespace Application.MainModule.Servicios
         {
             return string.Concat(ruta, "\\", GenerarNombre(nombre, extension));
         }
+      
     }
 }
