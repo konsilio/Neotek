@@ -6,53 +6,6 @@
 </style>
 <link rel="stylesheet" href="~/assets/plugins/light-gallery/css/lightgallery.css">
 <script type="text/javascript">
-    var CalcularImporte = function () {
-
-        var index;
-        var idtxtPrec;
-        var idtxtDesc;
-        var idddlIVA;
-        var idddlIEPS;
-        var precio = 0;
-        var descuento = 0;
-        var cantidad = 0;
-        var iva;
-        var ieps;
-        var total;
-        var subtotal;
-        var id = $(".calculaPrecio").prevObject[0].activeElement.id;
-        if (id == "")
-            id = $(".calculaPrecio").prevObject[0].activeElement.dataset.id;
-
-        if (id.includes("Precio")) {
-            index = id.replace("OrdenCompraProductos_", "").replace("__Precio", "");
-        }
-        if (id.includes("Descuento")) {
-            index = id.replace("OrdenCompraProductos_", "").replace("__Descuento", "");
-        }
-        if (id.includes("IVA")) {
-            index = id.replace("OrdenCompraProductos_", "").replace("__IVA", "");
-        }
-        if (id.includes("IEPS")) {
-            index = id.replace("OrdenCompraProductos_", "").replace("__IEPS", "");
-        }
-        idtxtPrec = "#OrdenCompraProductos_" + index + "__Precio";
-        idtxtDesc = "#OrdenCompraProductos_" + index + "__Descuento";
-        idddlIVA = "#OrdenCompraProductos_" + index + "__IVA";
-        idddlIEPS = "#OrdenCompraProductos_" + index + "__IEPS";
-        idCantidad = "OrdenCompraProductos_" + index + "__CantidadAComprar";
-        idTotlaImporte = "OrdenCompraProductos_" + index + "__Importe";
-
-        precio = parseFloat($(idtxtPrec).val());
-        cantidad = parseFloat($("label[for = '" + idCantidad + "']").text());
-        descuento = ((precio * cantidad) * ($(idtxtDesc).val() / 100));
-        subtotal = (precio * cantidad) - (descuento);
-        iva = ((subtotal) * ($(idddlIVA + " option:selected").val().replace("IVA", "") / 100));
-        ieps = ((subtotal) * ($(idddlIEPS + " option:selected").val().replace("IEPS", "") / 100));
-        total = subtotal + iva + ieps;
-        $("label[for = '" + idTotlaImporte + "']").text(total.toFixed(2));
-    }
-
     $(document).ready(function () {
         $("#btnCrear").click(function () {
             var form = $(this).parent("form");
@@ -60,6 +13,29 @@
             form.attr('method', 'post');
         });
     });
+    function redondeo(numero, decimales) {
+        var flotante = parseFloat(numero);
+        var resultado = Math.round(flotante * Math.pow(10, decimales)) / Math.pow(10, decimales);
+        return resultado;
+    }
+    //Expedidor
+    var ObtenerPrecioXGalon = function (RPMMNTPG, TSG, TC) {
+        return (parseFloat(RPMMNTPG) + parseFloat(TSG)) * TC;
+    };
+    var ObtenerImporteLitros = function (PrecioXGalon, FactorCGalLtr) {
+        return PrecioXGalon / FactorCGalLtr;
+    };
+    var ObtenerPVPM = function (ImporteLitros, FactorCaKg) {
+        return ImporteLitros / FactorCaKg;
+    };
+    var ObtenerPVIva = function (PVPM, IVA) {
+        return (PVPM * (IVA / 100) + parseFloat(PVPM));
+    };
+    var ObtenerImportePagar = function (kilogramosPapeleta, PVIva) {
+        return kilogramosPapeleta * PVIva;
+    };
+
+
     var ObtenerLitrosDesdeKilos = function (kilogramos, factor) {
         return kilogramos / factor;
     };
@@ -72,7 +48,17 @@
     var ObtenerDiferenciaKilogramos = function (cantidadMayor, cantidadMenor) {
         if (cantidadMayor < cantidadMenor)
             return cantidadMenor - cantidadMayor;
-        return cantidadMayor - cantidadMenor;
+        return (cantidadMayor - cantidadMenor);
+    };
+    //Porteador
+    var ObtenerPrecioTransporte = function (Factor, KilosPapeleta) {
+        return (Factor * KilosPapeleta)
+    };
+    var ObtenerSubtotalTransporte = function (PrecioTransporte, Casetas) {
+        return (parseFloat(PrecioTransporte) + parseFloat(Casetas))
+    };
+    var ObtenerImporteTransporte = function (Subtotal, Iva) {
+        return (Subtotal * (Iva / 100)) + parseFloat(Subtotal);
     };
     var CalcularKilosFinales = function () {
         var Factor = $("#FactorLitrosAKilos").val();
@@ -82,8 +68,8 @@
         var kilogramosRealesTractor = ObtenerKilogramosDesdeLitros(litrosRealesTractor, Factor);
         var kilogramosRemanentes = ObtenerDiferenciaKilogramos(kilogramosRealesTractor, kilogramosPapeletaTractor);
 
-        $("#KilosDescargados").val(kilogramosRealesTractor);
-        $("#KilosDiferencia").val(kilogramosRemanentes);
+        $("#KilosDescargados").val(redondeo(kilogramosRealesTractor, 5));
+        $("#KilosDiferencia").val(redondeo(kilogramosRemanentes, 5));
     };
     var CalcularImporteExpedidor = function () {
         var RPMMNTPG = $("#MontBelvieuDlls").val();
@@ -92,37 +78,40 @@
         var FactorCGalLtr = $("#FactorGalonALitros").val();
         var FactorCaKg = $("#FactorCompraLitrosAKilos").val();
         var kilogramosPapeleta = $("#KilosPapeleta").val();
+        var Iva = $("#IVAExpedidor option:selected").val();
 
-        var PrecioXGalon = (RPMMNTPG + TSP) * TC;
-        $("#PrecioPorGalon").val(PrecioXGalon);
-        var ImporteLitros = PrecioXGalon * FactorCGalLtr;
-        $("#ImporteEnLitros").val(ImporteLitros);
-        var PVPM = ImporteLitros / FactorCaKg;
-        $("#PVPM").val(PVPM);
-        var PVIva = PVPM * IVA + PVPM;
-        $("#PrecioConIVA").val(PVIva);
-        var ImportePagar = kilogramosPapeleta * PVIva;
-        $("#ImporteExpedidor").val(ImportePagar);
+        var PrecioXGalon = ObtenerPrecioXGalon(RPMMNTPG, TSG, TC);
+        var ImporteLitros = ObtenerImporteLitros(PrecioXGalon, FactorCGalLtr);
+        var PVPM = ObtenerPVPM(ImporteLitros, FactorCaKg);
+        var PVIva = redondeo(ObtenerPVIva(PVPM, Iva), 5);
+        var ImportePagar = ObtenerImportePagar(kilogramosPapeleta, PVIva);
+
+        $("#PrecioPorGalon")[0].textContent = Number.isNaN(PrecioXGalon) ? "0" : redondeo(PrecioXGalon, 5);
+        $("#ImporteEnLitros")[0].textContent = Number.isNaN(ImporteLitros) ? "0" : redondeo(ImporteLitros, 5);
+        $("#PVPM")[0].textContent = Number.isNaN(PVPM) ? "0" : redondeo(PVPM, 5);
+        $("#PrecioConIVA")[0].textContent = Number.isNaN(PVIva) ? "0" : redondeo(PVIva, 5);
+        $("#ImporteExpedidor")[0].textContent = new Intl.NumberFormat("es-MX").format(Number.isNaN(ImportePagar) ? "0" : ImportePagar);
     };
     var CalcularImportePortador = function () {
         var FactorConv = $("#FactorConvTransporte").val();
         var kilogramosPapeleta = $("#KilosPapeleta").val();
         var Casetas = $("#Casetas").val();
-        var Iva = $("#IVAPorteador").val();
+        var Iva = $("#IVAPorteador option:selected").val();
 
-        var PrecioTransporte = FactorConv * kilogramosPapeleta;
-        $("#PrecioTransporte").val(PrecioTransporte);
-        var Subtotal = PrecioTransporte + Casetas;
-        $("#SubTotoalPorteador").val(Subtotal);
-        var ImportePagar = Subtotal * Iva + Subtotal;
-        $("#ImportePorteador").val(ImportePagar);
+        var PrecioTransporte = ObtenerPrecioTransporte(FactorConv, kilogramosPapeleta);
+        var Subtotal = ObtenerSubtotalTransporte(PrecioTransporte, Casetas);
+        var ImportePagar = ObtenerImporteTransporte(Subtotal, Iva);
+
+        $("#PrecioTransporte")[0].textContent = Number.isNaN(PrecioTransporte) ? "0" : redondeo(PrecioTransporte, 5);
+        $("#SubTotoalPorteador")[0].textContent = Number.isNaN(Subtotal) ? "0" : redondeo(Subtotal, 5);
+        $("#ImportePorteador")[0].textContent = new Intl.NumberFormat("es-MX").format(Number.isNaN(ImportePagar) ? "0" : redondeo(ImportePagar, 2));
     };
     window.onload = function () {
         CalcularKilosFinales();
     }
 </script>
 <section class="content home">
-@Html.HiddenFor(m => m.FactorLitrosAKilos)
+    @Html.HiddenFor(m => m.FactorLitrosAKilos)
     <div class="container-fluid">
         <div class="block-header">
             <div class="row clearfix">
@@ -194,18 +183,18 @@
 
                     @if (ViewBag.MensajeError != null)
                     {
-                    <div class="row clearfix">
-                        <div id="divMensajeError" class="container">
-                            <div class="alert alert-danger">
-                                <div class="alert-icon">
-                                    <i class="zmdi zmdi-block"></i>
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MensajeError</label>
+                                    </strong>
                                 </div>
-                                <strong>
-                                    <label>@ViewBag.MensajeError</label>
-                                </strong>
                             </div>
                         </div>
-                    </div>
                     }
                     <div class="row clearfix blockquote blockquote-info btn-round">
                         <div class="table-responsive">
@@ -492,7 +481,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.MontBelvieuDlls, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(m => m.MontBelvieuDlls, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 form-control-label">
@@ -505,7 +494,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.TarifaServicioPorGalonDlls, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(m => m.TarifaServicioPorGalonDlls, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 form-control-label">
@@ -518,7 +507,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.TipoDeCambioDOF, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(m => m.TipoDeCambioDOF, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 form-control-label">
@@ -532,7 +521,7 @@
                                                 <div class="col-md-4 text-right">
                                                     <div class="form-group">
                                                         <div class="form-group">
-                                                            $ @Html.LabelFor(m => m.PrecioPorGalon)
+                                                            $ @Html.LabelFor(m => m.PrecioPorGalon, new { id = "PrecioPorGalon" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -546,7 +535,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.FactorGalonALitros, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(m => m.FactorGalonALitros, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -556,7 +545,7 @@
                                                 </div>
                                                 <div class="col-md-4 text-right">
                                                     <div class="form-group">
-                                                        @Html.LabelFor(m => m.ImporteEnLitros)
+                                                        $ @Html.LabelFor(m => m.ImporteEnLitros, new { id = "ImporteEnLitros" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 form-control-label">
@@ -569,7 +558,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.FactorCompraLitrosAKilos, new { @class = "form-control", @onchange = "javascript: CalcularKilosFinales();" })
+                                                        @Html.TextBoxFor(m => m.FactorCompraLitrosAKilos, new { @class = "form-control", @onchange = "javascript: CalcularImporteExpedidor()" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -579,7 +568,7 @@
                                                 </div>
                                                 <div class="col-md-4 text-right">
                                                     <div class="form-group">
-                                                        @Html.LabelFor(m => m.PVPM)
+                                                        $ @Html.LabelFor(m => m.PVPM, new { id = "PVPM" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 form-control-label">
@@ -592,7 +581,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <select name="IVAExpedidor" class="form-control" data-live-search="true">
+                                                        <select name="IVAExpedidor" id="IVAExpedidor" class="form-control" data-live-search="true" onchange="javascript: CalcularImporteExpedidor()">
                                                             @foreach (var item in ViewBag.IVAs)
                                                             {
                                                                 <option value="@item.Value">@item.Text</option>
@@ -607,7 +596,7 @@
                                                 </div>
                                                 <div class="col-md-4 text-right">
                                                     <div class="form-group">
-                                                        @Html.LabelFor(m => m.PrecioConIVA)
+                                                        $ @Html.LabelFor(m => m.PrecioConIVA, new { id = "PrecioConIVA" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 form-control-label">
@@ -620,7 +609,7 @@
                                                     <label for="btnSolicitarPagoExpedidor">IMPORTE A PAGAR</label>
                                                 </div>
                                                 <div class="col-md-4 form-control-label text-right">
-                                                    $ @Html.LabelFor(m => m.ImporteExpedidor)
+                                                    $ @Html.LabelFor(m => m.ImporteExpedidor, new { id = "ImporteExpedidor" })
                                                 </div>
                                                 <div class="col-md-3 form-control-label">
                                                     <label for="lblImporteAPagar">(En pesos)</label>
@@ -629,7 +618,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="submit" ID="btnGuardarDatosExpedidor" class="btn btn-raised btn-primary btn-round" value="Guardar" />
+                                                        <input type="submit" ID="btnGuardarDatosExpedidor" class="btn btn-raised btn-primary btn-round" disabled value="Guardar" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -650,7 +639,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.FactorConvTransporte, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(m => m.FactorConvTransporte, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -660,7 +649,7 @@
                                                 </div>
                                                 <div class="col-md-4 text-right">
                                                     <div class="form-group">
-                                                        @Html.LabelFor(m => m.PrecioTransporte)
+                                                      $ @Html.LabelFor(m => m.PrecioTransporte, new { id = "PrecioTransporte" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3  form-control-label">
@@ -673,7 +662,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        @Html.TextBoxFor(m => m.Casetas, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(m => m.Casetas, new { @class = "form-control", @onchange = "javascript: CalcularImportePortador()" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 form-control-label">
@@ -686,7 +675,7 @@
                                                 </div>
                                                 <div class="col-md-4 text-right">
                                                     <div class="form-group">
-                                                        @Html.LabelFor(m => m.SubTotoalPorteador)
+                                                       $ @Html.LabelFor(m => m.SubTotoalPorteador, new { id = "SubTotoalPorteador" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 form-control-label">
@@ -699,10 +688,10 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <select name="IVAPorteador" class="form-control" data-live-search="true">
+                                                        <select name="IVAPorteador" id="IVAPorteador" class="form-control" data-live-search="true" onchange="javascript: CalcularImportePortador()">
                                                             @foreach (var item in ViewBag.IVAs)
                                                             {
-                                                            <option value="@item.Value">@item.Text</option>
+                                                                <option value="@item.Value">@item.Text</option>
                                                             }
                                                         </select>
                                                     </div>
@@ -714,7 +703,7 @@
                                                     <label for="btnSolicitarPaogPorteador">IMPORTE A PAGAR</label>
                                                 </div>
                                                 <div class="col-md-4 form-control-label text-right">
-                                                    @Html.LabelFor(m => m.ImportePorteador)
+                                                  $ @Html.LabelFor(m => m.ImportePorteador, new { id = "ImportePorteador" })
                                                 </div>
                                                 <div class="col-md-3 form-control-label">
                                                     <label for="btnSolicitarPaogPorteador">(En pesos)</label>
@@ -723,7 +712,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="submit" ID="btnGuardarDatosPorteador" class="btn btn-raised btn-primary btn-round" value="Guardar" />
+                                                        <input type="submit" ID="btnGuardarDatosPorteador" class="btn btn-raised btn-primary btn-round" disabled value="Guardar" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
