@@ -34,18 +34,24 @@ namespace Application.MainModule.Servicios.Mobile
             return cliente;
         }
 
-        public static RespuestaDto Registar(ClienteDTO cliente)
+        public static RespuestaDto Registar(ClienteDTO cliente,short idEmpresa)
         {
             var adapter = ClienteAdapter.FromDTO(cliente);
             adapter.FechaRegistro = DateTime.Now;
             adapter.Activo = true;
+            adapter.IdEmpresa = idEmpresa;
             adapter.RazonSocial = (cliente.RazonSocial!=null) ? cliente.RazonSocial : null;
             return ClienteServicio.AltaCliente(adapter);
         }
 
-        internal static RespuestaDto Modificar(ClienteDTO cliente)
+        internal static RespuestaDto Modificar(ClienteDTO cliente,short idEmpresa)
         {
-            throw new NotImplementedException();
+            var adapter = ClienteAdapter.FromDTO(cliente);
+            adapter.FechaRegistro = DateTime.Now;
+            adapter.Activo = true;
+            adapter.IdEmpresa = idEmpresa;
+            adapter.RazonSocial = (cliente.RazonSocial != null) ? cliente.RazonSocial : null;
+            return ClienteServicio.Modificar(adapter);
         }
 
         public static List<ClienteDTO> BuscadorClientes(string criterio)

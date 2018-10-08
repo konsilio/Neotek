@@ -153,9 +153,9 @@ namespace Application.MainModule.Flujos
         {
             var resp = ClientesServicio.EvaluarCliente(cliente);
             if (resp.IdCliente!=0)
-                return ClientesServicio.Modificar(cliente);
+                return ClientesServicio.Modificar(cliente,TokenServicio.ObtenerIdEmpresa());
             else
-                return ClientesServicio.Registar(cliente);
+                return ClientesServicio.Registar(cliente,TokenServicio.ObtenerIdEmpresa());
         }
 
         public List<ClienteDTO> BuscadorClientes(string criterio)
@@ -167,6 +167,12 @@ namespace Application.MainModule.Flujos
         {
             var ReporteAlmacen = AlmacenGasServicio.ReporteDia(fecha, idCAlmacenGas);
             return ReporteAlmacen;
+        }
+
+        public RespuestaDto Venta(VentaDTO venta,bool esCamioneta, bool esEstacion, bool esPipa)
+        {
+            var resp = VentaServicio.BuscarFolioVenta(venta.FolioVenta);
+            return null;
         }
     }
 }

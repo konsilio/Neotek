@@ -220,7 +220,7 @@ namespace Application.MainModule.Servicios.Almacen
         public static List<UnidadAlmacenGas> ObtenerAlmacenes(short idEmpresa)
         {
             var al = new AlmacenGasDataAccess().BuscarTodas(idEmpresa);
-            return al.Where(x => (x.IdPipa != null || x.IdCamioneta != null || x.IdEstacionCarburacion != null)).ToList();
+            return al.Where(x => (x.IdPipa != null || x.IdCamioneta != null || x.IdEstacionCarburacion != null  && x.Activo)).ToList();
         }
         public static UnidadAlmacenGas ObtenerAlmacen(short idCAlmacenGas)
         {

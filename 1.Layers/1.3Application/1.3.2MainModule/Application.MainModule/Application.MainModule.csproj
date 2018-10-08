@@ -158,6 +158,7 @@
     <Compile Include="DTOs\Catalogo\EquipoTransporteDTO.cs" />
     <Compile Include="DTOs\Mobile\CilindroDto.cs" />
     <Compile Include="DTOs\Mobile\ClienteDTO.cs" />
+    <Compile Include="DTOs\Mobile\ConceptoDTO.cs" />
     <Compile Include="DTOs\Mobile\DatosTipoPersonaDto .cs" />
     <Compile Include="DTOs\Mobile\DatosTomaLecturaDto.cs" />
     <Compile Include="DTOs\Mobile\LecturaAlmacenDto.cs" />
@@ -168,10 +169,12 @@
     <Compile Include="DTOs\Mobile\RecargaDTO.cs" />
     <Compile Include="DTOs\Mobile\ReporteDiaDTO.cs" />
     <Compile Include="DTOs\Mobile\TanquesDto.cs" />
+    <Compile Include="DTOs\Mobile\VentaDTO.cs" />
     <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
     <Compile Include="DTOs\Mobile\TipoPersonaDto.cs" />
     <Compile Include="DTOs\Mobile\TipoRegimenFiscalDto.cs" />
     <Compile Include="Servicios\Mobile\ClientesServicio.cs" />
+    <Compile Include="Servicios\Mobile\VentaServicio.cs" />
     <Compile Include="Servicios\NotificacionDTO.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEstatusDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />

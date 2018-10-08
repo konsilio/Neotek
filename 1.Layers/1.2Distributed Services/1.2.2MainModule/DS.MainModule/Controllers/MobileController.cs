@@ -205,5 +205,10 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.BuscadorClientes(criterio), Request);
         }
+        [Route("ventra/{esCamioneta}/{esEstacion}/{esPipa}")]
+        public HttpResponseMessage PostVenta(VentaDTO venta, bool esCamioneta,bool esEstacion,bool esPipa)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.Venta(venta,esCamioneta,esEstacion,esPipa), Request);
+        }
     }
 }
