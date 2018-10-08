@@ -266,6 +266,9 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAlmacenGeneral_AlmacenGasMovimiento" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAlmacenTotal_AlmacenGasMovimiento" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoFoto_AlmacenGasMovimiento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_Empresa" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso1" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

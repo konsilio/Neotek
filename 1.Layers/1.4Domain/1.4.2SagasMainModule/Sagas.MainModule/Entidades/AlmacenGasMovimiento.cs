@@ -74,5 +74,6 @@ namespace Sagas.MainModule.Entidades
         public virtual UnidadAlmacenGas UnidadAlamcen { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasMovimientoFoto> Fotografias { get; set; }
+        public virtual Empresa Empresa { get; set; }
     }
 }

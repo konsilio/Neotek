@@ -20,6 +20,11 @@ namespace Sagas.MainModule.Entidades
             this.Fotografias = new HashSet<AlmacenGasTraspasoFoto>();
         }
     
+        public short IdEmpresa { get; set; }
+        public short Year { get; set; }
+        public byte Mes { get; set; }
+        public byte Dia { get; set; }
+        public short Orden { get; set; }
         public short IdCAlmacenGasSalida { get; set; }
         public short IdCAlmacenGasEntrada { get; set; }
         public short IdTipoMedidorSalida { get; set; }

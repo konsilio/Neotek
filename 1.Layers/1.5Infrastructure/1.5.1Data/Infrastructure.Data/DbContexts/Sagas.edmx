@@ -126,9 +126,17 @@
         </EntityType>
         <EntityType Name="AlmacenGasAutoConsumo">
           <Key>
-            <PropertyRef Name="IdCAlmacenGasSalida" />
-            <PropertyRef Name="IdCAlmacenGasEntrada" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
           </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
           <Property Name="IdCAlmacenGasSalida" Type="smallint" Nullable="false" />
           <Property Name="IdCAlmacenGasEntrada" Type="smallint" Nullable="false" />
           <Property Name="IdTipoEvento" Type="tinyint" Nullable="false" />
@@ -139,12 +147,21 @@
         </EntityType>
         <EntityType Name="AlmacenGasAutoConsumoFoto">
           <Key>
-            <PropertyRef Name="IdCAlmacenGasSalida" />
-            <PropertyRef Name="IdCAlmacenGasEntrada" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+            <PropertyRef Name="OrdenImagen" />
           </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="OrdenImagen" Type="smallint" Nullable="false" />
           <Property Name="IdCAlmacenGasSalida" Type="smallint" Nullable="false" />
           <Property Name="IdCAlmacenGasEntrada" Type="smallint" Nullable="false" />
-          <Property Name="IdOrden" Type="int" Nullable="false" />
           <Property Name="IdImagenDe" Type="smallint" Nullable="false" />
           <Property Name="UrlImagen" Type="varchar" MaxLength="350" />
           <Property Name="PathImagen" Type="varchar" MaxLength="250" />
@@ -372,9 +389,17 @@
         </EntityType>
         <EntityType Name="AlmacenGasTraspaso">
           <Key>
-            <PropertyRef Name="IdCAlmacenGasSalida" />
-            <PropertyRef Name="IdCAlmacenGasEntrada" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
           </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
           <Property Name="IdCAlmacenGasSalida" Type="smallint" Nullable="false" />
           <Property Name="IdCAlmacenGasEntrada" Type="smallint" Nullable="false" />
           <Property Name="IdTipoMedidorSalida" Type="smallint" Nullable="false" />
@@ -388,13 +413,21 @@
         </EntityType>
         <EntityType Name="AlmacenGasTraspasoFoto">
           <Key>
-            <PropertyRef Name="IdCAlmacenGasSalida" />
-            <PropertyRef Name="IdCAlmacenGasEntrada" />
-            <PropertyRef Name="IdOrden" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+            <PropertyRef Name="OrdenImagen" />
           </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="OrdenImagen" Type="smallint" Nullable="false" />
           <Property Name="IdCAlmacenGasSalida" Type="smallint" Nullable="false" />
           <Property Name="IdCAlmacenGasEntrada" Type="smallint" Nullable="false" />
-          <Property Name="IdOrden" Type="int" Nullable="false" />
           <Property Name="IdImagenDe" Type="smallint" Nullable="false" />
           <Property Name="UrlImagen" Type="varchar" MaxLength="350" />
           <Property Name="PathImagen" Type="varchar" MaxLength="250" />
@@ -1758,15 +1791,21 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <End Role="AlmacenGasAutoConsumo" Type="Self.AlmacenGasAutoConsumo" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="AlmacenGasAutoConsumoFoto" Type="Self.AlmacenGasAutoConsumoFoto" Multiplicity="0..1" />
+          <End Role="AlmacenGasAutoConsumoFoto" Type="Self.AlmacenGasAutoConsumoFoto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AlmacenGasAutoConsumo">
-              <PropertyRef Name="IdCAlmacenGasSalida" />
-              <PropertyRef Name="IdCAlmacenGasEntrada" />
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
             </Principal>
             <Dependent Role="AlmacenGasAutoConsumoFoto">
-              <PropertyRef Name="IdCAlmacenGasSalida" />
-              <PropertyRef Name="IdCAlmacenGasEntrada" />
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1857,6 +1896,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Principal>
             <Dependent Role="AlmacenGasMovimiento">
               <PropertyRef Name="IdCAlmacenGasPrincipal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimiento_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="AlmacenGasMovimiento" Type="Self.AlmacenGasMovimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2093,12 +2144,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <End Role="AlmacenGasTraspasoFoto" Type="Self.AlmacenGasTraspasoFoto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AlmacenGasTraspaso">
-              <PropertyRef Name="IdCAlmacenGasSalida" />
-              <PropertyRef Name="IdCAlmacenGasEntrada" />
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
             </Principal>
             <Dependent Role="AlmacenGasTraspasoFoto">
-              <PropertyRef Name="IdCAlmacenGasSalida" />
-              <PropertyRef Name="IdCAlmacenGasEntrada" />
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3931,6 +3988,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="CAlmacenGas" EntitySet="CAlmacenGas" />
             <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
           </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimiento_Empresa" Association="Self.FK_AlmacenGasMovimiento_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+          </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasMovimientoAlmacenGeneral_AlmacenGasMovimiento" Association="Self.FK_AlmacenGasMovimientoAlmacenGeneral_AlmacenGasMovimiento">
             <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
             <End Role="AlmacenGasMovimientoAlmacenGeneral" EntitySet="AlmacenGasMovimientoAlmacenGeneral" />
@@ -4620,6 +4681,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="UnidadesAlmacenGasCilindro" Relationship="Sagas.MainModuleModel.FK_CAlmacenGasCilindro_Empresa" FromRole="Empresa" ToRole="UnidadAlmacenGasCilindro" />
           <NavigationProperty Name="OperadoresChoferes" Relationship="Sagas.MainModuleModel.FK_COperadorChofer_Empresa" FromRole="Empresa" ToRole="OperadorChofer" />
           <NavigationProperty Name="PreciosVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_Empresa" FromRole="Empresa" ToRole="PrecioVenta" />
+          <NavigationProperty Name="AlmacenGasMovimiento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_Empresa" FromRole="Empresa" ToRole="AlmacenGasMovimiento" />
                     
           <!--<NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaDireccion_Empresa" FromRole="EmpresaDireccion" ToRole="Empresa" />          
           <NavigationProperty Name="Empresa" Relationship="Self.FK_EmpresaFiscal_Empresa" FromRole="EmpresaFiscal" ToRole="Empresa" />          
@@ -5871,6 +5933,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
             <End Role="AlmacenGasMovimientoFoto" EntitySet="AlmacenGasMovimientoFoto" />
           </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimiento_Empresa" Association="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+          </AssociationSet>
+          <!--<AssociationSet Name="FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo1" Association="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo1">
+            <End Role="AlmacenGasAutoConsumo" EntitySet="AlmacenGasAutoConsumo" />
+            <End Role="AlmacenGasAutoConsumoFoto" EntitySet="AlmacenGasAutoConsumoFoto" />
+          </AssociationSet>-->
+          <!--<AssociationSet Name="FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso1" Association="Sagas.MainModuleModel.FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso1">
+            <End Role="AlmacenGasTraspaso" EntitySet="AlmacenGasTraspaso" />
+            <End Role="AlmacenGasTraspasoFoto" EntitySet="AlmacenGasTraspasoFoto" />
+          </AssociationSet>-->
           <!--<AssociationSet Name="FK_RolAccionMovil_Rol" Association="Sagas.MainModuleModel.FK_RolAccionMovil_Rol">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="RolAccionMovil" EntitySet="RolAccionMovil" />
@@ -8160,10 +8234,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </ReferentialConstraint>
         </Association>
         <EntityType Name="AlmacenGasAutoConsumo">
-          <Key>
-            <PropertyRef Name="IdCAlmacenGasSalida" />
-            <PropertyRef Name="IdCAlmacenGasEntrada" />
+          <Key>            
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
           </Key>
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="Year" Type="Int16" Nullable="false" />
+          <Property Name="Mes" Type="Byte" Nullable="false" />
+          <Property Name="Dia" Type="Byte" Nullable="false" />
+          <Property Name="Orden" Type="Int16" Nullable="false" />
           <Property Name="IdCAlmacenGasSalida" Type="Int16" Nullable="false" />
           <Property Name="IdCAlmacenGasEntrada" Type="Int16" Nullable="false" />
           <Property Name="IdTipoEvento" Type="Byte" Nullable="false" />
@@ -8178,17 +8260,26 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
         </EntityType>
         <EntityType Name="AlmacenGasAutoConsumoFoto">
           <Key>
-            <PropertyRef Name="IdCAlmacenGasSalida" />
-            <PropertyRef Name="IdCAlmacenGasEntrada" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+            <PropertyRef Name="OrdenImagen" />
           </Key>
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="Year" Type="Int16" Nullable="false" />
+          <Property Name="Mes" Type="Byte" Nullable="false" />
+          <Property Name="Dia" Type="Byte" Nullable="false" />
+          <Property Name="Orden" Type="Int16" Nullable="false" />
+          <Property Name="OrdenImagen" Type="Int16" Nullable="false" />
           <Property Name="IdCAlmacenGasSalida" Type="Int16" Nullable="false" />
-          <Property Name="IdCAlmacenGasEntrada" Type="Int16" Nullable="false" />
-          <Property Name="IdOrden" Type="Int32" Nullable="false" />
+          <Property Name="IdCAlmacenGasEntrada" Type="Int16" Nullable="false" />          
           <Property Name="IdImagenDe" Type="Int16" Nullable="false" />
           <Property Name="UrlImagen" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="PathImagen" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="CadenaBase64" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="AlmacenGasAutoConsumo" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo" FromRole="AlmacenGasAutoConsumoFoto" ToRole="AlmacenGasAutoConsumo" />
+          <NavigationProperty Name="AutoConsumo" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo" FromRole="AlmacenGasAutoConsumoFoto" ToRole="AlmacenGasAutoConsumo" />
         </EntityType>
         <EntityType Name="AlmacenGasCalibracion">
           <Key>
@@ -8227,9 +8318,17 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
         </EntityType>
         <EntityType Name="AlmacenGasTraspaso">
           <Key>
-            <PropertyRef Name="IdCAlmacenGasSalida" />
-            <PropertyRef Name="IdCAlmacenGasEntrada" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
           </Key>
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="Year" Type="Int16" Nullable="false" />
+          <Property Name="Mes" Type="Byte" Nullable="false" />
+          <Property Name="Dia" Type="Byte" Nullable="false" />
+          <Property Name="Orden" Type="Int16" Nullable="false" />
           <Property Name="IdCAlmacenGasSalida" Type="Int16" Nullable="false" />
           <Property Name="IdCAlmacenGasEntrada" Type="Int16" Nullable="false" />
           <Property Name="IdTipoMedidorSalida" Type="Int16" Nullable="false" />
@@ -8243,17 +8342,25 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="UnidadSalida" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CAlmacenGas" FromRole="AlmacenGasTraspaso" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="UnidadEntrada" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CAlmacenGas1" FromRole="AlmacenGasTraspaso" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso" FromRole="AlmacenGasTraspaso" ToRole="AlmacenGasTraspasoFoto" />
-          <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CTipoEvento" FromRole="AlmacenGasTraspaso" ToRole="TipoEvento" />
+          <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CTipoEvento" FromRole="AlmacenGasTraspaso" ToRole="TipoEvento" />          
         </EntityType>
         <EntityType Name="AlmacenGasTraspasoFoto">
           <Key>
-            <PropertyRef Name="IdCAlmacenGasSalida" />
-            <PropertyRef Name="IdCAlmacenGasEntrada" />
-            <PropertyRef Name="IdOrden" />
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+            <PropertyRef Name="OrdenImagen" />
           </Key>
+          <Property Name="IdEmpresa" Type="Int16" Nullable="false" />
+          <Property Name="Year" Type="Int16" Nullable="false" />
+          <Property Name="Mes" Type="Byte" Nullable="false" />
+          <Property Name="Dia" Type="Byte" Nullable="false" />
+          <Property Name="Orden" Type="Int16" Nullable="false" />
+          <Property Name="OrdenImagen" Type="Int16" Nullable="false" />
           <Property Name="IdCAlmacenGasSalida" Type="Int16" Nullable="false" />
-          <Property Name="IdCAlmacenGasEntrada" Type="Int16" Nullable="false" />
-          <Property Name="IdOrden" Type="Int32" Nullable="false" />
+          <Property Name="IdCAlmacenGasEntrada" Type="Int16" Nullable="false" />          
           <Property Name="IdImagenDe" Type="Int16" Nullable="false" />
           <Property Name="UrlImagen" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="PathImagen" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
@@ -8288,15 +8395,21 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <End Type="Sagas.MainModuleModel.AlmacenGasAutoConsumo" Role="AlmacenGasAutoConsumo" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="Sagas.MainModuleModel.AlmacenGasAutoConsumoFoto" Role="AlmacenGasAutoConsumoFoto" Multiplicity="0..1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasAutoConsumoFoto" Role="AlmacenGasAutoConsumoFoto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AlmacenGasAutoConsumo">
-              <PropertyRef Name="IdCAlmacenGasSalida" />
-              <PropertyRef Name="IdCAlmacenGasEntrada" />
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
             </Principal>
             <Dependent Role="AlmacenGasAutoConsumoFoto">
-              <PropertyRef Name="IdCAlmacenGasSalida" />
-              <PropertyRef Name="IdCAlmacenGasEntrada" />
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8359,12 +8472,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <End Type="Sagas.MainModuleModel.AlmacenGasTraspasoFoto" Role="AlmacenGasTraspasoFoto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AlmacenGasTraspaso">
-              <PropertyRef Name="IdCAlmacenGasSalida" />
-              <PropertyRef Name="IdCAlmacenGasEntrada" />
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
             </Principal>
             <Dependent Role="AlmacenGasTraspasoFoto">
-              <PropertyRef Name="IdCAlmacenGasSalida" />
-              <PropertyRef Name="IdCAlmacenGasEntrada" />
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9128,7 +9247,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Inventario" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenGas" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGas" />
           <NavigationProperty Name="Recarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenGasRecarga" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasRecarga" />
           <NavigationProperty Name="UnidadAlamcen" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_CAlmacenGas" FromRole="AlmacenGasMovimiento" ToRole="UnidadAlmacenGas" />
-          <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoFoto_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoFoto" />          
+          <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoFoto_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoFoto" />
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_Empresa" FromRole="AlmacenGasMovimiento" ToRole="Empresa" />          
           <!--<NavigationProperty Name="AlmacenGasMovimientoAlmacenGeneral" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAlmacenGeneral_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoAlmacenGeneral" />
           <NavigationProperty Name="AlmacenGasMovimientoAlmacenTotal" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAlmacenTotal_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoAlmacenTotal" />-->
           <!--<NavigationProperty Name="AlmacenGasMovimiento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAlmacenGeneral_AlmacenGasMovimiento" FromRole="AlmacenGasMovimientoAlmacenGeneral" ToRole="AlmacenGasMovimiento" />-->          
@@ -9273,6 +9393,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AlmacenGasMovimiento_Empresa">
+          <End Type="Sagas.MainModuleModel.Empresa" Role="Empresa" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimiento" Role="AlmacenGasMovimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>                
         <!--<Association Name="FK_RolAccionMovil_Rol">
           <End Type="Sagas.MainModuleModel.Rol" Role="Rol" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -10356,6 +10488,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasAutoConsumo">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasAutoConsumo">
               <MappingFragment StoreEntitySet="AlmacenGasAutoConsumo">
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="DatosProcesados" ColumnName="DatosProcesados" />
                 <ScalarProperty Name="ClaveOperacion" ColumnName="ClaveOperacion" />
@@ -10369,11 +10506,16 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasAutoConsumoFoto">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasAutoConsumoFoto">
               <MappingFragment StoreEntitySet="AlmacenGasAutoConsumoFoto">
+                <ScalarProperty Name="OrdenImagen" ColumnName="OrdenImagen" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="CadenaBase64" ColumnName="CadenaBase64" />
                 <ScalarProperty Name="PathImagen" ColumnName="PathImagen" />
                 <ScalarProperty Name="UrlImagen" ColumnName="UrlImagen" />
                 <ScalarProperty Name="IdImagenDe" ColumnName="IdImagenDe" />
-                <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
                 <ScalarProperty Name="IdCAlmacenGasEntrada" ColumnName="IdCAlmacenGasEntrada" />
                 <ScalarProperty Name="IdCAlmacenGasSalida" ColumnName="IdCAlmacenGasSalida" />
               </MappingFragment>
@@ -10412,6 +10554,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasTraspaso">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasTraspaso">
               <MappingFragment StoreEntitySet="AlmacenGasTraspaso">
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="DatosProcesados" ColumnName="DatosProcesados" />
                 <ScalarProperty Name="ClaveOperacion" ColumnName="ClaveOperacion" />
@@ -10428,11 +10575,16 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasTraspasoFoto">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasTraspasoFoto">
               <MappingFragment StoreEntitySet="AlmacenGasTraspasoFoto">
+                <ScalarProperty Name="OrdenImagen" ColumnName="OrdenImagen" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
                 <ScalarProperty Name="CadenaBase64" ColumnName="CadenaBase64" />
                 <ScalarProperty Name="PathImagen" ColumnName="PathImagen" />
                 <ScalarProperty Name="UrlImagen" ColumnName="UrlImagen" />
                 <ScalarProperty Name="IdImagenDe" ColumnName="IdImagenDe" />
-                <ScalarProperty Name="IdOrden" ColumnName="IdOrden" />
                 <ScalarProperty Name="IdCAlmacenGasEntrada" ColumnName="IdCAlmacenGasEntrada" />
                 <ScalarProperty Name="IdCAlmacenGasSalida" ColumnName="IdCAlmacenGasSalida" />
               </MappingFragment>

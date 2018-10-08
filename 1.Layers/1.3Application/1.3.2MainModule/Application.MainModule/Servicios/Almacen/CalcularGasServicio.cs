@@ -66,6 +66,10 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return cantidadActualLt + ingresoLt;
         }
+        public static decimal SumarLitrosDescuentaPorcentajeRema(decimal cantidadActualLt, decimal ingresoLt, decimal porcentajeCalibracionPlaneada)
+        {
+            return cantidadActualLt + (ingresoLt - ingresoLt * (porcentajeCalibracionPlaneada / 100));
+        }
 
         public static decimal RestarKilogramos(decimal cantidadActualKg, decimal salioKg)
         {
@@ -91,6 +95,6 @@ namespace Application.MainModule.Servicios.Almacen
         public static decimal SumarKilogramos(decimal cantidadActualKg, decimal capacidadKg, decimal cantidad)
         {
             return cantidadActualKg + (capacidadKg * cantidad);
-        }
+        }        
     }
 }

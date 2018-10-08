@@ -287,6 +287,99 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
         }
 
+        public void Actualizar(AplicaAutoConsumoDto aplicaAutoConsumo)
+        {
+            using (uow)
+            {
+                try
+                {
+                    if (aplicaAutoConsumo.unidadEntrada != null)
+                        uow.Repository<UnidadAlmacenGas>().Update(aplicaAutoConsumo.unidadEntrada);
+
+                    if (aplicaAutoConsumo.unidadSalida != null)
+                        uow.Repository<UnidadAlmacenGas>().Update(aplicaAutoConsumo.unidadSalida);
+
+                    if (aplicaAutoConsumo.AutoConsumoLecturaInicialSinNavProp != null)
+                        uow.Repository<AlmacenGasAutoConsumo>().Update(aplicaAutoConsumo.AutoConsumoLecturaInicialSinNavProp);
+
+                    if (aplicaAutoConsumo.AutoConsumoLecturaInicialFotos != null && aplicaAutoConsumo.AutoConsumoLecturaInicialFotos.Count > 0)
+                        aplicaAutoConsumo.AutoConsumoLecturaInicialFotos.ToList().ForEach(x =>
+                            uow.Repository<AlmacenGasAutoConsumoFoto>().Update(x)
+                        );
+
+                    if (aplicaAutoConsumo.AutoConsumoLecturaFinalSinNavProp != null)
+                        uow.Repository<AlmacenGasAutoConsumo>().Update(aplicaAutoConsumo.AutoConsumoLecturaFinalSinNavProp);
+
+                    if (aplicaAutoConsumo.AutoConsumoLecturaFinalFotos != null && aplicaAutoConsumo.AutoConsumoLecturaFinalFotos.Count > 0)
+                        aplicaAutoConsumo.AutoConsumoLecturaFinalFotos.ToList().ForEach(x =>
+                            uow.Repository<AlmacenGasAutoConsumoFoto>().Update(x)
+                        );
+
+                    // Agregar al modelo de dominio AlmacenGasMovimiento
+                    //if (aplicaAutoConsumo.AGMovimiento != null)
+                    //    uow.Repository<AlmacenGasMovimiento>().Insert(aplicaAutoConsumo.MovInventario);
+                    if (uow.repositories.Count > 0)
+                        uow.SaveChanges();
+                    //_respuesta.Id = aplicaAutoConsumo.IdCAlmacenGas;
+                    //_respuesta.Exito = true;
+                    //_respuesta.EsActulizacion = true;
+                    //_respuesta.ModeloValido = true;
+                    //_respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    //_respuesta.Exito = false;
+                    //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
+                    //_respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+        }
+
+        public void Actualizar(AplicaCalibracionDto aplicaCalibracion)
+        {
+            using (uow)
+            {
+                try
+                {
+                    if (aplicaCalibracion.unidadAlmacenGas != null)
+                        uow.Repository<UnidadAlmacenGas>().Update(aplicaCalibracion.unidadAlmacenGas);
+                    
+                    if (aplicaCalibracion.CalibracionLecturaInicialSinNavProp != null)
+                        uow.Repository<AlmacenGasCalibracion>().Update(aplicaCalibracion.CalibracionLecturaInicialSinNavProp);
+
+                    if (aplicaCalibracion.CalibracionLecturaInicialFotos != null && aplicaCalibracion.CalibracionLecturaInicialFotos.Count > 0)
+                        aplicaCalibracion.CalibracionLecturaInicialFotos.ToList().ForEach(x =>
+                            uow.Repository<AlmacenGasCalibracionFoto>().Update(x)
+                        );
+
+                    if (aplicaCalibracion.CalibracionLecturaFinalSinNavProp != null)
+                        uow.Repository<AlmacenGasCalibracion>().Update(aplicaCalibracion.CalibracionLecturaFinalSinNavProp);
+
+                    if (aplicaCalibracion.CalibracionLecturaFinalFotos != null && aplicaCalibracion.CalibracionLecturaFinalFotos.Count > 0)
+                        aplicaCalibracion.CalibracionLecturaFinalFotos.ToList().ForEach(x =>
+                            uow.Repository<AlmacenGasCalibracionFoto>().Update(x)
+                        );
+
+                    // Agregar al modelo de dominio AlmacenGasMovimiento
+                    //if (aplicaCalibracion.AGMovimiento != null)
+                    //    uow.Repository<AlmacenGasMovimiento>().Insert(aplicaCalibracion.MovInventario);
+                    if (uow.repositories.Count > 0)
+                        uow.SaveChanges();
+                    //_respuesta.Id = aplicaCalibracion.IdCAlmacenGas;
+                    //_respuesta.Exito = true;
+                    //_respuesta.EsActulizacion = true;
+                    //_respuesta.ModeloValido = true;
+                    //_respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    //_respuesta.Exito = false;
+                    //_respuesta.Mensaje = string.Format(Error.C0003, "de la unidad de almacén"); ;
+                    //_respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+        }
+
         public List<UnidadAlmacenGas> BuscarTodosEstacionCarburacion(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -426,22 +519,33 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasTraspaso>().Get(x => !x.DatosProcesados && x.IdTipoEvento.Equals(idTipoEvento)).ToList();
         }
-        public List<AlmacenGasTraspasoFoto> BuscarImagenes(short idCAlmacenEntrada, short idCAlmacenSalida)
+        public List<AlmacenGasTraspasoFoto> BuscarImagenesTraspaso(short idEmpresa, short anio, byte mes, byte dia, short orden)
         {
-            return uow.Repository<AlmacenGasTraspasoFoto>().Get(x => x.IdCAlmacenGasEntrada.Equals(idCAlmacenEntrada)
-                                                                  && x.IdCAlmacenGasSalida.Equals(idCAlmacenSalida)).ToList();
+            return uow.Repository<AlmacenGasTraspasoFoto>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                  && x.Year.Equals(anio)
+                                                                  && x.Mes.Equals(mes)
+                                                                  && x.Dia.Equals(dia)
+                                                                  && x.Orden.Equals(orden)).ToList();
         }
-        public List<AlmacenGasTomaLectura> BuscarTodasLecturasNoProcesadas()
-        {
-            return uow.Repository<AlmacenGasTomaLectura>().Get(x => !x.DatosProcesados).ToList();
-        }
-        public List<AlmacenGasAutoConsumo> BuscarTodasAutoConsumosNoProcesadas()
+        public List<AlmacenGasAutoConsumo> BuscarTodosAutoConsumosNoProcesadas()
         {
             return uow.Repository<AlmacenGasAutoConsumo>().Get(x => !x.DatosProcesados).ToList();
         }
-        public List<AlmacenGasTraspaso> BuscarTodasTraspasosNoProcesadas()
+        public List<AlmacenGasAutoConsumoFoto> BuscarImagenesAutoConsumo(short idEmpresa, short anio, byte mes, byte dia, short orden)
         {
-            return uow.Repository<AlmacenGasTraspaso>().Get(x => !x.DatosProcesados).ToList();
+            return uow.Repository<AlmacenGasAutoConsumoFoto>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                  && x.Year.Equals(anio)
+                                                                  && x.Mes.Equals(mes)
+                                                                  && x.Dia.Equals(dia)
+                                                                  && x.Orden.Equals(orden)).ToList();
+        }
+        public List<AlmacenGasCalibracionFoto> BuscarImagenesCalibracion(int idCAlmacenGas)
+        {
+            return uow.Repository<AlmacenGasCalibracionFoto>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)).ToList();
+        }
+        public List<AlmacenGasTomaLectura> BuscarTodosLecturasNoProcesadas()
+        {
+            return uow.Repository<AlmacenGasTomaLectura>().Get(x => !x.DatosProcesados).ToList();
         }
         public List<AlmacenGasCalibracion> BuscarTodasCalibracionesNoProcesadas()
         {
