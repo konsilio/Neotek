@@ -108,6 +108,9 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
                 Intent intent = new Intent(PuntoVentaGasListaActivity.this,
                         PuntoVentaPagarActivity.class);
                 intent.putExtra("ventaDTO", ventaDTO);
+                intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
+                intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
+                intent.putExtra("EsVentaPipa",EsVentaPipa);
                 startActivity(intent);
             }else{
                 AlertDialog.Builder builder = new

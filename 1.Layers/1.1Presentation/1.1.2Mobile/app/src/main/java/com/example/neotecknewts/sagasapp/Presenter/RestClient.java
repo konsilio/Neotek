@@ -30,6 +30,7 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
@@ -37,6 +38,7 @@ import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
+import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 
 import java.util.List;
@@ -325,4 +327,12 @@ public interface RestClient {
     @GET(Constantes.GET_CATALOGO_PRODUCTO)
     Call<DatosVentaOtrosDTO> getListasProductos( @Header("Authorization") String token,
                                                  @Header("Content-type") String contentType);
+    @POST(Constantes.POST_VENTA)
+    Call<RespuestaPuntoVenta> pagar(
+            @Body VentaDTO ventaDTO,
+            @Path(value = "esCamioneta") boolean esCamioneta,
+            @Path(value = "esEstacion") boolean esEstacion,
+            @Path(value = "esPipa") boolean esPipa,
+            @Header("Authorization") String token,
+            @Header("Content-type") String contentType);
 }

@@ -164,6 +164,15 @@ public class VistaOrdenCompraActivity extends AppCompatActivity implements Vista
         spinnerOrdenCompra.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ordenes));
     }
 
+    @Override
+    public void messageError(String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.error_titulo);
+        builder.setMessage(mensaje);
+        builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
+        builder.create().show();
+    }
+
 
     //metodo que llena la vista con los datos de la orden de compra seleccionada
     public void fillView(){

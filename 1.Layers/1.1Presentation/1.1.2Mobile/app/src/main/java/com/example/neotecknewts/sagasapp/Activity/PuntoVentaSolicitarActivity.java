@@ -1,16 +1,23 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.security.SecureRandom;
+import java.util.Random;
 
 public class PuntoVentaSolicitarActivity extends AppCompatActivity implements PuntoVentaSolicitarView {
     boolean EsVentaCarburacion,EsVentaCamioneta,EsVentaPipa;
@@ -21,6 +28,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
     EditText ETPuntoVentaSolicitarActivityBuscador;
     ProgressDialog progressDialog;
     VentaDTO ventaDTO;
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,14 +48,38 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
                 BtnPuntoVentaSolicitarActivityBuscarCliente);
         ETPuntoVentaSolicitarActivityBuscador = findViewById(R.id.
                 ETPuntoVentaSolicitarActivityBuscador);
+        ventaDTO = new VentaDTO();
+        Date actual = new Date();
+        ventaDTO.setFecha(new SimpleDateFormat("yyyy-MM-dd").format(actual));
+        ventaDTO.setHora(new SimpleDateFormat("hh:mm:ss").format(actual));
+        /*SimpleDateFormat s =
+                new SimpleDateFormat("yyyyMMddhhmmss");*/
+        SimpleDateFormat s =
+                new SimpleDateFormat("MMddhhmmss");
         if(EsVentaCamioneta){
+            //String codigo = s.format(actual)+"VC"+getRandomString(4);
+            String codigo = String.valueOf(actual.getYear())+
+                    Integer.toHexString(Integer.parseInt(s.format(actual)));
+            Log.w("codigo",codigo);
+            ventaDTO.setFolioVenta(codigo);
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.Camioneta));
         }else if(EsVentaCarburacion){
+            //String codigo = s.format(new Date())+"VEC"+getRandomString(4);
+            String codigo = String.valueOf(actual.getYear())+
+                    Integer.toHexString(Integer.parseInt(s.format(actual)));
+            Log.w("codigo",codigo);
+            ventaDTO.setFolioVenta(codigo);
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.Estacion));
         }else if(EsVentaPipa){
+            //String codigo = s.format(new Date())+"VEC"+getRandomString(4);
+            String codigo = String.valueOf(actual.getYear())+
+                    Integer.toHexString(Integer.parseInt(s.format(actual)));
+            Log.w("codigo",codigo);
+            ventaDTO.setFolioVenta(codigo);
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.pipa));
         }
-        ventaDTO = new VentaDTO();
+        Log.w("FolioVenta",ventaDTO.getFolioVenta());
+
         BtnPuntoVentaSolicitarActivitySeguirSinNumero.setOnClickListener(v -> SeguirSinNumero());
         BtnPuntoVentaSolicitarActivityRegistrarCliente.setOnClickListener(v -> RegistrarCliente());
         BtnPuntoVentaSolicitarActivityBuscarCliente.setOnClickListener(v-> Buscar());
@@ -136,4 +168,19 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
             progressDialog.dismiss();
         }
     }
+
+    /*protected String getRandomString(int len){
+        char[] ch = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+                'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+                'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+                'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+                'w', 'x', 'y', 'z' };
+        char[] ran = new char[len];
+        Random random = new Random();
+        for (int i =0 ;i<len;i++){
+            ran[i] = ch[random.nextInt(ch.length)];
+        }
+        return new String(ran).toUpperCase();
+    }*/
 }

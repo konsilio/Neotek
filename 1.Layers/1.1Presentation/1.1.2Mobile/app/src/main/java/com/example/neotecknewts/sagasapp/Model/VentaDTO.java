@@ -43,6 +43,9 @@ public class VentaDTO implements Serializable {
     @SerializedName("SinNumero")
     private boolean SinNumero;
 
+    @SerializedName("FolioVenta")
+    private String FolioVenta;
+
     public String getFecha() {
         return Fecha;
     }
@@ -141,5 +144,13 @@ public class VentaDTO implements Serializable {
 
     public void setSinNumero(boolean sinNumero) {
         SinNumero = sinNumero;
+    }
+
+    public String getFolioVenta() {
+        return FolioVenta;
+    }
+
+    public void setFolioVenta(String folioVenta) {
+        FolioVenta = folioVenta;
     }
 }
