@@ -1,0 +1,36 @@
+﻿.col-sm-05 {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 16.666667%;
+    flex: 0 0 16.666667%;
+    max-width: 8.666667%;
+    text-align: center;
+}
+
+a.tip {
+    text-decoration: none;
+}
+
+    a.tip:hover {
+        cursor: help;
+        position: relative;
+    }
+
+    a.tip span {
+        display: none;
+    }
+
+    a.tip:hover span {
+        padding: 5px 20px 5px 5px;
+        display: block;
+        z-index: 100;
+        background-image: url('../../assets/images/back-tooltip.png') !important;
+        background-repeat: repeat-x;
+        left: 0px;
+        margin: 10px;
+        width: 250px;
+        position: absolute;
+        top: 10px;
+        text-decoration: none;
+        border-radius: 6px;
+        color: white;
+    }

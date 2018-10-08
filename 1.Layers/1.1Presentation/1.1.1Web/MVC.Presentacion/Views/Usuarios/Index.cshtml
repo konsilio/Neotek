@@ -141,30 +141,46 @@
 
                     </div>
                 </div>
-                @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                @if (ViewBag.MensajeError != null)
                 {
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MensajeError</label>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                }
 
-                    <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
-                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
- bottom: 20px; left: 0px; right: 0px;">
-                        @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                        <span data-notify="icon"></span>
-                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
-                        <a href="#" target="_blank" data-notify="url"></a>
-                    </div>
-                }
-                @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
-                {
-                    <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
-                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
- bottom: 20px; left: 0px; right: 0px;">
-                        @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                        <span data-notify="icon"></span>
-                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
-                    </div>
-                }
+                @*@if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                                   {
+
+                                       <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
+                                            role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                    bottom: 20px; left: 0px; right: 0px;">
+                                           @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
+                @* <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                                           <span data-notify="icon"></span>
+                                           <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
+                                           <a href="#" target="_blank" data-notify="url"></a>
+                                       </div>
+                                   }
+                                   @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
+                                   {
+                                       <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
+                                            role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                    bottom: 20px; left: 0px; right: 0px;">
+                                           @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
+                @*<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                            <span data-notify="icon"></span>
+                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
+                        </div>
+                    }*@
             </div>
         </div>
     </section>

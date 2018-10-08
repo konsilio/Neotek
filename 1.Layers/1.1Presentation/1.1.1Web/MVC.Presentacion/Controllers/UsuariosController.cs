@@ -24,16 +24,18 @@ namespace MVC.Presentacion.Controllers
             {
                 Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn)
             };
-            if (TempData["RespuestaDTO"] != null)
-            {
-                ViewBag.MessageExito = TempData["RespuestaDTO"];
-            }
-            if (TempData["RespuestaDTOError"] != null)
-            {
-                ViewBag.MessageError = TempData["RespuestaDTOError"];
-            }
+            //if (TempData["RespuestaDTO"] != null)
+            //{
+            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
+            //}
+            //if (TempData["RespuestaDTOError"] != null)
+            //{
+            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //}
 
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //ViewBag.MessageError = TempData["RespuestaDTOError"];
+            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+
             return View(rolCat);
         }
 
@@ -55,21 +57,19 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            //if (ModelState.IsValid)
-            //{
+
             var respuesta = CatalogoServicio.CrearUsuario(_ojUs, _tok);
-            //}
 
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", _ojUs);
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("Index", _ojUs);
             }
         }
@@ -88,20 +88,19 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            //if (ModelState.IsValid)
-            //{
+
             var respuesta = CatalogoServicio.ActualizaCredencialesUser(objUser, _tok);
-            //}
+
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", objUser);
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("Index", objUser);
             }
 
@@ -114,14 +113,15 @@ namespace MVC.Presentacion.Controllers
             string _tkn = Session["StringToken"].ToString();
             ViewBag.IdUser = CatalogoServicio.ObtenerIdUsuario(id, _tkn);
             ViewBag.AllRoles = CatalogoServicio.ObtenerTodosRoles(_tkn);
-            if (TempData["RespuestaDTO"] != null)
-            {
-                ViewBag.MessageExito = TempData["RespuestaDTO"];
-            }
-            if (TempData["RespuestaDTOError"] != null)
-            {
-                ViewBag.MessageError = TempData["RespuestaDTOError"];
-            }
+            //if (TempData["RespuestaDTO"] != null)
+            //{
+            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
+            //}
+            //if (TempData["RespuestaDTOError"] != null)
+            //{
+            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //}
+            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
 
             ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View();
@@ -173,21 +173,19 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            //if (ModelState.IsValid)
-            //{
+
             var respuesta = CatalogoServicio.ActualizaEdicionUsuario(_Obj, _tok);
-            //}
 
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", _Obj);
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("Index", _Obj);
             }
 
@@ -200,14 +198,14 @@ namespace MVC.Presentacion.Controllers
             var respuesta = CatalogoServicio.EliminaUsuarioSel(id, _tkn);
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("Index");
             }
 
@@ -218,25 +216,19 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            //if (ModelState.IsValid)
-            //{
-            //objUser = CatalogoServicio.ObtenerTodosUsuarios(idUsr, _tok)[0];
+
             var respuesta = CatalogoServicio.EliminarRolAlUsuario(objUser, idUsr, id, _tok);
-            //}
 
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Baja Exitosa";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
-                //return RedirectToAction("Index", objUser);
+                //TempData["RespuestaDTO"] = "Baja Exitosa";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario });
-
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
-                //return RedirectToAction("Index", objUser);
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario });
 
             }
@@ -256,5 +248,23 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Usuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
             return View("Index", rolCat);
         }
+
+        private string Validar(RespuestaDTO Resp = null)
+        {
+            string Mensaje = string.Empty;
+            ModelState.Clear();
+            if (Resp != null)
+            {
+                if (Resp.ModelStatesStandar != null)
+                    foreach (var error in Resp.ModelStatesStandar.ToList())
+                    {
+                        ModelState.AddModelError(error.Key, error.Value);
+                    }
+                if (Resp.MensajesError != null)
+                    Mensaje = Resp.MensajesError[0];
+            }
+            return Mensaje;
+        }
+
     }
 }

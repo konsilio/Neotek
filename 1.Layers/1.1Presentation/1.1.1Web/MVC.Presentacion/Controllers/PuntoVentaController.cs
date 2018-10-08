@@ -1,5 +1,6 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Catalogos;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.ListaPV = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             }
             ViewBag.Usuarios = TempData["Users"];
-        
+
             if (TempData["RespuestaDTO"] != null)
             {
                 ViewBag.MessageExito = TempData["RespuestaDTO"];
@@ -50,7 +51,7 @@ namespace MVC.Presentacion.Controllers
             if (lstusuarios.Count() >= 1)
             {
                 ViewBag.Usuarios = lstusuarios;
-            }           
+            }
             TempData["Users"] = lstusuarios;
             ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
             if (ViewBag.EsSuperUser)
@@ -74,12 +75,30 @@ namespace MVC.Presentacion.Controllers
 
             List<PuntoVentaModel> model = CatalogoServicio.ListaPuntosVenta(idPV, _tkn);
             PuntoVentaModel nmodel = model[0];
+
             var respuesta = CatalogoServicio.ModificarOperador(nmodel, idChofer, _tkn);
 
             //    var JsonInfo = JsonConvert.SerializeObject(list);
             //return Json(JsonInfo, JsonRequestBehavior.AllowGet);
+            //if (respuesta.Exito)
+            //{
+            //    TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;    
+            //    TempData["RespuestaDTOError"] = null;
+            //}
+            //else
+            //{
+            //    TempData["RespuestaDTOError"] = respuesta.Mensaje;
+            //}
 
-            return new JsonResult { Data = new { IsCorrect = respuesta, Message = respuesta } };
+             //return new JsonResult { Data = new { IsCorrect = respuesta.Exito, Message = respuesta.Mensaje } };
+            var JsonInfo = JsonConvert.SerializeObject(respuesta.Mensaje);
+            return Json(JsonInfo, JsonRequestBehavior.AllowGet);
+
+            //return Json(new
+            //{
+            //    redirectUrl = Url.Action("Index", nmodel),
+            //    isRedirect = true
+            //});
 
         }
         public ActionResult BorrarPuntoVenta(List<PuntoVentaModel> _ObjModel, short idE, int id)

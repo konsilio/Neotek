@@ -183,19 +183,10 @@ namespace Application.MainModule.Flujos
         public RespuestaDto ModificaPermisos(List<RolDto> rolDto)
         {
             var resp = PermisosServicio.PuedeModificarRol();
-            //if (resp.Exito)
-            //    foreach (var _lst in rolDto)
-            //    {
-            //        var emp = RolAdapter.FromDtoPer(_lst);
-            //        return RolServicio.Actualizar(emp);
-            //    }
-            //return resp;
-
             if (!resp.Exito) return resp;
 
                 var emp = RolAdapter.FromDtoPer(rolDto);
-                return RolServicio.Actualizar(emp);
-            
+                return RolServicio.Actualizar(emp);           
 
             //insertar Rol in data access
         }

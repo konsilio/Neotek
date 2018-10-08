@@ -7,82 +7,10 @@
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link href="~/Resources/css/CreateForm.css" rel="stylesheet" />
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+<script src="~/Resources/js/lib/Events.js"></script>
 
-<script type="text/javascript">
-    $(function () {
-
-        $('select').on('change', function () {
-
-            if ($('#ddlPais').find('option:selected').text() != 'México')
-            {
-               $('#ddlEdo').parent().hide();
-                $('#txtEdoP').show();
-            }
-
-            if ($('#ddlPais').find('option:selected').text() == 'México' || $('#ddlPais').find('option:selected').text() == 'Seleccione') {
-                 $('#ddlEdo').parent().show();
-                $('#txtEdoP').hide();
-            }
-
-        });
-
-    });
-
-    $(document).ready(function () {
-        $("#btnGuardaEdicion").click(function () {
-
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Usuarios", Action = "GuardaEdicionUsuario" }) %>');
-            form.attr('method', 'post');
-        });
-        $("#btnRegresarIndex").click(function () {
-
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Usuarios", Action = "Index" }) %>');
-            form.attr('method', 'post');
-        });
-
-    });
-</script>
-<style type="text/css">
-    .col-sm-05 {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 16.666667%;
-        flex: 0 0 16.666667%;
-        max-width: 8.666667%;
-        text-align: center;
-    }
-
-    a.tip {
-        text-decoration: none;
-    }
-
-        a.tip:hover {
-            cursor: help;
-            position: relative;
-        }
-
-        a.tip span {
-            display: none;
-        }
-
-        a.tip:hover span {
-            padding: 5px 20px 5px 5px;
-            display: block;
-            z-index: 100;
-             background-image: url('../../assets/images/back-tooltip.png') !important;
-            background-repeat: repeat-x;
-            left: 0px;
-            margin: 10px;
-            width: 250px;
-            position: absolute;
-            top: 10px;
-            text-decoration: none;
-            border-radius: 6px;
-            color:white;
-        }
-</style>
 @using (Html.BeginForm((ViewBag.IdUser == null) ? "GuardarUsuario" : "GuardaEdicionUsuario", "Usuarios", FormMethod.Post))
 {
     <section class="content home">
@@ -98,14 +26,14 @@
                     <div class="row clearfix">
                         <div class="col-sm-3">
                             <b>Gasera</b>
-                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                 @foreach (var lst in ViewBag.Empresas)
                                 {
                                     <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                 }
                             </select>
+                            @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                         </div>
-
                     </div>
                 </div>
             </div>
