@@ -29,6 +29,10 @@ namespace Sagas.MainModule.Entidades
             this.TraspasosEntrada = new HashSet<AlmacenGasTraspaso>();
             this.PuntosVenta = new HashSet<PuntoVenta>();
             this.MovimientosGas = new HashSet<AlmacenGasMovimiento>();
+            this.ReporteDelDia = new HashSet<ReporteDelDia>();
+            this.VentaCajaGeneral = new HashSet<VentaCajaGeneral>();
+            this.VentaCorteAnticipoEC = new HashSet<VentaCorteAnticipoEC>();
+            this.VentaMovimiento = new HashSet<VentaMovimiento>();
         }
     
         public short IdCAlmacenGas { get; set; }
@@ -83,5 +87,13 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<PuntoVenta> PuntosVenta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasMovimiento> MovimientosGas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReporteDelDia> ReporteDelDia { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VentaCajaGeneral> VentaCajaGeneral { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VentaCorteAnticipoEC> VentaCorteAnticipoEC { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VentaMovimiento> VentaMovimiento { get; set; }
     }
 }
