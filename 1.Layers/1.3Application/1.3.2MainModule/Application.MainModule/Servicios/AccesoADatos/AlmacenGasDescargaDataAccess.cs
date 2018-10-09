@@ -73,72 +73,80 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
-        public void Actualizar(List<AplicaDescargaDto> aplicacionesDto)
-        {
-            if(aplicacionesDto.Count > 0)
-                using (uow)
-                {
-                    try
-                    {
-                        foreach (var desDto in aplicacionesDto)
-                        {
-                            if(desDto.unidadEntrada != null)
-                                uow.Repository<UnidadAlmacenGas>().Update(desDto.unidadEntrada);
+        public void Actualizar(AplicaDescargaDto aplicacionDto)
+        {  
+            using (uow)
+            {
+                try
+                {                        
+                    if(aplicacionDto.unidadEntrada != null)
+                        uow.Repository<UnidadAlmacenGas>().Update(aplicacionDto.unidadEntrada);
 
-                            if (desDto.unidadSalida != null)
-                                uow.Repository<UnidadAlmacenGas>().Update(desDto.unidadSalida);
+                    if (aplicacionDto.unidadSalida != null)
+                        uow.Repository<UnidadAlmacenGas>().Update(aplicacionDto.unidadSalida);
 
-                            if (desDto.AlmacenGas != null)
-                                uow.Repository<AlmacenGas>().Update(desDto.AlmacenGas);
+                    if (aplicacionDto.AlmacenGas != null)
+                        uow.Repository<AlmacenGas>().Update(aplicacionDto.AlmacenGas);
 
-                            if (desDto.OCExpedidor != null)
-                                uow.Repository<OrdenCompra>().Update(desDto.OCExpedidor);
+                    if (aplicacionDto.OCExpedidor != null)
+                        uow.Repository<OrdenCompra>().Update(aplicacionDto.OCExpedidor);
 
-                            if (desDto.OCPorteador != null)
-                                uow.Repository<OrdenCompra>().Update(desDto.OCPorteador);
+                    if (aplicacionDto.OCPorteador != null)
+                        uow.Repository<OrdenCompra>().Update(aplicacionDto.OCPorteador);
 
-                            // Agregar al modelo de dominio AlmacenGasMovimiento
-                            //if (desDto.AGMovimiento != null)
-                            //    uow.Repository<AlmacenGasMovimiento>().Insert(desDto.MovInventario);
+                    // Agregar al modelo de dominio AlmacenGasMovimiento
+                    //if (aplicacionDto.AGMovimiento != null)
+                    //    uow.Repository<AlmacenGasMovimiento>().Insert(aplicacionDto.MovInventario);
 
-                            if (desDto.DescargaSinNavigationProperties != null)
-                                uow.Repository<AlmacenGasDescarga>().Update(desDto.DescargaSinNavigationProperties);
-                        }
-                        uow.SaveChanges();
-                        //_respuesta.Id = _almDes.IdAlmacenEntradaGasDescarga;
-                        //_respuesta.Exito = true;
-                        //_respuesta.EsActulizacion = true;
-                        //_respuesta.ModeloValido = true;
-                        //_respuesta.Mensaje = Exito.OK;
-                    }
-                    catch (Exception ex)
-                    {
-                        //_respuesta.Exito = false;
-                        //_respuesta.Mensaje = string.Format(Error.C0003, "de la descargar de gas"); ;
-                        //_respuesta.MensajesError = CatchInnerException.Obtener(ex);
-                    }
+                    if (aplicacionDto.DescargaSinNavigationProperties != null)
+                        uow.Repository<AlmacenGasDescarga>().Update(aplicacionDto.DescargaSinNavigationProperties);
+
+                    if (aplicacionDto.DescargaFotos != null && aplicacionDto.DescargaFotos.Count > 0)
+                        aplicacionDto.DescargaFotos.ToList().ForEach(x =>
+                            uow.Repository<AlmacenGasDescargaFoto>().Update(x)
+                        );
+                        
+                    uow.SaveChanges();
+                    //_respuesta.Id = _almDes.IdAlmacenEntradaGasDescarga;
+                    //_respuesta.Exito = true;
+                    //_respuesta.EsActulizacion = true;
+                    //_respuesta.ModeloValido = true;
+                    //_respuesta.Mensaje = Exito.OK;
                 }
+                catch (Exception ex)
+                {
+                    //_respuesta.Exito = false;
+                    //_respuesta.Mensaje = string.Format(Error.C0003, "de la descargar de gas"); ;
+                    //_respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
             //return _respuesta;
         }
-
         public List<AlmacenGasDescarga> BuscarTodas()
         {
             return uow.Repository<AlmacenGasDescarga>().GetAll().ToList();
         }
-
         public AlmacenGasDescarga Buscar(int idAlmacenEntradaGasDescarga)
         {
             return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.IdAlmacenEntradaGasDescarga.Equals(idAlmacenEntradaGasDescarga));
         }
-
         public AlmacenGasDescarga BuscarOCompraExpedidor(int idOCompra)
         {
             return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.IdOrdenCompraExpedidor.Equals(idOCompra));
         }
-
         public AlmacenGasDescarga BuscarClaveOperacion(string claveOperacion)
         {
             return uow.Repository<AlmacenGasDescarga>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
+        }
+        public List<AlmacenGasDescargaFoto> BuscarImagenes(int idAlmacenEntradaGasDescarga)
+        {
+            return uow.Repository<AlmacenGasDescargaFoto>().Get(x => x.IdAlmacenEntradaGasDescarga.Equals(idAlmacenEntradaGasDescarga)).ToList();
+        }
+        public List<AlmacenGasDescargaFoto> BuscarImagenesSinVigencia(DateTime fechaVigencia)
+        {
+            //Agregar FechaRegistro en las imagenes
+            //return uow.Repository<AlmacenGasDescargaFoto>().Get(x => x.FechaRegistro < fechaVigencia).ToList();
+            return new List<AlmacenGasDescargaFoto>();
         }
     }
 }

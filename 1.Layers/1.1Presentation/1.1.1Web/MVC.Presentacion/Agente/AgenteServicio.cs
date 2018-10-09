@@ -69,7 +69,9 @@ namespace MVC.Presentacion.Agente
         public List<PuntoVentaModel> _listaPuntosV;
         public OperadorChoferModel Operador;
         public List<OperadorChoferModel> _listaOperadoresUsuarios;
-
+        public List<OrdenCompraPagoDTO> _listaOrdenCompraPago;
+        public List<PrecioVentaModel> _listaPreciosV;
+        public List<EstatusTipoFechaModel> _listaEstatus;
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -1051,7 +1053,136 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
         #endregion
+        #region Precio de Venta Gas
 
+        public void BuscarListaPrecioVenta(int idPrecioV, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPrecioVenta"];
+            GetListaPreciosV(idPrecioV, tkn).Wait();
+        }
+        private async Task GetListaPreciosV(int idPV, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PrecioVentaModel> lus = new List<PrecioVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<PrecioVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<PrecioVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+                if (idPV != 0)
+                {
+                    _listaPreciosV = (from x in lus where x.IdPrecioVenta == idPV select x).ToList();
+                }
+                else
+                {
+                    _listaPreciosV = lus;
+                }
+            }
+        }
+
+        public void BuscarListaEstatus(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaEstatusPV"];
+            GetListaEstatus(tkn).Wait();
+        }
+        private async Task GetListaEstatus(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<EstatusTipoFechaModel> lus = new List<EstatusTipoFechaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<EstatusTipoFechaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<EstatusTipoFechaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+                _listaEstatus = lus;
+                
+            }
+        }
+        public void BuscarListaPreciosVentaIdEmpresa(short idEmpresa, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaPrecioVIdEmpresa"];
+            GetListaPrecioVIdE(tkn, idEmpresa).Wait();
+        }
+        private async Task GetListaPrecioVIdE(string Token, short idEmpresa)
+        {
+            using (var client = new HttpClient())
+            {
+                List<PrecioVentaModel> lus = new List<PrecioVentaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<PrecioVentaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<PrecioVentaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaPreciosV = lus;
+            }
+        }
+
+        public void EliminarPrecioVenta(PrecioVentaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutEliminaPreciosVenta"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void GuardarPrecioVenta(PrecioVentaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraPrecioVenta"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+
+        public void ModificarPrecioVenta(PrecioVentaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutModificaPreciosVenta"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        #endregion
         #region Paises
         public void BuscarPaises(string tkn)
         {
@@ -1227,7 +1358,7 @@ namespace MVC.Presentacion.Agente
         #region Forma de Pago
         public void ListaFormaPago(string tkn)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaFormaPagos"];
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaFormasPago"];
             GetListaFormaPago(tkn).Wait();
         }
         private async Task GetListaFormaPago(string Token)
@@ -2366,11 +2497,58 @@ namespace MVC.Presentacion.Agente
                 _listaOrdenCompraEstatus = emp;
             }
         }
-
         public void RegistrarEntrada(EntradaMercanciaModel dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostGuardarEntradas"];
             LLamada(dto, token, MetodoRestConst.Post).Wait();
+        }
+        public void EnviarConfirmarPago (OrdenCompraPagoDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutConfirmarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void EnviarSolicitudPago(OrdenCompraPagoDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            LLamada(dto, token, MetodoRestConst.Post).Wait();
+        }
+        public void EnviarDatosFactura(OrdenCompraDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutDatosFactura"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void BuscarListaPagos(int oc, string tkn)
+        {
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetListaPagos"];
+            GetListaPago(oc, tkn).Wait();
+        }
+        private async Task GetListaPago(int idoc, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<OrdenCompraPagoDTO> list = new List<OrdenCompraPagoDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idoc.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<OrdenCompraPagoDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<OrdenCompraPagoDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaOrdenCompraPago = list;
+            }
         }
         #endregion
 

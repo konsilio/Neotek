@@ -4,205 +4,210 @@
     @using (Html.BeginForm("Autorizar", "OrdenCompra", FormMethod.Post))
     {
         @Html.HiddenFor(m => m.IdOrdenCompra)
-    <section class="content home">
-        <div class="container-fluid">
-            <div class="block-header">
-                <div class="row clearfix">
-                    <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>Compras</h2>
-                        <ul class="breadcrumb padding-0">
-                            <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item active">
-                                <label>Compras / Ordern de Compra / Nueva "</label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card">
+        <section class="content home">
+            <div class="container-fluid">
+                <div class="block-header">
                     <div class="row clearfix">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label> @Model.Empresa</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <b>Número de Requisición:</b>&nbsp;
-                                    <label> @Model.NumeroRequisicion</label>
-                                </div>
-                                <div class="input-group">
-                                    <b>Número de Orden de Compra:</b>&nbsp;
-                                    <label>@Model.NumOrdenCompra</label>
-                                </div>
-                            </div>
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Compras</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item active">Compras</li>
+                                <li class="breadcrumb-item">Ordern de Compra </li>
+                                <li class="breadcrumb-item">Autorizar</li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="row clearfix">
-                        <div class="col-lg-3 col-md-12">
-                            <div class="form-group form-float">
-                                <b>Fecha requerida:</b>
-                                @Html.TextBoxFor(m => m.FechaRequerida, new { @class = "form-control", @disabled = "disabled" })
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-12">
-                            <div class="form-group form-float">
-                                <b>Solicitante:</b>
-                                 @Html.TextBoxFor(m => m.usuarioSolicitante, new { @class = "form-control", @disabled = "disabled" })
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-12 form-float">
-                            <div class="form-group">
-                                <b>Motivo de compra:</b>
-                                @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control  no-resize", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
-
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-12">
-                            <div class="form-group form-float">
-                                <b>Se requiere en:</b>
-                                @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control  no-resize", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row clearfix">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <b>Proveedor:</b>&nbsp;
-                                    <label>@ViewBag.NombrePorvedor</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row clearfix">
-                        <div class="body table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <td><b>Tipo</b></td>
-                                        <td><b>Producto</b></td>
-                                        <td><b>Requeridos</b></td>
-                                        <td><b>Unidad</b></td>
-                                        <td><b>Detalle</b></td>
-                                        <td><b>Centro de costo</b></td>
-                                        <td><b>Cuenta Contable</b></td>
-                                        <td><b>Cantidada</b></td>
-                                        <td><b>Precio</b></td>
-                                        <td><b>%Desc</b></td>
-                                        <td><b>%IVA</b></td>
-                                        <td><b>Importe</b></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var m in Model.Productos)
-                                    {
-                                    <tr>
-                                        <td>@m.TipoProducto</td>
-                                        <td>@m.Producto</td>
-                                        <td>@m.CantidadAComprar</td>
-                                        <td>@m.UnidadMedida</td>
-                                        <td>@m.Aplicacion</td>
-                                        <td>@m.CentroCosto</td>
-                                        <td>@m.CuentaContable</td>
-                                        <td>@m.Precio</td>
-                                        <td>@m.Descuento</td>
-                                        <td>@m.IVA</td>
-                                        <td>@m.IEPS</td>
-                                        <td>@m.Importe</td>
-                                    </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    @if (ViewBag.MensajeError != null)
-                    {
-                        <div class="row clearfix">
-                            <div id="divMensajeError" class="container">
-                                <div class="alert alert-danger">
-                                    <div class="alert-icon">
-                                        <i class="zmdi zmdi-block"></i>
+                    <div class="card">
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label> @Model.Empresa</label>
                                     </div>
-                                    <strong>
-                                        <label>@ViewBag.MensajeError</label>
-                                    </strong>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <b>Número de Requisición:</b>&nbsp;
+                                            <label> @Model.NumeroRequisicion</label>
+                                        </div>
+                                        <div class="input-group">
+                                            <b>Número de Orden de Compra:</b>&nbsp;
+                                            <label>@Model.NumOrdenCompra</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-lg-3 col-md-12">
+                                    <div class="form-group form-float">
+                                        <b>Fecha requerida:</b>
+                                        @Html.TextBoxFor(m => m.FechaRequerida, new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-12">
+                                    <div class="form-group form-float">
+                                        <b>Solicitante:</b>
+                                        @Html.TextBoxFor(m => m.Solicitante, new { @class = "form-control", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-12 form-float">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <b>Motivo de compra:</b>
+                                            @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control  no-resize btn-round", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-12">
+                                    <div class="form-group form-float">
+                                        <div class="form-group">
+                                            <b>Se requiere en:</b>
+                                            @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control  no-resize btn-round", @placeholder = "Error de carga", @rows = "4", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <b>Proveedor:</b>&nbsp;
+                                            <label>@ViewBag.NombrePorvedor</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <td><b>Tipo</b></td>
+                                                <td><b>Producto</b></td>
+                                                <td><b>Requeridos</b></td>
+                                                <td><b>Unidad</b></td>
+                                                <td><b>Detalle</b></td>
+                                                <td><b>Centro de costo</b></td>
+                                                <td><b>Cuenta Contable</b></td>
+                                                <td><b>Cantidad</b></td>
+                                                <td><b>Precio</b></td>
+                                                <td><b>%Desc</b></td>
+                                                <td><b>%IVA</b></td>
+                                                <td><b>Importe</b></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var m in Model.Productos)
+                                            {
+                                                <tr>
+                                                    <td>@m.TipoProducto</td>
+                                                    <td>@m.Producto</td>
+                                                    <td>@m.CantidadAComprar</td>
+                                                    <td>@m.UnidadMedida</td>
+                                                    <td>@m.Aplicacion</td>
+                                                    <td>@m.CentroCosto</td>
+                                                    <td>@m.CuentaContable</td>
+                                                    <td>@m.Precio</td>
+                                                    <td>@m.Descuento</td>
+                                                    <td>@m.IVA</td>
+                                                    <td>@m.IEPS</td>
+                                                    <td>@m.Importe</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @if (ViewBag.MensajeError != null)
+                            {
+                                <div class="row clearfix">
+                                    <div id="divMensajeError" class="container">
+                                        <div class="alert alert-danger">
+                                            <div class="alert-icon">
+                                                <i class="zmdi zmdi-block"></i>
+                                            </div>
+                                            <strong>
+                                                <label>@ViewBag.MensajeError</label>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="row clearfix">
+                                <div class="col-sm-4 center">
+                                    <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
+                                </div>
+                                <div class="col-sm-4 center">
+                                    <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
+                                        Cancelar
+                                    </a>
+                                </div>
+                                <div class="col-sm-4 center">
+                                    <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
+                                        Autorizar
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    }
-                    <div class="row clearfix">
-                        <div class="col-sm-4 center">
-                            <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
-                        </div>
-                        <div class="col-sm-4 center">
-                            <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
-                                Cancelar
-                            </a>
-                        </div>
-                        <div class="col-sm-4 center">
-                            <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
-                                Autorizar
-                            </a>
-                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <input id="btnAutorizar" type="submit" value="Si" class="btn btn-raised btn-primary btn-round" />
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <div class="modal fade" id="ModalConfirmacion" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
-                </div>
-                <div class="modal-footer">
-                    <input id="btnAutorizar" type="submit" value="Si" class="btn btn-raised btn-primary btn-round" />
-                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="body">
-                        <div class="col-sm-12">
-                            <asp:TextBox ID="txtMotivoCancela" TextMode="MultiLine" CssClass="form-control tex" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></asp:TextBox>
+        <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="body">
+                            <div class="col-sm-12">
+                                <asp:TextBox ID="txtMotivoCancela" TextMode="MultiLine" CssClass="form-control tex" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></asp:TextBox>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" Text="Cancelar" OnClick="btnCancelar_Click" Enabled="false" />
-                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="ModalMensaje" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="title" id="ModalMensajeLabel">Orden de Compra exitosa</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="body">
-                        <div class="col-sm-12">
-                            <asp:Label ID="lblMensajeOrdenCompra" TextMode="MultiLine" />
-                        </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" Text="Cancelar" OnClick="btnCancelar_Click" Enabled="false" />
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <asp:Button ID="btnCrear12" CssClass="btn btn-raised btn-primary btn-round" Text="Crear" OnClick="BtnCrear_Click" />
-                    <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+            </div>
+        </div>
+        <div class="modal fade" id="ModalMensaje" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="title" id="ModalMensajeLabel">Orden de Compra exitosa</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="body">
+                            <div class="col-sm-12">
+                                <asp:Label ID="lblMensajeOrdenCompra" TextMode="MultiLine" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnCrear12" CssClass="btn btn-raised btn-primary btn-round" Text="Crear" OnClick="BtnCrear_Click" />
+                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     }
 </body>

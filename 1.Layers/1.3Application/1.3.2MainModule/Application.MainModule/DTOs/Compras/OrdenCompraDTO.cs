@@ -18,7 +18,7 @@ namespace Application.MainModule.DTOs
         public string OrdenCompraEstatus { get; set; }
         public int IdRequisicion { get; set; }
         public string NumeroRequisicion { get; set; }
-        public string usuarioSolicitante { get; set; }
+        public string Solicitante { get; set; }
         public string MotivoRequisicion { get; set; }
         public string RequeridoEn { get; set; }
         public int IdProveedor { get; set; }
@@ -40,6 +40,22 @@ namespace Application.MainModule.DTOs
         public Nullable<decimal> Iva { get; set; }
         public Nullable<decimal> Ieps { get; set; }
         public Nullable<decimal> Total { get; set; }
+
+
+        public Nullable<decimal> MontBelvieuDlls { get; set; }
+        public Nullable<decimal> TarifaServicioPorGalonDlls { get; set; }
+        public Nullable<decimal> TipoDeCambioDOF { get; set; }
+        public Nullable<decimal> PrecioPorGalon { get; set; }
+        public Nullable<decimal> FactorGalonALitros { get; set; }
+        public Nullable<decimal> ImporteEnLitros { get; set; }
+        public Nullable<decimal> FactorCompraLitrosAKilos { get; set; }
+        public Nullable<decimal> PVPM { get; set; }
+        public string FolioFiscalUUID { get; set; }
+        public string FolioFactura { get; set; }
+        public DateTime? FechaResgistroFactura { get; set; }
+        public Nullable<decimal> FactorConvTransporte { get; set; }
+        public Nullable<decimal> PrecioTransporte { get; set; }
+        public Nullable<decimal> Casetas { get; set; }
         public List<OrdenCompraProductoDTO> Productos { get; set; }
     }
 }

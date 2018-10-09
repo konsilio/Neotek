@@ -91,5 +91,14 @@ namespace Infrastructure.Data.DbContexts
         public virtual DbSet<OrdenCompraPago> OrdenCompraPago { get; set; }
         public virtual DbSet<PrecioVenta> PrecioVenta { get; set; }
         public virtual DbSet<PrecioVentaEstatus> PrecioVentaEstatus { get; set; }
+        public virtual DbSet<AlmacenGasMovimiento> AlmacenGasMovimiento { get; set; }
+        public virtual DbSet<AlmacenGasMovimientoFoto> AlmacenGasMovimientoFoto { get; set; }
+        public virtual DbSet<CTipoMovimiento> CTipoMovimiento { get; set; }
+        public virtual DbSet<ReporteDelDia> ReporteDelDia { get; set; }
+        public virtual DbSet<VentaCajaGeneral> VentaCajaGeneral { get; set; }
+        public virtual DbSet<VentaCorteAnticipoEC> VentaCorteAnticipoEC { get; set; }
+        public virtual DbSet<VentaMovimiento> VentaMovimiento { get; set; }
+        public virtual DbSet<VentaPuntoDeVenta> VentaPuntoDeVenta { get; set; }
+        public virtual DbSet<VentaPuntoDeVentaDetalle> VentaPuntoDeVentaDetalle { get; set; }
     }
 }

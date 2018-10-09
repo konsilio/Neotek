@@ -34,5 +34,6 @@ namespace Application.MainModule.DTOs.Catalogo
         public string CategoriaProducto { get; set; }
         public string LineaProducto { get; set; }
         public string Empresa { get; set; }
+        
     }
 }

@@ -18,6 +18,7 @@ namespace Sagas.MainModule.Entidades
         public AlmacenGasDescarga()
         {
             this.Fotos = new HashSet<AlmacenGasDescargaFoto>();
+            this.Movimientos = new HashSet<AlmacenGasMovimiento>();
         }
     
         public int IdAlmacenEntradaGasDescarga { get; set; }
@@ -68,5 +69,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<AlmacenGasDescargaFoto> Fotos { get; set; }
         public virtual Proveedor Expedidor { get; set; }
         public virtual Proveedor Porteador { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasMovimiento> Movimientos { get; set; }
     }
 }

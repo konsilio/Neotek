@@ -12,6 +12,7 @@ namespace Application.MainModule.DTOs.Almacen
     {
         public AlmacenGasDescarga Descarga { get; set; }
         public AlmacenGasDescarga DescargaSinNavigationProperties { get; set; }
+        public List<AlmacenGasDescargaFoto> DescargaFotos { get; set; }
 
 
         public OrdenCompra OCExpedidor { get; set; }
@@ -31,6 +32,8 @@ namespace Application.MainModule.DTOs.Almacen
 
         public string Concepto { get; set; }// Revisar si puede ser catálogo de apoyo
 
+
+        public AlmacenGasMovimiento Movimiento { get; set; }
 
         public decimal CantidadSINRemanenteKg { get; set; }
         public decimal CantidadSINRemanenteLt { get; set; }

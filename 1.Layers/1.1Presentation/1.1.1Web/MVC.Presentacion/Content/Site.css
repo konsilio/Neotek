@@ -1,6 +1,5 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+  
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -33,5 +32,7 @@ textarea {
     background-color: #ffffff;
     border: 1px solid #dddddd;
 }
-
+.widthInherit.btn-group.bootstrap-select.form-control{
+    width:inherit
+}
 

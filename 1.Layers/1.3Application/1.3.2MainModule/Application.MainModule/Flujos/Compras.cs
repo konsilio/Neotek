@@ -6,6 +6,7 @@ using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Almacen;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.Requisicion;
@@ -56,7 +57,7 @@ namespace Application.MainModule.Flujos
             respuesta.Exito = true;
             List<OrdenCompra> locDTO = OrdenCompraServicio.IdentificarOrdenes(oc);
             locDTO = OrdenCompraServicio.AsignarProductos(oc.Productos, locDTO);
-            locDTO = OrdenCompraServicio.CalcularTotales(locDTO);
+            locDTO = CalcularOrdenCompraServicio.CalcularTotales(locDTO);
             foreach (var ocDTO in locDTO)
             {                
                 ocDTO.NumOrdenCompra = FolioServicio.GeneraNumerOrdenCompra(ocDTO);
@@ -109,6 +110,27 @@ namespace Application.MainModule.Flujos
             entity.IdOrdenCompraEstatus = 5;
             return OrdenCompraServicio.Actualizar(entity);
         }
+        public RespuestaDto FinalizarOrdenCompra(OrdenCompraDTO dto)
+        {
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            if (oc == null) return OrdenCompraServicio.NoExiste();
+
+            var entity = OrdenComprasAdapter.FromEntity(oc);
+            entity.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
+            return OrdenCompraServicio.Actualizar(entity);
+        }
+        public RespuestaDto ActualizarOrdenCompraFactura(OrdenCompraDTO dto)
+        {
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            if (oc == null) return OrdenCompraServicio.NoExiste();
+
+            var entity = OrdenComprasAdapter.FromEntity(oc);
+            entity.FolioFactura = dto.FolioFactura;
+            entity.FolioFiscalUUID = dto.FolioFiscalUUID;
+            entity.FechaResgistroFactura = Convert.ToDateTime(DateTime.Today.ToShortDateString());
+
+            return OrdenCompraServicio.Actualizar(entity);
+        }
         public List<OrdenCompraDTO> ListaOrdenCompra(short IdEmpresa)
         {
             var resp = PermisosServicio.PuedeConsultarOrdenCompra();
@@ -131,14 +153,39 @@ namespace Application.MainModule.Flujos
         public ComplementoGasDTO BuscarComplementoGas(int idOrdenCompra)
         {
             var oc = OrdenCompraServicio.Buscar(idOrdenCompra);
-            var cg = OrdenCompraServicio.BuscarComplemento(oc);
-
+            var cg = OrdenCompraServicio.BuscarComplementoGas(oc);
+            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
+            var imgs = AlmacenGasServicio.ObtenerImagenes(alamacen);
 
             return cg;
         }
         public List<OrdenCompraEstatusDTO> ListaEstatus()
         {
             return OrdenComprasAdapter.ToDTO(OrdenCompraServicio.ListaEstatus());
+        }
+        public RespuestaDto ConfirmarPago(OrdenCompraPagoDTO dto)
+        {
+            var Pago = OrdenCompraPagoServicio.Buscar(dto.IdOrdenCompra, dto.Orden);
+
+            var entity = OrdenCompraPagoAdapter.FromEntity(Pago);
+            entity.PhysicalPathCapturaPantalla = entity.PhysicalPathCapturaPantalla;
+            entity = ImagenServicio.ObtenerImagen(entity);          
+
+            return OrdenCompraPagoServicio.Actualiza(entity);            
+        }
+        public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)
+        {
+            var Pago = OrdenCompraPagoAdapter.FromDTO(dto);
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+
+            Pago = CalcularPagoServicio.CalcularPago(Pago, oc);           
+            
+            return OrdenCompraPagoServicio.Guardar(Pago);
+        }
+        public List<OrdenCompraPagoDTO> BuscarPagos(int idOc)
+        {
+            var pagos = OrdenCompraPagoServicio.BuscarPagos(idOc);
+            return OrdenCompraPagoAdapter.ToDTO(pagos);
         }
     }
 }

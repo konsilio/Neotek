@@ -29,7 +29,7 @@ namespace Application.MainModule.Servicios.Notificacion
                 ParaLista = ObtenerCorreo(destinatarios),
                 Asunto = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], req.NumeroRequisicion),
                 Mensaje = CorreoHtmlServicio.RequisicionNueva(req),
-            };        
+            };
             Enviar(correoDto);
             if (!incluirMensajePush)
             {
@@ -52,6 +52,40 @@ namespace Application.MainModule.Servicios.Notificacion
             }
         }
         public static void OrdenDeCompraNueva(OrdenCompra oc, bool incluirMensajePush = false)
+        {
+            var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
+            var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.CompraAutorizarOCompra).ToList();
+            var destinatarios = ObtenerDestinatarios(roles);
+
+            var correoDto = new CorreoDto()
+            {
+                De = ObtenerCorreo(usuAplicacion),
+                ParaLista = ObtenerCorreo(destinatarios),
+                Asunto = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], oc.NumOrdenCompra),
+                Mensaje = CorreoHtmlServicio.OrdenCompraNueva(oc),
+            };
+            Enviar(correoDto);
+            if (!incluirMensajePush)
+            {
+                var Autorizacion = new KeyValuePair<string, string>("key", string.Concat("=", ConfigurationManager.AppSettings["AppNotificacionKeyAutorizacion"]));
+                var js = new FBNotificacionDTO()
+                {
+                    registration_ids = ObtenerKeysMovile(destinatarios).ToArray(),
+                    data = new Data
+                    {
+                        OrderNo = oc.NumOrdenCompra.ToString(),
+                        Tipo = NotificacionPushConst.RT001
+                    },
+                    notification = new Notification
+                    {
+                        text = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], oc.NumOrdenCompra),
+                        title = NotificacionPushConst.R0001
+                    }
+                };
+                Enviar(js, Autorizacion);
+            }
+        }
+        public static void ConfirmacionPago(OrdenCompra oc, bool incluirMensajePush = false)
         {
             var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
             var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.CompraAutorizarOCompra).ToList();
@@ -121,7 +155,13 @@ namespace Application.MainModule.Servicios.Notificacion
         private static List<Usuario> ObtenerDestinatarios(List<Rol> roles)
         {
             var destinatarios = new List<Usuario>();
-            roles.ToList().ForEach(x => destinatarios.AddRange(x.Usuarios));//.ListaUsuarios));
+            foreach (var rol in roles)
+            {
+                if (rol.UsuariosRoles != null && rol.UsuariosRoles.Count > 0)
+                {
+                    destinatarios.AddRange(rol.UsuariosRoles.Select(ru => ru.Usuario).ToList());
+                }
+            }            
             return destinatarios.Distinct().ToList();
         }
         private static List<string> ObtenerCorreo(List<Usuario> usuarios)
@@ -144,16 +184,20 @@ namespace Application.MainModule.Servicios.Notificacion
                 return usuario.Email3;
 
             return string.Empty;
-        }        
+        }
         private static void Enviar(CorreoDto dto)
         {
-            EnviarCorreosServicio.Enviar(dto);
+            if (string.IsNullOrEmpty(dto.De) && dto.ParaLista.Count > 0)
+            {
+                EnviarCorreosServicio.Enviar(dto);
+            }
+
         }
         private static FBNotificacionDTO Enviar(FBNotificacionDTO dto, KeyValuePair<string, string> Autorizacion)
         {
-            var agente = new AgenteServicio();   
+            var agente = new AgenteServicio();
             agente.PostMethod(dto, "https://fcm.googleapis.com/", "fcm/send", Autorizacion);
-            return dto;       
+            return dto;
 
         }
     }

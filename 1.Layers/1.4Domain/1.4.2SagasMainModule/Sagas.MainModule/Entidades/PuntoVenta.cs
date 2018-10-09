@@ -14,6 +14,16 @@ namespace Sagas.MainModule.Entidades
     
     public partial class PuntoVenta
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PuntoVenta()
+        {
+            this.ReporteDelDia = new HashSet<ReporteDelDia>();
+            this.VentaCajaGeneral = new HashSet<VentaCajaGeneral>();
+            this.VentaCorteAnticipoEC = new HashSet<VentaCorteAnticipoEC>();
+            this.VentaMovimiento = new HashSet<VentaMovimiento>();
+            this.VentaPuntoDeVenta = new HashSet<VentaPuntoDeVenta>();
+        }
+    
         public int IdPuntoVenta { get; set; }
         public short IdEmpresa { get; set; }
         public short IdCAlmacenGas { get; set; }
@@ -25,5 +35,15 @@ namespace Sagas.MainModule.Entidades
         public virtual UnidadAlmacenGas UnidadesAlmacen { get; set; }
         public virtual OperadorChofer OperadorChofer { get; set; }
         public virtual Empresa Empresa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReporteDelDia> ReporteDelDia { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VentaCajaGeneral> VentaCajaGeneral { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VentaCorteAnticipoEC> VentaCorteAnticipoEC { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VentaMovimiento> VentaMovimiento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VentaPuntoDeVenta> VentaPuntoDeVenta { get; set; }
     }
 }

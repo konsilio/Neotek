@@ -106,7 +106,6 @@ namespace Application.MainModule.Flujos
             user.Activo = false;
             return UsuarioServicio.Actualizar(user);
         }
-
         public RespuestaDto AsignarRol(UsuarioRolDto uRDto)
         {
             var resp = PermisosServicio.PuedeModificarUsuario();
@@ -124,7 +123,6 @@ namespace Application.MainModule.Flujos
             var usuarioRol = UsuarioAdapter.FromDtoRol(uRDto);
             return UsuarioServicio.Insertar(usuarioRol);
         }
-
         public RespuestaDto EliminaRolAsignado(UsuarioRolDto usrol)
         {
             var resp = PermisosServicio.PuedeEliminarRol();
@@ -142,8 +140,7 @@ namespace Application.MainModule.Flujos
 
            var userol = UsuarioAdapter.FromDtoRol(usrol);
            return UsuarioServicio.Eliminar(userol);
-        }
-        
+        }        
         #endregion
 
         #region Roles
@@ -176,7 +173,6 @@ namespace Application.MainModule.Flujos
             var emp = RolAdapter.FromDtoNomRol(rolDto, rol);
             emp.FechaRegistro = emp.FechaRegistro;
             return RolServicio.Actualizar(emp);
-
             //insertar Rol in data access
         }
 
