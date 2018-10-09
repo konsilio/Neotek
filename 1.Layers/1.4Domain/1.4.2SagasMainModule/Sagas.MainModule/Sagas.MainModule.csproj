@@ -121,6 +121,9 @@
     <Compile Include="Entidades\ClienteLocacion.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\CTipoMovimiento.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\CuentaContable.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -187,6 +190,9 @@
     <Compile Include="Entidades\RegimenFiscal.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\ReporteDelDia.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Requisicion.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -246,6 +252,21 @@
     </Compile>
     <Compile Include="Entidades\UsuarioPartial.cs" />
     <Compile Include="Entidades\UsuarioRol.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\VentaCajaGeneral.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\VentaCorteAnticipoEC.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\VentaMovimiento.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\VentaPuntoDeVenta.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\VentaPuntoDeVentaDetalle.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
     <Compile Include="IRepositorios\IEmpresaRepositorio.cs" />
