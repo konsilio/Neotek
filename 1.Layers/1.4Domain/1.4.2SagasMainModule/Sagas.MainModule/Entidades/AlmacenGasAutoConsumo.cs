@@ -14,6 +14,17 @@ namespace Sagas.MainModule.Entidades
     
     public partial class AlmacenGasAutoConsumo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AlmacenGasAutoConsumo()
+        {
+            this.Fotografias = new HashSet<AlmacenGasAutoConsumoFoto>();
+        }
+    
+        public short IdEmpresa { get; set; }
+        public short Year { get; set; }
+        public byte Mes { get; set; }
+        public byte Dia { get; set; }
+        public short Orden { get; set; }
         public short IdCAlmacenGasSalida { get; set; }
         public short IdCAlmacenGasEntrada { get; set; }
         public byte IdTipoEvento { get; set; }
@@ -24,7 +35,8 @@ namespace Sagas.MainModule.Entidades
     
         public virtual UnidadAlmacenGas UnidadSalida { get; set; }
         public virtual UnidadAlmacenGas UnidadEntrada { get; set; }
-        public virtual AlmacenGasAutoConsumoFoto Fotografias { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasAutoConsumoFoto> Fotografias { get; set; }
         public virtual TipoEvento TipoEvento { get; set; }
     }
 }

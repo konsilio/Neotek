@@ -67,6 +67,12 @@
     <Compile Include="Entidades\AlmacenGasDescargaFoto.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\AlmacenGasMovimiento.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entidades\AlmacenGasMovimientoFoto.cs">
+      <DependentUpon>Sagas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\AlmacenGasRecarga.cs">
       <DependentUpon>Sagas.tt</DependentUpon>
     </Compile>
@@ -254,6 +260,7 @@
     <Compile Include="ObjetosValor\Constantes\AlmacenGasConst.cs" />
     <Compile Include="ObjetosValor\Constantes\AlmacenConst.cs" />
     <Compile Include="ObjetosValor\Constantes\NotificacionPushConst.cs" />
+    <Compile Include="ObjetosValor\Enum\CalibracionDestinoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\enumIVA.cs" />
     <Compile Include="ObjetosValor\Enum\EstatusPrecioVentaEnum.cs" />
     <Compile Include="ObjetosValor\Enum\IdentidadUnidadAlmacenGasEnum.cs" />

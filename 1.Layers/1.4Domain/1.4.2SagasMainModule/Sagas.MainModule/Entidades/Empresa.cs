@@ -42,6 +42,7 @@ namespace Sagas.MainModule.Entidades
             this.UnidadesAlmacenGasCilindro = new HashSet<UnidadAlmacenGasCilindro>();
             this.OperadoresChoferes = new HashSet<OperadorChofer>();
             this.PreciosVenta = new HashSet<PrecioVenta>();
+            this.AlmacenGasMovimiento = new HashSet<AlmacenGasMovimiento>();
         }
     
         public short IdEmpresa { get; set; }
@@ -144,5 +145,7 @@ namespace Sagas.MainModule.Entidades
         public virtual ICollection<OperadorChofer> OperadoresChoferes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PrecioVenta> PreciosVenta { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlmacenGasMovimiento> AlmacenGasMovimiento { get; set; }
     }
 }

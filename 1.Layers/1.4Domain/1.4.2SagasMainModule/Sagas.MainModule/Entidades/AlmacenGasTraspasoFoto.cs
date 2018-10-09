@@ -14,14 +14,19 @@ namespace Sagas.MainModule.Entidades
     
     public partial class AlmacenGasTraspasoFoto
     {
+        public short IdEmpresa { get; set; }
+        public short Year { get; set; }
+        public byte Mes { get; set; }
+        public byte Dia { get; set; }
+        public short Orden { get; set; }
+        public short OrdenImagen { get; set; }
         public short IdCAlmacenGasSalida { get; set; }
         public short IdCAlmacenGasEntrada { get; set; }
-        public int IdOrden { get; set; }
         public short IdImagenDe { get; set; }
         public string UrlImagen { get; set; }
         public string PathImagen { get; set; }
         public string CadenaBase64 { get; set; }
     
-        public virtual AlmacenGasTraspaso AlmacenGasTraspaso { get; set; }
+        public virtual AlmacenGasTraspaso Traspaso { get; set; }
     }
 }

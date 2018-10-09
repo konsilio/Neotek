@@ -33,6 +33,8 @@ namespace Application.MainModule.DTOs.Almacen
         public string Concepto { get; set; }// Revisar si puede ser catálogo de apoyo
 
 
+        public AlmacenGasMovimiento Movimiento { get; set; }
+
         public decimal CantidadSINRemanenteKg { get; set; }
         public decimal CantidadSINRemanenteLt { get; set; }
         public decimal RemanenteKg { get; set; }
