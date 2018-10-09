@@ -209,6 +209,7 @@ namespace Application.MainModule.Servicios.Almacen
 
             return cil;
         }
+
         public static UnidadAlmacenGasCilindro AdaptarCilindro(UnidadAlmacenGasCilindro cil, decimal cantidad)
         {
             if (cil != null)
@@ -216,6 +217,7 @@ namespace Application.MainModule.Servicios.Almacen
 
             return cil;
         }
+
         public static List<UnidadAlmacenGasCilindro> AdaptarCilindro(List<AlmacenGasTomaLecturaCilindro> tmCil)
         {            
             return tmCil.Select(x=> AdaptarCilindro(x)).ToList();
