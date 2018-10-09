@@ -218,11 +218,6 @@ namespace Application.MainModule.Servicios.Almacen
             return cil;
         }
 
-        public static List<UnidadAlmacenGasCilindro> AdaptarCilindro(List<AlmacenGasTomaLecturaCilindro> tmCil)
-        {            
-            return tmCil.Select(x=> AdaptarCilindro(x)).ToList();
-        }
-
         public static List<UnidadAlmacenGasCilindro> AdaptarCilindro(decimal cantidad)
         {
             var cilindros = new List<UnidadAlmacenGasCilindro>();
@@ -363,6 +358,11 @@ namespace Application.MainModule.Servicios.Almacen
         {
             var al = new AlmacenGasDataAccess().BuscarTodas(idEmpresa);
             return al.Where(x => (x.IdPipa != null || x.IdCamioneta != null || x.IdEstacionCarburacion != null && x.Activo)).ToList();
+        }
+
+        public static List<UnidadAlmacenGasCilindro> AdaptarCilindro(List<AlmacenGasTomaLecturaCilindro> tmCil)
+        {
+            return tmCil.Select(x => AdaptarCilindro(x)).ToList();
         }
     }
 }
