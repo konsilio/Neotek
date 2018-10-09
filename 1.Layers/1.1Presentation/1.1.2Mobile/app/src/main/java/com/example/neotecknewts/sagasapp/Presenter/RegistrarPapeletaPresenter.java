@@ -23,4 +23,6 @@ public interface RegistrarPapeletaPresenter {
     void getMedidores(String token);
     void onSuccessGetMedidores(List<MedidorDTO> medidorDTOList);
     void onError();
+
+    void onError(String mensaje);
 }
