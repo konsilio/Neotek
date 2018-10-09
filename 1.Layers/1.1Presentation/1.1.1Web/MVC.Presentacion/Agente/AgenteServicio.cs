@@ -2512,7 +2512,32 @@ namespace MVC.Presentacion.Agente
         public void EnviarSolicitudPago(OrdenCompraPagoDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
-            LLamada(dto, token, MetodoRestConst.Post).Wait();
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void EnviarSolicitudPagoExpedidor(OrdenCompraComplementoGasDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void EnviarSolicitudPagoPorteador(OrdenCompraComplementoGasDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void GuardarDatosPorteador(OrdenCompraComplementoGasDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void GuardarDatosExpedidor(OrdenCompraComplementoGasDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void ConfirmarDatosPapeleta(OrdenCompraComplementoGasDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
         public void EnviarDatosFactura(OrdenCompraDTO dto, string token)
         {

@@ -28,6 +28,7 @@ namespace Application.MainModule.DTOs.Compras
         public decimal KilosDescargados { get; set; }
         public decimal KilosDiferencia { get; set; }
         public decimal FactorLitrosAKilos { get; set; }
+        public decimal PrecioConIVA { get; set; }
 
         public List<ProductoOCDTO> Productos { get; set; }
         public OrdenCompraDTO OrdenCompraExpedidor { get; set; }

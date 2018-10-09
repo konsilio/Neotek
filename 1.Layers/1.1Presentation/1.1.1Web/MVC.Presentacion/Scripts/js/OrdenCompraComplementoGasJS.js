@@ -1,12 +1,22 @@
 ﻿    $(document).ready(function () {
-        $("#btnCrear").click(function () {
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "OrdenCompra", Action = "CrearOrdenCompra" }) %>');
-            form.attr('method', 'post');
+        $("#btnPagoExpedidor").click(function () {
+            $("form").attr("action", "/OrdenCompra/SolicitarPagoExpedidor");
+        });
+        $("#btnPagoPorteador").click(function () {
+            $("form").attr("action", "/OrdenCompra/SolicitarPagoPorteador");
+        });
+        $("#btnGuardarDatosExpedidor").click(function () {
+            $("form").attr("action", "/OrdenCompra/GuardarDatosExpedidor");
+        });
+        $("#btnGuardarDatosPorteador").click(function () {
+            $("form").attr("action", "/OrdenCompra/GuardarDatosPorteador");
+        });
+        $("#btnGuardarDatosPapeleta").click(function () {
+            $("form").attr("action", "/OrdenCompra/GuardarDatosPapeleta");
         });
     });
 
-    //kilos finales
+//kilos finales
     var ObtenerLitrosDesdeKilos = function (kilogramos, factor) {
         return kilogramos / factor;
     };

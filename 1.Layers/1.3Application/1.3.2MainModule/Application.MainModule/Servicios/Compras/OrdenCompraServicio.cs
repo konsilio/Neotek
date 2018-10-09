@@ -76,7 +76,7 @@ namespace Application.MainModule.Servicios.Compras
                 }
             }
             return _ocs;
-        }       
+        }
         /// <summary>
         /// Busca todos las ordene de compra por ID de empresa
         /// En caso de no ser administracion central se tomara el ID de la empresa del token para filtrar.
@@ -135,6 +135,31 @@ namespace Application.MainModule.Servicios.Compras
                 Exito = false,
             };
         }
+        public static RespuestaDto PagoExistenteExpedidor()
+        {
+            string mensaje = string.Format(Error.PagoExistente, "el expedidor");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+                Exito = false,
+            };
+        }
+        public static RespuestaDto PagoExistentePorteador()
+        {
+            string mensaje = string.Format(Error.PagoExistente, "el porteador");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+                Exito = false,
+            };
+        }
+
         public static ComplementoGasDTO BuscarComplementoGas(OrdenCompra oc)
         {
             var descarga = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
@@ -163,7 +188,7 @@ namespace Application.MainModule.Servicios.Compras
             OCExpedidor.SubtotalSinIva = CalcularOrdenCompraServicio.Subtotal(OCExpedidor.PVPM.Value, descarga.MasaKg.Value);
             OCExpedidor.Iva = CalcularOrdenCompraServicio.Iva(OCExpedidor.SubtotalSinIva.Value, IvaEnum.p16);
             OCExpedidor.Total = CalcularOrdenCompraServicio.Total(OCExpedidor.SubtotalSinIva.Value, OCExpedidor.Iva.Value, 0);
-            
+
             OCPorteador.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
             OCPorteador.FactorConvTransporte = empresa.FactorFleteGas;
             OCPorteador.PrecioTransporte = CalcularOrdenCompraServicio.ComplementoPrecioTransporteDeGas(descarga.MasaKg.Value, OCPorteador.FactorConvTransporte.Value);
@@ -218,14 +243,45 @@ namespace Application.MainModule.Servicios.Compras
         {
             return ComplementoGasAdapter.ToRequisicion(dto, req);
         }
-        public static OrdenCompra ObtenerOCExpedidordeComplemento(ComplementoGasDTO dto)
+        public static OrdenCompra CompletarDatosExpedidor(ComplementoGasDTO dto, OrdenCompra oc)
         {
-            OrdenCompra oc = OrdenComprasAdapter.FromDTO(dto.OrdenCompraExpedidor);
-            oc.Total = dto.
-        }
-        //public static RespuestaDto SolicitarPagoExpedidor(ComplementoGasDTO dto)
-        //{
+            var productoComplemento = dto.Productos.SingleOrDefault(x => x.EsGas);       
 
-        //}
+            oc.IdCentroCosto = productoComplemento.IdCentroCosto;
+            oc.IdCuentaContable = productoComplemento.IdCuentaContable;
+            oc.IdProveedor = productoComplemento.IdProveedor;
+            oc.MontBelvieuDlls = dto.OrdenCompraExpedidor.MontBelvieuDlls;
+            oc.TarifaServicioPorGalonDlls = dto.OrdenCompraExpedidor.TarifaServicioPorGalonDlls;
+            oc.TipoDeCambioDOF = dto.OrdenCompraExpedidor.TipoDeCambioDOF;
+            oc.PrecioPorGalon = dto.OrdenCompraExpedidor.PrecioPorGalon;
+            oc.FactorGalonALitros = dto.OrdenCompraExpedidor.FactorGalonALitros;
+            oc.ImporteEnLitros = dto.OrdenCompraExpedidor.ImporteEnLitros;
+            oc.FactorCompraLitrosAKilos = dto.OrdenCompraExpedidor.FactorCompraLitrosAKilos;
+            oc.PVPM = dto.OrdenCompraExpedidor.PVPM;
+            oc.Iva = dto.OrdenCompraExpedidor.Iva;
+            oc.Total = dto.OrdenCompraExpedidor.Total;
+            oc.FolioFactura = dto.OrdenCompraExpedidor.FolioFactura;
+            oc.FolioFiscalUUID = dto.OrdenCompraExpedidor.FolioFiscalUUID;
+
+            return oc;
+        }
+        public static OrdenCompra CompletarDatosPorteador(ComplementoGasDTO dto, OrdenCompra oc)
+        {
+            var productoComplemento = dto.Productos.SingleOrDefault(x => x.EsTransporteGas);          
+
+            oc.IdCentroCosto = productoComplemento.IdCentroCosto;
+            oc.IdCuentaContable = productoComplemento.IdCuentaContable;
+            oc.IdProveedor = productoComplemento.IdProveedor;
+            oc.FactorConvTransporte = dto.OrdenCompraPorteador.FactorConvTransporte;
+            oc.PrecioTransporte = dto.OrdenCompraPorteador.PrecioTransporte;
+            oc.Casetas = dto.OrdenCompraPorteador.Casetas;
+            oc.SubtotalSinIva = dto.OrdenCompraPorteador.SubtotalSinIva;
+            oc.Iva = dto.OrdenCompraPorteador.Iva;
+            oc.Total = dto.OrdenCompraPorteador.Total;
+            oc.FolioFactura = dto.OrdenCompraPorteador.FolioFactura;
+            oc.FolioFiscalUUID = dto.OrdenCompraPorteador.FolioFiscalUUID;
+
+            return oc;
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace Sagas.MainModule.Entidades
         // Colocar en el constructor de la entidad autogenerada HASTA EL FINAL
         // using System.Linq;
         //this.Usuario = this.UsuariosRoles.Select(x => x.Usuario).ToList();
+        public bool Tesoreria { get; set; }
+
         public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }

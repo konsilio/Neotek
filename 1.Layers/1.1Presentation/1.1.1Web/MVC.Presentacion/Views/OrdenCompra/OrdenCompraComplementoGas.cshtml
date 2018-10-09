@@ -5,14 +5,17 @@
     .calculaPrecio {
     }
 </style>
+<script>
+
+</script>
 <link rel="stylesheet" href="~/assets/plugins/light-gallery/css/lightgallery.css">
 <section class="content home">
     <div class="container-fluid">
-        @using (Html.BeginForm("ComplementoGas", "OrdenCompra", FormMethod.Post))
+        @using (Html.BeginForm())
         {
             @Html.HiddenFor(m => m.FactorLitrosAKilos)
             @*@Html.HiddenFor(m => m.OrdenCompraExpedidor)
-                @Html.HiddenFor(m => m.OrdenCompraPorteador)*@
+            @Html.HiddenFor(m => m.OrdenCompraPorteador)*@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-md-12">
@@ -375,12 +378,13 @@
                                         </div>
                                         <div class="row clearfix">
                                             <div class="col-md-2">
-                                                <input type="submit" ID="btnGuardarDatosPapeleta" class="btn btn-raised btn-primary btn-round" value="Guardar" />
+                                                <input type="submit" ID="btnGuardarDatosPapeleta" class="btn btn-raised btn-primary btn-round" value="Confirmar datos" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            @*--------------------------------------------------------------------------------------------------------------------------------------------------*@
                             <div class="panel panel-primary">
                                 <div class="panel-heading" role="tab" id="headingCostos">
                                     <h4 class="panel-title">
@@ -547,10 +551,7 @@
                                                     <div class="col-md-3 form-control-label">
                                                         <label for="lblImporteAPagar">(En pesos)</label>
                                                     </div>
-                                                </div>
-
-                                                @if (Model.OrdenCompraExpedidor.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.PagoConfirmado))
-                                                {
+                                                </div>                                           
                                                     <br />
                                                     <div class="row clearfix">
                                                         <div class="col-md-3 col-sm-4 form-control-label">
@@ -574,17 +575,16 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <br />
-                                                }
+                                                    <br />                                                
                                                 <div class="row clearfix">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="submit" ID="btnGuardarDatosExpedidor" class="btn btn-raised btn-primary btn-round" disabled value="Guardar" />
+                                                            <input type="submit" ID="btnGuardarDatosExpedidor" class="btn btn-raised btn-primary btn-round" value="Guardar" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="submit" ID="btnSolicitarPagoExpedidor" class="btn btn-raised btn-primary btn-round" formaction="SolicitarPagoExpedidor" value="Solicitar Pago" />
+                                                            <input type="submit" id="btnPagoExpedidor" class="btn btn-raised btn-primary btn-round" disabled value="Solicitar Pago" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -678,10 +678,7 @@
                                                     <div class="col-md-3 form-control-label">
                                                         <label for="btnSolicitarPaogPorteador">(En pesos)</label>
                                                     </div>
-                                                </div>
-
-                                                @if (Model.OrdenCompraExpedidor.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.PagoConfirmado))
-                                                {
+                                                </div>                                            
                                                     <br />
                                                     <div class="row clearfix">
                                                         <div class="col-md-3 col-sm-4 form-control-label">
@@ -705,17 +702,16 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <br />
-                                                }
+                                                    <br />                                                
                                                 <div class="row clearfix">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="submit" ID="btnGuardarDatosPorteador" class="btn btn-raised btn-primary btn-round" disabled value="Guardar" />
+                                                            <input type="submit" ID="btnGuardarDatosPorteador" class="btn btn-raised btn-primary btn-round" value="Guardar" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <input type="submit" ID="btnSolicitarPaogPorteador" class="btn btn-raised btn-primary btn-round" formaction="SolisitarPagoPorteador" value="Solicitar Pago" />
+                                                            <input type="submit" ID="btnSolicitarPaogPorteador" class="btn btn-raised btn-primary btn-round" disabled formaction="SolisitarPagoPorteador" value="Solicitar Pago" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -735,7 +731,7 @@
                                     <div class="panel-body">
                                         <div class="blockquote blockquote-info btn-round">
                                             <div id="aniimated-thumbnials" class="list-unstyled row clearfix">
-                                               @*Imagenes*@
+                                                @*Imagenes*@
                                                 @if (Model.Fotos != null)
                                                 {
                                                     foreach (var item in Model.Fotos)

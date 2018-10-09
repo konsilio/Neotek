@@ -166,20 +166,35 @@ namespace MVC.Presentacion.App_Code
             agente.EnviarConfirmarPago(dto, tkn);
             return agente._RespuestaDTO;
         }
-        public static RespuestaDTO SolicitarPago(OrdenCompraPagoDTO dto, string tkn)
+        public static RespuestaDTO SolicitarPagoExpedidor(OrdenCompraComplementoGasDTO dto, string tkn)
         {
             AgenteServicio agente = new AgenteServicio();
-            agente.EnviarSolicitudPago(dto, tkn);
+            agente.EnviarSolicitudPagoExpedidor(dto, tkn);
             return agente._RespuestaDTO;
         }
-        public static RespuestaDTO GenerarPago(OrdenCompraComplementoDTO oc, string tkn)
+        public static RespuestaDTO SolicitarPagoPorteador(OrdenCompraComplementoGasDTO dto, string tkn)
         {
-            return SolicitarPago(new OrdenCompraPagoDTO()
-            {
-                IdOrdenCompra = oc.IdOrdenCompra,
-                IdProveedor = oc.IdProveedor,
-                MontoPagado = oc.MontoAPagar
-            }, tkn);
+            AgenteServicio agente = new AgenteServicio();
+            agente.EnviarSolicitudPagoPorteador(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ConfirmarDatosExpedidor(OrdenCompraComplementoGasDTO dto, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.GuardarDatosExpedidor(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ConfirmarDatosPorteador(OrdenCompraComplementoGasDTO dto, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.GuardarDatosPorteador(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ConfirmarDatosPapeleta(OrdenCompraComplementoGasDTO dto, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.GuardarDatosPorteador(dto, tkn);
+            return agente._RespuestaDTO;
         }
     }
 }

@@ -111,5 +111,20 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _compras.BuscarPagos(idOC));
         }
+        [Route("solictud/pago/expedidor")]
+        public HttpResponseMessage PutSolicitarPagoExpedidor(ComplementoGasDTO oc)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoExipedidor(oc), Request);
+        }
+        [Route("solictud/pago/porteador")]
+        public HttpResponseMessage PutSolicitarPagoPorteador(ComplementoGasDTO oc)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoPorteador(oc), Request);
+        }
+        [Route("solictud/pago/mercancia")]
+        public HttpResponseMessage PutSolicitarPago(ComplementoGasDTO oc)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoPorteador(oc), Request);
+        }
     }
 }

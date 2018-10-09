@@ -40,8 +40,6 @@ namespace Application.MainModule.DTOs
         public Nullable<decimal> Iva { get; set; }
         public Nullable<decimal> Ieps { get; set; }
         public Nullable<decimal> Total { get; set; }
-
-
         public Nullable<decimal> MontBelvieuDlls { get; set; }
         public Nullable<decimal> TarifaServicioPorGalonDlls { get; set; }
         public Nullable<decimal> TipoDeCambioDOF { get; set; }
