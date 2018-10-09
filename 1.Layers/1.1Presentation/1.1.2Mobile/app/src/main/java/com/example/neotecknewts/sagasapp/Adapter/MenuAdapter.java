@@ -324,8 +324,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsVentaCamioneta",true);
                     intent.putExtra("EsVentaPipa",false);
                     view.getContext().startActivity(intent);
-                }else if(menuItem.getHeaderMenu().equals("Camioneta de cilindros")&&
-                        menuItem.getName().equals("Pipa")){
+                }else if(menuItem.getHeaderMenu().equals("Pipa")&&
+                        menuItem.getName().equals("Punto de Venta")){
                     Intent intent = new Intent(view.getContext(),
                             PuntoVentaSolicitarActivity.class);
                     intent.putExtra("EsVentaCarburacion",false);

@@ -19,4 +19,5 @@ public interface VistaOrdenesCompraPresenter {
     void getOrdenesCompra(int IdEmpresa, String token);
     void onSuccessGetOrdenesCompra(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO);
     void onError();
+    void onError(String mensaje);
 }

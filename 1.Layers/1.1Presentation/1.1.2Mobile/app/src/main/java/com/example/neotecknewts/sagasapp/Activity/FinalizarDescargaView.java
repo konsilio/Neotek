@@ -17,4 +17,6 @@ public interface FinalizarDescargaView {
     void onSuccessGetOrdenesCompra(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO);
     void onSuccessGetMedidores(List<MedidorDTO> medidorDTOs);
     void onSuccessGetAlmacen(List<AlmacenDTO> almacenDTOs);
+
+    void messageError(String mensaje);
 }

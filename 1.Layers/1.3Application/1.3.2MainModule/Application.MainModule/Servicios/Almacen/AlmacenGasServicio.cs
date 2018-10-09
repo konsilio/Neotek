@@ -17,6 +17,7 @@ using Security.MainModule.Criptografia;
 using Utilities.MainModule;
 using Sagas.MainModule.ObjetosValor.Constantes;
 using Application.MainModule.Servicios.Seguridad;
+using Application.MainModule.AdaptadoresDTO.Mobile;
 
 namespace Application.MainModule.Servicios.Almacen
 {
@@ -389,6 +390,40 @@ namespace Application.MainModule.Servicios.Almacen
             return EstacionCarburacionServicio.ObtenerNombre(uAG);
         }
 
+        public static ReporteDiaDTO ReporteDia(DateTime fecha, short idCAlmacenGas)
+        {
+            var almacen = ObtenerAlmacen(idCAlmacenGas);
+            if (almacen.IdCamioneta !=null && almacen.IdCamioneta>0)
+            {
+                var cilindros = new AlmacenGasDataAccess().BuscarTodosCilindros(TokenServicio.ObtenerIdEmpresa());
+                //Falta agregar los datos de la venta de tanques
+                var reporte = new ReporteAdapter().ToDto(almacen);
+
+                reporte.Fecha = DateTime.Now;
+                reporte.ClaveReporte = "2018FG675DGD43";
+                return reporte;
+            }
+            else
+            {
+                var tipoMedidor = TipoMedidorGasServicio.Obtener(almacen.IdTipoMedidor.Value);
+                var linicial = BuscarLecturaPorFecha(idCAlmacenGas,TipoEventoEnum.Inicial,fecha);
+                var lfinal = BuscarLecturaPorFecha(idCAlmacenGas, TipoEventoEnum.Final,fecha);
+                var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
+                var ventas = PuntoVentaServicio.BuscarPorOperadorChofer(operador.IdOperadorChofer);
+                
+                //Falta agregar los valores de la venta de gas
+                var reporte = new ReporteAdapter().ToDto(almacen, tipoMedidor,linicial,lfinal);
+                reporte.Fecha = DateTime.Now;
+                reporte.ClaveReporte = "2018FG675DGD43";
+                return reporte;
+            }
+        }
+
+        public static AlmacenGasTomaLectura BuscarLecturaPorFecha(short idCAlmacenGas,byte tipoEvento,DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().BuscarLectura(idCAlmacenGas, tipoEvento, fecha);
+        }
+
         public static decimal ObtenerCantidadActualAlmacenGeneral(short IdEmpresa, bool EnLitros = true)
         {
             var almacenGas = new AlmacenGasDataAccess().ProductoAlmacenGas(IdEmpresa);
@@ -450,6 +485,7 @@ namespace Application.MainModule.Servicios.Almacen
 
             return cil;
         }
+
         public static UnidadAlmacenGasCilindro AdaptarCilindro(UnidadAlmacenGasCilindro cil, decimal cantidad)
         {
             if (cil != null)
@@ -458,8 +494,8 @@ namespace Application.MainModule.Servicios.Almacen
             return cil;
         }
         public static List<UnidadAlmacenGasCilindro> AdaptarCilindro(List<AlmacenGasTomaLecturaCilindro> tmCil)
-        {
-            return tmCil.Select(x => AdaptarCilindro(x)).ToList();
+        {            
+            return tmCil.Select(x=> AdaptarCilindro(x)).ToList();
         }
 
         public static List<UnidadAlmacenGas> ObtenerAlmacenes(short idEmpresa)
@@ -595,6 +631,12 @@ namespace Application.MainModule.Servicios.Almacen
                 CantidadCONRemanenteLt = litrosRealesTractor,
             };
         }
+
+        public static UnidadAlmacenGas ObtenerAlmacen(short idCAlmacenGas)
+        {
+            return new AlmacenGasDataAccess().BuscarAlmacen(idCAlmacenGas);
+        }
+
         public static UnidadAlmacenGas AplicarDescargaAlmacenAlterno(UnidadAlmacenGas unidadEntrada, AlmacenGasDescarga descarga)
         {
             if (unidadEntrada.EsAlterno)

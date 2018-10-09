@@ -24,4 +24,6 @@ public interface FinalizarDescargaPresenter {
     void getAlmacenes(String token);
     void onSuccessGetAlmacenes(List<AlmacenDTO> almacenDTOs);
     void onError();
+
+    void onError(String mensaje);
 }

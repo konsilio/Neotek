@@ -1,16 +1,18 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
-import android.content.Context;
-
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
+import com.example.neotecknewts.sagasapp.Model.ClienteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosClientesDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosEmpresaConfiguracionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosPuntoVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTipoPersonaDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosTraspasoDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosVentaOtrosDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
@@ -22,11 +24,13 @@ import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaClienteDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
@@ -34,6 +38,7 @@ import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioDTO;
 import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
+import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 
 import java.util.List;
@@ -300,4 +305,34 @@ public interface RestClient {
     Call<DatosTipoPersonaDTO> getDatosTipoRason(@Header("Authorization") String token,
                                                 @Header("Content-type") String contentType
     );
+
+    @POST(Constantes.POST_CLIENTE)
+    Call<RespuestaClienteDTO> registrarCliente(@Body ClienteDTO clienteDTO,
+                                               @Header("Authorization") String token,
+                                               @Header("Content-type") String contentType
+    );
+    @GET(Constantes.GET_LIST_CLIENTES)
+    Call<DatosClientesDTO> getListaClientes(@Path(value = "criterio") String criterio,
+                                            @Header("Authorization") String token,
+                                            @Header("Content-type") String contentType);
+
+    @GET(Constantes.GET_LIST_EXISTENCIAS)
+    Call<DatosPuntoVentaDTO> getListaExistencias(@Path(value = "esGasLP") boolean esGasLP,
+                                                 @Path(value = "esCilindroConGas")
+                                                         boolean esCilindroConGas,
+                                                 @Path(value = "esCilindro") boolean esCilindro,
+                                                 @Header("Authorization") String token,
+                                                 @Header("Content-type") String contentType
+    );
+    @GET(Constantes.GET_CATALOGO_PRODUCTO)
+    Call<DatosVentaOtrosDTO> getListasProductos( @Header("Authorization") String token,
+                                                 @Header("Content-type") String contentType);
+    @POST(Constantes.POST_VENTA)
+    Call<RespuestaPuntoVenta> pagar(
+            @Body VentaDTO ventaDTO,
+            @Path(value = "esCamioneta") boolean esCamioneta,
+            @Path(value = "esEstacion") boolean esEstacion,
+            @Path(value = "esPipa") boolean esPipa,
+            @Header("Authorization") String token,
+            @Header("Content-type") String contentType);
 }

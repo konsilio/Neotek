@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
+import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -16,7 +17,9 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
+import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
 import com.example.neotecknewts.sagasapp.SQLite.IniciarDescargaSQL;
@@ -54,6 +57,7 @@ public class Lisener{
     public static final String LecturaFinalCamioneta = "LecturaFinalCamioneta";
     public static final String RecargaCamioneta = "RecargaCamioneta";
     public static final String RecargaEstacion ="RecargaEstacion";
+    public static final String VENTA = "Venta";
 
     private  String token;
 
@@ -124,6 +128,8 @@ public class Lisener{
                 case RecargaEstacion:
                     completo = RecargaEstacion();
                     break;
+                case VENTA:
+                    completo = PuntoVenta();
             }
         };
 
@@ -134,9 +140,130 @@ public class Lisener{
             scheduledFuture.cancel(false);
         }
     }
+
+    private boolean PuntoVenta() {
+        if(ServicioDisponible()){
+            Log.w("Iniciando","Revisando las ventas "+ new Date());
+            Cursor cursor = sagasSql.GetVentas();
+            VentaDTO ventaDTO;
+            boolean esCamioneta,
+                    esEstacion,
+                    esPipa;
+            if(cursor.moveToFirst()){
+                while (!cursor.isAfterLast()){
+                    ventaDTO = new VentaDTO();
+                    /*coloco los valores de la venta*/
+                    ventaDTO.setFolioVenta(cursor.getString(cursor.getColumnIndex("FolioVenta")));
+                    ventaDTO.setIdCliente(cursor.getInt(cursor.getColumnIndex("IdCliente")));
+                    ventaDTO.setSubtotal(cursor.getDouble(cursor.getColumnIndex("Subtotal")));
+                    ventaDTO.setIva(cursor.getDouble(cursor.getColumnIndex("Iva")));
+                    ventaDTO.setTotal(cursor.getDouble(cursor.getColumnIndex("Total")));
+                    ventaDTO.setFactura(cursor.getInt(
+                            cursor.getColumnIndex("Factura"))>0
+                    );
+                    ventaDTO.setCredito(cursor.getInt(
+                            cursor.getColumnIndex("Credito"))>0
+                    );
+                    ventaDTO.setEfectivo(cursor.getDouble(cursor.getColumnIndex("Efectivo")));
+                    ventaDTO.setFecha(cursor.getString(cursor.getColumnIndex("Fecha")));
+                    ventaDTO.setHora(cursor.getString(cursor.getColumnIndex("Hora")));
+                    ventaDTO.setCambio(cursor.getDouble(cursor.getColumnIndex("Cambio")));
+                    ventaDTO.setSinNumero(
+                            cursor.getInt(cursor.getColumnIndex("SinNumero")) > 0
+                    );
+                    esCamioneta = cursor.getInt(cursor.getColumnIndex("EsCamioneta"))>0;
+                    esEstacion = cursor.getInt(cursor.getColumnIndex("EsEstacion"))>0;
+                    esPipa = cursor.getInt(cursor.getColumnIndex("EsPipa"))>0;
+                    //Obtengo y coloco el concepto de venta
+                    Cursor concepto = sagasSql.GetVentaConcepto(ventaDTO.getFolioVenta());
+                    if(concepto.moveToFirst()) {
+                        while (!concepto.isAfterLast()) {
+                            ConceptoDTO conceptoDTO= new ConceptoDTO();
+
+                            conceptoDTO.setIdTipoGas(concepto.getInt(
+                                    concepto.getColumnIndex("IdTipoGas"))
+                            );
+                            conceptoDTO.setCantidad(concepto.getInt(
+                                    concepto.getColumnIndex("Cantidad"))
+                            );
+                            conceptoDTO.setPUnitario(concepto.getDouble(
+                                    concepto.getColumnIndex("PUnitario"))
+                            );
+                            conceptoDTO.setDescuento(concepto.getDouble(
+                                    concepto.getColumnIndex("Descuento")
+                            ));
+                            conceptoDTO.setSubtotal(concepto.getDouble(
+                                    concepto.getColumnIndex("Subtotal")
+                            ));
+                            conceptoDTO.setIdCategoria(concepto.getInt(
+                                    concepto.getColumnIndex("IdCategoria")));
+                            conceptoDTO.setIdLinea(concepto.getInt(
+                                    concepto.getColumnIndex("IdLinea"))
+                            );
+                            conceptoDTO.setIdProducto(concepto.getInt(
+                                    concepto.getColumnIndex("IdProducto"))
+                            );
+                            conceptoDTO.setConcepto(concepto.getString(
+                                    concepto.getColumnIndex("Concepto"))
+                            );
+                            concepto.moveToNext();
+                        }
+                    }
+                    registrarVenta(ventaDTO,esCamioneta,esEstacion,esPipa);
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (sagasSql.GetVentas().getCount()==0);
+    }
+
+    private boolean registrarVenta(VentaDTO ventaDTO,boolean esCamioneta,boolean esEstacion,boolean
+                                esPipa) {
+
+        Log.w("Registro","Registrando en servicio de ventas: "+ventaDTO.getFolioVenta());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaPuntoVenta> call = restClient.pagar(
+                ventaDTO,
+                esCamioneta,
+                esEstacion,
+                esPipa,
+                token,
+                "application/json"
+        );
+        call.enqueue(new Callback<RespuestaPuntoVenta>() {
+            @Override
+            public void onResponse(Call<RespuestaPuntoVenta> call,
+                                   Response<RespuestaPuntoVenta> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaPuntoVenta> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        if(_registrado){
+            sagasSql.EliminarVenta(ventaDTO.getFolioVenta());
+            sagasSql.EliminarVentaConcepto(ventaDTO.getFolioVenta());
+        }
+        Log.w("Registro","Registro en servicio venta"+ventaDTO.getFolioVenta()+": "+
+                _registrado);
+        return _registrado;
+    }
+
+
     private boolean RecargaEstacion(){
         return false;
     }
+
     private boolean RecargaCamioneta(){
         boolean registrado = false;
         if(ServicioDisponible()) {

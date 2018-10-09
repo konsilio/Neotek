@@ -58,11 +58,15 @@ public class RegistrarPapeletaInteractorImpl implements RegistrarPapeletaInterac
             public void onResponse(Call<RespuestaOrdenesCompraDTO> call, Response<RespuestaOrdenesCompraDTO> response) {
                 if (response.isSuccessful()) {
                     RespuestaOrdenesCompraDTO data = response.body();
-                    Log.w(TAG,"Success");
-                    if(EsGas) {
-                        registrarPapeletaPresenter.onSuccessGetOrdenesCompraExpedidor(data);
+                    if(data.isExito()) {
+                        Log.w(TAG, "Success");
+                        if (EsGas) {
+                            registrarPapeletaPresenter.onSuccessGetOrdenesCompraExpedidor(data);
+                        } else {
+                            registrarPapeletaPresenter.onSuccessGetOrdenesCompraPorteador(data);
+                        }
                     }else{
-                        registrarPapeletaPresenter.onSuccessGetOrdenesCompraPorteador(data);
+                        registrarPapeletaPresenter.onError(data.getMensaje());
                     }
                 }
                 else {
