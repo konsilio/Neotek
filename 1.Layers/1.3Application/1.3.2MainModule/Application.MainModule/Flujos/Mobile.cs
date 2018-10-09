@@ -171,7 +171,7 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto Venta(VentaDTO venta,bool esCamioneta, bool esEstacion, bool esPipa)
         {
-            var resp = VentaServicio.BuscarFolioVenta(venta.FolioVenta);
+            var resp = VentaServicio.BuscarFolioVenta(venta.FolioVenta,TokenServicio.ObtenerIdUsuario());
             return null;
         }
     }

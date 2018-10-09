@@ -14,6 +14,10 @@ using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.AdaptadoresDTO.Almacen;
 using Application.MainModule.Servicios.Compras;
+using Security.MainModule.Criptografia;
+using Utilities.MainModule;
+using Sagas.MainModule.ObjetosValor.Constantes;
+using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 
 namespace Application.MainModule.Servicios.Almacen
@@ -222,10 +226,6 @@ namespace Application.MainModule.Servicios.Almacen
             var al = new AlmacenGasDataAccess().BuscarTodas(idEmpresa);
             return al.Where(x => (x.IdPipa != null || x.IdCamioneta != null || x.IdEstacionCarburacion != null  && x.Activo)).ToList();
         }
-        public static UnidadAlmacenGas ObtenerAlmacen(short idCAlmacenGas)
-        {
-            return new AlmacenGasDataAccess().BuscarAlmacen(idCAlmacenGas);
-        }
 
         public static List<UnidadAlmacenGasCilindro> AdaptarCilindro(decimal cantidad)
         {
@@ -356,6 +356,11 @@ namespace Application.MainModule.Servicios.Almacen
                 CantidadCONRemanenteKg = kilogramosRealesTractor,
                 CantidadCONRemanenteLt = litrosRealesTractor,
             };
+        }
+
+        public static UnidadAlmacenGas ObtenerAlmacen(short idCAlmacenGas)
+        {
+            return new AlmacenGasDataAccess().BuscarAlmacen(idCAlmacenGas);
         }
     }
 }
