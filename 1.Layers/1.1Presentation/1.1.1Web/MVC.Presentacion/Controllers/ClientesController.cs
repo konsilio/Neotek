@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Catalogos;
+using MVC.Presentacion.Models.Seguridad;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -20,16 +21,17 @@ namespace MVC.Presentacion.Controllers
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
             ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
             ViewBag.Clientes = CatalogoServicio.ListaClientes(0,"","", _tkn);
-            if (TempData["RespuestaDTO"] != null)
-            {
-                ViewBag.MessageExito = TempData["RespuestaDTO"];
-            }
-            if (TempData["RespuestaDTOError"] != null)
-            {
-                ViewBag.MessageError = TempData["RespuestaDTOError"];
-            }
+            //if (TempData["RespuestaDTO"] != null)
+            //{
+            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
+            //}
+            //if (TempData["RespuestaDTOError"] != null)
+            //{
+            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //}
+            //ViewBag.MessageError = TempData["RespuestaDTOError"];
 
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
+            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
             return View();
         }
 
@@ -49,20 +51,19 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            //if (ModelState.IsValid)
-            //{
+            
             var respuesta = CatalogoServicio.CrearCliente(_ojUs, _tok);
-            //}
+            
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", _ojUs);
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("Index", _ojUs);
             }
      
@@ -85,20 +86,19 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            //if (ModelState.IsValid)
-            //{
+            
             var respuesta = CatalogoServicio.ModificarCliente(_Obj, _tok);
-            //}
+          
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                //TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", _Obj);
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("Index", _Obj);
             }            
         }
@@ -111,14 +111,14 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Clientes = CatalogoServicio.ListaClientes(0, "", "", _tkn);
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Baja Exitosa";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                //TempData["RespuestaDTO"] = "Baja Exitosa";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", _Obj);
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("Index", _Obj);
             }      
         }
@@ -134,16 +134,18 @@ namespace MVC.Presentacion.Controllers
             //llenar locaciones
             ViewBag.Locaciones = CatalogoServicio.ObtenerLocaciones(id, _tkn);
             List<ClienteLocacionMod> _lst = CatalogoServicio.ObtenerLocaciones(id, _tkn);
-            if (TempData["RespuestaDTO"] != null)
-            {
-                ViewBag.MessageExito = TempData["RespuestaDTO"];
-            }
-            if (TempData["RespuestaDTOError"] != null)
-            {
-                ViewBag.MessageError = TempData["RespuestaDTOError"];
-            }
+            //if (TempData["RespuestaDTO"] != null)
+            //{
+            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
+            //}
+            //if (TempData["RespuestaDTOError"] != null)
+            //{
+            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //}
 
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //ViewBag.MessageError = TempData["RespuestaDTOError"];
+            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+
             return View(_lst);
         }
 
@@ -152,26 +154,24 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            //if (ModelState.IsValid)
-            //{
+            
             var respuesta = CatalogoServicio.RegistraLocaciones(_Obj, _tok);
-            //}
+            
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", _Obj);
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("Index", _Obj);
             }
          
         }
-
-        //[HttpPost]
+                
         public ActionResult EditarClienteLoc(ClienteLocacionMod _ObjModel, int id, short idOrden)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -194,14 +194,14 @@ namespace MVC.Presentacion.Controllers
 
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                //TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("EditarLocaciones", "Clientes", new { id = _ObjModel.IdCliente });
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("EditarLocaciones", "Clientes", new { id = _ObjModel.IdCliente });
             }
            
@@ -214,14 +214,14 @@ namespace MVC.Presentacion.Controllers
             var respuesta = CatalogoServicio.EliminarClienteLocacion(_ObjModel, _tkn);
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                //TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("EditarLocaciones", "Clientes", new { id = _ObjModel.IdCliente });
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("EditarLocaciones", "Clientes", new { id = _ObjModel.IdCliente });
             }
            
@@ -238,6 +238,23 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Clientes = CatalogoServicio.ListaClientes(0, filterObj.Rfc, filterObj.RazonSocial, _tkn);
  
             return View("Index", filterObj);
+        }
+
+        private string Validar(RespuestaDTO Resp = null)
+        {
+            string Mensaje = string.Empty;
+            ModelState.Clear();
+            if (Resp != null)
+            {
+                if (Resp.ModelStatesStandar != null)
+                    foreach (var error in Resp.ModelStatesStandar.ToList())
+                    {
+                        ModelState.AddModelError(error.Key, error.Value);
+                    }
+                if (Resp.MensajesError != null)
+                    Mensaje = Resp.MensajesError[0];
+            }
+            return Mensaje;
         }
     }
 }

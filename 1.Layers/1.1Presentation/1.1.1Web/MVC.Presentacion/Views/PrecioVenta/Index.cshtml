@@ -1,13 +1,11 @@
 ﻿@model  MVC.Presentacion.Models.Catalogos.PrecioVentaModel
-
 <!DOCTYPE html>
-
 <html>
 <head>
     @{
         ViewBag.Title = "Index";
     }
-   
+
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script type="text/javascript">
         $(function () {
@@ -58,7 +56,7 @@
 
             /*******/
             $("#IdA").keyup(function () {
-                 debugger
+                debugger
                 var from = $("#IdDe").val();
                 var To = $(this).val();
 
@@ -69,16 +67,13 @@
                         var rowindex = $(this).index();
                         $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
                     }
-                    else
-                    {
+                    else {
                         var rowindex = $(this).index();
                         $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
                     }
-
                 });
             });
         });
-
     </script>
     <style type="text/css">
         .col-sm-01 {
@@ -88,13 +83,15 @@
             max-width: 2.666667%;
             text-align: left;
         }
-           .col-sm-013 {
+
+        .col-sm-013 {
             -webkit-box-flex: 0;
             -ms-flex: 0 0 16.666667%;
             flex: 0 0 16.666667%;
             max-width: 13.666667%;
             text-align: right;
         }
+
         .col-sm-05 {
             -webkit-box-flex: 0;
             -ms-flex: 0 0 16.666667%;
@@ -135,20 +132,17 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="card">
                         <div class="header">
                             <h2><strong>Registrar precio de salida</strong></h2>
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                @*<div class="col-sm-05">*@
                                 <div class="col-sm-005" style="text-align:center">
                                     <div class="form-group">
                                         Precio PEMEX:
                                     </div>
                                 </div>
-                                @*<div class="col-lg-2 col-md-2 col-sm-2">*@
                                 <div class="col-sm-005">
                                     <div class="form-group">
                                         <input name="PrecioPemexKg" id="PrecioPMX" type="text" class="form-control" />
@@ -159,13 +153,11 @@
                                         kg.
                                     </div>
                                 </div>
-                                @*<div class="col-sm-013">*@
                                 <div class="col-sm-005" style="text-align:center">
                                     <div class="form-group">
                                         Utilidad esperada:
                                     </div>
                                 </div>
-                                @*<div class="col-lg-2 col-md-2 col-sm-2">*@
                                 <div class="col-sm-005">
                                     <div class="form-group">
                                         <input name="UtilidadEsperadaKg" id="txtUtilidad" type="text" class="form-control" />
@@ -213,7 +205,7 @@
                                         <span class="input-group-addon">
                                             <i class="zmdi zmdi-calendar"></i>
                                         </span>
-                                        <input type="text" name="FechaProgramada" class="form-control datetimepicker" placeholder="Fecha programada" data-dtp="dtp_REMsB">
+                                        <input type="text" name="FechaProgramada" class="form-control date" placeholder="formato: dd/mm/aaaa" />
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
@@ -238,12 +230,21 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <b>De:</b>
-                                    <input type="text" id="IdDe" class="form-control"/>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="zmdi zmdi-calendar"></i>
+                                        </span>
+                                        <input type="text" id="IdDe" class="form-control date" placeholder="formato: dd/mm/aaaa" />
+                                    </div>
                                 </div>
-
                                 <div class="col-sm-3">
                                     <b>A:</b>
-                                    <input type="text" id="IdA" class="form-control"/>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="zmdi zmdi-calendar"></i>
+                                        </span>
+                                        <input type="text" id="IdA" class="form-control date" placeholder="formato: dd/mm/aaaa" />
+                                    </div>
                                 </div>
                             </div>
                             <br />
@@ -299,47 +300,49 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-                    @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                    @if (ViewBag.MensajeError != null)
                 {
-
-                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
-                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                         bottom: 20px; left: 0px; right: 0px;">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
-                            <span data-notify="icon"></span>
-                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
-                            <a href="#" target="_blank" data-notify="url"></a>
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MensajeError</label>
+                                    </strong>
+                                </div>
+                            </div>
                         </div>
                     }
-                    @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
-                {
-                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
-                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                         bottom: 20px; left: 0px; right: 0px;">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
-                            <span data-notify="icon"></span>
-                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
-                        </div>
-                    }
-
+                    @*@if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                        {
+                                <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
+                                     role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                                 bottom: 20px; left: 0px; right: 0px;">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                                    <span data-notify="icon"></span>
+                                    <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
+                                    <a href="#" target="_blank" data-notify="url"></a>
+                                </div>
+                            }
+                            @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
+                        {
+                                <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
+                                     role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                                 bottom: 20px; left: 0px; right: 0px;">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
+                                    <span data-notify="icon"></span>
+                                    <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
+                                </div>
+                            }*@
                 </div>
             </div>
-
         </section>
     }
-
 </body>
 @Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
 @Scripts.Render("~/Scripts/jquery-ui.js")
-@*<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/i18n/jquery-ui-i18n.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
 </html>
-@*@section scripts {
-        <script>
-            $("#datetimepicker1").datetimepicker();
-            $("#datetimepicker1").bootstrapMaterialDatePicker();
-        </script>
-    }*@

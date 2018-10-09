@@ -40,7 +40,7 @@
                                     <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
                                         @foreach (var lst in ViewBag.Empresas)
                                         {
-                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                         }
                                     </select>
                                 </div>
@@ -60,18 +60,18 @@
                                 <b>Tipo persona</b>
                                 <select name="IdTipoPersona" id="ddlTipoPersona" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                     @foreach (var lst in ViewBag.TipoPersona)
-                                                {
-                                                <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
-                                                }
+                                    {
+                                        <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
+                                    }
                                 </select>
                             </div>
                             <div class="col-sm-6">
                                 <b>Regimen Fiscal</b>
                                 <select name="IdRegimenFiscal" class="form-control show-tick" data-live-search="true">
                                     @foreach (var lst in ViewBag.RegimenFiscal)
-                                                {
-                                                <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
-                                                }
+                                    {
+                                        <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
+                                    }
                                 </select>
                             </div>
                         </div> <br />
@@ -87,7 +87,6 @@
                                             <input type="text" name="Rfc" id="txtRfc" class="form-control" />
                                         </div>
                                     </div>
-
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label for="txtRS">
@@ -95,7 +94,6 @@
                                             </label>
                                             <input type="text" name="RazonSocial" id="txtRS" class="form-control" />
                                         </div>
-
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary float-left" />
@@ -103,8 +101,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="card">
                             <div class="body">
                                 <div class="row clearfix">
@@ -130,34 +126,33 @@
                                                 <tbody>
                                                     @foreach (var item in @ViewBag.Clientes)
                                                     {
-                                                            <tr>
-
-                                                                <td>@item.Empresa</td>
-                                                                <td>@item.TipoPersonaFiscal</td>
-                                                                <td>@item.RegimenFiscal</td>
-                                                                <td>@item.RazonSocial</td>
-                                                                <td>@item.Rfc</td>
-                                                                <td>@item.limiteCreditoMonto</td>
-                                                                <td>@item.limiteCreditoDias</td>
-                                                                <td>@item.DescuentoXKilo</td>
-                                                                <td>@item.Celular</td>
-                                                                <td>@item.Telefono1</td>
-                                                                <td>@item.Email1</td>
-                                                                <td>
-                                                                    <a ID="lblCrear" href="@Url.Action("EditarCliente", "Clientes", new { id = item.IdCliente })">
-                                                                        <i class="material-icons">edit</i>
-                                                                        <span class="icon-name"></span>
-                                                                    </a>
-                                                                    <a ID="lbEdit" href="@Url.Action("EditarLocaciones", "Clientes", new { id = item.IdCliente })">
-                                                                        <i class="material-icons">edit_location</i>
-                                                                        <span class="icon-name"></span>
-                                                                    </a>
-                                                                    <a ID="lbBorrar" href="@Url.Action("BorrarClientes", "Clientes", new { id = item.IdCliente })">
-                                                                        <i class="material-icons">delete</i>
-                                                                        <span class="icon-name"></span>
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td>@item.Empresa</td>
+                                                            <td>@item.TipoPersonaFiscal</td>
+                                                            <td>@item.RegimenFiscal</td>
+                                                            <td>@item.RazonSocial</td>
+                                                            <td>@item.Rfc</td>
+                                                            <td>@item.limiteCreditoMonto</td>
+                                                            <td>@item.limiteCreditoDias</td>
+                                                            <td>@item.DescuentoXKilo</td>
+                                                            <td>@item.Celular</td>
+                                                            <td>@item.Telefono1</td>
+                                                            <td>@item.Email1</td>
+                                                            <td>
+                                                                <a ID="lblCrear" href="@Url.Action("EditarCliente", "Clientes", new { id = item.IdCliente })">
+                                                                    <i class="material-icons">edit</i>
+                                                                    <span class="icon-name"></span>
+                                                                </a>
+                                                                <a ID="lbEdit" href="@Url.Action("EditarLocaciones", "Clientes", new { id = item.IdCliente })">
+                                                                    <i class="material-icons">edit_location</i>
+                                                                    <span class="icon-name"></span>
+                                                                </a>
+                                                                <a ID="lbBorrar" href="@Url.Action("BorrarClientes", "Clientes", new { id = item.IdCliente })">
+                                                                    <i class="material-icons">delete</i>
+                                                                    <span class="icon-name"></span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
                                                     }
                                                 </tbody>
                                             </table>
@@ -169,43 +164,50 @@
                         </div>
                     </div>
                 </div>
-                @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                @if (ViewBag.MensajeError != null)
                 {
-
-                    <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
-                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                         bottom: 20px; left: 0px; right: 0px;">
-                        @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                        <span data-notify="icon"></span>
-                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
-                        <a href="#" target="_blank" data-notify="url"></a>
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MensajeError</label>
+                                </strong>
+                            </div>
+                        </div>
                     </div>
                 }
+                @*@if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                    {
+                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
+                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                             bottom: 20px; left: 0px; right: 0px;">
+                            @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
+                @* <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                            <span data-notify="icon"></span>
+                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
+                            <a href="#" target="_blank" data-notify="url"></a>
+                        </div>
+                    }
 
-                @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
-                {
-                    <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
-                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                         bottom: 20px; left: 0px; right: 0px;">
-                        @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                        <span data-notify="icon"></span>
-                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
-                    </div>
-                }
+                    @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
+                    {
+                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
+                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                             bottom: 20px; left: 0px; right: 0px;">
+                            @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
+                @* <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                            <span data-notify="icon"></span>
+                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
+                        </div>
+                    }*@
             </div>
         </div>
     </section>
-
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-@*<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
-    <script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
-    <script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
-    <script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
-    <script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
-    <script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
-    <script src="~/assets/js/pages/tables/jquery-datatable.js"></script>*@
+
 

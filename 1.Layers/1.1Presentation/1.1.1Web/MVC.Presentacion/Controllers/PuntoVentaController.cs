@@ -1,5 +1,6 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Catalogos;
+using MVC.Presentacion.Models.Seguridad;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,6 @@ namespace MVC.Presentacion.Controllers
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
                 ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0, _tkn);
-
             }
             else
             {
@@ -30,16 +30,17 @@ namespace MVC.Presentacion.Controllers
             }
             ViewBag.Usuarios = TempData["Users"];
 
-            if (TempData["RespuestaDTO"] != null)
-            {
-                ViewBag.MessageExito = TempData["RespuestaDTO"];
-            }
-            if (TempData["RespuestaDTOError"] != null)
-            {
-                ViewBag.MessageError = TempData["RespuestaDTOError"];
-            }
+            //if (TempData["RespuestaDTO"] != null)
+            //{
+            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
+            //}
+            //if (TempData["RespuestaDTOError"] != null)
+            //{
+            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //}
+            //ViewBag.MessageError = TempData["RespuestaDTOError"];
+            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
 
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View();
         }
 
@@ -70,7 +71,6 @@ namespace MVC.Presentacion.Controllers
 
         public JsonResult Guardar(short idEmpresa, int idChofer, int idPV)
         {
-            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
             List<PuntoVentaModel> model = CatalogoServicio.ListaPuntosVenta(idPV, _tkn);
@@ -78,7 +78,7 @@ namespace MVC.Presentacion.Controllers
 
             var respuesta = CatalogoServicio.ModificarOperador(nmodel, idChofer, _tkn);
 
-            //    var JsonInfo = JsonConvert.SerializeObject(list);
+            //var JsonInfo = JsonConvert.SerializeObject(list);
             //return Json(JsonInfo, JsonRequestBehavior.AllowGet);
             //if (respuesta.Exito)
             //{
@@ -120,6 +120,22 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
 
+        }
+        private string Validar(RespuestaDTO Resp = null)
+        {
+            string Mensaje = string.Empty;
+            ModelState.Clear();
+            if (Resp != null)
+            {
+                if (Resp.ModelStatesStandar != null)
+                    foreach (var error in Resp.ModelStatesStandar.ToList())
+                    {
+                        ModelState.AddModelError(error.Key, error.Value);
+                    }
+                if (Resp.MensajesError != null)
+                    Mensaje = Resp.MensajesError[0];
+            }
+            return Mensaje;
         }
     }
 }

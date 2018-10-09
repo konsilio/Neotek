@@ -1,4 +1,5 @@
 ﻿using MVC.Presentacion.App_Code;
+using MVC.Presentacion.Models.Seguridad;
 using MVC.Presentacion.Models.Ventas;
 using System;
 using System.Collections.Generic;
@@ -31,16 +32,16 @@ namespace MVC.Presentacion.Controllers
 
             ViewBag.ListaEntidad = CatalogoServicio.ListaTipoFecha(_tkn);
             ViewBag.ListaConcepto = CatalogoServicio.ListaTipoFecha(_tkn);
-            if (TempData["RespuestaDTO"] != null)
-            {
-                ViewBag.MessageExito = TempData["RespuestaDTO"];
-            }
-            if (TempData["RespuestaDTOError"] != null)
-            {
-                ViewBag.MessageError = TempData["RespuestaDTOError"];
-            }
-
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //if (TempData["RespuestaDTO"] != null)
+            //{
+            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
+            //}
+            //if (TempData["RespuestaDTOError"] != null)
+            //{
+            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //}
+            //ViewBag.MessageError = TempData["RespuestaDTOError"];
+            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
 
             return View();
         }
@@ -100,7 +101,6 @@ namespace MVC.Presentacion.Controllers
             {
                 ViewBag.MessageError = TempData["RespuestaDTOError"];
             }
-
             ViewBag.MessageError = TempData["RespuestaDTOError"];
 
             return View();
@@ -138,6 +138,23 @@ namespace MVC.Presentacion.Controllers
             ViewBag.MessageError = TempData["RespuestaDTOError"];
 
             return View();
+        }
+
+        private string Validar(RespuestaDTO Resp = null)
+        {
+            string Mensaje = string.Empty;
+            ModelState.Clear();
+            if (Resp != null)
+            {
+                if (Resp.ModelStatesStandar != null)
+                    foreach (var error in Resp.ModelStatesStandar.ToList())
+                    {
+                        ModelState.AddModelError(error.Key, error.Value);
+                    }
+                if (Resp.MensajesError != null)
+                    Mensaje = Resp.MensajesError[0];
+            }
+            return Mensaje;
         }
     }
 }

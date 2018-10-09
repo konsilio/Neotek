@@ -176,7 +176,7 @@
                                             <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
                                                 @foreach (var lst in ViewBag.ListaPaises)
                                                 {
-                                                    <option value="@lst.IdPais">@lst.Pais</option>
+                                                <option value="@lst.IdPais">@lst.Pais</option>
                                                 }
                                             </select>
                                         </div>
@@ -195,7 +195,7 @@
                                             <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                 @foreach (var lst in ViewBag.ListaEstados)
                                                 {
-                                                    <option value="@lst.IdEstadoRep">@lst.Estado</option>
+                                                <option value="@lst.IdEstadoRep">@lst.Estado</option>
                                                 }
                                             </select>
                                         </div>
@@ -325,9 +325,9 @@
                                                 @*@Html.EditorFor(m => m)*@
                                                 @foreach (var item in Model)
                                                 {
-                                                    <tr>
-                                                        <td>@item.Pais</td>
-                                                        @if(@item.EstadoProvincia != "" && @item.EstadoProvincia != null )
+                                                <tr>
+                                                    <td>@item.Pais</td>
+                                                    @if(@item.EstadoProvincia != "" && @item.EstadoProvincia != null )
                                                         {
                                                         <td>@item.EstadoProvincia</td>
                                                         }
@@ -335,24 +335,24 @@
                                                         {
                                                         <td>@item.Estado</td>
                                                         }
-                                                        <td>@item.Municipio</td>
-                                                        <td>@item.TipoLocacion</td>
-                                                        <td>@item.CodigoPostal</td>
-                                                        <td>@item.Colonia</td>
-                                                        <td>@item.Calle</td>
-                                                        <td>@item.NumInt</td>
-                                                        <td>@item.NumExt</td>
-                                                        <td>
-                                                            <a ID="lblCrear" href="@Url.Action("EditarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })">
-                                                                <i class="material-icons">edit</i>
-                                                                <span class="icon-name"></span>
-                                                            </a>
-                                                            <a ID="lbBorrar" href="@Url.Action("BorrarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })">
-                                                                <i class="material-icons">delete</i>
-                                                                <span class="icon-name"></span>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                    <td>@item.Municipio</td>
+                                                    <td>@item.TipoLocacion</td>
+                                                    <td>@item.CodigoPostal</td>
+                                                    <td>@item.Colonia</td>
+                                                    <td>@item.Calle</td>
+                                                    <td>@item.NumInt</td>
+                                                    <td>@item.NumExt</td>
+                                                    <td>
+                                                        <a ID="lblCrear" href="@Url.Action("EditarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })">
+                                                            <i class="material-icons">edit</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                        <a ID="lbBorrar" href="@Url.Action("BorrarClienteLoc", "Clientes", new { id = item.IdCliente , idOrden = item.Orden })">
+                                                            <i class="material-icons">delete</i>
+                                                            <span class="icon-name"></span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                                 }
                                             </tbody>
                                         </table>
@@ -363,33 +363,46 @@
                     </div>
                 </div>
             </div>
-
-            @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+            @if (ViewBag.MensajeError != null)
+                {
+                <div class="row clearfix">
+                    <div id="divMensajeError" class="container">
+                        <div class="alert alert-danger">
+                            <div class="alert-icon">
+                                <i class="zmdi zmdi-block"></i>
+                            </div>
+                            <strong>
+                                <label>@ViewBag.MensajeError</label>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            }
+            @*@if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
                 {
 
                 <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
                      role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
                          bottom: 20px; left: 0px; right: 0px;">
                     @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                    <span data-notify="icon"></span>
-                    <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
-                    <a href="#" target="_blank" data-notify="url"></a>
-                </div>
-            }
+            @*<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                        <span data-notify="icon"></span>
+                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
+                        <a href="#" target="_blank" data-notify="url"></a>
+                    </div>
+                }
 
-            @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
-                {
-                <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
-                     role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                         bottom: 20px; left: 0px; right: 0px;">
-                    @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                    <span data-notify="icon"></span>
-                    <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
-                </div>
-            }
-
+                @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
+                    {
+                    <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
+                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                             bottom: 20px; left: 0px; right: 0px;">
+                        @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
+            @*<a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                        <span data-notify="icon"></span>
+                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
+                    </div>
+                }*@
         </div>
     </section>
 }

@@ -9,32 +9,30 @@
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 
-<script type="text/javascript">  
+<script type="text/javascript">
     var thisIndex = -1;
     $(document).ready(function () {
         $("#tblChoferes tbody").delegate('tr', 'click', function () {
-            thisIndex = $(this).index();                    
+            thisIndex = $(this).index();
         });
     });
 
     $(function () {
         $('select').on('change', function (e) {
-         
+
             //$('#tblChoferes tbody tr').each(function () {
             //  $(this).find("td").eq(3).css("background-color", "");
-            //});
-                          
-       
-        //    $('#tblChoferes tbody tr td:eq(' + 3 + ')').css("background-color", "none");
-            
+            //});    
+            //$('#tblChoferes tbody tr td:eq(' + 3 + ')').css("background-color", "none");
+
             //var _lstId = [];
 
             //var _lstrows = [];
 
-            var getIdRepeat = -1;          
+            var getIdRepeat = -1;
             //var currentIndexSelect = $('#tblChoferes tbody tr')[0].rowIndex;
             var thisIndexSelect = thisIndex;//$(this).index();
-           // var value = $('#tblChoferes tbody tr:eq(' + thisIndexSelect + ')').find('td option:selected').val();
+            // var value = $('#tblChoferes tbody tr:eq(' + thisIndexSelect + ')').find('td option:selected').val();
             var currentSelect = this.value;//$('#usr').find('option:selected').val();
             //var optionSelected = $("option:selected", this);
             //var valueSelected = this.value;
@@ -42,7 +40,7 @@
             //var val = $(e.target).val();
             //var text = $(e.target).find("option:selected").text(); //only time the find is required
             //var name = $(e.target).attr('name');
-          
+
             ////collect the values from selected;
             $('#tblChoferes tbody tr').each(function () {
                 //var customerId = $(this).find("#idtd").html();
@@ -76,8 +74,8 @@
 
             //if (!isMyObjectEmpty) {
 
-           
-            if (getIdRepeat >= 0) {           
+
+            if (getIdRepeat >= 0) {
 
                 //var currentSelect = $('#tblChoferes tbody tr').find('td option:selected').val()
                 //var currentId = $('#tblChoferes tbody tr')[0].rowIndex;
@@ -109,21 +107,21 @@
             // );
 
             /***********GUARDARChofer************/
-          
+
             var url = "/PuntoVenta/Guardar";
-            var idChofer = currentSelect;           
+            var idChofer = currentSelect;
             //var idEmpresa = $('#tblChoferes tbody tr:eq(' + currentIndexSelect + ') td:eq(' + 0 + ')').text();
             var uri = $('#tblChoferes tbody tr:eq(' + thisIndexSelect + ') td:eq(' + 0 + ')').prevObject[0].activeElement.baseURI;
             var idEmpresa = uri.substring(uri.lastIndexOf('=') + 1);
             var idPV = uri.substring(uri.lastIndexOf('/') + 1).substring(0, 1);
-                         
-            $.getJSON(url, { idEmpresa: idEmpresa, idChofer: idChofer, idPV: idPV}, function (data) {
-               debugger
+
+            $.getJSON(url, { idEmpresa: idEmpresa, idChofer: idChofer, idPV: idPV }, function (data) {
+                debugger
                 if (data == "[]") {
                     window.location.reload(true);
                     location.reload(true);
-                 
-                   //get messages Error
+
+                    //get messages Error
                 }
                 else {
                     //get message Sucess
@@ -131,9 +129,11 @@
                     location.reload(true);
                 }
             });
+
+            location.reload(true);
         });
 
-    });   
+    });
 </script>
 
 <!-- Page Loader -->
@@ -190,7 +190,7 @@
                                                     <td>@item.PuntoVenta</td>
                                                     @if (ViewBag.Usuarios != null)
                                                     {
-                                                        <td >
+                                                        <td>
                                                             <select id="usr" name="IdUsuario" class="form-control selectpicker z-index show-tick">
                                                                 <option value="0">Seleccione...</option>
                                                                 @foreach (var lst in ViewBag.Usuarios)
@@ -230,31 +230,42 @@
 
                     </div>
                 </div>
-
-                @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                @if (ViewBag.MensajeError != null)
                 {
-
-                    <div id="success" data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
-                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                         bottom: 20px; left: 0px; right: 0px;">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                        <span data-notify="icon"></span>
-                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
-                        <a href="#" target="_blank" data-notify="url"></a>
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MensajeError</label>
+                                </strong>
+                            </div>
+                        </div>
                     </div>
                 }
-
-                @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
-                {
-                    <div id="error" data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
-                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                         bottom: 20px; left: 0px; right: 0px;">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                        <span data-notify="icon"></span>
-                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
-                    </div>
-                }
-
+                @*@if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                    {
+                        <div id="success" data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
+                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                             bottom: 20px; left: 0px; right: 0px;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                            <span data-notify="icon"></span>
+                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
+                            <a href="#" target="_blank" data-notify="url"></a>
+                        </div>
+                    }
+                    @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
+                    {
+                        <div id="error" data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
+                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                             bottom: 20px; left: 0px; right: 0px;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                            <span data-notify="icon"></span>
+                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
+                        </div>
+                    }*@
             </div>
         </div>
     </section>
