@@ -162,5 +162,112 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 UrlImagen = img.UrlImagen
             };
         }
+
+        public static AlmacenGasTraspaso FromEntity(AlmacenGasTraspaso traspaso)
+        {
+            return new AlmacenGasTraspaso
+            {
+                IdEmpresa = traspaso.IdEmpresa,
+                Year = traspaso.Year,
+                Mes = traspaso.Mes,
+                Dia = traspaso.Dia,
+                Orden = traspaso.Orden,
+                IdCAlmacenGasSalida = traspaso.IdCAlmacenGasSalida,
+                IdCAlmacenGasEntrada = traspaso.IdCAlmacenGasEntrada,
+                IdTipoMedidorSalida = traspaso.IdTipoMedidorSalida,
+                IdTipoEvento = traspaso.IdTipoEvento,
+                P5000Salida = traspaso.P5000Salida,
+                P5000Entrada = traspaso.P5000Entrada,
+                PorcentajeSalida = traspaso.PorcentajeSalida,
+                ClaveOperacion = traspaso.ClaveOperacion,
+                DatosProcesados = traspaso.DatosProcesados,
+                FechaRegistro = traspaso.FechaRegistro,
+            };
+        }
+
+        public static AlmacenGasTraspasoFoto FromEntity(AlmacenGasTraspasoFoto img)
+        {
+            return new AlmacenGasTraspasoFoto
+            {
+                IdEmpresa = img.IdEmpresa,
+                Year = img.Year,
+                Mes = img.Mes,
+                Dia = img.Dia,
+                Orden = img.Orden,
+                OrdenImagen = img.OrdenImagen,
+                IdImagenDe = img.IdImagenDe,
+                CadenaBase64 = img.CadenaBase64,
+                PathImagen = img.PathImagen,
+                UrlImagen = img.UrlImagen
+            };
+        }
+
+        public static AlmacenGasAutoConsumo FromEntity(AlmacenGasAutoConsumo AutoConsumo)
+        {
+            return new AlmacenGasAutoConsumo
+            {
+                IdEmpresa = AutoConsumo.IdEmpresa,
+                Year = AutoConsumo.Year,
+                Mes = AutoConsumo.Mes,
+                Dia = AutoConsumo.Dia,
+                Orden = AutoConsumo.Orden,
+                IdCAlmacenGasSalida = AutoConsumo.IdCAlmacenGasSalida,
+                IdCAlmacenGasEntrada = AutoConsumo.IdCAlmacenGasEntrada,
+                IdTipoEvento = AutoConsumo.IdTipoEvento,
+                P5000Salida = AutoConsumo.P5000Salida,
+                ClaveOperacion = AutoConsumo.ClaveOperacion,
+                DatosProcesados = AutoConsumo.DatosProcesados,
+                FechaRegistro = AutoConsumo.FechaRegistro,                
+            };
+        }
+
+        public static AlmacenGasAutoConsumoFoto FromEntity(AlmacenGasAutoConsumoFoto img)
+        {
+            return new AlmacenGasAutoConsumoFoto
+            {
+                IdEmpresa = img.IdEmpresa,
+                Year = img.Year,
+                Mes = img.Mes,
+                Dia = img.Dia,
+                Orden = img.Orden,
+                OrdenImagen = img.OrdenImagen,
+                IdImagenDe = img.IdImagenDe,
+                CadenaBase64 = img.CadenaBase64,
+                PathImagen = img.PathImagen,
+                UrlImagen = img.UrlImagen,
+            };
+        }
+
+        public static AlmacenGasCalibracion FromEntity(AlmacenGasCalibracion Calibracion)
+        {
+            return new AlmacenGasCalibracion
+            {
+                IdCAlmacenGas = Calibracion.IdCAlmacenGas,
+                IdTipoEvento = Calibracion.IdTipoEvento,                
+                IdDestinoCalibracion = Calibracion.IdDestinoCalibracion,
+                IdOrden = Calibracion.IdOrden,
+                IdTipoMedidor = Calibracion.IdTipoMedidor,
+                PorcentajeCalibracion = Calibracion.PorcentajeCalibracion,
+                Porcentaje = Calibracion.Porcentaje,
+                P5000 = Calibracion.P5000,
+                ClaveOperacion = Calibracion.ClaveOperacion,
+                DatosProcesados = Calibracion.DatosProcesados,
+                FechaRegistro = Calibracion.FechaRegistro,
+            };
+        }
+
+        public static AlmacenGasCalibracionFoto FromEntity(AlmacenGasCalibracionFoto img)
+        {
+            return new AlmacenGasCalibracionFoto
+            {
+                IdCAlmacenGas = img.IdCAlmacenGas,
+                IdOrden = img.IdOrden,
+                IdOrdenFoto = img.IdOrdenFoto,
+                IdImagenDe = img.IdImagenDe,
+                CadenaBase64 = img.CadenaBase64,
+                PathImagen = img.PathImagen,
+                UrlImagen = img.UrlImagen,
+            };
+        }
     }
 }
