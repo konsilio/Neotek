@@ -269,6 +269,19 @@
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_Empresa" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso1" />
         <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo1" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.CTipoMovimiento" Width="1.5" PointX="18.375" PointY="21.5" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.ReporteDelDia" Width="1.5" PointX="10.5" PointY="42.25" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.VentaCajaGeneral" Width="1.5" PointX="10.5" PointY="56.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.VentaCorteAnticipoEC" Width="1.5" PointX="10.5" PointY="49.375" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.VentaMovimiento" Width="1.5" PointX="10.375" PointY="6.75" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.VentaPuntoDeVenta" Width="1.5" PointX="23.375" PointY="14.125" />
+        <EntityTypeShape EntityType="Sagas.MainModuleModel.VentaPuntoDeVentaDetalle" Width="1.5" PointX="25.625" PointY="15.125" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_CTipoMovimiento" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_ReporteDelDia_Usuario" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_VentaCajaGeneral_Usuario1" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_Usuario" />
+        <AssociationConnector Association="Sagas.MainModuleModel.FK_VentaPuntoDeVentaDetalle_VentaPuntoDeVenta" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

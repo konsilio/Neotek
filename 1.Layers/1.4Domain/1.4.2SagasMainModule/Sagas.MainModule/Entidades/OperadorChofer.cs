@@ -18,6 +18,11 @@ namespace Sagas.MainModule.Entidades
         public OperadorChofer()
         {
             this.PuntosVenta = new HashSet<PuntoVenta>();
+            this.ReporteDelDia = new HashSet<ReporteDelDia>();
+            this.VentaCajaGeneral = new HashSet<VentaCajaGeneral>();
+            this.VentaCorteAnticipoEC = new HashSet<VentaCorteAnticipoEC>();
+            this.VentaMovimiento = new HashSet<VentaMovimiento>();
+            this.VentaPuntoDeVenta = new HashSet<VentaPuntoDeVenta>();
         }
     
         public int IdOperadorChofer { get; set; }
@@ -32,5 +37,15 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PuntoVenta> PuntosVenta { get; set; }
         public virtual Empresa Empresa { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReporteDelDia> ReporteDelDia { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VentaCajaGeneral> VentaCajaGeneral { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VentaCorteAnticipoEC> VentaCorteAnticipoEC { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VentaMovimiento> VentaMovimiento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VentaPuntoDeVenta> VentaPuntoDeVenta { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Sagas.MainModule.Entidades
         public Nullable<short> IdCAlmacenGasReferencia { get; set; }
         public Nullable<int> IdAlmacenEntradaGasDescarga { get; set; }
         public Nullable<int> IdAlmacenGasRecarga { get; set; }
-        public System.TimeSpan Hora { get; set; }
+        public string FolioOperacionDia { get; set; }
         public string CAlmacenPrincipalNombre { get; set; }
         public string CAlmacenReferenciaNombre { get; set; }
         public string OperadorChoferNombre { get; set; }
@@ -41,6 +41,12 @@ namespace Sagas.MainModule.Entidades
         public string TipoMovimiento { get; set; }
         public Nullable<decimal> RemanenteKg { get; set; }
         public Nullable<decimal> RemanenteLt { get; set; }
+        public decimal RemanenteAcumuladoDiaKg { get; set; }
+        public decimal RemanenteAcumuladoDiaLt { get; set; }
+        public decimal RemanenteAcumuladoMesKg { get; set; }
+        public decimal RemanenteAcumuladoMesLt { get; set; }
+        public decimal RemanenteAcumuladoAnioKg { get; set; }
+        public decimal RemanenteAcumuladoAnioLt { get; set; }
         public decimal EntradaKg { get; set; }
         public decimal EntradaLt { get; set; }
         public decimal SalidaKg { get; set; }
@@ -75,5 +81,6 @@ namespace Sagas.MainModule.Entidades
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlmacenGasMovimientoFoto> Fotografias { get; set; }
         public virtual Empresa Empresa { get; set; }
+        public virtual CTipoMovimiento CTipoMovimiento { get; set; }
     }
 }
