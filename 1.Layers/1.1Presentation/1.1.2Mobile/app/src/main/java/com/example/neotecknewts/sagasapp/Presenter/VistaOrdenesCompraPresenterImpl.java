@@ -49,4 +49,10 @@ public class VistaOrdenesCompraPresenterImpl implements VistaOrdenesCompraPresen
         vistaOrdenCompraView.hideProgress();
         vistaOrdenCompraView.messageError(R.string.error_conexion);
     }
+
+    @Override
+    public void onError(String mensaje) {
+        vistaOrdenCompraView.hideProgress();
+        vistaOrdenCompraView.messageError(mensaje);
+    }
 }

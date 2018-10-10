@@ -60,7 +60,11 @@ public class VistaOrdenesCompraInteractorImpl implements VistaOrdenesCompraInter
                 if (response.isSuccessful()) {
                     RespuestaOrdenesCompraDTO data = response.body();
                     Log.w(TAG,"Success");
-                    vistaOrdenesCompraPresenter.onSuccessGetOrdenesCompra(data);
+                    if(data.isExito() && data.getOrdenesCompra().size()>0) {
+                        vistaOrdenesCompraPresenter.onSuccessGetOrdenesCompra(data);
+                    }else{
+                        vistaOrdenesCompraPresenter.onError(data.getMensaje());
+                    }
                 }
                 else {
                     switch (response.code()) {

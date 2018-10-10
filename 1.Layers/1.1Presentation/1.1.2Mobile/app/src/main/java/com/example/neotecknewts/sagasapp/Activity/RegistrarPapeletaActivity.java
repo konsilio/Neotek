@@ -550,4 +550,13 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public void showMessageError() {
 
     }
+
+    @Override
+    public void messageError(String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.error_titulo);
+        builder.setMessage(mensaje);
+        builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
+        builder.create().show();
+    }
 }

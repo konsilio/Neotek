@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Respuesta;
 using Sagas.MainModule.Entidades;
 using Exceptions.MainModule.Validaciones;
+using Application.MainModule.DTOs.Mobile;
+using Application.MainModule.Servicios.Seguridad;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -29,6 +31,24 @@ namespace Application.MainModule.Servicios.Catalogos
             return new ClientesDataAccess().Insertar(cte);
         }
 
+        public static int BuscarRazon(ClienteDTO cliente)
+        {
+            var resultado = new ClientesDataAccess().BuscarRazonSocial(cliente,TokenServicio.ObtenerIdEmpresa());
+            if (resultado != null)
+                return resultado.IdCliente;
+            else
+                return 0;           
+        }
+
+        public static int BuscarCliente(ClienteDTO cliente)
+        {
+            var resultado = new ClientesDataAccess().Buscar(cliente);
+            if (resultado != null)
+                return cliente.IdCliente;
+            else
+                return 0;
+        }
+
         public static Cliente Obtener(int IdCliente)
         {
             return new ClientesDataAccess().Buscar(IdCliente);
@@ -38,7 +58,12 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new ClientesDataAccess().BuscarLocacionId(IdCliente, Orden);
         }
-        
+
+        public static List<Cliente> BuscadorClientes(string criterio)
+        {
+            return new ClientesDataAccess().BuscadorClientes(criterio, TokenServicio.ObtenerIdEmpresa());
+        }
+
         public static List<ClienteLocacionDTO> ObtenerLoc(int IdCliente)
         {
             List<ClienteLocacionDTO> lClientes = AdaptadoresDTO.Seguridad.ClientesAdapter.ToDTOLoc(new ClientesDataAccess().BuscarLocacion(IdCliente));

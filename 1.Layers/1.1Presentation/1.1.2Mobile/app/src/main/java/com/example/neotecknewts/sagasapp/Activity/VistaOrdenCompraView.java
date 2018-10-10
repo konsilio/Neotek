@@ -14,4 +14,6 @@ public interface VistaOrdenCompraView {
     void hideProgress();
     void messageError(int mensaje);
     void onSuccessGetOrdenesCompra(RespuestaOrdenesCompraDTO respuestaOrdenesCompraDTO);
+
+    void messageError(String mensaje);
 }

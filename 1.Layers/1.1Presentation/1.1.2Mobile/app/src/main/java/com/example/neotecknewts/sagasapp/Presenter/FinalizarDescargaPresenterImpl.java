@@ -75,4 +75,10 @@ public class FinalizarDescargaPresenterImpl implements FinalizarDescargaPresente
         finalizarDescargaView.messageError(R.string.error_conexion);
 
     }
+
+    @Override
+    public void onError(String mensaje) {
+        finalizarDescargaView.hideProgress();
+        finalizarDescargaView.messageError(mensaje);
+    }
 }

@@ -121,7 +121,7 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarTomaDeLecturaCamioneta(lfcdto), Request);
         }
         /// <summary>
-        /// Permite obtener el catalogo de eestaciones filtrando por el tipo 
+        /// Permite obtener el catalogo de estaciones filtrando por el tipo 
         /// </summary>
         /// <param name="EsEstacion">Es una estacion</param>
         /// <param name="EsAlmacen">Es un almacen</param>
@@ -170,6 +170,11 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoUnidades(), Request);
         }
 
+        [Route("reportes/reporte-dia/{fecha}/{idCAlmacenGas}")]
+        public HttpResponseMessage GetReporteDia(DateTime fecha, short idCAlmacenGas)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.ReporteDia(fecha, idCAlmacenGas),Request);
+        }
         [Route("catalogos/anticipos/{esAnticipo}/{esCorteCaja}")]
         public HttpResponseMessage GetEstacionesDeposito(bool esAnticipo,bool esCorteCaja)
         {
@@ -180,6 +185,30 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetTipoPersona()
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoTipoPersona(), Request);
+        }
+        /// <summary>
+        /// Permite realizar el registro del cliente, realizara una busqueda para verificar 
+        /// si este ya este registrado, en caso de que si tomara el id y lo steara en el 
+        /// DTO para luego realizar un update, en caso de que no encuentre el id realizara 
+        /// un registro normal , retornando un obtjeto RespuestaDTO
+        /// </summary>
+        /// <param name="cliente">Objeto DTO con los datos del cliente</param>
+        /// <returns>Respuesta del registro</returns>
+        [Route("cliente/registrar")]
+        public HttpResponseMessage PostRegistrarCliente(ClienteDTO cliente)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.registrarCliente(cliente), Request);
+        }
+
+        [Route("cliente/lista-clientes/{criterio}")]
+        public HttpResponseMessage GetListaClientes(String criterio)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.BuscadorClientes(criterio), Request);
+        }
+        [Route("ventra/{esCamioneta}/{esEstacion}/{esPipa}")]
+        public HttpResponseMessage PostVenta(VentaDTO venta, bool esCamioneta,bool esEstacion,bool esPipa)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.Venta(venta,esCamioneta,esEstacion,esPipa), Request);
         }
     }
 }

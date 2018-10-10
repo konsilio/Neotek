@@ -72,4 +72,10 @@ public class RegistrarPapeletaPresenterImpl implements RegistrarPapeletaPresente
         registrarPapeletaView.messageError(R.string.error_conexion);
 
     }
+
+    @Override
+    public void onError(String mensaje) {
+        registrarPapeletaView.hideProgress();
+        registrarPapeletaView.messageError(mensaje);
+    }
 }

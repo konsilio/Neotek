@@ -148,5 +148,31 @@ namespace Application.MainModule.Flujos
         {
             return ClientesServicio.ConsultarTipoPersonas();
         }
+
+        public RespuestaDto registrarCliente(ClienteDTO cliente)
+        {
+            var resp = ClientesServicio.EvaluarCliente(cliente);
+            if (resp.IdCliente!=0)
+                return ClientesServicio.Modificar(cliente,TokenServicio.ObtenerIdEmpresa());
+            else
+                return ClientesServicio.Registar(cliente,TokenServicio.ObtenerIdEmpresa());
+        }
+
+        public List<ClienteDTO> BuscadorClientes(string criterio)
+        {
+            return ClientesServicio.BuscadorClientes(criterio);
+        }
+
+        public ReporteDiaDTO ReporteDia(DateTime fecha, short idCAlmacenGas)
+        {
+            var ReporteAlmacen = AlmacenGasServicio.ReporteDia(fecha, idCAlmacenGas);
+            return ReporteAlmacen;
+        }
+
+        public RespuestaDto Venta(VentaDTO venta,bool esCamioneta, bool esEstacion, bool esPipa)
+        {
+            var resp = VentaServicio.BuscarFolioVenta(venta.FolioVenta,TokenServicio.ObtenerIdUsuario());
+            return null;
+        }
     }
 }

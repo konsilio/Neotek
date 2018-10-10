@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs.Mobile;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
@@ -38,6 +39,49 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public ClienteLocacion BuscarLocacionId(int idCliente, short idOrden)
         {
             return uow.Repository<ClienteLocacion>().GetSingle(x => x.IdCliente.Equals(idCliente) && x.Orden.Equals(idOrden));
+        }
+
+        public Cliente BuscarRazonSocial(ClienteDTO cliente,short idEmpresa)
+        {
+            var consulta = uow.Repository<Cliente>().GetSingle(
+                x =>
+                (x.RazonSocial!=null && x.RazonSocial.Trim().ToLower().Equals(cliente.RazonSocial) && x.RazonSocial.Any()) &&
+                x.IdTipoPersona.Equals(cliente.IdTipoPersona) &&
+                x.IdRegimenFiscal.Equals(cliente.IdTipoRegimen) &&
+                x.IdEmpresa.Equals(idEmpresa)
+               );
+         
+            return (consulta != null) ? consulta : null;
+        }
+
+        public Cliente Buscar(ClienteDTO cliente)
+        {
+            return uow.Repository<Cliente>().GetSingle(
+                x =>
+                x.Nombre.Equals(cliente.Nombre) &&
+                x.Apellido1.ToLower().Equals(cliente.Apellido1) &&
+                x.Apellido2.ToLower().Equals(cliente.Apellido2) &&
+                x.Telefono.Equals(cliente.TelefonoFijo) &&
+                x.Celular.Equals(cliente.Celular) &&
+                x.IdTipoPersona.Equals(cliente.IdTipoPersona) &&
+                x.IdRegimenFiscal.Equals(cliente.IdTipoRegimen)
+                );
+        }
+
+        public List<Cliente> BuscadorClientes(string criterio,short idEmpresa)
+        {
+            return uow.Repository<Cliente>().Get(
+                x => ((x.Telefono.Contains(criterio)
+                || x.Telefono1.Contains(criterio)
+                || x.Telefono2.Contains(criterio)
+                || x.Telefono3.Contains(criterio)
+                || x.Celular.Contains(criterio)
+                || x.Celular1.Contains(criterio)
+                || x.Celular2.Contains(criterio)
+                || x.Celular3.Contains(criterio)
+                || x.Rfc.ToLower().Contains(criterio)))
+                && x.IdEmpresa.Equals(idEmpresa)
+            ).ToList();
         }
 
         public RespuestaDto Insertar(Cliente cte)

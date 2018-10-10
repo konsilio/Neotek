@@ -59,8 +59,12 @@ public class FinalizarDescargaInteractorImpl implements FinalizarDescargaInterac
             public void onResponse(Call<RespuestaOrdenesCompraDTO> call, Response<RespuestaOrdenesCompraDTO> response) {
                 if (response.isSuccessful()) {
                     RespuestaOrdenesCompraDTO data = response.body();
-                    Log.w(TAG,"Success");
-                    finalizarDescargaPresenter.onSuccessGetOrdenesCompra(data);
+                    if(data.isExito()) {
+                        Log.w(TAG, "Success");
+                        finalizarDescargaPresenter.onSuccessGetOrdenesCompra(data);
+                    }else{
+                        finalizarDescargaPresenter.onError(data.getMensaje());
+                    }
                 }
                 else {
                     switch (response.code()) {
@@ -113,8 +117,12 @@ public class FinalizarDescargaInteractorImpl implements FinalizarDescargaInterac
             public void onResponse(Call<List<MedidorDTO>> call, Response<List<MedidorDTO>> response) {
                 if (response.isSuccessful()) {
                     List<MedidorDTO> data = response.body();
-                    Log.w(TAG,"Success");
-                    finalizarDescargaPresenter.onSuccessGetMedidores(data);
+                    if (data.size()>0) {
+                        Log.w(TAG, "Success");
+                        finalizarDescargaPresenter.onSuccessGetMedidores(data);
+                    }else{
+                        finalizarDescargaPresenter.onError("No se pudieron obtener los medidores");
+                    }
                 }
                 else {
                     switch (response.code()) {
@@ -168,7 +176,11 @@ public class FinalizarDescargaInteractorImpl implements FinalizarDescargaInterac
                 if (response.isSuccessful()) {
                     List<AlmacenDTO> data = response.body();
                     Log.w(TAG,"Success");
-                    finalizarDescargaPresenter.onSuccessGetAlmacenes(data);
+                    if (data.size()>0) {
+                        finalizarDescargaPresenter.onSuccessGetAlmacenes(data);
+                    }else{
+                        finalizarDescargaPresenter.onError("No se pudieron obtener las ordenes de compra");
+                    }
                 }
                 else {
                     switch (response.code()) {

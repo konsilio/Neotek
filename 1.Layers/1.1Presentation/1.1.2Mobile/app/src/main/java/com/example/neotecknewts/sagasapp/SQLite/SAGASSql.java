@@ -1,16 +1,21 @@
 package com.example.neotecknewts.sagasapp.SQLite;
 
+import android.animation.ValueAnimator;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.VentaDTO;
+
+import java.util.DoubleSummaryStatistics;
 
 /**
  * Clase SAGASSql para el manejo de base de datos local
@@ -52,6 +57,8 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_RECARGAS_IMAGENES = "recargas_imagenes";
     private static final String TABLE_RECARGAS_CILINDROS = "recargas_images_cilindros";
     private static final String TABLE_REPORTES = "reportes";
+    private static final String TABLE_VENTAS = "ventas";
+    private static final String TABLE_VENTAS_CONCEPTO = "ventas_conceptos";
 
     public static final String TIPO_RECARGA_CAMIONETA = "C";
     public static final String TIPO_RECARGA_ESTACION_CARBURACION =  "EC";
@@ -339,6 +346,43 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
+        //region Tabla de ventas
+        db.execSQL("CREATE TABLE "+TABLE_VENTAS+" (" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "FolioVenta TEXT,"+
+                "IdCliente INTEGER," +
+                "Subtotal DOUBLE," +
+                "Iva DOUBLE," +
+                "Total DOUBLE," +
+                "Factura BOOLEAN DEFAULT 1 ," +
+                "Credito BOOLEAN DEFAULT 0 ," +
+                "Efectivo DOUBLE," +
+                "Fecha TEXT," +
+                "Hora TEXT," +
+                "Cambio DOUBLE," +
+                "SinNumero BOOLEAN DEFAULT 0," +
+                "Falta BOOLEAN DEFAULT 1,"+
+                "EsCamioneta BOOLEAN,"+
+                "EsEstacion BOOLEAN,"+
+                "EsPipa BOOLEAN"+
+                ")");
+        //enregion
+        //region Tabla de concepto de venta
+        db.execSQL("CREATE TABLE "+TABLE_VENTAS_CONCEPTO+" (" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "FolioVenta TEXT," +
+                "IdTipoGas INTEGER," +
+                "Cantidad INTEGER," +
+                "Concepto TEXT," +
+                "PUnitario DOUBLE," +
+                "Descuento DOUBLE," +
+                "Subtotal DOUBLE," +
+                "IdCategoria INTEGER," +
+                "IdLinea INTEGER," +
+                "IdProducto INTEGER,"+
+                "Falta BOOLEAN DEFAULT 1"+
+                ")");
+        //endregion
     }
 
     /**
@@ -382,6 +426,8 @@ public class SAGASSql extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_RECARGAS);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_RECARGAS_CILINDROS);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_RECARGAS_IMAGENES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_VENTAS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_VENTAS_CONCEPTO);
         onCreate(db);
     }
     //endregion
@@ -1621,6 +1667,86 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarCilindrosRecarga(String ClaveOperacion){
         return this.getWritableDatabase().delete(TABLE_RECARGAS_CILINDROS,
                 " WHERE  ClaveOperacion = "+ClaveOperacion,null);
+    }
+
+    public Long InsertarVenta(VentaDTO ventaDTO, boolean esCamioneta, boolean esEstacion,
+                              boolean esPipa) {
+
+        ContentValues values = new ContentValues();
+        values.put("FolioVenta",ventaDTO.getFolioVenta());
+        values.put("IdCliente",ventaDTO.getIdCliente());
+        values.put("Subtotal",ventaDTO.getTotal());
+        values.put("Iva",ventaDTO.getIva());
+        values.put("Total",ventaDTO.getTotal());
+        values.put("Factura",ventaDTO.isFactura());
+        values.put("Credito",ventaDTO.isCredito());
+        values.put("Efectivo",ventaDTO.getEfectivo());
+        values.put("Fecha",ventaDTO.getFecha());
+        values.put("Hora",ventaDTO.getHora());
+        values.put("Cambio",ventaDTO.getCambio());
+        values.put("SinNumero",ventaDTO.isCredito());
+        values.put("EsCamioneta",esCamioneta);
+        values.put("EsEstacion",esEstacion);
+        values.put("EsPipa",esPipa);
+        return this.getWritableDatabase().insert(
+                TABLE_VENTAS,
+                null,
+                values
+        );
+    }
+
+    public Long[] InsertarConcepto(VentaDTO ventaDTO) {
+        int size = ventaDTO.getConcepto().size();
+        Long[] _result = new Long[size];
+        ContentValues values = new ContentValues();
+        for (int x =0; x<size;x++){
+            ConceptoDTO conceptoDTO = ventaDTO.getConcepto().get(x);
+            values.put("FolioVenta",ventaDTO.getFolioVenta());
+            values.put("IdTipoGas",conceptoDTO.getIdTipoGas());
+            values.put("Cantidad",conceptoDTO.getCantidad());
+            values.put("PUnitario",conceptoDTO.getPUnitario());
+            values.put("Descuento",conceptoDTO.getDescuento());
+            values.put("Subtotal",conceptoDTO.getSubtotal());
+            values.put("IdCategoria",conceptoDTO.getIdCategoria());
+            values.put("IdLinea",conceptoDTO.getIdLinea());
+            values.put("IdProducto",conceptoDTO.getIdProducto());
+            values.put("Concepto",conceptoDTO.getConcepto());
+            _result[x]= this.getWritableDatabase().insert(TABLE_VENTAS_CONCEPTO,
+                    null,values);
+        }
+        return _result;
+    }
+
+    public Cursor GetVentas() {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_VENTAS,
+                null);
+    }
+
+    public Cursor GetVentaConcepto(String folioVenta) {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_VENTAS_CONCEPTO+
+                " WHERE FolioVenta = '"+folioVenta+"'",null);
+    }
+
+    public Integer EliminarVenta(String folioVenta) {
+        return this.getWritableDatabase().delete(
+                TABLE_VENTAS,
+                " FolioVenta = '"+folioVenta+"'",
+                null
+        );
+    }
+
+    public Integer EliminarVentaConcepto(String folioVenta) {
+        return this.getWritableDatabase().delete(
+                TABLE_VENTAS_CONCEPTO,
+                " FolioVenta = '"+folioVenta+"'",
+                null
+        );
+    }
+
+    public Cursor GetVenta(String folioVenta) {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_VENTAS+
+                        " WHERE FolioVenta = '"+folioVenta+"'",
+                null);
     }
 
     //endregion

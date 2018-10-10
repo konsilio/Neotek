@@ -21,4 +21,6 @@ public interface RegistrarPapeletaView {
     void onSuccessRegistrarPapeleta();
     void onSuccessRegistrarIniciarDescarga();
     void showMessageError();
+
+    void messageError(String mensaje);
 }

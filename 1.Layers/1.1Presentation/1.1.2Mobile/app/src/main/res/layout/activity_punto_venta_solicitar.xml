@@ -98,7 +98,7 @@
                 android:inputType="textPersonName"
                 android:textSize="24sp"
                 android:autofillHints="@string/Buscar"
-                tools:ignore="UnusedAttribute" />
+                tools:ignore="LabelFor,UnusedAttribute" />
 
             <Button
                 android:id="@+id/BtnPuntoVentaSolicitarActivityBuscarCliente"
