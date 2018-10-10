@@ -121,6 +121,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var complemeto = OrdenCompraServicio.InitComplemento(id, tkn);
+            ViewBag.Proveedor = complemeto.Proveedor;
             return View(complemeto);
         }
         [HttpPost]
