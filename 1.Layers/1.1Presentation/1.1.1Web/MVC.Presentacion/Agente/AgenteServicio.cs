@@ -2087,6 +2087,7 @@ namespace MVC.Presentacion.Agente
                         respuesta = await response.Content.ReadAsAsync<RespuestaAutenticacionDto>();
                     else
                     {
+                        respuesta.Mensaje = "Usuario y/o contraseña incorrectos";
                         client.CancelPendingRequests();
                         client.Dispose();
                     }

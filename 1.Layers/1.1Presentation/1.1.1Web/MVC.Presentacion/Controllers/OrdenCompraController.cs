@@ -58,7 +58,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
                 ViewBag.IVAs = CatalogoServicio.ListaIVA();
                 ViewBag.IEPs = CatalogoServicio.ListaIEPS();
-                return View(model);
+                return View("OrdenCompra", model);
             }
         }
         public ActionResult Ordenes(int? pageO, int? pageR)
@@ -72,7 +72,7 @@ namespace MVC.Presentacion.Controllers
             var model = OrdenCompraServicio.InitOrdenesCompra(tkn);
             if (pageO == null) pageO = 1;
             if (pageR == null) pageR = 1;
-            ViewBag.Ordenes = model.OrdenesCompra.ToPagedList(pageO.Value, 20);
+            ViewBag.Ordenes = model.OrdenesCompra.OrderByDescending(x => x.IdRequisicion ).ToPagedList(pageO.Value, 20);
             ViewBag.Requisiciones = model.Requisiciones.ToPagedList(pageR.Value, 20);
             return View();
         }

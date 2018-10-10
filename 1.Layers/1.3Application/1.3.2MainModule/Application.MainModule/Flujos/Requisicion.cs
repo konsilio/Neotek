@@ -8,6 +8,7 @@ using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.AdaptadoresDTO.Requisicion;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.Compras;
+using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.Flujos
 {
@@ -15,6 +16,9 @@ namespace Application.MainModule.Flujos
     {
         public RespuestaDto InsertRequisicionNueva(RequisicionDTO _req)
         {
+            if (_req.Productos == null || _req.Productos.Count.Equals(0))
+                return new RespuestaDto() { Exito= false, MensajesError = new List<string>() { string.Format(Error.R0006, "Productos") } }; 
+
             var _requisicion = RequisicionAdapter.FromDTO(_req);
             _requisicion = CalcularOrdenCompraServicio.CalcularAlmacenProcutos(_requisicion);
             var ListaRequisiciones = RequisicionServicio.IdentificarRequisicones(_requisicion);

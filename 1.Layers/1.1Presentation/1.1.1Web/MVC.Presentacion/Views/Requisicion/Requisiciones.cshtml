@@ -1,4 +1,4 @@
-﻿MVC.Presentacion.Models.Requisicion
+﻿@using MVC.Presentacion.Models.Requisicion
 @using PagedList.Mvc;
 @using PagedList;
 @model MVC.Presentacion.Models.Requisicion.RequisicionesModel
@@ -42,7 +42,7 @@
                                                     <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                 }
                                             </select>
-                                     
+
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
@@ -53,14 +53,6 @@
                                             <input id="BtnNuevaReq" type="submit" onclick="location.href='@Url.Action("Requisicion", "Requisicion")'" value="Requisicion" class="btn btn-primary btn-round btn-block" />
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="card">
-                                <div class="header">
-                                    <h2><strong></strong><small></small></h2>
-                                </div>
-                                <div class="body">
                                     <div class="row clearfix">
                                         <div class="col-lg-3">
                                             <label>Estatus</label>
@@ -122,20 +114,20 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
+                                    <div class="row clearfix blockquote blockquote-info btn-round">
                                         <div class="table-responsive">
-                                            <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="RequisicionProductos">
+                                            <table class="table table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <td>Gasera</td>
-                                                        <td>No. Requisicion</td>
-                                                        <td>Fecha Requerida</td>
-                                                        <td>Solicitante</td>
-                                                        <td>Estatus</td>
-                                                        <td>Accion</td>
+                                                        <td><strong>Gasera</strong></td>
+                                                        <td><strong>No. Requisicion</strong></td>
+                                                        <td><strong>Fecha Requerida</strong></td>
+                                                        <td><strong>Solicitante</strong></td>
+                                                        <td><strong>Estatus</strong></td>
+                                                        <td><strong>Accion</strong></td>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="contenido">
                                                     @foreach (var req in ViewBag.Requisiciones)
                                                     {
                                                         <tr>
@@ -200,6 +192,7 @@
 <script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
 <script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
 <script src="~/assets/js/pages/tables/jquery-datatable.js"></script>
+<script src="~/Scripts/js/RequisicionesJS.js"></script>
 
 
 

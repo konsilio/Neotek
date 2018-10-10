@@ -49,7 +49,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return IntegrarRoles(uow.Repository<Usuario>().Get(x => x.Activo));
         }
-
         public RespuestaDto Actualizar(Usuario usuario)
         {
             RespuestaDto _respuesta = new RespuestaDto();

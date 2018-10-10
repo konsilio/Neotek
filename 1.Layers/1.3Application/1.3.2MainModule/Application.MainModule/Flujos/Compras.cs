@@ -121,6 +121,15 @@ namespace Application.MainModule.Flujos
             entity.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
             return OrdenCompraServicio.Actualizar(entity);
         }
+        public RespuestaDto FinalizarEntradaProductoOrdenCompra(OrdenCompraDTO dto)
+        {
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            if (oc == null) return OrdenCompraServicio.NoExiste();
+
+            var entity = OrdenComprasAdapter.FromEntity(oc);
+            entity.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+            return OrdenCompraServicio.Actualizar(entity);
+        }
         public RespuestaDto ActualizarOrdenCompraFactura(OrdenCompraDTO dto)
         {
             var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);

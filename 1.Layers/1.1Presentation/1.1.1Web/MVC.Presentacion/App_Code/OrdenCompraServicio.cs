@@ -85,6 +85,7 @@ namespace MVC.Presentacion.App_Code
             oc.IdRequisicion = model.IdRequisicion;
             oc.Productos = ObtenerProductosGrid(model.OrdenCompraProductos);
             oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Espera_autorizacion;
+            oc.FechaAutorizacion = Convert.ToDateTime(DateTime.Today.ToShortDateString());
             return GenerarOrdenesCompra(oc, Tkn);
         }
         private static List<OrdenCompraProductoCrearDTO> ObtenerProductosGrid(List<ProductoOCDTO> Prods)

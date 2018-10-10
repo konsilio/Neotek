@@ -18,9 +18,8 @@
                             <h2>Compras</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item active">
-                                    <Label> Compras / Ordern de Compra </Label>
-                                </li>
+                                <li class="breadcrumb-item">Compras</li>
+                                <li class="breadcrumb-item">Ordern de Compra</li>
                             </ul>
                         </div>
                     </div>
@@ -34,10 +33,9 @@
                                             <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                         }
                                     </select>
-
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" >
                                 <div class="form-group">
                                     <input name="NumRequisicion" class="form-control" placeholder="N° de Requisición" />
                                 </div>
@@ -106,7 +104,7 @@
                             <div class="row clearfix">
                                 <div class="col-sm-4">
                                     <label>Proveedor</label>
-                                    <select name="IdProveedor" class="form-control show-tick selectpicker" @EnabledAdminCentral data-live-search="true">
+                                    <select name="IdProveedor" class="form-control z-index show-tick selectpicker" data-live-search="true">
                                         @foreach (var lst in ViewBag.Proveedores)
                                         {
                                             <option value="@lst.IdProveedor">@lst.NombreComercial</option>
@@ -115,7 +113,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <label>Estatus</label>
-                                    <select name="Estatus" class="form-control show-tick selectpicker" @EnabledAdminCentral data-live-search="true">
+                                    <select name="Estatus" class="form-control z-index show-tick selectpicker" data-live-search="true">
                                         @foreach (var lst in ViewBag.Estatus)
                                         {
                                             <option value="@lst.IdOrdenCompraEstatus">@lst.Descripcion</option>
@@ -123,42 +121,48 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row clearfix">
-                                <div class="col-sm-3">
-                                    <label>Fecha de registro</label>
-                                    <div class="input-group">
-                                        @Html.EditorFor(model => model.FechaRegistroDe, new { htmlAttributes = new { @class = "from-control" } })
+                            <div class="demo-masked-input">
+                                <div class="row clearfix">
+                                    <div class="col-sm-3">
+                                        <label>Fecha de registro</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+                                            @Html.TextBoxFor(model => model.FechaRegistroDe, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
+                                        </div>
                                         @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <label>&nbsp; </label>
-                                    <div class="input-group">
-                                        @Html.EditorFor(model => model.FechaRegistroA, new { htmlAttributes = new { @class = "from-control" } })
+                                    <div class="col-sm-3">
+                                        <label>&nbsp; </label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+                                            @Html.TextBoxFor(model => model.FechaRegistroA, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
+                                        </div>
                                         @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <label>Fecha de requisición</label>
-                                    <div class="input-group">
-                                        @Html.EditorFor(model => model.FechaRequeridaDe, new { htmlAttributes = new { @class = "from-control" } })
+                                    <div class="col-sm-3">
+                                        <label>Fecha de requisición</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+                                            @Html.TextBoxFor(model => model.FechaRequeridaDe, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
+                                        </div>
                                         @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <label>&nbsp;</label>
-                                    <div class="input-group">
-                                        @Html.EditorFor(model => model.FechaRequeridaA, new { htmlAttributes = new { @class = "from-control" } })
+                                    <div class="col-sm-3">
+                                        <label>&nbsp;</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+                                            @Html.TextBoxFor(model => model.FechaRequeridaA, new { @class = "form-control date", @placeholder = "Ej: 30/07/2016" })
+                                        </div>
                                         @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
-                                <div class="col-sm-1">
-                                    <b>&nbsp; </b>
-                                    <div class="input-group">
-                                        <button ID="lblAction" class="tn btn-danger btn-simple btn-round btn-sm" formaction="Buscar">
-                                            <i class="material-icons">search</i>
-                                            <span class="icon-name"></span>
-                                        </button>
+                                    <div class="col-sm-1">
+                                        <b>&nbsp; </b>
+                                        <div class="input-group">
+                                            <button ID="lblAction" class="tn btn-danger btn-simple btn-round btn-sm" formaction="Buscar">
+                                                <i class="material-icons">search</i>
+                                                <span class="icon-name"></span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -167,14 +171,14 @@
                                     <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
                                         <thead>
                                             <tr>
-                                                <td><b>Gasera</b></td>
-                                                <td><b>N° Requisición</b></td>
-                                                <td><b>No. Orden de Compra</b></td>
-                                                <td><b>Solicitante</b></td>
-                                                <td><b>Proveedor</b></td>
-                                                <td><b>Importe</b></td>
-                                                <td><b>Estatus</b></td>
-                                                <td><b>Accion</b></td>
+                                                <td><strong>Gasera</strong></td>
+                                                <td><strong>N° Requisición</strong></td>
+                                                <td><strong>No. Orden de Compra</strong></td>
+                                                <td><strong>Solicitante</strong></td>
+                                                <td><strong>Proveedor</strong></td>
+                                                <td><strong>Importe</strong></td>
+                                                <td><strong>Estatus</strong></td>
+                                                <td><strong>Accion</strong></td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -228,6 +232,13 @@
                                                                 <span class="icon-name"></span>
                                                             </a>
                                                         }
+                                                        @if (_oc.EsGas == false && _oc.EsTransporteGas == false && _oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.EnComplementoCompra))
+                                                        {
+                                                            <a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraComplemento", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
+                                                                <i class="material-icons">input</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                        }
                                                     </td>
                                                 </tr>
                                             }
@@ -251,3 +262,5 @@
         </section>
     }
 </body>
+<script src="assets/js/pages/forms/advanced-form-elements.js"></script>
+<script src="~/Scripts/js/OrdenesJS.js"></script>
