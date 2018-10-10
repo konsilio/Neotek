@@ -4,6 +4,7 @@
     @using (Html.BeginForm("Autorizar", "OrdenCompra", FormMethod.Post))
     {
         @Html.HiddenFor(m => m.IdOrdenCompra)
+        @Html.HiddenFor(m => m.FechaAutorizacion)
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -88,8 +89,7 @@
                                                 <td><b>Tipo</b></td>
                                                 <td><b>Producto</b></td>
                                                 <td><b>Requeridos</b></td>
-                                                <td><b>Unidad</b></td>
-                                                <td><b>Detalle</b></td>
+                                                <td><b>Unidad</b></td>                                            
                                                 <td><b>Centro de costo</b></td>
                                                 <td><b>Cuenta Contable</b></td>
                                                 <td><b>Cantidad</b></td>
@@ -103,11 +103,10 @@
                                             @foreach (var m in Model.Productos)
                                             {
                                                 <tr>
-                                                    <td>@m.TipoProducto</td>
+                                                    <td>@m.ProductoServicioTipo</td>
                                                     <td>@m.Producto</td>
                                                     <td>@m.CantidadAComprar</td>
-                                                    <td>@m.UnidadMedida</td>
-                                                    <td>@m.Aplicacion</td>
+                                                    <td>@m.UnidadMedida</td>                                                    
                                                     <td>@m.CentroCosto</td>
                                                     <td>@m.CuentaContable</td>
                                                     <td>@m.Precio</td>

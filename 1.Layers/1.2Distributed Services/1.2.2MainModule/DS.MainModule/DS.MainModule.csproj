@@ -272,11 +272,18 @@
     <Content Include="Imagenes\Inventario\imagenes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Imagenes\Inventario\AlmacenPrincipal_5_1_Magnatel_Inicial_50.jpeg" />
+    <Content Include="Imagenes\Inventario\AlmacenPrincipal_5_2_Magnatel_Inicial_50.jpeg" />
+    <Content Include="Imagenes\Inventario\AlmacenPrincipal_5_3_Magnatel_Inicial_90.jpeg" />
+    <Content Include="Imagenes\Inventario\Tractor_5_4_Magnatel_Inicial_90.jpeg" />
+    <Content Include="Imagenes\Inventario\Tractor_5_5_Magnatel_Inicial_60-5.jpeg" />
+    <Content Include="Imagenes\Inventario\Tractor_5_6_Magnatel_Inicial_90-5.jpeg" />
     <Content Include="Imagenes\Pagos\imagenes.txt" />
     <Content Include="PlantillasHtml\OrdenCompraNueva.html" />
     <Content Include="PlantillasHtml\RequisicionNueva.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="PlantillasHtml\SolicitudPago.html" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />

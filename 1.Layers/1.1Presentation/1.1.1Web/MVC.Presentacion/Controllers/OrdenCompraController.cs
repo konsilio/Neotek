@@ -58,7 +58,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
                 ViewBag.IVAs = CatalogoServicio.ListaIVA();
                 ViewBag.IEPs = CatalogoServicio.ListaIEPS();
-                return View(model);
+                return View("OrdenCompra", model);
             }
         }
         public ActionResult Ordenes(int? pageO, int? pageR)
@@ -72,7 +72,7 @@ namespace MVC.Presentacion.Controllers
             var model = OrdenCompraServicio.InitOrdenesCompra(tkn);
             if (pageO == null) pageO = 1;
             if (pageR == null) pageR = 1;
-            ViewBag.Ordenes = model.OrdenesCompra.ToPagedList(pageO.Value, 20);
+            ViewBag.Ordenes = model.OrdenesCompra.OrderByDescending(x => x.IdRequisicion ).ToPagedList(pageO.Value, 20);
             ViewBag.Requisiciones = model.Requisiciones.ToPagedList(pageR.Value, 20);
             return View();
         }
@@ -121,22 +121,80 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var complemeto = OrdenCompraServicio.InitComplemento(id, tkn);
-
             return View(complemeto);
         }
-        public ActionResult Solicitar(OrdenCompraPagoDTO model)
+        [HttpPost]
+        public JsonResult SolicitarPagoExpedidor(OrdenCompraComplementoGasDTO model = null)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            if (Session["StringToken"] == null) RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var respuesta = OrdenCompraServicio.SolicitarPago(model, tkn);
-            if (respuesta.Exito && respuesta.Mensaje.Equals("OK"))
-                return RedirectToAction("Ordenes");
+            var respuesta = OrdenCompraServicio.SolicitarPagoExpedidor(model, tkn);
+            if (respuesta.Exito)
+            {
+                var js = JsonConvert.SerializeObject(respuesta);
+                return Json(js, JsonRequestBehavior.AllowGet);
+            }
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("EntradaMercancia", model);
+                RedirectToAction("OrdenCompraComplementoGas", model.IdOrdenCompraExpedidor);
+                return new JsonResult();
             }           
         }
+        [HttpPost]
+        public JsonResult SolicitarPagoPorteador(OrdenCompraComplementoGasDTO model = null)
+        {
+            if (Session["StringToken"] == null) RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var respuesta = OrdenCompraServicio.SolicitarPagoPorteador(model, tkn);
+            if (respuesta.Exito)
+            {
+                var js = JsonConvert.SerializeObject(respuesta);
+                return Json(js, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                TempData["RespuestaDTO"] = respuesta;
+                RedirectToAction("OrdenCompraComplementoGas", model.IdOrdenCompraPorteador);
+                return new JsonResult();
+            }
+        }
+        public JsonResult GuardarDatosExpedidor(OrdenCompraComplementoGasDTO model = null)
+        {
+            if (Session["StringToken"] == null) RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var respuesta = OrdenCompraServicio.SolicitarPagoExpedidor(model, tkn);
+            if (respuesta.Exito)
+            {
+                var js = JsonConvert.SerializeObject(respuesta);
+                return Json(js, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                TempData["RespuestaDTO"] = respuesta;
+                RedirectToAction("OrdenCompraComplementoGas", model.IdOrdenCompraExpedidor);
+                return new JsonResult();
+            }
+        }
+        [HttpPost]
+        public JsonResult GuardarDatosPorteador(OrdenCompraComplementoGasDTO model = null)
+        {
+            if (Session["StringToken"] == null) RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var respuesta = OrdenCompraServicio.SolicitarPagoPorteador(model, tkn);
+            if (respuesta.Exito)
+            {
+                var js = JsonConvert.SerializeObject(respuesta);
+                return Json(js, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                TempData["RespuestaDTO"] = respuesta;
+                RedirectToAction("OrdenCompraComplementoGas", model.IdOrdenCompraPorteador);
+                return new JsonResult();
+            }
+        }
+
         public ActionResult OrdenCompraPago(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -159,10 +217,21 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("OrdenCompraPago", new { id = dto.IdOrdenCompra });
             }
         }
-        public ActionResult OrdenCompraComplementoGas()
+        public ActionResult OrdenCompraComplementoGas(int? id)
         {
-            
-            return View();
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            int IdOC = id ?? 0;
+            var complemeto = OrdenCompraServicio.InitComplementoGas(IdOC, tkn);
+            ViewBag.IVAs = CatalogoServicio.ListaIVA();
+            ViewBag.IEPs = CatalogoServicio.ListaIEPS();
+            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
+            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
+
+            RespuestaDTO Resp = new RespuestaDTO();
+            if (TempData["RespuestaDTO"] != null) Resp = (RespuestaDTO)TempData["RespuestaDTO"];
+            ViewBag.MensajeError = Validar(Resp);
+            return View(complemeto);          
         }
         private string Validar(RespuestaDTO Resp = null)
         {

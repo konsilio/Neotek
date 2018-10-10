@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Compras;
+﻿using Application.MainModule.DTOs;
+using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Servicios.Almacen;
 using Sagas.MainModule.Entidades;
 using System;
@@ -16,44 +17,7 @@ namespace Application.MainModule.Servicios
     {
         private static string rutaImagenes = ConfigurationManager.AppSettings["RutaImagenesInventario"];
         private static string rutaImagenesPagos = ConfigurationManager.AppSettings["RutaImagenesPagos"];
-
-        public static AlmacenGasDescargaFoto ObtenerImagen(AlmacenGasDescargaFoto foto)
-        {
-            // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
-            //string a = "CadenaBase64|IdUA|Magnatel|Inicial|.jpeg";
-            List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
-            string nombre = string.Concat(campos.ElementAt(1), "_", foto.Orden, "_", campos.ElementAt(2), "_", campos.ElementAt(3));
-            string extension = campos.ElementAt(4);
-            foto.CadenaBase64 = campos.ElementAt(0);
-
-            foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
-            foto.PathImagen = GenerarNombre(nombre, extension, foto.PathImagen);
-            foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);            
-
-            FileUtilities.GuardarImagen(foto.CadenaBase64, foto.PathImagen);
-            foto.CadenaBase64 = null;
-            campos.Clear();
-            return foto;
-        }
-
-        public static OrdenCompraPago ObtenerImagen(OrdenCompraPago foto)
-        {
-            //La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
-            //string a = "CadenaBase64|NumeroOrdenCompra|.jpeg";
-            var b64 = foto.PhysicalPathCapturaPantalla;
-            List<string> campos = FilterFunciones.ObtenerFields(b64);
-            string nombre = string.Concat(campos.ElementAt(1), "_", foto.Orden, "_", ".png");
-            string extension = campos.ElementAt(2);           
-
-            foto.PhysicalPathCapturaPantalla = Convertir.GetPhysicalPath(rutaImagenesPagos);
-            foto.PhysicalPathCapturaPantalla = GenerarNombre(nombre, extension, b64);
-            foto.UrlPathCapturaPantalla = Convertir.PhysicalPathToUrlPath(b64);
-
-            FileUtilities.GuardarImagen(b64, foto.PhysicalPathCapturaPantalla);            
-            campos.Clear();
-            return foto;
-        }
-
+           
         public static AlmacenGasRecargaFoto ObtenerImagen(AlmacenGasRecargaFoto foto)
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
@@ -134,6 +98,67 @@ namespace Application.MainModule.Servicios
             return foto;
         }
 
+        public static AlmacenGasDescargaFoto ObtenerImagen(AlmacenGasDescargaFoto foto)
+        {
+            // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
+            //string a = "CadenaBase64|IdUA|Magnatel|Inicial|.jpeg";
+            List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
+            string nombre = string.Concat(campos.ElementAt(1), "_", foto.Orden, "_", campos.ElementAt(2), "_", campos.ElementAt(3));
+            string extension = campos.ElementAt(4);
+            foto.CadenaBase64 = campos.ElementAt(0);
+
+            foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
+            foto.PathImagen = GenerarNombre(nombre, extension, foto.PathImagen);
+            foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);
+
+            FileUtilities.GuardarImagen(foto.CadenaBase64, foto.PathImagen);
+            foto.CadenaBase64 = null;
+            campos.Clear();
+            return foto;
+        }
+
+        public static OrdenCompraPago ObtenerImagen(OrdenCompraPago foto)
+        {
+            //La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
+            //string a = "CadenaBase64|NumeroOrdenCompra|.jpeg";
+            var b64 = foto.PhysicalPathCapturaPantalla;
+            List<string> campos = FilterFunciones.ObtenerFields(b64);
+            string nombre = string.Concat(campos.ElementAt(1), "_", foto.Orden, "_", ".png");
+            string extension = campos.ElementAt(2);
+
+            foto.PhysicalPathCapturaPantalla = Convertir.GetPhysicalPath(rutaImagenesPagos);
+            foto.PhysicalPathCapturaPantalla = GenerarNombre(nombre, extension, b64);
+            foto.UrlPathCapturaPantalla = Convertir.PhysicalPathToUrlPath(b64);
+
+            FileUtilities.GuardarImagen(b64, foto.PhysicalPathCapturaPantalla);
+            campos.Clear();
+            return foto;
+        }
+
+        public static List<ImagenDTO> BuscarImagenes(AlmacenGasDescarga descarga)
+        {
+            //Formato del nombre de la imagen Tractor_5_4_Magnatel_Inicial_90.jpeg
+            List<ImagenDTO> li = new List<ImagenDTO>();
+            var fotosAlacenGasDescarga = AlmacenGasServicio.ObtenerImagenes(descarga);
+            foreach (var foto in fotosAlacenGasDescarga)
+            {
+                ImagenDTO i = new ImagenDTO();
+                var t = FilterFunciones.ObtenerFields(foto.UrlImagen, '/').Count;
+                i.Nombre = foto.UrlImagen.Split('/')[t - 1];
+
+                var nomPartes = FilterFunciones.ObtenerFields(i.Nombre, '_');
+
+                i.UrlImg = foto.UrlImagen;
+                i.Oden = short.Parse(nomPartes.ElementAt(2));
+                i.Tipo = nomPartes.ElementAt(3);
+                i.Momento = nomPartes.ElementAt(4);
+                i.Lectura = string.Concat(nomPartes.ElementAt(5).Split('.')[0].Replace('-', '.'), " %");
+                li.Add(i);
+            }
+            return li;
+        }
+
+
         public static void LimpiarImagenes()
         {
             double diasVigencia = Convert.ToDouble(ConfigurationManager.AppSettings["ImagenesDiasVigencia"]) * -1;
@@ -166,7 +191,6 @@ namespace Application.MainModule.Servicios
         public static string GenerarNombre(string nombre, string extension, string ruta)
         {
             return string.Concat(ruta, "\\", GenerarNombre(nombre, extension));
-        }
-      
+        }   
     }
 }

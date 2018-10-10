@@ -46,6 +46,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _compras.BuscarOrdenCompra(idOC));
         }
+        [Route("buscar/ordencompra/complemento/gas/{idOC}")]
+        public HttpResponseMessage GetOrdenCompraComplementoGas(int idOC)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _compras.BuscarComplementoGas(idOC));
+        }
         /// <summary>
         /// Genera las ordenes de compra y les asigna los productos necesarios segun los distintos proveedore y los guarda en la base de datos
         /// </summary>
@@ -71,7 +76,7 @@ namespace DS.MainModule.Controllers
         /// </summary>
         /// <param name="idOrdenCompra"></param>
         /// <returns></returns>
-        [Route("autoroizar/ordencompra")]
+        [Route("autorizar/ordencompra")]
         public HttpResponseMessage PutAutorizarCompra(OrdenCompraDTO oc)
         {
             return RespuestaHttp.crearRespuesta(_compras.AutorizarOrdenCompra(oc), Request);
@@ -105,6 +110,21 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaPagos(int idOC)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _compras.BuscarPagos(idOC));
+        }
+        [Route("solictud/pago/expedidor")]
+        public HttpResponseMessage PutSolicitarPagoExpedidor(ComplementoGasDTO oc)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoExipedidor(oc), Request);
+        }
+        [Route("solictud/pago/porteador")]
+        public HttpResponseMessage PutSolicitarPagoPorteador(ComplementoGasDTO oc)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoPorteador(oc), Request);
+        }
+        [Route("solictud/pago/mercancia")]
+        public HttpResponseMessage PutSolicitarPago(ComplementoGasDTO oc)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoPorteador(oc), Request);
         }
     }
 }

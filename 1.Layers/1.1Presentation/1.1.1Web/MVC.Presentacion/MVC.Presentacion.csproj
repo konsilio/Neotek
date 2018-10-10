@@ -309,6 +309,7 @@
     <Compile Include="Models\Catalogos\UsuarioDTO.cs" />
     <Compile Include="Models\Catalogos\UsuariosModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ImagenDTO.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrdenCompra\AlmacenEntradaDTO.cs" />
     <Compile Include="Models\OrdenCompra\EntradaMercanciaModel.cs" />
@@ -10686,6 +10687,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\Logo GMG.JPG" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Resources\css\CreateForm.css" />
@@ -11338,6 +11340,12 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\ConfirmacionPagoJS.js" />
+    <Content Include="Scripts\js\CProductoJS.js" />
+    <Content Include="Scripts\js\OrdenCompraComplementoGasJS.js" />
+    <Content Include="Scripts\js\OrdenesJS.js" />
+    <Content Include="Scripts\js\RequisicionesJS.js" />
+    <Content Include="Scripts\js\UtileriasJS.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />

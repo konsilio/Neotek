@@ -104,14 +104,13 @@ namespace MVC.Presentacion.App_Code
             newModel.Cantidad = prod.Cantidad;
             return newModel;
         }
-        public static RequisicionModel ActivarBorrar(RequisicionModel model, int id, List<RequisicionProductoNuevoDTO> Prodcutos, string _tkn)
+        public static RequisicionDTO ActivarBorrar(RequisicionDTO model, int id, List<RequisicionProductoDTO> Prodcutos, string _tkn)
         {
             var newModel = model;
             newModel.FechaRequerida = model.FechaRequerida;
-            newModel.RequisicionProductos = Prodcutos.Where(x => !x.IdProducto.Equals(id)).ToList();
-            newModel.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(_tkn);
-            newModel.Productos = CatalogoServicio.ListaProductos(_tkn);
-
+            newModel.Productos = Prodcutos.Where(x => !x.IdProducto.Equals(id)).ToList();
+            //newModel.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(_tkn);
+            //newModel.Productos = CatalogoServicio.ListaProductos(_tkn);
             return newModel;
         }
         public static RequisicionProductoDTO CrearProductoNuevo(RequisicionDTO model, string _tkn)

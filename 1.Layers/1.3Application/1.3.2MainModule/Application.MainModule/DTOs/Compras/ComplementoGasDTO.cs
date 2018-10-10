@@ -18,7 +18,6 @@ namespace Application.MainModule.DTOs.Compras
         public string MotivoRequisicion { get; set; }
         public string RequeridoEn { get; set; }
         public DateTime FechaRequerida { get; set; }
-
         public DateTime FechaEntraGas { get; set; }
         public decimal PorcenMagnatelOcularTractorINI { get; set; }
         public decimal PorcenMagnatelOcularAlmacenINI { get; set; }
@@ -28,7 +27,12 @@ namespace Application.MainModule.DTOs.Compras
         public decimal KilosPapeleta { get; set; }
         public decimal KilosDescargados { get; set; }
         public decimal KilosDiferencia { get; set; }
+        public decimal FactorLitrosAKilos { get; set; }
+        public decimal PrecioConIVA { get; set; }
+
+        public List<ProductoOCDTO> Productos { get; set; }
         public OrdenCompraDTO OrdenCompraExpedidor { get; set; }
         public OrdenCompraDTO OrdenCompraPorteador { get; set; }
+        public List<ImagenDTO> Fotos { get; set; }
     }
 }

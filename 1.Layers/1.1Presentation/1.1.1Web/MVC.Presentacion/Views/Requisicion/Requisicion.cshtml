@@ -104,6 +104,8 @@
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
                                                 @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })
+                                                @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })
+
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -115,18 +117,21 @@
                                                 }
                                             </select>
                                             @Html.HiddenFor(m => m.IdUsuarioSolicitante)
+                                            @Html.ValidationMessageFor(m => m.IdUsuarioSolicitante, "", new { @class = "alert-danger" })
                                         </div>
                                         <div class="col-lg-3">
                                             <b>Motivo de compra:</b>
                                             <div class="blockquote blockquote-info btn-round">
                                                 <textarea name="MotivoRequisicion" class="form-control  no-resize" @EnabledEsNueva placeholder="Motivo de la compra..." rows="4">@Model.MotivoRequisicion</textarea>
                                             </div>
+                                            @Html.ValidationMessageFor(m => m.MotivoRequisicion, "", new { @class = "alert-danger" })
                                         </div>
                                         <div class="col-lg-3 ">
                                             <b>Se requiere en:</b>
                                             <div class="blockquote blockquote-info btn-round">
                                                 <textarea name="RequeridoEn" class="form-control no-resize" @EnabledEsNueva placeholder="Se requiere en..." rows="4">@Model.RequeridoEn</textarea>
                                             </div>
+                                            @Html.ValidationMessageFor(m => m.RequeridoEn, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     @if (!string.IsNullOrEmpty(ViewBag.MensajeError))
@@ -188,6 +193,8 @@
                                                 <div class="form-group">
                                                     <input type="number" id="Cantidad" class="form-control" placeholder="Cantidad" name="Cantidad" value="@Model.Cantidad" />
                                                 </div>
+                                                @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "alert-danger" })
+
                                                 @*<asp:Label runat="server" ID="reqCant" CssClass="alert-danger" Visible="false" Text="Campo requerido" />*@
                                             </div>
                                             <div class="col-lg-3">
@@ -232,20 +239,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    }
-                                    @if (ViewBag.MensajeError != null)
-                                    {
-                                        <div id="DivCamposPord" class="container">
-                                            <div class="alert alert-danger">
-                                                <div class="alert-icon">
-                                                    <i class="zmdi zmdi-block"></i>
-                                                </div>
-                                                <strong>
-                                                    <label>@ViewBag.MensajeError</label>
-                                                </strong>
-                                            </div>
-                                        </div>
-                                    }
+                                    }                                    
                                     <!--Grid productos agregados nueva requisicion-->
                                     @if (Model.Productos != null)
                                     {

@@ -48,5 +48,23 @@ namespace Application.MainModule.Servicios.Notificacion
 
             return html;
         }
+        public static string SolicitudPago(Sagas.MainModule.Entidades.OrdenCompra oc)
+        {
+            string ruta = Convertir.GetPhysicalPath(string.Concat(_rutaPlantillas, "OrdenCompraNueva.html"));
+            string html = FileUtilities.ObtenerContenido(ruta);
+
+            html = html.Replace("[[TITULO]]", "SOLICITUD DE PAOG");
+            html = html.Replace("[[SUBTITULO]]", "Se requiere de su atencion para el siguente pago de la orden de compra");
+            html = html.Replace("[[FECHA]]", DateTime.Now.ToShortDateString());
+            html = html.Replace("[[IR_A_SAGAS]]", Convertir.GetUrlBasePath());
+            html = html.Replace("[[NUM_OC]]", oc.NumOrdenCompra);
+            html = html.Replace("[[NUM_REQ]]", oc.Requisicion.NumeroRequisicion);
+            html = html.Replace("[[FECHA_REQUISICION]]", oc.FechaRegistro.ToShortDateString());
+            html = html.Replace("[[SOLICITANTE]]", UsuarioServicio.ObtenerNombreCompleto(oc.Requisicion.Solicitante));
+            html = html.Replace("[[MONTO]]", oc.Total.ToString());
+            html = html.Replace("[[WebAppURL]]", ConfigurationManager.AppSettings["RutaPlantillasHtml"]);
+
+            return html;
+        }
     }
 }
