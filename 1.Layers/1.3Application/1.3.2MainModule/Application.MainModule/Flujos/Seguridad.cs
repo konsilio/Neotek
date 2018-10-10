@@ -138,15 +138,15 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
 
-           var userol = UsuarioAdapter.FromDtoRol(usrol);
-           return UsuarioServicio.Eliminar(userol);
-        }        
+            var userol = UsuarioAdapter.FromDtoRol(usrol);
+            return UsuarioServicio.Eliminar(userol);
+        }
         #endregion
 
         #region Roles
         public List<RolDto> AllRoles()
         {
-           return RolServicio.ListaAllRoles().ToList();
+            return RolServicio.ListaAllRoles().ToList();
         }
 
         public RespuestaDto AltaRoles(RolDto rolDto)
@@ -176,14 +176,13 @@ namespace Application.MainModule.Flujos
             //insertar Rol in data access
         }
 
-        public RespuestaDto ModificaPermisos(RolDto rolDto)
+        public RespuestaDto ModificaPermisos(List<RolDto> rolDto)
         {
             var resp = PermisosServicio.PuedeModificarRol();
             if (!resp.Exito) return resp;
 
-            var emp = RolAdapter.FromDto(rolDto.ListaRoles);
-
-            return RolServicio.Actualizar(emp);
+                var emp = RolAdapter.FromDtoPer(rolDto);
+                return RolServicio.Actualizar(emp);           
 
             //insertar Rol in data access
         }

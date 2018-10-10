@@ -14,8 +14,8 @@
 <script type="text/javascript">
     $(function () {
 
-        $('select').on('change', function () {  
-          
+        $('select').on('change', function () {
+
             if ($('#ddlPais').find('option:selected').text() != 'México')
             {
                $('#ddlEdo').parent().hide();
@@ -26,7 +26,7 @@
                  $('#ddlEdo').parent().show();
                 $('#txtEdoP').hide();
             }
-                     
+
         });
 
     });
@@ -72,6 +72,7 @@
                                                 </label>
                                                 <input id="NombreComercial" type="text" name="NombreComercial" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].NombreComercial)" />
                                                 <input id="IdEmpresa" type="text" name="IdEmpresa" hidden="hidden" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].IdEmpresa)" />
+                                                @Html.ValidationMessageFor(m => m.NombreComercial, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
                                     </div>
@@ -96,6 +97,7 @@
                                                 Razón social:*
                                             </label>
                                             <input type="text" name="RazonSocial" id="txtRazonS" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].RazonSocial)" />
+                                            @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -105,6 +107,7 @@
                                             Rfc:*
                                         </label>
                                         <input type="text" name="Rfc" id="txtRfc" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Rfc)" />
+                                        @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -270,6 +273,7 @@
                                                 <option value="@lst.IdPais">@lst.Pais</option>
                                             }
                                         </select>
+                                        @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
@@ -284,6 +288,7 @@
                                                 <option value="@lst.IdEstadoRep">@lst.Estado</option>
                                             }
                                         </select>
+                                        @Html.ValidationMessageFor(m => m.IdEstadoRep, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
 
@@ -293,6 +298,7 @@
                                             Municipio:*
                                         </label>
                                         <input type="text" name="Municipio" id="txtMun" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Municipio)" />
+                                        @Html.ValidationMessageFor(m => m.Municipio, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
@@ -301,7 +307,8 @@
                                             C.P.:*
                                         </label>
                                         <input type="text" name="CodigoPostal" id="txtCP" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].CodigoPostal)" />
-                                    </div>
+                                        @Html.ValidationMessageFor(m => m.CodigoPostal, "", new { @class = "alert-danger" })
+                                     </div>
                                 </div>
                             </div>
 
@@ -313,6 +320,7 @@
                                                 Colonia:*
                                             </label>
                                             <input type="text" name="Colonia" id="txtCol" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Colonia)" />
+                                            @Html.ValidationMessageFor(m => m.Colonia, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -322,6 +330,7 @@
                                             Calle:*
                                         </label>
                                         <input type="text" name="Calle" id="txtCalle" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Calle)" />
+                                        @Html.ValidationMessageFor(m => m.Calle, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -334,6 +343,7 @@
                                                 Núm. Ext.:*
                                             </label>
                                             <input type="text" name="NumExt" id="txtNume" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].NumExt)" />
+                                            @Html.ValidationMessageFor(m => m.NumExt, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -387,7 +397,7 @@
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            <input type="submit" value="Regresar" id="RegresaIndex" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary float-left"/>                            
+                            <input type="submit" value="Regresar" id="RegresaIndex" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary float-left" />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
@@ -404,6 +414,22 @@
                     </div>
                 </div>
             </div>
+
+            @if (ViewBag.MensajeError != null)
+                {
+                <div class="row clearfix">
+                    <div id="divMensajeError" class="container">
+                        <div class="alert alert-danger">
+                            <div class="alert-icon">
+                                <i class="zmdi zmdi-block"></i>
+                            </div>
+                            <strong>
+                                <label>@ViewBag.MensajeError</label>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </section>
 }

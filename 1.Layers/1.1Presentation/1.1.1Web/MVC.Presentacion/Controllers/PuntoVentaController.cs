@@ -1,5 +1,7 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Catalogos;
+using MVC.Presentacion.Models.Seguridad;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +22,6 @@ namespace MVC.Presentacion.Controllers
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
                 ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0, _tkn);
-
             }
             else
             {
@@ -28,17 +29,18 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.ListaPV = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             }
             ViewBag.Usuarios = TempData["Users"];
-        
-            if (TempData["RespuestaDTO"] != null)
-            {
-                ViewBag.MessageExito = TempData["RespuestaDTO"];
-            }
-            if (TempData["RespuestaDTOError"] != null)
-            {
-                ViewBag.MessageError = TempData["RespuestaDTOError"];
-            }
 
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //if (TempData["RespuestaDTO"] != null)
+            //{
+            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
+            //}
+            //if (TempData["RespuestaDTOError"] != null)
+            //{
+            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //}
+            //ViewBag.MessageError = TempData["RespuestaDTOError"];
+            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+
             return View();
         }
 
@@ -50,7 +52,7 @@ namespace MVC.Presentacion.Controllers
             if (lstusuarios.Count() >= 1)
             {
                 ViewBag.Usuarios = lstusuarios;
-            }           
+            }
             TempData["Users"] = lstusuarios;
             ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
             if (ViewBag.EsSuperUser)
@@ -69,17 +71,34 @@ namespace MVC.Presentacion.Controllers
 
         public JsonResult Guardar(short idEmpresa, int idChofer, int idPV)
         {
-            //if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
             List<PuntoVentaModel> model = CatalogoServicio.ListaPuntosVenta(idPV, _tkn);
             PuntoVentaModel nmodel = model[0];
+
             var respuesta = CatalogoServicio.ModificarOperador(nmodel, idChofer, _tkn);
 
-            //    var JsonInfo = JsonConvert.SerializeObject(list);
+            //var JsonInfo = JsonConvert.SerializeObject(list);
             //return Json(JsonInfo, JsonRequestBehavior.AllowGet);
+            //if (respuesta.Exito)
+            //{
+            //    TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;    
+            //    TempData["RespuestaDTOError"] = null;
+            //}
+            //else
+            //{
+            //    TempData["RespuestaDTOError"] = respuesta.Mensaje;
+            //}
 
-            return new JsonResult { Data = new { IsCorrect = respuesta, Message = respuesta } };
+             //return new JsonResult { Data = new { IsCorrect = respuesta.Exito, Message = respuesta.Mensaje } };
+            var JsonInfo = JsonConvert.SerializeObject(respuesta.Mensaje);
+            return Json(JsonInfo, JsonRequestBehavior.AllowGet);
+
+            //return Json(new
+            //{
+            //    redirectUrl = Url.Action("Index", nmodel),
+            //    isRedirect = true
+            //});
 
         }
         public ActionResult BorrarPuntoVenta(List<PuntoVentaModel> _ObjModel, short idE, int id)
@@ -101,6 +120,22 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("Index");
             }
 
+        }
+        private string Validar(RespuestaDTO Resp = null)
+        {
+            string Mensaje = string.Empty;
+            ModelState.Clear();
+            if (Resp != null)
+            {
+                if (Resp.ModelStatesStandar != null)
+                    foreach (var error in Resp.ModelStatesStandar.ToList())
+                    {
+                        ModelState.AddModelError(error.Key, error.Value);
+                    }
+                if (Resp.MensajesError != null)
+                    Mensaje = Resp.MensajesError[0];
+            }
+            return Mensaje;
         }
     }
 }

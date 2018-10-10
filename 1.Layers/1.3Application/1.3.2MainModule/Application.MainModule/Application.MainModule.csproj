@@ -66,6 +66,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\FormaPagoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\OperadorChoferAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
     <Compile Include="DTOs\Almacen\AplicaAutoConsumoDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaCalibracionDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaTraspasoDto.cs" />
@@ -84,7 +85,10 @@
     <Compile Include="AdaptadoresDTO\Mobile\TipoRegimenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
+    <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />
+    <Compile Include="DTOs\Ventas\VentaPuntoVentaDTO.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenSalidaProductoDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />
     <Compile Include="Servicios\Compras\CalcularPagoServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraPagoServicio.cs" />
     <Compile Include="AdaptadoresDTO\Seguridad\RolAdapter.cs" />
@@ -148,8 +152,6 @@
     <Compile Include="DTOs\Catalogo\CuentaContableModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaCrearDTO.cs" />
     <Compile Include="DTOs\Catalogo\EmpresaDTO.cs" />
-    <Compile Include="DTOs\Catalogo\EmpresaEliminarDto.cs" />
-    <Compile Include="DTOs\Catalogo\EmpresaModificarDto.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorCrearDto.cs" />
     <Compile Include="DTOs\Catalogo\ProveedorDto.cs" />
     <Compile Include="DTOs\Catalogo\ProductoDTO.cs" />
@@ -308,6 +310,7 @@
     <Compile Include="Servicios\Seguridad\PermisosServicio.cs" />
     <Compile Include="Servicios\Seguridad\TokenServicio.cs" />
     <Compile Include="Servicios\Seguridad\UsuarioAplicacionServicio.cs" />
+    <Compile Include="Servicios\Ventas\CajaGeneralServicio.cs" />
     <Compile Include="Servicios\Ventas\CalcularPreciosVentaServicio.cs" />
     <Compile Include="UnitOfWork\GenericUnitOfWork.cs" />
     <Compile Include="UnitOfWork\IGenericUnitOfWork.cs" />

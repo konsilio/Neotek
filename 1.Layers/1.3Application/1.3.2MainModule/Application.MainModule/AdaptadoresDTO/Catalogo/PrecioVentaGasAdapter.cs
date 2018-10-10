@@ -18,6 +18,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
 
             PrecioVentaDTO usDTO = new PrecioVentaDTO()
             {
+                IdPrecioVenta = pv.IdPrecioVenta,
                 IdEmpresa = pv.IdEmpresa,
                 IdPrecioVentaEstatus = pv.IdPrecioVentaEstatus,
                 IdCategoria = pv.IdCategoria,
@@ -74,7 +75,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             var Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(PVGasDTO.IdEmpresa));
             var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
-            var IdPreVenta = PVGasDTO.IdEmpresa == 0 ? 1 : PVGasDTO.IdEmpresa + 1;
+            var IdPreVenta = PVGasDTO.IdPrecioVenta == 0 ? 1 : PVGasDTO.IdPrecioVenta + 1;
 
             return new PrecioVenta()
             {
@@ -161,6 +162,7 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
         public static PrecioVenta FromDtoEditar(PrecioVentaDTO Ctedto, PrecioVenta catCte)
         {
             var catPrecioVenta = FromEntity(catCte);
+            catPrecioVenta.IdPrecioVenta = Ctedto.IdPrecioVenta;
             if (Ctedto.IdEmpresa != 0) { catPrecioVenta.IdEmpresa = Ctedto.IdEmpresa; } else { catPrecioVenta.IdEmpresa = catPrecioVenta.IdEmpresa; }
             if (Ctedto.IdPrecioVentaEstatus != 0) { catPrecioVenta.IdPrecioVentaEstatus = Ctedto.IdPrecioVentaEstatus; } else catPrecioVenta.IdPrecioVentaEstatus = catPrecioVenta.IdPrecioVentaEstatus;
             if (Ctedto.IdCategoria != 0) catPrecioVenta.IdCategoria = Ctedto.IdCategoria; else catPrecioVenta.IdCategoria = catPrecioVenta.IdCategoria;

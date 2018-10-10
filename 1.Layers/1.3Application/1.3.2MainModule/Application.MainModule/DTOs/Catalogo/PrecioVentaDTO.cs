@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Exceptions.MainModule.Validaciones;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +16,22 @@ namespace Application.MainModule.DTOs.Catalogo
         public short IdCategoria { get; set; }
         public short IdProductoLinea { get; set; }
         public int IdProducto { get; set; }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
+        [Display(Name = "Categoría")]
         public string Categoria { get; set; }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [StringLength(50, MinimumLength = 1, ErrorMessage = Error.R0004)]
+        [Display(Name = "Línea")]
         public string Linea { get; set; }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [StringLength(500, MinimumLength = 1, ErrorMessage = Error.R0004)]
+        [Display(Name = "Producto")]
         public string Producto { get; set; }
+
         public Nullable<decimal> PrecioActual { get; set; }
         public Nullable<decimal> PrecioPemexKg { get; set; }
         public Nullable<decimal> PrecioPemexLt { get; set; }
@@ -26,6 +41,9 @@ namespace Application.MainModule.DTOs.Catalogo
         public Nullable<decimal> PrecioSalidaKg { get; set; }
         public Nullable<decimal> PrecioSalidaLt { get; set; }
         public bool EsGas { get; set; }
+
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "FechaProgramada")]
         public System.DateTime FechaProgramada { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public Nullable<System.DateTime> FechaVencimiento { get; set; }

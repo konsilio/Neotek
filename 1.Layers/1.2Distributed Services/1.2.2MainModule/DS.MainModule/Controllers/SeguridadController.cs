@@ -106,7 +106,7 @@ namespace DS.MainModule.Controllers
         }
 
         [Route("modifica/permisos")]
-        public HttpResponseMessage PutModificaPermiso(RolDto rolDto)
+        public HttpResponseMessage PutModificaPermiso(List<RolDto> rolDto)
         {
             return RespuestaHttp.crearRespuesta(_seguridad.ModificaPermisos(rolDto), Request);
         }

@@ -1,5 +1,4 @@
-﻿@using MVC.Presentacion.Models.Catalogos
-@model  PartialViewModel
+﻿@model MVC.Presentacion.Models.Catalogos.PartialViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -9,180 +8,7 @@
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
-
-<script type="text/javascript">
-    $(function () {
-
-        $('#interest_tabs').on('click', 'a[data-toggle="tab"]', function (e) {
-            e.preventDefault();
-
-            var $link = $(this);
-
-            if (!$link.parent().hasClass('active')) {
-
-                //remove active class from other tab-panes
-                $('.tab-content:not(.' + $link.attr('href').replace('#', '') + ') .tab-pane').removeClass('active');
-
-                // click first submenu tab for active section
-                $('a[href="' + $link.attr('href') + '_all"][data-toggle="tab"]').click();
-
-                // activate tab-pane for active section
-                $('.tab-content.' + $link.attr('href').replace('#', '') + ' .tab-pane:first').addClass('active');
-            }
-
-
-            //tabSisCompra
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnGuardaP").click(function () {
-
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Roles", Action = "GuardarPermisos" }) %>');
-            form.attr('method', 'post');
-
-            //var arrItem = [];
-            //var commaSeparated = "";
-            //$("#ItemList td input[type=checkbox]").each(function (index, val) {
-            //    alert(index);
-            //    alert(val);
-            //     debugger
-            //    var checkdId = $(val).atrr("Id");
-            //    var arr = checkdId.split('_');
-            //    var currentCheckboxId = arr[1];
-            //    var IsChecked = $("#" + checkId).is(":checked", true);
-
-            //    if (Ischecked) {
-            //        arrItem.push(currentCheckboxId);
-            //    }
-            //    alert(arrItem.values);
-            //})
-
-            //if (arrItem.lenght != 0)
-
-            //{
-            //    $.ajax({
-            //        url: "/Roles/SaveList",
-            //        type:"POST",
-            //        data: { ItemList: commaSeparated },
-            //        success: function (response)
-            //        {
-
-            //        }
-            //    })
-
-            //}
-
-            /*********/
-
-        });
-
-    });
-
-    $(document).ready(function () {
-        
-        $("#homeRequisicion").click(function () {          
-            $('#MovilCompra').css("display", "none");
-            $('#SistemaCompra').css("display", "none");
-            $('#SistemaCatalogo').css("display", "none");
-            $('#window_Compra').css("display", "none");
-            $('#window_Ventas').css("display", "none");
-            $('#window_Inventario').css("display", "none");
-            $('#window_Catalogos').css("display", "none");
-            $('#hide_divCat').css("display", "none");
-            $('#catalogos_tabs').css("display", "none");
-            $('#MovilCatalogo').css("display", "none");
-            $('#gvwSistemaReq').css("display", "");
-            $('#MovilRequsicion').css("display", "");
-            $('#SistemaInventario').css("display", "none");
-            
-        });
-        $("#homeCatalogos").click(function () {
-            $('#MovilCompra').css("display", "none");
-            $('#SistemaCompra').css("display", "none");
-            $('#SistemaCatalogo').css("display", "");
-            $('#window_Compra').css("display", "none");
-            $('#window_Ventas').css("display", "none");
-            $('#window_Inventario').css("display", "none");
-            $('#window_Catalogos').css("display", "");
-            $('#hide_divCat').css("display", "");
-            $('#tabSisCompra').css("display", "none");
-            $('#gvwSistemaReq').css("display", "none");
-            $('#catalogos_tabs').css("display", "");
-            $('#MovilCatalogo').css("display", "");            
-            $('#MovilRequsicion').css("display", "none");
-            $('#SistemaVentas').css("display", "none");
-            $('#MovilVentas').css("display", "none");        
-                        
-        });
-
-        $("#homeCompra").click(function () {
-            $('#MovilCompra').css("display", "");
-            $('#SistemaCompra').css("display", "");
-            $('#divgvwCompra').css("display", "");
-            $('#DivgvwMovilCompra').css("display", "");
-            $('#tabSisCompra').css("display", "");
-            $('#SistemaCatalogo').css("display", "none");      
-            $('#window_Compra').css("display", "");
-            $('#window_Ventas').css("display", "none");
-            $('#SistemaVentas').css("display", "none");
-            $('#window_Inventario').css("display", "none");
-            $('#window_Catalogos').css("display", "none");
-            $('#hide_divCat').css("display", "none");
-            $('#catalogos_tabs').css("display", "none");
-            $('#MovilCatalogo').css("display", "none");           
-            $('#SistemaInventario').css("display", "none");
-        });
-        
-        $("#homeInventario").click(function () {
-            $('#window_Inventario').css("display", "");
-            $('#SistemaInventario').css("display", "");            
-            $('#MovilCompra').css("display", "none");
-            $('#SistemaCompra').css("display", "none");
-            $('#SistemaCatalogo').css("display", "none");
-            $('#window_Compra').css("display", "none");
-            $('#window_Ventas').css("display", "none");
-            $('#SistemaVentas').css("display", "none");
-            $('#MovilVentas').css("display", "none");
-            $('#window_Catalogos').css("display", "none");
-            $('#hide_divCat').css("display", "none");
-            $('#catalogos_tabs').css("display", "none");
-            $('#MovilCatalogo').css("display", "none");               
-            $('#tabSisCompra').css("display", "none");
-            $('#gvwSistemaReq').css("display", "none");
-            $('#MovilRequsicion').css("display", "none");           
-            $('#divgvwCompra').css("display", "none");
-            $('#DivgvwMovilCompra').css("display", "none");             
-         
-        });
-        
-        $("#homeVentas").click(function () {
-            $('#window_Ventas').css("display", "");
-            $('#SistemaVentas').css("display", "");
-            $('#MovilVentas').css("display", "");
-            $('#window_Inventario').css("display", "none");
-            $('#SistemaInventario').css("display", "none");
-            $('#MovilCompra').css("display", "none");
-            $('#SistemaCompra').css("display", "none");
-            $('#SistemaCatalogo').css("display", "none");
-            $('#window_Compra').css("display", "none");            
-            $('#window_Catalogos').css("display", "none");
-            $('#hide_divCat').css("display", "none");
-            $('#catalogos_tabs').css("display", "none");
-            $('#MovilCatalogo').css("display", "none");
-            $('#tabSisCompra').css("display", "none");
-            $('#gvwSistemaReq').css("display", "none");
-            $('#MovilRequsicion').css("display", "none");
-            $('#divgvwCompra').css("display", "none");
-            $('#DivgvwMovilCompra').css("display", "none");
-            
-        });
-    });
-
-</script>
-
+<script src="~/Resources/js/Roles.js"></script>
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
@@ -195,7 +21,7 @@
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
-
+                <!--Empresa-->
                 <div class="row clearfix">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="card">
@@ -207,7 +33,7 @@
                                             <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
                                                 @foreach (var lst in ViewBag.listaEmpresas)
                                                 {
-                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                 }
                                             </select>
                                         </div>
@@ -225,7 +51,8 @@
                         </div>
                     </div>
                 </div>
-
+                <!---->
+                <!--Alta Rol-->
                 <div class="row clearfix">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="card">
@@ -257,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-
+                <!---->
                 <div class="body">
                     <!-- Nav tabs all menu-->
                     <ul class="nav nav-tabs" role="tablist">
@@ -265,16 +92,16 @@
                         <li class="nav-item" id="homeRequisicion"><a class="nav-link" id="homeRequisicion" data-toggle="tab" href="#window_Requsicion"><i class="zmdi zmdi-apps"></i> Requisicion </a></li>
                         <li class="nav-item"><a class="nav-link" id="homeCompra" data-toggle="tab" href="#window_Compra"> <i class="zmdi zmdi-money-box"></i> Compra </a></li>
                         <li class="nav-item"><a class="nav-link" id="homeInventario" data-toggle="tab" href="#window_Inventario"><i class="zmdi zmdi-file"></i> Inventario </a></li>
-                        <li class="nav-item"><a class="nav-link" id="homeVentas"data-toggle="tab" href="#window_Ventas"><i class="zmdi zmdi-money"></i> Ventas </a></li>
+                        <li class="nav-item"><a class="nav-link" id="homeVentas" data-toggle="tab" href="#window_Ventas"><i class="zmdi zmdi-money"></i> Ventas </a></li>
                         <li class="nav-item"><a class="nav-link" id="homeCatalogos" data-toggle="tab" href="#window_Catalogos"><i class="zmdi zmdi-settings-square"></i> Catalogos </a></li>
                     </ul>
-                    <div class="row clearfix">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <input type="submit" id="btnGuardaP" name="Guardar" value="Guardar" formaction=@Url.Action("GuardarPermisos") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                    @*<div class="row clearfix">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="submit" id="btnGuardaP" name="Guardar" value="Guardar" formaction=@Url.Action("GuardarPermisos") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>*@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <!--Compra tab menu-->
@@ -320,9 +147,14 @@
                     <!--Catalogo tab content-->
                     <div class="tab-content">
                         <div id="SistemaCatalogo" class="tab-pane">
-
+                            <div class="row clearfix" id="btnCatalogo">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="submit" id="btnGuardaP" name="Guardar" title="Catalogos" value="Guardar" formaction=@Url.Action("GuardarPermisos") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="table-responsive" id="hide_divCat">
-
                                 <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" id="ItemList">
                                     <thead>
                                         <tr>
@@ -362,9 +194,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         @Html.EditorFor(m => m.ListaRolesCat)
-
                                     </tbody>
                                 </table>
                             </div>
@@ -377,6 +207,13 @@
                     <!--Compra tab content-->
                     <div class="tab-content">
                         <div id="SistemaCompra" class="tab-pane">
+                            <div class="row clearfix" id="btnCompra">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="submit" id="btnGuardaPCompra" name="Guardar" title="Compras" value="Guardar" formaction=@Url.Action("GuardarPermisosCompra") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="table-responsive" id="divgvwCompra">
                                 <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
                                     <thead>
@@ -392,13 +229,18 @@
                                     </thead>
                                     <tbody>
                                         @Html.EditorFor(m => m.ListaRolesCom)
-
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div id="MovilCompra" class="tab-pane">
-                          
+                            <div class="row clearfix" id="btnMovilCompra">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="submit" id="btnGuardaPCompra" name="Guardar" title="MovilCompra" value="Guardar" formaction=@Url.Action("GuardarPerMovilCompra") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="table-responsive" id="DivgvwMovilCompra">
                                 <table id="tabSisCompra" class="table table table-bordered table-striped table-hover js-basic-example dataTable">
                                     <thead>
@@ -435,7 +277,6 @@
                         </div>
                     </div>
 
-
                     <!--ventas tab content-->
                     <div class="tab-content">
                         <div id="SistemaVentas" class="tab-pane">
@@ -459,7 +300,13 @@
                     <!--Requisicion tab content-->
                     <div class="tab-content">
                         <div id="SistemaRequsicion" class="tab-pane">
-                            
+                            <div class="row clearfix" id="btnRrequisicion">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="submit" id="btnGuardaPCompra" name="Guardar" value="Guardar" title="Requisicion" formaction=@Url.Action("GuardarPermisoRequisicion") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="table-responsive" id="gvwSistemaReq">
                                 <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
                                     <thead>
@@ -511,32 +358,45 @@
                             </div>
                         </div>*@
                 </div>
-
-                @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                @if (ViewBag.MensajeError != null)
                 {
-
-                    <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
-                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                         bottom: 20px; left: 0px; right: 0px;">
-                        @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                        <span data-notify="icon"></span>
-                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
-                        <a href="#" target="_blank" data-notify="url"></a>
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MensajeError</label>
+                                </strong>
+                            </div>
+                        </div>
                     </div>
                 }
+                @*@if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
+                    {
+                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
+                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                             bottom: 20px; left: 0px; right: 0px;">
+                            @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
+                @* <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                            <span data-notify="icon"></span>
+                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
+                            <a href="#" target="_blank" data-notify="url"></a>
+                        </div>
+                    }
 
-                @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
-                {
-                    <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
-                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                         bottom: 20px; left: 0px; right: 0px;">
-                        @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                        <span data-notify="icon"></span>
-                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
-                    </div>
-                }
+                    @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
+                    {
+                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
+                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
+                             bottom: 20px; left: 0px; right: 0px;">
+                            @*<button type="button" aria-hidden="true" class="close" data-notify="dismiss" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">×</button>*@
+                @*  <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                            <span data-notify="icon"></span>
+                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
+                        </div>
+                    }*@
             </div>
         </div>
     </section>

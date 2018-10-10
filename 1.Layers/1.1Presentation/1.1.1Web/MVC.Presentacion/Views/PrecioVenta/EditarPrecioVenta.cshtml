@@ -20,6 +20,13 @@
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#btnActualizaPrecio").click(function () {
+
+                var form = $(this).parent("form");
+                form.attr('action', '<%= Url.RouteUrl(new { Controller = "PrecioVenta", Action = "ActualizarPrecioVenta" }) %>');
+                form.attr('method', 'post');
+            });
+
             $("#btnRegresarIndex").click(function () {
                 var form = $(this).parent("form");
                 form.attr('action', '<%= Url.RouteUrl(new { Controller = "PrecioVenta", Action = "Index" }) %>');
@@ -86,6 +93,8 @@
                                         <input name="PrecioSalidaLt" type="text" class="form-control" readonly="readonly" />
                                         <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
                                         <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
+                                        <input type="text" name="IdPrecioVenta" hidden="hidden" value="@(ViewBag.ListaPV[0].IdPrecioVenta)" />
+
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +111,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
-                                    <input type="submit" id="btnActualizaPrecio" value="Actualizar Precio" formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                    <input type="submit" id="btnActualizaPrecio" value="Actualizar Precio" formaction=@Url.Action("ActualizarPrecioVenta") formmethod="post" class="btn btn-raised btn-primary float-right" />
                                 </div>
                             </div>
                         </div>

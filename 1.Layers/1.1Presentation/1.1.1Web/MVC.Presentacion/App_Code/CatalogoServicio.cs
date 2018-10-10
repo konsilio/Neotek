@@ -15,6 +15,7 @@ using Utilities.MainModule;
 //using System.Web.Script.Serialization;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using MVC.Presentacion.Models.Ventas;
 
 namespace MVC.Presentacion.App_Code
 {
@@ -192,6 +193,15 @@ namespace MVC.Presentacion.App_Code
             cc.Roles = Roles;
             return cc;
         }
+        public static UsuarioRolModel AgregarIdsToentity(UsuarioRolModel cc, int idU, short rol, string token)
+        {
+            // var Nombre = ObtenerRolesId(cc.IdRol, token);
+            //UsuarioRolModel entity = new UsuarioRolModel();
+            cc.IdRol = rol;
+            cc.IdUsuario = idU;
+
+            return cc;
+        }
         public static List<UsuariosModel> ObtenerTodosUsuarios(int id, string token)
         {
             var agente = new AgenteServicio();
@@ -261,12 +271,11 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.FiltrarUsuarios(us.IdEmpresa, us.IdUsuario, us.Email1, token);
             return agente._lstUserEmp;
-
         }
 
-        public static RespuestaDTO EliminarRolAlUsuario(UsuariosModel cc, string tkn)
+        public static RespuestaDTO EliminarRolAlUsuario(UsuarioRolModel cc, int iduser, short idRol, string tkn)
         {
-            // AgregarIdRolToList(cc, tkn);
+            AgregarIdsToentity(cc, iduser, idRol, tkn);
             var agente = new AgenteServicio();
             agente.EliminarRolesAsig(cc, tkn);
             return agente._RespuestaDTO;
@@ -437,7 +446,6 @@ namespace MVC.Presentacion.App_Code
             return Roles;
 
         }
-
         public static List<RolDto> PermisosCompra(List<RolCompras> lst)
         {
             List<RolDto> Roles = new List<RolDto>();
@@ -520,115 +528,134 @@ namespace MVC.Presentacion.App_Code
         public static List<RolDto> TODto(List<RolCat> lst)
         {
             List<RolDto> Roles = new List<RolDto>();
+            for (int i = 0; i <= lst.Count() - 1; i++)
+            {
+                RolDto _lstc = new RolDto();
+                _lstc.Activo = lst[i].Activo;
+                _lstc.IdRol = lst[i].IdRol;
+                _lstc.Rol1 = lst[i].Rol1;
+                _lstc.NombreRol = lst[i].NombreRol;
+                _lstc.IdEmpresa = lst[i].IdEmpresa;
+                _lstc.FechaRegistro = lst[i].FechaRegistro;
+                _lstc.CatInsertarUsuario = lst[i].CatInsertarUsuario;
+                _lstc.CatModificarUsuario = lst[i].CatModificarUsuario;
+                _lstc.CatEliminarUsuario = lst[i].CatEliminarUsuario;
+                _lstc.CatConsultarUsuario = lst[i].CatConsultarUsuario;
+                _lstc.CatInsertarProveedor = lst[i].CatInsertarProveedor;
+                _lstc.CatModificarProveedor = lst[i].CatModificarProveedor;
+                _lstc.CatEliminarProveedor = lst[i].CatEliminarProveedor;
+                _lstc.CatConsultarProveedor = lst[i].CatConsultarProveedor;
+                _lstc.CatInsertarProducto = lst[i].CatInsertarProducto;
+                _lstc.CatModificarProducto = lst[i].CatModificarProducto;
+                _lstc.CatEliminarProducto = lst[i].CatEliminarProducto;
+                _lstc.CatConsultarProducto = lst[i].CatConsultarProducto;
+                _lstc.CatInsertarCentroCosto = lst[i].CatInsertarCentroCosto;
+                _lstc.CatModificarCentroCosto = lst[i].CatModificarCentroCosto;
+                _lstc.CatEliminarCentroCosto = lst[i].CatEliminarCentroCosto;
+                _lstc.CatConsultarCentroCosto = lst[i].CatConsultarCentroCosto;
+                _lstc.CatInsertarCuentaContable = lst[i].CatInsertarCuentaContable;
+                _lstc.CatModificarCuentaContable = lst[i].CatModificarCuentaContable;
+                _lstc.CatEliminarCuentaContable = lst[i].CatEliminarCuentaContable;
+                _lstc.CatConsultarCuentaContable = lst[i].CatConsultarCuentaContable;
+                _lstc.CatInsertarCliente = lst[i].CatInsertarCliente;
+                _lstc.CatModificarCliente = lst[i].CatModificarCliente;
+                _lstc.CatEliminarCliente = lst[i].CatEliminarCliente;
+                _lstc.CatConsultarCliente = lst[i].CatConsultarCliente;
+                _lstc.CatAsignarChoferPuntoVenta = lst[i].CatAsignarChoferPuntoVenta;
+                _lstc.CatEliminarPuntoVenta = lst[i].CatEliminarPuntoVenta;
+                _lstc.CatConsultarPuntoVenta = lst[i].CatConsultarPuntoVenta;
+                _lstc.CatAsignarEquipoTransporte = lst[i].CatAsignarEquipoTransporte;
+                _lstc.CatModificarEquipoTransporte = lst[i].CatModificarEquipoTransporte;
+                _lstc.CatEliminarEquipoTransporte = lst[i].CatEliminarEquipoTransporte;
+                _lstc.CatConsultarEquipoTransporte = lst[i].CatConsultarEquipoTransporte;
 
-            RolDto _lstc = new RolDto();
-            _lstc.Activo = lst[0].Activo;
-            _lstc.IdRol = lst[0].IdRol;
-            _lstc.Rol1 = lst[0].Rol1;
-            _lstc.NombreRol = lst[0].NombreRol;
-            _lstc.IdEmpresa = lst[0].IdEmpresa;
-            _lstc.CatInsertarUsuario = lst[0].CatInsertarUsuario;
-            _lstc.CatModificarUsuario = lst[0].CatModificarUsuario;
-            _lstc.CatEliminarUsuario = lst[0].CatEliminarUsuario;
-            _lstc.CatConsultarUsuario = lst[0].CatConsultarUsuario;
-            _lstc.CatInsertarProveedor = lst[0].CatInsertarProveedor;
-            _lstc.CatModificarProveedor = lst[0].CatModificarProveedor;
-            _lstc.CatEliminarProveedor = lst[0].CatEliminarProveedor;
-            _lstc.CatConsultarProveedor = lst[0].CatConsultarProveedor;
-            _lstc.CatInsertarProducto = lst[0].CatInsertarProducto;
-            _lstc.CatModificarProducto = lst[0].CatModificarProducto;
-            _lstc.CatEliminarProducto = lst[0].CatEliminarProducto;
-            _lstc.CatConsultarProducto = lst[0].CatConsultarProducto;
-            _lstc.CatInsertarCentroCosto = lst[0].CatInsertarCentroCosto;
-            _lstc.CatModificarCentroCosto = lst[0].CatModificarCentroCosto;
-            _lstc.CatEliminarCentroCosto = lst[0].CatEliminarCentroCosto;
-            _lstc.CatConsultarCentroCosto = lst[0].CatConsultarCentroCosto;
-            _lstc.CatInsertarCuentaContable = lst[0].CatInsertarCuentaContable;
-            _lstc.CatModificarCuentaContable = lst[0].CatModificarCuentaContable;
-            _lstc.CatEliminarCuentaContable = lst[0].CatEliminarCuentaContable;
-            _lstc.CatConsultarCuentaContable = lst[0].CatConsultarCuentaContable;
-            _lstc.CatInsertarCliente = lst[0].CatInsertarCliente;
-            _lstc.CatModificarCliente = lst[0].CatModificarCliente;
-            _lstc.CatEliminarCliente = lst[0].CatEliminarCliente;
-            _lstc.CatConsultarCliente = lst[0].CatConsultarCliente;
-            _lstc.CatAsignarChoferPuntoVenta = lst[0].CatAsignarChoferPuntoVenta;
-            _lstc.CatEliminarPuntoVenta = lst[0].CatEliminarPuntoVenta;
-            _lstc.CatConsultarPuntoVenta = lst[0].CatConsultarPuntoVenta;
-            _lstc.CatAsignarEquipoTransporte = lst[0].CatAsignarEquipoTransporte;
-            _lstc.CatModificarEquipoTransporte = lst[0].CatModificarEquipoTransporte;
-            _lstc.CatEliminarEquipoTransporte = lst[0].CatEliminarEquipoTransporte;
-            _lstc.CatConsultarEquipoTransporte = lst[0].CatConsultarEquipoTransporte;
+                /***********************/
+                _lstc.CompraVerOCompra = lst[i].CompraVerOCompra;
+                _lstc.CompraGenerarOCompra = lst[i].CompraGenerarOCompra;
+                _lstc.CompraAutorizarOCompra = lst[i].CompraAutorizarOCompra;
+                _lstc.CompraEntraProductoOCompra = lst[i].CompraEntraProductoOCompra;
+                _lstc.CompraAtiendeServicioOCompra = lst[i].CompraAtiendeServicioOCompra;
+                /*******/
 
-            /***********************/
-            _lstc.CompraVerOCompra = lst[0].CompraVerOCompra;
-            _lstc.CompraGenerarOCompra = lst[0].CompraGenerarOCompra;
-            _lstc.CompraAutorizarOCompra = lst[0].CompraAutorizarOCompra;
-            _lstc.CompraEntraProductoOCompra = lst[0].CompraEntraProductoOCompra;
-            _lstc.CompraAtiendeServicioOCompra = lst[0].CompraAtiendeServicioOCompra;
-            /*******/
-
-            _lstc.AppCompraVerOCompra = lst[0].AppCompraVerOCompra;
-            _lstc.AppCompraEntraGas = lst[0].AppCompraEntraGas;
-            _lstc.AppCompraGasIniciarDescarga = lst[0].AppCompraGasIniciarDescarga;
-            _lstc.AppCompraGasFinalizarDescarga = lst[0].AppCompraGasFinalizarDescarga;
-            _lstc.AppAutoconsumoInventarioGral = lst[0].AppAutoconsumoInventarioGral;
-            _lstc.AppAutoconsumoEstacionCarb = lst[0].AppAutoconsumoEstacionCarb;
-            _lstc.AppAutoconsumoPipa = lst[0].AppAutoconsumoPipa;
-            _lstc.AppCalibracionEstacionCarb = lst[0].AppCalibracionEstacionCarb;
-            _lstc.AppCalibracionPipa = lst[0].AppCalibracionPipa;
-            _lstc.AppCalibracionCamionetaCilindro = lst[0].AppCalibracionCamionetaCilindro;
-            _lstc.AppRecargaEstacionCarb = lst[0].AppRecargaEstacionCarb;
-            _lstc.AppRecargaPipa = lst[0].AppRecargaPipa;
-            _lstc.AppRecargaCamionetaCilindro = lst[0].AppRecargaCamionetaCilindro;
-            _lstc.AppTomaLecturaAlmacenPral = lst[0].AppTomaLecturaAlmacenPral;
-            _lstc.AppTomaLecturaEstacionCarb = lst[0].AppTomaLecturaEstacionCarb;
-            _lstc.AppTomaLecturaPipa = lst[0].AppTomaLecturaPipa;
-            _lstc.AppTomaLecturaCamionetaCilindro = lst[0].AppTomaLecturaCamionetaCilindro;
-            _lstc.AppTomaLecturaReporteDelDia = lst[0].AppTomaLecturaReporteDelDia;
-            _lstc.AppTraspasoEstacionCarb = lst[0].AppTraspasoEstacionCarb;
-            _lstc.AppTraspasoPipa = lst[0].AppTraspasoPipa;
-            /*********/
-            _lstc.RequisicionVerRequisiciones = lst[0].RequisicionVerRequisiciones;
-            _lstc.RequisicionGenerarNueva = lst[0].RequisicionGenerarNueva;
-            _lstc.RequisicionRevisarExistencia = lst[0].RequisicionRevisarExistencia;
-            _lstc.RequisicionAutorizar = lst[0].RequisicionAutorizar;
-            Roles.Add(_lstc);
-
+                _lstc.AppCompraVerOCompra = lst[i].AppCompraVerOCompra;
+                _lstc.AppCompraEntraGas = lst[i].AppCompraEntraGas;
+                _lstc.AppCompraGasIniciarDescarga = lst[i].AppCompraGasIniciarDescarga;
+                _lstc.AppCompraGasFinalizarDescarga = lst[i].AppCompraGasFinalizarDescarga;
+                _lstc.AppAutoconsumoInventarioGral = lst[i].AppAutoconsumoInventarioGral;
+                _lstc.AppAutoconsumoEstacionCarb = lst[i].AppAutoconsumoEstacionCarb;
+                _lstc.AppAutoconsumoPipa = lst[i].AppAutoconsumoPipa;
+                _lstc.AppCalibracionEstacionCarb = lst[i].AppCalibracionEstacionCarb;
+                _lstc.AppCalibracionPipa = lst[i].AppCalibracionPipa;
+                _lstc.AppCalibracionCamionetaCilindro = lst[i].AppCalibracionCamionetaCilindro;
+                _lstc.AppRecargaEstacionCarb = lst[i].AppRecargaEstacionCarb;
+                _lstc.AppRecargaPipa = lst[i].AppRecargaPipa;
+                _lstc.AppRecargaCamionetaCilindro = lst[i].AppRecargaCamionetaCilindro;
+                _lstc.AppTomaLecturaAlmacenPral = lst[i].AppTomaLecturaAlmacenPral;
+                _lstc.AppTomaLecturaEstacionCarb = lst[i].AppTomaLecturaEstacionCarb;
+                _lstc.AppTomaLecturaPipa = lst[i].AppTomaLecturaPipa;
+                _lstc.AppTomaLecturaCamionetaCilindro = lst[i].AppTomaLecturaCamionetaCilindro;
+                _lstc.AppTomaLecturaReporteDelDia = lst[i].AppTomaLecturaReporteDelDia;
+                _lstc.AppTraspasoEstacionCarb = lst[i].AppTraspasoEstacionCarb;
+                _lstc.AppTraspasoPipa = lst[i].AppTraspasoPipa;
+                /*********/
+                _lstc.RequisicionVerRequisiciones = lst[i].RequisicionVerRequisiciones;
+                _lstc.RequisicionGenerarNueva = lst[i].RequisicionGenerarNueva;
+                _lstc.RequisicionRevisarExistencia = lst[i].RequisicionRevisarExistencia;
+                _lstc.RequisicionAutorizar = lst[i].RequisicionAutorizar;
+                Roles.Add(_lstc);
+            }
             return Roles;
         }
-        public static RolDto AddPermisosCat(RolDto cc)
+        public static List<RolDto> AddPermisosCat(RolDto cc, List<RolDto> _roles)
         {
             List<RolDto> Roles = new List<RolDto>();
             Roles = (TODto(cc.ListaRolesCat));
 
-            cc.ListaRoles = Roles;
-            return cc;
+            _roles.AddRange(Roles);
+
+            return _roles;
         }
-        public static RolDto AddPermisosCom(RolDto cc)
+        public static List<RolDto> AddPermisosCom(RolDto cc, List<RolDto> _roles)
         {
+            //List<RolDto> Roles = new List<RolDto>();
+            //Roles = (PermisosCompra(cc.ListaRolesCom));
+            //            cc.ListaRoles = Roles;
+            //return cc;
+
             List<RolDto> Roles = new List<RolDto>();
             Roles = (PermisosCompra(cc.ListaRolesCom));
 
-            cc.ListaRoles = Roles;
-            return cc;
+            _roles.AddRange(Roles);
+
+            return _roles;
         }
 
-        public static RolDto AddPermisosReq(RolDto cc)
+        public static List<RolDto> AddPermisosReq(RolDto cc, List<RolDto> _roles)
         {
+            //List<RolDto> Roles = new List<RolDto>();
+            //Roles = (PermisosRequisicion(cc.ListaRequsicion));
+            //cc.ListaRoles = Roles;
+            //return cc;
             List<RolDto> Roles = new List<RolDto>();
             Roles = (PermisosRequisicion(cc.ListaRequsicion));
 
-            cc.ListaRoles = Roles;
-            return cc;
+            _roles.AddRange(Roles);
+
+            return _roles;
         }
 
-        public static RolDto AddPermisosMovilCom(RolDto cc)
+        public static List<RolDto> AddPermisosMovilCom(RolDto cc, List<RolDto> _roles)
         {
+            //List<RolDto> Roles = new List<RolDto>();
+            //Roles = (PermisosMovilCompra(cc.ListaMovilCompra));
+            //cc.ListaRoles = Roles;
+            //return cc;
             List<RolDto> Roles = new List<RolDto>();
             Roles = (PermisosMovilCompra(cc.ListaMovilCompra));
 
-            cc.ListaRoles = Roles;
-            return cc;
+            _roles.AddRange(Roles);
+
+            return _roles;
         }
         public static List<RolDto> ObtenerTodosRoles(string token)
         {
@@ -688,34 +715,60 @@ namespace MVC.Presentacion.App_Code
         public static RespuestaDTO ActualizaPermisos(RolDto cc, string tkn)
         {
             var agente = new AgenteServicio();
+            List<RolDto> xroles = new List<RolDto>();
             if (cc.ListaRolesCat != null)
             {
-                AddPermisosCat(cc);
-                agente.GuardarPermisos(cc, tkn);
-            }
+                AddPermisosCat(cc, xroles);
+                agente.GuardarPermisos(xroles, tkn);
+            }         
+
+            return agente._RespuestaDTO;
+
+        }
+
+        public static RespuestaDTO ActualizaPermisosCompra(RolDto cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            List<RolDto> xroles = new List<RolDto>();       
 
             if (cc.ListaRolesCom != null)
             {
-                AddPermisosCom(cc);
-                agente.GuardarPermisos(cc, tkn);
+                AddPermisosCom(cc, xroles);
+                agente.GuardarPermisos(xroles, tkn);
             }
+                     
+            return agente._RespuestaDTO;
+
+        }
+        public static RespuestaDTO ActualizaPermisosRequisicion(RolDto cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            List<RolDto> xroles = new List<RolDto>();
 
             if (cc.ListaRequsicion != null)
             {
-                AddPermisosReq(cc);
-                agente.GuardarPermisos(cc, tkn);
-            }
-
-            if (cc.ListaMovilCompra != null)
-            {
-                AddPermisosMovilCom(cc);
-                agente.GuardarPermisos(cc, tkn);
+                AddPermisosReq(cc, xroles);
+                agente.GuardarPermisos(xroles, tkn);
             }
 
             return agente._RespuestaDTO;
 
         }
 
+        public static RespuestaDTO ActualizaPermisosMovilCompra(RolDto cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            List<RolDto> xroles = new List<RolDto>();
+
+            if (cc.ListaMovilCompra != null)
+            {
+                AddPermisosMovilCom(cc, xroles);
+                agente.GuardarPermisos(xroles, tkn);
+            }
+
+            return agente._RespuestaDTO;
+
+        }
         public static RespuestaDTO EliminaRolSel(short id, string tkn)
         {
             var agente = new AgenteServicio();
@@ -829,8 +882,8 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.BuscarIdChofer(idUsuario, token);
             return agente.Operador;
-        }   
-    
+        }
+
         public static List<OperadorChoferModel> ObtenerUsuarioOperador(short idEmpresa, string token)
         {
             var agente = new AgenteServicio();
@@ -880,7 +933,7 @@ namespace MVC.Presentacion.App_Code
         #endregion
 
         #region Precios de Venta Gas
-        public static List<PrecioVentaModel> ListaPrecioVenta(int idPrecioV, string token)
+        public static List<PrecioVentaModel> ListaPrecioVenta(short idPrecioV, string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarListaPrecioVenta(idPrecioV, token);
