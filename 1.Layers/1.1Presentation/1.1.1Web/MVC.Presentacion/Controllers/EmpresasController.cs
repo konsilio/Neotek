@@ -49,6 +49,8 @@ namespace MVC.Presentacion.Controllers
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
             ViewBag.Empresas = null;
+
+            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
             return View(em);
         }
 
@@ -70,7 +72,7 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Index", Objemp);   
+                return RedirectToAction("Nueva", Objemp);   
             }
         }
 

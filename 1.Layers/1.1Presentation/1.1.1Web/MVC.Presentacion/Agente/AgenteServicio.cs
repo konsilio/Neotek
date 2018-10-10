@@ -73,6 +73,9 @@ namespace MVC.Presentacion.Agente
         public List<OrdenCompraPagoDTO> _listaOrdenCompraPago;
         public List<PrecioVentaModel> _listaPreciosV;
         public List<EstatusTipoFechaModel> _listaEstatus;
+        public List<CajaGeneralModel> _listaCajaGral;
+        public List<CajaGeneralCamionetaModel> _listaCajaGralCamioneta;
+    
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -740,7 +743,6 @@ namespace MVC.Presentacion.Agente
                 _lstaRegimenFiscal = lus;
             }
         }
-
         public void BuscarListaClientes(int id, string rfc, string nombre, string tkn)//short idEmpresa, 
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetClientes"];
@@ -1153,7 +1155,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + idEmpresa.ToString()).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         lus = await response.Content.ReadAsAsync<List<PrecioVentaModel>>();
                     else
@@ -1190,6 +1192,120 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Caja General
+        public void BuscarListaVentaCajaGral(string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGral"];
+            GetListaCajaGral(tkn).Wait();
+        }
+        private async Task GetListaCajaGral(string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CajaGeneralModel> lus = new List<CajaGeneralModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<CajaGeneralModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<CajaGeneralModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                               
+                    _listaCajaGral = lus;
+                
+            }
+        }
+        
+        public void BuscarListaVentaCajaGralIdE(short idE, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGralId"];
+            GetListaCajaGral(idE, tkn).Wait();
+        }
+        private async Task GetListaCajaGral(short id, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CajaGeneralModel> lus = new List<CajaGeneralModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + id.ToString()).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<CajaGeneralModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<CajaGeneralModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+                if (id != 0)
+                {
+                    _listaCajaGral = (from x in lus where x.IdEmpresa == id select x).ToList();
+                }
+                else
+                {
+                    _listaCajaGral = lus;
+                }
+            }
+        }
+
+        public void BuscarListaCajaGralCamioneta(string cveReporte,string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGralCamioneta"];
+            GetListaCajaGralCamioneta(cveReporte, tkn).Wait();
+        }
+        private async Task GetListaCajaGralCamioneta(string cveRep,string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<CajaGeneralCamionetaModel> lus = new List<CajaGeneralCamionetaModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + cveRep).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<CajaGeneralCamionetaModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<CajaGeneralCamionetaModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+
+                _listaCajaGralCamioneta = lus;
+                
+            }
+        }
         public void GuardarLiquidacion(CajaGeneralModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings[""];

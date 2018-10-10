@@ -43,7 +43,8 @@ namespace MVC.Presentacion.Controllers
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
             ViewBag.Regimen = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
             ViewBag.Clientes = CatalogoServicio.ListaClientes(0, "", "", _tkn);
-        
+            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+
             return View();
         }
         [HttpPost]
@@ -64,7 +65,7 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Index", _ojUs);
+                return RedirectToAction("Nuevo", _ojUs);
             }
      
         }

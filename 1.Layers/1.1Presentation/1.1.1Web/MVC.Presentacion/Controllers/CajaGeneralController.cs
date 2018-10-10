@@ -22,12 +22,12 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsSuperUser)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.CajaGralCamioneta = null;//CatalogoServicio.ListaPrecioVenta(0, _tkn);
+                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn);
             }
             else
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
-                ViewBag.CajaGralCamioneta = null;//CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGralId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             }
 
             ViewBag.ListaEntidad = CatalogoServicio.ListaTipoFecha(_tkn);
@@ -50,27 +50,35 @@ namespace MVC.Presentacion.Controllers
         public ActionResult Liquidar(CajaGeneralModel _ObjModel)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            string _tok = Session["StringToken"].ToString();
-            ViewBag.CajaGeneral = null;
+            string _tok = Session["StringToken"].ToString();           
             return View();
         }
+        public ActionResult Buscar(CajaGeneralCamionetaModel _model)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+
+            ViewBag.CajaGeneralCamioneta = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia,_tkn);
+            return View("Liquidar");
+        }
+  
         public ActionResult GuardarLiquidar(CajaGeneralModel _ObjModel)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tok = Session["StringToken"].ToString();
 
-            var respuesta = CatalogoServicio.CrearGuardarLiquidacion(_ObjModel, _tok);
+            var respuesta = VentasServicio.CrearGuardarLiquidacion(_ObjModel, _tok);
            
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", _ObjModel);
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("Index", _ObjModel);
             }
         }

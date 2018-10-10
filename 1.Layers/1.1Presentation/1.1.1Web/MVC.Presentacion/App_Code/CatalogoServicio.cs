@@ -972,16 +972,6 @@ namespace MVC.Presentacion.App_Code
 
         #endregion
 
-        #region Caja General
-        public static RespuestaDTO CrearGuardarLiquidacion(CajaGeneralModel cc, string tkn)
-        {
-            var agente = new AgenteServicio();
-            agente.GuardarLiquidacion(cc, tkn);
-            return agente._RespuestaDTO;
-        }
-
-        #endregion
-
         #region Centro de Costo
         public static CentroCostoModel InitCentroCosto(string Tkn)
         {

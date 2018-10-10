@@ -92,14 +92,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if (ViewBag.CajaGralCamioneta != null)
+                                                @if (ViewBag.CajaGeneral != null)
                                                 {
-                                                    foreach (var item in ViewBag.CajaGralCamioneta)
+                                                    foreach (var item in ViewBag.CajaGeneral)
                                                     {
                                                 <tr>
                                                     <td>@item.Fecha</td>
                                                     <td>@item.Entidad</td>
-                                                    <td>@item.Operador/Chofer</td>
+                                                    <td>@item.OperadorChofer</td>
                                                     <td>@item.Concepto</td>
                                                     <td>@item.Descripcion</td>
                                                     <td>@item.Ingreso</td>
@@ -114,13 +114,13 @@
                                 </div>
                             </div>
                             <div class="row clearfix">
-                                @if (ViewBag.CajaGralCamioneta != null)
+                                @if (ViewBag.CajaGeneral != null)
                                 {
                                     <div class="col-md-6">
-                                        Pagina @(ViewBag.CajaGralCamioneta.PageCount < ViewBag.CajaGralCamioneta.PageNumber ? 0 : ViewBag.CajaGralCamioneta.PageNumber) de @ViewBag.CajaGralCamioneta.PageCount
+                                        Pagina @(ViewBag.CajaGeneral.PageCount < ViewBag.CajaGeneral.PageNumber ? 0 : ViewBag.CajaGeneral.PageNumber) de @ViewBag.CajaGeneral.PageCount
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        @Html.PagedListPager((IPagedList)ViewBag.CajaGralCamioneta, page => Url.Action("CajaGeneral", new { page, @class = "btn btn-primary btn-simple" }))
+                                        @Html.PagedListPager((IPagedList)ViewBag.CajaGeneral, page => Url.Action("CajaGeneral", new { page, @class = "btn btn-primary btn-simple" }))
                                     </div>
                                 }
                             </div>

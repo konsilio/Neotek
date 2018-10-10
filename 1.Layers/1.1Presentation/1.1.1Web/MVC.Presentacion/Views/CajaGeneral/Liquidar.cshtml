@@ -1,4 +1,4 @@
-﻿@model  MVC.Presentacion.Models.Ventas.CajaGeneralModel
+﻿@model  MVC.Presentacion.Models.Ventas.CajaGeneralCamionetaModel
 
 <!DOCTYPE html>
 
@@ -53,7 +53,9 @@
                                     <input type="text" name="Clave" class="form-control" />
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="submit" value="Buscar" formmethod="post" class="btn btn-raised btn-primary float-left" />
+                                    @*<input type="submit" value="Buscar" formmethod="post" class="btn btn-raised btn-primary float-left" />*@
+                                    <input type="submit" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary float-left" />
+
                                 </div>
                             </div>
                         </div>
@@ -69,7 +71,7 @@
                                     @*<input type="text" class="form-control" />*@
                                     @*@Html.Label("Operador", "@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].IdCliente)", new { @class = "form-control" })
                                         <input id="IdCliente" type="text" name="IdCliente" hidden="hidden" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].IdCliente)" />*@
-                                    @Html.LabelFor(model => model.Operador, (string)((@ViewBag.CajaGeneral == null) ? "value" : @ViewBag.IdCliente[0].CajaGeneral), new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.OperadorChofer, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].OperadorChofer), new { @class = "form-control" })
 
                                 </div>
                                 <div class="col-sm-05">

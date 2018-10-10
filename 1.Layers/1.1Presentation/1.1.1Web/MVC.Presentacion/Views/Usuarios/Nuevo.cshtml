@@ -27,9 +27,12 @@
                         <div class="col-sm-3">
                             <b>Gasera</b>
                             <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                @foreach (var lst in ViewBag.Empresas)
+                                @if (ViewBag.Empresas != null)
                                 {
-                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                    foreach (var lst in ViewBag.Empresas)
+                                    {
+                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                    }
                                 }
                             </select>
                             @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
@@ -54,6 +57,7 @@
                                     <div class="form-group">
                                         <input type="text" name="Nombre" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Nombre)" />
                                         <input id="IdUsuario" type="text" name="IdUsuario" hidden="hidden" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].IdUsuario)" />
+                                        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2">
@@ -64,11 +68,12 @@
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
                                         <input type="text" name="Email1" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Email1)" class="form-control">
+                                        @Html.ValidationMessageFor(m => m.Email1, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-md-1 col-sm-1">
                                     <div class="form-group">
-                                       <a href="javascript:void(0);" class="tip" role="button" aria-haspopup="true" aria-expanded="false"> <i class="material-icons">help</i><span>Nombre de Usuario para accesar al sistema</span></a>
+                                        <a href="javascript:void(0);" class="tip" role="button" aria-haspopup="true" aria-expanded="false"> <i class="material-icons">help</i><span>Nombre de Usuario para accesar al sistema</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +85,8 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Apellido1)" />
+                                        <input type="text" name="Apellido1" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Apellido1)" />
+                                        @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2">
@@ -90,7 +96,8 @@
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" />
+                                        <input type="password" name="Password" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-1 col-md-1 col-sm-1">
@@ -307,6 +314,7 @@
                                             Municipio:*
                                         </label>
                                         <input type="text" name="Municipio" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Municipio)" />
+                                        @Html.ValidationMessageFor(m => m.Municipio, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
@@ -315,6 +323,7 @@
                                             C.P.:*
                                         </label>
                                         <input type="text" name="CodigoPostal" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].CodigoPostal)" />
+                                        @Html.ValidationMessageFor(m => m.CodigoPostal, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -327,6 +336,7 @@
                                                 Colonia:*
                                             </label>
                                             <input type="text" name="Colonia" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Colonia)" />
+                                            @Html.ValidationMessageFor(m => m.Colonia, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -336,6 +346,7 @@
                                             Calle:*
                                         </label>
                                         <input type="text" name="Calle" id="txtCalle" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Calle)" />
+                                        @Html.ValidationMessageFor(m => m.Calle, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -348,6 +359,7 @@
                                                 Núm. Ext.:*
                                             </label>
                                             <input type="text" name="NumExt" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].NumExt)" />
+                                            @Html.ValidationMessageFor(m => m.NumExt, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -374,7 +386,7 @@
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-7">
                         <div class="form-group">
-                            @if (@ViewBag.Empresas == null)
+                            @if (ViewBag.IdUser == null)
                             {
                                 <input type="submit" value="Crear" formaction="GuardarUsuario" formmethod="post" class="btn btn-raised btn-primary float-right" />
                             }
@@ -386,6 +398,22 @@
                     </div>
                 </div>
             </div>
+
+            @if (ViewBag.MensajeError != null)
+                {
+                <div class="row clearfix">
+                    <div id="divMensajeError" class="container">
+                        <div class="alert alert-danger">
+                            <div class="alert-icon">
+                                <i class="zmdi zmdi-block"></i>
+                            </div>
+                            <strong>
+                                <label>@ViewBag.MensajeError</label>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </section>
 }

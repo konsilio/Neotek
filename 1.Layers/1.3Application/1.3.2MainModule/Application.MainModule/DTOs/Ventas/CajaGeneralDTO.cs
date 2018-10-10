@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MVC.Presentacion.Models.Ventas
+namespace Application.MainModule.DTOs.Ventas
 {
-    public class CajaGeneralModel
+    public class CajaGeneralDTO
     {
         public short IdEmpresa { get; set; }
         public short Year { get; set; }

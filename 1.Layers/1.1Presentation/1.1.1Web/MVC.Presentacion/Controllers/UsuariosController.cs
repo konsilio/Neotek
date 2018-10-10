@@ -49,6 +49,9 @@ namespace MVC.Presentacion.Controllers
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
             ViewBag.Empresas = CatalogoServicio.Empresas(_tok);
             // ViewBag.IdUser.Count() = 0;
+
+            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+
             return View();
         }
 
@@ -70,7 +73,7 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Index", _ojUs);
+                return RedirectToAction("Nuevo", _ojUs);
             }
         }
 
