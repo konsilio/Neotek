@@ -60,6 +60,12 @@
         });
     });
 </script>
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
 <section class="content home">
     <div class="container-fluid">
         @using (Html.BeginForm("OrdenCompraComplemento", "OrdenCompra", FormMethod.Post))
@@ -193,20 +199,20 @@
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
-                                    <div class="col-md-3 col-sm-4 form-control-label">
+                                    <div class="col-md-3 form-control-label">
                                         <label>Folio Fiscal</label>
                                     </div>
-                                    <div class="col-md-9 col-sm-8">
+                                    <div class="col-md-9">
                                         <div class="form-group">
                                             @Html.TextBoxFor(m => m.FolioFiscalUUID, new { @class = "form-control", @placeholder = "UUID de la factura" })
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row clearfix">
-                                    <div class="col-md-3 col-sm-4 form-control-label">
+                                    <div class="col-md-3 form-control-label">
                                         <label>Folio Factura</label>
                                     </div>
-                                    <div class="col-md-9 col-sm-8">
+                                    <div class="col-md-9">
                                         <div class="form-group">
                                             @Html.TextBoxFor(m => m.FolioFactura, new { @class = "form-control", @placeholder = "Folio de la factura" })
                                         </div>
@@ -225,7 +231,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="header">
-                                <h2><strong>Factura</strong></h2>
+                                <h2><strong>Resumen de pagos</strong></h2>
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
