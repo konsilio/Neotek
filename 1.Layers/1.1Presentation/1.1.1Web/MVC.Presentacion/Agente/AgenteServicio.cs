@@ -1222,8 +1222,8 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                               
-                    _listaCajaGral = lus;
+
+                _listaCajaGral = lus.OrderByDescending(x=> x.FechaAplicacion).ToList();
                 
             }
         }

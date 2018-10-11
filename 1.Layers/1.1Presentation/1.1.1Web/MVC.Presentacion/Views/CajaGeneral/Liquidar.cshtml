@@ -15,7 +15,8 @@
             max-width: 8.666667%;
             text-align: center;
         }
-          .col-sm-005 {
+
+        .col-sm-005 {
             -webkit-box-flex: 0;
             -ms-flex: 0 0 16.666667%;
             flex: 0 0 16.666667%;
@@ -24,7 +25,7 @@
         }
     </style>
     <script type="text/javascript">
-        $(document).ready(function () {        
+        $(document).ready(function () {
             $('#Chkboxcorrecto').click(function () {
                 if (!$(this).is(':checked')) {
                     $("#btnLiquidar").prop("disabled", true);
@@ -32,9 +33,9 @@
                 else {
                     $("#btnLiquidar").prop("disabled", false);
                 }
-                  
-            });         
-    });
+
+            });
+        });
     </script>
 </head>
 <body style="height:100%">
@@ -50,7 +51,7 @@
                                     <b>Clave Reporte:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" name="Clave" class="form-control" />
+                                    <input type="text" name="FolioOperacionDia" class="form-control" />
                                 </div>
                                 <div class="col-sm-2">
                                     @*<input type="submit" value="Buscar" formmethod="post" class="btn btn-raised btn-primary float-left" />*@
@@ -68,9 +69,6 @@
                                     <b>Operador:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @*<input type="text" class="form-control" />*@
-                                    @*@Html.Label("Operador", "@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].IdCliente)", new { @class = "form-control" })
-                                        <input id="IdCliente" type="text" name="IdCliente" hidden="hidden" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].IdCliente)" />*@
                                     @Html.LabelFor(model => model.OperadorChofer, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].OperadorChofer), new { @class = "form-control" })
 
                                 </div>
@@ -78,15 +76,13 @@
                                     <b>Camioneta:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @*<input type="text" class="form-control" />*@
-                                    @Html.Label("Camioneta", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.PuntoVenta, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].PuntoVenta), new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-2">
                                     <b>Fecha de reporte:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @*<input type="text" class="form-control" />*@
-                                    @Html.Label("FechaReporte", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.FechaRegistro, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].FechaRegistro), new { @class = "form-control" })
                                 </div>
                             </div>
                             <br />
@@ -95,25 +91,25 @@
                                     <b>Venta total:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.Label("VentaTotal", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.VentaTotal, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].VentaTotal), new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-005">
                                     <b>Venta en efectivo:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.Label("VentaEfectivo", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.VentaTotalContado, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].VentaTotalContado), new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-005">
                                     <b>Venta a crédito:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.Label("VentaCredito", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.VentaTotalCredito, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].VentaTotalCredito), new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-05">
                                     <b>Otras ventas:</b>
                                 </div>
                                 <div class="col-sm-05">
-                                    @Html.Label("OtrasVentas", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.OtrasVentas, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].OtrasVentas), new { @class = "form-control" })
                                 </div>
                             </div>
                             <br />
@@ -162,20 +158,20 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @*@if (ViewBag.ListaPV != null)
+                                                @if (ViewBag.CajaGeneralCamioneta != null)
+                                                {
+                                                    foreach (var item in ViewBag.CajaGeneralCamioneta)
                                                     {
-                                                        foreach (var item in ViewBag.ListaPV)
-                                                        {
-                                                            <tr>
-                                                                <td>@item.Empresa</td>
-                                                                <td>@item.PrecioPemexKg</td>
-                                                                <td>@item.UtilidadEsperadaKg</td>
-                                                                <td>@item.PrecioSalidaKg</td>
-                                                                <td>@item.FechaProgramada</td>
-                                                                <td>@item.Total</td>
-                                                            </tr>
-                                                        }
-                                                    }*@
+                                                        <tr>
+                                                            <td>@item.OperadorChofer</td>
+                                                            <td>@item.OperadorChofer</td>
+                                                            <td>@item.Descuento</td>
+                                                            <td>@item.Subtotal</td>
+                                                            <td>@item.Iva</td>
+                                                            <td>@item.Total</td>
+                                                        </tr>
+                                                    }
+                                                }
                                             </tbody>
                                         </table>
                                     </div><br />
@@ -184,7 +180,7 @@
                                             <b>Descuento:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            <input type="text" name="Clave" class="form-control" />
+                                            @Html.LabelFor(model => model.Descuento, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].Descuento), new { @class = "form-control" })
                                         </div>
                                     </div><br />
                                     <div class="row clearfix">
@@ -192,7 +188,7 @@
                                             <b>Total:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            <input type="text" name="Total" class="form-control" />
+                                            @Html.LabelFor(model => model.Total, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].Total), new { @class = "form-control" })
                                         </div>
                                     </div><br />
                                     <div class="row clearfix">
@@ -200,7 +196,7 @@
                                             <b>Efectivo a recibir:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            <input type="text" name="Efectivo" class="form-control" />
+                                            @Html.LabelFor(model => model.EfectivoRecibido, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].EfectivoRecibido), new { @class = "form-control" })
                                         </div>
                                     </div><br />
                                     <div class="row clearfix">

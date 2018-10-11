@@ -1,28 +1,27 @@
 ﻿using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Models.Seguridad;
 using MVC.Presentacion.Models.Ventas;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using PagedList;
+using Newtonsoft.Json;
 
 namespace MVC.Presentacion.Controllers
 {
     public class CajaGeneralController : Controller
     {
         // GET: CajaGeneral
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
             ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
-
+            var Pagina = page ?? 1;
             if (ViewBag.EsSuperUser)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn);
+                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn).ToPagedList(Pagina,20);
             }
             else
             {
@@ -46,11 +45,11 @@ namespace MVC.Presentacion.Controllers
             return View();
         }
 
-        [HttpPost]
+        //[HttpPost]
         public ActionResult Liquidar(CajaGeneralModel _ObjModel)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            string _tok = Session["StringToken"].ToString();           
+         
             return View();
         }
         public ActionResult Buscar(CajaGeneralCamionetaModel _model)
@@ -61,7 +60,18 @@ namespace MVC.Presentacion.Controllers
             ViewBag.CajaGeneralCamioneta = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia,_tkn);
             return View("Liquidar");
         }
-  
+
+        public ActionResult Consultar(CajaGeneralModel _model, int? page)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+            var Pagina = page ?? 1;
+            ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGralId(_model.IdEmpresa, _tkn).ToPagedList(Pagina, 20); ;
+            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+
+            return View("Index", _model);
+        }
+        
         public ActionResult GuardarLiquidar(CajaGeneralModel _ObjModel)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));

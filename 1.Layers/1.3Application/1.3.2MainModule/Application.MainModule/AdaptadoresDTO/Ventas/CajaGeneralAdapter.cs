@@ -52,6 +52,12 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
         public static VentaPuntoVentaDTO ToDTOC(VentaPuntoDeVenta pv)
         {
+            var vt = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotal;
+           
+            var vtc = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito;
+            var vtco = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalContado;
+            var ov = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).OtrasVentas;
+
             VentaPuntoVentaDTO usDTO = new VentaPuntoVentaDTO()
             {
                 IdEmpresa = pv.IdEmpresa,
@@ -82,17 +88,33 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
                 OperadorChofer = pv.OperadorChofer,
                 DatosProcesados = pv.DatosProcesados,
                 FechaRegistro = pv.FechaRegistro,
-                VentaTotal = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotal,
-                VentaTotalCredito = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito,
-                VentaTotalContado = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalContado,
-                OtrasVentas = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).OtrasVentas,
+                VentaTotal = vt,//CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotal,
+                VentaTotalCredito = vtc,//CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito,
+                VentaTotalContado = vtco,//CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalContado,
+                OtrasVentas = ov,//CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).OtrasVentas,
             };
             return usDTO;
         }
+
+        public static List<VentaPuntoVentaDTO>  SumarTotales(List<VentaPuntoVentaDTO> lst)
+        {
+            var consulta = (from venta in lst                           
+                            select venta.Total);
+
+            // Usamos la función de agregación Sum para calcular la suma de todos los elementos
+            decimal resultadoTotal = consulta.Sum();
+
+
+        //    lst.VentaTotal = resultadoTotal;
+
+
+            return lst;
+
+        }
         public static List<VentaPuntoVentaDTO> ToDTOC(List<VentaPuntoDeVenta> lu)
         {
-            List<VentaPuntoVentaDTO> luDTO = lu.ToList().Select(x => ToDTOC(x)).ToList();
-            return luDTO;
+            List<VentaPuntoVentaDTO> luDTO = lu.ToList().Select(x => ToDTOC(x)).ToList();         
+            return SumarTotales(luDTO);
         }
 
         public static VentaPuntoVentaDTO ToDTOP(VentaPuntoDeVenta pv)

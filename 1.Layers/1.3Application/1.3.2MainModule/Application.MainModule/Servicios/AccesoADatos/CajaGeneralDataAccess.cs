@@ -36,6 +36,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FolioOperacionDia.Equals(cve)
                                                          ).ToList();
+            //  return uow.Repository<VentaPuntoDeVenta>().Get().ToList();
         }
     }
 }

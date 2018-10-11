@@ -12,26 +12,26 @@
     <title></title>
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
     <script type="text/javascript">
-        $(function () {
-            $('select').on('change', function () {
-                $('#tblfilterable tbody tr').each(function () {
-                    var value = $('#IdTipoFecha').find('option:selected').text();//get value to filter of selected
-                    var hiderow = $(this).find("td").eq(10).html();//get value of column status
-                    if (value != hiderow) {
-                        var rowindex = $(this).index();
-                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
-                    }
-                    if (value == hiderow) {
-                        var rowindex = $(this).index();
-                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
-                    }
+        //$(function () {
+        //    $('select').on('change', function () {
+        //        $('#tblfilterable tbody tr').each(function () {
+        //            var value = $('#IdTipoFecha').find('option:selected').text();//get value to filter of selected
+        //            var hiderow = $(this).find("td").eq(10).html();//get value of column status
+        //            if (value != hiderow) {
+        //                var rowindex = $(this).index();
+        //                $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
+        //            }
+        //            if (value == hiderow) {
+        //                var rowindex = $(this).index();
+        //                $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
+        //            }
 
-                    if (value == 'Seleccione') {
-                        $('#tblfilterable tbody tr').show();
-                    }
-                });
-            });
-        });
+        //            if (value == 'Seleccione') {
+        //                $('#tblfilterable tbody tr').show();
+        //            }
+        //        });
+        //    });
+        //});
 
         $(document).ready(function () {
             $("#txtUtilidad").keyup(function () {
@@ -53,14 +53,31 @@
             });//key up.
 
             $("#IdA").keyup(function () {
-
                 var from = $("#IdDe").val();
                 var To = $(this).val();
+                var index = 0;
+                var value = $('#IdTipoFecha').find('option:selected').val();//get value to filter of selected
+                if (value == 1) {
+                    index = 4;
+                }
+                if (value == 2) {
+                    index = 7;
+                }
+                if (value == 3) {
+                    index = 6;
+                }
+
+                var dateParts = from.split("/");
+                var datefrom = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+                var dateParts2 = To.split("/");
+                var dateto = new Date(dateParts2[2], dateParts2[1] - 1, dateParts2[0]);
 
                 $('#tblfilterable tbody tr').each(function () {
-                    var filterdate = $(this).find("td").eq(7).html().split(" ", 1);//get value of column Fecha Programada
+                    var filterdate = $(this).find("td").eq(index).html();//get value of column Fecha x
+                    var dateParts3 = filterdate.split("/");
+                    var datefilter = new Date(dateParts3[2].split(" ", 1), dateParts3[1] - 1, dateParts3[0]);
 
-                    if (from == filterdate || To == filterdate) {
+                    if (datefilter >= datefrom && datefilter <= dateto) {
                         var rowindex = $(this).index();
                         $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
                     }
@@ -68,8 +85,50 @@
                         var rowindex = $(this).index();
                         $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
                     }
-
                 });
+            });
+            $('select').on('change', function () {
+
+                var from = $("#IdDe").val();
+                var To = $("#IdA").val();
+                var value = $('#IdTipoFecha').find('option:selected').val();//get value to filter of selected
+                if (from != "" && To != "" && value != 0) {
+
+                    var index = 0;
+
+                    if (value == 1) {
+                        index = 4;
+                    }
+                    if (value == 2) {
+                        index = 7;
+                    }
+                    if (value == 3) {
+                        index = 5;
+                    }
+
+                    var dateParts = from.split("/");
+                    var datefrom = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+                    var dateParts2 = To.split("/");
+                    var dateto = new Date(dateParts2[2], dateParts2[1] - 1, dateParts2[0]);
+
+                    $('#tblfilterable tbody tr').each(function () {
+                        var filterdate = $(this).find("td").eq(index).html();//get value of column Fecha Programada  x
+                        var dateParts3 = filterdate.split("/");
+                        var datefilter = new Date(dateParts3[2].split(" ", 1), dateParts3[1] - 1, dateParts3[0]);
+                        if (datefilter >= datefrom && datefilter <= dateto) {
+                            var rowindex = $(this).index();
+                            $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
+                        }
+                        else {
+                            var rowindex = $(this).index();
+                            $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
+                        }
+                    });
+                }
+
+                if (value == 0) {
+                    $('#tblfilterable tbody tr').show();
+                }
             });
         });
 
