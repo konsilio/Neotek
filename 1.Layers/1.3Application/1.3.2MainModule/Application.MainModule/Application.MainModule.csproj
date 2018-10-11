@@ -88,6 +88,7 @@
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\CamionetaDto.cs" />
     <Compile Include="DTOs\Mobile\DatosRecargaDto.cs" />
+    <Compile Include="DTOs\Mobile\PipaDto.cs" />
     <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />
     <Compile Include="DTOs\Ventas\VentaPuntoVentaDTO.cs" />
     <Compile Include="DTOs\ImagenDTO.cs" />
