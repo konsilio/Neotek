@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sagas.MainModule.Entidades;
 
 namespace Application.MainModule.Flujos
 {
@@ -173,6 +174,31 @@ namespace Application.MainModule.Flujos
         {
             var resp = VentaServicio.BuscarFolioVenta(venta.FolioVenta,TokenServicio.ObtenerIdUsuario());
             return null;
+        }
+
+        public DatosRecargaDto CatalogoRecargas(bool esEstacion, bool esPipa, bool esCamioneta)
+        {
+            var tipoMedidores = TipoMedidorGasServicio.Obtener();
+            if (esCamioneta)
+            {
+                var almacenesAlternos = AlmacenGasServicio.ObtenerAlmacenGeneral(TokenServicio.ObtenerIdEmpresa(), true);
+                var camionetas = AlmacenGasServicio.ObtenerCamionetas(TokenServicio.ObtenerIdEmpresa());
+                var camionetasDTO = AlmacenRecargaAdapter.ToDTOCamionetas(camionetas, tipoMedidores);
+                return AlmacenRecargaAdapter.ToDTO(almacenesAlternos, camionetasDTO, tipoMedidores);
+            }
+            else if (esPipa)
+            {
+                return null;
+            }
+            else if (esEstacion)
+            {
+                var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
+                var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
+
+                return AlmacenRecargaAdapter.ToDTO(pipas, estaciones, tipoMedidores);
+            }
+            return null;
+
         }
     }
 }
