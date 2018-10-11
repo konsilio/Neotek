@@ -274,7 +274,7 @@ namespace MVC.Presentacion.App_Code
             foreach (var _row in list)
             {
                 if (_row.AutorizaCompra)
-                    if (_row.CantidadAComprar > _row.Cantidad)
+                    if (_row.CantidadAComprar > _row.CantidadAComprar)
                         correcto = false;
             }
             return correcto;

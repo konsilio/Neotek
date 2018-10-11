@@ -47,7 +47,8 @@ namespace MVC.Presentacion.App_Code
                 model.IdEmpresa = datos.IdEmpresa;
                 model.Empresa = datos.NombreComercial;
                 model.FechaRequisicion = datos.FechaRequerida;
-                model.OrdenCompraProductos = datos.Productos;
+                model.OrdenCompraProductos = datos.ProductosOC;
+                model.EsGasTransporte = datos.EsGasTransporte;
             }
             return model;
         }
