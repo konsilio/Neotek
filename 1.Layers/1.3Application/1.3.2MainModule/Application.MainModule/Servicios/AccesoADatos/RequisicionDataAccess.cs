@@ -51,7 +51,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     _respuesta.Id = _req.IdRequisicion;
                     _respuesta.Mensaje = _req.NumeroRequisicion;
                     _respuesta.Exito = true;
-                    _respuesta.Mensaje = Exito.OK;
+                    //_respuesta.Mensaje = Exito.OK;
                 }
                 catch (Exception ex)
                 {

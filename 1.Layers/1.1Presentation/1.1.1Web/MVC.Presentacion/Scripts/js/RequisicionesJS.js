@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     $("#txtNumRequisicion").keyup(Busqueda);
     $("#ddlEmpresas").on('change', Busqueda);
+
 });//document.ready
 
 var Busqueda = function () {

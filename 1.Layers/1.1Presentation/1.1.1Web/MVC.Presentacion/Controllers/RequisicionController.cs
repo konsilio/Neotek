@@ -17,12 +17,13 @@ namespace MVC.Presentacion.Controllers
     public class RequisicionController : MainController
     {
         string tkn = string.Empty;
-        public ActionResult Requisiciones(int? page)
+        public ActionResult Requisiciones(int? page, string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             TempData["ListProductosRequisicion"] = null;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            if (!string.IsNullOrEmpty(msj)) ViewBag.NumeroRequisicion = msj;
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -98,7 +99,7 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             var respuesta = RequisicionServicio.FinalizarRevision(model, tkn);
             if (respuesta.Exito)
-                return RedirectToAction("Requisiciones", RequisicionServicio.InitRequisiciones(tkn));
+                return RedirectToAction("Requisiciones", new { msj = string.Concat("Revision exitosa de ", model.NumeroRequisicion)});
             else
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
@@ -113,7 +114,7 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             var respuesta = RequisicionServicio.FinalizarAutorizacion(model, tkn);
             if (respuesta.Exito)
-                return RedirectToAction("Requisiciones", RequisicionServicio.InitRequisiciones(tkn));
+                return RedirectToAction("Requisiciones", new { msj = string.Concat("Autorizacion exitosa ", model.NumeroRequisicion) });
             else
             {
                 ViewData["RespuestaDTO"] = respuesta;
@@ -171,7 +172,7 @@ namespace MVC.Presentacion.Controllers
             if (respuesta.Exito)
             {
                 TempData["ListProductosRequisicion"] = null;
-                return RedirectToAction("Requisiciones");
+                return RedirectToAction("Requisiciones", new { msj = string.Concat("Se genero: ", respuesta.Mensaje)});
             }
             else
             {

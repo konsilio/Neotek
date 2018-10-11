@@ -21,7 +21,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             Req.MotivoRequisicion = _req.MotivoRequisicion;
             Req.RequeridoEn = _req.RequeridoEn;
             Req.FechaRequerida = _req.FechaRequerida;
-            Req.Productos = ProductosOCAdapter.ToDTO(_req.Productos.ToList());
+            Req.ProductosOC = ProductosOCAdapter.ToDTO(_req.Productos.ToList());
             return Req;
         }      
         public static List<OrdenCompraDTO> ToDTO(List<OrdenCompra> ocDTO)

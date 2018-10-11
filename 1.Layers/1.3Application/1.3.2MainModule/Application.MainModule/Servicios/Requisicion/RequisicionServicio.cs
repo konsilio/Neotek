@@ -7,6 +7,7 @@ using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.AdaptadoresDTO.Requisicion;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
+using Application.MainModule.DTOs.Compras;
 
 namespace Application.MainModule.Servicios.Requisicion
 {
@@ -90,6 +91,11 @@ namespace Application.MainModule.Servicios.Requisicion
         public static List<RequisicionEstatus> RequisiconEstatus()
         {
             return new RequisicionDataAccess().Estatus();
+        }
+        public static RequisicionOCDTO DeterminarTipoRequisicion(RequisicionOCDTO req)
+        {
+            req.EsGasTransporte = req.ProductosOC.Where(x => x.EsGas).ToList().Count().Equals(0) ? false : true;
+            return req;
         }
     }
 }

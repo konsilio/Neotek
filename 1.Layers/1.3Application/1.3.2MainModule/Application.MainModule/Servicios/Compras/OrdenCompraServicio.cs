@@ -159,7 +159,6 @@ namespace Application.MainModule.Servicios.Compras
                 Exito = false,
             };
         }
-
         public static ComplementoGasDTO BuscarComplementoGas(OrdenCompra oc)
         {
             var descarga = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
