@@ -27,7 +27,7 @@
             android:padding="28dp"
             android:text="@string/Anticipo"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textSize="30sp" />
 
         <ImageView
             android:id="@+id/IEstacionesCarburacionImagen"
