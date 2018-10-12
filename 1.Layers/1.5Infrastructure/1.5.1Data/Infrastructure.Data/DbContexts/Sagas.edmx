@@ -237,6 +237,8 @@
           <Property Name="EntradaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="SalidaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="SalidaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CantidadAnteriorKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CantidadAnteriorLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="CantidadActualKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="CantidadActualLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="CantidadAcumuladaDiaKg" Type="decimal" Precision="18" Scale="4" />
@@ -245,6 +247,10 @@
           <Property Name="CantidadAcumuladaMesLt" Type="decimal" Precision="18" Scale="4" />
           <Property Name="CantidadAcumuladaAnioKg" Type="decimal" Precision="18" Scale="4" />
           <Property Name="CantidadAcumuladaAnioLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="PorcentajeAnterior" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="PorcentajeActual" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="P5000Anterior" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="P5000Actual" Type="decimal" Precision="18" Scale="4" />
           <Property Name="FechaAplicacion" Type="smalldatetime" Nullable="false" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
@@ -281,12 +287,12 @@
           <Property Name="Mes" Type="tinyint" Nullable="false" />
           <Property Name="Dia" Type="tinyint" Nullable="false" />
           <Property Name="Orden" Type="smallint" Nullable="false" />
-          <Property Name="CantidadAnteriorKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
-          <Property Name="CantidadAnteriorLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
-          <Property Name="CantidadActualKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
-          <Property Name="CantidadActualLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
-          <Property Name="PorcentajeAnterior" Type="decimal" Precision="10" Scale="4" Nullable="false" />
-          <Property Name="PorcentajeActual" Type="decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="CantidadAnteriorTotalKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CantidadAnteriorTotalLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CantidadActualTotalKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CantidadActualTotalLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="PorcentajeAnteriorTotal" Type="decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="PorcentajeActualTotal" Type="decimal" Precision="10" Scale="4" Nullable="false" />
         </EntityType>
         <EntityType Name="AlmacenGasMovimientoFoto">
           <Key>
@@ -9917,14 +9923,20 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="EntradaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="SalidaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="SalidaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CantidadAnteriorKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CantidadAnteriorLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />          
           <Property Name="CantidadActualKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="CantidadActualLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CantidadActualLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />          
           <Property Name="CantidadAcumuladaDiaKg" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="CantidadAcumuladaDiaLt" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="CantidadAcumuladaMesKg" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="CantidadAcumuladaMesLt" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="CantidadAcumuladaAnioKg" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="CantidadAcumuladaAnioLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="CantidadAcumuladaAnioLt" Type="Decimal" Precision="18" Scale="4" />          
+          <Property Name="PorcentajeAnterior" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="PorcentajeActual" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="P5000Anterior" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="P5000Actual" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="FechaAplicacion" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
           <!--"AlmacenGasMovimientoAlmacenGeneral"-->
@@ -9935,12 +9947,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="PorcentajeAnteriorGeneral" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
           <Property Name="PorcentajeActualGeneral" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
           <!--"AlmacenGasMovimientoAlmacenTotal"-->
-          <Property Name="CantidadAnteriorKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="CantidadAnteriorLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CantidadAnteriorTotalKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CantidadAnteriorTotalLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="CantidadActualTotalKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="CantidadActualTotalLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
-          <Property Name="PorcentajeAnterior" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <Property Name="PorcentajeActual" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="PorcentajeAnteriorTotal" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="PorcentajeActualTotal" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
           <NavigationProperty Name="Descarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenEntradaGasDescarga" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasDescarga" />
           <NavigationProperty Name="Inventario" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenGas" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGas" />
           <NavigationProperty Name="Recarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenGasRecarga" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasRecarga" />
@@ -11969,6 +11981,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasMovimiento">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasMovimiento">
               <MappingFragment StoreEntitySet="AlmacenGasMovimiento">
+                <ScalarProperty Name="PorcentajeAnterior" ColumnName="PorcentajeAnterior" />
+                <ScalarProperty Name="PorcentajeActual" ColumnName="PorcentajeActual" />
+                <ScalarProperty Name="CantidadAnteriorLt" ColumnName="CantidadAnteriorLt" />
+                <ScalarProperty Name="CantidadAnteriorKg" ColumnName="CantidadAnteriorKg" />
+                <ScalarProperty Name="P5000Actual" ColumnName="P5000Actual" />
+                <ScalarProperty Name="P5000Anterior" ColumnName="P5000Anterior" />
                 <ScalarProperty Name="RemanenteAcumuladoAnioLt" ColumnName="RemanenteAcumuladoAnioLt" />
                 <ScalarProperty Name="RemanenteAcumuladoAnioKg" ColumnName="RemanenteAcumuladoAnioKg" />
                 <ScalarProperty Name="RemanenteAcumuladoMesLt" ColumnName="RemanenteAcumuladoMesLt" />
@@ -12027,12 +12045,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
               
               <MappingFragment StoreEntitySet="AlmacenGasMovimientoAlmacenTotal">
-                <ScalarProperty Name="PorcentajeActual" ColumnName="PorcentajeActual" />
-                <ScalarProperty Name="PorcentajeAnterior" ColumnName="PorcentajeAnterior" />
-                <ScalarProperty Name="CantidadActualTotalLt" ColumnName="CantidadActualLt" />
-                <ScalarProperty Name="CantidadActualTotalKg" ColumnName="CantidadActualKg" />
-                <ScalarProperty Name="CantidadAnteriorLt" ColumnName="CantidadAnteriorLt" />
-                <ScalarProperty Name="CantidadAnteriorKg" ColumnName="CantidadAnteriorKg" />
+                <ScalarProperty Name="PorcentajeActualTotal" ColumnName="PorcentajeActualTotal" />
+                <ScalarProperty Name="PorcentajeAnteriorTotal" ColumnName="PorcentajeAnteriorTotal" />
+                <ScalarProperty Name="CantidadActualTotalLt" ColumnName="CantidadActualTotalLt" />
+                <ScalarProperty Name="CantidadActualTotalKg" ColumnName="CantidadActualTotalKg" />
+                <ScalarProperty Name="CantidadAnteriorTotalLt" ColumnName="CantidadAnteriorTotalLt" />
+                <ScalarProperty Name="CantidadAnteriorTotalKg" ColumnName="CantidadAnteriorTotalKg" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
                 <ScalarProperty Name="Dia" ColumnName="Dia" />
                 <ScalarProperty Name="Mes" ColumnName="Mes" />

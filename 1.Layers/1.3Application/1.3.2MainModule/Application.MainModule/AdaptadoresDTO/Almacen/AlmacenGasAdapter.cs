@@ -1,4 +1,7 @@
-﻿using Sagas.MainModule.Entidades;
+﻿using Application.MainModule.DTOs.Almacen;
+using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Constantes;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -267,6 +270,72 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 CadenaBase64 = img.CadenaBase64,
                 PathImagen = img.PathImagen,
                 UrlImagen = img.UrlImagen,
+            };
+        }
+
+        public static AlmacenGasMovimiento FromEntity(UnidadAlmacenGas unidadEntrada, AlmacenGasDescarga descarga, AlmacenGas almacenGasTotal, AlmacenGasMovimiento ultimoMovimiento, Empresa empresa, InventarioAnteriorDto invAnterior)
+        {
+            return new AlmacenGasMovimiento
+            {
+                IdEmpresa = empresa.IdEmpresa,
+                Year = (short)descarga.FechaFinDescarga.Value.Year,
+                Mes = (byte)descarga.FechaFinDescarga.Value.Month,
+                Dia = (byte)descarga.FechaFinDescarga.Value.Day,
+                Orden = ultimoMovimiento != null ? ultimoMovimiento.Orden++ : (short)1,
+                IdTipoMovimiento = TipoMovimientoEnum.Entrada,
+                IdTipoEvento = TipoEventoEnum.Descarga,
+                IdOrdenVenta = null,
+                IdAlmacenGas = almacenGasTotal.IdAlmacenGas,
+                IdCAlmacenGasPrincipal = unidadEntrada.IdCAlmacenGas,
+                IdCAlmacenGasReferencia = null,
+                IdAlmacenEntradaGasDescarga = descarga.IdAlmacenEntradaGasDescarga,
+                IdAlmacenGasRecarga = null,
+                FolioOperacionDia = null,
+                CAlmacenPrincipalNombre = unidadEntrada.Numero,
+                CAlmacenReferenciaNombre = null,
+                OperadorChoferNombre = null,
+                TipoEvento = AlmacenGasConst.Descarga,
+                TipoMovimiento = AlmacenGasConst.Entrada,
+                RemanenteKg = invAnterior.RemanenteKg,
+                RemanenteLt = invAnterior.RemanenteLt,
+                //RemanenteAcumuladoDiaKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.RemanenteAcumuladoDiaKg, kilogramosRemanentes),
+                //RemanenteAcumuladoDiaLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.RemanenteAcumuladoDiaLt, litrosRemanentes),
+                //RemanenteAcumuladoMesKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.RemanenteAcumuladoMesKg, kilogramosRemanentes),
+                //RemanenteAcumuladoMesLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.RemanenteAcumuladoMesLt, litrosRemanentes),
+                //RemanenteAcumuladoAnioKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.RemanenteAcumuladoAnioKg, kilogramosRemanentes),
+                //RemanenteAcumuladoAnioLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.RemanenteAcumuladoAnioLt, litrosRemanentes),
+                EntradaKg = invAnterior.EntradaKg,
+                EntradaLt = invAnterior.EntradaLt,
+                SalidaKg = 0,
+                SalidaLt = 0,
+                CantidadActualKg = unidadEntrada.CantidadActualKg,
+                CantidadActualLt = unidadEntrada.CantidadActualLt,
+                CantidadAnteriorKg = invAnterior.CantidadAnteriorKg,
+                CantidadAnteriorLt = invAnterior.CantidadAnteriorLt,
+                PorcentajeActual = unidadEntrada.PorcentajeActual,
+                PorcentajeAnterior = invAnterior.PorcentajeAnterior,
+                P5000Actual = null,
+                P5000Anterior = null,
+                CantidadActualTotalKg = almacenGasTotal.CantidadActualKg,
+                CantidadActualTotalLt = almacenGasTotal.CantidadActualLt,
+                CantidadAnteriorTotalKg = invAnterior.CantidadAnteriorTotalKg,
+                CantidadAnteriorTotalLt = invAnterior.CantidadAnteriorTotalLt,
+                PorcentajeActualTotal = almacenGasTotal.PorcentajeActual,
+                PorcentajeAnteriorTotal = invAnterior.PorcentajeAnteriorTotal,
+                CantidadActualGeneralKg = almacenGasTotal.CantidadActualGeneralKg,
+                CantidadActualGeneralLt = almacenGasTotal.CantidadActualGeneralLt,
+                CantidadAnteriorGeneralKg = invAnterior.CantidadAnteriorGeneralKg,
+                CantidadAnteriorGeneralLt = invAnterior.CantidadAnteriorGeneralLt,
+                PorcentajeActualGeneral = almacenGasTotal.PorcentajeActualGeneral,
+                PorcentajeAnteriorGeneral = invAnterior.PorcentajeAnteriorGeneral,
+                //CantidadAcumuladaDiaKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.CantidadAcumuladaDiaKg.Value, kilogramosRealesTractor),
+                //CantidadAcumuladaDiaLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.CantidadAcumuladaDiaLt.Value, litrosRealesTractor),
+                //CantidadAcumuladaMesKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.CantidadAcumuladaMesKg.Value, kilogramosRealesTractor),
+                //CantidadAcumuladaMesLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.CantidadAcumuladaMesLt.Value, litrosRealesTractor),
+                //CantidadAcumuladaAnioKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.CantidadAcumuladaAnioKg.Value, kilogramosRealesTractor),
+                //CantidadAcumuladaAnioLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.CantidadAcumuladaAnioLt.Value, litrosRealesTractor),
+                FechaAplicacion = descarga.FechaFinDescarga.Value,
+                FechaRegistro = DateTime.Now,
             };
         }
     }

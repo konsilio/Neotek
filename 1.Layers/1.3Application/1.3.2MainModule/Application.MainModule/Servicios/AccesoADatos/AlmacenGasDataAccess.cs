@@ -432,15 +432,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.Activo).ToList();
         }
 
-        public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idAlmacenGas, short year, short mes, short dia)
+        public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idAlmacenGas, short year, byte mes, byte dia)
         {
-            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdAlmacenGas.Equals(idAlmacenGas)                                                                  
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdAlmacenGas.Equals(idAlmacenGas)
                                                                   && x.Year.Equals(year)
                                                                   && x.Mes.Equals(mes)
                                                                   && x.Dia.Equals(dia)).LastOrDefault();
         }
 
-        public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idAlmacenGas, short idCAlmacenGas, short idEmpresa, short year, short mes, short dia)
+        public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idAlmacenGas, short idCAlmacenGas, short idEmpresa, short year, byte mes, byte dia)
         {
             return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                                   && x.IdAlmacenGas.Equals(idAlmacenGas)
