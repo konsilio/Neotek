@@ -25,7 +25,7 @@
                 android:paddingBottom="5dp"
                 android:text="@string/Estacion"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/TVPuntoVentaActivityEnCasoTitulo"
@@ -33,11 +33,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:labelFor="@+id/BtnPuntoVentaSolicitarActivitySeguirSinNumero"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/en_caso_de_negativa_del_cliente"
                 android:textAlignment="center"
+                android:labelFor="@+id/BtnPuntoVentaSolicitarActivitySeguirSinNumero"
                 android:textSize="18sp" />
 
             <Button
@@ -46,10 +46,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/seguir_sin_numero"
+                android:textSize="18sp"
+                android:backgroundTint="@color/colorButtonLogin"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="14sp"
                 tools:ignore="UnusedAttribute" />
 
             <TextView
@@ -70,10 +70,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/registrar_cliente"
+                android:backgroundTint="@color/colorButtonLogin"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 tools:ignore="UnusedAttribute" />
 
             <TextView
@@ -86,7 +86,7 @@
                 android:paddingBottom="15dp"
                 android:text="@string/cual_es_su_numero_de_celular_telofono_fijo_o_rfc"
                 android:textAlignment="center"
-                android:textSize="24sp" />
+                android:textSize="30sp" />
 
             <EditText
                 android:id="@+id/ETPuntoVentaSolicitarActivityBuscador"
@@ -94,10 +94,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:autofillHints="@string/Buscar"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:textSize="18sp"
+                android:textSize="24sp"
+                android:autofillHints="@string/Buscar"
                 tools:ignore="LabelFor,UnusedAttribute" />
 
             <Button
@@ -108,9 +108,9 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="15dp"
                 android:backgroundTint="@color/colorButtonLogin"
-                android:text="@string/buscar_cliente"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="18sp"
+                android:text="@string/buscar_cliente"
+                android:textSize="24sp"
                 tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>
