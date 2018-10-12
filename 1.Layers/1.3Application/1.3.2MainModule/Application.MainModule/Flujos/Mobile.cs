@@ -204,8 +204,9 @@ namespace Application.MainModule.Flujos
 
         }
 
-        public RespuestaDto Autoconsumo(bool esPipa, bool esInventario, bool esEstacion)
+        public RespuestaDto Autoconsumo(AutoconsumoDTO dto, bool esPipa, bool esInventario, bool esEstacion)
         {
+            //var resp = AutoconsumoServicio;
             return null;
         }
     }

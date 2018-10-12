@@ -217,9 +217,9 @@ namespace DS.MainModule.Controllers
         }
 
         [Route("autoconsumo/{esPipa}/{esInventarioGral}/{esEstacion}")]
-        public HttpResponseMessage PostAutoconsumo(bool esPipa,bool esInventario,bool esEstacion)
+        public HttpResponseMessage PostAutoconsumo(AutoconsumoDTO dto,bool esPipa,bool esInventario,bool esEstacion)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.Autoconsumo(esPipa, esInventario, esEstacion),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.Autoconsumo(dto,esPipa, esInventario, esEstacion),Request);
         }
     }
 }

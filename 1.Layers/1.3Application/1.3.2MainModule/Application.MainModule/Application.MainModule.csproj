@@ -86,6 +86,7 @@
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
+    <Compile Include="DTOs\Mobile\AutoconsumoDTO.cs" />
     <Compile Include="DTOs\Mobile\CamionetaDto.cs" />
     <Compile Include="DTOs\Mobile\DatosRecargaDto.cs" />
     <Compile Include="DTOs\Mobile\EstacionesDto.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Servicios\Almacen\CalcularAlmacenServicio.cs" />
     <Compile Include="DTOs\Mobile\TipoPersonaDto.cs" />
     <Compile Include="DTOs\Mobile\TipoRegimenFiscalDto.cs" />
+    <Compile Include="Servicios\Mobile\AutoconsumoServicio.cs" />
     <Compile Include="Servicios\Mobile\ClientesServicio.cs" />
     <Compile Include="DTOs\NotificacionDTO.cs" />
     <Compile Include="Servicios\Catalogos\PrecioVentaGasServicio.cs" />

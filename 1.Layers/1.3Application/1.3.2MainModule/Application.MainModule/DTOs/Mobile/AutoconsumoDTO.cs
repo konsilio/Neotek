@@ -8,18 +8,17 @@ namespace Application.MainModule.DTOs.Mobile
 {
     public class AutoconsumoDTO
     {
-        public short IdCAlmacenGasSalida;
+        public short IdCAlmacenGasSalida { get; set; }
 
-        public short IdCAlmacenGasEntrada;
+        public short IdCAlmacenGasEntrada { get; set; }
 
-        public string ClaveOperacion;
+        public string ClaveOperacion { get; set; }
 
-        public List<string> Imagenes;
+        public List<string> Imagenes { get; set; }
 
-        public int CantidadFotos;
+        public int CantidadFotos { get; set; }
 
-        public String NombreTipoMedidor;
-
+        public decimal PorcentajeMedidor { get; set; }
 
     }
 }
