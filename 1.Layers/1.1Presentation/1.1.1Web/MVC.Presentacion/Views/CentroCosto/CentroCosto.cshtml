@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>Centro Costo</title>
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+    <script src="~/Scripts/js/CentroCostoJS.js"></script>
 </head>
 <body style="padding-top:10px">
     @using (Html.BeginForm("Crear", "CentroCosto", FormMethod.Post))
@@ -14,11 +15,11 @@
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Centro de Costos</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item active">
-                                    <Label> Catalogos / Centros de costo</Label>
-                                </li>
+                                <li class="breadcrumb-item">Catalogos </li>
+                                <li class="breadcrumb-item">Centros de costo</li>
                             </ul>
                         </div>
                     </div>
@@ -27,6 +28,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="header">
+                                <strong>Nuevo </strong>centro de costo
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
@@ -34,20 +36,20 @@
                                         <label>Numero</label>
                                         <div class="form-group">
                                             @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", @placeholder = "Numero de centro de costo" })
-                                            <Label class="alert-danger" hidden> Campo requerido</Label>
+                                            @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-6 form-control-label">
                                         <label for="txtDescripcion">Descripción</label>
                                         <div class="form-group">
                                             @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", placeholder = "Descripción", @style = "max-width:initial" })
-                                            <Label class="alert-danger" hidden>Text="Campo requerido" </Label>
+                                            @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlTipoCentroCosto">Tipo centro de costo</label>
                                         <div class="form-group">
-                                            <select name=IdTipoCentroCosto class="form-control z-index show-tick" data-live-search="true">
+                                            <select name=IdTipoCentroCosto  class="form-control z-index selectpicker" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.TiposCentrosCosto)
                                                 {
@@ -55,14 +57,14 @@
                                                 }
                                             </select>
                                         </div>
-                                        <Label ID="reqTipoCC" class="alert-danger" hidden Text="Campo requerido" />
+                                        @Html.ValidationMessageFor(m => m.IdTipoCentroCosto, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlEquipoTransporte">Equipo Transporte</label>
                                         <div class="form-group">
-                                            <select id="IdEquipoTransporte" class="form-control z-index show-tick" data-live-search="true">
+                                            <select id="IdEquipoTransporte"  class="form-control z-index selectpicker" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.EquipoTransporte)
                                                 {
@@ -70,7 +72,7 @@
                                                 }
                                             </select>
                                         </div>
-                                        <Label id="reqEquipoTrasnporte" class="alert-danger" hidden="hidden">Campo requerido </Label>
+                                      @Html.ValidationMessageFor(m => m.IdTipoCentroCosto, "", new { @class = "alert-danger" })
                                     </div>
                                     @*<div class="col-md-3 form-control-label">
                                         <label for="ddlVehiculo">Vehiculo</label>
@@ -79,12 +81,11 @@
                                                 <option id="0">Seleccione uno</option>
                                             </select>
                                         </div>*@
-                                    <Label ID="reqVehiculo" class="alert-danger" hidden="hidden">Campo requerido</Label>
-
+                                    @*<Label ID="reqVehiculo" class="alert-danger" hidden="hidden">Campo requerido</Label>*@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlUnidadAlmacenGas">Unidad de almacen de gas</label>
                                         <div class="form-group">
-                                            <select id="IdVehiculo" class="form-control z-index show-tick" data-live-search="true">
+                                            <select id="IdCAlmacenGas"  class="form-control z-index selectpicker" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.UnidadAlmacenGas)
                                                 {
@@ -92,12 +93,12 @@
                                                 }
                                             </select>
                                         </div>
-                                        <Label ID="reqUnidad" class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                        @Html.ValidationMessageFor(m => m.IdCAlmacenGas, "", new { @class = "alert-danger" })
                                     </div>
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlEstacionCarburacion">Estacion de carburación</label>
                                         <div class="form-group">
-                                            <select id="IdEstacionCarburacion" class="form-control z-index show-tick" data-live-search="true">
+                                            <select id="IdEstacionCarburacion"  class="form-control z-index selectpicker" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.EstacionesCarburacion)
                                                 {
@@ -105,10 +106,10 @@
                                                 }
                                             </select>
                                         </div>
-                                        <Label ID="reqEstacion" class="alert-danger" hidden="hidden">Campo requerido</Label>
+                                        @Html.ValidationMessageFor(m => m.IdEstacionCarburacion, "", new { @class = "alert-danger" })
                                     </div>
                                     <div class="col-md-3 form-control-label">
-                                        <b>&nbsp; </b>
+                                       <div><strong>&nbsp; </strong></div> 
                                         @if (ViewBag.EsEdicion == null)
                                         {
                                             <button btn id="BtnCrear" formaction="Crear" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
@@ -161,17 +162,18 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="header">
+                                <strong>Centros de costo</strong>
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
                                     <div class="col-md-4 form-control-label">
                                         <label for="ddlFiltroGasera">Gasera</label>
                                         <div class="form-group">
-                                            <select name="idEmpresa" class="form-control z-index show-tick" data-live-search="true">
+                                            <select name="idEmpresa" class="form-control selectpicker" data-live-search="true">
                                                 <option value="0">Seleccione uno</option>
                                                 @foreach (var item in ViewBag.Empresas)
                                                 {
-
+                                                    <option value="item.IdEmpresa">@item.NombreComercial</option>
                                                 }
                                             </select>
                                         </div>
@@ -185,7 +187,12 @@
                                     <div class="col-md-4 form-control-label">
                                         <label for="ddlFiltroCentroCosto">Tipo centro de costo</label>
                                         <div class="form-group">
-                                            <select></select>
+                                            <select class="form-control selectpicker" data-live-search="true">
+                                                @foreach (var item in ViewBag.TiposCentrosCosto)
+                                                {
+                                                    <option value="@item.IdTipoCentroCosto">@item.Descripcion</option>
+                                                }
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -202,22 +209,24 @@
                                         </div>
                                     </div>
                                 }
-                                <div class="row clearfix">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <td><b>Gasera</b></td>
-                                                    <td><b>Número</b></td>
-                                                    <td><b>Descripción</b></td>
-                                                    <td><b>Tipo</b></td>
-                                                    <td><b>Acción</b></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @Html.EditorFor(m => m.CentrosCostos)
-                                            </tbody>
-                                        </table>
+                                <div class="blockquote blockquote-info btn-round">
+                                    <div class="row clearfix">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped filterable">
+                                                <thead>
+                                                    <tr>
+                                                        <td><b>Gasera</b></td>
+                                                        <td><b>Número</b></td>
+                                                        <td><b>Descripción</b></td>
+                                                        <td><b>Tipo</b></td>
+                                                        <td><b>Acción</b></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @Html.EditorFor(m => m.CentrosCostos)
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -234,15 +243,13 @@
                         <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" Text="Si" OnClick="BtnCrear_Click" />
+                        <input type="submit" ID="BtnCrear" CssClass="btn btn-raised btn-primary btn-round" Text="Si" OnClick="BtnCrear_Click" />
                         <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Cancelar</button>
                     </div>
                 </div>
             </div>
         </div>
     }
-    </body>
+</body>
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="http://harvesthq.github.io/chosen/chosen.jquery.js"></script>
-    
+
