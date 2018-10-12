@@ -132,7 +132,40 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         public static DatosRecargaDto ToDTO(List<UnidadAlmacenGas> pipas, List<UnidadAlmacenGas> estaciones, List<TipoMedidorUnidadAlmacenGas> tipoMedidores)
         {
             List<PipaDto> pipasDto = new List<PipaDto>();
-            return null;
+            List<EstacionesDto> estacionesDto = new List<EstacionesDto>();
+            pipasDto = pipas.Select(x=>ToDTOPipa(x,tipoMedidores)).ToList();
+            estacionesDto = estaciones.Select(x => ToDTOEstaciones(x, tipoMedidores)).ToList();
+            return new DatosRecargaDto()
+            {
+                Pipas = pipasDto,
+                Estaciones = estacionesDto
+            };
+        }
+
+        public static EstacionesDto ToDTOEstaciones(UnidadAlmacenGas estacion, List<TipoMedidorUnidadAlmacenGas> tipoMedidores)
+        {
+            return new EstacionesDto()
+            {
+                IdAlmacenGas = estacion.IdAlmacenGas.Value,
+                CantidadP5000 = estacion.P5000Actual,
+                IdTipoMedidor = estacion.IdTipoMedidor,
+                NombreAlmacen = estacion.Numero,
+                PorcentajeMedidor = estacion.PorcentajeActual,
+                Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x=>x.IdTipoMedidor.Equals(estacion.IdTipoMedidor)))
+            };
+        }
+
+        public static PipaDto ToDTOPipa(UnidadAlmacenGas pipa, List<TipoMedidorUnidadAlmacenGas> tipoMedidores)
+        {
+            return new PipaDto()
+            {
+                IdTipoMedidor = pipa.IdTipoMedidor,
+                CantidadP5000 = pipa.P5000Actual,
+                IdAlmacenGas = pipa.IdAlmacenGas.Value,
+                Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x=>x.IdTipoMedidor.Equals(pipa.IdTipoMedidor))),
+                NombreAlmacen = pipa.Numero,
+                PorcentajeMedidor = pipa.PorcentajeActual
+            };
         }
     }
 }

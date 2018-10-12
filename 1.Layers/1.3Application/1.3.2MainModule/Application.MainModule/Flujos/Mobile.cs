@@ -186,11 +186,11 @@ namespace Application.MainModule.Flujos
                 var camionetasDTO = AlmacenRecargaAdapter.ToDTOCamionetas(camionetas, tipoMedidores);
                 return AlmacenRecargaAdapter.ToDTO(almacenesAlternos, camionetasDTO, tipoMedidores);
             }
-            else if (esPipa)
+            else if (esEstacion)
             {
                 return null;
             }
-            else if (esEstacion)
+            else if (esPipa)
             {
                 var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
                 var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
