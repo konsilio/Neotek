@@ -654,12 +654,26 @@ namespace Application.MainModule.Servicios.Almacen
             {
                 RemanenteKg = kilogramosRemanentes,
                 RemanenteLt = litrosRemanentes,
+                RemanenteAcumuladoDiaKg = RemanenteServicio.SumarRemanenteDelDiaEnKilogramos(empresa.IdEmpresa, kilogramosRemanentes),
+                RemanenteAcumuladoDiaLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.RemanenteAcumuladoDiaLt, litrosRemanentes),
+                RemanenteAcumuladoMesKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.RemanenteAcumuladoMesKg, kilogramosRemanentes),
+                RemanenteAcumuladoMesLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.RemanenteAcumuladoMesLt, litrosRemanentes),
+                RemanenteAcumuladoAnioKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.RemanenteAcumuladoAnioKg, kilogramosRemanentes),
+                RemanenteAcumuladoAnioLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.RemanenteAcumuladoAnioLt, litrosRemanentes),
+
                 EntradaKg = kilogramosRealesTractor,
                 EntradaLt = litrosRealesTractor,
                 SalidaKg = 0,
                 SalidaLt = 0,
                 CantidadAnteriorKg = unidadEntradaCantidadKg,
                 CantidadAnteriorLt = unidadEntradaCantidadLt,
+                CantidadAcumuladaDiaKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.CantidadAcumuladaDiaKg.Value, kilogramosRealesTractor),
+                CantidadAcumuladaDiaLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.CantidadAcumuladaDiaLt.Value, litrosRealesTractor),
+                CantidadAcumuladaMesKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.CantidadAcumuladaMesKg.Value, kilogramosRealesTractor),
+                CantidadAcumuladaMesLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.CantidadAcumuladaMesLt.Value, litrosRealesTractor),
+                CantidadAcumuladaAnioKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.CantidadAcumuladaAnioKg.Value, kilogramosRealesTractor),
+                CantidadAcumuladaAnioLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.CantidadAcumuladaAnioLt.Value, litrosRealesTractor),
+
                 PorcentajeAnterior = unidadEntradaPorcentaje,
                 P5000Anterior = null,
                 CantidadAnteriorTotalKg = almacenTotalCantidadActualKg,
@@ -680,13 +694,6 @@ namespace Application.MainModule.Servicios.Almacen
                 unidadEntrada = AlmacenGasAdapter.FromEntity(unidadEntrada),
                 identidadUE = IdentificarTipoUnidadAlamcenGas(unidadEntrada),
                 Movimiento = AlmacenGasAdapter.FromEntity(unidadEntrada, descarga, almacenGasTotal, ultimoMovimiento, empresa, invAnterior),
-                //PorcentajeUE = unidadEntrada.PorcentajeActual,
-                //CantidadSINRemanenteKg = kilogramosPapeletaTractor,
-                //CantidadSINRemanenteLt = litrosPapeletaTractor,
-                //RemanenteKg = kilogramosRemanentes,
-                //RemanenteLt = litrosRemanentes,
-                //CantidadCONRemanenteKg = kilogramosRealesTractor,
-                //CantidadCONRemanenteLt = litrosRealesTractor,
             };
         }
 

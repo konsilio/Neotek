@@ -101,10 +101,11 @@ namespace Application.MainModule.Servicios
         public static AlmacenGasDescargaFoto ObtenerImagen(AlmacenGasDescargaFoto foto)
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
-            //string a = "CadenaBase64|IdUA|Magnatel|Inicial|.jpeg";
+            //                  0         1     2       3       4      5     6
+            //string a = "CadenaBase64|Tractor|IdUa|Magnatel|Inicial|60-5|.jpeg"
             List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
-            string nombre = string.Concat(campos.ElementAt(1), "_", foto.Orden, "_", campos.ElementAt(2), "_", campos.ElementAt(3));
-            string extension = campos.ElementAt(4);
+            string nombre = string.Concat(campos.ElementAt(1), "_", campos.ElementAt(2), "_", foto.Orden, "_", campos.ElementAt(3), "_", campos.ElementAt(4), "_", campos.ElementAt(5));
+            string extension = campos.ElementAt(6);
             foto.CadenaBase64 = campos.ElementAt(0);
 
             foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
@@ -185,7 +186,7 @@ namespace Application.MainModule.Servicios
 
         public static string GenerarNombre(string nombre, string extension)
         {
-            return string.Concat("Imagen_", nombre, extension.Contains(".") ? extension: "." + extension);
+            return string.Concat(nombre, extension.Contains(".") ? extension: "." + extension);
         }
 
         public static string GenerarNombre(string nombre, string extension, string ruta)
