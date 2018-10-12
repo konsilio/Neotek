@@ -31,5 +31,11 @@ namespace Application.MainModule.Servicios.Ventas
             List<VentaPuntoVentaDTO> lPventas = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTOC(new CajaGeneralDataAccess().BuscarPorCve(cve));
             return lPventas;
         }
+
+        public static List<VentaCorteAnticipoDTO> ObtenerCE(string cve)
+        {
+            List<VentaCorteAnticipoDTO> lPventas = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTOCE(new CajaGeneralDataAccess().BuscarPorCveEC(cve));
+            return lPventas;
+        }
     }
 }

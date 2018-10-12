@@ -31,7 +31,13 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarListaCajaGralCamioneta(cveReporte, token);
             return agente._listaCajaGralCamioneta;
         }
-        
+        public static List<VentaCorteAnticipoModel> ListaVentasCajaGralEstacion(string cveReporte, string token)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarListaCajaGralEstacion(cveReporte, token);
+            return agente._listaCajaGralEstacion;
+        }
+
         public static RespuestaDTO CrearGuardarLiquidacion(CajaGeneralModel cc, string tkn)
         {
             var agente = new AgenteServicio();

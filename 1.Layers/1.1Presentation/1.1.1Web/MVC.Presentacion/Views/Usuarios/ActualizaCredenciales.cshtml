@@ -8,10 +8,17 @@
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
-
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
 <script type="text/javascript">
-  
-    $(document).ready(function () {  
+    var message = '@ViewBag.MessageExito';
+    if (message != '') {
+        $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
+    }
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
         $("#btnRegresarIndex").click(function () {
 
             var form = $(this).parent("form");
@@ -21,7 +28,7 @@
 
     });
 </script>
-@using (Html.BeginForm("GuardarCredenciales", "Usuarios", FormMethod.Post)) 
+@using (Html.BeginForm("GuardarCredenciales", "Usuarios", FormMethod.Post))
 {
     <section class="content home">
         <div class="container-fluid">
@@ -56,6 +63,7 @@
                                                 Correo elect.:*
                                             </label>
                                             <input type="text" name="Email1" id="txtmail" class="form-control">
+                                            @Html.ValidationMessageFor(m => m.Email1, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -68,6 +76,7 @@
                                                 Contraseña:*
                                             </label>
                                             <input type="password" name="Password" id="txtpwd" class="form-control">
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -81,7 +90,7 @@
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            <input type="submit" id="btnRegresarIndex" value="Regresar" formaction=@Url.Action("Index")  class="btn btn-raised btn-primary float-left" formaction="Index" />
+                            <input type="submit" id="btnRegresarIndex" value="Regresar" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-left" formaction="Index" />
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-7">
@@ -92,13 +101,21 @@
                     </div>
                 </div>
             </div>
+            @if (ViewBag.MessageError != null)
+                {
+                <div class="row clearfix">
+                    <div id="divMensajeError" class="container">
+                        <div class="alert alert-danger">
+                            <div class="alert-icon">
+                                <i class="zmdi zmdi-block"></i>
+                            </div>
+                            <strong>
+                                <label>@ViewBag.MensajeError</label>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </section>
 }
-<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
-<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

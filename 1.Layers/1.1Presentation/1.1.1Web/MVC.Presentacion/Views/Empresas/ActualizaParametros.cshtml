@@ -5,20 +5,7 @@
     ViewBag.Title = "Catálogo / Gasera / Nueva";
 }
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#RegresaIndex").click(function () {
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Empresas", Action = "Index" }) %>');
-            form.attr('method', 'post');
-
-        });
-
-    });
-
-</script>
-
+<script src="~/Resources/js/Empresas.js"></script>
 @using (Html.BeginForm("Actualiza", "Empresas", FormMethod.Post)) 
 {
     <section class="content home">
@@ -167,18 +154,25 @@
                     <div class="col-lg-7 col-md-7 col-sm-7">
                         <div class="form-group">
                             <button class="btn btn-raised btn-primary float-right" title="Upload file"><i class="glyphicon glyphicon-open-file"></i>  Actualizar</button>
-
                         </div>
                     </div>
                 </div>
             </div>
+            @if (ViewBag.MensajeError != null)
+                {
+                <div class="row clearfix">
+                    <div id="divMensajeError" class="container">
+                        <div class="alert alert-danger">
+                            <div class="alert-icon">
+                                <i class="zmdi zmdi-block"></i>
+                            </div>
+                            <strong>
+                                <label>@ViewBag.MensajeError</label>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </section>
 }
-<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
-<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

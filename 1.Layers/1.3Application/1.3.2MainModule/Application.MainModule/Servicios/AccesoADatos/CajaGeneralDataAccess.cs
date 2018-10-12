@@ -34,9 +34,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<VentaPuntoDeVenta> BuscarPorCve(string cve)
         {
-            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FolioOperacionDia.Equals(cve)
-                                                         ).ToList();
-            //  return uow.Repository<VentaPuntoDeVenta>().Get().ToList();
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FolioOperacionDia.Equals(cve)).ToList();           
         }
+
+        public List<VentaCorteAnticipoEC> BuscarPorCveEC(string cve)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().Get(x => x.FolioOperacionDia.Equals(cve)).ToList();
+        }        
     }
 }

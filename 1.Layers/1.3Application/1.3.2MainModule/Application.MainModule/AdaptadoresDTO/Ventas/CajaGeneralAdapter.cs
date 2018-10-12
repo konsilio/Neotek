@@ -95,26 +95,53 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             };
             return usDTO;
         }
-
-        public static List<VentaPuntoVentaDTO>  SumarTotales(List<VentaPuntoVentaDTO> lst)
-        {
-            var consulta = (from venta in lst                           
-                            select venta.Total);
-
-            // Usamos la función de agregación Sum para calcular la suma de todos los elementos
-            decimal resultadoTotal = consulta.Sum();
-
-
-        //    lst.VentaTotal = resultadoTotal;
-
-
-            return lst;
-
-        }
+            
         public static List<VentaPuntoVentaDTO> ToDTOC(List<VentaPuntoDeVenta> lu)
         {
-            List<VentaPuntoVentaDTO> luDTO = lu.ToList().Select(x => ToDTOC(x)).ToList();         
-            return SumarTotales(luDTO);
+            List<VentaPuntoVentaDTO> luDTO = lu.ToList().Select(x => ToDTOC(x)).ToList();
+            return luDTO;
+        }
+
+        public static VentaCorteAnticipoDTO ToDTOCE(VentaCorteAnticipoEC pv)
+        {
+            //var vt = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotal;
+            //var vtc = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito;
+            //var vtco = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalContado;
+            //var ov = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).OtrasVentas;
+
+            VentaCorteAnticipoDTO usDTO = new VentaCorteAnticipoDTO()
+            {
+                IdEmpresa = pv.IdEmpresa,
+                Year = pv.Year,
+                Mes = pv.Mes,
+                Dia = pv.Dia,
+                Orden = pv.Orden,
+                IdTipoOperacion = pv.IdTipoOperacion,
+                IdPuntoVenta = pv.IdPuntoVenta,
+                IdCAlmacenGas = pv.IdCAlmacenGas,
+                IdOperadorChofer = pv.IdOperadorChofer,
+                IdUsuarioRecibe = pv.IdUsuarioRecibe,
+                FolioOperacionDia = pv.FolioOperacionDia,
+                FolioOperacion = pv.FolioOperacion,
+                TotalVenta = pv.TotalVenta,
+                TotalAnticipado = pv.TotalAnticipado,
+                MontoRecortadoAnticipado = pv.MontoRecortadoAnticipado,
+                TipoOperacion = pv.TipoOperacion,              
+                PuntoVenta = pv.PuntoVenta,               
+                OperadorChofer = pv.OperadorChofer,
+                UsuarioRecibe = pv.UsuarioRecibe,
+                DatosProcesados = pv.DatosProcesados,
+                FechaCorteAnticipo = pv.FechaCorteAnticipo,
+                FechaAplicacion = pv.FechaAplicacion,
+                FechaRegistro = pv.FechaRegistro
+            };
+            return usDTO;
+        }
+
+        public static List<VentaCorteAnticipoDTO> ToDTOCE(List<VentaCorteAnticipoEC> lu)
+        {
+            List<VentaCorteAnticipoDTO> luDTO = lu.ToList().Select(x => ToDTOCE(x)).ToList();
+            return luDTO;
         }
 
         public static VentaPuntoVentaDTO ToDTOP(VentaPuntoDeVenta pv)

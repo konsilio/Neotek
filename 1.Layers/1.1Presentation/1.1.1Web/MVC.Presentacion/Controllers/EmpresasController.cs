@@ -24,26 +24,25 @@ namespace MVC.Presentacion.Controllers
             RespuestaDTO Resp = new RespuestaDTO();
             ViewBag.listaEmpresas = CatalogoServicio.Empresas(_tok);
 
-            //if (TempData["RespuestaDTO"] != null)
-            //{
-            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
-            //}
-            //if (TempData["RespuestaDTOError"] != null)
-            //{
-            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
-            //}
-            //ViewBag.MessageError = TempData["RespuestaDTOError"];
-            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.MessageExito = TempData["RespuestaDTO"];
+            }
+            if (TempData["RespuestaDTOError"] != null)
+            {
+                ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+            }
+            ViewBag.MessageError = TempData["RespuestaDTOError"];
 
             return View();
         }
-        //views
+        //view
         public ActionResult Nueva()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-           _tok = Session["StringToken"].ToString();
+            _tok = Session["StringToken"].ToString();
             EmpresaModel em = new EmpresaModel();
-            
+
             //Se obtienen los paises         
             ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tok);
             //Se obtienen los estados 
@@ -59,33 +58,39 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            
+
             var respuesta = CatalogoServicio.create(Objemp, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
-          
+
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", Objemp);
             }
-                
+
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Nueva", Objemp);   
+                TempData["RespuestaDTOError"] = respuesta;
+                return RedirectToAction("Nueva", Objemp);
             }
         }
 
-        //views
+        //view
         public ActionResult ActualizaParametros(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             Empresa em = new Empresa();
             ViewBag.Empresas = CatalogoServicio.FiltrarEmpresa(em, id, _tkn).Empresas.ToList();
+
+            if (TempData["RespuestaDTOError"] != null)
+            {
+                ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+            }
+            ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View();
         }
-        //views
+        //view
         public ActionResult EditarEmpresa(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
@@ -107,37 +112,37 @@ namespace MVC.Presentacion.Controllers
             var respuesta = CatalogoServicio.EliminaEmpresaSel(id, _tkn);
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Baja Exitosa";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
+                TempData["RespuestaDTOError"] = respuesta;
                 return RedirectToAction("Index");
             }
         }
-        
+
         [HttpPost]
         public ActionResult Actualiza(EmpresaConfiguracion _Obj)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-          
+
             var respuesta = CatalogoServicio.ActualizaConfigEmpresa(_Obj, _tok);
-  
+
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", _Obj);
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Index", _Obj);
-            }            
+                TempData["RespuestaDTOError"] = respuesta;
+                return RedirectToAction("ActualizaParametros", "Empresas", new { _Obj.IdEmpresa });
+            }
         }
 
         [HttpPost]
@@ -146,20 +151,20 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
 
             _tok = Session["StringToken"].ToString();
-           
+
             var respuesta = CatalogoServicio.ActualizaEdicionEmpresa(_Obj, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
-            
+
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index", _Obj);
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Index", _Obj);
+                TempData["RespuestaDTOError"] = respuesta;
+                return RedirectToAction("Nueva", _Obj);
             }
         }
         private string Validar(RespuestaDTO Resp = null)

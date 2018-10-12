@@ -35,5 +35,11 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return null;
             return CajaGeneralServicio.ObtenerPV(cveReporte).ToList();
         }
+        public List<VentaCorteAnticipoDTO> CajaGeneralEstacion(string cveReporte)
+        {
+            var resp = PermisosServicio.PuedeConsultarCajaGeneral();
+            if (!resp.Exito) return null;
+            return CajaGeneralServicio.ObtenerCE(cveReporte).ToList();
+        }
     }
 }

@@ -21,16 +21,15 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsSuperUser)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn).ToPagedList(Pagina,20);
+                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn).ToPagedList(Pagina, 20);
             }
             else
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
-                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGralId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGralId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).ToPagedList(Pagina, 20);
             }
 
-            ViewBag.ListaEntidad = CatalogoServicio.ListaTipoFecha(_tkn);
-            ViewBag.ListaConcepto = CatalogoServicio.ListaTipoFecha(_tkn);
+
             //if (TempData["RespuestaDTO"] != null)
             //{
             //    ViewBag.MessageExito = TempData["RespuestaDTO"];
@@ -45,11 +44,10 @@ namespace MVC.Presentacion.Controllers
             return View();
         }
 
-        //[HttpPost]
         public ActionResult Liquidar(CajaGeneralModel _ObjModel)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-         
+
             return View();
         }
         public ActionResult Buscar(CajaGeneralCamionetaModel _model)
@@ -57,7 +55,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
-            ViewBag.CajaGeneralCamioneta = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia,_tkn);
+            ViewBag.CajaGeneralCamioneta = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia, _tkn);
             return View("Liquidar");
         }
 
@@ -71,14 +69,14 @@ namespace MVC.Presentacion.Controllers
 
             return View("Index", _model);
         }
-        
+
         public ActionResult GuardarLiquidar(CajaGeneralModel _ObjModel)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tok = Session["StringToken"].ToString();
 
             var respuesta = VentasServicio.CrearGuardarLiquidacion(_ObjModel, _tok);
-           
+
             if (respuesta.Exito)
             {
                 //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
@@ -98,52 +96,37 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
-            ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
-
-            if (ViewBag.EsSuperUser)
-            {
-                ViewBag.CajaGralEstacion = null;//CatalogoServicio.ListaPrecioVenta(0, _tkn);
-            }
-            else
-            {
-                ViewBag.CajaGralEstacion = null;//CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
-            }
-
-            //ViewBag.ListaEntidad = CatalogoServicio.ListaTipoFecha(_tkn);
-            //ViewBag.ListaConcepto = CatalogoServicio.ListaTipoFecha(_tkn);
-            if (TempData["RespuestaDTO"] != null)
-            {
-                ViewBag.MessageExito = TempData["RespuestaDTO"];
-            }
-            if (TempData["RespuestaDTOError"] != null)
-            {
-                ViewBag.MessageError = TempData["RespuestaDTOError"];
-            }
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
-
             return View();
         }
 
-        public ActionResult Pipa()
+        public ActionResult BuscarEstacion(VentaCorteAnticipoModel _model)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tkn = Session["StringToken"].ToString();
+
+            ViewBag.CajaGeneralEstacion = VentasServicio.ListaVentasCajaGralEstacion(_model.FolioOperacion, _tkn);
+            return View("Estacion");
+
+        }
+
+        public ActionResult Pipa(int? page)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
             ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
-
+            var Pagina = page ?? 1;
             if (ViewBag.EsSuperUser)
             {
-                //ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                //ViewBag.ListaPV = CatalogoServicio.ListaPrecioVenta(0, _tkn);
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn).ToPagedList(Pagina, 20);
             }
             else
             {
-                //ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
-                //ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
+                ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).ToPagedList(Pagina, 20);
             }
 
-            //ViewBag.ListaEntidad = CatalogoServicio.ListaTipoFecha(_tkn);
-            //ViewBag.ListaConcepto = CatalogoServicio.ListaTipoFecha(_tkn);
             if (TempData["RespuestaDTO"] != null)
             {
                 ViewBag.MessageExito = TempData["RespuestaDTO"];

@@ -86,6 +86,7 @@
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
     <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />
+    <Compile Include="DTOs\Ventas\VentaCorteAnticipoDTO.cs" />
     <Compile Include="DTOs\Ventas\VentaPuntoVentaDTO.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenSalidaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />

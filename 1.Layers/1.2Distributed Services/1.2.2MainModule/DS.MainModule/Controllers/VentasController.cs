@@ -33,6 +33,12 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneralCamioneta(cve));
         }
+
+        [Route("buscar/listacajageneralestacion/{cve}")]
+        public HttpResponseMessage GetListaCajaGeneralEstacion(string cve)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneralEstacion(cve));
+        }        
         #endregion
     }
 }
