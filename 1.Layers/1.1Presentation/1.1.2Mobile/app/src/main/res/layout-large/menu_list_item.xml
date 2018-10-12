@@ -17,8 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:text="Prueba"
-            android:textSize="14sp" />
+            android:textSize="20dp"
+            android:text="Prueba" />
 
     </LinearLayout>
 
@@ -32,24 +32,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
             android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/menu_item_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="25dp"
+            android:layout_width="2dp"
+            android:layout_height="80dp"
             android:layout_weight="1"
             android:textAlignment="center"
-            android:textSize="18sp" />
+            android:textSize="30dp" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="5dp"
             android:src="@drawable/right" />
     </LinearLayout>
     <View

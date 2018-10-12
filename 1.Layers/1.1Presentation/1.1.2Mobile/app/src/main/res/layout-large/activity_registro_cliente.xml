@@ -24,7 +24,7 @@
                 android:paddingBottom="5dp"
                 android:text="@string/Estacion"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
 
             <TextView
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:padding="15dp" />
+                android:padding="20dp" />
 
             <TextView
                 android:id="@+id/textView10"
@@ -55,7 +55,7 @@
                 android:paddingTop="15dp"
                 android:paddingBottom="5dp"
                 android:text="@string/regimen_fiscal"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/SRegistroClienteActivityRegimenFiscal"
@@ -76,13 +76,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:hint="@string/nombre"
-                    android:importantForAutofill="no"
+                    android:textSize="25sp"
                     android:inputType="textPersonName"
+                    android:hint="@string/nombre"
                     android:singleLine="true"
                     android:text=""
-                    android:textSize="18sp"
-                    tools:targetApi="o" />
+                    android:importantForAutofill="no" tools:targetApi="o" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -108,7 +107,6 @@
                 android:id="@+id/TILRegistroClienteActivityApellidoPaterno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <EditText
                     android:id="@+id/ETRegistroClienteActivityApellidoPaterno"
                     android:layout_width="match_parent"
@@ -116,39 +114,35 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:hint="@string/apellido_1"
-                    android:importantForAutofill="no"
-                    android:inputType="textPersonName"
                     android:singleLine="true"
+                    android:textSize="25sp"
+                    android:inputType="textPersonName"
                     android:text=""
-                    android:textSize="18sp"
-                    tools:targetApi="o" />
+                    android:importantForAutofill="no" tools:targetApi="o" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/TILRegistroClienteActivityApellidoMaterno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <EditText
                     android:id="@+id/ETRegistroClienteActivityApellidoMaterno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:hint="@string/apellido_2"
-                    android:importantForAutofill="no"
+                    android:textSize="25sp"
                     android:inputType="textPersonName"
-                    android:singleLine="true"
+                    android:hint="@string/apellido_2"
                     android:text=""
-                    android:textSize="18sp"
-                    tools:targetApi="o" />
+                    android:singleLine="true"
+                    android:importantForAutofill="no" tools:targetApi="o" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/TILRegistroClienteActivityCelular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <EditText
                     android:id="@+id/ETRegistroClienteActivityCelular"
                     android:layout_width="match_parent"
@@ -156,30 +150,27 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:hint="@string/celular"
-                    android:importantForAutofill="no"
+                    android:textSize="25sp"
                     android:inputType="phone"
                     android:singleLine="true"
-                    android:textSize="18sp"
-                    tools:targetApi="o" />
+                    android:importantForAutofill="no" tools:targetApi="o" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/TILRegistroClienteActivityNumeroFijo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <EditText
                     android:id="@+id/ETRegistroClienteActivityTelefonoFijo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:hint="@string/telef_no_fijo"
-                    android:importantForAutofill="no"
+                    android:textSize="25sp"
                     android:inputType="phone"
+                    android:hint="@string/telef_no_fijo"
                     android:singleLine="true"
-                    android:textSize="18sp"
-                    tools:targetApi="o" />
+                    android:importantForAutofill="no" tools:targetApi="o" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -192,7 +183,7 @@
                 android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/regresar"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 tools:ignore="UnusedAttribute" />
 
             <Button
@@ -204,7 +195,7 @@
                 android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/registrar_cliente"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="18sp"
+                android:textSize="30sp"
                 tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>
