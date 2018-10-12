@@ -188,7 +188,10 @@ namespace Application.MainModule.Flujos
             }
             else if (esEstacion)
             {
-                return null;
+                var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
+                var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
+
+                return AlmacenRecargaAdapter.ToDTO(pipas, estaciones, tipoMedidores);
             }
             else if (esPipa)
             {
