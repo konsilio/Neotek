@@ -489,8 +489,8 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarLectura(String ClaveProceso){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_LECTURA_INICIAL,"ClaveProceso = "+
-                ClaveProceso,null);
+        return db.delete(TABLE_LECTURA_INICIAL,"ClaveProceso = '"+
+                ClaveProceso+"'",null);
     }
 
     /**
@@ -558,8 +558,8 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarLecturaP5000(String ClaveProceso){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_LECTURA_INICIAL_P5000,"ClaveProceso = "+
-                ClaveProceso,null);
+        return db.delete(TABLE_LECTURA_INICIAL_P5000,"ClaveProceso = '"+
+                ClaveProceso+"'",null);
     }
     //endregion
 
@@ -617,8 +617,8 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarLecturaImagenes(String ClaveProceso){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_LECTURA_INICIAL_IMAGENES,"ClaveProceso = "+
-                ClaveProceso,null);
+        return db.delete(TABLE_LECTURA_INICIAL_IMAGENES,"ClaveProceso = '"+
+                ClaveProceso+"'",null);
     }
     ///endregion
 
@@ -657,8 +657,8 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Cursor GetLecturaFinalByClaveProceso(String ClaveProceso){
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_FINALIZAR+" WHERE ClaveProceso = "
-                +ClaveProceso,null);
+        return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_FINALIZAR+" WHERE ClaveProceso = '"
+                +ClaveProceso+"'",null);
     }
 
     /**
@@ -673,7 +673,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarLecturaFinal(String ClaveProceso){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_LECTURA_FINALIZAR,
-                "WHERE ClaveProceso = "+ClaveProceso,null);
+                "WHERE ClaveProceso = '"+ClaveProceso+"'",null);
     }
 
     /**
@@ -735,7 +735,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarImagenLecturaFinalP5000(String ClaveProceso){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_LECTURA_FINALIZAR_P5000,
-                "ClaveProceso = "+ClaveProceso,null);
+                "ClaveProceso = '"+ClaveProceso+"'",null);
     }
     //endregion
 
@@ -831,7 +831,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetLecturaIncialPipasByClaveOperacion(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_INICIAL_PIPA+
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -848,7 +848,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarLecturaInicialPipa(String ClaveOperacion){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_LECTURA_INICIAL_PIPA,
-                "ClaveOperacion = "+ClaveOperacion,null);
+                "ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -898,7 +898,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetImagenesLecturaInicialPipaByClaveOperacion(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_INICIAL_PIPA_IMAGENES+
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -913,7 +913,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarImagenesLecturaInicialPipas(String ClaveOperacion){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_LECTURA_INICIAL_PIPA_IMAGENES,
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion,null);
     }
     //endregion
 
@@ -950,7 +950,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetLecturaInicialPipaP5000ByClaveOperacion(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+ TABLE_LECTURA_INICIAL_PIPA_P5000+
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -963,8 +963,8 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarLecturaInicialPipaP500(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.delete(TABLE_LECTURA_INICIAL_PIPA_P5000," WHERE ClaveOperacion = "
-                +ClaveOperacion,null);
+        return db.delete(TABLE_LECTURA_INICIAL_PIPA_P5000," WHERE ClaveOperacion = '"
+                +ClaveOperacion+"'",null);
     }
     //endregion
 
@@ -1005,7 +1005,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetLecturaFinalPipasByClaveOperacion(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_FINAL_PIPA+
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -1022,7 +1022,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarLecturaFinalPipa(String ClaveOperacion){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_LECTURA_FINAL_PIPA,
-                "ClaveOperacion = "+ClaveOperacion,null);
+                "ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -1070,7 +1070,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetImagenesLecturaFinalPipaByClaveOperacion(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_FINAL_PIPA_IMAGENES+
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -1085,7 +1085,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarImagenesLecturaFinalPipas(String ClaveOperacion){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_LECTURA_FINAL_PIPA_IMAGENES,
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
     //endregion
 
@@ -1110,7 +1110,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetLecturaFinalPipaP5000ByClaveOperacion(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+ TABLE_LECTURA_FINAL_PIPA_P5000+
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -1123,8 +1123,8 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarLecturaFinalPipaP500(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.delete(TABLE_LECTURA_FINAL_PIPA_P5000," WHERE ClaveOperacion = "
-                +ClaveOperacion,null);
+        return db.delete(TABLE_LECTURA_FINAL_PIPA_P5000," WHERE ClaveOperacion = '"
+                +ClaveOperacion+"'",null);
     }
     //endregion
 
@@ -1167,7 +1167,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetLecturaInicialAlmacenByClaveOperacion(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_INICIAL_ALMACEN+
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -1181,7 +1181,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarLecturaIncialAlmacen(String ClaveOperacion){
         return this.getReadableDatabase().delete(TABLE_LECTURA_INICIAL_ALMACEN,
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -1232,7 +1232,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Cursor GetImagenesLecturaInicialAlmacenByClaveOperacion(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+
-                TABLE_LECTURA_FINAL_ALMACEN_IMAGENES+" WHERE ClaveOperacion = "+ClaveOperacion,
+                TABLE_LECTURA_FINAL_ALMACEN_IMAGENES+" WHERE ClaveOperacion = '"+ClaveOperacion+"'",
                 null);
     }
 
@@ -1247,7 +1247,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarImagenesLecturaInicialAlmacen(String ClaveOperacion){
         return this.getWritableDatabase().delete(TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES,
-                " ClaveOperacion = "+ClaveOperacion,null);
+                " ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
     //endregion
 
@@ -1303,7 +1303,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarLecturaFinalAlmacen(String ClaveOperacion){
         return this.getReadableDatabase().delete(TABLE_LECTURA_FINAL_ALMACEN,
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -1353,7 +1353,8 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Cursor GetImagenesLecturaFinalAlmacenByClaveOperacion(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+
-                        TABLE_LECTURA_FINAL_ALMACEN_IMAGENES+" WHERE ClaveOperacion = "+ClaveOperacion,
+                        TABLE_LECTURA_FINAL_ALMACEN_IMAGENES+" WHERE ClaveOperacion = '"
+                        +ClaveOperacion+"'",
                 null);
     }
 
@@ -1368,7 +1369,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarImagenesLecturaFinalAlmacen(String ClaveOperacion){
         return this.getWritableDatabase().delete(TABLE_LECTURA_INICIAL_ALMACEN_IMAGENES,
-                " ClaveOperacion = "+ClaveOperacion,null);
+                " ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
     //endregion
 
@@ -1391,7 +1392,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarLecturaInicialCamioneta(String ClaveOperacion){
         return this.getWritableDatabase().delete(
                 TABLE_LECTURA_INICIAL_CAMIONETA,
-                " ClaveOperacion = "+ClaveOperacion,
+                " ClaveOperacion = '"+ClaveOperacion+"'",
                 null
                 );
     }
@@ -1427,13 +1428,13 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Cursor GetCilindrosLecturaInicialCamioneta(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+
-                TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS+" WHERE ClaveOperacion = "+ClaveOperacion,
+                TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS+" WHERE ClaveOperacion = '"+ClaveOperacion,
                 null);
     }
 
     public Integer EliminarCilindrosLecturaInicialCamioneta(String ClaveOperacion){
         return this.getWritableDatabase().delete(TABLE_LECTURA_INICIAL_CAMIONETA_CILINDROS,
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
     //endregion
 
@@ -1451,13 +1452,13 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetLecturaFinalCamionetaByClaveOperacion(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery(
                 "SELECT * FROM "+TABLE_LECTURA_FINAL_CAMIONETA+
-                        " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                        " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     public Integer EliminarLecturaFinalCamioneta(String ClaveOperacion){
         return this.getWritableDatabase().delete(
                 TABLE_LECTURA_FINAL_CAMIONETA,
-                " ClaveOperacion = "+ClaveOperacion,
+                " ClaveOperacion = '"+ClaveOperacion,
                 null
         );
     }
@@ -1493,8 +1494,8 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Cursor GetCilindrosLecturaFinalCamioneta(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+
-                        TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS+" WHERE ClaveOperacion = "+
-                        ClaveOperacion,
+                        TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS+" WHERE ClaveOperacion = '"+
+                        ClaveOperacion+"'",
                 null);
     }
 
@@ -1548,7 +1549,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Cursor GetRecargaByClaveOperacion(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_RECARGAS+
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -1561,7 +1562,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarRecarga(String ClaveOperacion){
         return this.getWritableDatabase().delete(TABLE_RECARGAS,
-                "ClaveOperacion = "+ClaveOperacion,null);
+                "ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -1570,7 +1571,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Cursor GetRecargas(String tipo) {
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_RECARGAS_CILINDROS+
-                " WHERE Tipo = "+tipo,null);
+                " WHERE Tipo = '"+tipo+"'",null);
     }
     //endregion
 
@@ -1607,7 +1608,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Cursor GetImagenesRecarga(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+
-                TABLE_RECARGAS_IMAGENES+" WHERE ClaveOperacion = "+ClaveOperacion,null);
+                TABLE_RECARGAS_IMAGENES+" WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -1619,7 +1620,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarImagenesRecarga(String ClaveOperacion){
         return this.getWritableDatabase().delete(TABLE_RECARGAS_IMAGENES,
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
     //endregion
 
@@ -1654,7 +1655,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Cursor GetCilindrosRecarga(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "
-                +TABLE_RECARGAS_CILINDROS+" WHERE  ClaveOperacion = "+ClaveOperacion,
+                +TABLE_RECARGAS_CILINDROS+" WHERE  ClaveOperacion = '"+ClaveOperacion+"'",
                 null);
     }
 
@@ -1666,7 +1667,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Integer EliminarCilindrosRecarga(String ClaveOperacion){
         return this.getWritableDatabase().delete(TABLE_RECARGAS_CILINDROS,
-                " WHERE  ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE  ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     public Long InsertarVenta(VentaDTO ventaDTO, boolean esCamioneta, boolean esEstacion,
