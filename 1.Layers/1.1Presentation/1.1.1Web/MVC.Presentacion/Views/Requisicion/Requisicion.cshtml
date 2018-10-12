@@ -6,54 +6,16 @@
 }
 <script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
-
+<script src="~/assets/plugins/momentjs/moment.js"></script>
+<script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+<script src="~/assets/plugins/bootstrap-select/css/bootstrap-select.css"></script>
+<script src="~/Scripts/js/RequisicionJS.js"></script>
 <div class="page-loader-wrapper">
     <div class="loader">
         <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="50" height="50" alt="Alpino"></div>
         <p>Procesando</p>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#selectTipo").on('change', function () {
-            var url = "/Requisicion/GetProductos";
-            var id = $('#selectTipo').find('option:selected').val();
-            document.getElementById("unidadPord").innerHTML = "";
-            $.getJSON(url, { idTipo: id }, function (data) {
-                var $select = $('#productos');
-                if (data == "[]") {
-                    $select.find('option').remove().end().append('<option selected="selected" value="0">No haty productos</option>').val('0')
-                    $select.selectpicker("refresh")
-                }
-                else {
-                    $select.find('option').remove().end().append('<option selected="selected" value="0">Seleccione un producto</option>').val('0')
-                    $.each(JSON.parse(data), function (key, val) {
-                        $select.append($('<option />', { value: (val['IdProducto']), text: val['Descripcion'] }));
-                    });
-                    $select.selectpicker("refresh");
-                }
-            });
-        });
-        $("#productos").on('change', function () {
-            var url = "/Requisicion/GetUnidadMedida";
-            var id = $('#productos').find('option:selected').val();
-            if (id == '0') {
-                document.getElementById("unidadPord").innerHTML = "";
-            }
-            else {
-                $.getJSON(url, { idPord: id }, function (data) {
-                    var $unidad = $('#unidadPord');
-                    if (data == "[]") {
-                        document.getElementById("unidadPord").innerHTML = "";
-                    }
-                    else {
-                        document.getElementById("unidadPord").innerHTML = data;
-                    }
-                });
-            }
-        });
-    });
-</script>
 <body>
     @using (Html.BeginForm("CrearRequisicion", "Requisicion", FormMethod.Post))
     {
@@ -103,9 +65,9 @@
                                             <b>Fecha requerida:</b>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
-                                                @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })
-                                                @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })
+                                                @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })                                               
                                             </div>
+                                            @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })
                                         </div>
                                         <div class="col-lg-3">
                                             <b>Solicitante:</b>
@@ -186,14 +148,13 @@
                                                 </select>
                                             </div>
                                             <div class="col-lg-2">
-                                                <b>
+                                                <strong>
                                                     <label> Cantidad: <b id="unidadPord"> </b> </label>
-                                                </b>
+                                                </strong>
                                                 <div class="form-group">
                                                     <input type="number" id="Cantidad" class="form-control" placeholder="Cantidad" name="Cantidad" value="@Model.Cantidad" />
                                                 </div>
                                                 @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "alert-danger" })
-
                                                 @*<asp:Label runat="server" ID="reqCant" CssClass="alert-danger" Visible="false" Text="Campo requerido" />*@
                                             </div>
                                             <div class="col-lg-3">
@@ -222,15 +183,14 @@
                                             </div>
                                         </div>
                                         <div class="row clearfix js-sweetalert">
-                                            <div class="col-lg-8">
-
+                                            <div class="col-md-8">
                                                 <b>Aplicación:</b>
                                                 <div class="form-group">
                                                     <input type="text" placeholder="Comentarios..." Class="form-control" name="Aplicacion" />
                                                 </div>
                                                 @*<asp:Label runat="server" ID="reqApli" CssClass="alert-danger" Visible="false" Text="Campo requerido" />*@
                                             </div>
-                                            <div class="col-lg-2 col-md-6">
+                                            <div class="col-md-2 col-md-6">
                                                 <label>&nbsp; </label>
                                                 <div class="form-group">
                                                     <input type="submit" value="Agregar" formaction="Agregar" class="btn btn-danger btn-simple btn-round btn-sm" />
@@ -373,10 +333,5 @@
         </div>
     }
 </body>
-<script src="~/assets/plugins/momentjs/moment.js"></script> <!-- Moment Plugin Js -->
-<!-- Bootstrap Material Datetime Picker Plugin Js -->
-<script src="~/assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
-<script src="~/assets/plugins/bootstrap-select/css/bootstrap-select.css"></script>
-<script src="~/assets/js/pages/forms/basic-form-elements.js"></script>
-<script src="~/assets/js/pages/forms/advanced-form-elements.js"></script>
+
 
