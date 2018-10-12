@@ -203,5 +203,10 @@ namespace Application.MainModule.Flujos
             return null;
 
         }
+
+        public RespuestaDto Autoconsumo(bool esPipa, bool esInventario, bool esEstacion)
+        {
+            return null;
+        }
     }
 }

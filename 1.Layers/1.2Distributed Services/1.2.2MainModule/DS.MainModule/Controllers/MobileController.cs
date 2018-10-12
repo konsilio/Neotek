@@ -215,5 +215,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoRecargas(esEstacion, esPipa, esCamioneta),Request);
         }
+
+        [Route("autoconsumo/{esPipa}/{esInventarioGral}/{esEstacion}")]
+        public HttpResponseMessage PostAutoconsumo(bool esPipa,bool esInventario,bool esEstacion)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.Autoconsumo(esPipa, esInventario, esEstacion),Request);
+        }
     }
 }
