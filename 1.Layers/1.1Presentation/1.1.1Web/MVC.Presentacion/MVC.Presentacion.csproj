@@ -11340,11 +11340,15 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\CentroCostoJS.js" />
     <Content Include="Scripts\js\ConfirmacionPagoJS.js" />
     <Content Include="Scripts\js\CProductoJS.js" />
+    <Content Include="Scripts\js\CuentasContablesJS.js" />
     <Content Include="Scripts\js\OrdenCompraComplementoGasJS.js" />
     <Content Include="Scripts\js\OrdenesJS.js" />
+    <Content Include="Scripts\js\RequisicionAutorizacionJS.js" />
     <Content Include="Scripts\js\RequisicionesJS.js" />
+    <Content Include="Scripts\js\RequisicionJS.js" />
     <Content Include="Scripts\js\UtileriasJS.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment-with-locales.js" />

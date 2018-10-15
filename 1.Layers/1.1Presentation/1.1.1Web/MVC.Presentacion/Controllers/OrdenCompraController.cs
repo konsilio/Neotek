@@ -36,6 +36,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.IVAs = CatalogoServicio.ListaIVA();
             ViewBag.IEPs = CatalogoServicio.ListaIEPS();
             ViewBag.Estatus = model.IdOrdenCompraEstatus;
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             return View(model);
         }
         public ActionResult CrearOrdenCompra(OrdenCompraModel model)
@@ -43,13 +44,8 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             var Respuesta = OrdenCompraServicio.GenerarOrdenCompra(model, Session["StringToken"].ToString());
             if (Respuesta.Exito)
-            {
-                string tkn = Session["StringToken"].ToString();
-                ViewBag.EsAdminCentral = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-                ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-                ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
-                ViewBag.Estatus = OrdenCompraServicio.ListaEstatus(tkn);
-                return RedirectToAction("Ordenes");
+            {               
+                return RedirectToAction("Ordenes", new { msj = Respuesta.Mensaje });
             }
             else
             {
@@ -61,10 +57,11 @@ namespace MVC.Presentacion.Controllers
                 return View("OrdenCompra", model);
             }
         }
-        public ActionResult Ordenes(int? pageO, int? pageR)
+        public ActionResult Ordenes(int? pageO, int? pageR, string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
+            if (!string.IsNullOrEmpty(msj)) ViewBag.Msj = msj;
             ViewBag.EsAdminCentral = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
@@ -122,6 +119,7 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             var complemeto = OrdenCompraServicio.InitComplemento(id, tkn);
             ViewBag.Proveedor = complemeto.Proveedor;
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             return View(complemeto);
         }
         [HttpPost]
@@ -202,7 +200,7 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             var ocp = OrdenCompraServicio.InitOrdenCompraPago(id, tkn);
             ViewBag.FormasPago = CatalogoServicio.ListaFormaPago(tkn);
-            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);        
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             return View(ocp);
         }
         public ActionResult ConfirmarPago(OrdenCompraPagoDTO dto = null)
@@ -228,10 +226,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.IEPs = CatalogoServicio.ListaIEPS();
             ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
             ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
-
-            RespuestaDTO Resp = new RespuestaDTO();
-            if (TempData["RespuestaDTO"] != null) Resp = (RespuestaDTO)TempData["RespuestaDTO"];
-            ViewBag.MensajeError = Validar(Resp);
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);            
             return View(complemeto);          
         }
         private string Validar(RespuestaDTO Resp = null)

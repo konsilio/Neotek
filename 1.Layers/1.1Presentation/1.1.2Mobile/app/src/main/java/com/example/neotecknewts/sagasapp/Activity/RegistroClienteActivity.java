@@ -14,14 +14,19 @@ import android.widget.Spinner;
 
 import com.example.neotecknewts.sagasapp.Model.ClienteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTipoPersonaDTO;
+import com.example.neotecknewts.sagasapp.Model.RegimenesDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaClienteDTO;
+import com.example.neotecknewts.sagasapp.Model.TipoPersonaDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RegistroClientePresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RegistroClientePresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class RegistroClienteActivity extends AppCompatActivity implements RegistroClienteView{
     Spinner SRegistroClienteActivityTipoPersona,SRegistroClienteActivityRegimenFiscal;
@@ -36,7 +41,8 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
     DatosTipoPersonaDTO datos;
     ClienteDTO clienteDTO;
     VentaDTO ventaDTO;
-
+    String[] lista_tipo_persona,lista_regimen_fiscal;
+    TipoPersonaDTO tipoPersonaDTO_Seleccionada;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,13 +89,24 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
         SRegistroClienteActivityTipoPersona.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                clienteDTO.setIdTipoPersona(1);
-                Log.w("Persona",parent.getItemAtPosition(position).toString());
-                ETRegistroClienteActivityRazonSocial.setVisibility(
+                if(datos!=null) {
 
-                        parent.getItemAtPosition(position).toString().equals("Persona Moral")?
-                                View.VISIBLE: View.GONE
-                );
+                    Log.w("Persona", parent.getItemAtPosition(position).toString());
+                    ETRegistroClienteActivityRazonSocial.setVisibility(
+                            parent.getItemAtPosition(position).toString().equals("Moral") ?
+                                    View.VISIBLE : View.GONE
+                    );
+                    for (TipoPersonaDTO tipo:
+                         datos.getTipoPersona()) {
+                        if(tipo.getDescripcion().equals(
+                                parent.getItemAtPosition(position).toString()
+                        )){
+                            clienteDTO.setIdTipoPersona(tipo.getIdTipoPersona());
+                            tipoPersonaDTO_Seleccionada = tipo;
+                            colocarRegimen(tipo,parent.getItemAtPosition(position).toString().equals("Moral"));
+                        }
+                    }
+                }
             }
 
             @Override
@@ -100,7 +117,19 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
         SRegistroClienteActivityRegimenFiscal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                clienteDTO.setIdTipoRegimen(1);
+                if(datos!=null) {
+                    if(position>=0) {
+                        if(tipoPersonaDTO_Seleccionada.getRegimenes().size()<=0 &&
+                                SRegistroClienteActivityTipoPersona.getSelectedItem().toString().equals("Moral")
+                                ) {
+                            for (RegimenesDTO regimenDTO : tipoPersonaDTO_Seleccionada.getRegimenes()) {
+                                if (regimenDTO.getDescripcion().equals(parent.getItemAtPosition(position).toString())) {
+                                    clienteDTO.setIdTipoRegimen(regimenDTO.getIdRegimenFiscal());
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             @Override
@@ -112,6 +141,20 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
         presenter.getLista(session.getToken());
         BtnRegistroClienteActivityRegistrarCliente.setOnClickListener(v -> verificarForm());
         BtnRegistroClienteActivityRegresar.setOnClickListener(v -> finish());
+    }
+
+    private void colocarRegimen(TipoPersonaDTO tipo,boolean esMoral) {
+        if(tipo.getRegimenes().size()>0 && esMoral){
+            lista_regimen_fiscal = new String[tipo.getRegimenes().size()];
+            for (int x = 0;x<tipo.getRegimenes().size();x++) {
+                lista_regimen_fiscal[x] = tipo.getRegimenes().get(x).getDescripcion();
+            }
+            SRegistroClienteActivityRegimenFiscal.setAdapter(new ArrayAdapter<>(
+                    this,
+                    R.layout.custom_spinner,
+                    lista_regimen_fiscal
+            ));
+        }
     }
 
     @Override
@@ -176,6 +219,19 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
     @Override
     public void onSuccessDatosFiscales(DatosTipoPersonaDTO dto) {
         datos = dto;
+
+        if(datos.getTipoPersona().size()>0){
+            int size = datos.getTipoPersona().size();
+            lista_tipo_persona = new String[size];
+            for (int x= 0;x<datos.getTipoPersona().size();x++){
+                lista_tipo_persona[x] = datos.getTipoPersona().get(x).getDescripcion();
+            }
+            SRegistroClienteActivityTipoPersona.setAdapter(new ArrayAdapter<>(
+                    this,
+                    R.layout.custom_spinner,
+                    lista_tipo_persona
+            ));
+        }
     }
 
     @Override

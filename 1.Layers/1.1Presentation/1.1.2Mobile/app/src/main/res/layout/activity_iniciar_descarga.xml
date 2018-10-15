@@ -1,205 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 
     <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/textTitulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/title_iniciar_descarga"
-            android:textColor="@color/colorTextLogin"
-            android:textSize="25dp"
-            android:textStyle="italic" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="@string/spinner_num_compra"
-            android:textColor="@color/colorTextLogin"
-            android:textSize="25dp" />
-
-        <Spinner
-            android:id="@+id/spinner_orden_compra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textColor="@color/colorTextLogin"
-            android:textSize="25dp" />
 
         <LinearLayout
-            android:id="@+id/layout_tanque"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="@string/title_iniciar_descarga"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tanque_prestado"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/spinner_num_compra"
                 android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
+                android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/TvIniciarDescargaActivityNo"
-                android:layout_width="54dp"
+            <Spinner
+                android:id="@+id/spinner_orden_compra"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/label_no"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
                 android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
+                android:textSize="25sp" />
 
-            <Switch
-                android:id="@+id/switch_tanque"
+            <LinearLayout
+                android:id="@+id/layout_tanque"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tanque_prestado"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/TvIniciarDescargaActivityNo"
+                    android:layout_width="54dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/label_no"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="18sp" />
+
+                <Switch
+                    android:id="@+id/switch_tanque"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/TvIniciarDescargaActivitySi"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/label_si"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tipo_medidor_tractor"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_medidor_tractor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/tipos_medidor"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tipo_medidor_almacen"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_medidor_almacen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/tipos_medidor"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="30sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/nombre_almacen"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_almacen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:entries="@array/tipos_medidor"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="30sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/registrar_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:id="@+id/TvIniciarDescargaActivitySi"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:text="@string/label_si"
-                android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@color/colorButtonLogin"
+                android:minWidth="160dp"
+                android:text="@string/registrar"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="24sp" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tipo_medidor_tractor"
-                android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
-
-            <Spinner
-                android:id="@+id/spinner_medidor_tractor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:entries="@array/tipos_medidor"
-                android:paddingBottom="10dp"
-                android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tipo_medidor_almacen"
-                android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
-
-            <Spinner
-                android:id="@+id/spinner_medidor_almacen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:entries="@array/tipos_medidor"
-                android:paddingBottom="10dp"
-                android:textColor="@color/colorTextLogin"
-                android:textSize="30dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/nombre_almacen"
-                android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
-
-            <Spinner
-                android:id="@+id/spinner_almacen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:entries="@array/tipos_medidor"
-                android:paddingBottom="10dp"
-                android:textColor="@color/colorTextLogin"
-                android:textSize="30dp" />
-
-        </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/registrar_button"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorButtonLogin"
-            android:minWidth="170dp"
-            android:text="@string/registrar"
-            android:textColor="@color/colorTextButtonLogin"
-            android:textSize="25dp" />
-
-    </LinearLayout>
-
-
-
-</LinearLayout>
+</ScrollView>

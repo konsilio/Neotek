@@ -18,22 +18,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="@string/title_registro_papeleta"
                 android:textColor="@color/colorTextLogin"
-                android:textSize="25dp"
+                android:textSize="18sp"
                 android:textStyle="italic" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/spinner_num_compra_expedidor"
                 android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/spinner_orden_compra_expedidor"
@@ -46,11 +46,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/spinner_num_compra_porteador"
                 android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/spinner_orden_compra_porteador"
@@ -65,12 +65,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="2"
                 android:text="@string/fecha"
                 android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
+                android:textSize="18sp" />
 
 
             <LinearLayout
@@ -83,34 +83,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
-                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/seleccionar_fecha"
                     android:textColor="@color/colorTextLogin"
-                    android:textSize="25dp" />
+                    android:textSize="18sp" />
 
                 <ImageButton
                     android:id="@+id/imageBtnFecha"
-                    android:src="@drawable/calendar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_width="20dp"
+                    android:layout_height="40sp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@color/colorBackgroundLogin"/>
+                    android:background="@color/colorBackgroundLogin"
+                    android:src="@drawable/calendar" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:text="@string/fecha_embarque"
                 android:textColor="@color/colorTextLogin"
-                android:textSize="25dp" />
+                android:textSize="18sp" />
 
 
             <LinearLayout
@@ -123,21 +123,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
-                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/seleccionar_fecha"
                     android:textColor="@color/colorTextLogin"
-                    android:textSize="25dp" />
+                    android:textSize="18sp" />
+
                 <ImageButton
                     android:id="@+id/imageBtnFechaEmbarque"
-                    android:src="@drawable/calendar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_width="20dp"
+                    android:layout_height="40sp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@color/colorBackgroundLogin"/>
+                    android:background="@color/colorBackgroundLogin"
+                    android:src="@drawable/calendar" />
 
 
             </LinearLayout>
@@ -147,75 +148,84 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText android:id="@+id/input_embarque"
+                <EditText
+                    android:id="@+id/input_embarque"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="text"
                     android:hint="@string/num_embarque"
+                    android:inputType="text"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_expedidor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_nombre_expedidor"
+
+                <EditText
+                    android:id="@+id/input_nombre_expedidor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="text"
                     android:hint="@string/nombre_expedidor"
+                    android:inputType="text"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_porteador"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_nombre_porteador"
+
+                <EditText
+                    android:id="@+id/input_nombre_porteador"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="text"
                     android:hint="@string/nombre_porteador"
+                    android:inputType="text"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_placas_tractor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_placas_tractor"
+
+                <EditText
+                    android:id="@+id/input_placas_tractor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="text"
                     android:hint="@string/placas_tractor"
+                    android:inputType="text"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_nombre_operador"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_nombre_operador"
+
+                <EditText
+                    android:id="@+id/input_nombre_operador"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="text"
                     android:hint="@string/nombre_operador"
+                    android:inputType="text"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -224,15 +234,17 @@
                 android:id="@+id/input_layout_producto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_producto"
+
+                <EditText
+                    android:id="@+id/input_producto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="text"
                     android:hint="@string/producto"
+                    android:inputType="text"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -240,15 +252,17 @@
                 android:id="@+id/input_layout_num_tanque"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_num_tanque"
+
+                <EditText
+                    android:id="@+id/input_num_tanque"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="text"
                     android:hint="@string/num_tanque"
+                    android:inputType="text"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -257,16 +271,18 @@
                 android:id="@+id/input_layout_presion_tanque"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_presion_tanque"
+
+                <EditText
+                    android:id="@+id/input_presion_tanque"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="numberDecimal"
-                    android:hint="@string/presion_tanque"
                     android:layout_weight="1"
+                    android:hint="@string/presion_tanque"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -274,15 +290,17 @@
                 android:id="@+id/input_layout_cap_tanque"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_cap_tanque"
+
+                <EditText
+                    android:id="@+id/input_cap_tanque"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="numberDecimal"
                     android:hint="@string/capacidad_tanque"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -290,45 +308,51 @@
                 android:id="@+id/input_layout_medidor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_medidor"
+
+                <EditText
+                    android:id="@+id/input_medidor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="numberDecimal"
                     android:hint="@string/porcentaje_tanque"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_masa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_masa"
+
+                <EditText
+                    android:id="@+id/input_masa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="numberDecimal"
                     android:hint="@string/masa"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_sello"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_sello"
+
+                <EditText
+                    android:id="@+id/input_sello"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="text"
                     android:hint="@string/sello"
+                    android:inputType="text"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -336,30 +360,34 @@
                 android:id="@+id/input_layout_valor_carga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_valor_carga"
+
+                <EditText
+                    android:id="@+id/input_valor_carga"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="numberDecimal"
                     android:hint="@string/valor_carga"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_nombre_responsable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <EditText android:id="@+id/input_nombre_responsable"
+
+                <EditText
+                    android:id="@+id/input_nombre_responsable"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25dp"
-                    android:paddingBottom="15dp"
-                    android:inputType="text"
                     android:hint="@string/nombre_responsable"
+                    android:inputType="text"
+                    android:paddingBottom="15dp"
+                    android:textColor="@color/colorTextLogin"
                     android:textColorHint="@color/colorTextLogin"
-                    android:textColor="@color/colorTextLogin"/>
+                    android:textSize="18sp" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -377,7 +405,7 @@
                     android:layout_weight="1"
                     android:text="@string/tipo_medidor_tractor"
                     android:textColor="@color/colorTextLogin"
-                    android:textSize="25dp" />
+                    android:textSize="18sp" />
 
                 <Spinner
                     android:id="@+id/spinner_medidor_tractor"
@@ -396,26 +424,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
                 android:background="@color/colorButtonLogin"
-                android:minWidth="170dp"
+                android:minWidth="120dp"
                 android:text="@string/registrar"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="25dp" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/limpiar_button"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:background="@color/colorButtonLogin"
-                android:minWidth="170dp"
+                android:minWidth="120dp"
                 android:text="@string/limpiar_campos"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="25dp" />
+                android:textSize="18sp" />
 
 
 

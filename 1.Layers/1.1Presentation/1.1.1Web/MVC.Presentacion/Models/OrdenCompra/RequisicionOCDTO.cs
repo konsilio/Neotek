@@ -9,6 +9,7 @@ namespace MVC.Presentacion.Models.OrdenCompra
     [Serializable]
     public class RequisicionOCDTO : RequisicionDTO
     {
-        public List<ProductoOCDTO> Productos { get; set; }
+        public bool EsGasTransporte { get; set; }
+        public List<ProductoOCDTO> ProductosOC { get; set; }
     }
 }

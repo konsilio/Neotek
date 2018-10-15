@@ -18,12 +18,19 @@
     <td>
         @Html.LabelFor(m => m.CantidadAComprar, Model.CantidadAComprar.ToString())
         @Html.HiddenFor(m => m.CantidadAComprar)
-    </td>
+    </td>    
     <td>@Model.UnidadMedida</td>
     <td>@Model.Aplicacion</td>
     <td>@Model.CentroCosto</td>
-    <td width="350px">@Html.DropDownListFor(model => model.IdProveedor, ViewBag.Proveedores as IEnumerable<SelectListItem>, new { @class = "form-control selectpicker widthInherit" })</td>
-    <td width="350px">@Html.DropDownListFor(model => model.IdCuentaContable, ViewBag.CuentasContables as IEnumerable<SelectListItem>, new { @class = "form-control selectpicker widthInherit" })</td>
+    <td width="350px">
+    <select class="selectpicker" data-live-search="true"  name="IdProveedor">
+        @foreach (var item in ViewBag.Proveedores)
+        {
+            <option value="@item.Value">@item.Text</option>
+        }
+    </select>
+    @*@Html.DropDownListFor(model => model.IdProveedor, ViewBag.Proveedores as IEnumerable<SelectListItem>, new { @class = " form-control selectpicker" })*@</td>
+    <td width="350px">@Html.DropDownListFor(model => model.IdCuentaContable, ViewBag.CuentasContables as IEnumerable<SelectListItem>, new { @class = "selectpicker"  })</td>
     @if (Model.EsTransporteGas == true || Model.EsGas == true)
     {
 
@@ -32,8 +39,8 @@
     {
         <td>@Html.TextBoxFor(m => m.Precio, new { @class = "form-control  calculaPrecio ", @type = "number", @onkeyup = "javascript: CalcularImporte();", @style = "width:100px;" })</td>
         <td>@Html.TextBoxFor(m => m.Descuento, new { @type = "number", @class = "form-control calculaPrecio", @onkeyup = "javascript: CalcularImporte();", @style = "width:100px;" }) </td>
-        <td>@Html.DropDownListFor(model => model.IVA, ViewBag.IVAs as IEnumerable<SelectListItem>, new { @class = "selectpicker  calculaPrecio", @onchange = "javascript: CalcularImporte();" }) </td>
-        <td>@Html.DropDownListFor(model => model.IEPS, ViewBag.IEPs as IEnumerable<SelectListItem>, new { @class = "form-control selectpicker calculaPrecio", @onchange = "javascript: CalcularImporte();" })</td>
+        <td>@Html.DropDownListFor(model => model.IVA, ViewBag.IVAs as IEnumerable<SelectListItem>, new { @class = "selectpicker calculaPrecio", @onchange = "javascript: CalcularImporte();" }) </td>
+        <td>@Html.DropDownListFor(model => model.IEPS, ViewBag.IEPs as IEnumerable<SelectListItem>, new { @class = "selectpicker calculaPrecio", @onchange = "javascript: CalcularImporte();" })</td>
         <td class="align-right">$@Html.LabelFor(m => m.Importe, Model.Importe.ToString())@Html.HiddenFor(m => m.Importe)</td>
     }
 </tr>

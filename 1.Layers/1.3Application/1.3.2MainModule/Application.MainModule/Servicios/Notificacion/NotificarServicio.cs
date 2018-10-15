@@ -196,9 +196,8 @@ namespace Application.MainModule.Servicios.Notificacion
         private static FBNotificacionDTO Enviar(FBNotificacionDTO dto, KeyValuePair<string, string> Autorizacion)
         {
             var agente = new AgenteServicio();
-            agente.PostMethod(dto, "https://fcm.googleapis.com/", "fcm/send", Autorizacion);
+            agente.PostMethod(dto, ConfigurationManager.AppSettings["urlFireBase_Base"], ConfigurationManager.AppSettings["urlFireBase_EnviarNotificacionSerivicio"], Autorizacion);
             return dto;
-
         }
     }
 }

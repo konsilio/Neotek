@@ -42,7 +42,8 @@ namespace Application.MainModule.Flujos
         public RequisicionOCDTO BuscarRequisicion(int idRequisicion)
         {
             var Req = OrdenCompraServicio.BuscarRequisicion(idRequisicion);
-            Req.Productos = OrdenCompraServicio.DescartarProductosParaOC(Req.Productos);
+            Req.ProductosOC = OrdenCompraServicio.DescartarProductosParaOC(Req.ProductosOC);
+            Req = RequisicionServicio.DeterminarTipoRequisicion(Req);
             //Retornamos el objeto con los productos filtrados
             return Req;
         }
@@ -62,7 +63,7 @@ namespace Application.MainModule.Flujos
             {
                 ocDTO.NumOrdenCompra = FolioServicio.GeneraNumerOrdenCompra(ocDTO);
                 OrdenCompraRespuestaDTO orDTO = OrdenCompraServicio.GuardarOrdenCompra(ocDTO);
-                respuesta.Mensaje += orDTO.NumOrdenCompra + "|";
+                respuesta.Mensaje += string.Concat(orDTO.NumOrdenCompra, " ,");
                 if (orDTO.Exito)
                 {
                     respuesta.Id = orDTO.IdOrdenCompra;

@@ -42,6 +42,7 @@ namespace Application.MainModule.Servicios
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
             //string a = "CadenaBase64|IdUA|Magnatel|Inicial|.jpeg";
+            //"Cadenabase|Tractor|IdUa|Magnatel|Inicial|60-5|.jpeg"
 
             List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
             string nombre = string.Concat(campos.ElementAt(1), "_", foto.OrdenImagen, "_", campos.ElementAt(2), "_", campos.ElementAt(3));

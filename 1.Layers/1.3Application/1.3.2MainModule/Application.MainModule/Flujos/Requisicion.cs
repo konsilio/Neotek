@@ -30,7 +30,7 @@ namespace Application.MainModule.Flujos
                 if (respuesta.Exito)
                 {
                     resp.Id = respuesta.Id;
-                    resp.Mensaje = string.Concat(resp.Mensaje, " ,", respuesta.Mensaje);
+                    resp.Mensaje = string.IsNullOrEmpty(resp.Mensaje) ? respuesta.Mensaje : string.Concat(resp.Mensaje, " ,", respuesta.Mensaje);
                     resp.Exito = true;
                     resp.EsInsercion = true;          
                         NotificarServicio.RequisicionNueva(RequisicionServicio.Buscar(resp.Id));

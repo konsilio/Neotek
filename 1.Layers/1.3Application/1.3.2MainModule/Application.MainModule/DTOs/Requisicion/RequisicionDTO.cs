@@ -53,5 +53,6 @@ namespace Application.MainModule.DTOs.Requisicion
         public string Unidad { get; set; }
         public decimal Cantidad { get; set; }
         public string Aplicacion { get; set; }
+     
     }
 }
