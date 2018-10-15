@@ -22,6 +22,7 @@ import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,6 +46,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     public TextView textViewMensaje;
 
     PrecargaPapeletaDTO papeletaDTO;
+    public String NombreFoto;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +65,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
         textViewMensaje = (TextView) findViewById(R.id.textIndicaciones);
 
         textViewTitulo.setText(R.string.title_foto_papeleta);
-
+        NombreFoto = "FotoPapeleta|"+new Date();
         fotoTomada = false;
         if(fotoTomada==true){
             layoutTitle.setVisibility(View.GONE);
@@ -136,6 +138,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New Picture");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+        values.put(MediaStore.Images.Media.CONTENT_TYPE,"image/jpeg");
         imageUri = getContentResolver().insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

@@ -1,6 +1,6 @@
 ﻿@model MVC.Presentacion.Models.Requisicion.RequisicionProductoAutorizacionDTO
 @Html.HiddenFor(m => m.IdProducto)
-@Html.HiddenFor(m => m.CantidadAComprar)
+
 @Html.HiddenFor(m => m.Cantidad)
 
 <tr>
@@ -13,7 +13,7 @@
     <td>@Model.CantidadAlmacenActual</td>
     
     <td class="text-center">
-    @if (Model.CantidadAlmacenActual == Decimal.Parse("0"))
+    @if (Model.CantidadAlmacenActual == Decimal.Parse("0") || Model.EsGas || Model.EsTransporteGas)
     {
         @Html.CheckBoxFor(x => x.AutorizaEntrega, new { @disabled = "disabled", @style = "width: 20px; height: 20px;" })
     }

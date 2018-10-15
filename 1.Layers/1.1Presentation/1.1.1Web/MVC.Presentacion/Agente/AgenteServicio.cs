@@ -35,6 +35,9 @@ namespace MVC.Presentacion.Agente
         public RequisicionDTO _requisicion;
         public RequisicionOCDTO _requisicionOrdenCompra;
         public EntradaMercanciaModel _entradaMercancia;
+        public OperadorChoferModel Operador;
+        public OrdenCompraComplementoGasDTO _complementoGas;
+
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
         public List<EmpresaDTO> _listaEmpresas;
@@ -67,8 +70,7 @@ namespace MVC.Presentacion.Agente
         public List<TipoProveedorDTO> _listaTipoProveedor;
         public List<BancoDTO> _listaBanco;
         public List<FormaPagoDTO> _listaFormaPago;
-        public List<PuntoVentaModel> _listaPuntosV;
-        public OperadorChoferModel Operador;
+        public List<PuntoVentaModel> _listaPuntosV;      
         public List<OperadorChoferModel> _listaOperadoresUsuarios;
         public List<OrdenCompraPagoDTO> _listaOrdenCompraPago;
         public List<PrecioVentaModel> _listaPreciosV;
@@ -2253,6 +2255,7 @@ namespace MVC.Presentacion.Agente
                         respuesta = await response.Content.ReadAsAsync<RespuestaAutenticacionDto>();
                     else
                     {
+                        respuesta.Mensaje = "Usuario y/o contraseña incorrectos";
                         client.CancelPendingRequests();
                         client.Dispose();
                     }
@@ -2678,7 +2681,32 @@ namespace MVC.Presentacion.Agente
         public void EnviarSolicitudPago(OrdenCompraPagoDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
-            LLamada(dto, token, MetodoRestConst.Post).Wait();
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void EnviarSolicitudPagoExpedidor(OrdenCompraComplementoGasDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void EnviarSolicitudPagoPorteador(OrdenCompraComplementoGasDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void GuardarDatosPorteador(OrdenCompraComplementoGasDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void GuardarDatosExpedidor(OrdenCompraComplementoGasDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
+        }
+        public void ConfirmarDatosPapeleta(OrdenCompraComplementoGasDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGenerarPago"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
         public void EnviarDatosFactura(OrdenCompraDTO dto, string token)
         {
@@ -2716,6 +2744,39 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
                 _listaOrdenCompraPago = list;
+            }
+        }
+        public void BuscarComplementoGas(int idoc, string token)
+        {
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetOrdenCompraComplementoGas"];
+            BuscarOrdenCompraComplementoGas(idoc, token).Wait();
+        }
+        private async Task BuscarOrdenCompraComplementoGas(int idOC, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                OrdenCompraComplementoGasDTO emp = new OrdenCompraComplementoGasDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idOC.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<OrdenCompraComplementoGasDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    emp = new OrdenCompraComplementoGasDTO();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _complementoGas = emp;
             }
         }
         #endregion

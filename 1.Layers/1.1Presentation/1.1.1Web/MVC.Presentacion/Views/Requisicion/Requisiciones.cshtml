@@ -1,18 +1,30 @@
-﻿MVC.Presentacion.Models.Requisicion
+﻿@using MVC.Presentacion.Models.Requisicion
 @using PagedList.Mvc;
 @using PagedList;
-@model MVC.Presentacion.Models.Requisicion.RequisicionesModel
+@model RequisicionesModel
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
 
-<!-- Page Loader -->
-<div class="page-loader-wrapper">
-    <div class="loader">
-        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
-        <p>Espere por favor</p>
-    </div>
-</div>
-<body style="padding-top:10px">
+<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
+
+<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>
+<script src="~/Scripts/js/RequisicionesJS.js"></script>
+
+
+<script type="text/javascript">
+    var numReq = '@ViewBag.NumeroRequisicion';
+    if (numReq != '') {
+        $(window).on("load", showNotification('alert-success', numReq, 'top', 'center', '', ''));
+    }
+</script>
     @using (Html.BeginForm("Requisicion", "Requisicion", FormMethod.Post))
     {
+        <div class="page-loader-wrapper">
+            <div class="loader">
+                <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+                <p>Espere por favor</p>
+            </div>
+        </div>
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -27,6 +39,11 @@
                             </ul>
                         </div>
                     </div>
+                    @*@if (ViewBag.Requisiciones != null)
+                    {*@
+                        <div onload="javascript: showNotification('alert-success', 'Proceso Exitoso', 'top', 'center', '', '');"></div>
+                     
+                    @*}*@                   
                     <div class="row clearfix">
                         <div class="col-lg-12">
                             <div class="card">
@@ -42,7 +59,6 @@
                                                     <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
                                                 }
                                             </select>
-                                     
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
@@ -53,14 +69,6 @@
                                             <input id="BtnNuevaReq" type="submit" onclick="location.href='@Url.Action("Requisicion", "Requisicion")'" value="Requisicion" class="btn btn-primary btn-round btn-block" />
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="card">
-                                <div class="header">
-                                    <h2><strong></strong><small></small></h2>
-                                </div>
-                                <div class="body">
                                     <div class="row clearfix">
                                         <div class="col-lg-3">
                                             <label>Estatus</label>
@@ -122,20 +130,20 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="row clearfix">
+                                    <div class="row clearfix blockquote blockquote-info btn-round">
                                         <div class="table-responsive">
-                                            <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="RequisicionProductos">
+                                            <table class="table table-hover">
                                                 <thead>
                                                     <tr>
-                                                        <td>Gasera</td>
-                                                        <td>No. Requisicion</td>
-                                                        <td>Fecha Requerida</td>
-                                                        <td>Solicitante</td>
-                                                        <td>Estatus</td>
-                                                        <td>Accion</td>
+                                                        <td><strong>Gasera</strong></td>
+                                                        <td><strong>No. Requisicion</strong></td>
+                                                        <td><strong>Fecha Requerida</strong></td>
+                                                        <td><strong>Solicitante</strong></td>
+                                                        <td><strong>Estatus</strong></td>
+                                                        <td><strong>Accion</strong></td>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="contenido">
                                                     @foreach (var req in ViewBag.Requisiciones)
                                                     {
                                                         <tr>
@@ -192,14 +200,7 @@
         </section>
 
     }
-</body>
-<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
-<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>
+
 
 
 

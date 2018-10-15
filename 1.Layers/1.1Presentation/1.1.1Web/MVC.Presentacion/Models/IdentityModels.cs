@@ -26,7 +26,7 @@ namespace MVC.Presentacion.Models
         }
 
         public static ApplicationDbContext Create()
-        {
+       {
             return new ApplicationDbContext();
         }
     }

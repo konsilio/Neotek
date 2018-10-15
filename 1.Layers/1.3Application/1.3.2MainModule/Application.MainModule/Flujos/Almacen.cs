@@ -38,7 +38,7 @@ namespace Application.MainModule.Flujos
             var respEntrada = ProductoAlmacenServicio.EntradaAlmcacenProductos(_almacen, _almacenCrear, entradas);
             if (respEntrada.Exito)
             {
-                return new Compras().FinalizarOrdenCompra(new DTOs.OrdenCompraDTO { IdOrdenCompra = dto.IdOrdenCompra });
+                return new Compras().FinalizarEntradaProductoOrdenCompra(new DTOs.OrdenCompraDTO { IdOrdenCompra = dto.IdOrdenCompra });
             }
             return respEntrada;
         }
@@ -47,10 +47,6 @@ namespace Application.MainModule.Flujos
             var oc = OrdenCompraServicio.Buscar(Id);
             var req = RequisicionServicio.Buscar(oc.IdRequisicion);
             return ProductoAlmacenServicio.AlmacenEntrada(oc, req);
-        }
-        //public RespuestaDto GenerarSalidaProducto(AlmacenSalidaProductoDTO dto)
-        //{
-            
-        //}
+        }      
     }
 }

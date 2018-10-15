@@ -5,65 +5,7 @@
     string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
 }
 <script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $(".filterable tr:has(td)").each(function () {
-            var t = $(this).text().toLowerCase();
-            $("<td class='indexColumn'></td>")
-             .hide().text(t).appendTo(this);
-        });
-        $("#txtNumeroFiltro").keyup(function () {
-            var s = $(this).val().toLowerCase().split(" ");
-            $(".filterable tr:hidden").show();
-            $.each(s, function () {
-                $(".filterable tr:visible .indexColumn:not(:contains('"
-                   + this + "'))").parent().hide();
-            });//each
-        });    
-        $("#empresas").on('change', function () {
-            var url = "/Producto/GetBuscarCuentasCtbls";
-            var id = $('#empresas').find('option:selected').val();
 
-            $.getJSON(url, { idEmpresa: id }, function (data) {
-                var $select = $('#cuentacontable');
-                if (data == "[]") {
-                    $select.find('option').remove().end().append('<option selected="selected" value="0">Sin Productos</option>').val('0')
-                    $select.selectpicker("refresh")
-                }
-                else {
-                    $select.find('option').remove().end().append('<option selected="selected" value="0">Seleccione un producto</option>').val('0')
-                    $.each(JSON.parse(data), function (key, val) {                       
-                        $select.append($('<option />', { value: (val['IdEmpresa']), text: val['Descripcion'] }));
-                    });
-                    $select.selectpicker("refresh");
-                }
-            });
-        });
-    });//document.ready
-    $(function () {
-        $('select').on('change', function () {          
-            if ($('#tipoproducto').find('option:selected').val() == 2) {
-                $('#divProd').show();
-                $('#divServ').hide();
-                $('#cbServicioTransporte').prop('checked', false);
-            }
-            if ($('#tipoproducto').find('option:selected').val() == 3) {
-                $('#divProd').hide();
-                $('#divServ').show();
-                $('#cbEsGas').prop('checked', false);
-                $('#cbActivoVenta').prop('checked', false);
-            }
-            if ($('#tipoproducto').find('option:selected').val() == 0) {
-                $('#divProd').hide();
-                $('#divServ').hide();
-                $('#cbEsGas').prop('checked', false);
-                $('#cbActivoVenta').prop('checked', false);
-                $('#cbServicioTransporte').prop('checked', false);
-            }
-            cbServicioTransporte  
-        });
-    });     
-</script>
 <section class="content home">
     <div class="container-fluid">
         @using (Html.BeginForm("CrearProducto", "Producto", FormMethod.Post))
@@ -111,7 +53,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <b>Tipo: ¿Es producto o Servicio?</b>
-                                            <select name="IdProductoServicioTipo" id="tipoproducto" class="form-control selectpicker show-tick" data-live-search="true">
+                                            <select name="IdProductoServicioTipo" id="tipoproducto" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                 <option value="0">Seleccione uno</option>
                                                 <option value="2">Producto</option>
                                                 <option value="3">Servicio</option>
@@ -122,7 +64,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <b>Cuenta contable:</b>
-                                            <select id="cuentacontable" name="IdCuentaContable" class="form-control selectpicker show-tick" data-live-search="true">
+                                            <select id="cuentacontable" name="IdCuentaContable" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                 @foreach (var cc in ViewBag.CuentasContables)
                                                 {
                                                     if (cc.IdCuentaContable == Model.IdCuentaContable)
@@ -141,7 +83,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <b>Categorías:</b>
-                                            <select name="IdCategoria" class="form-control show-tick" data-live-search="true">
+                                            <select name="IdCategoria" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                 @foreach (var cc in ViewBag.Categorias)
                                                 {
                                                     if (cc.IdCategoria == Model.IdCategoria)
@@ -162,7 +104,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <b>Linea de Productos:</b>
-                                            <select name="IdProductoLinea" class="form-control show-tick" data-live-search="true">
+                                            <select name="IdProductoLinea" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                 @foreach (var cc in ViewBag.LineasProducto)
                                                 {
                                                     if (cc.IdProductoLinea == Model.IdProductoLinea)
@@ -181,7 +123,7 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <b>Unidad de medida:</b>
-                                            <select name="IdUnidadMedida" class="form-control show-tick" data-live-search="true">
+                                            <select name="IdUnidadMedida" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                 @foreach (var cc in ViewBag.UnidadesMedida)
                                                 {
                                                     if (cc.IdUnidadMedida == Model.IdUnidadMedida)
@@ -200,7 +142,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <b>Unidad de medida alternativa: (Opcional)</b>
-                                            <select name="IdUnidadMedida2" class="form-control show-tick" data-live-search="true">
+                                            <select name="IdUnidadMedida2" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                                 <option>Seleccione unidad </option>
                                                 @foreach (var cc in ViewBag.UnidadesMedida2)
                                                 {
@@ -277,13 +219,13 @@
                                             @if (ViewBag.EsEdicion == null)
                                             {
                                                 <button btn id="BtnCrear" formaction="CrearProducto" class="btn btn-primary btn-round">
-                                                    <i class="zmdi zmdi-plus"> Agregar</i>
+                                                    <i class="zmdi zmdi-plus"></i> Agregar
                                                 </button>
                                             }
                                             else
                                             {
                                                 <button btn id="btnUpDate" formaction="EditarProducto" class="btn btn-primary btn-round">
-                                                    <i class="zmdi zmdi-swap"> Terminar Edicion</i>
+                                                    <i class="zmdi zmdi-swap"></i> Terminar Edicion
                                                 </button>
                                             }
                                         </div>
@@ -312,6 +254,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="header">
+                                <strong>Lista </strong> de Productos
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
@@ -336,9 +279,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row clearfix">
+                                <div class="row clearfix blockquote blockquote-info btn-round">
                                     <div class="table-responsive">
-                                        <table class="table table table-bordered table-striped table-hover js-basic-example dataTable filterable" name="RequisicionProductos">
+                                        <table class="table table-striped table-hover filterable" name="RequisicionProductos">
                                             <thead>
                                                 <tr>
                                                     <td><b>Tipo</b></td>
@@ -412,3 +355,4 @@
         }
     </div>
 </section>
+<script src="~/Scripts/js/CProductoJS.js" ></script>

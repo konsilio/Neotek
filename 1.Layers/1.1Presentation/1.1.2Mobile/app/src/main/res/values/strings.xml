@@ -231,6 +231,8 @@
     <string name="precio_lt">Precio (lt):</string>
     <string name="desc_lt">Desc (lt)</string>
     <string name="litros_despachados">Litros despachados</string>
+    <string name="cliente_no_encontrado">Cliente no encontrado</string>
+    <string name="registrar_al_cliente">¿Registrar al cliente?</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
     <string-array name="header_tabla_anticipo">
         <item># Tiket</item>

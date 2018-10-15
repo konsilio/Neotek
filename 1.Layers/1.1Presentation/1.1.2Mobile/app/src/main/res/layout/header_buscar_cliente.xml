@@ -12,7 +12,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
-        android:text="Cliente no encontrado"
+        android:text="@string/cliente_no_encontrado"
         android:textSize="18sp" />
 
     <TextView
@@ -23,8 +23,8 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
-        android:text="¿Registrar al cliente?"
-        android:textSize="24sp" />
+        android:text="@string/registrar_al_cliente"
+        android:textSize="18sp" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                 android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/label_no"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:ignore="UnusedAttribute" />
 
             <Button
@@ -59,7 +59,7 @@
                 android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/label_si"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:ignore="UnusedAttribute" />
         </TableRow>
 

@@ -4,8 +4,8 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+    <script src="~/Scripts/js/CuentasContablesJS.js"></script>
 </head>
-
 <body style="padding-top:10px;">   
     @using (Html.BeginForm("Crear", "CuentaContable", FormMethod.Post))
     {
@@ -15,15 +15,14 @@
                 <div class="block-header">
                     <div class="row clearfix">
                         <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Cuentas Contables</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item active">
-                                    <Label>Catalogos / Cuentas contables </Label>
-                                </li>
+                                <li class="breadcrumb-item">Catalogos</li>
+                                <li class="breadcrumb-item">Cuentas contables</li>
                             </ul>
                         </div>
                     </div>
-
                     <div class="card">
                         <div class="header">
                             <b><strong>Insertar Cuenta contable</strong></b>
@@ -78,11 +77,14 @@
                         </div>
                     }
                     <div class="card">
+                        <div class="header">
+                            Lista de <strong>Cuentas Contables</strong>
+                        </div>
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-md-3">
-                                    <b>Gasera</b>
-                                    <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                    <strong>Gasera</strong>
+                                    <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick selectpicker" data-live-search="true">
                                         @foreach (var lst in ViewBag.Empresas)
                                         {
                                             <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
@@ -91,20 +93,20 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <b>Numero</b>
-                                        <input type="text" ID="txtNumeroCtaCtble" class="form-control" OnTextChanged="txtNumeroCtaCtble_TextChanged" />
+                                        <strong>Numero</strong>
+                                        <input type="text" ID="txtNumeroCtaCtble" class="form-control" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">
+                            <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
-                                    <table class="table table-hover">
+                                    <table class="table table-striped  filterable">
                                         <thead>
                                             <tr>
-                                                <td><b>Gasera</b></td>
-                                                <td><b>Número</b></td>
-                                                <td><b>Descripción</b></td>
-                                                <td><b>Acción</b></td>
+                                                <td><strong>Gasera</strong></td>
+                                                <td><strong>Número</strong></td>
+                                                <td><strong>Descripción</strong></td>
+                                                <td><strong>Acción</strong></td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -115,19 +117,9 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>      
     }
 </body>
 </html>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnUpDate").click(function () {
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "CuentaContable", Action = "Modificar" }) %>');
-            form.attr('method', 'post');
-        });
-    });
-</script>

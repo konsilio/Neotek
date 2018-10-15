@@ -42,10 +42,11 @@ namespace Application.MainModule.Flujos
         public RequisicionOCDTO BuscarRequisicion(int idRequisicion)
         {
             var Req = OrdenCompraServicio.BuscarRequisicion(idRequisicion);
-            Req.Productos = OrdenCompraServicio.DescartarProductosParaOC(Req.Productos);
+            Req.ProductosOC = OrdenCompraServicio.DescartarProductosParaOC(Req.ProductosOC);
+            Req = RequisicionServicio.DeterminarTipoRequisicion(Req);
             //Retornamos el objeto con los productos filtrados
             return Req;
-        }      
+        }
         /// <summary>
         /// Generamos la(s) ordene(s) de compra segun los provedores de la lista de productos.
         /// </summary>
@@ -59,10 +60,10 @@ namespace Application.MainModule.Flujos
             locDTO = OrdenCompraServicio.AsignarProductos(oc.Productos, locDTO);
             locDTO = CalcularOrdenCompraServicio.CalcularTotales(locDTO);
             foreach (var ocDTO in locDTO)
-            {                
+            {
                 ocDTO.NumOrdenCompra = FolioServicio.GeneraNumerOrdenCompra(ocDTO);
                 OrdenCompraRespuestaDTO orDTO = OrdenCompraServicio.GuardarOrdenCompra(ocDTO);
-                respuesta.Mensaje+= orDTO.NumOrdenCompra +"|";
+                respuesta.Mensaje += string.Concat(orDTO.NumOrdenCompra, " ,");
                 if (orDTO.Exito)
                 {
                     respuesta.Id = orDTO.IdOrdenCompra;
@@ -75,7 +76,7 @@ namespace Application.MainModule.Flujos
                     respuesta.Exito = orDTO.Exito;
                     respuesta.Mensaje = orDTO.Mensaje;
                 }
-            }            
+            }
             return respuesta;
         }
         /// <summary>
@@ -87,10 +88,12 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeAutorizarOrdenCompra();
             if (!resp.Exito) return resp;
-           
+
             var oc = OrdenCompraServicio.Buscar(_oc.IdOrdenCompra);
             if (oc == null) return OrdenCompraServicio.NoExiste();
-          
+
+            if (!oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion)) return OrdenCompraServicio.EstatusIncorrecto();
+
             var entity = OrdenComprasAdapter.FromEntity(oc);
             entity.IdUsuarioAutorizador = TokenServicio.ObtenerIdUsuario();
             entity.FechaAutorizacion = Convert.ToDateTime(DateTime.Today.ToShortDateString());
@@ -119,6 +122,15 @@ namespace Application.MainModule.Flujos
             entity.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
             return OrdenCompraServicio.Actualizar(entity);
         }
+        public RespuestaDto FinalizarEntradaProductoOrdenCompra(OrdenCompraDTO dto)
+        {
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            if (oc == null) return OrdenCompraServicio.NoExiste();
+
+            var entity = OrdenComprasAdapter.FromEntity(oc);
+            entity.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+            return OrdenCompraServicio.Actualizar(entity);
+        }
         public RespuestaDto ActualizarOrdenCompraFactura(OrdenCompraDTO dto)
         {
             var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
@@ -141,23 +153,33 @@ namespace Application.MainModule.Flujos
             return loc;
         }
         public OrdenCompraDTO BuscarOrdenCompra(int idOrdeCompra)
-        { 
+        {
             //Valida permiso para consultar orden de compra
             var resp = PermisosServicio.PuedeConsultarOrdenCompra();
             if (!resp.Exito) return new OrdenCompraCrearDTO();
 
             //Se busca el id en la base y se genera DTO para enviar
-            var oc = OrdenComprasAdapter.ToDTO(OrdenCompraServicio.Buscar(idOrdeCompra));           
-            return OrdenCompraServicio.AgregarDatosRequisicion(oc) ;
+            var oc = OrdenComprasAdapter.ToDTO(OrdenCompraServicio.Buscar(idOrdeCompra));
+            return OrdenCompraServicio.AgregarDatosRequisicion(oc);
         }
         public ComplementoGasDTO BuscarComplementoGas(int idOrdenCompra)
         {
-            var oc = OrdenCompraServicio.Buscar(idOrdenCompra);
-            var cg = OrdenCompraServicio.BuscarComplementoGas(oc);
-            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(oc.IdOrdenCompra);
-            var imgs = AlmacenGasServicio.ObtenerImagenes(alamacen);
+            var _OrdeCompra = OrdenCompraServicio.Buscar(idOrdenCompra);
+            var _ComplementoGas = OrdenCompraServicio.BuscarComplementoGas(_OrdeCompra);
+            var requisicion = new RequisicionDataAccess().BuscarPorIdRequisicion(_OrdeCompra.IdRequisicion);
+            foreach (var orden in requisicion.OrdenesCompra)
+            {
+                if (orden.EsGas)
+                    _ComplementoGas.OrdenCompraExpedidor = OrdenComprasAdapter.ToDTO(orden);
+                if (orden.EsTransporteGas)
+                    _ComplementoGas.OrdenCompraPorteador = OrdenComprasAdapter.ToDTO(orden);
+                _ComplementoGas.Productos.AddRange(ProductosOCAdapter.ToDTO(orden.Productos.ToList()));
+            }
+            _ComplementoGas = OrdenCompraServicio.CargarDatosRequisicion(_ComplementoGas, requisicion);
+            var alamacen = AlmacenGasServicio.ObtenerDescargaPorOCompraExpedidor(_OrdeCompra.IdOrdenCompra);
+            _ComplementoGas.Fotos = ImagenServicio.BuscarImagenes(alamacen);
 
-            return cg;
+            return _ComplementoGas;
         }
         public List<OrdenCompraEstatusDTO> ListaEstatus()
         {
@@ -169,23 +191,68 @@ namespace Application.MainModule.Flujos
 
             var entity = OrdenCompraPagoAdapter.FromEntity(Pago);
             entity.PhysicalPathCapturaPantalla = entity.PhysicalPathCapturaPantalla;
-            entity = ImagenServicio.ObtenerImagen(entity);          
+            entity = ImagenServicio.ObtenerImagen(entity);
 
-            return OrdenCompraPagoServicio.Actualiza(entity);            
+            return OrdenCompraPagoServicio.Actualiza(entity);
         }
         public RespuestaDto CrearOrdenCompraPago(OrdenCompraPagoDTO dto)
         {
             var Pago = OrdenCompraPagoAdapter.FromDTO(dto);
             var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
 
-            Pago = CalcularPagoServicio.CalcularPago(Pago, oc);           
-            
+            Pago = CalcularPagoServicio.CalcularPago(Pago, oc);
             return OrdenCompraPagoServicio.Guardar(Pago);
         }
         public List<OrdenCompraPagoDTO> BuscarPagos(int idOc)
         {
             var pagos = OrdenCompraPagoServicio.BuscarPagos(idOc);
             return OrdenCompraPagoAdapter.ToDTO(pagos);
+        }
+        public RespuestaDto GuardarDatosExipedidor(ComplementoGasDTO dto)
+        {
+            var ExistePago = BuscarPagos(dto.OrdenCompraExpedidor.IdOrdenCompra);
+            if (!ExistePago.Count.Equals(0)) return OrdenCompraServicio.PagoExistenteExpedidor();
+
+            var ocExperidro = OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra);
+            ocExperidro = OrdenCompraServicio.CompletarDatosExpedidor(dto, ocExperidro);
+
+            return OrdenCompraServicio.Actualizar(ocExperidro);
+        }
+        public RespuestaDto SolicitarPagoExipedidor(ComplementoGasDTO dto)
+        {
+            var ExistePago = BuscarPagos(dto.OrdenCompraExpedidor.IdOrdenCompra);
+            if (!ExistePago.Count.Equals(0)) return OrdenCompraServicio.PagoExistenteExpedidor();
+
+            var ocExperidro = OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra);
+            ocExperidro.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.SolicitudPago;
+
+            var respActualiza = OrdenCompraServicio.Actualizar(OrdenComprasAdapter.FromEntity(ocExperidro));
+            if (respActualiza.Exito) NotificarServicio.ConfirmacionPago(ocExperidro); 
+
+            return respActualiza;
+        }
+        public RespuestaDto GuardarDatosPorteador(ComplementoGasDTO dto)
+        {
+            var ExistePago = BuscarPagos(dto.OrdenCompraPorteador.IdOrdenCompra);
+            if (!ExistePago.Count.Equals(0)) return OrdenCompraServicio.PagoExistentePorteador();
+
+            var ocPorteador = OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra);
+            ocPorteador = OrdenCompraServicio.CompletarDatosPorteador(dto, ocPorteador);
+
+            return OrdenCompraServicio.Actualizar(OrdenComprasAdapter.FromEntity(ocPorteador));
+        }
+        public RespuestaDto SolicitarPagoPorteador(ComplementoGasDTO dto)
+        {
+            var ExistePago = BuscarPagos(dto.OrdenCompraPorteador.IdOrdenCompra);
+            if (!ExistePago.Count.Equals(0)) return OrdenCompraServicio.PagoExistentePorteador();
+
+            var ocPorteador = OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra);
+            ocPorteador.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.SolicitudPago;
+
+            var respActualiza = OrdenCompraServicio.Actualizar(OrdenComprasAdapter.FromEntity(ocPorteador));
+            if (respActualiza.Exito) NotificarServicio.ConfirmacionPago(ocPorteador);
+
+            return respActualiza;
         }
     }
 }

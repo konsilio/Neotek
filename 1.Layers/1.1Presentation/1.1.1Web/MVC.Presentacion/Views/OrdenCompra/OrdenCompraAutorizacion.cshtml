@@ -1,9 +1,15 @@
 ﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraDTO
-
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
 <body>
     @using (Html.BeginForm("Autorizar", "OrdenCompra", FormMethod.Post))
     {
         @Html.HiddenFor(m => m.IdOrdenCompra)
+        @Html.HiddenFor(m => m.FechaAutorizacion)
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -85,31 +91,31 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <td><b>Tipo</b></td>
-                                                <td><b>Producto</b></td>
-                                                <td><b>Requeridos</b></td>
-                                                <td><b>Unidad</b></td>
-                                                <td><b>Detalle</b></td>
-                                                <td><b>Centro de costo</b></td>
-                                                <td><b>Cuenta Contable</b></td>
-                                                <td><b>Cantidad</b></td>
-                                                <td><b>Precio</b></td>
-                                                <td><b>%Desc</b></td>
-                                                <td><b>%IVA</b></td>
-                                                <td><b>Importe</b></td>
+                                                <td><strong>Tipo</strong></td>
+                                                <td><strong>Producto</strong></td>
+                                                <td><strong>Requeridos</strong></td>
+                                                <td><strong>Unidad</strong></td>                                            
+                                                <td><strong>Centro de costo</strong></td>
+                                                <td><strong>Cuenta Contable</strong></td>
+                                                <td><strong>Cantidad</strong></td>
+                                                <td><strong>Precio</strong></td>
+                                                <td><strong>%Desc</strong></td>
+                                                <td><strong>%IVA</strong></td>
+                                                <td><strong>%Ieps</strong></td>
+                                                <td><strong>Importe</strong></td>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var m in Model.Productos)
                                             {
                                                 <tr>
-                                                    <td>@m.TipoProducto</td>
+                                                    <td>@m.ProductoServicioTipo</td>
                                                     <td>@m.Producto</td>
                                                     <td>@m.CantidadAComprar</td>
-                                                    <td>@m.UnidadMedida</td>
-                                                    <td>@m.Aplicacion</td>
+                                                    <td>@m.UnidadMedida</td>                                                    
                                                     <td>@m.CentroCosto</td>
                                                     <td>@m.CuentaContable</td>
+                                                    <td>@m.Cantidad</td>
                                                     <td>@m.Precio</td>
                                                     <td>@m.Descuento</td>
                                                     <td>@m.IVA</td>

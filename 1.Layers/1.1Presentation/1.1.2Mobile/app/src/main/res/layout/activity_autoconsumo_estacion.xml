@@ -20,11 +20,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="5dp"
                 android:paddingTop="15dp"
+                android:paddingBottom="5dp"
                 android:text="@string/carburaci_n_de_gas"
                 android:textAlignment="center"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/TVAutoconsumoEstacionActivityEstacionSalida"
@@ -66,7 +66,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="20dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 
@@ -79,7 +79,7 @@
                 android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="30sp"
+                android:textSize="18sp"
                 tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>

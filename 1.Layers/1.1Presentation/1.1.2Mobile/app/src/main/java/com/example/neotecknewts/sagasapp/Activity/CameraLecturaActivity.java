@@ -66,6 +66,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
     public boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
 
     public Uri imageUri;
+    String NombreImagen;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -122,58 +123,106 @@ public class CameraLecturaActivity extends AppCompatActivity {
         if(EsLecturaInicial){
             TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
                     " - "+lecturaDTO.getNombreEstacionCarburacion());
+            NombreImagen = String.valueOf(lecturaDTO.getIdEstacionCarburacion())+"|"+
+                    String.valueOf(lecturaDTO.getNombreTipoMedidor())+"|"+"Inicial";
         }else if (EsLecturaFinal){
             TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
                     " - "+lecturaDTO.getNombreEstacionCarburacion());
+            NombreImagen = String.valueOf(lecturaDTO.getIdEstacionCarburacion())+"|"+
+                    String.valueOf(lecturaDTO.getNombreTipoMedidor())+"|"+"Final";
         }else if (EsLecturaInicialPipa){
             TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
                     " - "+lecturaPipaDTO.getNombrePipa());
+            NombreImagen = String.valueOf(lecturaPipaDTO.getIdPipa())+"|"+
+                    String.valueOf(lecturaPipaDTO.getTipoMedidor())+"|"+"Inicial";
         }else if (EsLecturaFinalPipa){
             TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
                     " - "+lecturaPipaDTO.getNombrePipa());
+            NombreImagen = String.valueOf(lecturaPipaDTO.getIdPipa())+"|"+
+                    String.valueOf(lecturaPipaDTO.getTipoMedidor())+"|"+"Final";
         }
         if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
             if(EsPrimeraLectura){
                 TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)
                 +" - " +getString(R.string.Pipa));
+                NombreImagen = String.valueOf(recargaDTO.getIdCAlmacenGasEntrada())+"|"+
+                        String.valueOf(recargaDTO.getIdTipoMedidorEntrada())+"|"+"Inicial";
             }else{
                 TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)
                         +" - " +getString(R.string.Estacion));
+                NombreImagen = String.valueOf(recargaDTO.getIdCAlmacenGasSalida())+"|"+
+                        String.valueOf(recargaDTO.getIdTipoMedidorSalida())+"|"+"Inicial";
             }
         }
         if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
                     +" - " +getString(R.string.Estacion));
+            NombreImagen =
+                    (EsAutoconsumoEstacionInicial) ?
+                            String.valueOf(autoconsumoDTO.getIdCAlmacenGasSalida())+"|"+
+                                    String.valueOf(autoconsumoDTO.getNombreTipoMedidor())+"|"+"Inicial":
+                            String.valueOf(autoconsumoDTO.getIdCAlmacenGasSalida())+"|"+
+                                    String.valueOf(autoconsumoDTO.getNombreTipoMedidor())+"|"+"Final";
         }
         if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
                             +" - " +getString(R.string.Pipa));
+            NombreImagen =
+                    (EsAutoconsumoPipaInicial) ?
+                            String.valueOf(autoconsumoDTO.getIdCAlmacenGasSalida())+"|"+
+                                    String.valueOf(autoconsumoDTO.getNombreTipoMedidor())+"|"+"Inicial":
+                            String.valueOf(autoconsumoDTO.getIdCAlmacenGasSalida())+"|"+
+                                    String.valueOf(autoconsumoDTO.getNombreTipoMedidor())+"|"+"Final";
         }
         if(EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
                             +" - " +getString(R.string.Estacion)
             );
+            NombreImagen =
+                    (EsTraspasoEstacionInicial) ?
+                            String.valueOf(traspasoDTO.getIdCAlmacenGasSalida())+"|"+
+                                    String.valueOf(traspasoDTO.getNombreMedidor())+"|"+"Inicial":
+                            String.valueOf(traspasoDTO.getIdCAlmacenGasSalida())+"|"+
+                                    String.valueOf(traspasoDTO.getNombreMedidor())+"|"+"Final";
         }
         if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
                             +" - " +getString(R.string.Pipa)
             );
+            NombreImagen =
+                    (EsTraspasoPipaInicial) ?
+                            String.valueOf(traspasoDTO.getIdCAlmacenGasSalida())+"|"+
+                                    String.valueOf(traspasoDTO.getNombreMedidor())+"|"+"Inicial":
+                            String.valueOf(traspasoDTO.getIdCAlmacenGasSalida())+"|"+
+                                    String.valueOf(traspasoDTO.getNombreMedidor())+"|"+"Final";
         }
         if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
                             +" - " +calibracionDTO.getNombreCAlmacenGas()
             );
+            NombreImagen =
+                    (EsCalibracionEstacionInicial) ?
+                            String.valueOf(calibracionDTO.getIdCAlmacenGas())+"|"+
+                                    String.valueOf(calibracionDTO.getNombreMedidor())+"|"+"Inicial":
+                            String.valueOf(calibracionDTO.getIdCAlmacenGas())+"|"+
+                                    String.valueOf(calibracionDTO.getNombreMedidor())+"|"+"Final";
         }
         if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
                             +" - " +calibracionDTO.getNombreCAlmacenGas()
             );
+            NombreImagen =
+                    (EsCalibracionPipaInicial) ?
+                            String.valueOf(calibracionDTO.getIdCAlmacenGas())+"|"+
+                                    String.valueOf(calibracionDTO.getNombreMedidor())+"|"+"Inicial":
+                            String.valueOf(calibracionDTO.getIdCAlmacenGas())+"|"+
+                                    String.valueOf(calibracionDTO.getNombreMedidor())+"|"+"Final";
         }
         BtnCameraLecturaTomarFoto.setOnClickListener(v -> {
             List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
@@ -416,7 +465,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
     private void openCameraIntent() {
 
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.TITLE, (NombreImagen!=null)? NombreImagen:"New Picture");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
         imageUri = getContentResolver().insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);

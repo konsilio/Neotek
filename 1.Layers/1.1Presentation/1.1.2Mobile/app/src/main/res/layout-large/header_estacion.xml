@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:gravity="center_horizontal"
+    android:paddingBottom="5dp">
+
+    <TextView
+        android:id="@+id/EstacionesCarburacionHeaderTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Anticipo"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/EstacionesCarburacionHeaderInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/selecciona_la_estacion_de_carburacion"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+</LinearLayout>
