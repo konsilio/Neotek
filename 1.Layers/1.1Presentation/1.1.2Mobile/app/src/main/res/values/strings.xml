@@ -28,8 +28,8 @@
     <string name="message_nitida_no">No, esta borrosa/mal tomada</string>
     <string name="cargando_imagenes_inicio">Espere un momento...</string>
     <string name="cargando_imagenes_fin">Proceso finalizado</string>
-    <string name="login_hint_username">Correo electronico</string>
-    <string name="login_hint_password">Contraseña</string>
+    <string name="login_hint_username" translatable="false">Correo electronico</string>
+    <string name="login_hint_password" translatable="false">Contraseña</string>
     <string name="login_button">Login</string>
     <string name="spinner_gaseras">Gasera</string>
     <string name="spinner_num_compra">No. de orden de compra</string>
