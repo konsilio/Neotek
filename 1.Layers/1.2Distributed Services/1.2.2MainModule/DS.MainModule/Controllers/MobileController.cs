@@ -210,5 +210,16 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.Venta(venta,esCamioneta,esEstacion,esPipa), Request);
         }
+        [Route("catalogos/recarga/{esEstacion}/{esPipa}/{esCamioneta}")]
+        public HttpResponseMessage GetListaRecargas(bool esEstacion,bool esPipa,bool esCamioneta)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoRecargas(esEstacion, esPipa, esCamioneta),Request);
+        }
+
+        [Route("autoconsumo/{esPipa}/{esInventarioGral}/{esEstacion}")]
+        public HttpResponseMessage PostAutoconsumo(AutoconsumoDTO dto,bool esPipa,bool esInventario,bool esEstacion)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.Autoconsumo(dto,esPipa, esInventario, esEstacion),Request);
+        }
     }
 }
