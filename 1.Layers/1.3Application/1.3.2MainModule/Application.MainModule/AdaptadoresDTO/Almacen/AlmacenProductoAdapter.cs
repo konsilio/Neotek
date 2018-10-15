@@ -50,15 +50,16 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
         }
         public static AlmacenEntradaProducto FromDTO(AlmacenEntradaDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
         {
+            var oc = new OrdenCompraDataAccess().Buscar(idOC);
             return new AlmacenEntradaProducto()
             {
                 IdOrdenCompra = idOC,
-                IdRequisicion = new OrdenCompraDataAccess().Buscar(idOC).IdRequisicion,
+                IdRequisicion = oc.IdRequisicion,
                 IdAlmacen = _alm.IdAlmacen,
                 IdProduto = dto.IdProducto,
                 IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
                 Cantidad = dto.Cantidad,
-                Observaciones_ = dto.Aplicacion,
+                Observaciones_ = idOC.Equals(0) ? "Actualizacion" : oc.NumOrdenCompra,
                 FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
                 FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
             };
