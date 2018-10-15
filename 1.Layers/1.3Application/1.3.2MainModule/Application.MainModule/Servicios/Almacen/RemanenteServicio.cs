@@ -10,8 +10,11 @@ namespace Application.MainModule.Servicios.Almacen
 {
     public static class RemanenteServicio
     {
-        public static RemanenteDto ObtenerRemanente(AlmacenGasDescarga descarga, short idEmpresa)
+        public static RemanenteDto ObtenerRemanente(AlmacenGasDescarga descarga, short idAlmacenGas, short idEmpresa)
         {
+            var ulMovInventario = AlmacenGasServicio.ObtenerUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas);
+            if(ulMovInventario == null) return ObtenerRemanente();
+
             var ulmMovDescarga = AlmacenGasServicio.ObtenerUltimosMovimientosDeDescargas(descarga , idEmpresa);
 
             if (ulmMovDescarga.ElementAt(2) == null) return ObtenerRemanente();

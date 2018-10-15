@@ -433,9 +433,60 @@ namespace Application.MainModule.Servicios.Almacen
             }
         }
 
-        public static AlmacenGasMovimiento ObtenerUltimoMovimientoEnInventario(short idAlmacenGas, DateTime fecha)
+        public static AlmacenGasMovimiento ObtenerUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas)
         {
-            return new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(idAlmacenGas, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
+            return new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas);
+        }
+
+        public static AlmacenGasMovimiento ObtenerUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas, DateTime fecha)
+        {
+            var ulMov = new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
+            if (ulMov != null) return ulMov;
+
+            ulMov = ObtenerUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas);
+            if (ulMov != null) return ulMov;
+
+            return new AlmacenGasMovimiento
+            {
+                RemanenteKg = 0,
+                RemanenteLt = 0,
+                RemanenteAcumuladoDiaKg = 0,
+                RemanenteAcumuladoDiaLt = 0,
+                RemanenteAcumuladoMesKg = 0,
+                RemanenteAcumuladoMesLt = 0,
+                RemanenteAcumuladoAnioKg = 0,
+                RemanenteAcumuladoAnioLt = 0,
+                EntradaKg = 0,
+                EntradaLt = 0,
+                SalidaKg = 0,
+                SalidaLt = 0,
+                CantidadAnteriorKg = 0,
+                CantidadAnteriorLt = 0,
+                CantidadActualKg = 0,
+                CantidadActualLt = 0,
+                CantidadAcumuladaDiaKg = 0,
+                CantidadAcumuladaDiaLt = 0,
+                CantidadAcumuladaMesKg = 0,
+                CantidadAcumuladaMesLt = 0,
+                CantidadAcumuladaAnioKg = 0,
+                CantidadAcumuladaAnioLt = 0,
+                PorcentajeAnterior = 0,
+                PorcentajeActual = 0,
+                P5000Anterior = 0,
+                P5000Actual = 0,
+                CantidadAnteriorGeneralKg = 0,
+                CantidadAnteriorGeneralLt = 0,
+                CantidadActualGeneralKg = 0,
+                CantidadActualGeneralLt = 0,
+                PorcentajeAnteriorGeneral = 0,
+                PorcentajeActualGeneral = 0,
+                CantidadAnteriorTotalKg = 0,
+                CantidadAnteriorTotalLt = 0,
+                CantidadActualTotalKg = 0,
+                CantidadActualTotalLt = 0,
+                PorcentajeAnteriorTotal = 0,
+                PorcentajeActualTotal = 0,
+            };
         }
 
         public static AlmacenGasMovimiento ObtenerUltimoMovimientoEnInventario(UnidadAlmacenGas unidad, DateTime fecha)
@@ -660,8 +711,8 @@ namespace Application.MainModule.Servicios.Almacen
             decimal almacenGeneralPorcent = almacenGasTotal.PorcentajeActualGeneral;
             almacenGasTotal = AplicarDescargaAlmacenTotal(almacenGasTotal, unidadEntrada, litrosRealesTractor, kilogramosRealesTractor);
 
-            AlmacenGasMovimiento ultimoMovimiento = ObtenerUltimoMovimientoEnInventario(almacenGasTotal.IdAlmacenGas, descarga.FechaFinDescarga.Value);
-            RemanenteDto remaDto = RemanenteServicio.ObtenerRemanente(descarga, empresa.IdEmpresa);
+            AlmacenGasMovimiento ultimoMovimiento = ObtenerUltimoMovimientoEnInventario(empresa.IdEmpresa, almacenGasTotal.IdAlmacenGas, descarga.FechaFinDescarga.Value);
+            RemanenteDto remaDto = RemanenteServicio.ObtenerRemanente(descarga, almacenGasTotal.IdAlmacenGas, empresa.IdEmpresa);
 
             var invAnterior = new InventarioAnteriorDto
             {
