@@ -11340,6 +11340,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\ActualizacionExitenciasJS.js" />
     <Content Include="Scripts\js\CentroCostoJS.js" />
     <Content Include="Scripts\js\ConfirmacionPagoJS.js" />
     <Content Include="Scripts\js\CProductoJS.js" />
@@ -11460,6 +11461,7 @@
     <Content Include="Views\CajaGeneral\Estacion.cshtml" />
     <Content Include="Views\CajaGeneral\Pipa.cshtml" />
     <Content Include="Views\Almacen\SalidaMercancia.cshtml" />
+    <Content Include="Views\Almacen\ActualizacionExistencias.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

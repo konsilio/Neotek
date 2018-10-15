@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Almacen;
+﻿using Application.MainModule.AdaptadoresDTO.Almacen;
+using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Almacen;
@@ -47,6 +48,25 @@ namespace Application.MainModule.Flujos
             var oc = OrdenCompraServicio.Buscar(Id);
             var req = RequisicionServicio.Buscar(oc.IdRequisicion);
             return ProductoAlmacenServicio.AlmacenEntrada(oc, req);
-        }      
+        }
+        public List<AlmacenDTO> ProductosAlmacen(short idEmpresa)
+        {
+            //Validar Permisos
+
+            var prods = ProductoAlmacenServicio.Buscar(idEmpresa);
+            return AlmacenProductoAdapter.ToDTO(prods);
+        }
+        public RespuestaDto ActualizarAlmacen(AlmacenDTO dto)
+        {
+            //Validar permisos
+            var almacen = ProductoAlmacenServicio.ObtenerAlmacen(dto.IdProduto ,dto.IdEmpresa);
+            var entity = ProductoAlmacenServicio.AlmacenEntity(almacen);
+
+            if (dto.Cantidad > entity.Cantidad)
+            {
+
+            } 
+            return new RespuestaDto();
+        }
     }
 }

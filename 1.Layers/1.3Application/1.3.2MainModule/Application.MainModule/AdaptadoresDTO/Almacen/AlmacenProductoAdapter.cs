@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using System;
@@ -61,6 +62,30 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
                 FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
             };
+        }
+
+        public static AlmacenDTO ToDTO(Sagas.MainModule.Entidades.Almacen entidad)
+        {
+            var prod = ProductoServicio.ObtenerProducto(entidad.IdProduto);
+            return new AlmacenDTO()
+            {
+                IdAlmacen = entidad.IdAlmacen,
+                IdEmpresa = entidad.IdEmpresa,
+                IdProduto = entidad.IdProduto,
+                Cantidad = entidad.Cantidad,
+                Ubicacion = entidad.Ubicacion,
+                FechaRegistro = entidad.FechaRegistro,
+                FechaActualizacion = entidad.FechaActualizacion,
+                Descripcion = prod.Descripcion,
+                IdCategoria = prod.IdCategoria,
+                Categoria = prod.Categoria.Descripcion,
+                IdProductoLinea = prod.IdProductoLinea,
+                ProductoLinea = prod.LineaProducto.Descripcion
+            };
+        }
+        public static List<AlmacenDTO> ToDTO(List<Sagas.MainModule.Entidades.Almacen> entidad)
+        {
+            return entidad.Select(x => ToDTO(x)).ToList();
         }
     }
 }
