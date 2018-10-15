@@ -10,12 +10,12 @@ namespace Application.MainModule.DTOs.Almacen
     {
         public decimal RemanenteKg { get; set; }
         public decimal RemanenteLt { get; set; }
-        //RemanenteAcumuladoDiaKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.RemanenteAcumuladoDiaKg, kilogramosRemanentes),
-        //RemanenteAcumuladoDiaLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.RemanenteAcumuladoDiaLt, litrosRemanentes),
-        //RemanenteAcumuladoMesKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.RemanenteAcumuladoMesKg, kilogramosRemanentes),
-        //RemanenteAcumuladoMesLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.RemanenteAcumuladoMesLt, litrosRemanentes),
-        //RemanenteAcumuladoAnioKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.RemanenteAcumuladoAnioKg, kilogramosRemanentes),
-        //RemanenteAcumuladoAnioLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.RemanenteAcumuladoAnioLt, litrosRemanentes),
+        public decimal RemanenteAcumuladoDiaKg { get; set; } 
+        public decimal RemanenteAcumuladoDiaLt { get; set; } 
+        public decimal RemanenteAcumuladoMesKg { get; set; } 
+        public decimal RemanenteAcumuladoMesLt { get; set; } 
+        public decimal RemanenteAcumuladoAnioKg { get; set; } 
+        public decimal RemanenteAcumuladoAnioLt { get; set; } 
         public decimal EntradaKg { get; set; }
         public decimal EntradaLt { get; set; }
         public decimal SalidaKg { get; set; }
@@ -30,11 +30,11 @@ namespace Application.MainModule.DTOs.Almacen
         public decimal CantidadAnteriorGeneralKg { get; set; }
         public decimal CantidadAnteriorGeneralLt { get; set; }
         public decimal PorcentajeAnteriorGeneral { get; set; }
-        //CantidadAcumuladaDiaKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.CantidadAcumuladaDiaKg.Value, kilogramosRealesTractor),
-        //CantidadAcumuladaDiaLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.CantidadAcumuladaDiaLt.Value, litrosRealesTractor),
-        //CantidadAcumuladaMesKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.CantidadAcumuladaMesKg.Value, kilogramosRealesTractor),
-        //CantidadAcumuladaMesLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.CantidadAcumuladaMesLt.Value, litrosRealesTractor),
-        //CantidadAcumuladaAnioKg = CalcularGasServicio.SumarKilogramos(ultimoMovimiento.CantidadAcumuladaAnioKg.Value, kilogramosRealesTractor),
-        //CantidadAcumuladaAnioLt = CalcularGasServicio.SumarLitros(ultimoMovimiento.CantidadAcumuladaAnioLt.Value, litrosRealesTractor),
+        public decimal CantidadAcumuladaDiaKg { get; set; }
+        public decimal CantidadAcumuladaDiaLt { get; set; }
+        public decimal CantidadAcumuladaMesKg { get; set; }
+        public decimal CantidadAcumuladaMesLt { get; set; }
+        public decimal CantidadAcumuladaAnioKg { get; set; }
+        public decimal CantidadAcumuladaAnioLt { get; set; }
     }
 }

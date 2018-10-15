@@ -10,32 +10,76 @@ namespace Application.MainModule.Servicios.Almacen
 {
     public static class RemanenteServicio
     {
-        public static RemanenteDto ObtenerRemanenteDelDia(AlmacenGasMovimiento ultimoMovimiento, short idAlmacenGas, DateTime fechaAplicacion)
+        public static RemanenteDto ObtenerRemanente(AlmacenGasDescarga descarga, short idEmpresa)
         {
-            if (ultimoMovimiento == null) return ObtenerRemanente(ultimoMovimiento);
+            var ulmMovDescarga = AlmacenGasServicio.ObtenerUltimosMovimientosDeDescargas(descarga , idEmpresa);
 
+            if (ulmMovDescarga.ElementAt(2) == null) return ObtenerRemanente();
 
+            if (ulmMovDescarga.ElementAt(1) == null) return ObtenerRemanente(ulmMovDescarga.ElementAt(2));
+
+            if (ulmMovDescarga.ElementAt(0) == null) return ObtenerRemanente(ulmMovDescarga.ElementAt(2), ulmMovDescarga.ElementAt(1));
+
+            return ObtenerRemanente(ulmMovDescarga.ElementAt(2), ulmMovDescarga.ElementAt(1), ulmMovDescarga.ElementAt(0));
         }
 
-        public static RemanenteDto ObtenerRemanenteDelAnio(AlmacenGasMovimiento ultimoMovimiento, short idAlmacenGas, DateTime fechaAplicacion)
-        {
-            if (ultimoMovimiento == null) return ObtenerRemanente(ultimoMovimiento);
-
-
-        }
-
-        private static RemanenteDto ObtenerRemanente(AlmacenGasMovimiento ultimoMovimiento)
+        private static RemanenteDto ObtenerRemanente(AlmacenGasMovimiento ulMovAnio)
         {
             return new RemanenteDto
             {
-                //RemanenteKg = ultimoMovimiento.,
-                //RemanenteLt = ,
-                RemanenteAcumuladoDiaKg = ultimoMovimiento.RemanenteAcumuladoDiaKg,
-                RemanenteAcumuladoDiaLt = ultimoMovimiento.RemanenteAcumuladoDiaLt,
-                RemanenteAcumuladoMesKg = ultimoMovimiento.RemanenteAcumuladoMesKg,
-                RemanenteAcumuladoMesLt = ultimoMovimiento.RemanenteAcumuladoMesLt,
-                RemanenteAcumuladoAnioKg = ultimoMovimiento.RemanenteAcumuladoAnioKg,
-                RemanenteAcumuladoAnioLt = ultimoMovimiento.RemanenteAcumuladoAnioLt,
+                RemanenteKg = ulMovAnio.RemanenteKg.Value,
+                RemanenteLt = ulMovAnio.RemanenteLt.Value,
+                RemanenteAcumuladoDiaKg = 0,
+                RemanenteAcumuladoDiaLt = 0,
+                RemanenteAcumuladoMesKg = 0,
+                RemanenteAcumuladoMesLt = 0,
+                RemanenteAcumuladoAnioKg = ulMovAnio.RemanenteAcumuladoAnioKg,
+                RemanenteAcumuladoAnioLt = ulMovAnio.RemanenteAcumuladoAnioLt,
+            };
+        }
+
+        private static RemanenteDto ObtenerRemanente(AlmacenGasMovimiento ulMovAnio, AlmacenGasMovimiento ulMovMes)
+        {
+            return new RemanenteDto
+            {
+                RemanenteKg = ulMovMes.RemanenteKg.Value,
+                RemanenteLt = ulMovMes.RemanenteLt.Value,
+                RemanenteAcumuladoDiaKg = 0,
+                RemanenteAcumuladoDiaLt = 0,
+                RemanenteAcumuladoMesKg = ulMovMes.RemanenteAcumuladoMesKg,
+                RemanenteAcumuladoMesLt = ulMovMes.RemanenteAcumuladoMesLt,
+                RemanenteAcumuladoAnioKg = ulMovMes.RemanenteAcumuladoAnioKg,
+                RemanenteAcumuladoAnioLt = ulMovMes.RemanenteAcumuladoAnioLt,
+            };
+        }
+
+        private static RemanenteDto ObtenerRemanente(AlmacenGasMovimiento ulMovAnio, AlmacenGasMovimiento ulMovMes, AlmacenGasMovimiento ulMovDia)
+        {
+            return new RemanenteDto
+            {
+                RemanenteKg = ulMovDia.RemanenteKg.Value,
+                RemanenteLt = ulMovDia.RemanenteLt.Value,
+                RemanenteAcumuladoDiaKg = ulMovDia.RemanenteAcumuladoDiaKg,
+                RemanenteAcumuladoDiaLt = ulMovDia.RemanenteAcumuladoDiaLt,
+                RemanenteAcumuladoMesKg = ulMovDia.RemanenteAcumuladoMesKg,
+                RemanenteAcumuladoMesLt = ulMovDia.RemanenteAcumuladoMesLt,
+                RemanenteAcumuladoAnioKg = ulMovDia.RemanenteAcumuladoAnioKg,
+                RemanenteAcumuladoAnioLt = ulMovDia.RemanenteAcumuladoAnioLt,
+            };
+        }
+
+        private static RemanenteDto ObtenerRemanente()
+        {
+            return new RemanenteDto
+            {
+                RemanenteKg = 0,
+                RemanenteLt = 0,
+                RemanenteAcumuladoDiaKg = 0,
+                RemanenteAcumuladoDiaLt = 0,
+                RemanenteAcumuladoMesKg = 0,
+                RemanenteAcumuladoMesLt = 0,
+                RemanenteAcumuladoAnioKg = 0,
+                RemanenteAcumuladoAnioLt = 0,
             };
         }
     }

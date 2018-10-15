@@ -440,6 +440,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                   && x.Dia.Equals(dia)).LastOrDefault();
         }
 
+        public AlmacenGasMovimiento BuscarUltimoMovimientoConTipoEvento(short idEmpresa, byte idTipoEvento, short year, byte mes, byte dia)
+        {
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                && x.IdTipoEvento.Equals(idTipoEvento)
+                                                                && x.Year.Equals(year)
+                                                                && x.Mes.Equals(mes)
+                                                                && x.Dia.Equals(dia)).LastOrDefault();
+        }
+
+        public AlmacenGasMovimiento BuscarUltimoMovimientoConTipoEvento(short idEmpresa, byte idTipoEvento, short year, byte mes)
+        {
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                && x.IdTipoEvento.Equals(idTipoEvento)
+                                                                && x.Year.Equals(year)
+                                                                && x.Mes.Equals(mes)).LastOrDefault();
+        }
+
+        public AlmacenGasMovimiento BuscarUltimoMovimientoConTipoEvento(short idEmpresa, byte idTipoEvento, short year)
+        {
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                && x.IdTipoEvento.Equals(idTipoEvento)
+                                                                && x.Year.Equals(year)).LastOrDefault();
+        }
+
         public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idAlmacenGas, short idCAlmacenGas, short idEmpresa, short year, byte mes, byte dia)
         {
             return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
