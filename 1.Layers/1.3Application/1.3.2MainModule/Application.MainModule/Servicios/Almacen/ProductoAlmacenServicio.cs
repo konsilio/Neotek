@@ -22,6 +22,10 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, prod);
         }
+        public static RespuestaDto SalidaAlmcacenProductos(Sagas.MainModule.Entidades.Almacen _almacen, AlmacenSalidaProducto prod)
+        {
+            return new AlmacenDataAccess().ActualizarAlmacenSalida(_almacen, prod);
+        }
         public static RespuestaDto EntradaAlmcacenProductos(List<Sagas.MainModule.Entidades.Almacen> _almacen, List<Sagas.MainModule.Entidades.Almacen> _almacenCrear, List<AlmacenEntradaProducto> prod)
         {
             return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, _almacenCrear, prod);
@@ -67,6 +71,13 @@ namespace Application.MainModule.Servicios.Almacen
                 Ubicacion = AlmacenConst.UbicacionPendiente,
                 Entradas = new List<AlmacenEntradaProducto>()               
             };
+        }
+        public static List<Sagas.MainModule.Entidades.Almacen> Buscar(short idEmpresa)
+        {
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return new AlmacenDataAccess().ListaProductosAlmacenTodos();
+            else
+                return new AlmacenDataAccess().ListaProductosAlmacen(idEmpresa);
         }        
     }
 }
