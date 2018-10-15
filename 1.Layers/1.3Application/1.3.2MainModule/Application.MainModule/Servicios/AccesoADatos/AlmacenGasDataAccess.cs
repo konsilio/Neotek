@@ -96,6 +96,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                 && x.DatosProcesados.Equals(noProcesados)
                                                     ).ToList();
         }
+
+        public RespuestaDto Insertar(AlmacenGasAutoConsumo _autoconsumo)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<AlmacenGasAutoConsumo>().Insert(_autoconsumo);
+                    uow.SaveChanges();
+                    _respuesta.Id = _autoconsumo.IdCAlmacenGasEntrada;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }catch(Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, " del autoconsumo");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
         public RespuestaDto Insertar(AlmacenGasTomaLectura _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -569,6 +594,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<AlmacenGasCalibracion> BuscarTodasCalibracionesNoProcesadas()
         {
             return uow.Repository<AlmacenGasCalibracion>().Get(x => !x.DatosProcesados).ToList();
+        }
+
+        public AlmacenGasAutoConsumo BuscarAutoconsumoClaveOperacion(string claveOperacion)
+        {
+            return uow.Repository<AlmacenGasAutoConsumo>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
         }
     }
 }

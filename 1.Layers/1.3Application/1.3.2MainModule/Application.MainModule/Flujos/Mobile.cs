@@ -204,9 +204,41 @@ namespace Application.MainModule.Flujos
 
         }
 
-        public RespuestaDto Autoconsumo(AutoconsumoDTO dto, bool esPipa, bool esInventario, bool esEstacion)
+        public RespuestaDto Autoconsumo(AutoconsumoDTO dto,bool esFinal)
         {
-            //var resp = AutoconsumoServicio;
+            var resp = AutoconsumoServicio.EvaluarAutoconsumo(dto);
+
+            if (resp.Exito) return resp;
+            
+            return AutoconsumoServicio.Autoconsumo(dto,esFinal);
+        }
+
+        public RespuestaDto CatalogoAutoconsumo(bool esEstacion, bool esInventario, bool esPipas,bool esFinal)
+        {
+            var medidores = TipoMedidorGasServicio.Obtener();
+            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(puntoVenta.IdCAlmacenGas);
+            if (esEstacion)
+            {
+                
+                if (esFinal)
+                {
+
+                }
+                else
+                {
+                    var pipas = AlmacenGasServicio.ObtenerPipas(puntoVenta.IdEmpresa);
+                    var camionetas = AlmacenGasServicio.ObtenerCamionetas(puntoVenta.IdEmpresa);
+                    return AlmacenAutoconsumoAdapter.ToDTO(almacen, pipas, camionetas, medidores);
+                }
+                
+            }else if (esInventario)
+            {
+
+            }else if (esPipas)
+            {
+
+            }
             return null;
         }
     }

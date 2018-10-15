@@ -20,5 +20,11 @@ namespace Application.MainModule.DTOs.Mobile
 
         public decimal PorcentajeMedidor { get; set; }
 
+        public decimal P5000Salida { get; set; }
+
+        public DateTime FechaRegistro { get; set; }
+
+        public short IdTipoMedidor { get; set; }
+
     }
 }

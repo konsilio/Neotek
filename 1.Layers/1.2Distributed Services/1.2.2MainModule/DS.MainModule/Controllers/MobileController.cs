@@ -205,7 +205,7 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.BuscadorClientes(criterio), Request);
         }
-        [Route("ventra/{esCamioneta}/{esEstacion}/{esPipa}")]
+        [Route("venta/{esCamioneta}/{esEstacion}/{esPipa}")]
         public HttpResponseMessage PostVenta(VentaDTO venta, bool esCamioneta,bool esEstacion,bool esPipa)
         {
             return RespuestaHttp.crearRespuesta(_mobile.Venta(venta,esCamioneta,esEstacion,esPipa), Request);
@@ -216,10 +216,16 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoRecargas(esEstacion, esPipa, esCamioneta),Request);
         }
 
-        [Route("autoconsumo/{esPipa}/{esInventarioGral}/{esEstacion}")]
-        public HttpResponseMessage PostAutoconsumo(AutoconsumoDTO dto,bool esPipa,bool esInventario,bool esEstacion)
+        [Route("autoconsumo/{esFinal}")]
+        public HttpResponseMessage PostAutoconsumo(AutoconsumoDTO dto,bool esFinal = false)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.Autoconsumo(dto,esPipa, esInventario, esEstacion),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.Autoconsumo(dto,esFinal),Request);
+        }
+
+        [Route("catalogos/autoconsumo/{esEstacion}/{esInventario}/{esPipas}/{esFinal}")]
+        public HttpResponseMessage GetCatalogosAutoconsumo(bool esEstacion,bool esInventario,bool esPipas,bool esFinal = false)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoAutoconsumo(esEstacion, esInventario, esPipas,esFinal),Request);
         }
     }
 }
