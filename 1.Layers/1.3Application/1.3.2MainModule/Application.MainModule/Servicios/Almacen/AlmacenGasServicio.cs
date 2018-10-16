@@ -82,6 +82,11 @@ namespace Application.MainModule.Servicios.Almacen
             return ObtenerUnidadAlamcenGas((short)resp.Id);
         }
 
+        public static RespuestaDto InsertarAutoconsumo(AlmacenGasAutoConsumo adapter)
+        {
+            return new AlmacenGasDataAccess().Insertar(adapter);
+        }
+
         public static AlmacenGas ObtenerAlmacenGasTotal(Empresa empresa)
         {
             if (empresa.AlmacenesGas != null && empresa.AlmacenesGas.Count > 0)
@@ -1447,5 +1452,10 @@ namespace Application.MainModule.Servicios.Almacen
         //{
         //    return null;
         //}
+
+        public static AlmacenGasAutoConsumo ObtenerAutoconsumo(string claveOperacion)
+        {
+            return new AlmacenGasDataAccess().BuscarAutoconsumoClaveOperacion(claveOperacion);
+        }
     }
 }
