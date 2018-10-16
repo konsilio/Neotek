@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#9E9E9E</color>
+    <color name="colorPrimary">#9e9e9e</color>
     <color name="colorPrimaryDark">#23252B</color>
     <color name="colorAccent">#323740</color>
 
-    <color name="colorBackgroundLogin">#FFFFFF</color>
+    <color name="colorBackgroundLogin">#ffffff</color>
     <color name="colorButtonLogin">#323740</color>
     <color name="colorTextLogin">#323740</color>
     <color name="colorTextButtonLogin">#FFFFFF</color>
@@ -12,5 +12,17 @@
     <color name="colorBackgroundMenu1">#FF8C00</color>
     <color name="colorBackgroundMenu2">#6495ED</color>
     <color name="colorBackgroundMenu3">#000080</color>
+
+    <!--Colores de tema del sistema-->
+    <color name="colorBackgroundSistemaLogin">#313740</color>
+    <color name="colorBackgroundNavigationBar">#313740</color>
+    <color name="colorBackgroundStatusBar">#313740</color>
+    <color name="textColorSistemaLogin">#fefefe</color>
+    <color name="textColorSistemaLoginSecundario">#6e90be</color>
+    <color name="backgroundLoginForm">#FFFFFF</color>
+    <color name="buttonBackgroundColor">#313740</color>
+    <color name="textcolorButton">#fff</color>
+    <color name="primaryTextColor">#313740</color>
+    <!--Fin colores de tema del sistema-->
 
 </resources>
