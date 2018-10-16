@@ -227,5 +227,17 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoAutoconsumo(esEstacion, esInventario, esPipas,esFinal),Request);
         }
+
+        [Route("catalogos/calibracion/{esEstacion}/{esPipa}")]
+        public HttpResponseMessage GetCatalogosCalibracion(bool esEstacion,bool esPipa)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoCalibracion(esEstacion, esPipa), Request);
+        }
+
+        [Route("calibracion/{esFinal}")]
+        public HttpResponseMessage PostCalibracion(CalibracionDto dto, bool esFinal)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.Calibracion(dto,esFinal), Request);
+        }
     }
 }

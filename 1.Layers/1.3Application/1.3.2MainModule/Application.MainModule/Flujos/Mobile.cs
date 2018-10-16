@@ -213,33 +213,139 @@ namespace Application.MainModule.Flujos
             return AutoconsumoServicio.Autoconsumo(dto,esFinal);
         }
 
-        public RespuestaDto CatalogoAutoconsumo(bool esEstacion, bool esInventario, bool esPipas,bool esFinal)
+        public DatosAutoconsumoDto CatalogoAutoconsumo(bool esEstacion, bool esInventario, bool esPipas,bool esFinal)
         {
             var medidores = TipoMedidorGasServicio.Obtener();
             var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-            var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(puntoVenta.IdCAlmacenGas);
+            var pipas = AlmacenGasServicio.ObtenerPipas(puntoVenta.IdEmpresa);
+            var camionetas = AlmacenGasServicio.ObtenerCamionetas(puntoVenta.IdEmpresa);
+            var almacenes = AlmacenGasServicio.ObtenerAlmacenes(puntoVenta.IdEmpresa);
+            var predeterminado = puntoVenta.UnidadesAlmacen;
+            var autoconsumos = AlmacenGasServicio.ObtenerAutoConsumosNoProcesadas();
             if (esEstacion)
             {
                 
                 if (esFinal)
                 {
-
+                    var estacionesInicioEnInicial = estacionesInicio(autoconsumos);
+                    var estacionesFinEnInicial = estacionesFin(autoconsumos,false,true,true);
+                    return AlmacenAutoconsumoAdapter.ToDTOFinal(estacionesInicioEnInicial, estacionesFinEnInicial, medidores);
                 }
                 else
-                {
-                    var pipas = AlmacenGasServicio.ObtenerPipas(puntoVenta.IdEmpresa);
-                    var camionetas = AlmacenGasServicio.ObtenerCamionetas(puntoVenta.IdEmpresa);
-                    return AlmacenAutoconsumoAdapter.ToDTO(almacen, pipas, camionetas, medidores);
-                }
+                    return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, pipas, camionetas, medidores);
                 
             }else if (esInventario)
             {
-
+                if (esFinal)
+                {
+                    var estacionesInicioEnInicial = estacionesInicio(autoconsumos,false,true,true);
+                    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(estacionesInicioEnInicial, medidores);
+                }
+                else
+                    return AlmacenAutoconsumoAdapter.ToDTOInventarioGeneral(pipas, camionetas, medidores);
             }else if (esPipas)
             {
 
+                if (esFinal)
+                {
+                    var estacionesInicioEnInicial = estacionesInicio(autoconsumos, false, true, true);
+                    var estacionesFinEnInicial = estacionesFin(autoconsumos, false, true, true);
+                    return AlmacenAutoconsumoAdapter.ToDTOFinal(estacionesInicioEnInicial, estacionesFinEnInicial, medidores);
+                }
+                else
+                    return AlmacenAutoconsumoAdapter.ToDTO(almacenes, predeterminado, pipas, camionetas, medidores);
             }
             return null;
+        }
+
+        public List<UnidadAlmacenGas> estacionesInicio(List<AlmacenGasAutoConsumo> autoconsumos,bool estaciones = true,bool pipas = false,bool camionetas = false)
+        {
+            List<UnidadAlmacenGas> list = new List<UnidadAlmacenGas>();
+            if (estaciones) {
+                foreach (var autoconsumo in autoconsumos)
+                {
+                    var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(autoconsumo.IdCAlmacenGasSalida);
+                    if (almacen.IdEstacionCarburacion != null && almacen.IdEstacionCarburacion>0)
+                        list.Add(almacen);
+                }
+            }
+            if (pipas)
+            {
+                foreach (var autoconsumo in autoconsumos)
+                {
+                    var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(autoconsumo.IdCAlmacenGasSalida);
+                    if (almacen.IdPipa != null && almacen.IdPipa > 0)
+                        list.Add(almacen);
+                }
+            }
+            if (camionetas)
+            {
+                foreach (var autoconsumo in autoconsumos)
+                {
+                    var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(autoconsumo.IdCAlmacenGasSalida);
+                    if (almacen.IdCamioneta != null && almacen.IdCamioneta > 0)
+                        list.Add(almacen);
+                }
+            }
+            return list; 
+        }
+
+        public RespuestaDto Calibracion(CalibracionDto dto, bool esFinal)
+        {
+            var resp = CalibracionServicio.EvaluarClaveOperacion(dto.ClaveOperacion);//Queda pendiente hacer la busqueda por clave de operacion
+
+            if (resp.Exito) return resp;
+
+            return CalibracionServicio.Calibracion(dto,esFinal);//Queda pendiente hacer la respuesta del registro
+        }
+
+        public DatosCalibracionDto CatalogoCalibracion(bool esEstacion, bool esPipa)
+        {
+            var medidores = TipoMedidorGasServicio.Obtener();
+            if (esEstacion)
+            {
+                var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
+                return CalibracionAdapter.ToDTO(estaciones, medidores);
+            }
+            else if (esPipa)
+            {
+                var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
+                return CalibracionAdapter.ToDTO(pipas, medidores);
+            }
+            return null;
+        }
+
+        public List<UnidadAlmacenGas> estacionesFin(List<AlmacenGasAutoConsumo> autoconsumos, bool estaciones = true, bool pipas = false, bool camionetas = false)
+        {
+            List<UnidadAlmacenGas> list = new List<UnidadAlmacenGas>();
+            if (estaciones)
+            {
+                foreach (var autoconsumo in autoconsumos)
+                {
+                    var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(autoconsumo.IdCAlmacenGasEntrada);
+                    if (almacen.IdEstacionCarburacion != null && almacen.IdEstacionCarburacion > 0)
+                        list.Add(almacen);
+                }
+            }
+            if (pipas)
+            {
+                foreach (var autoconsumo in autoconsumos)
+                {
+                    var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(autoconsumo.IdCAlmacenGasEntrada);
+                    if (almacen.IdPipa != null && almacen.IdPipa > 0)
+                        list.Add(almacen);
+                }
+            }
+            if (camionetas)
+            {
+                foreach (var autoconsumo in autoconsumos)
+                {
+                    var almacen = AlmacenGasServicio.ObtenerUnidadAlamcenGas(autoconsumo.IdCAlmacenGasEntrada);
+                    if (almacen.IdCamioneta != null && almacen.IdCamioneta > 0)
+                        list.Add(almacen);
+                }
+            }
+            return list;
         }
     }
 }

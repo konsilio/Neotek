@@ -46,7 +46,7 @@ namespace Application.MainModule.Servicios.Mobile
                 adapter.Year = (short)dto.FechaRegistro.Year;
                 adapter.Fotografias = AlmacenAutoconsumoAdapter.FormDTO(dto, almacenEntrada, almacenSalida,IdOrden,adapter.IdEmpresa);
                     
-                return AlmacenGasServicio.InsertarAutoconsumo(adapter);//Falta realizar el registro por que no se encontro el data access
+                return AlmacenGasServicio.InsertarAutoconsumo(adapter);
         }
 
         public static int Orden(List<AlmacenGasAutoConsumo> autoconsumos)
