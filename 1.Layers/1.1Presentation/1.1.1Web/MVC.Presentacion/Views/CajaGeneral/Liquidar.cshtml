@@ -1,7 +1,7 @@
 ﻿@model  MVC.Presentacion.Models.Ventas.CajaGeneralCamionetaModel
-
+@using PagedList.Mvc;
+@using PagedList;
 <!DOCTYPE html>
-
 <html>
 <head>
     @{
@@ -9,15 +9,14 @@
     }
     <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
     <script src="~/assets/js/pages/ui/notifications.js"></script>
-    <script src="~/Resources/js/CajaGeneral.js"></script>
+    <script src="~/Resources/js/CajaGeneral.js" type="text/javascript"></script>
     <link href="~/Resources/css/CreateForm.css" rel="stylesheet" />
     <script type="text/javascript">
-        var numReq = '@ViewBag.NumeroRequisicion';
-        if (numReq != '') {
-            $(window).on("load", showNotification('alert-success', numReq, 'top', 'center', '', ''));
+        var message = '@ViewBag.MessageExito';
+        if (message != '') {
+            $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
         }
     </script>
-
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("GuardarLiquidar", "CajaGeneral", FormMethod.Post))
@@ -32,10 +31,10 @@
                                     <b>Clave Reporte:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" name="FolioOperacionDia" class="form-control" />
+                                    <input type="text" name="FolioOperacionDia" class="form-control" value="@((ViewBag.CajaGeneralCamioneta ==null)?"": ViewBag.CajaGeneralCamioneta[0].FolioOperacionDia)" />
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="submit" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary float-left" />
+                                    <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary float-left" />
                                 </div>
                             </div>
                         </div>
@@ -50,16 +49,34 @@
                                 <div class="col-sm-3">
                                     @Html.LabelFor(model => model.OperadorChofer, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].OperadorChofer), new { @class = "form-control" })
                                 </div>
-                                <div class="col-sm-05">
-                                    <b>Camioneta:</b>
-                                </div>
+                                @if (ViewBag.CajaGeneralCamioneta != null)
+                                {
+                                    if (ViewBag.CajaGeneralCamioneta[0].PuntoVenta == "Pipa No. 1")
+                                    {
+                                        <div class="col-sm-05" id="hiddendiv">
+                                            <b>Pipa:</b>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-05" id="hiddendiv">
+                                            <b>Camioneta:</b>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-sm-05" id="hiddendiv">
+                                        <b>Camioneta:</b>
+                                    </div>
+                                }
                                 <div class="col-sm-2">
                                     @Html.LabelFor(model => model.PuntoVenta, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].PuntoVenta), new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-005">
                                     <b>Fecha de reporte:</b>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     @Html.LabelFor(model => model.FechaRegistro, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].FechaRegistro.ToString()), new { @class = "form-control" })
                                 </div>
                             </div>
@@ -92,36 +109,109 @@
                             </div>
                             <br />
                             <div class="row clearfix">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="table-responsive">
-                                        <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>Concepto</th>
-                                                    <th>Salidas</th>
-                                                    <th>Recepciones</th>
-                                                    <th>Ventas</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @*@if (ViewBag.ListaPV != null)
-                                                    {
-                                                        foreach (var item in ViewBag.ListaPV)
+                                @if (ViewBag.CajaGeneralCamioneta != null)
+                                {
+                                    if (ViewBag.CajaGeneralCamioneta[0].PuntoVenta == "Pipa No. 1")
+                                    {
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="table-responsive">
+                                                <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Concepto</th>
+                                                            <th>P5000 Inicial</th>
+                                                            <th>P5000 Final</th>
+                                                            <th>Cantidad(Lt)</th>
+                                                            <th>Venta</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @*@if (ViewBag.ListaPV != null)
+                                                            {
+                                                                foreach (var item in ViewBag.ListaPV)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@item.Empresa</td>
+                                                                        <td>@item.PrecioPemexKg</td>
+                                                                        <td>@item.UtilidadEsperadaKg</td>
+                                                                        <td>@item.PrecioSalidaKg</td>
+                                                                        <td>@item.FechaProgramada</td>
+                                                                    </tr>
+                                                                }
+                                                            }*@
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="table-responsive">
+                                                <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Concepto</th>
+                                                            <th>Salidas</th>
+                                                            <th>Recepciones</th>
+                                                            <th>Ventas</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @*@if (ViewBag.ListaPV != null)
+                                                            {
+                                                                foreach (var item in ViewBag.ListaPV)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@item.Empresa</td>
+                                                                        <td>@item.PrecioPemexKg</td>
+                                                                        <td>@item.UtilidadEsperadaKg</td>
+                                                                        <td>@item.PrecioSalidaKg</td>
+                                                                        <td>@item.FechaProgramada</td>
+                                                                    </tr>
+                                                                }
+                                                            }*@
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div class="table-responsive">
+                                            <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Concepto</th>
+                                                        <th>Salidas</th>
+                                                        <th>Recepciones</th>
+                                                        <th>Ventas</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @*@if (ViewBag.ListaPV != null)
                                                         {
-                                                            <tr>
-                                                                <td>@item.Empresa</td>
-                                                                <td>@item.PrecioPemexKg</td>
-                                                                <td>@item.UtilidadEsperadaKg</td>
-                                                                <td>@item.PrecioSalidaKg</td>
-                                                                <td>@item.FechaProgramada</td>
-                                                            </tr>
-                                                        }
-                                                    }*@
-                                            </tbody>
-                                        </table>
+                                                            foreach (var item in ViewBag.ListaPV)
+                                                            {
+                                                                <tr>
+                                                                    <td>@item.Empresa</td>
+                                                                    <td>@item.PrecioPemexKg</td>
+                                                                    <td>@item.UtilidadEsperadaKg</td>
+                                                                    <td>@item.PrecioSalidaKg</td>
+                                                                    <td>@item.FechaProgramada</td>
+                                                                </tr>
+                                                            }
+                                                        }*@
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
+                                }
+
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <div class="table-responsive">
                                         <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
@@ -140,18 +230,29 @@
                                                 {
                                                     foreach (var item in ViewBag.CajaGeneralCamioneta)
                                                     {
-                                                        <tr>
-                                                            <td>@item.FolioOperacionDia</td>
-                                                            <td>Contado</td>
-                                                            <td>@item.Descuento</td>
-                                                            <td>@item.Subtotal</td>
-                                                            <td>@item.Iva</td>
-                                                            <td>@item.Total</td>
-                                                        </tr>
+                                                <tr>
+                                                    <td>@item.FolioOperacionDia</td>
+                                                    <td>Contado</td>
+                                                    <td>@item.Descuento</td>
+                                                    <td>@item.Subtotal</td>
+                                                    <td>@item.Iva</td>
+                                                    <td>@item.Total</td>
+                                                </tr>
                                                     }
                                                 }
                                             </tbody>
                                         </table>
+                                    </div>
+                                    <div class="row clearfix">
+                                        @if (ViewBag.CajaGeneralCamioneta != null && ViewBag.CajaGeneralCamioneta.Count >= 1)
+                                        {
+                                            <div class="col-md-6">
+                                                Pagina @(ViewBag.CajaGeneralCamioneta.PageCount < ViewBag.CajaGeneralCamioneta.PageNumber ? 0 : ViewBag.CajaGeneralCamioneta.PageNumber) de @ViewBag.CajaGeneralCamioneta.PageCount
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                @Html.PagedListPager((IPagedList)ViewBag.CajaGeneralCamioneta, page => Url.Action("CajaGeneral", new { page, @class = "btn btn-primary btn-simple" }))
+                                            </div>
+                                        }
                                     </div><br />
                                     <div class="row clearfix">
                                         <div class="col-sm-8" style="text-align:right">
@@ -197,6 +298,21 @@
                             </div>
                         </div>
                     </div>
+                    @if (ViewBag.MessageError != null)
+                {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MessageError</label>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </section>

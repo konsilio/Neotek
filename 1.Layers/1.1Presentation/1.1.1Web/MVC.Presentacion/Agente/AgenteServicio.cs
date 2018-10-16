@@ -1341,16 +1341,21 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); 
                 }
 
-
                 _listaCajaGralEstacion = lus;
 
             }
         }
-        public void GuardarLiquidacion(CajaGeneralModel dto, string tkn)
+        public void GuardarLiquidacion(CajaGeneralCamionetaModel dto, string tkn)
         {
-            this.ApiRoute = ConfigurationManager.AppSettings[""];
-            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+            this.ApiRoute = ConfigurationManager.AppSettings["PutLiquidarCajaGral"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
+        public void GuardarLiquidacionEst(VentaCorteAnticipoModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutLiquidarCajaGralEst"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        
 
         #endregion
         #region Paises

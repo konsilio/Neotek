@@ -9,15 +9,14 @@
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+<script src="~/Resources/js/Clientes.js"></script>
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#btnBuscar").click(function () {
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "Buscar" }) %>');
-            form.attr('method', 'post');
-        });
-    });
-
+    var message = '@ViewBag.MessageExito';
+    if (message != '') {
+        $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
+    }
 </script>
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
@@ -161,7 +160,7 @@
                         </div>
                     </div>
                 </div>
-                @if (ViewBag.MensajeError != null)
+                @if (ViewBag.MessageError != null)
                 {
                     <div class="row clearfix">
                         <div id="divMensajeError" class="container">
@@ -170,7 +169,7 @@
                                     <i class="zmdi zmdi-block"></i>
                                 </div>
                                 <strong>
-                                    <label>@ViewBag.MensajeError</label>
+                                    <label>@ViewBag.MessageError</label>
                                 </strong>
                             </div>
                         </div>

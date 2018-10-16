@@ -18,12 +18,6 @@
 
 </head>
 <body class="theme-black menu_dark">
-    @*<div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
-            <p>Espere por favor</p>
-        </div>
-    </div>*@
     @RenderBody()
     <div class="overlay_menu">
         <button class="btn btn-primary btn-icon btn-icon-mini btn-round"><i class="zmdi zmdi-close"></i></button>
@@ -492,9 +486,9 @@
                         <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">attach_money</i><span>Ventas</span> </a>
                         <ul class="ml-menu">
                             <li><a href="ui_kit.html">Ventas</a></li>
-                            <li>@Html.ActionLink("Caja General Camioneta", "Index", "CajaGeneral")</li>
+                            <li>@Html.ActionLink("Caja General", "Index", "CajaGeneral")</li>
                             <li>@Html.ActionLink("Caja General Estación", "Estacion", "CajaGeneral")</li>
-                            <li>@Html.ActionLink("Caja General Pipa", "Pipa", "CajaGeneral")</li>
+                            @*<li>@Html.ActionLink("Caja General Pipa", "Pipa", "CajaGeneral")</li>*@
                         </ul>
                     </li>
                     <li>

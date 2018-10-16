@@ -10691,11 +10691,14 @@
     <Content Include="fonts\Logo GMG.JPG" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Resources\css\Clientes.css" />
     <Content Include="Resources\css\CreateForm.css" />
     <Content Include="Resources\js\CajaGeneral.js" />
+    <Content Include="Resources\js\Clientes.js" />
     <Content Include="Resources\js\Empresas.js" />
     <Content Include="Resources\js\lib\Events.js" />
     <Content Include="Resources\js\lib\jquery-1.9.1.js" />
+    <Content Include="Resources\js\PrecioVenta.js" />
     <Content Include="Resources\js\Roles.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />

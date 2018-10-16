@@ -7,11 +7,19 @@
     @{
         ViewBag.Title = "Index";
     }
+    <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="~/assets/js/pages/ui/notifications.js"></script>
     <script src="~/Resources/js/CajaGeneral.js"></script>
     <link href="~/Resources/css/CreateForm.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var message = '@ViewBag.MessageExito';
+        if (message != '') {
+            $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
+        }
+    </script>
 </head>
 <body style="height:100%">
-    @using (Html.BeginForm("Estacion", "CajaGeneral", FormMethod.Post))
+    @using (Html.BeginForm("GuardarLiquidaEstacion", "CajaGeneral", FormMethod.Post))
     {
         <section class="content home">
             <div class="container-fluid">
@@ -23,7 +31,7 @@
                                     <b>Clave Reporte:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" name="FolioOperacion" class="form-control" />
+                                    <input type="text" name="FolioOperacion" class="form-control" value="@((ViewBag.CajaGeneralEstacion ==null)?"": ViewBag.CajaGeneralEstacion[0].FolioOperacion)" />
                                 </div>
                                 <div class="col-sm-2">
                                     <input type="submit" value="Buscar" formaction=@Url.Action("BuscarEstacion") formmethod="post" class="btn btn-raised btn-primary float-left" />
@@ -47,7 +55,7 @@
                                 <div class="col-sm-2">
                                     <b>Fecha de reporte:</b>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-3">
                                     @Html.LabelFor(model => model.FechaAplicacion, (string)((@ViewBag.CajaGeneralEstacion == null) ? "value" : @ViewBag.CajaGeneralEstacion[0].FechaAplicacion.ToString()), new { @class = "form-control" })
                                 </div>
                             </div>
@@ -62,12 +70,12 @@
                             </div>
                             <br />
                             <div class="row clearfix">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
                                     <div class="table-responsive">
 
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="col-lg-7 col-md-7 col-sm-7">
                                     <div class="table-responsive">
                                         <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
                                             <thead>
@@ -114,16 +122,32 @@
                                     </div><br />
                                     <div class="row clearfix">
                                         <div class="col-sm-7">
-                                            @*<input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-right" />*@
+                                            @*<input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("GuardarLiquidar") formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-right" />*@
                                         </div>
                                         <div class="col-sm-5">
-                                            <input type="submit" id="btnLiquidar" disabled value="Liquidar Camioneta" formaction=@Url.Action("GuardarLiquidar") formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                            <input type="submit" id="btnLiquidar" disabled value="Liquidar Estacion" formmethod="post" class="btn btn-raised btn-primary float-right" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    @if (ViewBag.MessageError != null)
+                {
+                        <div class="row clearfix">
+                            <div id="divMensajeError" class="container">
+                                <div class="alert alert-danger">
+                                    <div class="alert-icon">
+                                        <i class="zmdi zmdi-block"></i>
+                                    </div>
+                                    <strong>
+                                        <label>@ViewBag.MessageError</label>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </section>

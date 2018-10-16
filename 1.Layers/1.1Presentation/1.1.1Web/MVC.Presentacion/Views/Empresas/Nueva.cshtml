@@ -9,16 +9,6 @@
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/Empresas.js"></script>
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#RegresaIndex").click(function () {
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Empresas", Action = "Index" }) %>');
-            form.attr('method', 'post');
-        });
-    });
-
-</script>
 @using (Html.BeginForm((ViewBag.Empresas == null) ? "Crear" : "GuardaEdicionEmpresa", "Empresas", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <section class="content home">
@@ -372,7 +362,7 @@
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            <input type="submit" value="Regresar" id="RegresaIndex" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary float-left" />
+                            <input type="submit" value="Regresar" id="RegresaIndexNE" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary float-left" />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
@@ -389,7 +379,7 @@
                     </div>
                 </div>
             </div>
-            @if (ViewBag.MensajeError != null)
+            @if (ViewBag.MessageError != null)
                 {
                 <div class="row clearfix">
                     <div id="divMensajeError" class="container">
@@ -398,7 +388,7 @@
                                 <i class="zmdi zmdi-block"></i>
                             </div>
                             <strong>
-                                <label>@ViewBag.MensajeError</label>
+                                <label>@ViewBag.MessageError</label>
                             </strong>
                         </div>
                     </div>

@@ -29,34 +29,55 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGralId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).ToPagedList(Pagina, 20);
             }
 
-
-            //if (TempData["RespuestaDTO"] != null)
-            //{
-            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
-            //}
-            //if (TempData["RespuestaDTOError"] != null)
-            //{
-            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
-            //}
-            //ViewBag.MessageError = TempData["RespuestaDTOError"];
-            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.MessageExito = TempData["RespuestaDTO"];
+            }
+            if (TempData["RespuestaDTOError"] != null)
+            {
+                ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+                TempData["RespuestaDTOError"] = ViewBag.MessageError;
+            }
+            ViewBag.MessageError = TempData["RespuestaDTOError"];
 
             return View();
         }
 
-        public ActionResult Liquidar(CajaGeneralModel _ObjModel)
+        public ActionResult Liquidar()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
 
+            if (TempData["RespuestaCajaGral"] != null)
+            {
+                ViewBag.CajaGeneralCamioneta = TempData["RespuestaCajaGral"];
+            }
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.MessageExito = TempData["RespuestaDTO"];
+            }
+            if (TempData["RespuestaDTOError"] != null)
+            {
+                ViewBag.MensajeError = TempData["RespuestaDTOError"];
+            }
+            else
+            ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View();
         }
-        public ActionResult Buscar(CajaGeneralCamionetaModel _model)
+        public ActionResult Buscar(CajaGeneralCamionetaModel _model, int? page)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
-            ViewBag.CajaGeneralCamioneta = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia, _tkn);
-            return View("Liquidar");
+            var Pagina = page ?? 1;
+
+            ViewBag.CajaGeneralCamioneta = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia, _tkn).ToPagedList(Pagina, 10);
+            if (ViewBag.CajaGeneralCamioneta.Count == 0)
+            { TempData["RespuestaDTOError"] = "No existe la clave solicitada"; }
+            else
+            {
+                TempData["RespuestaCajaGral"] = ViewBag.CajaGeneralCamioneta;
+            }
+            return RedirectToAction("Liquidar");
         }
 
         public ActionResult Consultar(CajaGeneralModel _model, int? page)
@@ -64,13 +85,13 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             var Pagina = page ?? 1;
-            ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGralId(_model.IdEmpresa, _tkn).ToPagedList(Pagina, 20); ;
+            ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGralId(_model.IdEmpresa, _tkn).ToPagedList(Pagina, 20);
             ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
 
-            return View("Index", _model);
+            return View("Index");
         }
 
-        public ActionResult GuardarLiquidar(CajaGeneralModel _ObjModel)
+        public ActionResult GuardarLiquidar(CajaGeneralCamionetaModel _ObjModel)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tok = Session["StringToken"].ToString();
@@ -79,15 +100,15 @@ namespace MVC.Presentacion.Controllers
 
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index", _ObjModel);
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Liquidar");
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Index", _ObjModel);
+                TempData["RespuestaDTOError"] = respuesta;
+                return RedirectToAction("Liquidar");
             }
         }
 
@@ -96,17 +117,57 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
+            if (TempData["RespuestaCajaGralEst"] != null)
+            {
+                ViewBag.CajaGeneralEstacion = TempData["RespuestaCajaGralEst"];
+            }
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.MessageExito = TempData["RespuestaDTO"];
+            }
+            if (TempData["RespuestaDTOError"] != null)
+            {
+                ViewBag.MensajeError = TempData["RespuestaDTOError"];
+            }
+            ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View();
         }
 
-        public ActionResult BuscarEstacion(VentaCorteAnticipoModel _model)
+        public ActionResult BuscarEstacion(VentaCorteAnticipoModel _model, int? page)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
+            var Pagina = page ?? 1;
+            ViewBag.CajaGeneralEstacion = VentasServicio.ListaVentasCajaGralEstacion(_model.FolioOperacion, _tkn).ToPagedList(Pagina, 10);
 
-            ViewBag.CajaGeneralEstacion = VentasServicio.ListaVentasCajaGralEstacion(_model.FolioOperacion, _tkn);
-            return View("Estacion");
+            if (ViewBag.CajaGeneralEstacion.Count == 0)
+            {
+                TempData["RespuestaDTOError"] = "No existe la clave solicitada";
+            }
+            else { TempData["RespuestaCajaGralEst"] = ViewBag.CajaGeneralEstacion; }
+            return RedirectToAction("Estacion");
 
+        }
+
+        public ActionResult GuardarLiquidaEstacion(VentaCorteAnticipoModel _ObjModel)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+            string _tok = Session["StringToken"].ToString();
+
+            var respuesta = VentasServicio.GuardarLiquidacionEstacion(_ObjModel, _tok);
+
+            if (respuesta.Exito)
+            {
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
+                return RedirectToAction("Estacion");
+            }
+
+            else
+            {
+                TempData["RespuestaDTOError"] = respuesta;
+                return RedirectToAction("Estacion");
+            }
         }
 
         public ActionResult Pipa(int? page)

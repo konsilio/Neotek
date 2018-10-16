@@ -50,7 +50,15 @@
                                             <div>
                                                 <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Nombre + " " +ViewBag.IdUser[0].Apellido1 + " " +ViewBag.IdUser[0].Apellido2 )" />
                                                 <input type="text" name="IdUsuario" hidden="hidden" value="@ViewBag.IdUser[0].IdUsuario" readonly="readonly" id="IdUsuario" class="form-control" />
-                                            </div>
+                                                <input type="text" name="Nombre" hidden="hidden" value="@ViewBag.IdUser[0].Nombre" readonly="readonly" class="form-control" />
+                                                <input type="text" name="Apellido1" hidden="hidden" value="@ViewBag.IdUser[0].Apellido1" readonly="readonly" class="form-control" />
+                                                <input type="text" name="IdPais" hidden="hidden" value="@ViewBag.IdUser[0].IdPais" readonly="readonly" class="form-control" />
+                                                <input type="text" name="Municipio" hidden="hidden" value="@ViewBag.IdUser[0].Municipio" readonly="readonly" lass="form-control" />
+                                                <input type="text" name="CodigoPostal" hidden="hidden" value="@ViewBag.IdUser[0].CodigoPostal" readonly="readonly" class="form-control" />
+                                                <input type="text" name="Colonia" hidden="hidden" value="@ViewBag.IdUser[0].Colonia" readonly="readonly" class="form-control" />
+                                                <input type="text" name="Calle" hidden="hidden" value="@ViewBag.IdUser[0].Calle" readonly="readonly" class="form-control" />
+                                                <input type="text" name="NumExt" hidden="hidden" value="@ViewBag.IdUser[0].NumExt" readonly="readonly" class="form-control" />
+                                               </div>
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +118,7 @@
                                 <i class="zmdi zmdi-block"></i>
                             </div>
                             <strong>
-                                <label>@ViewBag.MensajeError</label>
+                                <label>@ViewBag.MessageError</label>
                             </strong>
                         </div>
                     </div>

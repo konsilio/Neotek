@@ -31,6 +31,7 @@ namespace MVC.Presentacion.Controllers
             if (TempData["RespuestaDTOError"] != null)
             {
                 ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+                TempData["RespuestaDTOError"] = ViewBag.MessageError;
             }
 
             ViewBag.MessageError = TempData["RespuestaDTOError"];
@@ -71,13 +72,13 @@ namespace MVC.Presentacion.Controllers
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index", _ojUs);
+                return RedirectToAction("Index");
             }
 
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;
-                return RedirectToAction("Nuevo", _ojUs);
+                return RedirectToAction("Nuevo");
             }
         }
 
@@ -108,7 +109,7 @@ namespace MVC.Presentacion.Controllers
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index", objUser);
+                return RedirectToAction("Index");
             }
 
             else
@@ -131,7 +132,8 @@ namespace MVC.Presentacion.Controllers
             }
             if (TempData["RespuestaDTOError"] != null)
             {
-                ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+                ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+                TempData["RespuestaDTOError"] = ViewBag.MessageError;
             }
 
             ViewBag.MessageError = TempData["RespuestaDTOError"];
@@ -187,13 +189,13 @@ namespace MVC.Presentacion.Controllers
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index", _Obj);
+                return RedirectToAction("Index");
             }
 
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;
-                return RedirectToAction("Nuevo", _Obj);
+                return RedirectToAction("Nuevo");
             }
 
         }

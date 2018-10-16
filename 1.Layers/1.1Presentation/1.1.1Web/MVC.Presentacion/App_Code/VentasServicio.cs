@@ -38,13 +38,20 @@ namespace MVC.Presentacion.App_Code
             return agente._listaCajaGralEstacion;
         }
 
-        public static RespuestaDTO CrearGuardarLiquidacion(CajaGeneralModel cc, string tkn)
+        public static RespuestaDTO CrearGuardarLiquidacion(CajaGeneralCamionetaModel cc, string tkn)
         {
             var agente = new AgenteServicio();
             agente.GuardarLiquidacion(cc, tkn);
             return agente._RespuestaDTO;
         }
-      
+
+        public static RespuestaDTO GuardarLiquidacionEstacion(VentaCorteAnticipoModel cc, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.GuardarLiquidacionEst(cc, tkn);
+            return agente._RespuestaDTO;
+        }
+
         #endregion
     }
 }
