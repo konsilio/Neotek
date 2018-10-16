@@ -26,11 +26,20 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenDataAccess().ActualizarAlmacenSalida(_almacen, prod);
         }
+        public static RespuestaDto Actualiza(Sagas.MainModule.Entidades.Almacen _almacen)
+        {
+            return new AlmacenDataAccess().Actualizar(_almacen);
+        }
         public static RespuestaDto EntradaAlmcacenProductos(List<Sagas.MainModule.Entidades.Almacen> _almacen, List<Sagas.MainModule.Entidades.Almacen> _almacenCrear, List<AlmacenEntradaProducto> prod)
         {
             return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, _almacenCrear, prod);
         }
         public static AlmacenEntradaProducto GenerarAlmacenEntradaProcuto(AlmacenEntradaDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
+        {
+            return AlmacenProductoAdapter.FromDTO(dto, idOC, _alm);
+        }
+
+        public static AlmacenSalidaProducto GenerarAlmacenSalidaProcuto(AlmacenSalidaProductoDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
         {
             return AlmacenProductoAdapter.FromDTO(dto, idOC, _alm);
         }

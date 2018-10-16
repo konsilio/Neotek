@@ -147,6 +147,29 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     uow.Repository<Sagas.MainModule.Entidades.Almacen>().Insert(_alm);
                     uow.SaveChanges();
                     _respuesta.Exito = true;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.A0001, "de la entrada de producto");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto Actualizar(Sagas.MainModule.Entidades.Almacen _alm)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.Almacen>().Update(_alm);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;
                     _respuesta.ModeloValido = true;
                     _respuesta.Mensaje = Exito.OK;

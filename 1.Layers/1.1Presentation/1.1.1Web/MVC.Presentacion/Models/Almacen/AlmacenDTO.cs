@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Application.MainModule.DTOs.Almacen
+namespace MVC.Presentacion.Models
 {
     public class AlmacenDTO
     {
@@ -15,7 +14,7 @@ namespace Application.MainModule.DTOs.Almacen
         public short IdProductoLinea { get; set; }
         public string Descripcion { get; set; }
         public string Categoria { get; set; }
-        public string ProductoLinea { get; set; }       
+        public string ProductoLinea { get; set; }
         public decimal Cantidad { get; set; }
         public string Ubicacion { get; set; }
         public DateTime FechaActualizacion { get; set; }
