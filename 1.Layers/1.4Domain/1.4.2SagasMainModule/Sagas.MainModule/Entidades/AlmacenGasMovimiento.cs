@@ -51,6 +51,8 @@ namespace Sagas.MainModule.Entidades
         public decimal EntradaLt { get; set; }
         public decimal SalidaKg { get; set; }
         public decimal SalidaLt { get; set; }
+        public decimal CantidadAnteriorKg { get; set; }
+        public decimal CantidadAnteriorLt { get; set; }
         public decimal CantidadActualKg { get; set; }
         public decimal CantidadActualLt { get; set; }
         public Nullable<decimal> CantidadAcumuladaDiaKg { get; set; }
@@ -59,6 +61,10 @@ namespace Sagas.MainModule.Entidades
         public Nullable<decimal> CantidadAcumuladaMesLt { get; set; }
         public Nullable<decimal> CantidadAcumuladaAnioKg { get; set; }
         public Nullable<decimal> CantidadAcumuladaAnioLt { get; set; }
+        public Nullable<decimal> PorcentajeAnterior { get; set; }
+        public Nullable<decimal> PorcentajeActual { get; set; }
+        public Nullable<decimal> P5000Anterior { get; set; }
+        public Nullable<decimal> P5000Actual { get; set; }
         public System.DateTime FechaAplicacion { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public decimal CantidadAnteriorGeneralKg { get; set; }
@@ -67,12 +73,12 @@ namespace Sagas.MainModule.Entidades
         public decimal CantidadActualGeneralLt { get; set; }
         public decimal PorcentajeAnteriorGeneral { get; set; }
         public decimal PorcentajeActualGeneral { get; set; }
-        public decimal CantidadAnteriorKg { get; set; }
-        public decimal CantidadAnteriorLt { get; set; }
+        public decimal CantidadAnteriorTotalKg { get; set; }
+        public decimal CantidadAnteriorTotalLt { get; set; }
         public decimal CantidadActualTotalKg { get; set; }
         public decimal CantidadActualTotalLt { get; set; }
-        public decimal PorcentajeAnterior { get; set; }
-        public decimal PorcentajeActual { get; set; }
+        public decimal PorcentajeAnteriorTotal { get; set; }
+        public decimal PorcentajeActualTotal { get; set; }
     
         public virtual AlmacenGasDescarga Descarga { get; set; }
         public virtual AlmacenGas Inventario { get; set; }

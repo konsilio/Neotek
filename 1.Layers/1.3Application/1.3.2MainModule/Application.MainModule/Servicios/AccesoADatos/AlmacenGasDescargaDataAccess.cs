@@ -94,10 +94,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     if (aplicacionDto.OCPorteador != null)
                         uow.Repository<OrdenCompra>().Update(aplicacionDto.OCPorteador);
 
-                    // Agregar al modelo de dominio AlmacenGasMovimiento
-                    //if (aplicacionDto.AGMovimiento != null)
-                    //    uow.Repository<AlmacenGasMovimiento>().Insert(aplicacionDto.MovInventario);
-
                     if (aplicacionDto.DescargaSinNavigationProperties != null)
                         uow.Repository<AlmacenGasDescarga>().Update(aplicacionDto.DescargaSinNavigationProperties);
 
@@ -105,7 +101,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                         aplicacionDto.DescargaFotos.ToList().ForEach(x =>
                             uow.Repository<AlmacenGasDescargaFoto>().Update(x)
                         );
-                        
+
+                    if (aplicacionDto.Movimiento != null)
+                        uow.Repository<AlmacenGasMovimiento>().Insert(aplicacionDto.Movimiento);
+                                        
                     uow.SaveChanges();
                     //_respuesta.Id = _almDes.IdAlmacenEntradaGasDescarga;
                     //_respuesta.Exito = true;

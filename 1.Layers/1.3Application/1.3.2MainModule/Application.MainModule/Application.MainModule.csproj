@@ -71,7 +71,10 @@
     <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
     <Compile Include="DTOs\Almacen\AplicaAutoConsumoDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaCalibracionDto.cs" />
+    <Compile Include="DTOs\Almacen\AplicaTomaLecturaDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaTraspasoDto.cs" />
+    <Compile Include="DTOs\Almacen\InventarioAnteriorDto.cs" />
+    <Compile Include="DTOs\Almacen\RemanenteDto.cs" />
     <Compile Include="DTOs\Catalogo\PrecioVentaEstatusDTO.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PrecioVentaGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
@@ -100,6 +103,7 @@
     <Compile Include="DTOs\ImagenDTO.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenSalidaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />
+    <Compile Include="Servicios\Almacen\RemanenteServicio.cs" />
     <Compile Include="Servicios\Compras\CalcularPagoServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraPagoServicio.cs" />
     <Compile Include="AdaptadoresDTO\Seguridad\RolAdapter.cs" />

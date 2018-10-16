@@ -14,8 +14,9 @@ namespace Sagas.MainModule.Entidades
     
     public partial class AlmacenEntradaProducto
     {
-        public int IdRequisicion { get; set; }
-        public int IdOrdenCompra { get; set; }
+        public int IdEntrada { get; set; }
+        public Nullable<int> IdRequisicion { get; set; }
+        public Nullable<int> IdOrdenCompra { get; set; }
         public int IdAlmacen { get; set; }
         public int IdProduto { get; set; }
         public int IdUsuarioRecibe { get; set; }
