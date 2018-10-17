@@ -15,5 +15,7 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal PorcentajeMedidor1 { get; set; }
         public decimal PorcentajeMedidor2 { get; set; }
         public List<string> Imagenes { get; set; }
+        public DateTime FechaRegistro { get; set; }
+        public int IdDestino { get; set; }
     }
 }

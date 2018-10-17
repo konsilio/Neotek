@@ -292,11 +292,11 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto Calibracion(CalibracionDto dto, bool esFinal)
         {
-            var resp = CalibracionServicio.EvaluarClaveOperacion(dto.ClaveOperacion);//Queda pendiente hacer la busqueda por clave de operacion
+            var resp = CalibracionServicio.EvaluarClaveOperacion(dto);
 
             if (resp.Exito) return resp;
 
-            return CalibracionServicio.Calibracion(dto,esFinal);//Queda pendiente hacer la respuesta del registro
+            return CalibracionServicio.Calibracion(dto,esFinal);
         }
 
         public DatosCalibracionDto CatalogoCalibracion(bool esEstacion, bool esPipa)
