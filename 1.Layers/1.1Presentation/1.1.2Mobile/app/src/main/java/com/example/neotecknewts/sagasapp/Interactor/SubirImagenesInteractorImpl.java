@@ -2508,6 +2508,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     }
 
     private void registrar_local_autoconsumo(SAGASSql sagasSql, AutoconsumoDTO autoconsumoDTO) {
+
     }
 
     //region Metodos de clase privados

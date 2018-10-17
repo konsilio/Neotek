@@ -59,6 +59,8 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_REPORTES = "reportes";
     private static final String TABLE_VENTAS = "ventas";
     private static final String TABLE_VENTAS_CONCEPTO = "ventas_conceptos";
+    private static final String TABLE_AUTOCONSUMO = "autoconsumos";
+    private static final String TABLE_AUTOCONSUMO_IMAGENES = "autoconsumos_imagenes";
 
     public static final String TIPO_RECARGA_CAMIONETA = "C";
     public static final String TIPO_RECARGA_ESTACION_CARBURACION =  "EC";
@@ -383,6 +385,18 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Falta BOOLEAN DEFAULT 1"+
                 ")");
         //endregion
+        //region Tabla de Autoconsumos
+        db.execSQL("CREATE TABLE "+TABLE_AUTOCONSUMO+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "IdAlmacenGasSalida INTEGER," +
+                "IdAlmacenGasEntrasa INTEGER," +
+                "P5000Salida INTEGER," +
+                "ClaveOperacion TEXT," +
+                "CantidadFotos INTEGER," +
+                "PorcentajeMedidor DOUBLE," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
     }
 
     /**
@@ -428,6 +442,8 @@ public class SAGASSql extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_RECARGAS_IMAGENES);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_VENTAS);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_VENTAS_CONCEPTO);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_AUTOCONSUMO);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_AUTOCONSUMO_IMAGENES);
         onCreate(db);
     }
     //endregion
@@ -1755,5 +1771,9 @@ public class SAGASSql extends SQLiteOpenHelper {
     /*public Long InsertReporte (String ){
 
     }*/
+    public Cursor GetAutoconsumo(String claveOperacion){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM " +TABLE_AUTOCONSUMO+"",
+                null);
+    }
     //endregion
 }
