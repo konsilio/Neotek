@@ -4,58 +4,13 @@
     ViewBag.Title = "Catálogo / Clientes";
 }
 
-<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+<script src="~/Resources/js/Clientes.js"></script>
 
-<script type="text/javascript">
-    $(function () {
-
-        $('select').on('change', function () {
-
-            if ($('#ddlTipopersona').find('option:selected').text() == 'Moral') {
-                $('#div_hideRP').show();
-                $('#div_hidePM').hide();
-                $('#hide_razonS').show();
-            }
-
-            if ($('#ddlTipopersona').find('option:selected').text() == 'Física') {
-                $('#div_hideRP').hide();
-                $('#hide_razonS').hide();
-            }
-
-            if ($('#ddlTipopersona').find('option:selected').text() == 'Seleccione') {
-                $('#div_hidePM').show();
-                $('#div_hideRP').show();
-                $('#hide_razonS').show();
-            }
-
-        });
-
-    });
-
-    $(document).ready(function () {
-        $("#btnGuardaEdicion").click(function () {
-
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "GuardaEdicionCliente" }) %>');
-            form.attr('method', 'post');
-        });
-        $("#btnRegresarIndex").click(function () {
-
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Clientes", Action = "Index" }) %>');
-            form.attr('method', 'post');
-        });
-
-    });
-</script>
 @using (Html.BeginForm("GuardarCliente", "Clientes", FormMethod.Post))
 {
     <section class="content home">
         <div class="container-fluid">
-
             <div class="row clearfix">
                 <div class="col-lg-7 col-md-7 col-sm-12">
                     <h3>&nbsp;Catálogo / Clientes</h3>
@@ -66,7 +21,7 @@
                     <div class="row clearfix">
                         <div class="col-sm-3">
                             <b>Gasera</b>
-                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                 @foreach (var lst in ViewBag.Empresas)
                                 {
                                     <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
@@ -74,7 +29,6 @@
                             </select>
                             @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -86,47 +40,47 @@
                         </div>
                         <div class="body">
                             <div class="row clearfix">
-                                <div class="row clearfix">
-                                    <div class="col-lg-4 col-md-4 col-sm-4">
-                                        <div class="form-group">
-                                            Tipo persona:*  <select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
-                                                <option value="0">Seleccione</option>
-                                                @foreach (var lst in ViewBag.TipoPersona)
-                                                {
-                                                    <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
-                                                }
-                                            </select>
-                                        </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        Tipo persona:*  <select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
+                                            <option value="0">Seleccione</option>
+                                            @foreach (var lst in ViewBag.TipoPersona)
+                                            {
+                                                <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
+                                            }
+                                        </select>
+                                        @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
                                     </div>
+                                </div>
 
-                                    <div class="col-lg-8 col-md-8 col-sm-8">
-                                        <div class="form-group">
-                                            Regimen Fiscal:*  <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
-                                                @foreach (var lst in ViewBag.Regimen)
-                                                {
-                                                    <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
-                                                }
-                                            </select>
-
-                                        </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                    <div class="form-group">
+                                        Regimen Fiscal:*  <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
+                                            @foreach (var lst in ViewBag.Regimen)
+                                            {
+                                                <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
+                                            }
+                                        </select>
+                                        @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">
 
+                            <div class="row clearfix">
                                 <div class="col-lg-8 col-md-8 col-sm-8">
                                     <div class="form-group" id="hide_razonS">
                                         Razón social:*
                                         <input type="text" name="RazonSocial" id="txtRS" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         Rfc:*
                                         <input type="text" name="Rfc" id="txtRfc" class="form-control" />
+                                        @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-
                             </div>
                             <div class="row clearfix" id="div_hideRP">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
@@ -139,10 +93,8 @@
                                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                                     <div class="form-group">
                                                         Nombre completo: <input type="text" name="RepresentanteLegal" id="txtNomCom" class="form-control" />
-
                                                     </div>
                                                 </div>
-
                                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                                     <div class="form-group">
                                                         <div>
@@ -151,18 +103,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                             <div class="row clearfix">
-
                                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                                     <div class="form-group">
                                                         Dirección:
                                                         <input type="text" name="Domicilio" id="txtNomCom" class="form-control" />
                                                     </div>
                                                 </div>
-
                                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                                     <div class="form-group">
                                                         Celular:
@@ -183,21 +131,19 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row clearfix" id="div_hidePM">
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         Nombres:* <input type="text" name="Nombre" class="form-control" />
-                                        @*<input id="IdCliente" type="text" name="IdCliente" hidden="hidden" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].IdCliente)" />*@
-
+                                        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
-
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
                                         <div>
                                             Apellido 1:*
                                             <input type="text" name="Apellido1" class="form-control" />
+                                            @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -248,7 +194,6 @@
                                         <div>
                                             Descuento $ x kilo:
                                             <input name="DescuentoXKilo" type="number" />
-                                            @*step="0.0001" pattern="[0-9]+([\,|\.][0-9]+)?"*@
                                         </div>
                                     </div>
                                 </div>
@@ -269,7 +214,6 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="form-group">
                                         <div class="col-lg-8 col-md-8 col-sm-8">
-                                            @*<input type="checkbox" id="checkAcceso" name="AccesoPortal" />*@
                                             @Html.CheckBoxFor(m => m.AccesoPortal)
                                             <label for="checkAcceso">
                                                 Acceso al portal de facturación
@@ -404,19 +348,18 @@
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            <input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-left" />
+                            <input type="submit" value="Regresar" id="btnRegresarIndexNC" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-left" />
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-7">
                         <div class="form-group">
-
                             <input type="submit" value="Crear" formaction="GuardarCliente" formmethod="post" class="btn btn-raised btn-primary float-right" />
 
                         </div>
                     </div>
                 </div>
             </div>
-            @if (ViewBag.MensajeError != null)
+            @if (ViewBag.MessageError != null)
                 {
                 <div class="row clearfix">
                     <div id="divMensajeError" class="container">
@@ -425,7 +368,7 @@
                                 <i class="zmdi zmdi-block"></i>
                             </div>
                             <strong>
-                                <label>@ViewBag.MensajeError</label>
+                                <label>@ViewBag.MessageError</label>
                             </strong>
                         </div>
                     </div>
@@ -434,10 +377,3 @@
         </div>
     </section>
 }
-<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
-<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

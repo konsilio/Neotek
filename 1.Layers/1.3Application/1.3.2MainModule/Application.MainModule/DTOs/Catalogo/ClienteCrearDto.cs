@@ -12,26 +12,29 @@ namespace Application.MainModule.DTOs.Catalogo
   public class ClienteCrearDto
     {        
         public int IdCliente { get; set; }
+        public short Orden { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdEmpresa")]
         public short IdEmpresa { get; set; }
 
-      
+        [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdTipoPersona")]
         public Nullable<byte> IdTipoPersona { get; set; }
 
-    
+        [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "IdRegimenFiscal")]
         public Nullable<short> IdRegimenFiscal { get; set; }
 
         [Display(Name = "IdCuentaContable")]
         public Nullable<int> IdCuentaContable { get; set; }
 
+        //[Required(ErrorMessage = Error.R0002)]
         [StringLength(100, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
+        //[Required(ErrorMessage = Error.R0002)]
         [StringLength(80, MinimumLength = 1, ErrorMessage = Error.R0004)]
         [Display(Name = "Apellido1")]
         public string Apellido1 { get; set; }

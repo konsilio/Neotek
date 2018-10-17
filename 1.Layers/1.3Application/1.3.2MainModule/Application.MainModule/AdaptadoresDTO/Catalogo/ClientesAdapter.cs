@@ -100,11 +100,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         }
       
         public static ClienteLocacion FromDtox(ClienteLocacionDTO cteDTO)
-        {
+        {           
             return new ClienteLocacion()
             {
                 IdCliente = cteDTO.IdCliente,
-                Orden = cteDTO.Orden,
+                Orden = (short)(cteDTO.Orden + 1),
                 IdPais = cteDTO.IdPais,
                 IdEstadoRep = cteDTO.IdEstadoRep,
                 EstadoProvincia = cteDTO.EstadoProvincia,
@@ -118,7 +118,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 location_lat = "1",//cteDTO.location_lat,
                 location_lng = "1",//cteDTO.location_lng,
                 place_id = "1",//cteDTO.place_id,
-                TipoLocacion = "1"//cteDTO.TipoLocacion,
+                TipoLocacion = cteDTO.TipoLocacion,
             };
         }
         public static ClienteLocacion FromDtocteLoc(ClienteLocacionDTO cteDTO)

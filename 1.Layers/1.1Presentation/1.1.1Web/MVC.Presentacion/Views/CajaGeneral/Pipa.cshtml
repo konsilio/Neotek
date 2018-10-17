@@ -1,4 +1,4 @@
-﻿@model  MVC.Presentacion.Models.Ventas.CajaGeneralModel
+﻿@model  MVC.Presentacion.Models.Ventas.CajaGeneralCamionetaModel
 
 <!DOCTYPE html>
 
@@ -7,39 +7,19 @@
     @{
         ViewBag.Title = "Index";
     }
-    <style type="text/css">
-        .col-sm-05 {
-            -webkit-box-flex: 0;
-            -ms-flex: 0 0 16.666667%;
-            flex: 0 0 16.666667%;
-            max-width: 8.666667%;
-            text-align: center;
-        }
-
-        .col-sm-005 {
-            -webkit-box-flex: 0;
-            -ms-flex: 0 0 16.666667%;
-            flex: 0 0 16.666667%;
-            max-width: 10.666667%;
-            text-align: center;
-        }
-    </style>
+    <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="~/assets/js/pages/ui/notifications.js"></script>
+    <script src="~/Resources/js/CajaGeneral.js"></script>
+    <link href="~/Resources/css/CreateForm.css" rel="stylesheet" />
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#Chkboxcorrecto').click(function () {
-                if (!$(this).is(':checked')) {
-                    $("#btnLiquidar").prop("disabled", true);
-                }
-                else {
-                    $("#btnLiquidar").prop("disabled", false);
-                }
-
-            });
-        });
+        var message = '@ViewBag.MessageExito';
+        if (message != '') {
+            $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
+        }
     </script>
 </head>
 <body style="height:100%">
-    @using (Html.BeginForm("Corte", "CajaGeneral", FormMethod.Post))
+    @using (Html.BeginForm("GuardarLiquidar", "CajaGeneral", FormMethod.Post))
     {
         <section class="content home">
             <div class="container-fluid">
@@ -51,10 +31,10 @@
                                     <b>Clave Reporte:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" name="Clave" class="form-control" />
+                                    <input type="text" name="FolioOperacionDia" class="form-control" />
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="submit" value="Buscar" formmethod="post" class="btn btn-raised btn-primary float-left" />
+                                    <input type="submit" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary float-left" />
                                 </div>
                             </div>
                         </div>
@@ -66,20 +46,20 @@
                                 <div class="col-sm-1">
                                     <b>Operador:</b>
                                 </div>
-                                <div class="col-sm-2">
-                                    @Html.LabelFor(model => model.Operador, (string)((@ViewBag.CajaGeneral == null) ? "value" : @ViewBag.IdCliente[0].CajaGeneral), new { @class = "form-control" })
+                                <div class="col-sm-3">
+                                    @Html.LabelFor(model => model.OperadorChofer, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].OperadorChofer), new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-05">
                                     <b>Pipa:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.Label("Camioneta", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.PuntoVenta, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].PuntoVenta), new { @class = "form-control" })
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-005">
                                     <b>Fecha de reporte:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.Label("FechaReporte", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.FechaRegistro, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].FechaRegistro.ToString()), new { @class = "form-control" })
                                 </div>
                             </div>
                             <br />
@@ -88,25 +68,25 @@
                                     <b>Venta total:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.Label("VentaTotal", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.VentaTotal, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].VentaTotal.ToString()), new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-005">
                                     <b>Venta en efectivo:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.Label("VentaEfectivo", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.VentaTotalContado, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].VentaTotalContado.ToString()), new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-005">
                                     <b>Venta a crédito:</b>
                                 </div>
                                 <div class="col-sm-2">
-                                    @Html.Label("VentaCredito", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.VentaTotalCredito, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].VentaTotalCredito.ToString()), new { @class = "form-control" })
                                 </div>
                                 <div class="col-sm-05">
                                     <b>Otras ventas:</b>
                                 </div>
                                 <div class="col-sm-05">
-                                    @Html.Label("OtrasVentas", "value", new { @class = "form-control" })
+                                    @Html.LabelFor(model => model.OtrasVentas, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].OtrasVentas.ToString()), new { @class = "form-control" })
                                 </div>
                             </div>
                             <br />
@@ -155,20 +135,20 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @*@if (ViewBag.ListaPV != null)
+                                                @if (ViewBag.CajaGeneralCamioneta != null)
+                                                {
+                                                    foreach (var item in ViewBag.CajaGeneralCamioneta)
                                                     {
-                                                        foreach (var item in ViewBag.ListaPV)
-                                                        {
-                                                            <tr>
-                                                                <td>@item.Empresa</td>
-                                                                <td>@item.PrecioPemexKg</td>
-                                                                <td>@item.UtilidadEsperadaKg</td>
-                                                                <td>@item.PrecioSalidaKg</td>
-                                                                <td>@item.FechaProgramada</td>
-                                                                <td>@item.Total</td>
-                                                            </tr>
-                                                        }
-                                                    }*@
+                                                <tr>
+                                                    <td>@item.FolioOperacionDia</td>
+                                                    <td>Contado</td>
+                                                    <td>@item.Descuento</td>
+                                                    <td>@item.Subtotal</td>
+                                                    <td>@item.Iva</td>
+                                                    <td>@item.Total</td>
+                                                </tr>
+                                                    }
+                                                }
                                             </tbody>
                                         </table>
                                     </div><br />
@@ -177,7 +157,7 @@
                                             <b>Descuento:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            <input type="text" name="Clave" class="form-control" />
+                                            @Html.LabelFor(model => model.Descuento, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].Descuento.ToString()), new { @class = "form-control" })
                                         </div>
                                     </div><br />
                                     <div class="row clearfix">
@@ -185,7 +165,7 @@
                                             <b>Total:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            <input type="text" name="Total" class="form-control" />
+                                            @Html.LabelFor(model => model.Total, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].Total.ToString()), new { @class = "form-control" })
                                         </div>
                                     </div><br />
                                     <div class="row clearfix">
@@ -193,7 +173,7 @@
                                             <b>Efectivo a recibir:</b>
                                         </div>
                                         <div class="col-sm-4">
-                                            <input type="text" name="Efectivo" class="form-control" />
+                                            @Html.LabelFor(model => model.VentaTotalContado, (string)((@ViewBag.CajaGeneralCamioneta == null) ? "value" : @ViewBag.CajaGeneralCamioneta[0].VentaTotalContado.ToString()), new { @class = "form-control" })
                                         </div>
                                     </div><br />
                                     <div class="row clearfix">
@@ -206,7 +186,7 @@
                                     </div><br />
                                     <div class="row clearfix">
                                         <div class="col-sm-7">
-                                            <input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-right" />
+                                            @*<input type="submit" value="Regresar" id="btnRegresarIndex" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-right" />*@
                                         </div>
                                         <div class="col-sm-5">
                                             <input type="submit" id="btnLiquidar" disabled value="Liquidar Camioneta" formaction=@Url.Action("GuardarLiquidar") formmethod="post" class="btn btn-raised btn-primary float-right" />
@@ -216,36 +196,10 @@
                             </div>
                         </div>
                     </div>
-                    @if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
-                {
-
-                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
-                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                         bottom: 20px; left: 0px; right: 0px;">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
-                            <span data-notify="icon"></span>
-                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
-                            <a href="#" target="_blank" data-notify="url"></a>
-                        </div>
-                    }
-                    @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
-                {
-                        <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
-                             role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                         bottom: 20px; left: 0px; right: 0px;">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
-                            <span data-notify="icon"></span>
-                            <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
-                        </div>
-                    }
-
                 </div>
             </div>
         </section>
     }
 
 </body>
-
-@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
-@Scripts.Render("~/Scripts/jquery-ui.js")
 </html>

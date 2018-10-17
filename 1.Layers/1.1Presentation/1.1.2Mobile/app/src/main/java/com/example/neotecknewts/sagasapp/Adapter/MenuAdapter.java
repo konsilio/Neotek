@@ -239,7 +239,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsPrimeraParteTraspaso",true);
                     view.getContext().startActivity(intent);
                 }else if(menuItem.getHeaderMenu().equals("Traspaso - Gas") &&
-                        menuItem.getName().equals("Estación Crb. (Final)")){
+                        menuItem.getName().equals("Estación Carb. (Final)")){
                     Intent intent = new Intent(view.getContext(),
                             TraspasoEstacionActivity.class);
                     intent.putExtra("EsTraspasoEstacionInicial",false);

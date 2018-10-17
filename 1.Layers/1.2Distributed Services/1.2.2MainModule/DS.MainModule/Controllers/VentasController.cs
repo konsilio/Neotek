@@ -1,4 +1,5 @@
-﻿using Application.MainModule.Flujos;
+﻿using Application.MainModule.DTOs.Ventas;
+using Application.MainModule.Flujos;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -32,6 +33,24 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetListaCajaGralCamioneta(string cve)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneralCamioneta(cve));
+        }
+
+        [Route("buscar/listacajageneralestacion/{cve}")]
+        public HttpResponseMessage GetListaCajaGeneralEstacion(string cve)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.CajaGeneralEstacion(cve));
+        }
+
+        [Route("Modifica/liquidarcajageneral")]
+        public HttpResponseMessage PutLiquidarReporte(VentaPuntoVentaDTO vpvDto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.GuardarReporteLiquidado(vpvDto));
+        }
+
+        [Route("Modifica/liquidarcajageneralest")]
+        public HttpResponseMessage PutLiquidarReporteEstacion(VentaCorteAnticipoDTO cestDto)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _ventas.GuardarReporteLiquidadoEst(cestDto));
         }
         #endregion
     }
