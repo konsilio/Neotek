@@ -7,15 +7,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net;
 //using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Web;
 using Utilities.MainModule;
 //using System.Web.Script.Serialization;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
-using MVC.Presentacion.Models.Ventas;
 
 namespace MVC.Presentacion.App_Code
 {
@@ -1381,6 +1377,7 @@ namespace MVC.Presentacion.App_Code
             return agente._listaTipoProveedor;
         }
         #endregion
+
         #region Banco
         public static List<BancoDTO> ListaBanco(string tkn)
         {
@@ -1389,6 +1386,7 @@ namespace MVC.Presentacion.App_Code
             return agente._listaBanco;
         }
         #endregion
+
         #region Forma de Pago
         public static List<FormaPagoDTO> ListaFormaPago(string tkn)
         {

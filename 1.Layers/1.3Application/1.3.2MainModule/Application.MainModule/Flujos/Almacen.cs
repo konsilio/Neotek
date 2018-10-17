@@ -7,6 +7,7 @@ using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Requisicion;
 using Sagas.MainModule.Entidades;
+using System;
 using System.Collections.Generic;
 
 namespace Application.MainModule.Flujos
@@ -24,8 +25,8 @@ namespace Application.MainModule.Flujos
                 var _Almacen = ProductoAlmacenServicio.ObtenerAlmacen(prod.IdProducto, dto.IdEmpresa);
                 if (_Almacen == null)
                 {
-                    var nuevoAlmacen = ProductoAlmacenServicio.GenaraAlmacenNuevo(prod.IdProducto, dto.IdEmpresa, prod.Cantidad );
-                    nuevoAlmacen = ProductoAlmacenServicio.GenerarAlmacenConEntradaProcuto(prod, dto.IdOrdenCompra, nuevoAlmacen);                    
+                    var nuevoAlmacen = ProductoAlmacenServicio.GenaraAlmacenNuevo(prod.IdProducto, dto.IdEmpresa, prod.Cantidad);
+                    nuevoAlmacen = ProductoAlmacenServicio.GenerarAlmacenConEntradaProcuto(prod, dto.IdOrdenCompra, nuevoAlmacen);
                     _almacenCrear.Add(nuevoAlmacen);
                 }
                 else
@@ -54,28 +55,36 @@ namespace Application.MainModule.Flujos
         {
             //Validar Permisos
 
-            var prods = ProductoAlmacenServicio.Buscar(idEmpresa);
+            var prods = ProductoAlmacenServicio.BuscarAlmacen(idEmpresa);
             return AlmacenProductoAdapter.ToDTO(prods);
         }
         public RespuestaDto ActualizarAlmacen(AlmacenDTO dto)
         {
             //Validar permisos
-            var almacen = ProductoAlmacenServicio.ObtenerAlmacen(dto.IdProduto ,dto.IdEmpresa);
+            var almacen = ProductoAlmacenServicio.ObtenerAlmacen(dto.IdProducto, dto.IdEmpresa);
             var entity = ProductoAlmacenServicio.AlmacenEntity(almacen);
-            var prod = ProductoServicio.ObtenerProducto(dto.IdProduto);
-
+            var prod = ProductoServicio.ObtenerProducto(dto.IdProducto);
+            entity.Ubicacion = dto.Ubicacion;
+            entity.FechaActualizacion = DateTime.Now;
+            RespuestaDto resp = new RespuestaDto();
+            if (dto.Cantidad < entity.Cantidad)
+            {
+                entity.Cantidad = dto.Cantidad;
+                var SalidaProd = ProductoAlmacenServicio.GenerarAlmacenSalidaProcuto(new AlmacenSalidaProductoDTO { IdProducto = dto.IdProducto, Cantidad = dto.Cantidad }, 0, almacen);
+                resp = ProductoAlmacenServicio.SalidaAlmcacenProductos(entity, SalidaProd);
+            }
             if (dto.Cantidad > entity.Cantidad)
             {
-                //ProductoAlmacenServicio.SalidaAlmcacenProductos();
+                entity.Cantidad = dto.Cantidad;
+                var EntradaProd = ProductoAlmacenServicio.GenerarAlmacenEntradaProcuto(new AlmacenEntradaDTO { IdProducto = dto.IdProducto, Cantidad = dto.Cantidad }, 0, almacen);
+                resp = ProductoAlmacenServicio.EntradaAlmcacenProductos(entity, EntradaProd);
             }
-            else
+            if (dto.Cantidad.Equals(entity.Cantidad))
             {
-                entity.Cantidad = dto.Cantidad;              
-                var EntradaProd = ProductoAlmacenServicio.GenerarAlmacenEntradaProcuto(new AlmacenEntradaDTO {  }, 0, almacen);
-                ProductoAlmacenServicio.EntradaAlmcacenProductos(entity, EntradaProd);
+                resp = ProductoAlmacenServicio.Actualiza(entity);
             }
-             
-            return new RespuestaDto();
+            return resp;
         }
+
     }
 }

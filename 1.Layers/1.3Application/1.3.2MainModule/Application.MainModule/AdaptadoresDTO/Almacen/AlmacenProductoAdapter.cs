@@ -7,8 +7,7 @@ using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Sagas.MainModule.ObjetosValor.Constantes;
 
 namespace Application.MainModule.AdaptadoresDTO.Almacen
 {
@@ -44,6 +43,18 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 Aplicacion = prod.Aplicacion
             };
         }
+        public static AlmacenEntradaDTO ToDTO(AlmacenEntradaProducto prod)
+        {
+            return new AlmacenEntradaDTO()
+            {
+                IdProducto = prod.IdProducto,
+                TipoProducto = prod.Productos.TipoServicioOProducto.Nombre,
+                Descripcion = prod.Productos.Descripcion,
+                Requeridos = prod.Cantidad,
+                UnidadMedida = prod.Productos.UnidadMedida.Descripcion,
+                Observaciones = prod.Observaciones_
+            };
+        }
         public static List<AlmacenEntradaDTO> ToDTO(List<RequisicionProducto> prod)
         {
             return prod.Select(x => ToDTO(x)).ToList();
@@ -51,20 +62,68 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
         public static AlmacenEntradaProducto FromDTO(AlmacenEntradaDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
         {
             var oc = new OrdenCompraDataAccess().Buscar(idOC);
-            return new AlmacenEntradaProducto()
+            if (oc != null)
             {
-                IdOrdenCompra = idOC,
-                IdRequisicion = oc.IdRequisicion,
-                IdAlmacen = _alm.IdAlmacen,
-                IdProduto = dto.IdProducto,
-                IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
-                Cantidad = dto.Cantidad,
-                Observaciones_ = idOC.Equals(0) ? "Actualizacion" : oc.NumOrdenCompra,
-                FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
-                FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
-            };
+                return new AlmacenEntradaProducto()
+                {
+                    IdOrdenCompra = idOC,
+                    IdRequisicion = oc.IdRequisicion,
+                    IdAlmacen = _alm.IdAlmacen,
+                    IdProducto = dto.IdProducto,
+                    IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
+                    Cantidad = dto.Cantidad,
+                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
+                    FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
+                    FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
+                };
+            }
+            else
+            {
+                return new AlmacenEntradaProducto()
+                {                    
+                    IdAlmacen = _alm.IdAlmacen,
+                    IdProducto = dto.IdProducto,
+                    IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
+                    Cantidad = dto.Cantidad,
+                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
+                    FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
+                    FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
+                };
+            }           
         }
-
+        public static AlmacenSalidaProducto FromDTO(AlmacenSalidaProductoDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
+        {            
+            var oc = new OrdenCompraDataAccess().Buscar(idOC);
+            if (oc != null)
+            {
+                return new AlmacenSalidaProducto()
+                {
+                    IdRequisicion = oc.IdRequisicion,
+                    IdAlmacen = _alm.IdAlmacen,
+                    IdProducto = dto.IdProducto,
+                    IdUsuarioEntrega = dto.IdUsuarioEntrega,
+                    IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
+                    Cantidad = dto.Cantidad,
+                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
+                    FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
+                    FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
+                };
+            }
+            else
+            {
+                return new AlmacenSalidaProducto()
+                {                   
+                    IdAlmacen = _alm.IdAlmacen,
+                    IdProducto = dto.IdProducto,
+                    IdUsuarioEntrega = TokenServicio.ObtenerIdUsuario(),
+                    IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
+                    Cantidad = dto.Cantidad,
+                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
+                    FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
+                    FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
+                };
+            }
+        }
         public static AlmacenDTO ToDTO(Sagas.MainModule.Entidades.Almacen entidad)
         {
             var prod = ProductoServicio.ObtenerProducto(entidad.IdProduto);
@@ -72,7 +131,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
             {
                 IdAlmacen = entidad.IdAlmacen,
                 IdEmpresa = entidad.IdEmpresa,
-                IdProduto = entidad.IdProduto,
+                IdProducto = entidad.IdProduto,
                 Cantidad = entidad.Cantidad,
                 Ubicacion = entidad.Ubicacion,
                 FechaRegistro = entidad.FechaRegistro,

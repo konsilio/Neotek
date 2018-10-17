@@ -12,7 +12,6 @@ namespace MVC.Presentacion.App_Code
         {
             return TokenGenerator.GetClaimsIdentityFromJwtSecurityToken(token);
         }
-
         public static short ObtenerIdEmpresa(string token)
         {
             var claims = ObtenerClaims(token);
@@ -21,7 +20,6 @@ namespace MVC.Presentacion.App_Code
             int idEmpresa = Empresa != null ? Convert.ToInt32(Empresa.Value) : 0;
             return (short)idEmpresa;
         }
-
         public static int ObtenerIdUsuario(string token)
         {
             var claims = ObtenerClaims(token);

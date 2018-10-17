@@ -18,10 +18,12 @@ namespace Sagas.MainModule.Entidades
         public Nullable<int> IdRequisicion { get; set; }
         public byte Orden { get; set; }
         public int IdAlmacen { get; set; }
-        public int IdProduto { get; set; }
+        public int IdProducto { get; set; }
         public int IdUsuarioEntrega { get; set; }
         public int IdUsuarioRecibe { get; set; }
         public decimal Cantidad { get; set; }
+        public decimal CantidadAnterior { get; set; }
+        public decimal CantidadFinal { get; set; }
         public string UrlDocSalida { get; set; }
         public string PathDocSalida { get; set; }
         public string Observaciones_ { get; set; }
@@ -33,5 +35,6 @@ namespace Sagas.MainModule.Entidades
         public virtual Requisicion Requisiciones { get; set; }
         public virtual Usuario UsuarioEntrega { get; set; }
         public virtual Usuario UsuarioRecibe { get; set; }
+        public virtual Producto CProducto { get; set; }
     }
 }
