@@ -33,7 +33,6 @@ namespace Application.MainModule.Servicios.Mobile
 
             adapter.IdOrden = Orden(al);
             adapter.Fotografias = AlmacenLecturaAdapter.FromDTO(liadto.Imagenes,adapter.IdCAlmacenGas,adapter.IdOrden);
-            
             adapter.IdTipoEvento = finalizar ? TipoEventoEnum.Final: TipoEventoEnum.Inicial;
             adapter.EsEncargadoAnden = false;
             adapter.EsEncargadoPuerta = false;

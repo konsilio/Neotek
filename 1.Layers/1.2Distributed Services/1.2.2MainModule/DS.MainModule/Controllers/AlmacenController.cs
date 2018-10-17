@@ -31,5 +31,20 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.BuscarOrdenCompra(IdOrdenCompra));
         }
+        [Route("buscar/productos/{idEmpresa}")]
+        public HttpResponseMessage GetProductosAlmacen(short idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.ProductosAlmacen(idEmpresa));
+        }
+        //[Route("salida/producto")]
+        //public HttpResponseMessage PostGuardarSalida(AlmacenSalidaProductoDTO Entradas)
+        //{
+        //    return RespuestaHttp.crearRespuesta(_almacen.GenerarSalidaProducto(Entradas), Request);
+        //}
+        [Route("actualiza/almacenproducto")]
+        public HttpResponseMessage PostActulizarAlmacenProducto(AlmacenDTO Update)
+        {
+            return RespuestaHttp.crearRespuesta(_almacen.ActualizarAlmacen(Update), Request);
+        }
     }
 }

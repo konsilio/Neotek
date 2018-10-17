@@ -14,12 +14,15 @@ namespace Sagas.MainModule.Entidades
     
     public partial class AlmacenEntradaProducto
     {
-        public int IdRequisicion { get; set; }
-        public int IdOrdenCompra { get; set; }
+        public int IdEntrada { get; set; }
+        public Nullable<int> IdRequisicion { get; set; }
+        public Nullable<int> IdOrdenCompra { get; set; }
         public int IdAlmacen { get; set; }
-        public int IdProduto { get; set; }
+        public int IdProducto { get; set; }
         public int IdUsuarioRecibe { get; set; }
         public decimal Cantidad { get; set; }
+        public decimal CantidadAnterior { get; set; }
+        public decimal CantidadFinal { get; set; }
         public string UrlDocEntrada { get; set; }
         public string PathDocEntrada { get; set; }
         public string Observaciones_ { get; set; }
@@ -31,5 +34,6 @@ namespace Sagas.MainModule.Entidades
         public virtual OrdenCompra OrdenesCompra { get; set; }
         public virtual Requisicion Requisiciones { get; set; }
         public virtual Usuario UsuarioRecibe { get; set; }
+        public virtual Producto CProducto { get; set; }
     }
 }

@@ -90,15 +90,17 @@
         </EntityType>
         <EntityType Name="AlmacenEntradaProducto">
           <Key>
-            <PropertyRef Name="IdRequisicion" />
-            <PropertyRef Name="IdOrdenCompra" />
+            <PropertyRef Name="IdEntrada" />
           </Key>
-          <Property Name="IdRequisicion" Type="int" Nullable="false" />
-          <Property Name="IdOrdenCompra" Type="int" Nullable="false" />
+          <Property Name="IdEntrada" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdAlmacen" Type="int" Nullable="false" />
-          <Property Name="IdProduto" Type="int" Nullable="false" />
+          <Property Name="IdRequisicion" Type="int" />
+          <Property Name="IdOrdenCompra" Type="int" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
           <Property Name="IdUsuarioRecibe" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CantidadAnterior" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CantidadFinal" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="UrlDocEntrada" Type="varchar" MaxLength="350" />
           <Property Name="PathDocEntrada" Type="varchar" MaxLength="350" />
           <Property Name="Observaciones " Type="varchar" MaxLength="250" />
@@ -447,16 +449,18 @@
         </EntityType>
         <EntityType Name="AlmacenSalidaProducto">
           <Key>
-            <PropertyRef Name="IdRequisicion" />
-            <PropertyRef Name="Orden" />
+            <PropertyRef Name="IdSalida" />
           </Key>
-          <Property Name="IdRequisicion" Type="int" Nullable="false" />
+          <Property Name="IdSalida" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Orden" Type="tinyint" Nullable="false" />
+          <Property Name="IdRequisicion" Type="int" />
           <Property Name="IdAlmacen" Type="int" Nullable="false" />
-          <Property Name="IdProduto" Type="int" Nullable="false" />
+          <Property Name="IdProducto" Type="int" Nullable="false" />
           <Property Name="IdUsuarioEntrega" Type="int" Nullable="false" />
           <Property Name="IdUsuarioRecibe" Type="int" Nullable="false" />
           <Property Name="Cantidad" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CantidadAnterior" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CantidadFinal" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="UrlDocSalida" Type="varchar" MaxLength="350" />
           <Property Name="PathDocSalida" Type="varchar" MaxLength="350" />
           <Property Name="Observaciones " Type="varchar" MaxLength="250" />
@@ -1918,12 +1922,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="IdProducto" />
             </Principal>
             <Dependent Role="AlmacenEntradaProducto">
-              <PropertyRef Name="IdProduto" />
+              <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AlmacenEntradaProducto_OrdenCompra">
-          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="1" />
+          <End Role="OrdenCompra" Type="Self.OrdenCompra" Multiplicity="0..1" />
           <End Role="AlmacenEntradaProducto" Type="Self.AlmacenEntradaProducto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OrdenCompra">
@@ -1935,7 +1939,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AlmacenEntradaProducto_Requisicion">
-          <End Role="Requisicion" Type="Self.Requisicion" Multiplicity="1" />
+          <End Role="Requisicion" Type="Self.Requisicion" Multiplicity="0..1" />
           <End Role="AlmacenEntradaProducto" Type="Self.AlmacenEntradaProducto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Requisicion">
@@ -2410,12 +2414,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="IdProducto" />
             </Principal>
             <Dependent Role="AlmacenSalidaProducto">
-              <PropertyRef Name="IdProduto" />
+              <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AlmacenSalidaProducto_Requisicion">
-          <End Role="Requisicion" Type="Self.Requisicion" Multiplicity="1" />
+          <End Role="Requisicion" Type="Self.Requisicion" Multiplicity="0..1" />
           <End Role="AlmacenSalidaProducto" Type="Self.AlmacenSalidaProducto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Requisicion">
@@ -6620,6 +6624,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="VentaPuntoDeVenta" EntitySet="VentaPuntoDeVenta" />
             <End Role="VentaPuntoDeVentaDetalle" EntitySet="VentaPuntoDeVentaDetalle" />
           </AssociationSet>
+          <AssociationSet Name="FK_AlmacenEntradaProducto_CProducto" Association="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_CProducto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="AlmacenEntradaProducto" EntitySet="AlmacenEntradaProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenSalidaProducto_CProducto" Association="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_CProducto">
+            <End Role="Producto" EntitySet="Producto" />
+            <End Role="AlmacenSalidaProducto" EntitySet="AlmacenSalidaProducto" />
+          </AssociationSet>
           <!--<AssociationSet Name="FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo1" Association="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo1">
             <End Role="AlmacenGasAutoConsumo" EntitySet="AlmacenGasAutoConsumo" />
             <End Role="AlmacenGasAutoConsumoFoto" EntitySet="AlmacenGasAutoConsumoFoto" />
@@ -6916,6 +6928,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="OrdenCompraProducto" Relationship="Sagas.MainModuleModel.FK_OrdenCompraProducto_CProducto" FromRole="Producto" ToRole="OrdenCompraProducto" />          
           <NavigationProperty Name="CuentaContable" Relationship="Sagas.MainModuleModel.FK_CProducto_CCuentaContable" FromRole="Producto" ToRole="CuentaContable" />
           <NavigationProperty Name="PrecioVenta" Relationship="Sagas.MainModuleModel.FK_CPrecioVenta_CProducto" FromRole="Producto" ToRole="PrecioVenta" />
+          <NavigationProperty Name="AlmacenEntradaProducto" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_CProducto" FromRole="Producto" ToRole="AlmacenEntradaProducto" />
+          <NavigationProperty Name="AlmacenSalidaProducto" Relationship="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_CProducto" FromRole="Producto" ToRole="AlmacenSalidaProducto" />
                  
         </EntityType>
         <EntityType Name="CategoriaProducto">
@@ -7799,15 +7813,17 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
         </EntityType>
         <EntityType Name="AlmacenEntradaProducto">
           <Key>
-            <PropertyRef Name="IdRequisicion" />
-            <PropertyRef Name="IdOrdenCompra" />        
+            <PropertyRef Name="IdEntrada" />        
           </Key>
-          <Property Name="IdRequisicion" Type="Int32" Nullable="false" />
-          <Property Name="IdOrdenCompra" Type="Int32" Nullable="false" />
+          <Property Name="IdEntrada" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRequisicion" Type="Int32" />
+          <Property Name="IdOrdenCompra" Type="Int32" />
           <Property Name="IdAlmacen" Type="Int32" Nullable="false" />
-          <Property Name="IdProduto" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
           <Property Name="IdUsuarioRecibe" Type="Int32" Nullable="false" />
           <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CantidadAnterior" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CantidadFinal" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="UrlDocEntrada" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="PathDocEntrada" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="Observaciones_" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
@@ -7817,20 +7833,23 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Productos" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_Producto" FromRole="AlmacenEntradaProducto" ToRole="Producto" />
           <NavigationProperty Name="OrdenesCompra" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_OrdenCompra" FromRole="AlmacenEntradaProducto" ToRole="OrdenCompra" />
           <NavigationProperty Name="Requisiciones" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_Requisicion" FromRole="AlmacenEntradaProducto" ToRole="Requisicion" />
-          <NavigationProperty Name="UsuarioRecibe" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_Usuario" FromRole="AlmacenEntradaProducto" ToRole="Usuario" />
+          <NavigationProperty Name="UsuarioRecibe" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_Usuario" FromRole="AlmacenEntradaProducto" ToRole="Usuario" />      
+          <NavigationProperty Name="CProducto" Relationship="Sagas.MainModuleModel.FK_AlmacenEntradaProducto_CProducto" FromRole="AlmacenEntradaProducto" ToRole="Producto" />     
         </EntityType>
         <EntityType Name="AlmacenSalidaProducto">
           <Key>
-            <PropertyRef Name="IdRequisicion" />     
-            <PropertyRef Name="Orden" />
+            <PropertyRef Name="IdSalida" />
           </Key>
-          <Property Name="IdRequisicion" Type="Int32" Nullable="false" />
+          <Property Name="IdSalida" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdRequisicion" Type="Int32" />
           <Property Name="Orden" Type="Byte" Nullable="false" />
           <Property Name="IdAlmacen" Type="Int32" Nullable="false" />
-          <Property Name="IdProduto" Type="Int32" Nullable="false" />
+          <Property Name="IdProducto" Type="Int32" Nullable="false" />
           <Property Name="IdUsuarioEntrega" Type="Int32" Nullable="false" />
           <Property Name="IdUsuarioRecibe" Type="Int32" Nullable="false" />
           <Property Name="Cantidad" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CantidadAnterior" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CantidadFinal" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="UrlDocSalida" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="PathDocSalida" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="Observaciones_" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
@@ -7840,7 +7859,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Productos" Relationship="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Producto" FromRole="AlmacenSalidaProducto" ToRole="Producto" />
           <NavigationProperty Name="Requisiciones" Relationship="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Requisicion" FromRole="AlmacenSalidaProducto" ToRole="Requisicion" />
           <NavigationProperty Name="UsuarioEntrega" Relationship="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Usuario" FromRole="AlmacenSalidaProducto" ToRole="Usuario" />         
-          <NavigationProperty Name="UsuarioRecibe" Relationship="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Usuario1" FromRole="AlmacenSalidaProducto" ToRole="Usuario" />
+          <NavigationProperty Name="UsuarioRecibe" Relationship="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_Usuario1" FromRole="AlmacenSalidaProducto" ToRole="Usuario" />         
+          <NavigationProperty Name="CProducto" Relationship="Sagas.MainModuleModel.FK_AlmacenSalidaProducto_CProducto" FromRole="AlmacenSalidaProducto" ToRole="Producto" />
         </EntityType>
         <EntityType Name="CamionetaCilindro">
           <Key>
@@ -8213,7 +8233,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="IdProducto" />
             </Principal>
             <Dependent Role="AlmacenEntradaProducto">
-              <PropertyRef Name="IdProduto" />
+              <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8225,7 +8245,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="IdProducto" />
             </Principal>
             <Dependent Role="AlmacenSalidaProducto">
-              <PropertyRef Name="IdProduto" />
+              <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8266,7 +8286,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AlmacenEntradaProducto_OrdenCompra">
-          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.OrdenCompra" Role="OrdenCompra" Multiplicity="0..1" />
           <End Type="Sagas.MainModuleModel.AlmacenEntradaProducto" Role="AlmacenEntradaProducto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="OrdenCompra">
@@ -8278,7 +8298,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AlmacenEntradaProducto_Requisicion">
-          <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="0..1" />
           <End Type="Sagas.MainModuleModel.AlmacenEntradaProducto" Role="AlmacenEntradaProducto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Requisicion">
@@ -8290,7 +8310,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AlmacenSalidaProducto_Requisicion">
-          <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.Requisicion" Role="Requisicion" Multiplicity="0..1" />
           <End Type="Sagas.MainModuleModel.AlmacenSalidaProducto" Role="AlmacenSalidaProducto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Requisicion">
@@ -8345,8 +8365,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdCilindro" Type="Int32" />
           <NavigationProperty Name="ReqProductos" Relationship="Sagas.MainModuleModel.FK_RequisicionProducto_CentroCosto" FromRole="CentroCosto" ToRole="RequisicionProducto" />
           <NavigationProperty Name="OCompraProductos" Relationship="Sagas.MainModuleModel.FK_OrdenCompraProducto_CentroCosto" FromRole="CentroCosto" ToRole="OrdenCompraProducto" />
-          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CentroCosto_Empresa" FromRole="CentroCosto" ToRole="Empresa" />
-          
+          <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_CentroCosto_Empresa" FromRole="CentroCosto" ToRole="Empresa" />          
           <NavigationProperty Name="UnidadAlmacenGas" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CAlmacenGas" FromRole="CentroCosto" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="UnidadAlmacenGasCilindro" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CAlmacenGasCilindro" FromRole="CentroCosto" ToRole="UnidadAlmacenGasCilindro" />
           <NavigationProperty Name="Camioneta" Relationship="Sagas.MainModuleModel.FK_CCentroCosto_CCamioneta" FromRole="CentroCosto" ToRole="Camioneta" />
@@ -10606,6 +10625,30 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="Orden" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenEntradaProducto_CProducto">
+          <End Type="Sagas.MainModuleModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AlmacenEntradaProducto" Role="AlmacenEntradaProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="AlmacenEntradaProducto">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenSalidaProducto_CProducto">
+          <End Type="Sagas.MainModuleModel.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="Sagas.MainModuleModel.AlmacenSalidaProducto" Role="AlmacenSalidaProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="AlmacenSalidaProducto">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>                
         <!--<Association Name="FK_RolAccionMovil_Rol">
           <End Type="Sagas.MainModuleModel.Rol" Role="Rol" Multiplicity="1">
@@ -11469,6 +11512,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenEntradaProducto">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenEntradaProducto">
               <MappingFragment StoreEntitySet="AlmacenEntradaProducto">
+                <ScalarProperty Name="CantidadFinal" ColumnName="CantidadFinal" />
+                <ScalarProperty Name="CantidadAnterior" ColumnName="CantidadAnterior" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdEntrada" ColumnName="IdEntrada" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="FechaEntrada" ColumnName="FechaEntrada" />
                 <ScalarProperty Name="Observaciones_" ColumnName="Observaciones " />
@@ -11476,7 +11523,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="UrlDocEntrada" ColumnName="UrlDocEntrada" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="IdUsuarioRecibe" ColumnName="IdUsuarioRecibe" />
-                <ScalarProperty Name="IdProduto" ColumnName="IdProduto" />
                 <ScalarProperty Name="IdAlmacen" ColumnName="IdAlmacen" />
                 <ScalarProperty Name="IdOrdenCompra" ColumnName="IdOrdenCompra" />
                 <ScalarProperty Name="IdRequisicion" ColumnName="IdRequisicion" />
@@ -11486,6 +11532,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenSalidaProducto">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenSalidaProducto">
               <MappingFragment StoreEntitySet="AlmacenSalidaProducto">
+                <ScalarProperty Name="CantidadFinal" ColumnName="CantidadFinal" />
+                <ScalarProperty Name="CantidadAnterior" ColumnName="CantidadAnterior" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdSalida" ColumnName="IdSalida" />
                 <ScalarProperty Name="IdUsuarioRecibe" ColumnName="IdUsuarioRecibe" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
@@ -11495,7 +11545,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="UrlDocSalida" ColumnName="UrlDocSalida" />
                 <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="IdUsuarioEntrega" ColumnName="IdUsuarioEntrega" />
-                <ScalarProperty Name="IdProduto" ColumnName="IdProduto" />
                 <ScalarProperty Name="IdAlmacen" ColumnName="IdAlmacen" />
                 <ScalarProperty Name="IdRequisicion" ColumnName="IdRequisicion" />
               </MappingFragment>

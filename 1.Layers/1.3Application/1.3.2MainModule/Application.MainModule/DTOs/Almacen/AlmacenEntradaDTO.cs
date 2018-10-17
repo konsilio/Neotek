@@ -20,7 +20,7 @@ namespace Application.MainModule.DTOs.Almacen
         public decimal Cantidad { get; set; }
         public string UrlDocEntrada { get; set; }
         public string PathDocEntrada { get; set; }
-        public string Observaciones_ { get; set; }
+        public string Observaciones { get; set; }
         public System.DateTime FechaEntrada { get; set; }
         public System.DateTime FechaRegistro { get; set; }
     }

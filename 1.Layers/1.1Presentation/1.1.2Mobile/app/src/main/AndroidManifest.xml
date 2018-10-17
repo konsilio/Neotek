@@ -28,7 +28,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MainActivity">
+        <activity android:name=".Activity.MainActivity" android:theme="@style/SagasTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,7 +37,7 @@
         </activity>
         <activity
             android:name=".Activity.MenuActivity"
-            android:label="@string/activity_menu" />
+            android:label="@string/activity_menu" android:theme="@style/SagasTheme.AppEnter" />
         <activity
             android:name=".Activity.IniciarDescargaActivity"
             android:label="@string/title_iniciar_descarga" />

@@ -66,6 +66,8 @@
     <Compile Include="AdaptadoresDTO\Catalogo\FormaPagoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\OperadorChoferAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\CalibracionAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
     <Compile Include="DTOs\Almacen\AplicaAutoConsumoDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaCalibracionDto.cs" />
@@ -90,13 +92,17 @@
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
     <Compile Include="DTOs\Mobile\AutoconsumoDTO.cs" />
+    <Compile Include="DTOs\Mobile\CalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\CamionetaDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosAutoconsumoDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosCalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\DatosRecargaDto.cs" />
     <Compile Include="DTOs\Mobile\EstacionesDto.cs" />
     <Compile Include="DTOs\Mobile\PipaDto.cs" />
     <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />
     <Compile Include="DTOs\Ventas\VentaPuntoVentaDTO.cs" />
     <Compile Include="DTOs\ImagenDTO.cs" />
+    <Compile Include="Servicios\AccesoADatos\AlmacenEntradaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenSalidaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />
     <Compile Include="Servicios\Almacen\RemanenteServicio.cs" />
@@ -199,6 +205,7 @@
     <Compile Include="DTOs\Mobile\TipoPersonaDto.cs" />
     <Compile Include="DTOs\Mobile\TipoRegimenFiscalDto.cs" />
     <Compile Include="Servicios\Mobile\AutoconsumoServicio.cs" />
+    <Compile Include="Servicios\Mobile\CalibracionServicio.cs" />
     <Compile Include="Servicios\Mobile\ClientesServicio.cs" />
     <Compile Include="DTOs\NotificacionDTO.cs" />
     <Compile Include="Servicios\Catalogos\PrecioVentaGasServicio.cs" />
