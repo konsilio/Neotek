@@ -25,14 +25,19 @@ namespace Application.MainModule.Flujos
                 var _Almacen = ProductoAlmacenServicio.ObtenerAlmacen(prod.IdProducto, dto.IdEmpresa);
                 if (_Almacen == null)
                 {
-                    var nuevoAlmacen = ProductoAlmacenServicio.GenaraAlmacenNuevo(prod.IdProducto, dto.IdEmpresa, prod.Cantidad);
+                    prod.CantidadAnterior = 0;
+                    prod.CantidadFinal = prod.Cantidad;
+                    var nuevoAlmacen = ProductoAlmacenServicio.GenaraAlmacenNuevo(prod.IdProducto, dto.IdEmpresa, prod.Cantidad);                    
                     nuevoAlmacen = ProductoAlmacenServicio.GenerarAlmacenConEntradaProcuto(prod, dto.IdOrdenCompra, nuevoAlmacen);
                     _almacenCrear.Add(nuevoAlmacen);
                 }
                 else
                 {
+                    _Almacen.FechaActualizacion = DateTime.Today;
+                    prod.CantidadAnterior = _Almacen.Cantidad;                  
                     var AlmacenActualizar = ProductoAlmacenServicio.AlmacenEntity(_Almacen);
                     AlmacenActualizar.Cantidad = CalcularAlmacenServicio.ObtenerSumaEntradaAlmacen(AlmacenActualizar.Cantidad, prod.Cantidad);
+                    prod.CantidadFinal = CalcularAlmacenServicio.ObtenerSumaEntradaAlmacen(AlmacenActualizar.Cantidad, prod.Cantidad); ;
                     _almacen.Add(AlmacenActualizar);
                     var EntradaProd = ProductoAlmacenServicio.GenerarAlmacenEntradaProcuto(prod, dto.IdOrdenCompra, _Almacen);
                     entradas.Add(EntradaProd);
@@ -61,6 +66,7 @@ namespace Application.MainModule.Flujos
         public RespuestaDto ActualizarAlmacen(AlmacenDTO dto)
         {
             //Validar permisos
+
             var almacen = ProductoAlmacenServicio.ObtenerAlmacen(dto.IdProducto, dto.IdEmpresa);
             var entity = ProductoAlmacenServicio.AlmacenEntity(almacen);
             var prod = ProductoServicio.ObtenerProducto(dto.IdProducto);
@@ -68,15 +74,29 @@ namespace Application.MainModule.Flujos
             entity.FechaActualizacion = DateTime.Now;
             RespuestaDto resp = new RespuestaDto();
             if (dto.Cantidad < entity.Cantidad)
-            {
+            {                
+                AlmacenSalidaProductoDTO salida = new AlmacenSalidaProductoDTO
+                {
+                    IdProducto = dto.IdProducto,
+                    Cantidad = CalcularAlmacenServicio.ObtenerDiferneciaMovimiento(dto.Cantidad, entity.Cantidad),
+                    CantidadAnterior = almacen.Cantidad,
+                    CantidadFinal = dto.Cantidad,
+                };
                 entity.Cantidad = dto.Cantidad;
-                var SalidaProd = ProductoAlmacenServicio.GenerarAlmacenSalidaProcuto(new AlmacenSalidaProductoDTO { IdProducto = dto.IdProducto, Cantidad = dto.Cantidad }, 0, almacen);
+                var SalidaProd = ProductoAlmacenServicio.GenerarAlmacenSalidaProcuto(salida, 0, almacen);
                 resp = ProductoAlmacenServicio.SalidaAlmcacenProductos(entity, SalidaProd);
             }
             if (dto.Cantidad > entity.Cantidad)
             {
+                AlmacenEntradaDTO entrada = new AlmacenEntradaDTO
+                {
+                    IdProducto = dto.IdProducto,
+                    Cantidad = CalcularAlmacenServicio.ObtenerDiferneciaMovimiento(dto.Cantidad, entity.Cantidad),
+                    CantidadAnterior = almacen.Cantidad,
+                    CantidadFinal = dto.Cantidad,
+                };
                 entity.Cantidad = dto.Cantidad;
-                var EntradaProd = ProductoAlmacenServicio.GenerarAlmacenEntradaProcuto(new AlmacenEntradaDTO { IdProducto = dto.IdProducto, Cantidad = dto.Cantidad }, 0, almacen);
+                var EntradaProd = ProductoAlmacenServicio.GenerarAlmacenEntradaProcuto(entrada, 0, almacen);
                 resp = ProductoAlmacenServicio.EntradaAlmcacenProductos(entity, EntradaProd);
             }
             if (dto.Cantidad.Equals(entity.Cantidad))
@@ -85,6 +105,14 @@ namespace Application.MainModule.Flujos
             }
             return resp;
         }
+        public List<RegistroDTO> RegistroAlmacen(short idEmpresa)
+        {
+            //Validar Permisos
+                      
+            var Entradas = ProductoAlmacenServicio.BuscarEntradasTodo(idEmpresa);
+            var Salidas = ProductoAlmacenServicio.BuscarSalidaTodo(idEmpresa);
 
+            return ProductoAlmacenServicio.UnirRegistros(Salidas, Entradas);
+        }
     }
 }

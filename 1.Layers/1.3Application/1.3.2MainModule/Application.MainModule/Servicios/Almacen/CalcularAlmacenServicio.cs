@@ -12,5 +12,11 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return TotalAlmacenActual + TotalEntrada;
         }
+        public static decimal ObtenerDiferneciaMovimiento(decimal cantidadMayor, decimal cantidadMenor)
+        {
+            if (cantidadMayor < cantidadMenor)
+                return cantidadMenor - cantidadMayor;
+            return cantidadMayor - cantidadMenor;
+        }
     }
 }
