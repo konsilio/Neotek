@@ -18,6 +18,12 @@ namespace Application.MainModule.Servicios.Mobile
             return EvaluarClaveOperacion(alm);
         }
 
+        public static RespuestaDto EvaluarClaveOperacion(AutoconsumoDTO dto)
+        {
+            var autoconsumo = AlmacenGasServicio.ObtenerAutoconsumo(dto.ClaveOperacion);
+            return EvaluarClaveOperacion(autoconsumo);
+        }
+
         public static RespuestaDto EvaluarClaveOperacion(DescargaDto descarga)
         {
             var alm = AlmacenGasServicio.ObtenerDescargaPorClaveOperacion(descarga.ClaveOperacion);
