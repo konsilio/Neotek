@@ -17,4 +17,20 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="SagasTheme" parent="Theme.AppCompat.Light.NoActionBar"  >
+        <item name="android:windowBackground">@color/colorBackgroundSistemaLogin</item>
+        <item name="android:colorForeground">@color/textColorSistemaLogin</item>
+        <item name="colorAccent">@color/primaryTextColor</item>
+        <item name="colorPrimary">@color/colorBackgroundNavigationBar</item>
+    </style>
+    <style name="SagasTheme.AppEnter" parent="Theme.AppCompat.Light">
+        <item name="android:colorForeground">@color/textcolorButton</item>
+        <item name="colorAccent">@color/primaryTextColor</item>
+        <item name="colorPrimary">@color/colorBackgroundNavigationBar</item>
+    </style>
+    <style name="SagasTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal" tools:ignore="NewApi">@color/colorBackgroundSistemaLogin</item>
+        <item name="android:textColor">@color/textcolorButton</item>
+    </style>
+
 </resources>

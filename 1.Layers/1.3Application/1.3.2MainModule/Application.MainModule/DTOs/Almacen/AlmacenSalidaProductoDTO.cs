@@ -11,7 +11,7 @@ namespace Application.MainModule.DTOs.Almacen
         public int IdRequisicion { get; set; }
         public byte Orden { get; set; }
         public int IdAlmacen { get; set; }
-        public int IdProduto { get; set; }
+        public int IdProducto { get; set; }
         public int IdUsuarioEntrega { get; set; }
         public int IdUsuarioRecibe { get; set; }
         public decimal Cantidad { get; set; }

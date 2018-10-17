@@ -1,102 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/colorBackgroundLogin">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.constraint.ConstraintLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:layout_height="wrap_content">
 
-        <ImageView android:src="@drawable/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal"
-            tools:ignore="ContentDescription" />
-
-        <TextView
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/spinner_gaseras"
-            android:textColor="@color/colorTextLogin"
-            android:textSize="24sp" />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="64dp"
+            app:cardBackgroundColor="@color/colorBackgroundLogin"
+            app:cardCornerRadius="15sp"
+            app:cardElevation="3sp"
+            app:contentPadding="5sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.49">
 
-        <Spinner
-            android:id="@+id/spinner_gasera"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:textSize="25sp"
-            android:paddingBottom="10dp"
-            android:textColor="@color/colorTextLogin"/>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/input_username"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:hint="@string/login_hint_username"
-                android:inputType="text"
-                android:paddingBottom="15dp"
-                android:textColor="@color/colorTextLogin"
-                android:textColorHint="@color/colorTextLogin"
-                android:textSize="18sp"
-                tools:ignore="Autofill" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_height="match_parent">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="50sp"
+                    android:layout_height="50sp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="144dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="144dp"
+                    android:layout_marginBottom="64dp"
+                    android:src="@drawable/logo"
+                    app:layout_constraintBottom_toTopOf="@+id/textView18"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
-            <EditText
-                android:id="@+id/input_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:hint="@string/login_hint_password"
-                android:inputType="textPassword"
-                android:paddingBottom="15dp"
-                android:textColor="@color/colorTextLogin"
-                android:textColorHint="@color/colorTextLogin"
-                android:textSize="18sp"
-                tools:ignore="Autofill" />
-        </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="0"
+                    android:text="@string/spinner_gaseras"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
-        <LinearLayout
-            android:id="@+id/layout_iniciar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15sp"
-            android:layout_weight="1"
-            android:gravity="center|bottom"
-            android:orientation="vertical">
+                <Spinner
+                    android:id="@+id/spinner_gasera"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="0"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/colorTextLogin"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@+id/input_layout_username"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
-            <Button
-                android:id="@+id/login_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorButtonLogin"
-                android:text="@string/login_button"
-                android:textColor="@color/colorTextButtonLogin"
-                android:textSize="24sp" />
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/input_layout_password"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_gasera">
 
-        </LinearLayout>
+                    <EditText
+                        android:id="@+id/input_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:hint="@string/login_hint_username"
+                        android:inputType="text"
+                        android:paddingBottom="5dp"
+                        android:textSize="18sp"
+                        tools:ignore="Autofill" />
+                    <!--android:textColor="@color/colorTextLogin"
+android:textColorHint="@color/colorTextLogin"-->
+                </android.support.design.widget.TextInputLayout>
 
-    </LinearLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/login_button"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_layout_username">
 
+                    <EditText
+                        android:id="@+id/input_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:hint="@string/login_hint_password"
+                        android:inputType="textPassword"
+                        android:paddingBottom="5dp"
+                        android:textSize="18sp"
+                        tools:ignore="Autofill"
+
+                        />
+                    <!--android:textColor="@color/colorTextLogin"
+                        android:textColorHint="@color/colorTextLogin"-->
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/login_button"
+                    style="@style/SagasTheme.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:minHeight="34dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:text="@string/login_button"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/input_layout_password" />
+                <!--android:background="@color/colorButtonLogin"
+                    android:textColor="@color/colorTextButtonLogin"-->
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+
+    </android.support.constraint.ConstraintLayout>
 </ScrollView>

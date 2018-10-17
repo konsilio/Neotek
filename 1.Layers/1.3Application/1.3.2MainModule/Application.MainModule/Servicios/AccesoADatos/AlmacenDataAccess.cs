@@ -19,13 +19,42 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-        public List<Sagas.MainModule.Entidades.Almacen> ListaProductosAlmacen()
+        public List<Sagas.MainModule.Entidades.Almacen> ListaProductosAlmacen(short idEmpresa)
+        {
+            return uow.Repository<Sagas.MainModule.Entidades.Almacen>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
+        }
+        public List<Sagas.MainModule.Entidades.Almacen> ListaProductosAlmacenTodos()
         {
             return uow.Repository<Sagas.MainModule.Entidades.Almacen>().GetAll().ToList();
         }
         public Sagas.MainModule.Entidades.Almacen ProductoAlmacen(int idProducto, short idEmpresa)
         {
             return uow.Repository<Sagas.MainModule.Entidades.Almacen>().GetSingle(x => x.IdProduto.Equals(idProducto) && x.IdEmpresa.Equals(idEmpresa));
+        }
+        public RespuestaDto ActualizarAlmacenSalida(Sagas.MainModule.Entidades.Almacen _alm, AlmacenSalidaProducto _salida)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.Almacen>().Update(_alm);
+                    uow.Repository<AlmacenSalidaProducto>().Insert(_salida);
+                    uow.SaveChanges();
+                    _respuesta.Id = _alm.IdAlmacen;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.A0001, "de la salida de producto");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
         }
         public RespuestaDto ActualizarAlmacenEntradas(Sagas.MainModule.Entidades.Almacen _alm, AlmacenEntradaProducto _entrada)
         {
@@ -116,6 +145,29 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 try
                 {
                     uow.Repository<Sagas.MainModule.Entidades.Almacen>().Insert(_alm);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.A0001, "de la entrada de producto");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto Actualizar(Sagas.MainModule.Entidades.Almacen _alm)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.Almacen>().Update(_alm);
                     uow.SaveChanges();
                     _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;

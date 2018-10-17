@@ -1,4 +1,5 @@
-﻿using MVC.Presentacion.Models.Catalogos;
+﻿using MVC.Presentacion.Models;
+using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.OrdenCompra;
 using MVC.Presentacion.Models.Requisicion;
 using MVC.Presentacion.Models.Seguridad;
@@ -78,7 +79,8 @@ namespace MVC.Presentacion.Agente
         public List<CajaGeneralModel> _listaCajaGral;
         public List<CajaGeneralCamionetaModel> _listaCajaGralCamioneta;
         public List<VentaCorteAnticipoModel> _listaCajaGralEstacion;
-
+        public List<AlmacenDTO> _listaAlmacen;
+    
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -2783,6 +2785,46 @@ namespace MVC.Presentacion.Agente
                 }
                 _complementoGas = emp;
             }
+        }
+        #endregion
+        #region Almacen
+        public void BuscarProductosAlmacen(short idEmpresa, string tkn)
+        {
+            this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetProductosAlmacen"];
+            ListaAlmacenProdcutos(idEmpresa, tkn).Wait();
+        }
+        private async Task ListaAlmacenProdcutos(short idEmpresa, string token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<AlmacenDTO> emp = new List<AlmacenDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiOrdenCompra, idEmpresa.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        emp = await response.Content.ReadAsAsync<List<AlmacenDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    emp = new List<AlmacenDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaAlmacen = emp;
+            }
+        }
+        public void ActualizarAlmacen(AlmacenDTO dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostActulizarAlmacenProducto"];
+            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
         #endregion
 

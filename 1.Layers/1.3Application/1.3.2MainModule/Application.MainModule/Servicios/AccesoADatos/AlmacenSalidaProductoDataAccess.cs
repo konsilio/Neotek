@@ -71,8 +71,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<AlmacenSalidaProducto> BuscarTodos()
         {
             return uow.Repository<AlmacenSalidaProducto>().GetAll().ToList();
-        }        
-
+        }
+        public List<AlmacenSalidaProducto> BuscarTodos(short idEmpresa)
+        {
+            return uow.Repository<AlmacenSalidaProducto>().Get(x => x.Almacen.IdEmpresa.Equals(idEmpresa)).ToList();
+        }
         public AlmacenSalidaProducto Buscar(int IdRequisicion, short Orden)
         {
             return uow.Repository<AlmacenSalidaProducto>().GetSingle(x => x.IdRequisicion.Equals(IdRequisicion)
