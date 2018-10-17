@@ -29,6 +29,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                          ).ToList();
         }
+        public List<VentaMovimiento> Buscar(int idPv)
+        {
+            return uow.Repository<VentaMovimiento>().Get(x => x.IdPuntoVenta.Equals(idPv)
+                                                         ).ToList();
+        }
 
         public VentaCajaGeneral BuscarGralPorCve(string cve)
         {
@@ -43,6 +48,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<VentaCorteAnticipoEC> BuscarPorCveEC(string cve)
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(x => x.FolioOperacionDia.Equals(cve)).ToList();
+        }
+
+        public List<VentaCorteAnticipoEC> BuscarPorIdPv(int idPv)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().Get(x => x.IdPuntoVenta.Equals(idPv)).ToList();
         }
 
         public RespuestaDto Actualizar(List<VentaPuntoDeVenta> pv)
@@ -92,6 +102,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 {
                     _respuesta.Exito = false;
                     _respuesta.Mensaje = string.Format(Error.C0003, "de la liquidación"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
+        public RespuestaDto Actualizar(VentaMovimiento pv)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {                   
+                    uow.Repository<Sagas.MainModule.Entidades.VentaMovimiento>().Update(pv);                    
+                    uow.SaveChanges();
+                    _respuesta.Id = pv.IdPuntoVenta;
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "del movimiento de venta"); ;
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
