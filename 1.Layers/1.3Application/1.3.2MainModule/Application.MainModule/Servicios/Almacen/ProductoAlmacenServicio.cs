@@ -38,7 +38,6 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return AlmacenProductoAdapter.FromDTO(dto, idOC, _alm);
         }
-
         public static AlmacenSalidaProducto GenerarAlmacenSalidaProcuto(AlmacenSalidaProductoDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
         {
             return AlmacenProductoAdapter.FromDTO(dto, idOC, _alm);
@@ -81,12 +80,27 @@ namespace Application.MainModule.Servicios.Almacen
                 Entradas = new List<AlmacenEntradaProducto>()               
             };
         }
-        public static List<Sagas.MainModule.Entidades.Almacen> Buscar(short idEmpresa)
+        public static List<Sagas.MainModule.Entidades.Almacen> BuscarAlmacen(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
                 return new AlmacenDataAccess().ListaProductosAlmacenTodos();
             else
                 return new AlmacenDataAccess().ListaProductosAlmacen(idEmpresa);
         }        
+        public static List<AlmacenEntradaProducto> BuscarEntradasTodo(short idEmpresa)
+        {
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return new AlmacenEntradaProductoDataAccess().BuscarTodos();
+            else
+                return new AlmacenEntradaProductoDataAccess().BuscarTodos(idEmpresa);
+        }
+        public static List<AlmacenSalidaProducto> BuscarSalidaTodo(short idEmpresa)
+        {
+            if (TokenServicio.ObtenerEsAdministracionCentral())
+                return new AlmacenSalidaProductoDataAccess().BuscarTodos();
+            else
+                return new AlmacenSalidaProductoDataAccess().BuscarTodos(idEmpresa);
+        }
+
     }
 }

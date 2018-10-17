@@ -7,6 +7,7 @@ using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Requisicion;
 using Sagas.MainModule.Entidades;
+using System;
 using System.Collections.Generic;
 
 namespace Application.MainModule.Flujos
@@ -54,7 +55,7 @@ namespace Application.MainModule.Flujos
         {
             //Validar Permisos
 
-            var prods = ProductoAlmacenServicio.Buscar(idEmpresa);
+            var prods = ProductoAlmacenServicio.BuscarAlmacen(idEmpresa);
             return AlmacenProductoAdapter.ToDTO(prods);
         }
         public RespuestaDto ActualizarAlmacen(AlmacenDTO dto)
@@ -64,6 +65,7 @@ namespace Application.MainModule.Flujos
             var entity = ProductoAlmacenServicio.AlmacenEntity(almacen);
             var prod = ProductoServicio.ObtenerProducto(dto.IdProducto);
             entity.Ubicacion = dto.Ubicacion;
+            entity.FechaActualizacion = DateTime.Now;
             RespuestaDto resp = new RespuestaDto();
             if (dto.Cantidad < entity.Cantidad)
             {
@@ -83,5 +85,6 @@ namespace Application.MainModule.Flujos
             }
             return resp;
         }
+
     }
 }
