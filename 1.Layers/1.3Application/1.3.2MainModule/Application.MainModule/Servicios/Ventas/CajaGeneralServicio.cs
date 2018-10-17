@@ -1,5 +1,7 @@
-﻿using Application.MainModule.DTOs.Ventas;
+﻿using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.AccesoADatos;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -30,6 +32,33 @@ namespace Application.MainModule.Servicios.Ventas
         {
             List<VentaPuntoVentaDTO> lPventas = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTOC(new CajaGeneralDataAccess().BuscarPorCve(cve));
             return lPventas;
+        }
+
+        public static List<VentaCorteAnticipoDTO> ObtenerCE(string cve)
+        {
+            List<VentaCorteAnticipoDTO> lPventas = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTOCE(new CajaGeneralDataAccess().BuscarPorCveEC(cve));
+            return lPventas;
+        }
+
+        public static RespuestaDto Actualizar(List<VentaPuntoDeVenta> pv)
+        {
+            return new CajaGeneralDataAccess().Actualizar(pv);
+        }
+
+        public static RespuestaDto Actualizar(List<VentaCorteAnticipoEC> pv)
+        {
+            return new CajaGeneralDataAccess().Actualizar(pv);
+        }
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "El Reporte del dia");
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }

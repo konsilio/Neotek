@@ -11,29 +11,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
     <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('select').on('change', function () {
-                $('#tblfilterable tbody tr').each(function () {
-                    var value = $('#IdTipoFecha').find('option:selected').text();//get value to filter of selected
-                    var hiderow = $(this).find("td").eq(10).html();//get value of column status
-                    if (value != hiderow) {
-                        var rowindex = $(this).index();
-                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
-                    }
-                    if (value == hiderow) {
-                        var rowindex = $(this).index();
-                        $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
-                    }
+    <script src="~/Resources/js/PrecioVenta.js"></script>
 
-                    if (value == 'Seleccione') {
-                        $('#tblfilterable tbody tr').show();
-                    }
-                });
-            });
-        });
+    @*<script type="text/javascript">
+        //$(function () {
+        //    $('select').on('change', function () {
+        //        $('#tblfilterable tbody tr').each(function () {
+        //            var value = $('#IdTipoFecha').find('option:selected').text();//get value to filter of selected
+        //            var hiderow = $(this).find("td").eq(10).html();//get value of column status
+        //            if (value != hiderow) {
+        //                var rowindex = $(this).index();
+        //                $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
+        //            }
+        //            if (value == hiderow) {
+        //                var rowindex = $(this).index();
+        //                $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
+        //            }
 
-        $(document).ready(function () {
+        //            if (value == 'Seleccione') {
+        //                $('#tblfilterable tbody tr').show();
+        //            }
+        //        });
+        //    });
+        //});
+
+        @*$(document).ready(function () {
             $("#txtUtilidad").keyup(function () {
 
                 var precio = $("#PrecioPMX").val();
@@ -53,14 +55,31 @@
             });//key up.
 
             $("#IdA").keyup(function () {
-
                 var from = $("#IdDe").val();
                 var To = $(this).val();
+                var index = 0;
+                var value = $('#IdTipoFecha').find('option:selected').val();//get value to filter of selected
+                if (value == 1) {
+                    index = 4;
+                }
+                if (value == 2) {
+                    index = 7;
+                }
+                if (value == 3) {
+                    index = 6;
+                }
+
+                var dateParts = from.split("/");
+                var datefrom = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+                var dateParts2 = To.split("/");
+                var dateto = new Date(dateParts2[2], dateParts2[1] - 1, dateParts2[0]);
 
                 $('#tblfilterable tbody tr').each(function () {
-                    var filterdate = $(this).find("td").eq(7).html().split(" ", 1);//get value of column Fecha Programada
+                    var filterdate = $(this).find("td").eq(index).html();//get value of column Fecha x
+                    var dateParts3 = filterdate.split("/");
+                    var datefilter = new Date(dateParts3[2].split(" ", 1), dateParts3[1] - 1, dateParts3[0]);
 
-                    if (from == filterdate || To == filterdate) {
+                    if (datefilter >= datefrom && datefilter <= dateto) {
                         var rowindex = $(this).index();
                         $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
                     }
@@ -68,12 +87,54 @@
                         var rowindex = $(this).index();
                         $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
                     }
-
                 });
+            });
+            $('select').on('change', function () {
+
+                var from = $("#IdDe").val();
+                var To = $("#IdA").val();
+                var value = $('#IdTipoFecha').find('option:selected').val();//get value to filter of selected
+                if (from != "" && To != "" && value != 0) {
+
+                    var index = 0;
+
+                    if (value == 1) {
+                        index = 4;
+                    }
+                    if (value == 2) {
+                        index = 7;
+                    }
+                    if (value == 3) {
+                        index = 5;
+                    }
+
+                    var dateParts = from.split("/");
+                    var datefrom = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
+                    var dateParts2 = To.split("/");
+                    var dateto = new Date(dateParts2[2], dateParts2[1] - 1, dateParts2[0]);
+
+                    $('#tblfilterable tbody tr').each(function () {
+                        var filterdate = $(this).find("td").eq(index).html();//get value of column Fecha Programada  x
+                        var dateParts3 = filterdate.split("/");
+                        var datefilter = new Date(dateParts3[2].split(" ", 1), dateParts3[1] - 1, dateParts3[0]);
+                        if (datefilter >= datefrom && datefilter <= dateto) {
+                            var rowindex = $(this).index();
+                            $('#tblfilterable tbody tr:eq(' + rowindex + ')').show();
+                        }
+                        else {
+                            var rowindex = $(this).index();
+                            $('#tblfilterable tbody tr:eq(' + rowindex + ')').hide();
+                        }
+                    });
+                }
+
+                if (value == 0) {
+                    $('#tblfilterable tbody tr').show();
+                }
             });
         });
 
-    </script>
+    </script>*@
 </head>
 <body style="height:100%">
     @using (Html.BeginForm("Registrar", "PrecioVentaOtro", FormMethod.Post))
@@ -266,7 +327,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if (ViewBag.MensajeError != null)
+                        @if (ViewBag.MessageError != null)
                         {
                             <div class="row clearfix">
                                 <div id="divMensajeError" class="container">
@@ -275,33 +336,12 @@
                                             <i class="zmdi zmdi-block"></i>
                                         </div>
                                         <strong>
-                                            <label>@ViewBag.MensajeError</label>
+                                            <label>@ViewBag.MessageError</label>
                                         </strong>
                                     </div>
                                 </div>
                             </div>
-                        }
-                        @*@if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
-                        {
-                            <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
-                                 role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                                bottom: 20px; left: 0px; right: 0px;">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
-                                <span data-notify="icon"></span>
-                                <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
-                                <a href="#" target="_blank" data-notify="url"></a>
-                            </div>
-                        }
-                        @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
-                        {
-                            <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
-                                 role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                                bottom: 20px; left: 0px; right: 0px;">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close" style="position: absolute; right: 10px; top: 5px; z-index: 1033;">x</a>
-                                <span data-notify="icon"></span>
-                                <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
-                            </div>
-                        }*@
+                        }                   
                     </div>
                 </div>
             </div>

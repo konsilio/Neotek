@@ -5,45 +5,10 @@
     ViewBag.Title = "Catálogo / Gasera / Nueva";
 }
 
-
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="~/Resources/js/Empresas.js"></script>
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
-
-<script type="text/javascript">
-    $(function () {
-
-        $('select').on('change', function () {
-
-            if ($('#ddlPais').find('option:selected').text() != 'México')
-            {
-               $('#ddlEdo').parent().hide();
-                $('#txtEdoP').show();
-            }
-
-            if ($('#ddlPais').find('option:selected').text() == 'México' || $('#ddlPais').find('option:selected').text() == 'Seleccione') {
-                 $('#ddlEdo').parent().show();
-                $('#txtEdoP').hide();
-            }
-
-        });
-
-    });
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#RegresaIndex").click(function () {
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "Empresas", Action = "Index" }) %>');
-            form.attr('method', 'post');
-
-        });
-
-    });
-
-</script>
 @using (Html.BeginForm((ViewBag.Empresas == null) ? "Crear" : "GuardaEdicionEmpresa", "Empresas", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <section class="content home">
@@ -308,7 +273,7 @@
                                         </label>
                                         <input type="text" name="CodigoPostal" id="txtCP" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].CodigoPostal)" />
                                         @Html.ValidationMessageFor(m => m.CodigoPostal, "", new { @class = "alert-danger" })
-                                     </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -397,7 +362,7 @@
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            <input type="submit" value="Regresar" id="RegresaIndex" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary float-left" />
+                            <input type="submit" value="Regresar" id="RegresaIndexNE" formaction=@Url.Action("Index") formmethod="post" class="btn btn-raised btn-primary float-left" />
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
@@ -414,8 +379,7 @@
                     </div>
                 </div>
             </div>
-
-            @if (ViewBag.MensajeError != null)
+            @if (ViewBag.MessageError != null)
                 {
                 <div class="row clearfix">
                     <div id="divMensajeError" class="container">
@@ -424,7 +388,7 @@
                                 <i class="zmdi zmdi-block"></i>
                             </div>
                             <strong>
-                                <label>@ViewBag.MensajeError</label>
+                                <label>@ViewBag.MessageError</label>
                             </strong>
                         </div>
                     </div>
@@ -433,10 +397,3 @@
         </div>
     </section>
 }
-<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
-<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

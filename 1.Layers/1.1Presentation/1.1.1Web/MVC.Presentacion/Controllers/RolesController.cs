@@ -30,20 +30,19 @@ namespace MVC.Presentacion.Controllers
                 ListaRolesCom = CatalogoServicio.ObtenerRolesCom(_tok),
                 ListaRequsicion = CatalogoServicio.ObtenerRolesReq(_tok),
                 ListaMovilCompra = CatalogoServicio.ObtenerRolesMovilCompra(_tok),
-
             };
 
-            //if (TempData["RespuestaDTO"] != null)
-            //{
-            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
-            //}
-            //if (TempData["RespuestaDTOError"] != null)
-            //{
-            //    ViewBag.MessageError = TempData["RespuestaDTOError"];
-            //}
-            //ViewBag.MessageError = TempData["RespuestaDTOError"];
-            if (TempData["RespuestaDTOError"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
-
+            if (TempData["RespuestaDTO"] != null)
+            {
+                ViewBag.MessageExito = TempData["RespuestaDTO"];
+            }
+            if (TempData["RespuestaDTOError"] != null)
+            {
+                ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+                TempData["RespuestaDTOError"] = ViewBag.MessageError;
+            }
+            ViewBag.MessageError = TempData["RespuestaDTOError"];
+          
             return View(rolCat);
         }
 
@@ -51,21 +50,20 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            //if (ModelState.IsValid)
-            //{
+            
             var respuesta = CatalogoServicio.AgregarRoles(ObjRol, _tok);
-            //}
+          
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index", ObjRol);
+                return RedirectToAction("Index");
             }
 
             else
             {
                 TempData["RespuestaDTOError"] = respuesta.Mensaje;
-                return RedirectToAction("Index", ObjRol);
+                return RedirectToAction("Index");
             }
 
         }
@@ -84,9 +82,10 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.EliminaRolSel(id, _tkn);
+
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = "Baja Exitosa";//respuesta.Mensaje;
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
@@ -96,7 +95,6 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = respuesta.Mensaje;
                 return RedirectToAction("Index");
             }
-
         }
 
         //Actualizar nombre ROL- funcionalidad --evento Guardar--
@@ -109,8 +107,8 @@ namespace MVC.Presentacion.Controllers
          
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
 
@@ -129,8 +127,8 @@ namespace MVC.Presentacion.Controllers
          
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
 
@@ -150,8 +148,8 @@ namespace MVC.Presentacion.Controllers
           
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
 
@@ -160,7 +158,6 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
                 return RedirectToAction("Index");
             }
-
         }
 
         public ActionResult GuardarPerMovilCompra(RolDto objrol)
@@ -171,8 +168,8 @@ namespace MVC.Presentacion.Controllers
     
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
 
@@ -191,8 +188,8 @@ namespace MVC.Presentacion.Controllers
         
             if (respuesta.Exito)
             {
-                //TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
-                //TempData["RespuestaDTOError"] = null;
+                TempData["RespuestaDTO"] = respuesta.Mensaje;
+                TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
 

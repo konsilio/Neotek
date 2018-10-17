@@ -142,11 +142,11 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             if (empresadto.UrlLogotipo500px != null) catEmpresa.UrlLogotipo500px = empresadto.UrlLogotipo500px; else catEmpresa.UrlLogotipo500px = catEmpresa.UrlLogotipo500px;
             if (empresadto.UrlLogotipo1000px != null) catEmpresa.UrlLogotipo1000px = empresadto.UrlLogotipo1000px; else catEmpresa.UrlLogotipo1000px = catEmpresa.UrlLogotipo1000px;
 
-            empresadto.FactorLitrosAKilos = catEmpresa.FactorLitrosAKilos;
-            empresadto.CierreInventario = catEmpresa.CierreInventario;
-            empresadto.InventarioSano = catEmpresa.InventarioSano;
-            empresadto.InventarioCrítico = catEmpresa.InventarioCrítico;
-            empresadto.MaxRemaGaseraMensual = catEmpresa.MaxRemaGaseraMensual;
+            //empresadto.FactorLitrosAKilos = catEmpresa.FactorLitrosAKilos;
+            //empresadto.CierreInventario = catEmpresa.CierreInventario;
+            //empresadto.InventarioSano = catEmpresa.InventarioSano;
+            //empresadto.InventarioCrítico = catEmpresa.InventarioCrítico;
+            //empresadto.MaxRemaGaseraMensual = catEmpresa.MaxRemaGaseraMensual;
 
 
             return catEmpresa;
