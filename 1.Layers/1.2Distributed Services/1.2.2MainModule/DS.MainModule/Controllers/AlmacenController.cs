@@ -46,5 +46,10 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_almacen.ActualizarAlmacen(Update), Request);
         }
+        [Route("buscar/registro/{idEmpresa}")]
+        public HttpResponseMessage GetRegistroAlmacen(short idEmpresa)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.RegistroAlmacen(idEmpresa));
+        }
     }
 }

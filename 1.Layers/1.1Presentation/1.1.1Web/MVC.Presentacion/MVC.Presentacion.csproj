@@ -273,6 +273,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Almacen\AlmacenDTO.cs" />
+    <Compile Include="Models\Almacen\RegistroDTO.cs" />
     <Compile Include="Models\Catalogos\BancoDTO.cs" />
     <Compile Include="Models\Catalogos\CatalogoRespuestaDTO.cs" />
     <Compile Include="Models\Catalogos\CategoriaProductoDTO.cs" />
@@ -11479,6 +11480,8 @@
     <Content Include="Views\Almacen\SalidaMercancia.cshtml" />
     <Content Include="Views\Almacen\ActualizacionExistencias.cshtml" />
     <Content Include="Views\Almacen\_gvProductosPartial.cshtml" />
+    <Content Include="Views\Almacen\MovimientosAlamacen.cshtml" />
+    <Content Include="Views\Almacen\_RegistroPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -12,13 +12,13 @@ namespace MVC.Presentacion.Controllers
     public class AlmacenController : Controller
     {
         string tkn = string.Empty;
-        public ActionResult ActualizacionExistencias(int? page, AlmacenDTO model = null)
+        public ActionResult ActualizacionExistencias(AlmacenDTO model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();            
-            var Pagina = page ?? 1;          
+            //var Pagina = page ?? 1;          
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            ViewBag.Productos = AlmacenServicio.BuscarProductosAlmacen(TokenServicio.ObtenerIdEmpresa(tkn), tkn).ToPagedList(Pagina, 20);
+            ViewBag.Productos = AlmacenServicio.BuscarProductosAlmacen(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             if (model != null && model.IdProductoLinea != 0) ViewBag.EsEdicion = true;            
             if (ViewBag.EsAdmin)
@@ -125,6 +125,27 @@ namespace MVC.Presentacion.Controllers
                 }
             }
             return PartialView("_gvProductosPartial", model);
+        }
+
+        public ActionResult MovimientosAlamacen()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
+            ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn);
+            ViewBag.LineasProducto = CatalogoServicio.ListaLineasProducto(tkn);
+           // ViewBag.Registros = AlmacenServicio.BuscarRegistroAlmacen(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            return View();
+        }
+
+        [ValidateInput(false)]
+        public ActionResult RegistroPartial()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var model = AlmacenServicio.BuscarRegistroAlmacen(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            return PartialView("_RegistroPartial", model);
         }
     }
 }
