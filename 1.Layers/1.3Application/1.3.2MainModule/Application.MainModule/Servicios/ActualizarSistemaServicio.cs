@@ -16,6 +16,8 @@ namespace Application.MainModule.Servicios
 
             CajaGeneralServicio.ProcesarSaldos();
 
+            CajaGeneralServicio.CargarVentasMovimientos();
+
             ImagenServicio.LimpiarImagenes();
         }
     }

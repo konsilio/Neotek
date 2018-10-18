@@ -1,4 +1,5 @@
-﻿using Application.MainModule.DTOs.Respuesta;
+﻿using Application.MainModule.AdaptadoresDTO.Ventas;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.AccesoADatos;
 using Exceptions.MainModule.Validaciones;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios.Ventas
 {
-   public class CajaGeneralServicio
+    public class CajaGeneralServicio
     {
         public static List<CajaGeneralDTO> Obtener()
         {
@@ -112,11 +113,15 @@ namespace Application.MainModule.Servicios.Ventas
 
         public static void CargarVentasMovimientos()
         {
-            bool noProcesados = false;
+            //bool noProcesados = false;
 
-            var ventas = ObtenerVentasPuntosVenta().Where(x=> x.DatosProcesados.Equals(noProcesados));
+            //var ventas = ObtenerVentasPuntosVenta().Where(x=> x.DatosProcesados.Equals(noProcesados));
+            //_lus.OrderByDescending(x => x.FechaAplicacion).ToList();
+            var ventas = ObtenerVentasCortesAnticipos();
             if (ventas != null && ventas.Count() > 0)
             {
+                var rep = CajaGeneralAdapter.FromDtoVtaM(ventas);
+               new CajaGeneralDataAccess().Insertar(rep);
 
             }
         }
@@ -125,5 +130,68 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().Buscar();
         }
+        public static List<VentaCorteAnticipoEC> ObtenerVentasCorteAnticipo()
+        {
+            return new CajaGeneralDataAccess().BuscarAnticiposC();
+        }
+
+        public static List<RegistrarVentasMovimientosDTO> ObtenerVentasCortesAnticipos()
+        {
+            List<RegistrarVentasMovimientosDTO> _lst = new List<RegistrarVentasMovimientosDTO>();
+            bool noProcesados = false;
+            bool Procesados = false;
+            List<VentaPuntoDeVenta> VentasPV = ObtenerVentasPuntosVenta().Where(x => x.DatosProcesados.Equals(noProcesados)).OrderByDescending(x => x.FechaRegistro).ToList();
+            List<VentaCorteAnticipoEC> VentasCortes = ObtenerVentasCorteAnticipo().Where(x => x.DatosProcesados.Equals(noProcesados)).OrderByDescending(x => x.FechaRegistro).ToList();
+            if ((VentasPV != null && VentasPV.Count() > 0)|| (VentasCortes != null && VentasCortes.Count() > 0))
+            {
+                _lst = MergedLst(VentasPV, VentasCortes);               
+                VentasPV.ForEach(x => x.DatosProcesados = Procesados);
+               new CajaGeneralDataAccess().Actualizar(VentasPV);
+            }
+            return _lst;
+        }
+
+        public static List<RegistrarVentasMovimientosDTO> MergedLst(List<VentaPuntoDeVenta> pv, List<VentaCorteAnticipoEC> vca)
+        {
+            List<VentaPuntoDeVenta> Ventas = pv.AsEnumerable()
+                                     .Select(o => new VentaPuntoDeVenta
+                                     {
+                                         IdEmpresa = o.IdEmpresa,
+                                         Year = o.Year,
+                                         Mes = o.Mes,
+                                         Dia = o.Dia,
+                                         Orden = o.Orden,
+                                         IdPuntoVenta = o.IdPuntoVenta,
+                                         IdCliente = o.IdCliente,
+                                         IdOperadorChofer = o.IdOperadorChofer,
+                                         FolioOperacionDia = o.FolioOperacionDia,
+                                         FolioVenta = o.FolioVenta,
+                                         Total = o.Total,
+                                         PuntoVenta = o.PuntoVenta,
+                                         OperadorChofer = o.OperadorChofer,
+                                         FechaRegistro = o.FechaRegistro,
+                                     }).ToList();
+
+            List<RegistrarVentasMovimientosDTO> lstFinal = pv.Select(v => new RegistrarVentasMovimientosDTO()
+            {
+                IdEmpresa = v.IdEmpresa,
+                Year = v.Year,
+                Mes = v.Mes,
+                Dia = v.Dia,
+                Orden = v.Orden,
+                IdPuntoVenta = v.IdPuntoVenta,
+                IdCliente = v.IdCliente,
+                IdOperadorChofer = v.IdOperadorChofer,
+                FolioOperacionDia = v.FolioOperacionDia,
+                FolioVenta = v.FolioVenta,
+                Ingreso = v.Total,
+                PuntoVenta = v.PuntoVenta,
+                OperadorChoferNombre = v.OperadorChofer,
+                FechaRegistro = v.FechaRegistro,
+            }).ToList();
+
+            return lstFinal;
+        }
+               
     }
 }

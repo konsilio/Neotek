@@ -61,6 +61,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaCorteAnticipoEC>().Get(x => x.IdPuntoVenta.Equals(idPv)).ToList();
         }
 
+        public List<VentaCorteAnticipoEC> BuscarAnticiposC()
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().Get().ToList();
+        }
         public RespuestaDto Actualizar(List<VentaPuntoDeVenta> pv)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -138,16 +142,19 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public RespuestaDto Insertar(VentaMovimiento pv)
+        public RespuestaDto Insertar(List<VentaMovimiento> pv)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<VentaMovimiento>().Insert(pv);
+                    foreach (var _pv in pv)
+                    {
+                        uow.Repository<VentaMovimiento>().Insert(_pv);
+                    }
                     uow.SaveChanges();
-                    _respuesta.Id = pv.IdPuntoVenta;
+                   // _respuesta.Id = pv.IdPuntoVenta;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
