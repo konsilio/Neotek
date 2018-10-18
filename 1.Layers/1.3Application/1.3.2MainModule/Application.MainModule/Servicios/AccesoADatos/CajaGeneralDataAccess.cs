@@ -19,6 +19,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
+
+        public List<VentaPuntoDeVenta> Buscar()
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get().ToList();
+        }
+
         public List<VentaMovimiento> BuscarTodos()
         {
             return uow.Repository<VentaMovimiento>().Get().ToList();
@@ -127,6 +133,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 {
                     _respuesta.Exito = false;
                     _respuesta.Mensaje = string.Format(Error.C0003, "del movimiento de venta"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto Insertar(VentaMovimiento pv)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<VentaMovimiento>().Insert(pv);
+                    uow.SaveChanges();
+                    _respuesta.Id = pv.IdPuntoVenta;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del movimiento de venta");
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
