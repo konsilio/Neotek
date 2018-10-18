@@ -9,6 +9,7 @@ using Application.MainModule.Servicios.Requisicion;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
+using Sagas.MainModule.ObjetosValor.Constantes;
 
 namespace Application.MainModule.Flujos
 {
@@ -81,6 +82,7 @@ namespace Application.MainModule.Flujos
                     Cantidad = CalcularAlmacenServicio.ObtenerDiferneciaMovimiento(dto.Cantidad, entity.Cantidad),
                     CantidadAnterior = almacen.Cantidad,
                     CantidadFinal = dto.Cantidad,
+                    Observaciones_ = string.Format(AlmacenConst.Actualizacion, dto.Observaciones),
                 };
                 entity.Cantidad = dto.Cantidad;
                 var SalidaProd = ProductoAlmacenServicio.GenerarAlmacenSalidaProcuto(salida, 0, almacen);
@@ -94,6 +96,7 @@ namespace Application.MainModule.Flujos
                     Cantidad = CalcularAlmacenServicio.ObtenerDiferneciaMovimiento(dto.Cantidad, entity.Cantidad),
                     CantidadAnterior = almacen.Cantidad,
                     CantidadFinal = dto.Cantidad,
+                    Observaciones = string.Format(AlmacenConst.Actualizacion, dto.Observaciones),
                 };
                 entity.Cantidad = dto.Cantidad;
                 var EntradaProd = ProductoAlmacenServicio.GenerarAlmacenEntradaProcuto(entrada, 0, almacen);

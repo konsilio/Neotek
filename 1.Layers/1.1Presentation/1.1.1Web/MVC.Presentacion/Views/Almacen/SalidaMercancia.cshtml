@@ -6,9 +6,6 @@
         <p>Espere por favor</p>
     </div>
 </div>
-
-@using (Html.BeginForm("Autorizacion", "Requisicion", FormMethod.Post))
-{
     @Html.HiddenFor(m => m.IdRequisicion)
     @Html.HiddenFor(m => m.IdUsuarioSolicitante)
     @Html.HiddenFor(m => m.RequisicionEstatus)
@@ -192,4 +189,3 @@
                 </div>
             </div>
         </div>
-}
