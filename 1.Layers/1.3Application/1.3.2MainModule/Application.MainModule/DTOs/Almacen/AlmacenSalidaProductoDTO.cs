@@ -15,6 +15,8 @@ namespace Application.MainModule.DTOs.Almacen
         public int IdUsuarioEntrega { get; set; }
         public int IdUsuarioRecibe { get; set; }
         public decimal Cantidad { get; set; }
+        public decimal CantidadAnterior { get; set; }
+        public decimal CantidadFinal { get; set; }
         public string UrlDocSalida { get; set; }
         public string PathDocSalida { get; set; }
         public string Observaciones_ { get; set; }

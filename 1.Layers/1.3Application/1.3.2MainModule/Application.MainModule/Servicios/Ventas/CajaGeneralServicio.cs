@@ -60,5 +60,70 @@ namespace Application.MainModule.Servicios.Ventas
                 MensajesError = new List<string>() { mensaje },
             };
         }
+
+        public static void ProcesarSaldos()
+        {
+            CalcularSaldoMovimientoVentas();
+        }
+
+        public static List<VentaMovimiento> CalcularSaldoMovimientoVentas()
+        {
+            List<VentaMovimiento> movimientos = new List<VentaMovimiento>();
+            List<PuntoVenta> punto = ObtenerPuntosVenta();
+            foreach (var pvx in punto)
+            {
+                movimientos = ObtenerVentaMovimiento(pvx.IdPuntoVenta);
+                if (movimientos != null && movimientos.Count > 0)
+                {
+                    movimientos.ForEach(x => movimientos.Add(ActualizarSaldos(x)));
+                }
+            }
+            return movimientos;
+        }
+        public static List<VentaMovimiento> ObtenerVentaMovimiento(int puntoventa)
+        {
+            return new CajaGeneralDataAccess().Buscar(puntoventa);
+        }
+
+        public static List<PuntoVenta> ObtenerPuntosVenta()
+        {
+            return new PuntoVentaDataAccess().BuscarTodos();
+        }
+
+        public static VentaMovimiento ActualizarSaldos(VentaMovimiento vm)
+        {
+            VentaMovimiento Updt = new VentaMovimiento();
+            if (vm.Saldo != 0)
+            {
+                vm.Saldo = CalcularPreciosVentaServicio.ObtenerSaldoActual(vm.IdPuntoVenta);
+                if (vm.Ingreso > 0)
+                {
+                    Updt.Saldo = CalcularPreciosVentaServicio.ObtenerSumaSaldoVenta(vm.Ingreso, vm.Saldo);
+                }
+                else if (vm.Egreso > 0)
+                {
+                    Updt.Saldo = CalcularPreciosVentaServicio.ObtenerSaldoVentaEgreso(vm.Egreso, vm.Saldo);
+                }
+                new CajaGeneralDataAccess().Actualizar(Updt);
+            }
+
+            return Updt;
+        }
+
+        public static void CargarVentasMovimientos()
+        {
+            bool noProcesados = false;
+
+            var ventas = ObtenerVentasPuntosVenta().Where(x=> x.DatosProcesados.Equals(noProcesados));
+            if (ventas != null && ventas.Count() > 0)
+            {
+
+            }
+        }
+
+        public static List<VentaPuntoDeVenta> ObtenerVentasPuntosVenta()
+        {
+            return new CajaGeneralDataAccess().Buscar();
+        }
     }
 }

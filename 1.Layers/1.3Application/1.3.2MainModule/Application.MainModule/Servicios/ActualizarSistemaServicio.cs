@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Ventas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Application.MainModule.Servicios
         {
             AlmacenGasServicio.ProcesarInventario();
 
-
+            CajaGeneralServicio.ProcesarSaldos();
 
             ImagenServicio.LimpiarImagenes();
         }
