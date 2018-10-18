@@ -61,7 +61,6 @@ namespace MVC.Presentacion.Controllers
             }
             return Mensaje;
         }
-
         [ValidateInput(false)]
         public ActionResult gvProductosPartial()
         {
@@ -70,7 +69,6 @@ namespace MVC.Presentacion.Controllers
             var model = AlmacenServicio.BuscarProductosAlmacen(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             return PartialView("_gvProductosPartial", model);
         }
-
         [HttpPost, ValidateInput(false)]
         public ActionResult gvProductosPartialAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] MVC.Presentacion.Models.AlmacenDTO item)
         {
@@ -126,19 +124,20 @@ namespace MVC.Presentacion.Controllers
             }
             return PartialView("_gvProductosPartial", model);
         }
-
         public ActionResult MovimientosAlamacen()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
             ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
             ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn);
-            ViewBag.LineasProducto = CatalogoServicio.ListaLineasProducto(tkn);
-           // ViewBag.Registros = AlmacenServicio.BuscarRegistroAlmacen(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            ViewBag.LineasProducto = CatalogoServicio.ListaLineasProducto(tkn);           
             return View();
         }
-
         [ValidateInput(false)]
         public ActionResult RegistroPartial()
         {

@@ -26,6 +26,9 @@ namespace Application.MainModule.DTOs.Almacen
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Ubicación")]
         public string Ubicacion { get; set; }
+        [Required(ErrorMessage = Error.R0002)]
+        [Display(Name = "Observaciones")]
+        public string Observaciones { get; set; }
         public DateTime FechaActualizacion { get; set; }
         public DateTime FechaRegistro { get; set; }
     }

@@ -7,7 +7,7 @@ using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sagas.MainModule.ObjetosValor.Constantes;
+
 
 namespace Application.MainModule.AdaptadoresDTO.Almacen
 {
@@ -74,7 +74,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                     Cantidad = dto.Cantidad,
                     CantidadAnterior = dto.CantidadAnterior,
                     CantidadFinal = dto.CantidadFinal,
-                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
+                    Observaciones_ = idOC.Equals(0) ? dto.Observaciones : oc.NumOrdenCompra,
                     FechaEntrada = dto.FechaEntrada,
                     FechaRegistro = DateTime.Now
                 };
@@ -89,7 +89,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                     Cantidad = dto.Cantidad,
                     CantidadAnterior = dto.CantidadAnterior,
                     CantidadFinal = dto.CantidadFinal,
-                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
+                    Observaciones_ = idOC.Equals(0) ? dto.Observaciones : oc.NumOrdenCompra,
                     FechaEntrada = DateTime.Now,
                     FechaRegistro = DateTime.Now
                 };
@@ -110,7 +110,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                     Cantidad = dto.Cantidad,
                     CantidadAnterior = dto.CantidadAnterior,
                     CantidadFinal = dto.CantidadFinal,
-                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
+                    Observaciones_ = idOC.Equals(0) ? dto.Observaciones_ : oc.NumOrdenCompra,
                     FechaEntrada = dto.FechaEntrada,
                     FechaRegistro = DateTime.Now
                 };
@@ -126,7 +126,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                     Cantidad = dto.Cantidad,
                     CantidadAnterior = dto.CantidadAnterior,
                     CantidadFinal = dto.CantidadFinal,
-                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
+                    Observaciones_ = idOC.Equals(0) ? dto.Observaciones_ : oc.NumOrdenCompra,
                     FechaEntrada = DateTime.Now,
                     FechaRegistro = DateTime.Now
                 };

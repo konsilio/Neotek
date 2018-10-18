@@ -1,3 +1,4 @@
+@using System.Configuration;
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
@@ -16,60 +17,108 @@
                 exportitem.Name = "CustomExportToXLS";
                 exportitem.Text = "Expotar a XLS";
                 exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
-
             });
-
             i.Items.Add(exportitem =>
             {
                 exportitem.Command = GridViewToolbarCommand.ExportToXlsx;
                 exportitem.Name = "CustomExportToXLSX";
-                exportitem.Text = "Export to XLSX";
+                exportitem.Text = "Exportar a XLSX";
                 exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
-
             });
             i.ItemAlign = GridToolbarItemAlign.Right;
         });
         settings.SettingsPager.Visible = true;
         settings.Settings.ShowFilterRow = true;
-        settings.SettingsBehavior.AllowSelectByRowClick = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
         settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
-        settings.Styles.Table.CssClass = "table table-striped";
-
+        //settings.Styles.Table.CssClass = "table table-striped";
         settings.HtmlRowPrepared = (sender, e) =>
         {
             if (e.RowType == GridViewRowType.Data)
                 if (Convert.ToBoolean(e.GetValue("EsEntrada")) == true)
                 {
-                    e.Row.CssClass = "theme-black col-md-12 bg-teal";
+                    e.Row.CssClass = "bg-teal";
                 }
             if (Convert.ToBoolean(e.GetValue("EsSalida")) == true)
-                e.Row.CssClass = "bg-red"; e.Row.Cells[0].CssClass = "col-md-2";
-            e.Row.Cells[1].CssClass = "col-md-2";
-
+                e.Row.CssClass = "bg-red";
         };
-
-        settings.Columns.Add("NombreEmpresa");
-        settings.Columns.Add("Referencia");
-        settings.Columns.Add("Descripcion");
-        settings.Columns.Add("CantidadAnterior");
-        settings.Columns.Add("Cantidad");
-        settings.Columns.Add("CantidadFinal");
+       
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "NombreEmpresa";
+            c.Caption = "Gasera";
+            c.ColumnType = MVCxGridViewColumnType.TextBox;
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Referencia";
+            c.Caption = "Referencia";
+            c.ColumnType = MVCxGridViewColumnType.TextBox;
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(40);
+            c.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descripcion";
+            c.Caption = "Producto";
+            c.ColumnType = MVCxGridViewColumnType.TextBox;
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(15);
+            c.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;        
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "CantidadAnterior";
+            c.Caption = "Anterior";
+            c.ColumnType = MVCxGridViewColumnType.TextBox;
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+            c.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
+            var colSettings = c.PropertiesEdit as TextBoxProperties;
+            colSettings.DisplayFormatString = "n2";
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Cantidad";
+            c.Caption = "Cantidad";
+            c.ColumnType = MVCxGridViewColumnType.TextBox;
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+            c.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
+            var colSettings = c.PropertiesEdit as TextBoxProperties;
+            colSettings.DisplayFormatString = "n2";
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "CantidadFinal";
+            c.Caption = "Final";
+            c.ColumnType = MVCxGridViewColumnType.TextBox;
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(5);
+            c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+            c.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
+            var colSettings = c.PropertiesEdit as TextBoxProperties;
+            colSettings.DisplayFormatString = "n2";
+        });
         settings.Columns.Add(c =>
         {
             c.FieldName = "FechaRegistro";
             c.Caption = "Fecha Registro";
-            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
             c.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
             c.SortIndex = 0;
             c.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+            c.ColumnType = MVCxGridViewColumnType.DateEdit;
+            c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            var colSettings = c.PropertiesEdit as DateEditProperties;
+            colSettings.DisplayFormatString = ConfigurationManager.AppSettings["FechaHora_F24H"];
+            colSettings.DisplayFormatInEditMode = true;
         });
-        //settings.FormatConditions.AddColorScale(, GridConditionColorScaleFormat.BlueWhiteRed);
-
     });
 }
 @grid.Bind(Model).GetHtml()

@@ -17,6 +17,7 @@ namespace MVC.Presentacion.Models
         public string ProductoLinea { get; set; }
         public decimal Cantidad { get; set; }
         public string Ubicacion { get; set; }
+        public string Observaciones { get; set; }
         public DateTime FechaActualizacion { get; set; }
         public DateTime FechaRegistro { get; set; }
     }
