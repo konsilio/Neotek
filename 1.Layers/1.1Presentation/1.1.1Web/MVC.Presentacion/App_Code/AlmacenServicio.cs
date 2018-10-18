@@ -26,5 +26,11 @@ namespace MVC.Presentacion.App_Code
         {
             return BuscarProductosAlmacen(TokenServicio.ObtenerIdEmpresa(tkn), tkn).SingleOrDefault(x => x.IdProducto.Equals(id));
         }
+        public static List<RegistroDTO> BuscarRegistroAlmacen(short id, string tkn)
+        {
+            var agente = new AgenteServicio();
+            agente.BuscarRegistroAlmacen(id, tkn);
+            return agente._listaRegistroAlmacen;
+        }
     }
 }

@@ -57,5 +57,11 @@ namespace Application.MainModule.Servicios.Mobile
 
             return EvaluarClaveOperacion(alm);
         }
+        public static RespuestaDto EvaluarClaveOperacion(CalibracionDto dto)
+        {
+            var cal = AlmacenGasServicio.ObtenerCalibracion(dto.ClaveOperacion);
+
+            return EvaluarClaveOperacion(cal);
+        }
     }
 }

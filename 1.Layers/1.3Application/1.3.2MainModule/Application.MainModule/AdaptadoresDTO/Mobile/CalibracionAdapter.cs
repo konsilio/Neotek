@@ -32,5 +32,32 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 PorcentajeMedidor = unidadAlmacen.PorcentajeActual
             };
         }
+
+        public static AlmacenGasCalibracion FromDTO(CalibracionDto dto,int IdOrden)
+        {
+            int num = 0;
+          
+            return new AlmacenGasCalibracion()
+            {
+                IdCAlmacenGas = dto.IdCAlmacenGas,
+                IdTipoMedidor = dto.IdTipoMedidor,
+                P5000 = dto.P5000,
+                IdOrden = IdOrden,
+                Porcentaje = dto.PorcentajeMedidor1,
+                PorcentajeCalibracion = dto.PorcentajeMedidor2,
+                Fotografias = dto.Imagenes.Select(x => ToDTO(x, IdOrden, num++,dto.IdCAlmacenGas)).ToList(),
+            };
+        }
+        
+        public static AlmacenGasCalibracionFoto ToDTO(string fotografia,int IdOrden,int IdOrdenFoto,short IdCAlmacenGas)
+        {
+            return new AlmacenGasCalibracionFoto()
+            {
+                CadenaBase64=fotografia,
+                IdOrden = IdOrden,
+                IdOrdenFoto =  (short) IdOrdenFoto,
+                IdCAlmacenGas = IdCAlmacenGas
+            };
+        }
     }
 }
