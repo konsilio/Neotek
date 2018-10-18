@@ -37,31 +37,31 @@
         </activity>
         <activity
             android:name=".Activity.MenuActivity"
-            android:label="@string/activity_menu" android:theme="@style/SagasTheme.AppEnter" />
+            android:label="@string/activity_menu" android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.IniciarDescargaActivity"
-            android:label="@string/title_iniciar_descarga" />
+            android:label="@string/title_iniciar_descarga" android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.FinalizarDescargaActivity"
-            android:label="@string/title_finalizar_descarga" />
+            android:label="@string/title_finalizar_descarga" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.CapturaPorcentajeActivity"
-            android:label="@string/activity_capturar_procentaje" />
+            android:label="@string/activity_capturar_procentaje" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.RegistrarPapeletaActivity"
-            android:label="@string/title_registro_papeleta" />
+            android:label="@string/title_registro_papeleta" android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.CameraPapeletaActivity"
-            android:label="@string/title_registro_papeleta" />
+            android:label="@string/title_registro_papeleta" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.VistaOrdenCompraActivity"
-            android:label="@string/title_orden_compra" />
+            android:label="@string/title_orden_compra" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.CameraDescargaActivity"
-            android:label="@string/title_proceso_descarga" />
+            android:label="@string/title_proceso_descarga" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.SubirImagenesActivity"
-            android:label="@string/title_proceso_descarga" />
+            android:label="@string/title_proceso_descarga" android:theme="@style/AppEnter"/>
 
         <!--
      Set custom default icon. This is used when no icon is set for incoming notification messages.
@@ -97,101 +97,101 @@
 
         <activity
             android:name=".Activity.LecturaDatosActivity"
-            android:label="@string/toma_de_lectura" />
+            android:label="@string/toma_de_lectura" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.LecturaP5000Activity"
-            android:label="@string/toma_de_lectura" />
+            android:label="@string/toma_de_lectura" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.CameraLecturaActivity"
-            android:label="@string/toma_de_lectura" />
+            android:label="@string/toma_de_lectura" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.LecturaPipaActivity"
-            android:label="@string/Pipa" />
+            android:label="@string/Pipa" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.LecturaAlmacenActivity"
-            android:label="@string/Almacen" />
+            android:label="@string/Almacen" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.LecturaCamionetaActivity"
-            android:label="@string/Camioneta" />
+            android:label="@string/Camioneta" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.ConfiguracionCamionetaActivity"
-            android:label="@string/Camioneta" />
+            android:label="@string/Camioneta" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.EnviarDartosActivity"
-            android:label="@string/Camioneta" />
+            android:label="@string/Camioneta" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.ReporteActivity"
-            android:label="@string/Reporte" />
+            android:label="@string/Reporte" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.VerReporteActivity"
-            android:label="@string/Reporte" />
+            android:label="@string/Reporte" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.RecargaCamionetaActivity"
-            android:label="@string/Recarga_camioneta" />
+            android:label="@string/Recarga_camioneta" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.RecargaEstacionCarburacionActivity"
-            android:label="@string/Recarga_de_estacion" />
+            android:label="@string/Recarga_de_estacion" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.RecargaPipaActivity"
-            android:label="@string/Recarga_pipa" />
+            android:label="@string/Recarga_pipa" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.AutoconsumoEstacionActivity"
-            android:label="@string/Autoconsumo_estacion" />
+            android:label="@string/Autoconsumo_estacion" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.AutoconsumoInventarioActivity"
-            android:label="@string/Autoconsumo_inventario" />
+            android:label="@string/Autoconsumo_inventario" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.AutoconsumoPipaActivity"
-            android:label="@string/Autoconsumo" />
+            android:label="@string/Autoconsumo" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.TraspasoEstacionActivity"
-            android:label="@string/Traspaso" />
+            android:label="@string/Traspaso" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.TraspasoPipaActivity"
-            android:label="@string/Traspaso" />
+            android:label="@string/Traspaso" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.CalibracionEstacionActivity"
-            android:label="@string/Calibracion" />
+            android:label="@string/Calibracion" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.CalibracionPipaActivity"
-            android:label="@string/Calibracion" />
+            android:label="@string/Calibracion" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.PorcentajeCalibracionActivity"
-            android:label="@string/Calibracion" />
+            android:label="@string/Calibracion" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.AnticipoEstacionCarburacionActivity"
-            android:label="@string/Anticipo" />
+            android:label="@string/Anticipo" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.AnticipoTablaActivity"
-            android:label="@string/Anticipo" />
+            android:label="@string/Anticipo" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.PuntoVentaSolicitarActivity"
-            android:label="@string/Punto_de_venta" />
+            android:label="@string/Punto_de_venta" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.RegistroClienteActivity"
-            android:label="@string/Punto_de_venta" />
+            android:label="@string/Punto_de_venta" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.BuscarClienteActivity"
-            android:label="@string/Punto_de_venta" />
+            android:label="@string/Punto_de_venta" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.VentaGasActivity"
             android:configChanges="orientation"
             android:label="@string/Punto_de_venta"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.PuntoVentaGasListaActivity"
             android:configChanges="orientation"
             android:label="@string/Punto_de_venta"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" android:theme="@style/AppEnter"/>
         <activity
             android:name=".Activity.PuntoVentaPagarActivity"
             android:configChanges="orientation"
             android:label="@string/Punto_de_venta"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" android:theme="@style/AppEnter"/>
         <activity android:name=".Activity.PuntoVentaOtrosActivity"
             android:configChanges="orientation"
             android:label="@string/Punto_de_venta"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" android:theme="@style/AppEnter"/>
     </application>
 
 </manifest>

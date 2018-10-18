@@ -8,7 +8,9 @@ namespace Application.MainModule.DTOs.Almacen
     public class AlmacenEntradaDTO
     {        
         public int IdAlmacen { get; set; }
-        public int IdProducto { get; set; }    
+        public int IdProducto { get; set; }
+        public short IdEmpresa { get; set; }
+        public string NombreEmpresa { get; set; }
         public string TipoProducto { get; set; }
         public string Descripcion { get; set; }
         public decimal Requeridos { get; set; }
@@ -18,6 +20,8 @@ namespace Application.MainModule.DTOs.Almacen
         [Required(ErrorMessage = Error.R0002)]
         [Display(Name = "Cantidad")]
         public decimal Cantidad { get; set; }
+        public decimal CantidadAnterior { get; set; }
+        public decimal CantidadFinal { get; set; }
         public string UrlDocEntrada { get; set; }
         public string PathDocEntrada { get; set; }
         public string Observaciones { get; set; }

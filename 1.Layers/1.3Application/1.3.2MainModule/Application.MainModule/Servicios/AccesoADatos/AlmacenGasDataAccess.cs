@@ -722,6 +722,33 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<AlmacenGasAutoConsumo>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
         }
+
+        public AlmacenGasCalibracion BuscarCalibracion(string claveOperacion)
+        {
+            return uow.Repository<AlmacenGasCalibracion>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
+        }
+
+        public RespuestaDto Insertar(AlmacenGasCalibracion carburacion)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            try
+            {
+                uow.Repository<AlmacenGasCalibracion>().Insert(carburacion);
+                uow.SaveChanges();
+                _respuesta.Id = carburacion.IdCAlmacenGas;
+                _respuesta.EsInsercion = true;
+                _respuesta.Exito = true;
+                _respuesta.ModeloValido = true;
+                _respuesta.Mensaje = Exito.OK;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Exito = false;
+                _respuesta.Mensaje = string.Format(Error.C0002, "del la recarga.");
+                _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+            }
+            return _respuesta;
+        }
     }
 }
       

@@ -273,6 +273,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Almacen\AlmacenDTO.cs" />
+    <Compile Include="Models\Almacen\RegistroDTO.cs" />
     <Compile Include="Models\Catalogos\BancoDTO.cs" />
     <Compile Include="Models\Catalogos\CatalogoRespuestaDTO.cs" />
     <Compile Include="Models\Catalogos\CategoriaProductoDTO.cs" />
@@ -366,6 +367,7 @@
     <Compile Include="Models\Seguridad\UsuarioRolModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralCamionetaModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralModel.cs" />
+    <Compile Include="Models\Ventas\VentaCorteAnticipoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -10700,9 +10702,14 @@
     <Content Include="fonts\Logo GMG.JPG" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Resources\css\Clientes.css" />
     <Content Include="Resources\css\CreateForm.css" />
+    <Content Include="Resources\js\CajaGeneral.js" />
+    <Content Include="Resources\js\Clientes.js" />
+    <Content Include="Resources\js\Empresas.js" />
     <Content Include="Resources\js\lib\Events.js" />
     <Content Include="Resources\js\lib\jquery-1.9.1.js" />
+    <Content Include="Resources\js\PrecioVenta.js" />
     <Content Include="Resources\js\Roles.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -11473,6 +11480,8 @@
     <Content Include="Views\Almacen\SalidaMercancia.cshtml" />
     <Content Include="Views\Almacen\ActualizacionExistencias.cshtml" />
     <Content Include="Views\Almacen\_gvProductosPartial.cshtml" />
+    <Content Include="Views\Almacen\MovimientosAlamacen.cshtml" />
+    <Content Include="Views\Almacen\_RegistroPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

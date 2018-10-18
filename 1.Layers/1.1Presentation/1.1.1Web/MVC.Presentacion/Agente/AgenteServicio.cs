@@ -78,7 +78,9 @@ namespace MVC.Presentacion.Agente
         public List<EstatusTipoFechaModel> _listaEstatus;
         public List<CajaGeneralModel> _listaCajaGral;
         public List<CajaGeneralCamionetaModel> _listaCajaGralCamioneta;
+        public List<VentaCorteAnticipoModel> _listaCajaGralEstacion;
         public List<AlmacenDTO> _listaAlmacen;
+        public List<RegistroDTO> _listaRegistroAlmacen;
     
         public AgenteServicio()
         {
@@ -1226,8 +1228,8 @@ namespace MVC.Presentacion.Agente
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                               
-                    _listaCajaGral = lus;
+
+                _listaCajaGral = lus.OrderByDescending(x=> x.FechaAplicacion).ToList();
                 
             }
         }
@@ -1310,11 +1312,53 @@ namespace MVC.Presentacion.Agente
                 
             }
         }
-        public void GuardarLiquidacion(CajaGeneralModel dto, string tkn)
+
+        public void BuscarListaCajaGralEstacion(string cveReporte, string tkn)
         {
-            this.ApiRoute = ConfigurationManager.AppSettings[""];
-            LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+            this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGralEstacion"];
+            GetListaCajaGralEstacion(cveReporte, tkn).Wait();
         }
+        private async Task GetListaCajaGralEstacion(string cveRep, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<VentaCorteAnticipoModel> lus = new List<VentaCorteAnticipoModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + cveRep).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<VentaCorteAnticipoModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<VentaCorteAnticipoModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); 
+                }
+
+                _listaCajaGralEstacion = lus;
+
+            }
+        }
+        public void GuardarLiquidacion(CajaGeneralCamionetaModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutLiquidarCajaGral"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        public void GuardarLiquidacionEst(VentaCorteAnticipoModel dto, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutLiquidarCajaGralEst"];
+            LLamada(dto, tkn, MetodoRestConst.Put).Wait();
+        }
+        
 
         #endregion
         #region Paises
@@ -2782,6 +2826,39 @@ namespace MVC.Presentacion.Agente
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostActulizarAlmacenProducto"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();
+        }
+        public void BuscarRegistroAlmacen(int id, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["GetRegistroAlmacen"];
+            GetListaRegistroAlmacen(id, tkn).Wait();
+        }
+        private async Task GetListaRegistroAlmacen(int id, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<RegistroDTO> list = new List<RegistroDTO>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiRoute, id.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        list = await response.Content.ReadAsAsync<List<RegistroDTO>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    list = new List<RegistroDTO>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _listaRegistroAlmacen = list;
+            }
         }
         #endregion
 

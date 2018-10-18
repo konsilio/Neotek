@@ -1463,6 +1463,16 @@ namespace Application.MainModule.Servicios.Almacen
             return new AlmacenGasDataAccess().BuscarAutoconsumoClaveOperacion(claveOperacion);
         }
 
+        public static AlmacenGasCalibracion ObtenerCalibracion(string claveOperacion)
+        {
+            return new AlmacenGasDataAccess().BuscarCalibracion(claveOperacion);
+        }
+        public static RespuestaDto InsertarCalibracion(AlmacenGasCalibracion adapter)
+        {
+            return new AlmacenGasDataAccess().Insertar(adapter);
+        }
+
+
         //public static object CrearMovimiento(AplicaRecargaDto apReDto)
         //{
         //    AlmacenGasMovimiento ultimoMovimiento = ObtenerUltimoMovimientoEnInventario(empresa.IdEmpresa, almacenGasTotal.IdAlmacenGas, descarga.FechaFinDescarga.Value);

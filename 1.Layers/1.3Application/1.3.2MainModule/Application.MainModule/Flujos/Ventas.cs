@@ -1,4 +1,6 @@
-﻿using Application.MainModule.DTOs.Ventas;
+﻿using Application.MainModule.AdaptadoresDTO.Ventas;
+using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.Servicios.Ventas;
 using System;
@@ -34,6 +36,35 @@ namespace Application.MainModule.Flujos
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
             return CajaGeneralServicio.ObtenerPV(cveReporte).ToList();
+        }
+        public List<VentaCorteAnticipoDTO> CajaGeneralEstacion(string cveReporte)
+        {
+            var resp = PermisosServicio.PuedeConsultarCajaGeneral();
+            if (!resp.Exito) return null;
+            return CajaGeneralServicio.ObtenerCE(cveReporte).ToList();
+        }
+
+        public RespuestaDto GuardarReporteLiquidado(VentaPuntoVentaDTO Dto)
+        {
+            var resp = PermisosServicio.PuedeModificarCajaGeneral();
+            if (!resp.Exito) return resp;
+
+            var reporte = CajaGeneralServicio.ObtenerPV(Dto.FolioOperacionDia).ToList();
+            if (reporte == null) return CajaGeneralServicio.NoExiste();
+
+            var rep = CajaGeneralAdapter.FromDto(reporte);
+            return CajaGeneralServicio.Actualizar(rep);
+        }
+        public RespuestaDto GuardarReporteLiquidadoEst(VentaCorteAnticipoDTO Dto)
+        {
+            var resp = PermisosServicio.PuedeModificarCajaGeneral();
+            if (!resp.Exito) return resp;
+
+            var reporte = CajaGeneralServicio.ObtenerCE(Dto.FolioOperacion).ToList();
+            if (reporte == null) return CajaGeneralServicio.NoExiste();
+
+            var rep = CajaGeneralAdapter.FromDtoCE(reporte);
+            return CajaGeneralServicio.Actualizar(rep);
         }
     }
 }

@@ -7,7 +7,14 @@
 
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+<script type="text/javascript">
+    var message = '@ViewBag.MessageExito';
+    if (message != '') {
+        $(window).on("load", showNotification('alert-success', message, 'top', 'center', '', ''));
+    }
+</script>
 @using (Html.BeginForm("GuardarRol", "Usuarios", FormMethod.Post))
 {
     <section class="content home">
@@ -66,7 +73,6 @@
                                 {
                                     foreach (var item in @ViewBag.IdUser[0].Roles)
                                     {
-
                                 <tr>
                                     <th>@item.NombreRol</th>
                                     <td>
@@ -93,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            @if (ViewBag.MensajeError != null)
+            @if (ViewBag.MessageError != null)
                 {
                 <div class="row clearfix">
                     <div id="divMensajeError" class="container">
@@ -102,42 +108,12 @@
                                 <i class="zmdi zmdi-block"></i>
                             </div>
                             <strong>
-                                <label>@ViewBag.MensajeError</label>
+                                <label>@ViewBag.MessageError</label>
                             </strong>
                         </div>
                     </div>
                 </div>
-            }
-            @*@if (ViewBag.MessageExito != "" && ViewBag.MessageExito != null)
-                    {
-
-                    <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-green p-r-35 animated fadeInDown"
-                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                             bottom: 20px; left: 0px; right: 0px;">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                        <span data-notify="icon"></span>
-                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageExito</span>
-                        <a href="#" target="_blank" data-notify="url"></a>
-                    </div>
-                }
-
-                @if (ViewBag.MessageError != "" && ViewBag.MessageError != null)
-                    {
-                    <div data-notify="container" class="bootstrap-notify-container alert alert-dismissible bg-red p-r-35 animated fadeInDown"
-                         role="alert" data-notify-position="bottom-center" style="display: inline-block; margin: 0px auto; position: fixed; transition: all 0.5s ease-in-out 0s; z-index: 1031;
-                             bottom: 20px; left: 0px; right: 0px;">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
-                        <span data-notify="icon"></span>
-                        <span data-notify="title"></span> <span data-notify="message">@ViewBag.MessageError</span><a href="#" target="_blank" data-notify="url"></a>
-                    </div>
-                }*@
+            }          
         </div>
     </section>
 }
-<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
-<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

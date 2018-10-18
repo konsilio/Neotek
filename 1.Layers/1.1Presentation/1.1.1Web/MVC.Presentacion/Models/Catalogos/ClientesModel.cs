@@ -13,6 +13,7 @@ namespace MVC.Presentacion.Models.Catalogos
         const string eTa = Error.R0004;//R0004
 
         public int IdCliente { get; set; }
+        public short Orden { get; set; }
 
         [Required(ErrorMessage = eReq)]
         [Display(Name = "IdEmpresa")]

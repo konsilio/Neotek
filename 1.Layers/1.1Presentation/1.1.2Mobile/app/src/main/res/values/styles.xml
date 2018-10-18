@@ -13,24 +13,33 @@
         <item name="android:textStyle">bold</item>
     </style>
     <style name="TabelViewText" >
-        <item name="android:textSize">15dp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="SagasTheme" parent="Theme.AppCompat.Light.NoActionBar"  >
+    <style name="SagasTheme" parent="Theme.AppCompat.Light"  >
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:windowBackground">@color/colorBackgroundSistemaLogin</item>
         <item name="android:colorForeground">@color/textColorSistemaLogin</item>
         <item name="colorAccent">@color/primaryTextColor</item>
         <item name="colorPrimary">@color/colorBackgroundNavigationBar</item>
+        <item name="android:navigationBarColor" tools:ignore="NewApi">@color/colorBackgroundNavigationBar</item>
     </style>
-    <style name="SagasTheme.AppEnter" parent="Theme.AppCompat.Light">
-        <item name="android:colorForeground">@color/textcolorButton</item>
+
+    <style name="AppEnter" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:colorForeground">@color/textColorSistemaLogin</item>
         <item name="colorAccent">@color/primaryTextColor</item>
-        <item name="colorPrimary">@color/colorBackgroundNavigationBar</item>
+        <item name="colorPrimaryDark">@color/buttonBackgroundColor</item>
     </style>
     <style name="SagasTheme.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="android:colorButtonNormal" tools:ignore="NewApi">@color/colorBackgroundSistemaLogin</item>
         <item name="android:textColor">@color/textcolorButton</item>
     </style>
-
+    <style name="ActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="background">@color/colorBackgroundNavigationBar</item>
+    </style>
+    <style name="ActionBarTitleStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/textcolorButton</item>
+    </style>
 </resources>

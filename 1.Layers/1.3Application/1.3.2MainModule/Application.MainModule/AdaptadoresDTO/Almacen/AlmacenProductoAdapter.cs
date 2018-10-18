@@ -7,7 +7,7 @@ using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sagas.MainModule.ObjetosValor.Constantes;
+
 
 namespace Application.MainModule.AdaptadoresDTO.Almacen
 {
@@ -72,9 +72,11 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                     IdProducto = dto.IdProducto,
                     IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
                     Cantidad = dto.Cantidad,
-                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
-                    FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
-                    FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
+                    CantidadAnterior = dto.CantidadAnterior,
+                    CantidadFinal = dto.CantidadFinal,
+                    Observaciones_ = idOC.Equals(0) ? dto.Observaciones : oc.NumOrdenCompra,
+                    FechaEntrada = dto.FechaEntrada,
+                    FechaRegistro = DateTime.Now
                 };
             }
             else
@@ -85,9 +87,11 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                     IdProducto = dto.IdProducto,
                     IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
                     Cantidad = dto.Cantidad,
-                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
-                    FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
-                    FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
+                    CantidadAnterior = dto.CantidadAnterior,
+                    CantidadFinal = dto.CantidadFinal,
+                    Observaciones_ = idOC.Equals(0) ? dto.Observaciones : oc.NumOrdenCompra,
+                    FechaEntrada = DateTime.Now,
+                    FechaRegistro = DateTime.Now
                 };
             }           
         }
@@ -104,9 +108,11 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                     IdUsuarioEntrega = dto.IdUsuarioEntrega,
                     IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
                     Cantidad = dto.Cantidad,
-                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
-                    FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
-                    FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
+                    CantidadAnterior = dto.CantidadAnterior,
+                    CantidadFinal = dto.CantidadFinal,
+                    Observaciones_ = idOC.Equals(0) ? dto.Observaciones_ : oc.NumOrdenCompra,
+                    FechaEntrada = dto.FechaEntrada,
+                    FechaRegistro = DateTime.Now
                 };
             }
             else
@@ -118,9 +124,11 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                     IdUsuarioEntrega = TokenServicio.ObtenerIdUsuario(),
                     IdUsuarioRecibe = TokenServicio.ObtenerIdUsuario(),
                     Cantidad = dto.Cantidad,
-                    Observaciones_ = idOC.Equals(0) ? AlmacenConst.Actualizacion : oc.NumOrdenCompra,
-                    FechaEntrada = Convert.ToDateTime(DateTime.Today.ToShortDateString()),
-                    FechaRegistro = Convert.ToDateTime(DateTime.Today.ToShortDateString())
+                    CantidadAnterior = dto.CantidadAnterior,
+                    CantidadFinal = dto.CantidadFinal,
+                    Observaciones_ = idOC.Equals(0) ? dto.Observaciones_ : oc.NumOrdenCompra,
+                    FechaEntrada = DateTime.Now,
+                    FechaRegistro = DateTime.Now
                 };
             }
         }

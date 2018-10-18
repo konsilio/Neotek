@@ -1,0 +1,130 @@
+﻿@Html.DevExpress().GetStyleSheets(
+        new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+        new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+    )
+@Html.DevExpress().GetScripts(
+        new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+        new Script { ExtensionSuite = ExtensionSuite.Editors },
+        new Script { ExtensionSuite = ExtensionSuite.GridView }
+    )
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
+<section class="content home">
+    <div class="container-fluid">
+        @using (Html.BeginForm())
+        {
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Entradas - Salidas</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Almacen</li>
+                            <li class="breadcrumb-item">Registro de Movimientos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <strong>Movimientos</strong>  del almacen
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <strong>Gasera:</strong>
+                                            <div>
+                                                @if (ViewBag.EsAdmin)
+                                                {
+                                                    <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                        @foreach (var lst in ViewBag.Empresas)
+                                                        {
+                                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                        }
+                                                    </select>
+                                                }
+                                                else
+                                                {
+                                                    @ViewBag.Empresas
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <b>Categorías:</b>
+                                            <select name="IdCategoria" class="form-control selectpicker show-tick" data-live-search="true">
+                                                @foreach (var cc in ViewBag.Categorias)
+                                                {
+                                                    <option value="@cc.IdCategoria">@cc.Nombre</option>
+
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <b>Linea de Productos:</b>
+                                            <select name="IdProductoLinea" class="form-control selectpicker show-tick" data-live-search="true">
+                                                @foreach (var cc in ViewBag.LineasProducto)
+                                                {
+                                                    <option value="@cc.IdProductoLinea">@cc.Linea</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <b>Producto:</b>
+                                            <select id="productos" name="IdProducto" class="form-control show-tick selectpicker" data-live-search="true">
+                                                @if (ViewBag.Productos != null)
+                                                {
+                                                    foreach (var lst in ViewBag.Productos)
+                                                    {
+
+                                                        <option value="@lst.IdProducto">@lst.Descripcion</option>
+
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (ViewBag.MensajeError != null && !ViewBag.MensajeError.Equal(string.Empty))
+                                {
+                                    <div class="row clearfix">
+                                        <div id="divCampos" class="container">
+                                            <div class="alert alert-danger">
+                                                <div class="alert-icon">
+                                                    <i class="zmdi zmdi-block"></i>
+                                                </div>
+                                                <strong>
+                                                    <label>@ViewBag.MensajeError</label>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="row clearfix">
+                                    <div class="table-responsive">
+                                        @Html.Action("RegistroPartial")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

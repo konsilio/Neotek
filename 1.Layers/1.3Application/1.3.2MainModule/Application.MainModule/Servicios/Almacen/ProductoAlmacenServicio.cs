@@ -17,7 +17,7 @@ namespace Application.MainModule.Servicios.Almacen
 {
     public static class ProductoAlmacenServicio
     {
-       
+
         public static RespuestaDto EntradaAlmcacenProductos(Sagas.MainModule.Entidades.Almacen _almacen, AlmacenEntradaProducto prod)
         {
             return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, prod);
@@ -56,7 +56,7 @@ namespace Application.MainModule.Servicios.Almacen
             return new AlmacenDataAccess().ProductoAlmacen(Idpord, idEmpresa);
         }
         public static RespuestaDto InsertarAlmacen(Sagas.MainModule.Entidades.Almacen almacen)
-        {          
+        {
             return new AlmacenDataAccess().Insertar(almacen);
         }
         public static Sagas.MainModule.Entidades.Almacen AlmacenEntity(Sagas.MainModule.Entidades.Almacen almacen)
@@ -77,30 +77,84 @@ namespace Application.MainModule.Servicios.Almacen
                 FechaActualizacion = DateTime.Now,
                 Cantidad = cantidad,
                 Ubicacion = AlmacenConst.UbicacionPendiente,
-                Entradas = new List<AlmacenEntradaProducto>()               
+                Entradas = new List<AlmacenEntradaProducto>()
             };
         }
         public static List<Sagas.MainModule.Entidades.Almacen> BuscarAlmacen(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
-                return new AlmacenDataAccess().ListaProductosAlmacenTodos();
+                if (idEmpresa.Equals(0))
+                    return new AlmacenDataAccess().ListaProductosAlmacenTodos();
+                else
+                    return new AlmacenDataAccess().ListaProductosAlmacen(idEmpresa);
             else
-                return new AlmacenDataAccess().ListaProductosAlmacen(idEmpresa);
-        }        
+                return new AlmacenDataAccess().ListaProductosAlmacen(TokenServicio.ObtenerIdEmpresa());
+        }
         public static List<AlmacenEntradaProducto> BuscarEntradasTodo(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
-                return new AlmacenEntradaProductoDataAccess().BuscarTodos();
+                if (idEmpresa.Equals(0))
+                    return new AlmacenEntradaProductoDataAccess().BuscarTodos();
+                else
+                    return new AlmacenEntradaProductoDataAccess().BuscarTodos(idEmpresa);
             else
-                return new AlmacenEntradaProductoDataAccess().BuscarTodos(idEmpresa);
+                return new AlmacenEntradaProductoDataAccess().BuscarTodos(TokenServicio.ObtenerIdEmpresa());
         }
         public static List<AlmacenSalidaProducto> BuscarSalidaTodo(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
-                return new AlmacenSalidaProductoDataAccess().BuscarTodos();
+                if (idEmpresa.Equals(0))
+                    return new AlmacenSalidaProductoDataAccess().BuscarTodos();
+                else
+                    return new AlmacenSalidaProductoDataAccess().BuscarTodos(idEmpresa);
             else
-                return new AlmacenSalidaProductoDataAccess().BuscarTodos(idEmpresa);
+                return new AlmacenSalidaProductoDataAccess().BuscarTodos(TokenServicio.ObtenerIdEmpresa());
         }
 
+        public static List<RegistroDTO> UnirRegistros(List<AlmacenSalidaProducto> Salidas, List<AlmacenEntradaProducto> Entradas)
+        {
+            List<RegistroDTO> Registro = new List<RegistroDTO>();
+            foreach (var _Salida in Salidas)
+            {
+                RegistroDTO dto = new RegistroDTO()
+                {
+                    IdProducto = _Salida.IdProducto,
+                    IdCategoria = _Salida.Productos.IdCategoria,
+                    IdProductoLinea = _Salida.Productos.IdProductoLinea,
+                    IdEmpresa = _Salida.Almacen.IdEmpresa,
+                    NombreEmpresa = _Salida.Almacen.Empresa.NombreComercial,
+                    Referencia = _Salida.Observaciones_,
+                    Descripcion = _Salida.Productos.Descripcion,
+                    CantidadAnterior = _Salida.CantidadAnterior,
+                    Cantidad = _Salida.Cantidad,
+                    CantidadFinal = _Salida.CantidadFinal,
+                    FechaRegistro = _Salida.FechaRegistro,
+                    EsEntrada = false,
+                    EsSalida = true,
+                };
+                Registro.Add(dto);
+            }
+            foreach (var _Entrada in Entradas)
+            {
+                RegistroDTO dto = new RegistroDTO()
+                {
+                    IdProducto = _Entrada.IdProducto,
+                    IdCategoria = _Entrada.Productos.IdCategoria,
+                    IdProductoLinea = _Entrada.Productos.IdProductoLinea,
+                    IdEmpresa = _Entrada.Almacen.IdEmpresa,
+                    NombreEmpresa = _Entrada.Almacen.Empresa.NombreComercial,
+                    Referencia = _Entrada.Observaciones_,
+                    Descripcion = _Entrada.Productos.Descripcion,
+                    CantidadAnterior  =_Entrada.CantidadAnterior,
+                    Cantidad = _Entrada.Cantidad,
+                    CantidadFinal = _Entrada.CantidadFinal,
+                    FechaRegistro = _Entrada.FechaRegistro,
+                    EsEntrada = true,
+                    EsSalida = false,
+                };
+                Registro.Add(dto);
+            }
+            return Registro.OrderBy(x => x.FechaRegistro).ToList();
+        }
     }
 }

@@ -3,19 +3,15 @@
 @{
     ViewBag.Title = "Catálogo / Usuarios";
 }
-
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <link href="~/Resources/css/CreateForm.css" rel="stylesheet" />
-<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
-<script src="~/Resources/js/lib/Events.js"></script>
 
 @using (Html.BeginForm((ViewBag.IdUser == null) ? "GuardarUsuario" : "GuardaEdicionUsuario", "Usuarios", FormMethod.Post))
 {
     <section class="content home">
         <div class="container-fluid">
-
             <div class="row clearfix">
                 <div class="col-lg-7 col-md-7 col-sm-12">
                     <h3>&nbsp;Catálogo / Usuarios</h3>
@@ -399,7 +395,7 @@
                 </div>
             </div>
 
-            @if (ViewBag.MensajeError != null)
+            @if (ViewBag.MessageError != null)
                 {
                 <div class="row clearfix">
                     <div id="divMensajeError" class="container">
@@ -408,7 +404,7 @@
                                 <i class="zmdi zmdi-block"></i>
                             </div>
                             <strong>
-                                <label>@ViewBag.MensajeError</label>
+                                <label>@ViewBag.MessageError</label>
                             </strong>
                         </div>
                     </div>
@@ -417,10 +413,3 @@
         </div>
     </section>
 }
-<script src="~/assets/bundles/datatablescripts.bundle.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
-<script src="~/assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
-<script src="~/assets/js/pages/tables/jquery-datatable.js"></script>

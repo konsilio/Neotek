@@ -1,4 +1,6 @@
-﻿using Sagas.MainModule.Entidades;
+﻿using Application.MainModule.Servicios.AccesoADatos;
+using Application.MainModule.Servicios.Catalogos;
+using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios.Ventas
 {
-   public class CalcularPreciosVentaServicio
+    public class CalcularPreciosVentaServicio
     {
         public static decimal ObtenerPrecioSalidaKg(decimal precioPemex, decimal utilidadEsperada)
         {
@@ -40,5 +42,20 @@ namespace Application.MainModule.Servicios.Ventas
 
             return EstatusPrecioVentaEnum.Programado;
         }
+        public static decimal ObtenerSumaSaldoVenta(decimal Ingreso, decimal Saldo)
+        {
+            return Ingreso + Saldo;
+        }
+
+        public static decimal ObtenerSaldoVentaEgreso(decimal Egreso, decimal Saldo)
+        {
+            return Saldo - Egreso;
+        }
+        public static decimal ObtenerSaldoActual(int puntoventa)
+        {
+            return new CajaGeneralDataAccess().Buscar(puntoventa).OrderByDescending(x => x.FechaAplicacion).FirstOrDefault().Saldo;
+        }
+
+       
     }
 }
