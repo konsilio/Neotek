@@ -1,4 +1,4 @@
-﻿using Application.MainModule.Servicios.Requisicion;
+﻿using Application.MainModule.Servicios.Requisiciones;
 using System;
 using System.Collections.Generic;
 using System.Linq;

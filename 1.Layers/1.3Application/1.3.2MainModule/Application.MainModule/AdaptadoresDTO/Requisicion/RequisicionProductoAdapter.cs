@@ -185,8 +185,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisicion
                 AutorizaCompra = _prodEntity.AutorizaCompra,
                 EsActivoVenta = _prodEntity.EsActivoVenta,
                 EsGas = _prodEntity.EsGas,
-                EsTransporteGas = _prodEntity.EsTransporteGas
-                
+                EsTransporteGas = _prodEntity.EsTransporteGas                
             };
             return _prod;
         }

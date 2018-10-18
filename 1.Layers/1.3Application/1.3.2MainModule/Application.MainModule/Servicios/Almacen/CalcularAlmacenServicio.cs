@@ -12,6 +12,10 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return TotalAlmacenActual + TotalEntrada;
         }
+        public static decimal ObtenerRestaSalidaAlmacen(decimal TotalAlmacenActual, decimal TotalEntrada)
+        {
+            return TotalAlmacenActual - TotalEntrada;
+        }
         public static decimal ObtenerDiferneciaMovimiento(decimal cantidadMayor, decimal cantidadMenor)
         {
             if (cantidadMayor < cantidadMenor)

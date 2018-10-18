@@ -9,7 +9,7 @@ using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacen;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Notificacion;
-using Application.MainModule.Servicios.Requisicion;
+using Application.MainModule.Servicios.Requisiciones;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;

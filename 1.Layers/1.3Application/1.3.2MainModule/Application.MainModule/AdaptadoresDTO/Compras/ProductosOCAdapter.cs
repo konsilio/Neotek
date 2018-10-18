@@ -2,7 +2,7 @@
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Catalogos;
-using Application.MainModule.Servicios.Requisicion;
+using Application.MainModule.Servicios.Requisiciones;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
@@ -193,6 +193,30 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
         public static List<OrdenCompraProductoDTO> ToDTOx(List<OrdenCompraProducto> _prods)
         {
           return _prods.ToList().Select(x => ToDTOx(x)).ToList();
+        }
+
+        public static OrdenCompraProducto FromEntity(OrdenCompraProducto _prod)
+        {
+            return new OrdenCompraProducto()
+            {
+                IdProducto = _prod.IdProducto,
+                ProductoServicioTipo = _prod.ProductoServicioTipo,
+                IdCentroCosto = _prod.IdCentroCosto,
+                Producto = _prod.Descripcion,
+                Categoria = _prod.Categoria,
+                Cantidad = _prod.Cantidad,
+                Linea = _prod.Linea,
+                UnidadMedida = _prod.UnidadMedida,
+                UnidadMedida2 = _prod.UnidadMedida2,
+                Descripcion = _prod.Descripcion,
+                Precio = _prod.Precio,
+                Descuento = _prod.Descuento,
+                IVA = _prod.IVA,
+                IEPS = _prod.IEPS,
+                Importe = _prod.Importe,
+                EsActivoVenta = _prod.EsActivoVenta,
+                EsGas = _prod.EsGas,
+            };
         }
     }
 }

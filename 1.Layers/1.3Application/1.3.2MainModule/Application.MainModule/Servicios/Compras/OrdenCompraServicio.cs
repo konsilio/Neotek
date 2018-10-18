@@ -233,7 +233,7 @@ namespace Application.MainModule.Servicios.Compras
         }
         public static OrdenCompraDTO AgregarDatosRequisicion(OrdenCompraDTO dto)
         {
-            var datosreq = Requisicion.RequisicionServicio.BuscarRequisicionPorId(dto.IdRequisicion);
+            var datosreq = Requisiciones.RequisicionServicio.BuscarRequisicionPorId(dto.IdRequisicion);
             dto.MotivoRequisicion = datosreq.MotivoRequisicion;
             dto.RequeridoEn = datosreq.RequeridoEn;
             return dto;
