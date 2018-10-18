@@ -12,13 +12,14 @@ namespace MVC.Presentacion.Controllers
     public class AlmacenController : Controller
     {
         string tkn = string.Empty;
-        public ActionResult ActualizacionExistencias(AlmacenDTO model = null)
+        public ActionResult ActualizacionExistencias(AlmacenDTO model = null, string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();            
             //var Pagina = page ?? 1;          
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             ViewBag.Productos = AlmacenServicio.BuscarProductosAlmacen(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            if (!string.IsNullOrEmpty(msj)) ViewBag.Confirmacion = msj;
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             if (model != null && model.IdProductoLinea != 0) ViewBag.EsEdicion = true;            
             if (ViewBag.EsAdmin)
@@ -37,7 +38,7 @@ namespace MVC.Presentacion.Controllers
             {
                 var respuesta = AlmacenServicio.ModificarAlmacen(model, tkn);
                 if (respuesta.Exito)
-                    return RedirectToAction("ActualizacionExistencias");
+                    return RedirectToAction("ActualizacionExistencias", new { msj = respuesta.Mensaje });
                 else
                 {
                     TempData["RespuestaDTO"] = respuesta;
