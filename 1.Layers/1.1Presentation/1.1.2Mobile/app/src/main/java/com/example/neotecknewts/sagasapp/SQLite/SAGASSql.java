@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
@@ -65,6 +66,10 @@ public class SAGASSql extends SQLiteOpenHelper {
     public static final String TIPO_RECARGA_CAMIONETA = "C";
     public static final String TIPO_RECARGA_ESTACION_CARBURACION =  "EC";
     public static final String TIPO_RECARGA_PIPA = "P";
+    public static final String TIPO_AUTOCONSUMO_ESTACION_CARBURACION = "ACEC";
+    public static final String TIPO_AUTOCONSUMO_INVENTARIO_GENERAL = "ACIG";
+    public static final String TIPO_AUTOCONSUMO_PIPAS = "ACP";
+
     //endregion
 
     //region Constructor de clase
@@ -338,6 +343,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
+
         //region Tabla de reportes
         db.execSQL("CREATE TABLE "+ TABLE_REPORTES+ "(" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -368,7 +374,8 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "EsEstacion BOOLEAN,"+
                 "EsPipa BOOLEAN"+
                 ")");
-        //enregion
+        //endregion
+
         //region Tabla de concepto de venta
         db.execSQL("CREATE TABLE "+TABLE_VENTAS_CONCEPTO+" (" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -385,15 +392,28 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Falta BOOLEAN DEFAULT 1"+
                 ")");
         //endregion
+
         //region Tabla de Autoconsumos
         db.execSQL("CREATE TABLE "+TABLE_AUTOCONSUMO+"(" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "IdAlmacenGasSalida INTEGER," +
-                "IdAlmacenGasEntrasa INTEGER," +
+                "IdCAlmacenGasSalida INTEGER," +
+                "IdCAlmacenGasEntrada INTEGER," +
                 "P5000Salida INTEGER," +
+                "NombreTipoMedidor TEXT,"+
                 "ClaveOperacion TEXT," +
                 "CantidadFotos INTEGER," +
                 "PorcentajeMedidor DOUBLE," +
+                "Tipo TEXT,"+
+                "EsFinal BOOLEAN DEFAULT 1,"+
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+        //region Imagenes Autoconsumos
+        db.execSQL("CREATE TABLE "+TABLE_AUTOCONSUMO_IMAGENES+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT,"+
+                "Url TEXT," +
+                "Imagen TEXT," +
                 "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
@@ -1767,12 +1787,133 @@ public class SAGASSql extends SQLiteOpenHelper {
     }
 
     //endregion
+
     //region Metodos para el registro del reporte
     /*public Long InsertReporte (String ){
 
     }*/
+    //endregion
+
+    //region Metodos para el autoconsumo
+
+    /**
+     * <h3>GetAutoconsumo</h3>
+     * Permite retornar un autoconsumoque coincida con la clave de operación
+     * que es enviada como parametro, retornara un objeto de tipo {@link Cursor}
+     * con el resultado obtenido.
+     * @param claveOperacion {@link String} que reprecenta la clave de operacion de autoconsumo
+     * @return Objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @author Jorge Omar Tovar Martínez (jorge.tovar@neoteck.com.mx)
+     */
     public Cursor GetAutoconsumo(String claveOperacion){
-        return this.getReadableDatabase().rawQuery("SELECT * FROM " +TABLE_AUTOCONSUMO+"",
+        return this.getReadableDatabase().rawQuery("SELECT * FROM " +TABLE_AUTOCONSUMO+
+                        " WHERE ClaveOperacion = '"+claveOperacion+"'",
+                null);
+    }
+
+    /**
+     * <h3>EliminarAutoconsumo</h3>
+     * Permite eliminar un autoconsumo por medio de la clave de operación , retornara un
+     * valor de tipo int con el numero total de registros eliminados
+     * @param claveOperacion {@link String} que reprecenta la clave de operacion de autoconsumo
+     * @return Número total de registros eliminados
+     * @author Jorge Omar Tovar Martínez (jorge.tovar@neoteck.com.mx)
+     */
+    public int EliminarAutoconsumo(String claveOperacion){
+        return this.getWritableDatabase().delete(TABLE_AUTOCONSUMO,
+                " ClaveOperacion = '"+claveOperacion+"'",null);
+    }
+
+    /**
+     * <h3>InsertarAutoconsumo</h3>
+     * Permite realizar el registro de un autoconsumo, tomara como parametro un
+     * objeto de la clase {@link AutoconsumoDTO} con los datos a registrar,
+     * retornara un valor de tipo long que repreceta el id del registro en la base de datos
+     *
+     * @param autoconsumoDTO Objeto DTO con los valores a registrar
+     * @return Id del registro creado , en caso de que de -1 no se registro
+     */
+    public Long InsertarAutoconsumo(AutoconsumoDTO autoconsumoDTO,String tipo,boolean esFinal){
+        ContentValues values = new ContentValues();
+        values.put("ClaveOperacion",autoconsumoDTO.getClaveOperacion());
+        values.put("CantidadFotos",autoconsumoDTO.getCantidadFotos());
+        values.put("IdCAlmacenGasSalida",autoconsumoDTO.getIdCAlmacenGasSalida());
+        values.put("IdCAlmacenGasEntrada",autoconsumoDTO.getIdCAlmacenGasEntrada());
+        values.put("NombreTipoMedidor",autoconsumoDTO.getNombreTipoMedidor());
+        values.put("P5000Salida",autoconsumoDTO.getP5000Salida());
+        values.put("PorcentajeMedidor",autoconsumoDTO.getPorcentajeMedidor());
+        values.put("Tipo",tipo);
+        values.put("EsFinal",esFinal);
+        return this.getWritableDatabase().insert(TABLE_AUTOCONSUMO,null,values);
+    }
+
+    /**
+     * <h3>GetImagenesAutoconsumo</h3>
+     * Permite retornar las imagenes que se tomaron en el autoconsumo,
+     * retornara un objeto de tipo {@link Cursor} con esta información
+     * @param claveOperacion {@link String} que reprecenta la clave de operacion de autoconsumo
+     * @return Objeto de tipo {@link Cursor} con las imagenes
+     */
+    public Cursor GetImagenesAutoconsumo(String claveOperacion){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+
+                TABLE_AUTOCONSUMO_IMAGENES+" WHERE ClaveOperacion ='"+claveOperacion+"'",
+                null);
+    }
+
+    /**
+     * <h3>EliminarImagenesAutoconsumo</h3>
+     * Permite realizar la eliminación de los registros de las imagenes del autoconsumo
+     * por medio de la clave de operacion que es enviada como parametro, el metodo retornara
+     * un valor int con el numero de regisatros eliminados.
+     *
+     * @param claveOperacion {@link String} que reprecenta la clave de operacion de autoconsumo
+     * @return Número de registos eliminados
+     * @author Jorge Omar Tovar Martínez (jorge.tovar@neoteck.com.mx)
+     */
+    public int EliminarImagenesAutoconsumo(String claveOperacion){
+        int total = this.getWritableDatabase().delete(TABLE_AUTOCONSUMO_IMAGENES,
+                " ClaveOperacion ='"+claveOperacion+"'",null);
+        this.getWritableDatabase().execSQL("VACUUM;");
+        return total;
+    }
+
+    /**
+     * <h3>InsertarImagenesAutoconsumo</h3>
+     * Permite realizar el registro de las imagenes de autoconsumo, retornara un
+     * array de tipo {@link Long} con los id de los registros en caso de ser exitosos.
+     * @param autoconsumoDTO Objeto DTO con los valores a registrar
+     * @return Array de tipo {@link Long} con los id registrados
+     */
+    public Long[] InsertarImagenesAutoconsumo(AutoconsumoDTO autoconsumoDTO){
+        int fotos = autoconsumoDTO.getImagenes().size();
+        Long[] inserts = new Long[fotos];
+        for(int x = 0; x<fotos;x++){
+            ContentValues values = new ContentValues();
+
+            values.put("ClaveOperacion",autoconsumoDTO.getClaveOperacion());
+            values.put("Url",autoconsumoDTO.getImagenesURI().get(x).toString());
+            values.put("Imagen",autoconsumoDTO.getImagenes().get(x));
+            inserts[x] = this.getWritableDatabase().insert(
+                    TABLE_AUTOCONSUMO_IMAGENES,
+                    null,
+                    values
+            );
+        }
+        return inserts;
+    }
+
+    /**
+     * Permite realizar la consulta de todos los registros de autoconsumo,
+     * retornara un objeto de tipo {@link Cursor} con el resultado de la consulta
+     * @return Retornara todos los registros encontrados
+     */
+    public Cursor GetAutoconsumos(){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_AUTOCONSUMO,
+                null);
+    }
+
+    public Cursor GetImagenesAutoconsumo(){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_AUTOCONSUMO_IMAGENES,
                 null);
     }
     //endregion

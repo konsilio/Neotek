@@ -13,11 +13,11 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_weight="1"
-        android:paddingTop="15dp"
         android:paddingBottom="15dp"
+        android:paddingTop="15dp"
         android:text="@string/toma_de_lectura"
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/TVCamposCamionetaHader"
@@ -29,7 +29,7 @@
         android:padding="5dp"
         android:text="@string/configuracion_camioneta"
         android:textAlignment="center"
-        android:textSize="14sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/TVCamposCamionetasHeaderInstrucciones"
@@ -41,7 +41,7 @@
         android:padding="5dp"
         android:text="@string/Registra_configuracion"
         android:textAlignment="center"
-        android:textSize="14sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/TVCamposCamionetasHeaderContabiliza"

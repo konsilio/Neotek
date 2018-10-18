@@ -1563,7 +1563,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             autoconsumoDTO, boolean esAutoconsumoEstacionFinal) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
-        String clave_unica = "RP";
+        String clave_unica = "AE";
         clave_unica += (esAutoconsumoEstacionFinal)? "F":"I";
         clave_unica += s.format(new Date());
         autoconsumoDTO.setClaveOperacion(clave_unica);
@@ -1604,7 +1604,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         if (servicio_intentos == 3) {
-            registrar_local_autoconsumo(sagasSql,autoconsumoDTO);
+            registrar_local_autoconsumo(sagasSql,autoconsumoDTO,
+                    SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION,esAutoconsumoEstacionFinal);
             registro_local = true;
         }
 
@@ -1623,9 +1624,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        int intentos_post = 0;
+         /*int intentos_post = 0;
         registra_reacrga = true;
-        while(intentos_post<3) {
+        while(intentos_post<3) {*/
+
             Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                         autoconsumoDTO,
                         true,
@@ -1636,16 +1638,20 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         "application/json"
             );
             Log.w("Url camioneta", retrofit.baseUrl().toString());
+
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
+
                 @Override
                 public void onResponse(Call<RespuestaRecargaDTO> call,
                                        Response<RespuestaRecargaDTO> response) {
                     RespuestaRecargaDTO data = response.body();
+
                     if (response.isSuccessful()) {
                         Log.w("IniciarDescarga", "Success");
                         subirImagenesPresenter.onSuccessRegistroRecarga();
+                        registro_local = false;
+
                     } else {
-                        registra_reacrga = false;
                         switch (response.code()) {
                             case 404:
                                 Log.w("Autoconsumo estacion", "not found");
@@ -1659,38 +1665,54 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
-                        if(data!=null) {
-                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
-                        }else {
-                            subirImagenesPresenter.errorSolicitud(response.message());
-                        }
-                        registra_reacrga= false;
+                        registro_local = true;
+                    }
+                    if(response.code()>=300) {
+                        registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
+                                SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION, esAutoconsumoEstacionFinal);
+                        Lisener lisener = new Lisener(sagasSql, token);
+                        lisener.CrearRunable(Lisener.Autoconsumo);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
-                    registra_reacrga = false;
-                    subirImagenesPresenter.errorSolicitud(t.getMessage());
+                    registro_local = true;
+                    registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
+                            SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION, esAutoconsumoEstacionFinal);
+                    Lisener lisener = new Lisener(sagasSql, token);
+                    lisener.CrearRunable(Lisener.Autoconsumo);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
+
+            /*if (registro_local){
+                registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
+                        SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION, esAutoconsumoEstacionFinal);
+                subirImagenesPresenter.onSuccessRegistroAndroid();
+                Lisener lisener = new Lisener(sagasSql,token);
+                lisener.CrearRunable(Lisener.Autoconsumo);
+                subirImagenesPresenter.onSuccessRegistroAndroid();
+            }
             intentos_post++;
             if(registra_reacrga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
-            registrar_local_autoconsumo(sagasSql,autoconsumoDTO);
+            }*/
+        /*}*/
+       /* if(intentos_post==3){
+            registrar_local_autoconsumo(sagasSql,autoconsumoDTO,
+                    SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION,esAutoconsumoEstacionFinal);
             registro_local = true;
         }
         if(registro_local ){
-            /*Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);*/
+            Lisener lisener = new Lisener(sagasSql,token);
+            lisener.CrearRunable(Lisener.RecargaCamioneta);
             subirImagenesPresenter.onSuccessRegistroAndroid();
-        }
+        }*/
         //endregion
 
     }
@@ -1700,7 +1722,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             autoconsumoDTO, boolean esAutoconsumoInventarioFinal) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
-        String clave_unica = "RI";
+        String clave_unica = "AIN";
         clave_unica += (esAutoconsumoInventarioFinal)? "F":"I";
         clave_unica += s.format(new Date());
         autoconsumoDTO.setClaveOperacion(clave_unica);
@@ -1741,14 +1763,13 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         if (servicio_intentos == 3) {
-            registrar_local_autoconsumo(sagasSql,autoconsumoDTO);
+            registrar_local_autoconsumo(sagasSql,autoconsumoDTO,
+                    SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL,esAutoconsumoInventarioFinal);
             registro_local = true;
         }
 
         //endregion
         //region Realiza el registro del autoconsumo
-
-
 
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -1760,9 +1781,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        int intentos_post = 0;
+        /*int intentos_post = 0;
         registra_reacrga = true;
-        while(intentos_post<3) {
+        while(intentos_post<3) {*/
             Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                     autoconsumoDTO,
                     false,
@@ -1782,7 +1803,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         Log.w("IniciarDescarga", "Success");
                         subirImagenesPresenter.onSuccessRegistroRecarga();
                     } else {
-                        registra_reacrga = false;
+                        //registra_reacrga = false;
                         switch (response.code()) {
                             case 404:
                                 Log.w("Autoconsumo inventario", "not found");
@@ -1801,7 +1822,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         }else {
                             subirImagenesPresenter.errorSolicitud(response.message());
                         }
-                        registra_reacrga= false;
+                        //registra_reacrga= false;
+                    }
+                    if(response.code()>=300){
+                        registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
+                                SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL,
+                                esAutoconsumoInventarioFinal);
+                        Lisener lisener = new Lisener(sagasSql, token);
+                        lisener.CrearRunable(Lisener.Autoconsumo);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
 
@@ -1809,10 +1838,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
                     registra_reacrga = false;
-                    subirImagenesPresenter.errorSolicitud(t.getMessage());
+                    registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
+                            SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL,
+                            esAutoconsumoInventarioFinal);
+                    Lisener lisener = new Lisener(sagasSql, token);
+                    lisener.CrearRunable(Lisener.Autoconsumo);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-            intentos_post++;
+           /* intentos_post++;
             if(registra_reacrga){
                 break;
             }else{
@@ -1820,14 +1854,13 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             }
         }
         if(intentos_post==3){
-            registrar_local_autoconsumo(sagasSql,autoconsumoDTO);
+            registrar_local_autoconsumo(sagasSql,autoconsumoDTO,
+                    SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL,esAutoconsumoInventarioFinal);
             registro_local = true;
         }
         if(registro_local ){
-            /*Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);*/
             subirImagenesPresenter.onSuccessRegistroAndroid();
-        }
+        }*/
         //endregion
 
     }
@@ -1837,7 +1870,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             autoconsumoDTO, boolean esAutoconsumoPipaFinal) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
-        String clave_unica = "RP";
+        String clave_unica = "AP";
         clave_unica += (esAutoconsumoPipaFinal)? "F":"I";
         clave_unica += s.format(new Date());
         autoconsumoDTO.setClaveOperacion(clave_unica);
@@ -1878,7 +1911,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         if (servicio_intentos == 3) {
-            registrar_local_autoconsumo(sagasSql,autoconsumoDTO);
+            registrar_local_autoconsumo(sagasSql,autoconsumoDTO,
+                    SAGASSql.TIPO_AUTOCONSUMO_PIPAS,esAutoconsumoPipaFinal);
             registro_local = true;
         }
 
@@ -1892,14 +1926,14 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        int intentos_post = 0;
+        /*int intentos_post = 0;
         registra_reacrga = true;
-        while(intentos_post<3) {
+        while(intentos_post<3) {*/
             Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                     autoconsumoDTO,
                     false,
@@ -1938,7 +1972,15 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         }else {
                             subirImagenesPresenter.errorSolicitud(response.message());
                         }
-                        registra_reacrga= false;
+                       // registra_reacrga= false;
+                    }
+                    if(response.code()>=300){
+                        registrar_local_autoconsumo(sagasSql,
+                                autoconsumoDTO,SAGASSql.TIPO_AUTOCONSUMO_PIPAS,
+                                esAutoconsumoPipaFinal);
+                        Lisener lisener = new Lisener(sagasSql, token);
+                        lisener.CrearRunable(Lisener.Autoconsumo);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
 
@@ -1946,25 +1988,29 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
                     registra_reacrga = false;
-                    subirImagenesPresenter.errorSolicitud(t.getMessage());
+                    registrar_local_autoconsumo(sagasSql,
+                            autoconsumoDTO,SAGASSql.TIPO_AUTOCONSUMO_PIPAS,
+                            esAutoconsumoPipaFinal);
+                    Lisener lisener = new Lisener(sagasSql, token);
+                    lisener.CrearRunable(Lisener.Autoconsumo);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_reacrga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
-            registrar_local_autoconsumo(sagasSql,autoconsumoDTO);
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
+            registrar_local_autoconsumo(sagasSql,
+                    autoconsumoDTO,SAGASSql.TIPO_AUTOCONSUMO_PIPAS,esAutoconsumoPipaFinal);
             registro_local = true;
         }
         if(registro_local ){
-            /*Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);*/
             subirImagenesPresenter.onSuccessRegistroAndroid();
-        }
+        }*/
         //endregion
     }
 
@@ -2370,7 +2416,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     }
 
     @Override
-    public void registrarCalibracionPipa(SAGASSql sagasSql, String token, CalibracionDTO calibracionDTO, boolean esCalibracionPipaFinal) {
+    public void registrarCalibracionPipa(SAGASSql sagasSql, String token, CalibracionDTO calibracionDTO,
+                                         boolean esCalibracionPipaFinal) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "CP";
@@ -2507,8 +2554,14 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     private void registrar_local_traspaso(SAGASSql sagasSql, TraspasoDTO traspasoDTO) {
     }
 
-    private void registrar_local_autoconsumo(SAGASSql sagasSql, AutoconsumoDTO autoconsumoDTO) {
-
+    private void registrar_local_autoconsumo(SAGASSql sagasSql, AutoconsumoDTO autoconsumoDTO,
+                                             String Tipo,boolean esFinal) {
+        if(sagasSql.GetAutoconsumo(autoconsumoDTO.getClaveOperacion()).getCount()==0){
+            sagasSql.InsertarAutoconsumo(autoconsumoDTO,Tipo,esFinal);
+            if(sagasSql.GetImagenesAutoconsumo(autoconsumoDTO.getClaveOperacion()).getCount()==0){
+                sagasSql.InsertarImagenesAutoconsumo(autoconsumoDTO);
+            }
+        }
     }
 
     //region Metodos de clase privados

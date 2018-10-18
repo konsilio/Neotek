@@ -18,10 +18,11 @@
                 android:id="@+id/TVAnticipoTablaActivityTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:text="@string/Anticipo"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="24sp" />
 
             <Spinner
                 android:id="@+id/SPAnticipoTablaActivityFechaCorte"
@@ -30,22 +31,23 @@
                 android:padding="20dp"
                 android:visibility="gone" />
 
-            <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            <ScrollView
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_height="200sp"
+                android:layout_height="300dp"
                 android:scrollbars="vertical">
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                     <TableLayout
                         android:id="@+id/TLAnticipoTablaActivityTabla"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:isScrollContainer="true"
                         android:scrollbarStyle="outsideOverlay"
-                        android:scrollbars="horizontal">
+                        android:scrollbars="horizontal"
+                        >
 
                     </TableLayout>
                 </HorizontalScrollView>
@@ -80,7 +82,7 @@
                         android:layout_weight="1"
                         android:text="@string/total"
                         android:textAlignment="textEnd"
-                        android:textSize="18sp" />
+                        android:textSize="24sp" />
 
                     <TextView
                         android:id="@+id/TVAnticipoTablaActivityTotal"
@@ -89,7 +91,7 @@
                         android:layout_weight="1"
                         android:text=""
                         android:textAlignment="textEnd"
-                        android:textSize="18sp"
+                        android:textSize="24sp"
                         android:textStyle="bold" />
                 </TableRow>
 
@@ -107,7 +109,7 @@
                         android:layout_weight="3"
                         android:text="@string/anticipar"
                         android:textAlignment="center"
-                        android:textSize="18sp" />
+                        android:textSize="24sp" />
                 </TableRow>
 
                 <TableRow
@@ -121,13 +123,13 @@
                         android:id="@+id/ETAnticipoTablaActivityAnticipo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
                         android:layout_weight="3"
                         android:ems="10"
                         android:inputType="numberDecimal"
                         android:textAlignment="textEnd"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         tools:ignore="Autofill,LabelFor" />
                 </TableRow>
 
@@ -292,7 +294,7 @@
                         android:backgroundTint="@color/colorButtonLogin"
                         android:text="@string/regresar"
                         android:textColor="@color/colorTextButtonLogin"
-                        android:textSize="18sp"
+                        android:textSize="24sp"
                         tools:ignore="ButtonStyle,UnusedAttribute" />
 
                     <Button
@@ -303,7 +305,7 @@
                         android:backgroundTint="@color/colorButtonLogin"
                         android:text="@string/hacer_anticipo"
                         android:textColor="@color/colorTextButtonLogin"
-                        android:textSize="18sp"
+                        android:textSize="24sp"
                         tools:ignore="ButtonStyle,UnusedAttribute" />
                 </TableRow>
             </TableLayout>
