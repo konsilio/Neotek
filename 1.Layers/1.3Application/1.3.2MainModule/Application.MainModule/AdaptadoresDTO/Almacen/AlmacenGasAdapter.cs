@@ -287,7 +287,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 Year = (short)descarga.FechaFinDescarga.Value.Year,
                 Mes = (byte)descarga.FechaFinDescarga.Value.Month,
                 Dia = (byte)descarga.FechaFinDescarga.Value.Day,
-                Orden = ultimoMovimiento != null ? ultimoMovimiento.Orden++ : (short)1,
+                Orden = ultimoMovimiento != null && ultimoMovimiento.Orden > 0 ? (short)(ultimoMovimiento.Orden + 1) : (short)1,
                 IdTipoMovimiento = TipoMovimientoEnum.Entrada,
                 IdTipoEvento = TipoEventoEnum.Descarga,
                 IdOrdenVenta = null,
