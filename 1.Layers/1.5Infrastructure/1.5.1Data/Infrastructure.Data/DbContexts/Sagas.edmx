@@ -296,6 +296,90 @@
           <Property Name="PorcentajeAnteriorTotal" Type="decimal" Precision="10" Scale="4" Nullable="false" />
           <Property Name="PorcentajeActualTotal" Type="decimal" Precision="10" Scale="4" Nullable="false" />
         </EntityType>
+        <EntityType Name="AlmacenGasMovimientoAutoconsumo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="AutoconsumoKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoDiaKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoDiaLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoMesKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoMesLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoAnioKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoAnioLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoAcumDiaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="AutoconsumoAcumDiaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="AutoconsumoAcumMesKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="AutoconsumoAcumMesLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="AutoconsumoAcumAnioKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="AutoconsumoAcumAnioLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlmacenGasMovimientoCalibracion">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="CalibracionKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionDiaKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionDiaLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionMesKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionMesLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionAnioKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionAnioLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionAcumDiaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CalibracionAcumDiaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CalibracionAcumMesKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CalibracionAcumMesLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CalibracionAcumAnioKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CalibracionAcumAnioLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlmacenGasMovimientoDescarga">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="DescargaKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaDiaKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaDiaLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaMesKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaMesLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaAnioKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaAnioLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaAcumDiaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="DescargaAcumDiaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="DescargaAcumMesKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="DescargaAcumMesLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="DescargaAcumAnioKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="DescargaAcumAnioLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
         <EntityType Name="AlmacenGasMovimientoFoto">
           <Key>
             <PropertyRef Name="IdEmpresa" />
@@ -317,6 +401,144 @@
           <Property Name="NombreMedidorLectura" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Lectura" Type="decimal" Precision="10" Scale="4" Nullable="false" />
           <Property Name="Evento" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlmacenGasMovimientoInventario">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="CAlmEntradaDiaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmEntradaDiaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmSalidaDiaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmSalidaDiaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmEntradaMesKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmEntradaMesLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmSalidaMesKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmSalidaMesLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmEntradaAnioKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmEntradaAnioLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmSalidaAnioKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmSalidaAnioLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlmacenGasMovimientoRecarga">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="RecargaKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaDiaKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaDiaLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaMesKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaMesLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaAnioKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaAnioLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaAcumDiaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="RecargaAcumDiaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="RecargaAcumMesKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="RecargaAcumMesLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="RecargaAcumAnioKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="RecargaAcumAnioLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlmacenGasMovimientoRemanente">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="RemaKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RemaLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RemaDiaKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RemaDiaLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RemaMesKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RemaMesLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RemaAnioKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RemaAnioLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="RemaAcumDiaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="RemaAcumDiaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="RemaAcumMesKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="RemaAcumMesLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="RemaAcumAnioKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="RemaAcumAnioLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlmacenGasMovimientoTraspaso">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="TraspasoKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoDiaKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoDiaLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoMesKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoMesLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoAnioKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoAnioLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoAcumDiaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TraspasoAcumDiaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TraspasoAcumMesKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TraspasoAcumMesLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TraspasoAcumAnioKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="TraspasoAcumAnioLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AlmacenGasMovimientoVenta">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="VentaKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaDiaKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaDiaLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaMesKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaMesLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaAnioKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaAnioLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaAcumDiaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="VentaAcumDiaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="VentaAcumMesKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="VentaAcumMesLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="VentaAcumAnioKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="VentaAcumAnioLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
         </EntityType>
         <EntityType Name="AlmacenGasRecarga">
           <Key>
@@ -1667,6 +1889,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="ClienteConCredito" Type="bit" Nullable="false" />
           <Property Name="OperadorChofer" Type="varchar" MaxLength="260" />
           <Property Name="DatosProcesados" Type="bit" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="smalldatetime" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <EntityType Name="VentaPuntoDeVentaDetalle">
@@ -1687,10 +1910,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdProducto" Type="int" Nullable="false" />
           <Property Name="IdProductoLinea" Type="smallint" Nullable="false" />
           <Property Name="IdCategoria" Type="smallint" Nullable="false" />
+          <Property Name="IdUnidadMedida" Type="smallint" Nullable="false" />
+          <Property Name="PrecioUnitarioProducto" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PrecioUnitarioLt" Type="decimal" Precision="18" Scale="2" />
           <Property Name="PrecioUnitarioKg" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DescuentoUnitarioProducto" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DescuentoUnitarioLt" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DescuentoUnitarioKg" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CantidadProducto" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CantidadLt" Type="decimal" Precision="18" Scale="2" />
           <Property Name="CantidadKg" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DescuentoTotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -1698,7 +1925,57 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="ProductoDescripcion" Type="varchar" MaxLength="500" />
           <Property Name="ProductoLinea" Type="varchar" MaxLength="50" />
           <Property Name="ProductoCategoria" Type="varchar" MaxLength="50" />
+          <Property Name="UnidadMedida" Type="varchar" MaxLength="50" />
           <Property Name="FechaRegistro" Type="smalldatetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VentaPuntoDeVentaEfectivo">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+            <PropertyRef Name="Year" />
+            <PropertyRef Name="Mes" />
+            <PropertyRef Name="Dia" />
+            <PropertyRef Name="Orden" />
+          </Key>
+          <Property Name="IdEmpresa" Type="smallint" Nullable="false" />
+          <Property Name="Year" Type="smallint" Nullable="false" />
+          <Property Name="Mes" Type="tinyint" Nullable="false" />
+          <Property Name="Dia" Type="tinyint" Nullable="false" />
+          <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="Subtotal" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SubtotalDia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SubtotalMes" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SubtotalAnio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SubtotalAcumDia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SubtotalAcumMes" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SubtotalAcumAnio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Descuento" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DescuentoDia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DescuentoMes" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DescuentoAnio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DescuentoAcumDia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DescuentoAcumMes" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DescuentoAcumAnio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Iva" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IvaDia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IvaMes" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IvaAnio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IvaAcumDia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IvaAcumMes" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IvaAcumAnio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalDia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalMes" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalAnio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalAcumDia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalAcumMes" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalAcumAnio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EfectivoRecibido" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="EfectivoRecibidoDia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EfectivoRecibidoMes" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EfectivoRecibidoAnio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EfectivoRecibidoAcumDia" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EfectivoRecibidoAcumMes" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="EfectivoRecibidoAcumAnio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <Association Name="FK_Almacen_CProducto">
           <End Role="CProducto" Type="Self.CProducto" Multiplicity="1" />
@@ -2190,6 +2467,72 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AlmacenGasMovimientoAutoconsumo_AlmacenGasMovimiento">
+          <End Role="AlmacenGasMovimiento" Type="Self.AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AlmacenGasMovimientoAutoconsumo" Type="Self.AlmacenGasMovimientoAutoconsumo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoAutoconsumo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoCalibracion_AlmacenGasMovimiento">
+          <End Role="AlmacenGasMovimiento" Type="Self.AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AlmacenGasMovimientoCalibracion" Type="Self.AlmacenGasMovimientoCalibracion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoCalibracion">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoDescarga_AlmacenGasMovimiento">
+          <End Role="AlmacenGasMovimiento" Type="Self.AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AlmacenGasMovimientoDescarga" Type="Self.AlmacenGasMovimientoDescarga" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoDescarga">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AlmacenGasMovimientoFoto_AlmacenGasMovimiento">
           <End Role="AlmacenGasMovimiento" Type="Self.AlmacenGasMovimiento" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2204,6 +2547,116 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="Orden" />
             </Principal>
             <Dependent Role="AlmacenGasMovimientoFoto">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoInventario_AlmacenGasMovimiento">
+          <End Role="AlmacenGasMovimiento" Type="Self.AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AlmacenGasMovimientoInventario" Type="Self.AlmacenGasMovimientoInventario" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoInventario">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoRecarga_AlmacenGasMovimiento">
+          <End Role="AlmacenGasMovimiento" Type="Self.AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AlmacenGasMovimientoRecarga" Type="Self.AlmacenGasMovimientoRecarga" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoRecarga">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoRemanente_AlmacenGasMovimiento">
+          <End Role="AlmacenGasMovimiento" Type="Self.AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AlmacenGasMovimientoRemanente" Type="Self.AlmacenGasMovimientoRemanente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoRemanente">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoTraspaso_AlmacenGasMovimiento">
+          <End Role="AlmacenGasMovimiento" Type="Self.AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AlmacenGasMovimientoTraspaso" Type="Self.AlmacenGasMovimientoTraspaso" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoTraspaso">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoVenta_AlmacenGasMovimiento">
+          <End Role="AlmacenGasMovimiento" Type="Self.AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AlmacenGasMovimientoVenta" Type="Self.AlmacenGasMovimientoVenta" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoVenta">
               <PropertyRef Name="IdEmpresa" />
               <PropertyRef Name="Year" />
               <PropertyRef Name="Mes" />
@@ -4236,6 +4689,28 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VentaPuntoDeVentaEfectivo_VentaPuntoDeVenta">
+          <End Role="VentaPuntoDeVenta" Type="Self.VentaPuntoDeVenta" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VentaPuntoDeVentaEfectivo" Type="Self.VentaPuntoDeVentaEfectivo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="VentaPuntoDeVenta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="VentaPuntoDeVentaEfectivo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SagasMainModuleModelStoreContainer">
           <EntitySet Name="Almacen" EntityType="Self.Almacen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenEntradaGasDescarga" EntityType="Self.AlmacenEntradaGasDescarga" Schema="dbo" store:Type="Tables" />
@@ -4252,7 +4727,15 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="AlmacenGasMovimiento" EntityType="Self.AlmacenGasMovimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenGasMovimientoAlmacenGeneral" EntityType="Self.AlmacenGasMovimientoAlmacenGeneral" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenGasMovimientoAlmacenTotal" EntityType="Self.AlmacenGasMovimientoAlmacenTotal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenGasMovimientoAutoconsumo" EntityType="Self.AlmacenGasMovimientoAutoconsumo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenGasMovimientoCalibracion" EntityType="Self.AlmacenGasMovimientoCalibracion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenGasMovimientoDescarga" EntityType="Self.AlmacenGasMovimientoDescarga" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenGasMovimientoFoto" EntityType="Self.AlmacenGasMovimientoFoto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenGasMovimientoInventario" EntityType="Self.AlmacenGasMovimientoInventario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenGasMovimientoRecarga" EntityType="Self.AlmacenGasMovimientoRecarga" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenGasMovimientoRemanente" EntityType="Self.AlmacenGasMovimientoRemanente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenGasMovimientoTraspaso" EntityType="Self.AlmacenGasMovimientoTraspaso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlmacenGasMovimientoVenta" EntityType="Self.AlmacenGasMovimientoVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenGasRecarga" EntityType="Self.AlmacenGasRecarga" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenGasRecargaCilindro" EntityType="Self.AlmacenGasRecargaCilindro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlmacenGasRecargaFoto" EntityType="Self.AlmacenGasRecargaFoto" Schema="dbo" store:Type="Tables" />
@@ -4344,6 +4827,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySet Name="VentaMovimiento" EntityType="Self.VentaMovimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VentaPuntoDeVenta" EntityType="Self.VentaPuntoDeVenta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VentaPuntoDeVentaDetalle" EntityType="Self.VentaPuntoDeVentaDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VentaPuntoDeVentaEfectivo" EntityType="Self.VentaPuntoDeVentaEfectivo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CCamionetaCilindro" EntityType="Self.CCamionetaCilindro" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [CCamionetaCilindro].[IdEmpresa] AS [IdEmpresa], 
@@ -4508,9 +4992,41 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
             <End Role="AlmacenGasMovimientoAlmacenTotal" EntitySet="AlmacenGasMovimientoAlmacenTotal" />
           </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoAutoconsumo_AlmacenGasMovimiento" Association="Self.FK_AlmacenGasMovimientoAutoconsumo_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoAutoconsumo" EntitySet="AlmacenGasMovimientoAutoconsumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoCalibracion_AlmacenGasMovimiento" Association="Self.FK_AlmacenGasMovimientoCalibracion_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoCalibracion" EntitySet="AlmacenGasMovimientoCalibracion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoDescarga_AlmacenGasMovimiento" Association="Self.FK_AlmacenGasMovimientoDescarga_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoDescarga" EntitySet="AlmacenGasMovimientoDescarga" />
+          </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasMovimientoFoto_AlmacenGasMovimiento" Association="Self.FK_AlmacenGasMovimientoFoto_AlmacenGasMovimiento">
             <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
             <End Role="AlmacenGasMovimientoFoto" EntitySet="AlmacenGasMovimientoFoto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoInventario_AlmacenGasMovimiento" Association="Self.FK_AlmacenGasMovimientoInventario_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoInventario" EntitySet="AlmacenGasMovimientoInventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoRecarga_AlmacenGasMovimiento" Association="Self.FK_AlmacenGasMovimientoRecarga_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoRecarga" EntitySet="AlmacenGasMovimientoRecarga" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoRemanente_AlmacenGasMovimiento" Association="Self.FK_AlmacenGasMovimientoRemanente_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoRemanente" EntitySet="AlmacenGasMovimientoRemanente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoTraspaso_AlmacenGasMovimiento" Association="Self.FK_AlmacenGasMovimientoTraspaso_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoTraspaso" EntitySet="AlmacenGasMovimientoTraspaso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoVenta_AlmacenGasMovimiento" Association="Self.FK_AlmacenGasMovimientoVenta_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoVenta" EntitySet="AlmacenGasMovimientoVenta" />
           </AssociationSet>
           <AssociationSet Name="FK_AlmacenGasRecarga_CAlmacenGas" Association="Self.FK_AlmacenGasRecarga_CAlmacenGas">
             <End Role="CAlmacenGas" EntitySet="CAlmacenGas" />
@@ -5147,6 +5663,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <AssociationSet Name="FK_VentaPuntoDeVentaDetalle_VentaPuntoDeVenta" Association="Self.FK_VentaPuntoDeVentaDetalle_VentaPuntoDeVenta">
             <End Role="VentaPuntoDeVenta" EntitySet="VentaPuntoDeVenta" />
             <End Role="VentaPuntoDeVentaDetalle" EntitySet="VentaPuntoDeVentaDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentaPuntoDeVentaEfectivo_VentaPuntoDeVenta" Association="Self.FK_VentaPuntoDeVentaEfectivo_VentaPuntoDeVenta">
+            <End Role="VentaPuntoDeVenta" EntitySet="VentaPuntoDeVenta" />
+            <End Role="VentaPuntoDeVentaEfectivo" EntitySet="VentaPuntoDeVentaEfectivo" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -6632,6 +7152,51 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
             <End Role="Producto" EntitySet="Producto" />
             <End Role="AlmacenSalidaProducto" EntitySet="AlmacenSalidaProducto" />
           </AssociationSet>
+          <!--<EntitySet Name="AlmacenGasMovimientoAutoconsumo" EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoAutoconsumo" />
+          <EntitySet Name="AlmacenGasMovimientoCalibracion" EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoCalibracion" />
+          <EntitySet Name="AlmacenGasMovimientoDescarga" EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoDescarga" />
+          <EntitySet Name="AlmacenGasMovimientoInventario" EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoInventario" />
+          <EntitySet Name="AlmacenGasMovimientoRecarga" EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoRecarga" />
+          <EntitySet Name="AlmacenGasMovimientoRemanente" EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoRemanente" />
+          <EntitySet Name="AlmacenGasMovimientoTraspaso" EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoTraspaso" />
+          <EntitySet Name="AlmacenGasMovimientoVenta" EntityType="Sagas.MainModuleModel.AlmacenGasMovimientoVenta" />
+          <EntitySet Name="VentaPuntoDeVentaEfectivo" EntityType="Sagas.MainModuleModel.VentaPuntoDeVentaEfectivo" />-->
+          <!--<AssociationSet Name="FK_AlmacenGasMovimientoAutoconsumo_AlmacenGasMovimiento" Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAutoconsumo_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoAutoconsumo" EntitySet="AlmacenGasMovimientoAutoconsumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoCalibracion_AlmacenGasMovimiento" Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoCalibracion_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoCalibracion" EntitySet="AlmacenGasMovimientoCalibracion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoDescarga_AlmacenGasMovimiento" Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoDescarga_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoDescarga" EntitySet="AlmacenGasMovimientoDescarga" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoInventario_AlmacenGasMovimiento" Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoInventario_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoInventario" EntitySet="AlmacenGasMovimientoInventario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoRecarga_AlmacenGasMovimiento" Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoRecarga_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoRecarga" EntitySet="AlmacenGasMovimientoRecarga" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoRemanente_AlmacenGasMovimiento" Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoRemanente_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoRemanente" EntitySet="AlmacenGasMovimientoRemanente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoTraspaso_AlmacenGasMovimiento" Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoTraspaso_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoTraspaso" EntitySet="AlmacenGasMovimientoTraspaso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlmacenGasMovimientoVenta_AlmacenGasMovimiento" Association="Sagas.MainModuleModel.FK_AlmacenGasMovimientoVenta_AlmacenGasMovimiento">
+            <End Role="AlmacenGasMovimiento" EntitySet="AlmacenGasMovimiento" />
+            <End Role="AlmacenGasMovimientoVenta" EntitySet="AlmacenGasMovimientoVenta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VentaPuntoDeVentaEfectivo_VentaPuntoDeVenta" Association="Sagas.MainModuleModel.FK_VentaPuntoDeVentaEfectivo_VentaPuntoDeVenta">
+            <End Role="VentaPuntoDeVenta" EntitySet="VentaPuntoDeVenta" />
+            <End Role="VentaPuntoDeVentaEfectivo" EntitySet="VentaPuntoDeVentaEfectivo" />
+          </AssociationSet>-->
           <!--<AssociationSet Name="FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo1" Association="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo1">
             <End Role="AlmacenGasAutoConsumo" EntitySet="AlmacenGasAutoConsumo" />
             <End Role="AlmacenGasAutoConsumoFoto" EntitySet="AlmacenGasAutoConsumoFoto" />
@@ -9972,13 +10537,140 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CantidadActualTotalLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="PorcentajeAnteriorTotal" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
           <Property Name="PorcentajeActualTotal" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <!--"AlmacenGasMovimientoAutoconsumo"-->
+          <Property Name="AutoconsumoKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoDiaKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoDiaLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoMesKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoMesLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoAnioKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoAnioLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoAcumDiaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoAcumDiaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoAcumMesKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoAcumMesLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoAcumAnioKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="AutoconsumoAcumAnioLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <!--"AlmacenGasMovimientoCalibracion"-->
+          <Property Name="CalibracionKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionDiaKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionDiaLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionMesKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionMesLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionAnioKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionAnioLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="CalibracionAcumDiaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CalibracionAcumDiaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CalibracionAcumMesKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CalibracionAcumMesLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CalibracionAcumAnioKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CalibracionAcumAnioLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <!--"AlmacenGasMovimientoDescarga"-->
+          <Property Name="DescargaKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaDiaKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaDiaLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaMesKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaMesLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaAnioKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaAnioLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="DescargaAcumDiaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="DescargaAcumDiaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="DescargaAcumMesKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="DescargaAcumMesLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="DescargaAcumAnioKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="DescargaAcumAnioLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <!--"AlmacenGasMovimientoInventario"-->
+          <Property Name="CAlmEntradaDiaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmEntradaDiaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmSalidaDiaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmSalidaDiaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmEntradaMesKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmEntradaMesLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmSalidaMesKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmSalidaMesLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmEntradaAnioKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmEntradaAnioLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmSalidaAnioKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmSalidaAnioLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <!--"AlmacenGasMovimientoRecarga"-->
+          <Property Name="RecargaKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaDiaKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaDiaLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaMesKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaMesLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaAnioKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaAnioLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RecargaAcumDiaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="RecargaAcumDiaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="RecargaAcumMesKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="RecargaAcumMesLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="RecargaAcumAnioKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="RecargaAcumAnioLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <!--AlmacenGasMovimientoRemanente"-->
+          <Property Name="RemaKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RemaLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RemaDiaKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RemaDiaLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RemaMesKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RemaMesLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RemaAnioKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RemaAnioLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="RemaAcumDiaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="RemaAcumDiaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="RemaAcumMesKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="RemaAcumMesLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="RemaAcumAnioKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="RemaAcumAnioLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <!--"AlmacenGasMovimientoTraspaso"-->
+          <Property Name="TraspasoKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoDiaKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoDiaLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoMesKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoMesLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoAnioKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoAnioLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="TraspasoAcumDiaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="TraspasoAcumDiaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="TraspasoAcumMesKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="TraspasoAcumMesLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="TraspasoAcumAnioKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="TraspasoAcumAnioLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <!--"AlmacenGasMovimientoVenta"-->
+          <Property Name="VentaKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaDiaKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaDiaLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaMesKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaMesLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaAnioKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaAnioLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaAcumDiaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="VentaAcumDiaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="VentaAcumMesKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="VentaAcumMesLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="VentaAcumAnioKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="VentaAcumAnioLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          
           <NavigationProperty Name="Descarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenEntradaGasDescarga" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasDescarga" />
           <NavigationProperty Name="Inventario" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenGas" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGas" />
           <NavigationProperty Name="Recarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenGasRecarga" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasRecarga" />
           <NavigationProperty Name="UnidadAlamcen" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_CAlmacenGas" FromRole="AlmacenGasMovimiento" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoFoto_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoFoto" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_Empresa" FromRole="AlmacenGasMovimiento" ToRole="Empresa" />          
-          <NavigationProperty Name="CTipoMovimiento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_CTipoMovimiento" FromRole="AlmacenGasMovimiento" ToRole="CTipoMovimiento" />          
+          <NavigationProperty Name="CTipoMovimiento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_CTipoMovimiento" FromRole="AlmacenGasMovimiento" ToRole="CTipoMovimiento" />
+          <!--<NavigationProperty Name="AlmacenGasMovimientoAutoconsumo" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAutoconsumo_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoAutoconsumo" />
+          <NavigationProperty Name="AlmacenGasMovimientoCalibracion" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoCalibracion_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoCalibracion" />
+          <NavigationProperty Name="AlmacenGasMovimientoDescarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoDescarga_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoDescarga" />
+          <NavigationProperty Name="AlmacenGasMovimientoInventario" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoInventario_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoInventario" />
+          <NavigationProperty Name="AlmacenGasMovimientoRecarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoRecarga_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoRecarga" />
+          <NavigationProperty Name="AlmacenGasMovimientoRemanente" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoRemanente_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoRemanente" />
+          <NavigationProperty Name="AlmacenGasMovimientoTraspaso" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoTraspaso_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoTraspaso" />
+          <NavigationProperty Name="AlmacenGasMovimientoVenta" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoVenta_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoVenta" />-->          
           <!--<NavigationProperty Name="AlmacenGasMovimientoAlmacenGeneral" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAlmacenGeneral_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoAlmacenGeneral" />
           <NavigationProperty Name="AlmacenGasMovimientoAlmacenTotal" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAlmacenTotal_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoAlmacenTotal" />-->
           <!--<NavigationProperty Name="AlmacenGasMovimiento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAlmacenGeneral_AlmacenGasMovimiento" FromRole="AlmacenGasMovimientoAlmacenGeneral" ToRole="AlmacenGasMovimiento" />-->          
@@ -10313,12 +11005,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="FolioVenta" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="RequiereFactura" Type="Boolean" Nullable="false" />
           <Property Name="VentaACredito" Type="Boolean" Nullable="false" />
-          <Property Name="Subtotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <!--<Property Name="Subtotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Descuento" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Iva" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />-->
           <Property Name="PorcentajeIva" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="EfectivoRecibido" Type="Decimal" Precision="18" Scale="2" />
+          <!--<Property Name="EfectivoRecibido" Type="Decimal" Precision="18" Scale="2" />-->
           <Property Name="CambioRegresado" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PuntoVenta" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="RazonSocial" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
@@ -10326,11 +11018,50 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="ClienteConCredito" Type="Boolean" Nullable="false" />
           <Property Name="OperadorChofer" Type="String" MaxLength="260" FixedLength="false" Unicode="false" />
           <Property Name="DatosProcesados" Type="Boolean" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="DateTime" Precision="0" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+          <!--"VentaPuntoDeVentaEfectivo"-->
+          <Property Name="Subtotal" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SubtotalDia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SubtotalMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SubtotalAnio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SubtotalAcumDia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SubtotalAcumMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SubtotalAcumAnio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Descuento" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DescuentoDia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DescuentoMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DescuentoAnio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DescuentoAcumDia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DescuentoAcumMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="DescuentoAcumAnio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Iva" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IvaDia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IvaMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IvaAnio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IvaAcumDia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IvaAcumMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IvaAcumAnio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalDia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalAnio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalAcumDia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalAcumMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalAcumAnio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="EfectivoRecibido" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="EfectivoRecibidoDia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="EfectivoRecibidoMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="EfectivoRecibidoAnio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="EfectivoRecibidoAcumDia" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="EfectivoRecibidoAcumMes" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="EfectivoRecibidoAcumAnio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          
           <NavigationProperty Name="CCliente" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_CCliente" FromRole="VentaPuntoDeVenta" ToRole="Cliente" />
           <NavigationProperty Name="COperadorChofer" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_COperadorChofer" FromRole="VentaPuntoDeVenta" ToRole="OperadorChofer" />
           <NavigationProperty Name="CPuntoVenta" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVenta_CPuntoVenta" FromRole="VentaPuntoDeVenta" ToRole="PuntoVenta" />
-          <NavigationProperty Name="VentaPuntoDeVentaDetalle" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVentaDetalle_VentaPuntoDeVenta" FromRole="VentaPuntoDeVenta" ToRole="VentaPuntoDeVentaDetalle" />
+          <NavigationProperty Name="VentaPuntoDeVentaDetalle" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVentaDetalle_VentaPuntoDeVenta" FromRole="VentaPuntoDeVenta" ToRole="VentaPuntoDeVentaDetalle" />          
+          <!--<NavigationProperty Name="VentaPuntoDeVentaEfectivo" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVentaEfectivo_VentaPuntoDeVenta" FromRole="VentaPuntoDeVenta" ToRole="VentaPuntoDeVentaEfectivo" />-->
         </EntityType>
         <EntityType Name="VentaPuntoDeVentaDetalle">
           <Key>
@@ -10363,6 +11094,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="ProductoCategoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="VentaPuntoDeVenta" Relationship="Sagas.MainModuleModel.FK_VentaPuntoDeVentaDetalle_VentaPuntoDeVenta" FromRole="VentaPuntoDeVentaDetalle" ToRole="VentaPuntoDeVenta" />
+          <Property Name="IdUnidadMedida" Type="Int16" Nullable="false" />
+          <Property Name="PrecioUnitarioProducto" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DescuentoUnitarioProducto" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CantidadProducto" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="UnidadMedida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_AlmacenGasMovimiento_CTipoMovimiento">
           <End Type="Sagas.MainModuleModel.CTipoMovimiento" Role="CTipoMovimiento" Multiplicity="1" />
@@ -10649,7 +11385,205 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>                
+        </Association>
+        <!--<Association Name="FK_AlmacenGasMovimientoAutoconsumo_AlmacenGasMovimiento">
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimiento" Role="AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimientoAutoconsumo" Role="AlmacenGasMovimientoAutoconsumo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoAutoconsumo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoCalibracion_AlmacenGasMovimiento">
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimiento" Role="AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimientoCalibracion" Role="AlmacenGasMovimientoCalibracion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoCalibracion">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoDescarga_AlmacenGasMovimiento">
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimiento" Role="AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimientoDescarga" Role="AlmacenGasMovimientoDescarga" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoDescarga">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoInventario_AlmacenGasMovimiento">
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimiento" Role="AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimientoInventario" Role="AlmacenGasMovimientoInventario" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoInventario">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoRecarga_AlmacenGasMovimiento">
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimiento" Role="AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimientoRecarga" Role="AlmacenGasMovimientoRecarga" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoRecarga">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoRemanente_AlmacenGasMovimiento">
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimiento" Role="AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimientoRemanente" Role="AlmacenGasMovimientoRemanente" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoRemanente">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoTraspaso_AlmacenGasMovimiento">
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimiento" Role="AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimientoTraspaso" Role="AlmacenGasMovimientoTraspaso" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoTraspaso">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlmacenGasMovimientoVenta_AlmacenGasMovimiento">
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimiento" Role="AlmacenGasMovimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.AlmacenGasMovimientoVenta" Role="AlmacenGasMovimientoVenta" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="AlmacenGasMovimiento">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="AlmacenGasMovimientoVenta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VentaPuntoDeVentaEfectivo_VentaPuntoDeVenta">
+          <End Type="Sagas.MainModuleModel.VentaPuntoDeVenta" Role="VentaPuntoDeVenta" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Sagas.MainModuleModel.VentaPuntoDeVentaEfectivo" Role="VentaPuntoDeVentaEfectivo" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="VentaPuntoDeVenta">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Principal>
+            <Dependent Role="VentaPuntoDeVentaEfectivo">
+              <PropertyRef Name="IdEmpresa" />
+              <PropertyRef Name="Year" />
+              <PropertyRef Name="Mes" />
+              <PropertyRef Name="Dia" />
+              <PropertyRef Name="Orden" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>-->                
         <!--<Association Name="FK_RolAccionMovil_Rol">
           <End Type="Sagas.MainModuleModel.Rol" Role="Rol" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -12106,6 +13040,180 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
+              
+              <MappingFragment StoreEntitySet="AlmacenGasMovimientoAutoconsumo">
+                <ScalarProperty Name="AutoconsumoAcumAnioLt" ColumnName="AutoconsumoAcumAnioLt" />
+                <ScalarProperty Name="AutoconsumoAcumAnioKg" ColumnName="AutoconsumoAcumAnioKg" />
+                <ScalarProperty Name="AutoconsumoAcumMesLt" ColumnName="AutoconsumoAcumMesLt" />
+                <ScalarProperty Name="AutoconsumoAcumMesKg" ColumnName="AutoconsumoAcumMesKg" />
+                <ScalarProperty Name="AutoconsumoAcumDiaLt" ColumnName="AutoconsumoAcumDiaLt" />
+                <ScalarProperty Name="AutoconsumoAcumDiaKg" ColumnName="AutoconsumoAcumDiaKg" />
+                <ScalarProperty Name="AutoconsumoAnioLt" ColumnName="AutoconsumoAnioLt" />
+                <ScalarProperty Name="AutoconsumoAnioKg" ColumnName="AutoconsumoAnioKg" />
+                <ScalarProperty Name="AutoconsumoMesLt" ColumnName="AutoconsumoMesLt" />
+                <ScalarProperty Name="AutoconsumoMesKg" ColumnName="AutoconsumoMesKg" />
+                <ScalarProperty Name="AutoconsumoDiaLt" ColumnName="AutoconsumoDiaLt" />
+                <ScalarProperty Name="AutoconsumoDiaKg" ColumnName="AutoconsumoDiaKg" />
+                <ScalarProperty Name="AutoconsumoLt" ColumnName="AutoconsumoLt" />
+                <ScalarProperty Name="AutoconsumoKg" ColumnName="AutoconsumoKg" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+              
+              <MappingFragment StoreEntitySet="AlmacenGasMovimientoCalibracion">
+                <ScalarProperty Name="CalibracionAcumAnioLt" ColumnName="CalibracionAcumAnioLt" />
+                <ScalarProperty Name="CalibracionAcumAnioKg" ColumnName="CalibracionAcumAnioKg" />
+                <ScalarProperty Name="CalibracionAcumMesLt" ColumnName="CalibracionAcumMesLt" />
+                <ScalarProperty Name="CalibracionAcumMesKg" ColumnName="CalibracionAcumMesKg" />
+                <ScalarProperty Name="CalibracionAcumDiaLt" ColumnName="CalibracionAcumDiaLt" />
+                <ScalarProperty Name="CalibracionAcumDiaKg" ColumnName="CalibracionAcumDiaKg" />
+                <ScalarProperty Name="CalibracionAnioLt" ColumnName="CalibracionAnioLt" />
+                <ScalarProperty Name="CalibracionAnioKg" ColumnName="CalibracionAnioKg" />
+                <ScalarProperty Name="CalibracionMesLt" ColumnName="CalibracionMesLt" />
+                <ScalarProperty Name="CalibracionMesKg" ColumnName="CalibracionMesKg" />
+                <ScalarProperty Name="CalibracionDiaLt" ColumnName="CalibracionDiaLt" />
+                <ScalarProperty Name="CalibracionDiaKg" ColumnName="CalibracionDiaKg" />
+                <ScalarProperty Name="CalibracionLt" ColumnName="CalibracionLt" />
+                <ScalarProperty Name="CalibracionKg" ColumnName="CalibracionKg" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+              
+              <MappingFragment StoreEntitySet="AlmacenGasMovimientoDescarga">
+                <ScalarProperty Name="DescargaAcumAnioLt" ColumnName="DescargaAcumAnioLt" />
+                <ScalarProperty Name="DescargaAcumAnioKg" ColumnName="DescargaAcumAnioKg" />
+                <ScalarProperty Name="DescargaAcumMesLt" ColumnName="DescargaAcumMesLt" />
+                <ScalarProperty Name="DescargaAcumMesKg" ColumnName="DescargaAcumMesKg" />
+                <ScalarProperty Name="DescargaAcumDiaLt" ColumnName="DescargaAcumDiaLt" />
+                <ScalarProperty Name="DescargaAcumDiaKg" ColumnName="DescargaAcumDiaKg" />
+                <ScalarProperty Name="DescargaAnioLt" ColumnName="DescargaAnioLt" />
+                <ScalarProperty Name="DescargaAnioKg" ColumnName="DescargaAnioKg" />
+                <ScalarProperty Name="DescargaMesLt" ColumnName="DescargaMesLt" />
+                <ScalarProperty Name="DescargaMesKg" ColumnName="DescargaMesKg" />
+                <ScalarProperty Name="DescargaDiaLt" ColumnName="DescargaDiaLt" />
+                <ScalarProperty Name="DescargaDiaKg" ColumnName="DescargaDiaKg" />
+                <ScalarProperty Name="DescargaLt" ColumnName="DescargaLt" />
+                <ScalarProperty Name="DescargaKg" ColumnName="DescargaKg" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+              
+              <MappingFragment StoreEntitySet="AlmacenGasMovimientoInventario">
+                <ScalarProperty Name="CAlmSalidaAnioLt" ColumnName="CAlmSalidaAnioLt" />
+                <ScalarProperty Name="CAlmSalidaAnioKg" ColumnName="CAlmSalidaAnioKg" />
+                <ScalarProperty Name="CAlmEntradaAnioLt" ColumnName="CAlmEntradaAnioLt" />
+                <ScalarProperty Name="CAlmEntradaAnioKg" ColumnName="CAlmEntradaAnioKg" />
+                <ScalarProperty Name="CAlmSalidaMesLt" ColumnName="CAlmSalidaMesLt" />
+                <ScalarProperty Name="CAlmSalidaMesKg" ColumnName="CAlmSalidaMesKg" />
+                <ScalarProperty Name="CAlmEntradaMesLt" ColumnName="CAlmEntradaMesLt" />
+                <ScalarProperty Name="CAlmEntradaMesKg" ColumnName="CAlmEntradaMesKg" />
+                <ScalarProperty Name="CAlmSalidaDiaLt" ColumnName="CAlmSalidaDiaLt" />
+                <ScalarProperty Name="CAlmSalidaDiaKg" ColumnName="CAlmSalidaDiaKg" />
+                <ScalarProperty Name="CAlmEntradaDiaLt" ColumnName="CAlmEntradaDiaLt" />
+                <ScalarProperty Name="CAlmEntradaDiaKg" ColumnName="CAlmEntradaDiaKg" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+              
+              <MappingFragment StoreEntitySet="AlmacenGasMovimientoRecarga">
+                <ScalarProperty Name="RecargaAcumAnioLt" ColumnName="RecargaAcumAnioLt" />
+                <ScalarProperty Name="RecargaAcumAnioKg" ColumnName="RecargaAcumAnioKg" />
+                <ScalarProperty Name="RecargaAcumMesLt" ColumnName="RecargaAcumMesLt" />
+                <ScalarProperty Name="RecargaAcumMesKg" ColumnName="RecargaAcumMesKg" />
+                <ScalarProperty Name="RecargaAcumDiaLt" ColumnName="RecargaAcumDiaLt" />
+                <ScalarProperty Name="RecargaAcumDiaKg" ColumnName="RecargaAcumDiaKg" />
+                <ScalarProperty Name="RecargaAnioLt" ColumnName="RecargaAnioLt" />
+                <ScalarProperty Name="RecargaAnioKg" ColumnName="RecargaAnioKg" />
+                <ScalarProperty Name="RecargaMesLt" ColumnName="RecargaMesLt" />
+                <ScalarProperty Name="RecargaMesKg" ColumnName="RecargaMesKg" />
+                <ScalarProperty Name="RecargaDiaLt" ColumnName="RecargaDiaLt" />
+                <ScalarProperty Name="RecargaDiaKg" ColumnName="RecargaDiaKg" />
+                <ScalarProperty Name="RecargaLt" ColumnName="RecargaLt" />
+                <ScalarProperty Name="RecargaKg" ColumnName="RecargaKg" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+              
+              <MappingFragment StoreEntitySet="AlmacenGasMovimientoRemanente">
+                <ScalarProperty Name="RemaAcumAnioLt" ColumnName="RemaAcumAnioLt" />
+                <ScalarProperty Name="RemaAcumAnioKg" ColumnName="RemaAcumAnioKg" />
+                <ScalarProperty Name="RemaAcumMesLt" ColumnName="RemaAcumMesLt" />
+                <ScalarProperty Name="RemaAcumMesKg" ColumnName="RemaAcumMesKg" />
+                <ScalarProperty Name="RemaAcumDiaLt" ColumnName="RemaAcumDiaLt" />
+                <ScalarProperty Name="RemaAcumDiaKg" ColumnName="RemaAcumDiaKg" />
+                <ScalarProperty Name="RemaAnioLt" ColumnName="RemaAnioLt" />
+                <ScalarProperty Name="RemaAnioKg" ColumnName="RemaAnioKg" />
+                <ScalarProperty Name="RemaMesLt" ColumnName="RemaMesLt" />
+                <ScalarProperty Name="RemaMesKg" ColumnName="RemaMesKg" />
+                <ScalarProperty Name="RemaDiaLt" ColumnName="RemaDiaLt" />
+                <ScalarProperty Name="RemaDiaKg" ColumnName="RemaDiaKg" />
+                <ScalarProperty Name="RemaLt" ColumnName="RemaLt" />
+                <ScalarProperty Name="RemaKg" ColumnName="RemaKg" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+              
+              <MappingFragment StoreEntitySet="AlmacenGasMovimientoTraspaso">
+                <ScalarProperty Name="TraspasoAcumAnioLt" ColumnName="TraspasoAcumAnioLt" />
+                <ScalarProperty Name="TraspasoAcumAnioKg" ColumnName="TraspasoAcumAnioKg" />
+                <ScalarProperty Name="TraspasoAcumMesLt" ColumnName="TraspasoAcumMesLt" />
+                <ScalarProperty Name="TraspasoAcumMesKg" ColumnName="TraspasoAcumMesKg" />
+                <ScalarProperty Name="TraspasoAcumDiaLt" ColumnName="TraspasoAcumDiaLt" />
+                <ScalarProperty Name="TraspasoAcumDiaKg" ColumnName="TraspasoAcumDiaKg" />
+                <ScalarProperty Name="TraspasoAnioLt" ColumnName="TraspasoAnioLt" />
+                <ScalarProperty Name="TraspasoAnioKg" ColumnName="TraspasoAnioKg" />
+                <ScalarProperty Name="TraspasoMesLt" ColumnName="TraspasoMesLt" />
+                <ScalarProperty Name="TraspasoMesKg" ColumnName="TraspasoMesKg" />
+                <ScalarProperty Name="TraspasoDiaLt" ColumnName="TraspasoDiaLt" />
+                <ScalarProperty Name="TraspasoDiaKg" ColumnName="TraspasoDiaKg" />
+                <ScalarProperty Name="TraspasoLt" ColumnName="TraspasoLt" />
+                <ScalarProperty Name="TraspasoKg" ColumnName="TraspasoKg" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
+              
+              <MappingFragment StoreEntitySet="AlmacenGasMovimientoVenta">
+                <ScalarProperty Name="VentaAcumAnioLt" ColumnName="VentaAcumAnioLt" />
+                <ScalarProperty Name="VentaAcumAnioKg" ColumnName="VentaAcumAnioKg" />
+                <ScalarProperty Name="VentaAcumMesLt" ColumnName="VentaAcumMesLt" />
+                <ScalarProperty Name="VentaAcumMesKg" ColumnName="VentaAcumMesKg" />
+                <ScalarProperty Name="VentaAcumDiaLt" ColumnName="VentaAcumDiaLt" />
+                <ScalarProperty Name="VentaAcumDiaKg" ColumnName="VentaAcumDiaKg" />
+                <ScalarProperty Name="VentaAnioLt" ColumnName="VentaAnioLt" />
+                <ScalarProperty Name="VentaAnioKg" ColumnName="VentaAnioKg" />
+                <ScalarProperty Name="VentaMesLt" ColumnName="VentaMesLt" />
+                <ScalarProperty Name="VentaMesKg" ColumnName="VentaMesKg" />
+                <ScalarProperty Name="VentaDiaLt" ColumnName="VentaDiaLt" />
+                <ScalarProperty Name="VentaDiaKg" ColumnName="VentaDiaKg" />
+                <ScalarProperty Name="VentaLt" ColumnName="VentaLt" />
+                <ScalarProperty Name="VentaKg" ColumnName="VentaKg" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>              
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AlmacenGasMovimientoFoto">
@@ -12257,6 +13365,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="VentaPuntoDeVenta">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.VentaPuntoDeVenta">
               <MappingFragment StoreEntitySet="VentaPuntoDeVenta">
+                <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="DatosProcesados" ColumnName="DatosProcesados" />
                 <ScalarProperty Name="OperadorChofer" ColumnName="OperadorChofer" />
@@ -12286,11 +13395,59 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
+
+              <MappingFragment StoreEntitySet="VentaPuntoDeVentaEfectivo">
+                <ScalarProperty Name="EfectivoRecibidoAcumAnio" ColumnName="EfectivoRecibidoAcumAnio" />
+                <ScalarProperty Name="EfectivoRecibidoAcumMes" ColumnName="EfectivoRecibidoAcumMes" />
+                <ScalarProperty Name="EfectivoRecibidoAcumDia" ColumnName="EfectivoRecibidoAcumDia" />
+                <ScalarProperty Name="EfectivoRecibidoAnio" ColumnName="EfectivoRecibidoAnio" />
+                <ScalarProperty Name="EfectivoRecibidoMes" ColumnName="EfectivoRecibidoMes" />
+                <ScalarProperty Name="EfectivoRecibidoDia" ColumnName="EfectivoRecibidoDia" />
+                <ScalarProperty Name="EfectivoRecibido" ColumnName="EfectivoRecibido" />
+                <ScalarProperty Name="TotalAcumAnio" ColumnName="TotalAcumAnio" />
+                <ScalarProperty Name="TotalAcumMes" ColumnName="TotalAcumMes" />
+                <ScalarProperty Name="TotalAcumDia" ColumnName="TotalAcumDia" />
+                <ScalarProperty Name="TotalAnio" ColumnName="TotalAnio" />
+                <ScalarProperty Name="TotalMes" ColumnName="TotalMes" />
+                <ScalarProperty Name="TotalDia" ColumnName="TotalDia" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="IvaAcumAnio" ColumnName="IvaAcumAnio" />
+                <ScalarProperty Name="IvaAcumMes" ColumnName="IvaAcumMes" />
+                <ScalarProperty Name="IvaAcumDia" ColumnName="IvaAcumDia" />
+                <ScalarProperty Name="IvaAnio" ColumnName="IvaAnio" />
+                <ScalarProperty Name="IvaMes" ColumnName="IvaMes" />
+                <ScalarProperty Name="IvaDia" ColumnName="IvaDia" />
+                <ScalarProperty Name="Iva" ColumnName="Iva" />
+                <ScalarProperty Name="DescuentoAcumAnio" ColumnName="DescuentoAcumAnio" />
+                <ScalarProperty Name="DescuentoAcumMes" ColumnName="DescuentoAcumMes" />
+                <ScalarProperty Name="DescuentoAcumDia" ColumnName="DescuentoAcumDia" />
+                <ScalarProperty Name="DescuentoAnio" ColumnName="DescuentoAnio" />
+                <ScalarProperty Name="DescuentoMes" ColumnName="DescuentoMes" />
+                <ScalarProperty Name="DescuentoDia" ColumnName="DescuentoDia" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="SubtotalAcumAnio" ColumnName="SubtotalAcumAnio" />
+                <ScalarProperty Name="SubtotalAcumMes" ColumnName="SubtotalAcumMes" />
+                <ScalarProperty Name="SubtotalAcumDia" ColumnName="SubtotalAcumDia" />
+                <ScalarProperty Name="SubtotalAnio" ColumnName="SubtotalAnio" />
+                <ScalarProperty Name="SubtotalMes" ColumnName="SubtotalMes" />
+                <ScalarProperty Name="SubtotalDia" ColumnName="SubtotalDia" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+              </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VentaPuntoDeVentaDetalle">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.VentaPuntoDeVentaDetalle">
               <MappingFragment StoreEntitySet="VentaPuntoDeVentaDetalle">
+                <ScalarProperty Name="UnidadMedida" ColumnName="UnidadMedida" />
+                <ScalarProperty Name="CantidadProducto" ColumnName="CantidadProducto" />
+                <ScalarProperty Name="DescuentoUnitarioProducto" ColumnName="DescuentoUnitarioProducto" />
+                <ScalarProperty Name="PrecioUnitarioProducto" ColumnName="PrecioUnitarioProducto" />
+                <ScalarProperty Name="IdUnidadMedida" ColumnName="IdUnidadMedida" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="ProductoCategoria" ColumnName="ProductoCategoria" />
                 <ScalarProperty Name="ProductoLinea" ColumnName="ProductoLinea" />
@@ -12314,7 +13471,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
               </MappingFragment>
             </EntityTypeMapping>
-          </EntitySetMapping>          
+          </EntitySetMapping>   
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
