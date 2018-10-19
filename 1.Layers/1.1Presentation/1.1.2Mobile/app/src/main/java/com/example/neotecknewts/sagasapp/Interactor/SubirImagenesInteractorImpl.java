@@ -2340,14 +2340,14 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        int intentos_post = 0;
+        /*int intentos_post = 0;
         registra_reacrga = true;
-        while(intentos_post<3) {
+        while(intentos_post<3) {*/
             Call<RespuestaTraspasoDTO> call = restClient.postCalibracion(
                     calibracionDTO,
                     true,
@@ -2385,33 +2385,40 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         }else {
                             subirImagenesPresenter.errorSolicitud(response.message());
                         }
-                        registra_reacrga= false;
+                        if(response.code()>=300){
+                            registrar_local_calibracion(sagasSql,calibracionDTO);
+                            subirImagenesPresenter.onSuccessRegistroAndroid();
+                            Lisener lisener = new Lisener(sagasSql,token);
+                            lisener.CrearRunable(Lisener.Calibracion);
+                        }
+                        //registra_reacrga= false;
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaTraspasoDTO> call, Throwable t) {
                     Log.e("error", t.toString());
-                    registra_reacrga = false;
                     subirImagenesPresenter.errorSolicitud(t.getMessage());
+                    registrar_local_calibracion(sagasSql,calibracionDTO);
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.Calibracion);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_reacrga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local_calibracion(sagasSql,calibracionDTO);
             registro_local = true;
         }
         if(registro_local ){
-            /*Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);*/
             subirImagenesPresenter.onSuccessRegistroAndroid();
-        }
+        }*/
         //endregion
     }
 
@@ -2549,7 +2556,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     }
 
     private void registrar_local_calibracion(SAGASSql sagasSql, CalibracionDTO calibracionDTO){
-
+        if(sagasSql.GetCalibracionByClaveOperacion(calibracionDTO.getClaveOperacion()).getCount()==0){
+            sagasSql.InsertarCalibracion(calibracionDTO,SAGASSql.TIPO_CALIBRACION_PIPA);
+            if(sagasSql.GetFotografiasCalibracion(calibracionDTO.getClaveOperacion()).getCount()==0){
+                sagasSql.InsertarImagenesCalibracion(calibracionDTO);
+            }
+        }
     }
     private void registrar_local_traspaso(SAGASSql sagasSql, TraspasoDTO traspasoDTO) {
     }
