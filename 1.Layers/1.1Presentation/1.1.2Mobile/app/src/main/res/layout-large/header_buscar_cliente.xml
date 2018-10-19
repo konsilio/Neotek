@@ -42,25 +42,25 @@
                 android:id="@+id/BtnBuscarClienteActivityNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorButtonLogin"
+                style="@style/SagasTheme.Button"
                 android:text="@string/label_no"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="24sp"
-                tools:ignore="UnusedAttribute" />
+                android:textSize="30sp"
+                tools:ignore="ButtonStyle,UnusedAttribute" />
 
             <Button
                 android:id="@+id/BtnBuscarClienteActivitySi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorButtonLogin"
+                style="@style/SagasTheme.Button"
                 android:text="@string/label_si"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="24sp"
-                tools:ignore="UnusedAttribute" />
+                android:textSize="30sp"
+                tools:ignore="ButtonStyle,UnusedAttribute" />
         </TableRow>
 
     </TableLayout>
