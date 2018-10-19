@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Sagas.MainModule.ObjetosValor.Enum;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 
 namespace Application.MainModule.Servicios.Mobile
 {

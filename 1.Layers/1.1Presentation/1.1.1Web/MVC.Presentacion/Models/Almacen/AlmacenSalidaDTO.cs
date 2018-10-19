@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Application.MainModule.DTOs.Almacen
+namespace MVC.Presentacion.Models.Almacen
 {
-    public class AlmacenSalidaProductoDTO
+    public class AlmacenSalidaDTO
     {
         public int IdRequisicion { get; set; }
         public short Orden { get; set; }
@@ -19,8 +18,6 @@ namespace Application.MainModule.DTOs.Almacen
         public string UnidadMedida { get; set; }
         public string Ubicacion { get; set; }
         public decimal Requeridos { get; set; }
-        public decimal CantidadEntregada { get; set; }
-        public decimal CantidadActual { get; set; }
         public decimal CantidadAnterior { get; set; }
         public decimal CantidadFinal { get; set; }
         public string UrlDocSalida { get; set; }

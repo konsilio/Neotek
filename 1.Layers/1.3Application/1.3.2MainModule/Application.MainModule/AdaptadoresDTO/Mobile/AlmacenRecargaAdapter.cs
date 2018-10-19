@@ -98,7 +98,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             List<CamionetaDto> camionetasDTO = new List<CamionetaDto>();
             foreach (var camioneta in camionetas)
             {
-                var camionetaCilindros = Servicios.Almacen.AlmacenGasServicio.ObtenerCilindros(camioneta);
+                var camionetaCilindros = Servicios.Almacenes.AlmacenGasServicio.ObtenerCilindros(camioneta);
                 camionetasDTO.Add(new CamionetaDto()
                 {
                     CantidadActualKg = camioneta.CantidadActualKg,

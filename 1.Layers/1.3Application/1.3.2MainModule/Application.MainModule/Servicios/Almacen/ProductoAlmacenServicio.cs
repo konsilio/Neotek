@@ -10,11 +10,12 @@ using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.DTOs.Compras;
-using Application.MainModule.AdaptadoresDTO.Almacen;
+using Application.MainModule.AdaptadoresDTO;
 using Sagas.MainModule.ObjetosValor.Constantes;
 using Exceptions.MainModule.Validaciones;
+using Application.MainModule.AdaptadoresDTO.Almacenes;
 
-namespace Application.MainModule.Servicios.Almacen
+namespace Application.MainModule.Servicios.Almacenes
 {
     public static class ProductoAlmacenServicio
     {
@@ -47,7 +48,7 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return AlmacenProductoAdapter.FromDTO(dto, idOC, _alm);
         }
-        public static Sagas.MainModule.Entidades.Almacen GenerarAlmacenConEntradaProcuto(AlmacenEntradaDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
+        public static Almacen GenerarAlmacenConEntradaProcuto(AlmacenEntradaDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
         {
             _alm.Entradas.Add(AlmacenProductoAdapter.FromDTO(dto, idOC, _alm));
             return _alm;
@@ -56,7 +57,7 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return AlmacenProductoAdapter.ToDTO(oc, req);
         }
-        public static Sagas.MainModule.Entidades.Almacen ObtenerAlmacen(int Idpord, short idEmpresa)
+        public static Almacen ObtenerAlmacen(int Idpord, short idEmpresa)
         {
             return new AlmacenDataAccess().ProductoAlmacen(Idpord, idEmpresa);
         }
@@ -64,7 +65,7 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenDataAccess().Insertar(almacen);
         }
-        public static Sagas.MainModule.Entidades.Almacen AlmacenEntity(Sagas.MainModule.Entidades.Almacen almacen)
+        public static Almacen AlmacenEntity(Almacen almacen)
         {
             return AlmacenAdapter.FromEmtity(almacen);
         }
@@ -72,7 +73,7 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenDataAccess().InsertarAlmacenEntradas(_almacen, prod);
         }
-        public static Sagas.MainModule.Entidades.Almacen GenaraAlmacenNuevo(int Idpord, short idEmpresa, decimal cantidad)
+        public static Almacen GenaraAlmacenNuevo(int Idpord, short idEmpresa, decimal cantidad)
         {
             return new Sagas.MainModule.Entidades.Almacen()
             {
@@ -85,7 +86,7 @@ namespace Application.MainModule.Servicios.Almacen
                 Entradas = new List<AlmacenEntradaProducto>()
             };
         }
-        public static List<Sagas.MainModule.Entidades.Almacen> BuscarAlmacen(short idEmpresa)
+        public static List<Almacen> BuscarAlmacen(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
                 if (idEmpresa.Equals(0))
@@ -94,7 +95,7 @@ namespace Application.MainModule.Servicios.Almacen
                     return new AlmacenDataAccess().ListaProductosAlmacen(idEmpresa);
             else
                 return new AlmacenDataAccess().ListaProductosAlmacen(TokenServicio.ObtenerIdEmpresa());
-        }
+        }       
         public static List<AlmacenEntradaProducto> BuscarEntradasTodo(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())

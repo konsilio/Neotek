@@ -1,5 +1,6 @@
 ﻿using MVC.Presentacion.Agente;
 using MVC.Presentacion.Models;
+using MVC.Presentacion.Models.Almacen;
 using MVC.Presentacion.Models.Seguridad;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,18 @@ namespace MVC.Presentacion.App_Code
             var agente = new AgenteServicio();
             agente.BuscarRegistroAlmacen(id, tkn);
             return agente._listaRegistroAlmacen;
+        }
+        public static RespuestaDTO RegistrarSalida(RequisicionSalidaDTO model, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.RegistrarSalida(model, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RequisicionSalidaDTO BuscarRequisicionSalida(int idRequisicion, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.BuscarRequsicionSalida(idRequisicion, tkn);
+            return agente._RequisicionSalida;
         }
     }
 }

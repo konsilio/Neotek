@@ -6,7 +6,7 @@ using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.AccesoADatos;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.Requisiciones;

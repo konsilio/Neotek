@@ -1,4 +1,4 @@
-﻿using Application.MainModule.AdaptadoresDTO.Requisicion;
+﻿using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;

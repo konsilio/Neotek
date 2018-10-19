@@ -11,7 +11,7 @@ using Application.MainModule.DTOs.Mobile;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.DTOs.Almacen;
-using Application.MainModule.AdaptadoresDTO.Almacen;
+using Application.MainModule.AdaptadoresDTO.Almacenes;
 using Application.MainModule.Servicios.Compras;
 using Security.MainModule.Criptografia;
 using Utilities.MainModule;
@@ -19,7 +19,7 @@ using Sagas.MainModule.ObjetosValor.Constantes;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 
-namespace Application.MainModule.Servicios.Almacen
+namespace Application.MainModule.Servicios.Almacenes
 {
     public static class AlmacenGasServicio
     {

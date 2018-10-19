@@ -1,12 +1,12 @@
-﻿using Application.MainModule.AdaptadoresDTO.Almacen;
+﻿using Application.MainModule.AdaptadoresDTO.Almacenes;
 using Application.MainModule.AdaptadoresDTO.Compras;
-using Application.MainModule.AdaptadoresDTO.Requisicion;
+using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Compras;
 using Application.MainModule.Servicios.Requisiciones;
@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace Application.MainModule.Flujos
 {
-    public class Almacen
+    public class Almacenes
     {
         public RespuestaDto GenerarEntradaProducto(OrdenCompraEntradasDTO dto)
         {
@@ -56,7 +56,7 @@ namespace Application.MainModule.Flujos
         }
         public RespuestaDto GenerarSalidaProducto(RequisicionSalidaDTO dto)
         {
-            List<Sagas.MainModule.Entidades.Almacen> _almacen = new List<Sagas.MainModule.Entidades.Almacen>();
+            List<Almacen> _almacen = new List<Almacen>();
             List<AlmacenSalidaProducto> Salidas = new List<AlmacenSalidaProducto>();
             var _requisicion = RequisicionAdapter.FromEntity(RequisicionServicio.Buscar(dto.IdRequisicion));
             List<RequisicionProducto> _productos = RequisicionProductoAdapter.FromEntity(_requisicion.Productos.ToList());
@@ -148,6 +148,11 @@ namespace Application.MainModule.Flujos
             var Salidas = ProductoAlmacenServicio.BuscarSalidaTodo(idEmpresa);
 
             return ProductoAlmacenServicio.UnirRegistros(Salidas, Entradas);
+        }
+        public RequisicionSalidaDTO BuscarRequsicionSalida(int idRequisicion)
+        {
+            var req = RequisicionServicio.Buscar(idRequisicion);
+            return AlmacenAdapter.FromDTO(req);
         }
     }
 }

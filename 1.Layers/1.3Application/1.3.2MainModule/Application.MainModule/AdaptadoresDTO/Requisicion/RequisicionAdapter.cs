@@ -4,7 +4,7 @@ using Sagas.MainModule.Entidades;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Application.MainModule.AdaptadoresDTO.Requisicion
+namespace Application.MainModule.AdaptadoresDTO.Requisiciones
 {
     public static class RequisicionAdapter
     {

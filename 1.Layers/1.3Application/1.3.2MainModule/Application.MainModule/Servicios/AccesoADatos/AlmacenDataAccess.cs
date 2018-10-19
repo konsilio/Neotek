@@ -19,15 +19,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-        public List<Sagas.MainModule.Entidades.Almacen> ListaProductosAlmacen(short idEmpresa)
+        public List<Almacen> ListaProductosAlmacen(short idEmpresa)
         {
             return uow.Repository<Sagas.MainModule.Entidades.Almacen>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
         }
-        public List<Sagas.MainModule.Entidades.Almacen> ListaProductosAlmacenTodos()
+        public List<Almacen> ListaProductosAlmacenTodos()
         {
             return uow.Repository<Sagas.MainModule.Entidades.Almacen>().GetAll().ToList();
         }
-        public Sagas.MainModule.Entidades.Almacen ProductoAlmacen(int idProducto, short idEmpresa)
+        public Almacen ProductoAlmacen(int idProducto, short idEmpresa)
         {
             return uow.Repository<Sagas.MainModule.Entidades.Almacen>().GetSingle(x => x.IdProduto.Equals(idProducto) && x.IdEmpresa.Equals(idEmpresa));
         }

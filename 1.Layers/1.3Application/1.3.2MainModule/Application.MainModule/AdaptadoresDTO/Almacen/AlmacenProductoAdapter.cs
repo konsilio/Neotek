@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace Application.MainModule.AdaptadoresDTO.Almacen
+namespace Application.MainModule.AdaptadoresDTO.Almacenes
 {
     public static class AlmacenProductoAdapter
     {

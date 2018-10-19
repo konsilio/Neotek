@@ -1,7 +1,7 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.Servicios.Seguridad;
