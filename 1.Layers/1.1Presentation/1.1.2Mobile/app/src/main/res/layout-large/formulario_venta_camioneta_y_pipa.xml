@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CLFormularioVentaCamionetaYPipaContenedor"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Switch
+        android:id="@+id/SWFormularioVentaCamionetaYPipaCredito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/credito"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/tableLayout2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/SWFormularioVentaCamionetaYPipaFactura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:checked="true"
+        android:text="@string/factura"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/tableLayout2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SWFormularioVentaCamionetaYPipaCredito" />
+
+    <TableLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/precio_lt"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/TVFormularioVentaCamionetaYPipaPrecio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textEnd" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/desc_lt"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/TVFormularioVentaCamionetaYPipaDescuento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textEnd" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/subtotal"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/TVFormularioVentaCamionetaYPipaSubtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textEnd" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/iva_16"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/TVFormularioVentaCamionetaYPipaIva"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textEnd" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/total"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/TVFormularioVentaCamionetaYPipaTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textEnd" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/BtnFormularioVentaCamionetaYPipaCancelar"
+        android:layout_width="143dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        style="@style/SagasTheme.Button"
+        android:text="@string/message_cancel"
+        android:textColor="@color/colorTextButtonLogin"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout2"
+        tools:ignore="UnusedAttribute" />
+
+    <Button
+        android:id="@+id/BtnFormularioVentaCamionetaYPipaPagar"
+        android:layout_width="143dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        style="@style/SagasTheme.Button"
+        android:text="@string/pagar"
+        android:textColor="@color/colorTextButtonLogin"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout2"
+        tools:ignore="UnusedAttribute" />
+</android.support.constraint.ConstraintLayout>

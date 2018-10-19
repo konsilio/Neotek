@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Application.MainModule.DTOs.Respuesta;
+﻿using Application.MainModule.AdaptadoresDTO.Requisicion;
+using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
+using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
-using Application.MainModule.AdaptadoresDTO.Requisicion;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
-using Application.MainModule.DTOs.Compras;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Application.MainModule.Servicios.Requisicion
+namespace Application.MainModule.Servicios.Requisiciones
 {
     public static class RequisicionServicio
     {
-        public static RespuestaDto GuardarRequisicionNueva(Sagas.MainModule.Entidades.Requisicion _req)
+        public static RespuestaDto GuardarRequisicionNueva(Requisicion _req)
         {
             return new RequisicionDataAccess().InsertarNueva(_req);
         }
@@ -25,11 +25,11 @@ namespace Application.MainModule.Servicios.Requisicion
         {
             return RequisicionAdapter.ToRevDTO(new RequisicionDataAccess().BuscarPorIdRequisicion(_idrequi));
         }
-        public static Sagas.MainModule.Entidades.Requisicion BuscarRequisicionPorId(int _idrequi)
+        public static Requisicion BuscarRequisicionPorId(int _idrequi)
         {
             return new RequisicionDataAccess().BuscarPorIdRequisicion(_idrequi);
         }
-        public static Sagas.MainModule.Entidades.Requisicion Buscar(int _idrequi)
+        public static Requisicion Buscar(int _idrequi)
         {
             return new RequisicionDataAccess().BuscarPorIdRequisicion(_idrequi);
         }
@@ -42,7 +42,7 @@ namespace Application.MainModule.Servicios.Requisicion
             var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
             return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad), RequisicionProductoAdapter.FromDTO(_req.ListaProductos, entidad.Productos.ToList()));
         }
-        public static RespuestaDto UpDateRequisicionAutoriza(Sagas.MainModule.Entidades.Requisicion _req, List<Sagas.MainModule.Entidades.RequisicionProducto> prods)
+        public static RespuestaDto UpDateRequisicionAutoriza(Requisicion _req, List<RequisicionProducto> prods)
         {
             return new RequisicionDataAccess().Actualizar(_req, prods);
         }
@@ -62,7 +62,7 @@ namespace Application.MainModule.Servicios.Requisicion
         {
             return new RequisicionDataAccess().BuscarProducto(idProd, idReq);
         }
-        public static List<Sagas.MainModule.Entidades.Requisicion> IdentificarRequisicones(Sagas.MainModule.Entidades.Requisicion _req)
+        public static List<Requisicion> IdentificarRequisicones(Requisicion _req)
         {
             List<Sagas.MainModule.Entidades.Requisicion> lRequi = new List<Sagas.MainModule.Entidades.Requisicion>();
             var productos = _req.Productos.ToList();
@@ -73,7 +73,7 @@ namespace Application.MainModule.Servicios.Requisicion
                 {
                     var reqGas = RequisicionAdapter.FromEntity(_req, productosGas);
                     reqGas.IdRequisicionEstatus = RequisicionEstatusEnum.Revision_exitosa;
-                    lRequi.Add(reqGas);     
+                    lRequi.Add(reqGas);
                 }
             }
             productos = productos.Where(x => !x.EsGas && !x.EsTransporteGas).ToList();
@@ -85,7 +85,7 @@ namespace Application.MainModule.Servicios.Requisicion
                     req.IdRequisicionEstatus = RequisicionEstatusEnum.Creada;
                     lRequi.Add(req);
                 }
-            }            
+            }
             return lRequi;
         }
         public static List<RequisicionEstatus> RequisiconEstatus()
@@ -96,6 +96,14 @@ namespace Application.MainModule.Servicios.Requisicion
         {
             req.EsGasTransporte = req.ProductosOC.Where(x => x.EsGas).ToList().Count().Equals(0) ? false : true;
             return req;
+        }
+        public static Requisicion DeterminaEstatusPorSalidas(Requisicion _requisicion, List<RequisicionProducto> _productos)
+        {
+            if (_productos.Where(x => x.CantidadEntregada.Equals(x.Cantidad)).Count().Equals(_productos.Count))
+                _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Cerrada;
+            else
+                _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Solicitante_Notificado;
+            return _requisicion;
         }
     }
 }

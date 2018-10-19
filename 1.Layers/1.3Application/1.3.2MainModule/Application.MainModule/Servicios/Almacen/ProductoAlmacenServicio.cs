@@ -12,6 +12,7 @@ using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.AdaptadoresDTO.Almacen;
 using Sagas.MainModule.ObjetosValor.Constantes;
+using Exceptions.MainModule.Validaciones;
 
 namespace Application.MainModule.Servicios.Almacen
 {
@@ -33,6 +34,10 @@ namespace Application.MainModule.Servicios.Almacen
         public static RespuestaDto EntradaAlmcacenProductos(List<Sagas.MainModule.Entidades.Almacen> _almacen, List<Sagas.MainModule.Entidades.Almacen> _almacenCrear, List<AlmacenEntradaProducto> prod)
         {
             return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, _almacenCrear, prod);
+        }
+        public static RespuestaDto SalidaAlmcacenProductos(List<Sagas.MainModule.Entidades.Almacen> _almacen, List<AlmacenSalidaProducto> prod, Sagas.MainModule.Entidades.Requisicion _requisicion, List<RequisicionProducto> _productos)
+        {
+            return new AlmacenDataAccess().ActualizarAlmacenSalidas(_almacen, prod, _requisicion, _productos);
         }
         public static AlmacenEntradaProducto GenerarAlmacenEntradaProcuto(AlmacenEntradaDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
         {
@@ -110,7 +115,6 @@ namespace Application.MainModule.Servicios.Almacen
             else
                 return new AlmacenSalidaProductoDataAccess().BuscarTodos(TokenServicio.ObtenerIdEmpresa());
         }
-
         public static List<RegistroDTO> UnirRegistros(List<AlmacenSalidaProducto> Salidas, List<AlmacenEntradaProducto> Entradas)
         {
             List<RegistroDTO> Registro = new List<RegistroDTO>();
@@ -155,6 +159,30 @@ namespace Application.MainModule.Servicios.Almacen
                 Registro.Add(dto);
             }
             return Registro.OrderBy(x => x.FechaRegistro).ToList();
+        }
+        public static RespuestaDto NoExiste()
+        {
+            string mensaje = string.Format(Error.NoExiste, "El prodcuto en almacen ");
+
+            return new RespuestaDto()
+            {
+                Exito = false,
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
+        }
+        public static RespuestaDto CantidadInsuficiente()
+        {
+            string mensaje = string.Format(Error.A0002);
+
+            return new RespuestaDto()
+            {
+                Exito = false,
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
         }
     }
 }

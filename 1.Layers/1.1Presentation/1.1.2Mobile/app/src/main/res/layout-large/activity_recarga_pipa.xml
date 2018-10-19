@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.RecargaPipaActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/TVRecargaPipaActivityTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="15dp"
+                android:text="@string/Recarga_pipa"
+                android:textAlignment="center"
+                android:textSize="36sp" />
+
+            <TextView
+                android:id="@+id/TVRecargaPipaActivityTituloAlmacen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="5dp"
+                android:text="@string/selecciona_almacen_principal"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/SRecargaPipaActivityAlmacen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="20dp" />
+
+            <TextView
+                android:id="@+id/TVRecargaPipaActivityTituloPipa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="5dp"
+                android:text="@string/selecciona_la_pipa_a_recargar"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/SRecargaPipaActivityPipa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="20dp" />
+
+            <TextView
+                android:id="@+id/TVRecargaPipaActiviryTituloMedidor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="15dp"
+                android:text="@string/selecciona_el_tipo_de_medidor_de_la_pipa"
+                android:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/SRecargaPipaActivityMedidor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:padding="20dp"
+                android:visibility="gone" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+
+            <Button
+                android:id="@+id/BtnRecargaPipaActivityAceptar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="85dp"
+                android:layout_marginRight="85dp"
+                style="@style/SagasTheme.Button"
+                android:text="@string/message_acept"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="36sp"
+                tools:ignore="UnusedAttribute"
+                tools:layout_editor_absoluteX="136dp"
+                tools:layout_editor_absoluteY="201dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

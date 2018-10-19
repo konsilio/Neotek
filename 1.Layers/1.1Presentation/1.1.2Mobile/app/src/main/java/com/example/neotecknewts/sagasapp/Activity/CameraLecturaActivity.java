@@ -243,8 +243,9 @@ public class CameraLecturaActivity extends AppCompatActivity {
     private void verificarBoton() {
         if(EsFotoP5000 && EsLecturaInicial || EsLecturaFinal){
             try {
-                lecturaDTO.getImagenes().add(imageurl);
+                //lecturaDTO.getImagenes().add(imageurl);
                 lecturaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                lecturaDTO.setCantidadFotografias(lecturaDTO.getCantidadFotografias()+1);
                 //lecturaDTO.setImagenP5000(imageurl);
                 //lecturaDTO.setImagenP5000URI(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
@@ -259,8 +260,9 @@ public class CameraLecturaActivity extends AppCompatActivity {
 
         }else if (EsFotoP5000 && (EsLecturaInicialPipa || EsLecturaFinalPipa)){
             try {
-                lecturaPipaDTO.getImagenes().add(imageurl);
+                //lecturaPipaDTO.getImagenes().add(imageurl);
                 lecturaPipaDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                lecturaDTO.setCantidadFotografias(lecturaDTO.getCantidadFotografias()+1);
                 //lecturaPipaDTO.setImagenP5000(imageurl);
                 //lecturaPipaDTO.setImagenP5000URI(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
@@ -276,7 +278,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }
         }else if(EsRecargaEstacionInicial|| EsRecargaEstacionFinal){
             try {
-                recargaDTO.getImagenes().add(imageurl);
+                //recargaDTO.getImagenes().add(imageurl);
                 recargaDTO.getImagenesUri().add(new URI(imageUri.toString()));
                 if (EsPrimeraLectura) {
                     Intent intent = new Intent(CameraLecturaActivity.this,
@@ -302,8 +304,9 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }
         }else if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
             try {
-                autoconsumoDTO.getImagenes().add(imageurl);
+                //autoconsumoDTO.getImagenes().add(imageurl);
                 autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
+                autoconsumoDTO.setCantidadFotos(autoconsumoDTO.getCantidadFotos()+1);
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         SubirImagenesActivity.class);
                 intent.putExtra("EsAutoconsumoEstacionInicial",EsAutoconsumoEstacionInicial);
@@ -315,7 +318,8 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }
         }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
             try {
-                autoconsumoDTO.getImagenes().add(imageurl);
+                //autoconsumoDTO.getImagenes().add(imageurl);
+                autoconsumoDTO.setCantidadFotos(autoconsumoDTO.getCantidadFotos()+1);
                 autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         SubirImagenesActivity.class);
@@ -328,7 +332,8 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }
         }else if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
             try {
-                autoconsumoDTO.getImagenes().add(imageurl);
+                //autoconsumoDTO.getImagenes().add(imageurl);
+                autoconsumoDTO.setCantidadFotos(autoconsumoDTO.getCantidadFotos()+1);
                 autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         CapturaPorcentajeActivity.class);
@@ -342,7 +347,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }
         }else if(EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
             try {
-                traspasoDTO.getImagenes().add(imageurl);
+                //traspasoDTO.getImagenes().add(imageurl);
                 traspasoDTO.getImagenesUri().add(new URI(imageUri.toString()));
                 if(EsPrimeraParteTraspaso) {
                     Intent intent = new Intent(CameraLecturaActivity.this,
@@ -366,7 +371,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }
         }else if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
             try {
-                traspasoDTO.getImagenes().add(imageurl);
+                //traspasoDTO.getImagenes().add(imageurl);
                 traspasoDTO.getImagenesUri().add(new URI(imageUri.toString()));
                 if(EsPasoIniciaLPipa) {
                     EsPasoIniciaLPipa = false;
@@ -391,7 +396,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }
         }else if(EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
             try {
-                calibracionDTO.getImagenes().add(imageurl);
+                //calibracionDTO.getImagenes().add(imageurl);
                 calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         CapturaPorcentajeActivity.class);
@@ -403,7 +408,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
             }
         }else if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
             try {
-                calibracionDTO.getImagenes().add(imageurl);
+                //calibracionDTO.getImagenes().add(imageurl);
                 calibracionDTO.getImagenesUri().add(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         CapturaPorcentajeActivity.class);

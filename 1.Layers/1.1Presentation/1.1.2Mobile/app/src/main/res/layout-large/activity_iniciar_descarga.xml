@@ -192,12 +192,12 @@
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
-            android:background="@color/colorButtonLogin"
+            style="@style/SagasTheme.Button"
             android:minWidth="170dp"
             android:text="@string/registrar"
             android:textColor="@color/colorTextButtonLogin"
-            android:textSize="25dp" />
-
+            android:textSize="25sp" />
+    <!--            android:background="@color/colorButtonLogin"-->
     </LinearLayout>
 
 

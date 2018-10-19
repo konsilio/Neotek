@@ -26,7 +26,7 @@ public class EnviarDartosActivity extends AppCompatActivity  implements EnviarDa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enviar_dartos);
+        setContentView(R.layout.activity_enviar_datos);
         Bundle bundle =  getIntent().getExtras();
         if(bundle!= null){
             EsLecturaInicialCamioneta = (boolean) bundle.get("EsLecturaInicialCamioneta");

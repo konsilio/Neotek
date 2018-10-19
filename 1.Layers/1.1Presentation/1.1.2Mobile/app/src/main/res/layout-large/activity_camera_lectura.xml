@@ -20,11 +20,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingBottom="15dp"
             android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:text="@string/toma_de_lectura"
             android:textAlignment="center"
-            android:textSize="24sp"
+            android:textSize="36sp"
             tools:ignore="InefficientWeight,NestedWeights" />
 
     </LinearLayout>
@@ -46,10 +46,13 @@
 
             <Button
                 android:id="@+id/BtnCameraLecturaTomarFoto"
-                android:layout_width="15dp"
+                style="@style/SagasTheme.Button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/tomar_foto" />
+                android:textColor="@color/textcolorButton"
+                android:text="@string/tomar_foto"
+                android:textSize="36sp" />
 
         </TableRow>
 
@@ -63,11 +66,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:paddingBottom="5dp"
                 android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:text="@string/tomar_foto_estacion"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="30sp" />
         </TableRow>
 
     </TableLayout>
@@ -124,6 +127,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                style="@style/SagasTheme.Button"
+                android:textColor="@color/textcolorButton"
                 android:text="@string/message_nitida_si" />
 
             <Button
@@ -131,6 +136,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                style="@style/SagasTheme.Button"
+                android:textColor="@color/textcolorButton"
                 android:text="@string/message_nitida_no" />
         </TableRow>
 

@@ -32,6 +32,7 @@ namespace Sagas.MainModule.Entidades
         public decimal Importe { get; set; }
         public bool EsActivoVenta { get; set; }
         public bool EsGas { get; set; }
+        public Nullable<decimal> CantidadEntregada { get; set; }
     
         public virtual OrdenCompra OrdenCompra { get; set; }
         public virtual CentroCosto CentroCosto { get; set; }

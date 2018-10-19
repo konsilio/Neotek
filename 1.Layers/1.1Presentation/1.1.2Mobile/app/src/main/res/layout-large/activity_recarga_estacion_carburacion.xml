@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.RecargaEstacionCarburacionActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UselessLeaf" >
+
+            <TextView
+                android:id="@+id/TVRecargaEstacionCarburacionActivityTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="15dp"
+                android:text="@string/datos_inciales"
+                android:textAlignment="center"
+                android:textSize="36sp" />
+
+            <TextView
+                android:id="@+id/TVRecargaEstacionCarburacionActivityPipaSalida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:padding="5dp"
+                android:text="@string/selecciona_la_pipa_de_salida"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/SRecargaEstacionCarburacionActivityListaPipa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="20dp" />
+
+            <TextView
+                android:id="@+id/TVRecargaEstacionCarburacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:padding="5dp"
+                android:text="@string/selecciona_medidor_porcentual_salida"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/SRecargaEstacionCarburacionActivityListaMedidorPipa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="20dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <TextView
+                android:id="@+id/TVRecargaEstacionCarburacionAcitvityEstacionDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:padding="5dp"
+                android:text="@string/selecciona_estacion_destino"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/SRecargaEstacionCarburacionActivityListaEstacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="20dp" />
+
+            <TextView
+                android:id="@+id/TVRecargaEstacionCarburacionActivityMedidorEstacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:padding="5dp"
+                android:text="@string/selecciona_medidor_porcentual_estacion"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/SRecargaEstacionCarburacionActivityListaMedidorPorcentualDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:padding="20dp"
+                />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <Button
+                android:id="@+id/BtnRecargaEstacionCarburacionActivityAceptar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="85dp"
+                android:layout_marginRight="85dp"
+                style="@style/SagasTheme.Button"
+                android:text="@string/message_acept"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="36sp"
+                tools:ignore="UnusedAttribute" />
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

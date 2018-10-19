@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="6dp">
@@ -8,13 +9,18 @@
         android:id="@+id/BtnCamposCamionetasFooterGuardar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:layout_marginLeft="85dp"
-        android:layout_marginRight="85dp"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="85dp"
+        android:layout_marginBottom="5dp"
         android:layout_weight="1"
-        android:backgroundTint="@color/colorButtonLogin"
         android:text="@string/message_acept"
+        style="@style/SagasTheme.Button"
         android:textColor="@color/colorTextButtonLogin"
-        android:textSize="24dp" />
+        android:textSize="18sp"
+         />
+    <!--
+    android:backgroundTint="@color/colorButtonLogin"
+    tools:ignore="UnusedAttribute"
+    -->
 </LinearLayout>

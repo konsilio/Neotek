@@ -21,6 +21,7 @@
     <color name="textColorSistemaLoginSecundario">#6e90be</color>
     <color name="backgroundLoginForm">#FFFFFF</color>
     <color name="buttonBackgroundColor">#313740</color>
+    <color name="buttonBackgroundColorHighlight">#647081</color>
     <color name="textcolorButton">#fff</color>
     <color name="primaryTextColor">#313740</color>
     <!--Fin colores de tema del sistema-->

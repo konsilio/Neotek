@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:layout_marginBottom="5dp"
@@ -12,7 +13,7 @@
         android:layout_weight="5"
         android:text=""
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/ETConfiguracionCamionetasCantidad"
@@ -20,10 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_weight="5"
         android:ems="10"
-        android:labelFor="@id/TVCamposCamionetasTipoCilindro"
         android:inputType="number"
+        android:labelFor="@id/TVCamposCamionetasTipoCilindro"
         android:maxLength="2"
         android:textAlignment="center"
-        android:textSize="24sp" />
+        android:textSize="18sp"
+        tools:ignore="Autofill,LabelFor" />
 
 </LinearLayout>

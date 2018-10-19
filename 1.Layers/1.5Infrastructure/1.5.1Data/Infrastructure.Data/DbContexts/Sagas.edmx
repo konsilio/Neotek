@@ -1454,6 +1454,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="UnidadMedida2" Type="varchar" MaxLength="50" />
           <Property Name="Descripcion" Type="varchar" MaxLength="500" />
           <Property Name="Cantidad" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CantidadEntregada" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Descuento" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="IVA" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -1602,6 +1603,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CompraAutorizarOCompra" Type="bit" Nullable="false" />
           <Property Name="CompraEntraProductoOCompra" Type="bit" Nullable="false" />
           <Property Name="CompraAtiendeServicioOCompra" Type="bit" Nullable="false" />
+          <Property Name="CompraCancelaOCompra" Type="bit" Nullable="false" />
+          <Property Name="AlmacenActualizaExistencias" Type="bit" Nullable="false" />
+          <Property Name="AlmacenVerExistencias" Type="bit" Nullable="false" />
+          <Property Name="AlmacenVerMovimientos" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="RolAccionCatalogo">
           <Key>
@@ -1655,6 +1660,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="CatConsultarPrecioVenta" Type="bit" Nullable="false" />
           <Property Name="CatAsignarChoferPuntoVenta" Type="bit" Nullable="false" />
           <Property Name="CatAsignarEquipoTransporte" Type="bit" Nullable="false" />
+          <Property Name="CatConsultarCajaGeneral" Type="bit" Nullable="false" />
+          <Property Name="CatLiquidarCajaGeneral" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="RolAccionMovil">
           <Key>
@@ -5892,9 +5899,16 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="AppTomaLecturaReporteDelDia" Type="Boolean" Nullable="false" />
           <Property Name="AppTraspasoEstacionCarb" Type="Boolean" Nullable="false" />
           <Property Name="AppTraspasoPipa" Type="Boolean" Nullable="false" />
+          <Property Name="CompraCancelaOCompra" Type="Boolean" Nullable="false" />
+          <Property Name="AlmacenActualizaExistencias" Type="Boolean" Nullable="false" />
+          <Property Name="AlmacenVerExistencias" Type="Boolean" Nullable="false" />
+          <Property Name="AlmacenVerMovimientos" Type="Boolean" Nullable="false" />
+          <Property Name="CatConsultarCajaGeneral" Type="Boolean" Nullable="false" />
+          <Property Name="CatLiquidarCajaGeneral" Type="Boolean" Nullable="false" />
 
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_Rol_Empresa" FromRole="Rol" ToRole="Empresa" />
-          <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />          
+          <NavigationProperty Name="UsuariosRoles" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="Rol" ToRole="UsuarioRol" />
+         
           <!--<NavigationProperty Name="RolAccionMovil" Relationship="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" FromRole="Rol" ToRole="RolAccionMovil" />-->
           
           <!--<NavigationProperty Name="Rol" Relationship="Sagas.MainModuleModel.FK_RolAccionMovil_Rol" FromRole="RolAccionMovil" ToRole="Rol" />-->
@@ -5924,7 +5938,6 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="IdUsuario" Type="Int32" Nullable="false" />
           <Property Name="IdRol" Type="Int16" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="1" FixedLength="false" Unicode="false"  />
-
           <NavigationProperty Name="Usuario" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Usuario" FromRole="UsuarioRol" ToRole="Usuario" />
           <NavigationProperty Name="Role" Relationship="Sagas.MainModuleModel.FK_UsuarioRol_Rol" FromRole="UsuarioRol" ToRole="Rol" />
         </EntityType>
@@ -7757,7 +7770,8 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="EsGas" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="OrdenCompra" Relationship="Sagas.MainModuleModel.FK_OrdenCompraProducto_OrdenCompra" FromRole="OrdenCompraProducto" ToRole="OrdenCompra" />          
           <NavigationProperty Name="CentroCosto" Relationship="Sagas.MainModuleModel.FK_OrdenCompraProducto_CentroCosto" FromRole="OrdenCompraProducto" ToRole="CentroCosto" />
-          <NavigationProperty Name="CProducto" Relationship="Sagas.MainModuleModel.FK_OrdenCompraProducto_CProducto" FromRole="OrdenCompraProducto" ToRole="Producto" />          
+          <NavigationProperty Name="CProducto" Relationship="Sagas.MainModuleModel.FK_OrdenCompraProducto_CProducto" FromRole="OrdenCompraProducto" ToRole="Producto" />
+          <Property Name="CantidadEntregada" Type="Decimal" Precision="18" Scale="2" />          
         </EntityType>
         <EntityType Name="OrdenCompraEstatus">
           <Key>
@@ -11722,6 +11736,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
             
               <MappingFragment StoreEntitySet="RolAccion">
+                <ScalarProperty Name="AlmacenVerMovimientos" ColumnName="AlmacenVerMovimientos" />
+                <ScalarProperty Name="AlmacenVerExistencias" ColumnName="AlmacenVerExistencias" />
+                <ScalarProperty Name="AlmacenActualizaExistencias" ColumnName="AlmacenActualizaExistencias" />
+                <ScalarProperty Name="CompraCancelaOCompra" ColumnName="CompraCancelaOCompra" />
                 <ScalarProperty Name="CompraAtiendeServicioOCompra" ColumnName="CompraAtiendeServicioOCompra" />
                 <ScalarProperty Name="CompraEntraProductoOCompra" ColumnName="CompraEntraProductoOCompra" />
                 <ScalarProperty Name="CompraAutorizarOCompra" ColumnName="CompraAutorizarOCompra" />
@@ -11735,7 +11753,9 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 </MappingFragment>
               
                 <MappingFragment StoreEntitySet="RolAccionCatalogo">
-                  <ScalarProperty Name="CatConsultarPrecioVenta" ColumnName="CatConsultarPrecioVenta" />
+                  <ScalarProperty Name="CatLiquidarCajaGeneral" ColumnName="CatLiquidarCajaGeneral" />
+                <ScalarProperty Name="CatConsultarCajaGeneral" ColumnName="CatConsultarCajaGeneral" />
+                <ScalarProperty Name="CatConsultarPrecioVenta" ColumnName="CatConsultarPrecioVenta" />
                 <ScalarProperty Name="CatEliminarPrecioVenta" ColumnName="CatEliminarPrecioVenta" />
                 <ScalarProperty Name="CatModificarPrecioVenta" ColumnName="CatModificarPrecioVenta" />
                 <ScalarProperty Name="CatInsertarPrecioVenta" ColumnName="CatInsertarPrecioVenta" />
@@ -11763,26 +11783,26 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
                 <ScalarProperty Name="CatModificarCliente" ColumnName="CatModificarCliente" />
                 <ScalarProperty Name="CatInsertarCliente" ColumnName="CatInsertarCliente" />
                 <ScalarProperty Name="CatConsultarCentroCosto" ColumnName="CatConsultarCentroCosto" />
-                  <ScalarProperty Name="CatEliminarCentroCosto" ColumnName="CatEliminarCentroCosto" />
-                  <ScalarProperty Name="CatModificarCentroCosto" ColumnName="CatModificarCentroCosto" />
-                  <ScalarProperty Name="CatInsertarCentroCosto" ColumnName="CatInsertarCentroCosto" />
-                  <ScalarProperty Name="CatConsultarCuentaContable" ColumnName="CatConsultarCuentaContable" />
-                  <ScalarProperty Name="CatEliminarCuentaContable" ColumnName="CatEliminarCuentaContable" />
-                  <ScalarProperty Name="CatModificarCuentaContable" ColumnName="CatModificarCuentaContable" />
-                  <ScalarProperty Name="CatInsertarCuentaContable" ColumnName="CatInsertarCuentaContable" />
-                  <ScalarProperty Name="CatConsultarProducto" ColumnName="CatConsultarProducto" />
-                  <ScalarProperty Name="CatEliminarProducto" ColumnName="CatEliminarProducto" />
-                  <ScalarProperty Name="CatModificarProducto" ColumnName="CatModificarProducto" />
-                  <ScalarProperty Name="CatInsertarProducto" ColumnName="CatInsertarProducto" />
-                  <ScalarProperty Name="CatConsultarProveedor" ColumnName="CatConsultarProveedor" />
-                  <ScalarProperty Name="CatEliminarProveedor" ColumnName="CatEliminarProveedor" />
-                  <ScalarProperty Name="CatModificarProveedor" ColumnName="CatModificarProveedor" />
-                  <ScalarProperty Name="CatInsertarProveedor" ColumnName="CatInsertarProveedor" />
-                  <ScalarProperty Name="CatConsultarUsuario" ColumnName="CatConsultarUsuario" />
-                  <ScalarProperty Name="CatEliminarUsuario" ColumnName="CatEliminarUsuario" />
-                  <ScalarProperty Name="CatModificarUsuario" ColumnName="CatModificarUsuario" />
-                  <ScalarProperty Name="CatInsertarUsuario" ColumnName="CatInsertarUsuario" />
-                  <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="CatEliminarCentroCosto" ColumnName="CatEliminarCentroCosto" />
+                <ScalarProperty Name="CatModificarCentroCosto" ColumnName="CatModificarCentroCosto" />
+                <ScalarProperty Name="CatInsertarCentroCosto" ColumnName="CatInsertarCentroCosto" />
+                <ScalarProperty Name="CatConsultarCuentaContable" ColumnName="CatConsultarCuentaContable" />
+                <ScalarProperty Name="CatEliminarCuentaContable" ColumnName="CatEliminarCuentaContable" />
+                <ScalarProperty Name="CatModificarCuentaContable" ColumnName="CatModificarCuentaContable" />
+                <ScalarProperty Name="CatInsertarCuentaContable" ColumnName="CatInsertarCuentaContable" />
+                <ScalarProperty Name="CatConsultarProducto" ColumnName="CatConsultarProducto" />
+                <ScalarProperty Name="CatEliminarProducto" ColumnName="CatEliminarProducto" />
+                <ScalarProperty Name="CatModificarProducto" ColumnName="CatModificarProducto" />
+                <ScalarProperty Name="CatInsertarProducto" ColumnName="CatInsertarProducto" />
+                <ScalarProperty Name="CatConsultarProveedor" ColumnName="CatConsultarProveedor" />
+                <ScalarProperty Name="CatEliminarProveedor" ColumnName="CatEliminarProveedor" />
+                <ScalarProperty Name="CatModificarProveedor" ColumnName="CatModificarProveedor" />
+                <ScalarProperty Name="CatInsertarProveedor" ColumnName="CatInsertarProveedor" />
+                <ScalarProperty Name="CatConsultarUsuario" ColumnName="CatConsultarUsuario" />
+                <ScalarProperty Name="CatEliminarUsuario" ColumnName="CatEliminarUsuario" />
+                <ScalarProperty Name="CatModificarUsuario" ColumnName="CatModificarUsuario" />
+                <ScalarProperty Name="CatInsertarUsuario" ColumnName="CatInsertarUsuario" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
                 </MappingFragment>
               
                 <MappingFragment StoreEntitySet="RolAccionMovil">
@@ -12166,6 +12186,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="OrdenCompraProducto">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.OrdenCompraProducto">
               <MappingFragment StoreEntitySet="OrdenCompraProducto">
+                <ScalarProperty Name="CantidadEntregada" ColumnName="CantidadEntregada" />
                 <ScalarProperty Name="EsGas" ColumnName="EsGas" />
                 <ScalarProperty Name="EsActivoVenta" ColumnName="EsActivoVenta" />
                 <ScalarProperty Name="IdCentroCosto" ColumnName="IdCentroCosto" />

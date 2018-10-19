@@ -13,9 +13,8 @@ namespace Application.MainModule.Servicios
         public static void Actualizar()
         {
             AlmacenGasServicio.ProcesarInventario();
-
+            CajaGeneralServicio.CargarVentasMovimientos();
             CajaGeneralServicio.ProcesarSaldos();
-
             ImagenServicio.LimpiarImagenes();
         }
     }

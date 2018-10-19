@@ -8,35 +8,37 @@
         android:id="@+id/textViewTituloPorcentaje"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="@string/title_medidor_almacen"
         android:textColor="@color/colorTextLogin"
-        android:textSize="20dp"
+        android:textSize="18sp"
         android:textStyle="italic"
         tools:ignore="SpUsage" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="@string/porcentaje_medidor"
         android:textColor="@color/colorTextLogin"
-        android:textSize="45dp"
+        android:textSize="24sp"
         android:textStyle="bold"
         tools:ignore="SpUsage" />
+
     <TextView
         android:id="@+id/textViewCapturaText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="@string/porcentaje_medidor_almacen_message"
         android:textColor="@color/colorTextLogin"
-        android:textSize="20dp"
+        android:textSize="18sp"
         tools:ignore="SpUsage" />
 
     <LinearLayout
@@ -49,56 +51,61 @@
         <NumberPicker
             android:id="@+id/number_picker_porcentaje"
             android:layout_width="wrap_content"
-            android:layout_height="180dp"
-            android:theme="@style/NumberPickerText"
-            android:scaleY="2"
+            android:layout_height="85dp"
+            android:layout_gravity="center"
             android:layout_weight="2"
-            android:layout_gravity="center" >
+            android:scaleY="2"
+            android:theme="@style/NumberPickerText">
 
         </NumberPicker>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/padding_value"
-            android:textSize="30dp"
-            android:layout_weight="1"
-            android:textStyle="bold"
             android:text="@string/punto"
+            android:textSize="18sp"
+            android:textStyle="bold"
             tools:ignore="SpUsage" />
+
         <NumberPicker
             android:id="@+id/number_picker_decimal"
             android:layout_width="60dp"
-            android:layout_height="180dp"
-            android:theme="@style/NumberPickerText"
-            android:scaleY="2"
+            android:layout_height="85dp"
+            android:layout_gravity="center"
             android:layout_weight="2"
-            android:layout_gravity="center" >
+            android:scaleY="2"
+            android:theme="@style/NumberPickerText">
 
         </NumberPicker>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:padding="@dimen/padding_value"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="@string/porcentaje"/>
+            android:text="@string/porcentaje"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/aceptar_button"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:background="@color/colorButtonLogin"
+        android:layout_marginLeft="2sp"
+        android:layout_marginRight="2sp"
         android:text="@string/message_acept"
+        style="@style/SagasTheme.Button"
         android:textColor="@color/colorTextButtonLogin"
-        android:textSize="25dp"
+        android:textSize="18sp"
         tools:ignore="SpUsage" />
-
+<!--        android:background="@color/colorButtonLogin"-->
 
 </LinearLayout>
