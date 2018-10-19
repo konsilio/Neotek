@@ -17,6 +17,12 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscarRequisiciones(idEmpresa, token);
             return respuestaReq._listaRequisicion;
         }
+        public static List<RequisicionDTO> BuscarRequisicionesEntrega(short idEmpresa, string token)
+        {
+           return BuscarRequisiciones(idEmpresa, token)
+                .Where(x => x.RequisicionEstatus.Equals(RequisicionEstatusEnum.Autoriza_entrega)
+                    || x.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Autorizacion_finalizada)).ToList();
+        }
         public static List<RequisicionEstatusDTO> BuscarRequisicionEstatus(string token)
         {
             var respuestaReq = new AgenteServicio();
@@ -242,7 +248,7 @@ namespace MVC.Presentacion.App_Code
         {
             if (ValidarAutorizacion(model.Productos))
             {
-                var _resp = ActualizarRequisicionAutorizacion(CrearAut(model, _tok), _tok);
+                var _resp = ActualizarRequisicionAutorizacion(CrearAut(model), _tok);
                 if (_resp.Exito)                
                     return new RespuestaDTO { Exito = true, Id = _resp.Id };                
                 else                
@@ -279,7 +285,7 @@ namespace MVC.Presentacion.App_Code
             }
             return correcto;
         }
-        private static RequisicionAutPutDTO CrearAut(RequisicionAutorizacionModel model, string tkn)
+        private static RequisicionAutPutDTO CrearAut(RequisicionAutorizacionModel model)
         {
             RequisicionAutPutDTO _aut = new RequisicionAutPutDTO();
             _aut.IdRequisicion = model.IdRequisicion;

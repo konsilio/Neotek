@@ -218,5 +218,9 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 EsGas = _prod.EsGas,
             };
         }
+        public static List<OrdenCompraProducto> FromEntity(List<OrdenCompraProducto> _prod)
+        {
+            return _prod.Select(x => FromEntity(x)).ToList();
+        }
     }
 }

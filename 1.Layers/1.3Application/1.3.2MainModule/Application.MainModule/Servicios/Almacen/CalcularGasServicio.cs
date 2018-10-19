@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sagas.MainModule.Entidades;
 
-namespace Application.MainModule.Servicios.Almacen
+namespace Application.MainModule.Servicios.Almacenes
 {
     public static class CalcularGasServicio
     {

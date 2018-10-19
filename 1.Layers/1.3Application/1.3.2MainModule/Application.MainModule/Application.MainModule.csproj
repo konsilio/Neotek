@@ -251,7 +251,7 @@
     <Compile Include="DTOs\Seguridad\UserRol.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioRolDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuariosModel.cs" />
-    <Compile Include="Flujos\Almacen.cs" />
+    <Compile Include="Flujos\Almacenes.cs" />
     <Compile Include="Flujos\Catalogos.cs" />
     <Compile Include="Flujos\Compras.cs" />
     <Compile Include="Flujos\Inventarios.cs" />

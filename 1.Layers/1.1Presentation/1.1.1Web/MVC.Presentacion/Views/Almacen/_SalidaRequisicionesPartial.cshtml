@@ -1,0 +1,51 @@
+@using System.Configuration;
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "SalidaRequisiciones";
+        settings.CallbackRouteValues = new { Controller = "Almacen", Action = "SalidaRequisicionesPartial" };
+
+
+        settings.KeyFieldName = "IdRequisicion";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        //settings.Styles.Table.CssClass = "table table-striped";
+        settings.Columns.Add("NombreComercial", "Gasera");
+        settings.Columns.Add("NumeroRequisicion", "No. Requisición");
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "FechaRequerida";
+            c.Caption = "Fecha Requerida";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            c.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
+            c.SortIndex = 0;
+            c.SortOrder = DevExpress.Data.ColumnSortOrder.Descending;
+            c.ColumnType = MVCxGridViewColumnType.DateEdit;
+            c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Center;
+            var colSettings = c.PropertiesEdit as DateEditProperties;
+            colSettings.DisplayFormatString = ConfigurationManager.AppSettings["FechaHora_F24H"];
+            colSettings.DisplayFormatInEditMode = true;
+        });
+        settings.Columns.Add("UsuarioSolicitante", "Solicitante");
+        settings.Columns.Add("RequisicionEstatus", "Estatus");
+
+
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Salidas", new { id = d.KeyValue }) + "><i class='material-icons'>forward</i> <span class='icon-name'></span></a>"));
+            });
+        });
+    });
+}
+@grid.Bind(Model).GetHtml()

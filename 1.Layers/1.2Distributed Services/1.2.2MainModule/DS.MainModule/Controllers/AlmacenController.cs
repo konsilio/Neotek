@@ -1,5 +1,6 @@
 ﻿using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Compras;
+using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.Flujos;
 using DS.MainModule.Results;
 using System;
@@ -16,15 +17,20 @@ namespace DS.MainModule.Controllers
     [RoutePrefix("api/almacen")]
     public class AlmacenController : ApiController
     {
-        private Almacen _almacen;
+        private Almacenes _almacen;
         public AlmacenController()
         {
-            _almacen = new Almacen();
+            _almacen = new Almacenes();
         }
         [Route("entrada/producto")]
         public HttpResponseMessage PostGuardarEntradas(OrdenCompraEntradasDTO Entradas)
         {
             return RespuestaHttp.crearRespuesta(_almacen.GenerarEntradaProducto(Entradas), Request);
+        }
+        [Route("salida/producto")]
+        public HttpResponseMessage PostGuardarSalida(RequisicionSalidaDTO Salidas)
+        {
+            return RespuestaHttp.crearRespuesta(_almacen.GenerarSalidaProducto(Salidas), Request);
         }
         [Route("buscar/ordecompraentrada/{IdOrdenCompra}")]
         public HttpResponseMessage GetOrdenCompraEntrada(int IdOrdenCompra)
@@ -35,12 +41,7 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetProductosAlmacen(short idEmpresa)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.ProductosAlmacen(idEmpresa));
-        }
-        //[Route("salida/producto")]
-        //public HttpResponseMessage PostGuardarSalida(AlmacenSalidaProductoDTO Entradas)
-        //{
-        //    return RespuestaHttp.crearRespuesta(_almacen.GenerarSalidaProducto(Entradas), Request);
-        //}
+        }        
         [Route("actualiza/almacenproducto")]
         public HttpResponseMessage PostActulizarAlmacenProducto(AlmacenDTO Update)
         {
@@ -50,6 +51,11 @@ namespace DS.MainModule.Controllers
         public HttpResponseMessage GetRegistroAlmacen(short idEmpresa)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.RegistroAlmacen(idEmpresa));
+        }
+        [Route("buscar/almacen/requisicion/{idEmpresa}")]
+        public HttpResponseMessage GetRequisiconAlmacen(short idRequisicon)
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.BuscarRequsicionSalida(idRequisicon));
         }
     }
 }

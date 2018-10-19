@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.Servicios.Seguridad;

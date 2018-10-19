@@ -19,15 +19,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-        public List<Sagas.MainModule.Entidades.Almacen> ListaProductosAlmacen(short idEmpresa)
+        public List<Almacen> ListaProductosAlmacen(short idEmpresa)
         {
             return uow.Repository<Sagas.MainModule.Entidades.Almacen>().Get(x => x.IdEmpresa.Equals(idEmpresa)).ToList();
         }
-        public List<Sagas.MainModule.Entidades.Almacen> ListaProductosAlmacenTodos()
+        public List<Almacen> ListaProductosAlmacenTodos()
         {
             return uow.Repository<Sagas.MainModule.Entidades.Almacen>().GetAll().ToList();
         }
-        public Sagas.MainModule.Entidades.Almacen ProductoAlmacen(int idProducto, short idEmpresa)
+        public Almacen ProductoAlmacen(int idProducto, short idEmpresa)
         {
             return uow.Repository<Sagas.MainModule.Entidades.Almacen>().GetSingle(x => x.IdProduto.Equals(idProducto) && x.IdEmpresa.Equals(idEmpresa));
         }
@@ -81,19 +81,26 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public RespuestaDto ActualizarAlmacenEntradas(List<Sagas.MainModule.Entidades.Almacen> _alm, List<Sagas.MainModule.Entidades.Almacen> _almCrear, List<AlmacenEntradaProducto> _entrada)
+        public RespuestaDto ActualizarAlmacenEntradas(List<Sagas.MainModule.Entidades.Almacen> _alm, List<Sagas.MainModule.Entidades.Almacen> _almCrear, List<AlmacenEntradaProducto> _entrada, OrdenCompra oc, List<OrdenCompraProducto> ocp)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
+                    //Almacen
                     foreach (var alm in _almCrear)
                         uow.Repository<Sagas.MainModule.Entidades.Almacen>().Insert(alm);
                     foreach (var alm in _alm)
                         uow.Repository<Sagas.MainModule.Entidades.Almacen>().Update(alm);
                     foreach (var entrada in _entrada)
                         uow.Repository<AlmacenEntradaProducto>().Insert(entrada);
+
+                    //Orden de compra
+                    foreach (var p in ocp)
+                        uow.Repository<OrdenCompraProducto>().Update(p);
+                    uow.Repository<OrdenCompra>().Update(oc);    
+
                     uow.SaveChanges();
                     _respuesta.Id = 0;
                     _respuesta.Exito = true;
