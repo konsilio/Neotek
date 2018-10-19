@@ -233,6 +233,9 @@
     <string name="litros_despachados">Litros despachados</string>
     <string name="cliente_no_encontrado">Cliente no encontrado</string>
     <string name="registrar_al_cliente">¿Registrar al cliente?</string>
+    <string name="selecciona_el_almacen">Selecciona el almacen</string>
+    <string name="tomar_foto">Tomar foto</string>
+    <string name="selecciona_el_tipo_de_medidor_de_la_pipa">Selecciona el tipo de medidor de la pipa:</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
     <string-array name="header_tabla_anticipo">
         <item># Tiket</item>

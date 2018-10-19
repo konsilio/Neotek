@@ -86,7 +86,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="17dp"
-        android:backgroundTint="@color/colorButtonLogin"
+        style="@style/SagasTheme.Button"
         android:gravity="center"
         android:text="@string/opciones"
         android:textAlignment="center"
@@ -96,14 +96,14 @@
         app:layout_constraintEnd_toStartOf="@+id/BtnPuntoVentaGasListaActivityGasListaAgregar"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="ButtonStyle,UnusedAttribute" />
-
+<!--        android:backgroundTint="@color/colorButtonLogin"-->
     <Button
         android:id="@+id/BtnPuntoVentaGasListaActivityGasListaAgregar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="17dp"
-        android:backgroundTint="@color/colorButtonLogin"
+        style="@style/SagasTheme.Button"
         android:gravity="center"
         android:text="@string/agregar"
         android:textAlignment="center"
@@ -113,7 +113,7 @@
         app:layout_constraintEnd_toStartOf="@+id/BtnPuntoVentaGasListActivityPagar"
         app:layout_constraintStart_toEndOf="@+id/BtnPuntoVetaGasListActivityOpciones"
         tools:ignore="ButtonStyle,UnusedAttribute" />
-
+<!--        android:backgroundTint="@color/colorButtonLogin"-->
     <Button
         android:id="@+id/BtnPuntoVentaGasListActivityPagar"
         android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="17dp"
-        android:backgroundTint="@color/colorButtonLogin"
+        style="@style/SagasTheme.Button"
         android:gravity="center"
         android:text="@string/pagar"
         android:textAlignment="center"
@@ -132,7 +132,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/BtnPuntoVentaGasListaActivityGasListaAgregar"
         tools:ignore="ButtonStyle,UnusedAttribute" />
-
+<!--        android:backgroundTint="@color/colorButtonLogin"-->
     <include
         layout="@layout/formulario_venta_camioneta_y_pipa"
         android:layout_width="wrap_content"

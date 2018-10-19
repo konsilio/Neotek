@@ -291,22 +291,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorButtonLogin"
+                        style="@style/SagasTheme.Button"
                         android:text="@string/regresar"
                         android:textColor="@color/colorTextButtonLogin"
                         android:textSize="24sp"
                         tools:ignore="ButtonStyle,UnusedAttribute" />
-
+                        <!--android:backgroundTint="@color/colorButtonLogin"-->
                     <Button
                         android:id="@+id/BtnAnticipoTablaActivityHacerAnticipo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorButtonLogin"
+                        style="@style/SagasTheme.Button"
                         android:text="@string/hacer_anticipo"
                         android:textColor="@color/colorTextButtonLogin"
                         android:textSize="24sp"
                         tools:ignore="ButtonStyle,UnusedAttribute" />
+                    <!--android:backgroundTint="@color/colorButtonLogin"-->
                 </TableRow>
             </TableLayout>
 

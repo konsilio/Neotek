@@ -398,24 +398,24 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/colorButtonLogin"
+                style="@style/SagasTheme.Button"
                 android:minWidth="170dp"
                 android:text="@string/registrar"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="25dp" />
+                android:textSize="25sp" />
 
             <Button
                 android:id="@+id/limpiar_button"
+                style="@style/SagasTheme.Button"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@color/colorButtonLogin"
+                android:layout_marginBottom="20dp"
                 android:minWidth="170dp"
                 android:text="@string/limpiar_campos"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="25dp" />
+                android:textSize="25sp" />
 
 
 

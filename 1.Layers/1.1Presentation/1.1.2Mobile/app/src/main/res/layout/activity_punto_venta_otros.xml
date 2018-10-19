@@ -247,7 +247,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/colorButtonLogin"
+        style="@style/SagasTheme.Button"
         android:text="@string/opciones"
         android:textColor="@color/colorTextButtonLogin"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -257,7 +257,7 @@
         app:layout_editor_absoluteX="25dp"
         app:layout_editor_absoluteY="25dp"
         tools:ignore="MissingConstraints,UnusedAttribute" />
-
+<!--        android:backgroundTint="@color/colorButtonLogin"-->
     <Button
         android:id="@+id/BtnPuntoVentaOtrosActivityAgregar"
         android:layout_width="wrap_content"
@@ -265,7 +265,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/colorButtonLogin"
+        style="@style/SagasTheme.Button"
         android:text="@string/agregar"
         android:textColor="@color/colorTextButtonLogin"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -273,7 +273,7 @@
         app:layout_constraintStart_toEndOf="@+id/BtnPuntoVentaOtrosActivityOpciones"
         app:layout_constraintTop_toBottomOf="@+id/scrollView5"
         tools:ignore="UnusedAttribute" />
-
+<!--        android:backgroundTint="@color/colorButtonLogin"-->
     <Button
         android:id="@+id/BtnPuntoVentaOtrosActivityPagar"
         android:layout_width="wrap_content"
@@ -281,7 +281,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/colorButtonLogin"
+        style="@style/SagasTheme.Button"
         android:text="@string/pagar"
         android:textColor="@color/colorTextButtonLogin"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -289,5 +289,5 @@
         app:layout_constraintStart_toEndOf="@+id/BtnPuntoVentaOtrosActivityAgregar"
         app:layout_constraintTop_toBottomOf="@+id/scrollView5"
         tools:ignore="UnusedAttribute" />
-
+<!--        android:backgroundTint="@color/colorButtonLogin"-->
 </android.support.constraint.ConstraintLayout>
