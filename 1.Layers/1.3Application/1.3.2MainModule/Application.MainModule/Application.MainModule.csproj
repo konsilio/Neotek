@@ -101,6 +101,7 @@
     <Compile Include="DTOs\Mobile\EstacionesDto.cs" />
     <Compile Include="DTOs\Mobile\PipaDto.cs" />
     <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />
+    <Compile Include="DTOs\Ventas\RegistrarVentasMovimientosDTO.cs" />
     <Compile Include="DTOs\Ventas\VentaCorteAnticipoDTO.cs" />
     <Compile Include="DTOs\Ventas\VentaPuntoVentaDTO.cs" />
     <Compile Include="DTOs\ImagenDTO.cs" />

@@ -177,11 +177,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             };
             return usDTO;
         }
-        public static List<VentaPuntoVentaDTO> ToDTOP(List<VentaPuntoDeVenta> lu)
-        {
-            List<VentaPuntoVentaDTO> luDTO = lu.ToList().Select(x => ToDTOC(x)).ToList();
-            return luDTO;
-        }
 
         public static VentaPuntoDeVenta FromDto(VentaPuntoVentaDTO pvDTO)
         {
@@ -255,6 +250,40 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         public static List<VentaCorteAnticipoEC> FromDtoCE(List<VentaCorteAnticipoDTO> DTO)
         {
             return DTO.ToList().Select(x => FromDtoCE(x)).ToList();
+        }
+
+        public static VentaMovimiento FromDtoVtaM(RegistrarVentasMovimientosDTO pvDTO)
+        {
+            return new VentaMovimiento()
+            {
+                IdEmpresa = pvDTO.IdEmpresa,
+                Year = pvDTO.Year,
+                Mes = pvDTO.Mes,
+                Dia = pvDTO.Dia,
+                Orden = pvDTO.Orden,
+                IdTipoMovimiento = pvDTO.IdTipoMovimiento,
+                IdPuntoVenta = pvDTO.IdPuntoVenta,
+                IdCliente = pvDTO.IdCliente,
+                IdOperadorChofer = pvDTO.IdOperadorChofer,
+                IdCAlmacenGas = pvDTO.IdCAlmacenGas,
+                FolioOperacionDia = pvDTO.FolioOperacionDia,
+                FolioVenta = pvDTO.FolioVenta,
+                FolioAnticipo = pvDTO.FolioAnticipo,
+                FolioCorteCaja = pvDTO.FolioCorteCaja,
+                TipoMovimiento = pvDTO.TipoMovimiento,
+                Descripcion = pvDTO.Descripcion,
+                Ingreso = pvDTO.Ingreso,
+                Egreso = pvDTO.Egreso,
+                Saldo = pvDTO.Saldo,
+                PuntoVenta = pvDTO.PuntoVenta,
+                OperadorChoferNombre = pvDTO.OperadorChoferNombre,
+                FechaAplicacion = pvDTO.FechaAplicacion,
+                FechaRegistro = DateTime.Now
+            };
+        }
+        public static List<VentaMovimiento> FromDtoVtaM(List<RegistrarVentasMovimientosDTO> DTO)
+        {
+            return DTO.ToList().Select(x => FromDtoVtaM(x)).ToList();
         }
     }
 }
