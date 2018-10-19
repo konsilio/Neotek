@@ -21,11 +21,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                android:paddingTop="25dp"
                 android:text="@string/toma_de_lectura"
                 android:textAlignment="center"
-                android:textSize="25sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/TVLecturaCamionetaActivityCamioneta"
@@ -33,9 +33,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="25dp"
+                android:paddingTop="15dp"
                 android:text="@string/Selecciona_la_camioneta"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <Spinner
                 android:id="@+id/SLecturaCamionetaActivityListaCamioneta"
@@ -51,9 +51,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="20dp"
+                android:paddingTop="15dp"
                 android:text="@string/Quien_eres"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <Spinner
                 android:id="@+id/SLecturaCamionetaActivityListaQuien"
@@ -69,12 +69,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="15dp"
                 android:paddingLeft="5dp"
+                android:paddingTop="5dp"
                 android:paddingRight="5dp"
-                android:paddingTop="15dp"
+                android:paddingBottom="5dp"
                 android:text="@string/Recordatorio_uno"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/TVLecturaCamionetaActivityRecordatorioDos"
@@ -82,18 +82,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="15dp"
                 android:paddingLeft="5dp"
+                android:paddingTop="5dp"
                 android:paddingRight="5dp"
-                android:paddingTop="15dp"
+                android:paddingBottom="5dp"
                 android:text="@string/Recordatorio_dos"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp" />
+                android:layout_height="16sp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp" />
 
             <Button
                 android:id="@+id/BtnLecturaCamionetaActivityAceptar"
@@ -102,11 +102,12 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="85dp"
                 android:layout_marginRight="85dp"
-                android:backgroundTint="@color/colorButtonLogin"
+                style="@style/SagasTheme.Button"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="25sp"
                 tools:ignore="UnusedAttribute" />
+            <!--android:backgroundTint="@color/colorButtonLogin"-->
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

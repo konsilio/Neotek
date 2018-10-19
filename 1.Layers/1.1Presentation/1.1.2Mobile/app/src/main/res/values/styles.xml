@@ -35,6 +35,7 @@
     <style name="SagasTheme.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="android:colorButtonNormal" tools:ignore="NewApi">@color/colorBackgroundSistemaLogin</item>
         <item name="android:textColor">@color/textcolorButton</item>
+        <item name="colorControlHighlight">@color/buttonBackgroundColorHighlight</item>
     </style>
     <style name="ActionBarStyle" parent="Widget.AppCompat.ActionBar">
         <item name="background">@color/colorBackgroundNavigationBar</item>

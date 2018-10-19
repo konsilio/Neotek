@@ -66,11 +66,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="85dp"
                 android:layout_marginRight="85dp"
-                android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/message_acept"
+                style="@style/SagasTheme.Button"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="18sp"
                 tools:ignore="UnusedAttribute" />
+            <!--                android:backgroundTint="@color/colorButtonLogin" -->
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.PuntoVentaPagarActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ScrollView
+                android:id="@+id/scrollView4"
+                android:layout_width="match_parent"
+                android:layout_height="400sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="NestedScrolling">
+
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TableLayout
+                        android:id="@+id/TLPuntoVentaPagarActivityConcepto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:ignore="ScrollViewSize">
+
+                    </TableLayout>
+                </HorizontalScrollView>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="108dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/subtotal"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView4" />
+
+            <TextView
+                android:id="@+id/TVPuntoVentaPagarActivitySubtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginStart="104dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="40dp"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/textView24"
+                app:layout_constraintTop_toBottomOf="@+id/scrollView4" />
+
+            <TextView
+                android:id="@+id/TVPuntoVentaPagarActivityIva"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginEnd="40dp"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView28" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/total"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toStartOf="@+id/TVPuntoVentaActivityPagarTotal"
+                app:layout_constraintHorizontal_bias="0.569"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/iva_16"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toStartOf="@+id/TVPuntoVentaPagarActivityIva"
+                app:layout_constraintHorizontal_bias="0.43"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+            <TextView
+                android:id="@+id/TVPuntoVentaActivityPagarTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginEnd="40dp"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView30" />
+
+            <Switch
+                android:id="@+id/SPuntoVentaPagarActivityFactura"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="69dp"
+                android:layout_marginEnd="8dp"
+                android:checked="true"
+                android:text="@string/factura"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toStartOf="@+id/SPuntoVentaActivityCredito"
+                app:layout_constraintHorizontal_bias="0.101"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+            <Switch
+                android:id="@+id/SPuntoVentaActivityCredito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/credito"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@+id/BtnPuntoVentaPagarActivityConfirmar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TVPuntoVentaActivityPagarTotal" />
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/efectivo"
+                android:textSize="18sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toStartOf="@+id/ETPuntoVentaPagarActivityEfectivo"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/SPuntoVentaPagarActivityFactura" />
+
+            <EditText
+                android:id="@+id/ETPuntoVentaPagarActivityEfectivo"
+                android:layout_width="144dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/BtnPuntoVentaPagarActivityConfirmar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/SPuntoVentaActivityCredito"
+                app:layout_constraintVertical_bias="0.314"
+                tools:ignore="LabelFor"
+                tools:targetApi="o" />
+
+            <Button
+                android:id="@+id/BtnPuntoVentaPagarActivityOpciones"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="43dp"
+                style="@style/SagasTheme.Button"
+                android:text="@string/opciones"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/BtnPuntoVentaPagarActivityCancelar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/SPuntoVentaPagarActivityFactura"
+                tools:ignore="UnusedAttribute" />
+<!--android:backgroundTint="@color/colorButtonLogin"-->
+            <Button
+                android:id="@+id/BtnPuntoVentaPagarActivityCancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                style="@style/SagasTheme.Button"
+                android:text="@string/message_cancel"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/BtnPuntoVentaPagarActivityConfirmar"
+                app:layout_constraintStart_toEndOf="@+id/BtnPuntoVentaPagarActivityOpciones"
+                app:layout_constraintTop_toBottomOf="@+id/textView30"
+                app:layout_constraintVertical_bias="1.0"
+                tools:ignore="UnusedAttribute" />
+<!--                android:backgroundTint="@color/colorButtonLogin"-->
+            <Button
+                android:id="@+id/BtnPuntoVentaPagarActivityConfirmar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                style="@style/SagasTheme.Button"
+                android:text="@string/confirmar"
+                android:textColor="@color/colorTextButtonLogin"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/BtnPuntoVentaPagarActivityCancelar"
+                app:layout_constraintTop_toBottomOf="@+id/SPuntoVentaActivityCredito"
+                tools:ignore="UnusedAttribute" />
+            <!--android:backgroundTint="@color/colorButtonLogin"-->
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
