@@ -39,14 +39,6 @@ namespace Sagas.MainModule.Entidades
         public string OperadorChoferNombre { get; set; }
         public string TipoEvento { get; set; }
         public string TipoMovimiento { get; set; }
-        public Nullable<decimal> RemanenteKg { get; set; }
-        public Nullable<decimal> RemanenteLt { get; set; }
-        public decimal RemanenteAcumuladoDiaKg { get; set; }
-        public decimal RemanenteAcumuladoDiaLt { get; set; }
-        public decimal RemanenteAcumuladoMesKg { get; set; }
-        public decimal RemanenteAcumuladoMesLt { get; set; }
-        public decimal RemanenteAcumuladoAnioKg { get; set; }
-        public decimal RemanenteAcumuladoAnioLt { get; set; }
         public decimal EntradaKg { get; set; }
         public decimal EntradaLt { get; set; }
         public decimal SalidaKg { get; set; }
@@ -55,12 +47,12 @@ namespace Sagas.MainModule.Entidades
         public decimal CantidadAnteriorLt { get; set; }
         public decimal CantidadActualKg { get; set; }
         public decimal CantidadActualLt { get; set; }
-        public Nullable<decimal> CantidadAcumuladaDiaKg { get; set; }
-        public Nullable<decimal> CantidadAcumuladaDiaLt { get; set; }
-        public Nullable<decimal> CantidadAcumuladaMesKg { get; set; }
-        public Nullable<decimal> CantidadAcumuladaMesLt { get; set; }
-        public Nullable<decimal> CantidadAcumuladaAnioKg { get; set; }
-        public Nullable<decimal> CantidadAcumuladaAnioLt { get; set; }
+        public decimal CantidadAcumuladaDiaKg { get; set; }
+        public decimal CantidadAcumuladaDiaLt { get; set; }
+        public decimal CantidadAcumuladaMesKg { get; set; }
+        public decimal CantidadAcumuladaMesLt { get; set; }
+        public decimal CantidadAcumuladaAnioKg { get; set; }
+        public decimal CantidadAcumuladaAnioLt { get; set; }
         public Nullable<decimal> PorcentajeAnterior { get; set; }
         public Nullable<decimal> PorcentajeActual { get; set; }
         public Nullable<decimal> P5000Anterior { get; set; }

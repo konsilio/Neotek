@@ -75,7 +75,7 @@
     <Compile Include="DTOs\Almacen\AplicaTraspasoDto.cs" />
     <Compile Include="DTOs\Almacen\InventarioAnteriorDto.cs" />
     <Compile Include="DTOs\Almacen\RegistroDTO.cs" />
-    <Compile Include="DTOs\Almacen\RemanenteDto.cs" />
+    <Compile Include="DTOs\Almacen\RemaDto.cs" />
     <Compile Include="DTOs\Catalogo\PrecioVentaEstatusDTO.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PrecioVentaGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
