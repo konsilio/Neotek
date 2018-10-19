@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
@@ -62,6 +63,7 @@ public class Lisener{
     public static final String RecargaEstacion ="RecargaEstacion";
     public static final String VENTA = "Venta";
     public static final String Autoconsumo = "Autoconsumo";
+    public static final String Calibracion = "Calibracion";
 
     private  String token;
 
@@ -138,6 +140,9 @@ public class Lisener{
                 case Autoconsumo:
                     completo = Autoconsumo();
                     break;
+                case Calibracion:
+                    completo = Calibracion();
+                    break;
             }
         };
 
@@ -147,6 +152,43 @@ public class Lisener{
         if(completo) {
             scheduledFuture.cancel(false);
         }
+    }
+
+    private boolean Calibracion() {
+        if(ServicioDisponible()){
+            Log.w("Iniciando",new Date()+" Revisado de los autoconsumos");
+            Cursor cursor = sagasSql.GetAutoconsumos();
+            if(cursor.moveToFirst()){
+                CalibracionDTO dto;
+                while (!cursor.isAfterLast()){
+                    dto = new CalibracionDTO();
+                    dto.setCantidadFotografias(
+                            cursor.getInt(
+                                    cursor.getColumnIndex("CantidadFotografias")
+                            )
+                    );
+                    dto.setNombreMedidor(
+                            cursor.getString(
+                                    cursor.getColumnIndex("NombreMedidor")
+                            )
+                    );
+                    dto.setIdTipoMedidor(
+                            cursor.getInt(
+                                    cursor.getColumnIndex("IdTipoMedidor")
+                            )
+                    );
+                    dto.setNombreCAlmacenGas(
+                            cursor.getString(
+                                    cursor.getColumnIndex("NombreCAlmacenGas")
+                            )
+                    );
+                    cursor.moveToNext();
+                }
+            }
+
+        }
+        return (this.sagasSql.GetCalibraciones().getCount()==0);
+
     }
 
     private boolean Autoconsumo() {

@@ -282,7 +282,6 @@ public interface RestClient {
     @GET(Constantes.GET_CATALOGO_CALIBRACION)
     Call<DatosCalibracionDTO> getDatosCalibracion(@Path(value = "esEstacion") boolean esEstacion,
                                                   @Path(value = "esPipa") boolean esPipa,
-                                                  @Path(value = "esFinal") boolean esFinal,
                                                   @Header("Authorization") String token,
                                                   @Header("Content-type") String contentType
     );

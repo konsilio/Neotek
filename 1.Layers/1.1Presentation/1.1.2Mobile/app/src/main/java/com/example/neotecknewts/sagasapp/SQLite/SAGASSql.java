@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
@@ -62,6 +63,8 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_VENTAS_CONCEPTO = "ventas_conceptos";
     private static final String TABLE_AUTOCONSUMO = "autoconsumos";
     private static final String TABLE_AUTOCONSUMO_IMAGENES = "autoconsumos_imagenes";
+    private static final String TABLE_CALIBRACION = "calibracion";
+    private static final String TABLE_CALIBRACION_IMAGENES = "calibracion_imagenes";
 
     public static final String TIPO_RECARGA_CAMIONETA = "C";
     public static final String TIPO_RECARGA_ESTACION_CARBURACION =  "EC";
@@ -69,6 +72,8 @@ public class SAGASSql extends SQLiteOpenHelper {
     public static final String TIPO_AUTOCONSUMO_ESTACION_CARBURACION = "ACEC";
     public static final String TIPO_AUTOCONSUMO_INVENTARIO_GENERAL = "ACIG";
     public static final String TIPO_AUTOCONSUMO_PIPAS = "ACP";
+    public static final String TIPO_CALIBRACION_PIPA = "CALP";
+    public static final String TIPO_CALIBRACION_ESTACION = "CALES";
 
     //endregion
 
@@ -417,6 +422,33 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
+        //region Calibración
+        db.execSQL("CREATE TABLE "+ TABLE_CALIBRACION+"(" +
+                        "Id PRIMARY KEY AUTOINCREMENT,"+
+                        "Tipo TEXT,"+
+                        "ClaveOperacion TEXT,"+
+                        "IdCAlmacenGas INTEGER,"+
+                        "IdTipoMedidor INTEGER,"+
+                        "NombreCAlmacenGas TEXT,"+
+                        "NombreMedidor TEXT,"+
+                        "PorcentajeCalibracion DOUBLE,"+
+                        "IdDestinoCalibracion INTEGER,"+
+                        "IdDestinoCalibracion INTEGER,"+
+                        "P5000 INTEGER,"+
+                        "Porcentaje INTEGER,"+
+                        "CantidadFotografias INTEGER,"+
+                        "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+        //region Imagenes Calibración
+        db.execSQL("CREATE TABLE "+TABLE_CALIBRACION_IMAGENES+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT,"+
+                "Url TEXT," +
+                "Imagen TEXT," +
+                "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
     }
 
     /**
@@ -464,6 +496,8 @@ public class SAGASSql extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_VENTAS_CONCEPTO);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_AUTOCONSUMO);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_AUTOCONSUMO_IMAGENES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_CALIBRACION);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_CALIBRACION_IMAGENES);
         onCreate(db);
     }
     //endregion
@@ -1916,5 +1950,52 @@ public class SAGASSql extends SQLiteOpenHelper {
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_AUTOCONSUMO_IMAGENES,
                 null);
     }
+
+    public Cursor GetCalibraciones() {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_CALIBRACION,
+                null);
+    }
+
+    public Cursor GetCalibracionByClaveOperacion(String claveOperacion) {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_CALIBRACION+
+        "WHERE ClaveOperacion = '"+claveOperacion+"'",null);
+    }
+
+    public Long InsertarCalibracion(CalibracionDTO calibracionDTO, String tipoCalibracion) {
+        ContentValues values = new ContentValues();
+        values.put("Tipo",tipoCalibracion);
+        values.put("ClaveOperacion",calibracionDTO.getClaveOperacion());
+        values.put("IdCAlmacenGas",calibracionDTO.getIdCAlmacenGas());
+        values.put("IdTipoMedidor",calibracionDTO.getIdTipoMedidor());
+        values.put("NombreCAlmacenGas",calibracionDTO.getNombreCAlmacenGas());
+        values.put("NombreMedidor",calibracionDTO.getNombreMedidor());
+        values.put("PorcentajeCalibracion",calibracionDTO.getPorcentajeCalibracion());
+        values.put("IdDestinoCalibracion",calibracionDTO.getIdDestinoCalibracion());
+        values.put("IdDestinoCalibracion",calibracionDTO.getIdDestinoCalibracion());
+        values.put("P5000",calibracionDTO.getP5000());
+        values.put("Porcentaje",calibracionDTO.getPorcentaje());
+        values.put("CantidadFotografias",calibracionDTO.getCantidadFotografias());
+
+        return this.getReadableDatabase().insert(TABLE_CALIBRACION,null,values);
+    }
+
+    public Cursor GetFotografiasCalibracion(String claveOperacion) {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_CALIBRACION_IMAGENES+
+        "WHERE ClaveOperacion = '"+claveOperacion+"'",null);
+    }
+
+    public Long[] InsertarImagenesCalibracion(CalibracionDTO calibracionDTO) {
+        Long[] inserts = new Long[calibracionDTO.getImagenes().size()];
+        for (int x = 0;x<calibracionDTO.getImagenes().size();x++) {
+            ContentValues values = new ContentValues();
+            values.put("ClaveOperacion",calibracionDTO.getClaveOperacion());
+            values.put("Url",calibracionDTO.getImagenesUri().get(x).toString());
+            values.put("Imagen",calibracionDTO.getImagenes().get(x));
+            inserts[x] = this.getWritableDatabase().insert(TABLE_CALIBRACION_IMAGENES,
+                    null,values);
+        }
+        return inserts;
+    }
+
     //endregion
 }
