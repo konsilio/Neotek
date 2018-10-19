@@ -11482,6 +11482,7 @@
     <Content Include="Views\Almacen\_gvProductosPartial.cshtml" />
     <Content Include="Views\Almacen\MovimientosAlamacen.cshtml" />
     <Content Include="Views\Almacen\_RegistroPartial.cshtml" />
+    <Content Include="Views\Almacen\_SalidaRequisicionesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

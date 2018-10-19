@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using PagedList;
 using MVC.Presentacion.Models;
 using System;
+using MVC.Presentacion.Models.Requisicion;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -146,6 +147,26 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             var model = AlmacenServicio.BuscarRegistroAlmacen(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             return PartialView("_RegistroPartial", model);
+        }
+        public ActionResult SalidaMercancia()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
+            return View();
+        }
+    
+        [ValidateInput(false)]
+        public ActionResult SalidaRequisicionesPartial()
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var model = RequisicionServicio.BuscarRequisicionesEntrega(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            return PartialView("_SalidaRequisicionesPartial", model);
         }
     }
 }

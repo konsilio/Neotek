@@ -31,9 +31,9 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenDataAccess().Actualizar(_almacen);
         }
-        public static RespuestaDto EntradaAlmcacenProductos(List<Sagas.MainModule.Entidades.Almacen> _almacen, List<Sagas.MainModule.Entidades.Almacen> _almacenCrear, List<AlmacenEntradaProducto> prod)
+        public static RespuestaDto EntradaAlmcacenProductos(List<Sagas.MainModule.Entidades.Almacen> _almacen, List<Sagas.MainModule.Entidades.Almacen> _almacenCrear, List<AlmacenEntradaProducto> prod, OrdenCompra oc, List<OrdenCompraProducto> ocp)
         {
-            return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, _almacenCrear, prod);
+            return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, _almacenCrear, prod, oc, ocp);
         }
         public static RespuestaDto SalidaAlmcacenProductos(List<Sagas.MainModule.Entidades.Almacen> _almacen, List<AlmacenSalidaProducto> prod, Sagas.MainModule.Entidades.Requisicion _requisicion, List<RequisicionProducto> _productos)
         {

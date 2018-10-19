@@ -1,0 +1,36 @@
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "SalidaRequisiciones";
+        settings.CallbackRouteValues = new { Controller = "Almacen", Action = "SalidaRequisicionesPartial" };
+
+
+        settings.KeyFieldName = "IdRequisicion";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add("NombreComercial", "Gasera");
+        settings.Columns.Add("NumeroRequisicion", "No. Requisición");
+        settings.Columns.Add("FechaRequerida", "Fecha Requerida");
+        settings.Columns.Add("UsuarioSolicitante", "Solicitante");
+        settings.Columns.Add("RequisicionEstatus", "Estatus");
+        
+        settings.Columns.Add(c =>
+        {
+            c.Caption = "Acción";
+            c.SetDataItemTemplateContent(d =>
+            {
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("IrSañodas", new { id = d.KeyValue }) + "><i class='material-icons'>forward</i> <span class='icon-name'></span></a>"));
+            });
+        });
+    });
+}
+@grid.Bind(Model).GetHtml()

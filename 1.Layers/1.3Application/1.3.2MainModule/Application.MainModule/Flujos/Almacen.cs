@@ -1,5 +1,7 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Almacen;
+using Application.MainModule.AdaptadoresDTO.Compras;
 using Application.MainModule.AdaptadoresDTO.Requisicion;
+using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
@@ -23,10 +25,11 @@ namespace Application.MainModule.Flujos
             List<Sagas.MainModule.Entidades.Almacen> _almacen = new List<Sagas.MainModule.Entidades.Almacen>();
             List<Sagas.MainModule.Entidades.Almacen> _almacenCrear = new List<Sagas.MainModule.Entidades.Almacen>();
             List<AlmacenEntradaProducto> entradas = new List<AlmacenEntradaProducto>();
-            var ProductosOC = OrdenCompraServicio.Buscar(dto.IdOrdenCompra).Productos.ToList();
-
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            var ProductosOC = ProductosOCAdapter.FromEntity(oc.Productos.ToList());
             foreach (var prod in dto.Productos)
             {
+                ProductosOC.FirstOrDefault(x => x.IdProducto.Equals(prod.IdProducto)).CantidadEntregada = prod.Cantidad;
                 var _Almacen = ProductoAlmacenServicio.ObtenerAlmacen(prod.IdProducto, dto.IdEmpresa);
                 if (_Almacen == null)
                 {
@@ -48,12 +51,8 @@ namespace Application.MainModule.Flujos
                     entradas.Add(EntradaProd);
                 }
             }
-            var respEntrada = ProductoAlmacenServicio.EntradaAlmcacenProductos(_almacen, _almacenCrear, entradas);
-            if (respEntrada.Exito)
-            {
-                return new Compras().FinalizarEntradaProductoOrdenCompra(new DTOs.OrdenCompraDTO { IdOrdenCompra = dto.IdOrdenCompra });
-            }
-            return respEntrada;
+            oc =  OrdenCompraServicio.DeterminarEstatosPorEntradas(OrdenComprasAdapter.FromEntity(oc), ProductosOC);
+            return ProductoAlmacenServicio.EntradaAlmcacenProductos(_almacen, _almacenCrear, entradas, oc, ProductosOC);
         }
         public RespuestaDto GenerarSalidaProducto(RequisicionSalidaDTO dto)
         {

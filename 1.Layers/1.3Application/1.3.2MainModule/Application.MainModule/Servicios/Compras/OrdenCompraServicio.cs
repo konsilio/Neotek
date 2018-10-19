@@ -282,12 +282,13 @@ namespace Application.MainModule.Servicios.Compras
 
             return oc;
         }
-        //public static OrdenCompra DeterminarEstatosPorEntradas(OrdenCompra oc, List<OrdenCompraProducto> productos)
-        //{
-        //    if (productos.Where(x => x.Ca) )
-        //    {
-
-        //    }
-        //}
+        public static OrdenCompra DeterminarEstatosPorEntradas(OrdenCompra oc, List<OrdenCompraProducto> productos)
+        {
+            if (productos.Where(x => x.CantidadEntregada.Equals(x.Cantidad)).Count().Equals(productos.Count))
+                oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
+            else
+                oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Proceso_compra;
+            return oc;
+        }   
     }
 }

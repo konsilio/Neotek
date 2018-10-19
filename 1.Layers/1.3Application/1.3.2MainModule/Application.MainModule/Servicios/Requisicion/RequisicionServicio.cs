@@ -64,7 +64,7 @@ namespace Application.MainModule.Servicios.Requisiciones
         }
         public static List<Requisicion> IdentificarRequisicones(Requisicion _req)
         {
-            List<Sagas.MainModule.Entidades.Requisicion> lRequi = new List<Sagas.MainModule.Entidades.Requisicion>();
+            List<Requisicion> lRequi = new List<Requisicion>();
             var productos = _req.Productos.ToList();
             var productosGas = _req.Productos.Where(x => x.EsGas || x.EsTransporteGas).ToList();
             if (productosGas != null)

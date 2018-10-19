@@ -81,19 +81,26 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public RespuestaDto ActualizarAlmacenEntradas(List<Sagas.MainModule.Entidades.Almacen> _alm, List<Sagas.MainModule.Entidades.Almacen> _almCrear, List<AlmacenEntradaProducto> _entrada)
+        public RespuestaDto ActualizarAlmacenEntradas(List<Sagas.MainModule.Entidades.Almacen> _alm, List<Sagas.MainModule.Entidades.Almacen> _almCrear, List<AlmacenEntradaProducto> _entrada, OrdenCompra oc, List<OrdenCompraProducto> ocp)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
+                    //Almacen
                     foreach (var alm in _almCrear)
                         uow.Repository<Sagas.MainModule.Entidades.Almacen>().Insert(alm);
                     foreach (var alm in _alm)
                         uow.Repository<Sagas.MainModule.Entidades.Almacen>().Update(alm);
                     foreach (var entrada in _entrada)
                         uow.Repository<AlmacenEntradaProducto>().Insert(entrada);
+
+                    //Orden de compra
+                    foreach (var p in ocp)
+                        uow.Repository<OrdenCompraProducto>().Update(p);
+                    uow.Repository<OrdenCompra>().Update(oc);    
+
                     uow.SaveChanges();
                     _respuesta.Id = 0;
                     _respuesta.Exito = true;
