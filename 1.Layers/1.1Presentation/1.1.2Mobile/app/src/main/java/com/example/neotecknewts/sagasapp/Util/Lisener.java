@@ -1,8 +1,10 @@
 package com.example.neotecknewts.sagasapp.Util;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
@@ -18,6 +20,7 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
+import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
@@ -58,6 +61,7 @@ public class Lisener{
     public static final String RecargaCamioneta = "RecargaCamioneta";
     public static final String RecargaEstacion ="RecargaEstacion";
     public static final String VENTA = "Venta";
+    public static final String Autoconsumo = "Autoconsumo";
 
     private  String token;
 
@@ -130,6 +134,10 @@ public class Lisener{
                     break;
                 case VENTA:
                     completo = PuntoVenta();
+                    break;
+                case Autoconsumo:
+                    completo = Autoconsumo();
+                    break;
             }
         };
 
@@ -139,6 +147,125 @@ public class Lisener{
         if(completo) {
             scheduledFuture.cancel(false);
         }
+    }
+
+    private boolean Autoconsumo() {
+        if(ServicioDisponible()){
+            Log.w("Iniciando",new Date()+" Revisado de los autoconsumos");
+            Cursor cursor = sagasSql.GetAutoconsumos();
+            AutoconsumoDTO dto;
+            if(cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    dto = new AutoconsumoDTO();
+                    /*Coloco los valors del autoconsumo*/
+                    dto.setClaveOperacion(cursor.getString(
+                            cursor.getColumnIndex("ClaveOperacion"))
+                    );
+                    dto.setCantidadFotos(cursor.getColumnIndex(
+                            cursor.getColumnName(
+                                    cursor.getColumnIndex("CantidadFotos")
+                            )
+                    ));
+                    dto.setIdCAlmacenGasEntrada(
+                            cursor.getInt(
+                                    cursor.getColumnIndex("IdCAlmacenGasEntrada")
+                            )
+                    );
+                    dto.setIdCAlmacenGasSalida(
+                            cursor.getInt(
+                                    cursor.getColumnIndex("IdCAlmacenGasSalida")
+                            )
+                    );
+                    dto.setNombreTipoMedidor(
+                            cursor.getString(
+                                    cursor.getColumnIndex("NombreTipoMedidor")
+                            )
+                    );
+                    dto.setP5000Salida(
+                            cursor.getInt(
+                                    cursor.getColumnIndex("P5000Salida")
+                            )
+                    );
+                    dto.setPorcentajeMedidor(
+                            cursor.getDouble(
+                                    cursor.getColumnIndex("PorcentajeMedidor")
+                            )
+                    );
+                    /*Coloco las imagenes */
+                    Cursor imagenes = sagasSql.GetImagenesAutoconsumo(dto.getClaveOperacion());
+                    imagenes.moveToFirst();
+                    while (!imagenes.isAfterLast()){
+                        dto.getImagenes().add(
+                                imagenes.getString(
+                                        imagenes.getColumnIndex("Imagen")
+                                )
+                        );
+                        try {
+                            URI uri = new URI(imagenes.getString(
+                                    imagenes.getColumnIndex("Url")
+                            ));
+                            dto.getImagenesURI().add(uri);
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        imagenes.moveToNext();
+                    }
+
+                    if(Registrar(dto,
+                            cursor.getString( cursor.getColumnIndex("Tipo")),
+                            cursor.getInt(cursor.getColumnIndex("EsFinal"))>0
+                    )) {
+                        sagasSql.EliminarAutoconsumo(dto.getClaveOperacion());
+                        sagasSql.EliminarImagenesAutoconsumo(dto.getClaveOperacion());
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (this.sagasSql.GetAutoconsumos().getCount()==0);
+    }
+
+    private boolean Registrar(AutoconsumoDTO dto,String Tipo,boolean esFinal) {
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
+                dto,
+                Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION),
+                Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL),
+                Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_PIPAS),
+                esFinal,
+                token,
+                "application/json"
+        );
+        Log.w("Url camioneta", retrofit.baseUrl().toString());
+        call.enqueue(new Callback<RespuestaRecargaDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaRecargaDTO> call,
+                                   Response<RespuestaRecargaDTO> response) {
+                RespuestaRecargaDTO data = response.body();
+                if (response.isSuccessful()) {
+                    Log.w("IniciarDescarga", "Success");
+                    _registrado = call.isExecuted() && response.isSuccessful();
+                } else {
+                    _registrado = false;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
+                Log.e("error", t.toString());
+               _registrado = false;
+            }
+        });
+        return _registrado;
     }
 
     private boolean PuntoVenta() {
