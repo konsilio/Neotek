@@ -279,70 +279,312 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             };
         }
 
-        public static AlmacenGasMovimiento FromEntity(UnidadAlmacenGas unidadEntrada, AlmacenGasDescarga descarga, AlmacenGas almacenGasTotal, AlmacenGasMovimiento ultimoMovimiento, Empresa empresa, InventarioAnteriorDto invAnterior)
+        public static AlmacenGasMovimiento FromInit()
         {
+            var fechaRegistro = DateTime.Now;
+
             return new AlmacenGasMovimiento
             {
-                IdEmpresa = empresa.IdEmpresa,
-                Year = (short)descarga.FechaFinDescarga.Value.Year,
-                Mes = (byte)descarga.FechaFinDescarga.Value.Month,
-                Dia = (byte)descarga.FechaFinDescarga.Value.Day,
-                Orden = ultimoMovimiento != null && ultimoMovimiento.Orden > 0 ? (short)(ultimoMovimiento.Orden + 1) : (short)1,
-                IdTipoMovimiento = TipoMovimientoEnum.Entrada,
-                IdTipoEvento = TipoEventoEnum.Descarga,
+                IdEmpresa = 0,
+                Year = 0,
+                Mes = 0,
+                Dia = 0,
+                Orden = 0,
+                IdTipoMovimiento = 0,
+                IdTipoEvento = null,
                 IdOrdenVenta = null,
-                IdAlmacenGas = almacenGasTotal.IdAlmacenGas,
-                IdCAlmacenGasPrincipal = unidadEntrada.IdCAlmacenGas,
+                IdAlmacenGas = 0,
+                IdCAlmacenGasPrincipal = 0,
                 IdCAlmacenGasReferencia = null,
-                IdAlmacenEntradaGasDescarga = descarga.IdAlmacenEntradaGasDescarga,
-                IdAlmacenGasRecarga = null,
-                FolioOperacionDia = null,
-                CAlmacenPrincipalNombre = unidadEntrada.Numero,
-                CAlmacenReferenciaNombre = null,
-                OperadorChoferNombre = descarga.NombreOperador,
-                TipoEvento = AlmacenGasConst.Descarga,
-                TipoMovimiento = AlmacenGasConst.Entrada,
-                RemanenteKg = invAnterior.RemanenteKg,
-                RemanenteLt = invAnterior.RemanenteLt,
-                RemanenteAcumuladoDiaKg = invAnterior.RemanenteAcumuladoDiaKg,
-                RemanenteAcumuladoDiaLt = invAnterior.RemanenteAcumuladoDiaLt,
-                RemanenteAcumuladoMesKg = invAnterior.RemanenteAcumuladoMesKg,
-                RemanenteAcumuladoMesLt = invAnterior.RemanenteAcumuladoMesLt,
-                RemanenteAcumuladoAnioKg = invAnterior.RemanenteAcumuladoAnioKg,
-                RemanenteAcumuladoAnioLt = invAnterior.RemanenteAcumuladoAnioLt,
-                EntradaKg = invAnterior.EntradaKg,
-                EntradaLt = invAnterior.EntradaLt,
+                IdAlmacenEntradaGasDescarga = null,
+                IdAlmacenGasRecarga = null, 
+                EntradaKg = 0,
+                EntradaLt = 0,
                 SalidaKg = 0,
                 SalidaLt = 0,
-                CantidadActualKg = unidadEntrada.CantidadActualKg,
-                CantidadActualLt = unidadEntrada.CantidadActualLt,
-                CantidadAnteriorKg = invAnterior.CantidadAnteriorKg,
-                CantidadAnteriorLt = invAnterior.CantidadAnteriorLt,
-                PorcentajeActual = unidadEntrada.PorcentajeActual,
-                PorcentajeAnterior = invAnterior.PorcentajeAnterior,
-                P5000Actual = null,
+                CantidadAnteriorKg = 0,
+                CantidadAnteriorLt = 0,
+                CantidadActualKg = 0,
+                CantidadActualLt = 0,
+                CantidadAcumuladaDiaKg = 0,
+                CantidadAcumuladaDiaLt = 0,
+                CantidadAcumuladaMesKg = 0,
+                CantidadAcumuladaMesLt = 0,
+                CantidadAcumuladaAnioKg = 0,
+                CantidadAcumuladaAnioLt = 0,
+                FechaAplicacion = fechaRegistro,
+                FechaRegistro = fechaRegistro,
+                CantidadAnteriorGeneralKg = 0,
+                CantidadAnteriorGeneralLt = 0,
+                CantidadActualGeneralKg = 0,
+                CantidadActualGeneralLt = 0,
+                PorcentajeAnteriorGeneral = 0,
+                PorcentajeActualGeneral = 0,
+                CantidadAnteriorTotalKg = 0,
+                CantidadAnteriorTotalLt = 0,
+                CantidadActualTotalKg = 0,
+                CantidadActualTotalLt = 0,
+                PorcentajeAnteriorTotal = 0,
+                PorcentajeActualTotal = 0,                
+                AutoconsumoAcumDiaKg = 0,
+                AutoconsumoAcumDiaLt = 0,
+                AutoconsumoAcumMesKg = 0,
+                AutoconsumoAcumMesLt = 0,
+                AutoconsumoAcumAnioKg = 0,
+                AutoconsumoAcumAnioLt = 0,
+                CalibracionAcumDiaKg = 0,
+                CalibracionAcumDiaLt = 0,
+                CalibracionAcumMesKg = 0,
+                CalibracionAcumMesLt = 0,
+                CalibracionAcumAnioKg = 0,
+                CalibracionAcumAnioLt = 0,
+                DescargaAcumDiaKg = 0,
+                DescargaAcumDiaLt = 0,
+                DescargaAcumMesKg = 0,
+                DescargaAcumMesLt = 0,
+                DescargaAcumAnioKg = 0,
+                DescargaAcumAnioLt = 0,
+                CAlmEntradaDiaKg = 0,
+                CAlmEntradaDiaLt = 0,
+                CAlmSalidaDiaKg = 0,
+                CAlmSalidaDiaLt = 0,
+                CAlmEntradaMesKg = 0,
+                CAlmEntradaMesLt = 0,
+                CAlmSalidaMesKg = 0,
+                CAlmSalidaMesLt = 0,
+                CAlmEntradaAnioKg = 0,
+                CAlmEntradaAnioLt = 0,
+                CAlmSalidaAnioKg = 0,
+                CAlmSalidaAnioLt = 0,
+                RecargaAcumDiaKg = 0,
+                RecargaAcumDiaLt = 0,
+                RecargaAcumMesKg = 0,
+                RecargaAcumMesLt = 0,
+                RecargaAcumAnioKg = 0,
+                RecargaAcumAnioLt = 0,
+                RemaAcumDiaKg = 0,
+                RemaAcumDiaLt = 0,
+                RemaAcumMesKg = 0,
+                RemaAcumMesLt = 0,
+                RemaAcumAnioKg = 0,
+                RemaAcumAnioLt = 0,
+                TraspasoAcumDiaKg = 0,
+                TraspasoAcumDiaLt = 0,
+                TraspasoAcumMesKg = 0,
+                TraspasoAcumMesLt = 0,
+                TraspasoAcumAnioKg = 0,
+                TraspasoAcumAnioLt = 0,
+                VentaAcumDiaKg = 0,
+                VentaAcumDiaLt = 0,
+                VentaAcumMesKg = 0,
+                VentaAcumMesLt = 0,
+                VentaAcumAnioKg = 0,
+                VentaAcumAnioLt = 0,
+                
+                FolioOperacionDia = null,
+                CAlmacenPrincipalNombre = null,
+                CAlmacenReferenciaNombre = null,
+                OperadorChoferNombre = null,
+                TipoEvento = null,
+                TipoMovimiento = null,                
+                PorcentajeAnterior = null,
+                PorcentajeActual = null,
                 P5000Anterior = null,
-                CantidadActualTotalKg = almacenGasTotal.CantidadActualKg,
-                CantidadActualTotalLt = almacenGasTotal.CantidadActualLt,
-                CantidadAnteriorTotalKg = invAnterior.CantidadAnteriorTotalKg,
-                CantidadAnteriorTotalLt = invAnterior.CantidadAnteriorTotalLt,
-                PorcentajeActualTotal = almacenGasTotal.PorcentajeActual,
-                PorcentajeAnteriorTotal = invAnterior.PorcentajeAnteriorTotal,
-                CantidadActualGeneralKg = almacenGasTotal.CantidadActualGeneralKg,
-                CantidadActualGeneralLt = almacenGasTotal.CantidadActualGeneralLt,
-                CantidadAnteriorGeneralKg = invAnterior.CantidadAnteriorGeneralKg,
-                CantidadAnteriorGeneralLt = invAnterior.CantidadAnteriorGeneralLt,
-                PorcentajeActualGeneral = almacenGasTotal.PorcentajeActualGeneral,
-                PorcentajeAnteriorGeneral = invAnterior.PorcentajeAnteriorGeneral,
-                CantidadAcumuladaDiaKg = invAnterior.CantidadAcumuladaDiaKg,
-                CantidadAcumuladaDiaLt = invAnterior.CantidadAcumuladaDiaLt,
-                CantidadAcumuladaMesKg = invAnterior.CantidadAcumuladaMesKg,
-                CantidadAcumuladaMesLt = invAnterior.CantidadAcumuladaMesLt,
-                CantidadAcumuladaAnioKg = invAnterior.CantidadAcumuladaAnioKg,
-                CantidadAcumuladaAnioLt = invAnterior.CantidadAcumuladaAnioLt,
-                FechaAplicacion = descarga.FechaFinDescarga.Value,
-                FechaRegistro = DateTime.Now,
+                P5000Actual = null,
+                AutoconsumoKg = null,
+                AutoconsumoLt = null,
+                AutoconsumoDiaKg = null,
+                AutoconsumoDiaLt = null,
+                AutoconsumoMesKg = null,
+                AutoconsumoMesLt = null,
+                AutoconsumoAnioKg = null,
+                AutoconsumoAnioLt = null,
+                CalibracionKg = null,
+                CalibracionLt = null,
+                CalibracionDiaKg = null,
+                CalibracionDiaLt = null,
+                CalibracionMesKg = null,
+                CalibracionMesLt = null,
+                CalibracionAnioKg = null,
+                CalibracionAnioLt = null,
+                DescargaKg = null,
+                DescargaLt = null,
+                DescargaDiaKg = null,
+                DescargaDiaLt = null,
+                DescargaMesKg = null,
+                DescargaMesLt = null,
+                DescargaAnioKg = null,
+                DescargaAnioLt = null,
+                RecargaKg = null,
+                RecargaLt = null,
+                RecargaDiaKg = null,
+                RecargaDiaLt = null,
+                RecargaMesKg = null,
+                RecargaMesLt = null,
+                RecargaAnioKg = null,
+                RecargaAnioLt = null,
+                RemaKg = null,
+                RemaLt = null,
+                RemaDiaKg = null,
+                RemaDiaLt = null,
+                RemaMesKg = null,
+                RemaMesLt = null,
+                RemaAnioKg = null,
+                RemaAnioLt = null,
+                TraspasoKg = null,
+                TraspasoLt = null,
+                TraspasoDiaKg = null,
+                TraspasoDiaLt = null,
+                TraspasoMesKg = null,
+                TraspasoMesLt = null,
+                TraspasoAnioKg = null,
+                TraspasoAnioLt = null,
+                VentaKg = null,
+                VentaLt = null,
+                VentaDiaKg = null,
+                VentaDiaLt = null,
+                VentaMesKg = null,
+                VentaMesLt = null,
+                VentaAnioKg = null,
+                VentaAnioLt = null,
             };
+        }
+
+        public static AlmacenGasMovimiento FromEntity(UnidadAlmacenGas unidadEntrada, AlmacenGasDescarga descarga, AlmacenGas almacenGasTotal, AlmacenGasMovimiento ultimoMovimiento, Empresa empresa, InventarioAnteriorDto invAnterior)
+        {
+            var almGMovimiento = FromInit();
+
+            //------Ids y nombres-----------------
+            almGMovimiento.IdEmpresa = empresa.IdEmpresa;
+            almGMovimiento.Year = (short)descarga.FechaFinDescarga.Value.Year;
+            almGMovimiento.Mes = (byte)descarga.FechaFinDescarga.Value.Month;
+            almGMovimiento.Dia = (byte)descarga.FechaFinDescarga.Value.Day;
+            almGMovimiento.Orden = ultimoMovimiento != null && ultimoMovimiento.Orden > 0 ? (short)(ultimoMovimiento.Orden + 1) : (short)1;
+            almGMovimiento.IdTipoMovimiento = TipoMovimientoEnum.Entrada;
+            almGMovimiento.IdTipoEvento = TipoEventoEnum.Descarga;
+            almGMovimiento.IdAlmacenGas = almacenGasTotal.IdAlmacenGas;
+            almGMovimiento.IdCAlmacenGasPrincipal = unidadEntrada.IdCAlmacenGas;
+            almGMovimiento.IdAlmacenEntradaGasDescarga = descarga.IdAlmacenEntradaGasDescarga;
+            almGMovimiento.CAlmacenPrincipalNombre = unidadEntrada.Numero;
+            almGMovimiento.OperadorChoferNombre = descarga.NombreOperador;
+            almGMovimiento.TipoEvento = AlmacenGasConst.Descarga;
+            almGMovimiento.TipoMovimiento = AlmacenGasConst.Entrada;
+            //------Ids y nombres-----------------
+
+            //------Entrada, Salida y Saldo-----------------            
+            almGMovimiento.EntradaKg = invAnterior.EntradaKg;
+            almGMovimiento.EntradaLt = invAnterior.EntradaLt;
+            almGMovimiento.CantidadActualKg = unidadEntrada.CantidadActualKg;
+            almGMovimiento.CantidadActualLt = unidadEntrada.CantidadActualLt;
+            almGMovimiento.CantidadAnteriorKg = invAnterior.CantidadAnteriorKg;
+            almGMovimiento.CantidadAnteriorLt = invAnterior.CantidadAnteriorLt;
+            almGMovimiento.PorcentajeActual = unidadEntrada.PorcentajeActual;
+            almGMovimiento.PorcentajeAnterior = invAnterior.PorcentajeAnterior;
+            //------Entrada, Salida y Saldo-----------------
+
+            //------Entrada, Salida y Saldo Acumulados-----------------
+            almGMovimiento.CAlmEntradaDiaKg = invAnterior.CAlmEntradaDiaKg;
+            almGMovimiento.CAlmEntradaDiaLt = invAnterior.CAlmEntradaDiaLt;
+            almGMovimiento.CAlmSalidaDiaKg = invAnterior.CAlmSalidaDiaKg;
+            almGMovimiento.CAlmSalidaDiaLt = invAnterior.CAlmSalidaDiaLt;
+            almGMovimiento.CAlmEntradaMesKg = invAnterior.CAlmEntradaMesKg;
+            almGMovimiento.CAlmEntradaMesLt = invAnterior.CAlmEntradaMesLt;
+            almGMovimiento.CAlmSalidaMesKg = invAnterior.CAlmSalidaMesKg;
+            almGMovimiento.CAlmSalidaMesLt = invAnterior.CAlmSalidaMesLt;
+            almGMovimiento.CAlmEntradaAnioKg = invAnterior.CAlmEntradaAnioKg;
+            almGMovimiento.CAlmEntradaAnioLt = invAnterior.CAlmEntradaAnioLt;
+            almGMovimiento.CAlmSalidaAnioKg = invAnterior.CAlmSalidaAnioKg;
+            almGMovimiento.CAlmSalidaAnioLt = invAnterior.CAlmSalidaAnioLt;
+            almGMovimiento.CantidadAcumuladaDiaKg = invAnterior.CantidadAcumuladaDiaKg;
+            almGMovimiento.CantidadAcumuladaDiaLt = invAnterior.CantidadAcumuladaDiaLt;
+            almGMovimiento.CantidadAcumuladaMesKg = invAnterior.CantidadAcumuladaMesKg;
+            almGMovimiento.CantidadAcumuladaMesLt = invAnterior.CantidadAcumuladaMesLt;
+            almGMovimiento.CantidadAcumuladaAnioKg = invAnterior.CantidadAcumuladaAnioKg;
+            almGMovimiento.CantidadAcumuladaAnioLt = invAnterior.CantidadAcumuladaAnioLt;
+            //------Entrada, Salida y Saldo Acumulados-----------------
+
+            //------Almacen Gas Total y General--------------
+            almGMovimiento.CantidadActualTotalKg = almacenGasTotal.CantidadActualKg;
+            almGMovimiento.CantidadActualTotalLt = almacenGasTotal.CantidadActualLt;
+            almGMovimiento.CantidadAnteriorTotalKg = invAnterior.CantidadAnteriorTotalKg;
+            almGMovimiento.CantidadAnteriorTotalLt = invAnterior.CantidadAnteriorTotalLt;
+            almGMovimiento.PorcentajeActualTotal = almacenGasTotal.PorcentajeActual;
+            almGMovimiento.PorcentajeAnteriorTotal = invAnterior.PorcentajeAnteriorTotal;
+            almGMovimiento.CantidadActualGeneralKg = almacenGasTotal.CantidadActualGeneralKg;
+            almGMovimiento.CantidadActualGeneralLt = almacenGasTotal.CantidadActualGeneralLt;
+            almGMovimiento.CantidadAnteriorGeneralKg = invAnterior.CantidadAnteriorGeneralKg;
+            almGMovimiento.CantidadAnteriorGeneralLt = invAnterior.CantidadAnteriorGeneralLt;
+            almGMovimiento.PorcentajeActualGeneral = almacenGasTotal.PorcentajeActualGeneral;
+            almGMovimiento.PorcentajeAnteriorGeneral = invAnterior.PorcentajeAnteriorGeneral;
+            //------Almacen Gas Total y General--------------
+
+            //----Descarga--------------------
+            almGMovimiento.DescargaKg = invAnterior.DescargaKg;
+            almGMovimiento.DescargaLt = invAnterior.DescargaLt;
+            almGMovimiento.DescargaDiaKg = invAnterior.DescargaDiaKg;
+            almGMovimiento.DescargaDiaLt = invAnterior.DescargaDiaLt;
+            almGMovimiento.DescargaMesKg = invAnterior.DescargaMesKg;
+            almGMovimiento.DescargaMesLt = invAnterior.DescargaMesLt;
+            almGMovimiento.DescargaAnioKg = invAnterior.DescargaAnioKg;
+            almGMovimiento.DescargaAnioLt = invAnterior.DescargaAnioLt;
+            almGMovimiento.DescargaAcumDiaKg = invAnterior.DescargaAcumDiaKg;
+            almGMovimiento.DescargaAcumDiaLt = invAnterior.DescargaAcumDiaLt;
+            almGMovimiento.DescargaAcumMesKg = invAnterior.DescargaAcumMesKg;
+            almGMovimiento.DescargaAcumMesLt = invAnterior.DescargaAcumMesLt;
+            almGMovimiento.DescargaAcumAnioKg = invAnterior.DescargaAcumAnioKg;
+            almGMovimiento.DescargaAcumAnioLt = invAnterior.DescargaAcumAnioLt;
+            almGMovimiento.FechaAplicacion = descarga.FechaFinDescarga.Value;
+            //----Descarga--------------------
+
+            //----Remanente--------------------
+            almGMovimiento.RemaKg = invAnterior.RemaKg;
+            almGMovimiento.RemaLt = invAnterior.RemaLt;
+            almGMovimiento.RemaDiaKg = invAnterior.RemaDiaKg;
+            almGMovimiento.RemaDiaLt = invAnterior.RemaDiaLt;
+            almGMovimiento.RemaMesKg = invAnterior.RemaMesKg;
+            almGMovimiento.RemaMesLt = invAnterior.RemaMesLt;
+            almGMovimiento.RemaAnioKg = invAnterior.RemaAnioKg;
+            almGMovimiento.RemaAnioLt = invAnterior.RemaAnioLt;
+            almGMovimiento.RemaAcumDiaKg = invAnterior.RemaAcumDiaKg;
+            almGMovimiento.RemaAcumDiaLt = invAnterior.RemaAcumDiaLt;
+            almGMovimiento.RemaAcumMesKg = invAnterior.RemaAcumMesKg;
+            almGMovimiento.RemaAcumMesLt = invAnterior.RemaAcumMesLt;
+            almGMovimiento.RemaAcumAnioKg = invAnterior.RemaAcumAnioKg;
+            almGMovimiento.RemaAcumAnioLt = invAnterior.RemaAcumAnioLt;
+            //----Remanente--------------------
+
+            almGMovimiento.AutoconsumoAcumDiaKg = ultimoMovimiento.AutoconsumoAcumDiaKg;
+            almGMovimiento.AutoconsumoAcumDiaLt = ultimoMovimiento.AutoconsumoAcumDiaLt;
+            almGMovimiento.AutoconsumoAcumMesKg = ultimoMovimiento.AutoconsumoAcumMesKg;
+            almGMovimiento.AutoconsumoAcumMesLt = ultimoMovimiento.AutoconsumoAcumMesLt;
+            almGMovimiento.AutoconsumoAcumAnioKg = ultimoMovimiento.AutoconsumoAcumAnioKg;
+            almGMovimiento.AutoconsumoAcumAnioLt = ultimoMovimiento.AutoconsumoAcumAnioLt;
+            almGMovimiento.CalibracionAcumDiaKg = ultimoMovimiento.CalibracionAcumDiaKg;
+            almGMovimiento.CalibracionAcumDiaLt = ultimoMovimiento.CalibracionAcumDiaLt;
+            almGMovimiento.CalibracionAcumMesKg = ultimoMovimiento.CalibracionAcumMesKg;
+            almGMovimiento.CalibracionAcumMesLt = ultimoMovimiento.CalibracionAcumMesLt;
+            almGMovimiento.CalibracionAcumAnioKg = ultimoMovimiento.CalibracionAcumAnioKg;
+            almGMovimiento.CalibracionAcumAnioLt = ultimoMovimiento.CalibracionAcumAnioLt;            
+            almGMovimiento.RecargaAcumDiaKg = ultimoMovimiento.RecargaAcumDiaKg;
+            almGMovimiento.RecargaAcumDiaLt = ultimoMovimiento.RecargaAcumDiaLt;
+            almGMovimiento.RecargaAcumMesKg = ultimoMovimiento.RecargaAcumMesKg;
+            almGMovimiento.RecargaAcumMesLt = ultimoMovimiento.RecargaAcumMesLt;
+            almGMovimiento.RecargaAcumAnioKg = ultimoMovimiento.RecargaAcumAnioKg;
+            almGMovimiento.RecargaAcumAnioLt = ultimoMovimiento.RecargaAcumAnioLt;            
+            almGMovimiento.TraspasoAcumDiaKg = ultimoMovimiento.TraspasoAcumDiaKg;
+            almGMovimiento.TraspasoAcumDiaLt = ultimoMovimiento.TraspasoAcumDiaLt;
+            almGMovimiento.TraspasoAcumMesKg = ultimoMovimiento.TraspasoAcumMesKg;
+            almGMovimiento.TraspasoAcumMesLt = ultimoMovimiento.TraspasoAcumMesLt;
+            almGMovimiento.TraspasoAcumAnioKg = ultimoMovimiento.TraspasoAcumAnioKg;
+            almGMovimiento.TraspasoAcumAnioLt = ultimoMovimiento.TraspasoAcumAnioLt;
+            almGMovimiento.VentaAcumDiaKg = ultimoMovimiento.VentaAcumDiaKg;
+            almGMovimiento.VentaAcumDiaLt = ultimoMovimiento.VentaAcumDiaLt;
+            almGMovimiento.VentaAcumMesKg = ultimoMovimiento.VentaAcumMesKg;
+            almGMovimiento.VentaAcumMesLt = ultimoMovimiento.VentaAcumMesLt;
+            almGMovimiento.VentaAcumAnioKg = ultimoMovimiento.VentaAcumAnioKg;
+            almGMovimiento.VentaAcumAnioLt = ultimoMovimiento.VentaAcumAnioLt;
+
+            return almGMovimiento;
         }
     }
 }

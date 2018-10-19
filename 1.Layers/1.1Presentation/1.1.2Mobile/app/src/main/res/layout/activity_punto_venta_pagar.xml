@@ -24,7 +24,7 @@
             <ScrollView
                 android:id="@+id/scrollView4"
                 android:layout_width="match_parent"
-                android:layout_height="182dp"
+                android:layout_height="220sp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
@@ -182,7 +182,7 @@
                 android:layout_width="94dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/colorButtonLogin"
+                style="@style/SagasTheme.Button"
                 android:text="@string/opciones"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="14sp"
@@ -191,13 +191,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView32"
                 tools:ignore="UnusedAttribute" />
-
+<!--android:backgroundTint="@color/colorButtonLogin"-->
             <Button
                 android:id="@+id/BtnPuntoVentaPagarActivityCancelar"
                 android:layout_width="97dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/colorButtonLogin"
+                style="@style/SagasTheme.Button"
                 android:text="@string/message_cancel"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="14sp"
@@ -207,13 +207,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/ETPuntoVentaPagarActivityEfectivo"
                 app:layout_constraintVertical_bias="0.0"
                 tools:ignore="UnusedAttribute" />
+            <!--android:backgroundTint="@color/colorButtonLogin"-->
 
             <Button
                 android:id="@+id/BtnPuntoVentaPagarActivityConfirmar"
                 android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:backgroundTint="@color/colorButtonLogin"
+                style="@style/SagasTheme.Button"
                 android:text="@string/confirmar"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="14sp"
@@ -223,6 +224,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView32"
                 app:layout_constraintVertical_bias="1.0"
                 tools:ignore="UnusedAttribute" />
+            <!--android:backgroundTint="@color/colorButtonLogin"-->
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

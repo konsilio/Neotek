@@ -25,11 +25,11 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="4"
+                android:paddingTop="15dp"
                 android:paddingBottom="15dp"
-                android:paddingTop="25dp"
                 android:text="@string/reporte_del_dia"
                 android:textAlignment="center"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -41,7 +41,7 @@
                 android:layout_weight="4"
                 android:paddingTop="25dp"
                 android:text="@string/selecciona_la_fecha_a_reportar"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                         android:paddingTop="15dp"
                         android:text="@string/seleccionar_fecha"
                         android:textAlignment="center"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
 
                     <ImageButton
                         android:id="@+id/IBReporteFechaActivityFecha"
@@ -91,10 +91,10 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="4"
-                android:paddingBottom="5dp"
                 android:paddingTop="15dp"
+                android:paddingBottom="5dp"
                 android:text="@string/selecciona_la_unidad"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/SReporteActivityListUnidades"
@@ -107,7 +107,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="56sp"
+                android:layout_height="20sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="4" />
@@ -116,15 +116,15 @@
                 android:id="@+id/BtnReporteactivityAceptar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="85dp"
-                android:layout_marginRight="85dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="4"
-                android:backgroundTint="@color/colorButtonLogin"
-                android:padding="15dp"
+                style="@style/SagasTheme.Button"
+                android:padding="10dp"
                 android:text="@string/Generar_reporte"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:ignore="UnusedAttribute" />
 
         </LinearLayout>
