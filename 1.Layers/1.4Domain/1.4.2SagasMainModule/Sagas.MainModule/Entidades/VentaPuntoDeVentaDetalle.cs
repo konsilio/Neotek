@@ -35,6 +35,11 @@ namespace Sagas.MainModule.Entidades
         public string ProductoLinea { get; set; }
         public string ProductoCategoria { get; set; }
         public System.DateTime FechaRegistro { get; set; }
+        public short IdUnidadMedida { get; set; }
+        public Nullable<decimal> PrecioUnitarioProducto { get; set; }
+        public Nullable<decimal> DescuentoUnitarioProducto { get; set; }
+        public Nullable<decimal> CantidadProducto { get; set; }
+        public string UnidadMedida { get; set; }
     
         public virtual VentaPuntoDeVenta VentaPuntoDeVenta { get; set; }
     }

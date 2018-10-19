@@ -1,7 +1,5 @@
 ﻿
 @model MVC.Presentacion.Models.AlmacenDTO
-@*@using PagedList.Mvc;
-    @using PagedList;*@
 
 @{
     string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
@@ -17,7 +15,14 @@
         new Script { ExtensionSuite = ExtensionSuite.GridView }
     )
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-@*<script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>*@
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+<script type="text/javascript">
+    var numReq = '@ViewBag.Confirmacion';
+    if (numReq != '') {
+        $(window).on("load", showNotification('alert-success', numReq, 'top', 'center', '', ''));
+    }
+</script>
 <script src="~/Scripts/js/RequisicionAutorizacionJS.js"></script>
 <div class="page-loader-wrapper">
     <div class="loader">
@@ -27,7 +32,7 @@
 </div>
 <section class="content home">
     <div class="container-fluid">
-        @using (Html.BeginForm("CrearLineaProducto", "Producto", FormMethod.Post))
+        @using (Html.BeginForm())
             {
             @Html.HiddenFor(m => m.IdEmpresa)
             @Html.HiddenFor(m => m.IdProducto)
@@ -64,16 +69,25 @@
                                             }
                                             else
                                             {
-
                                                 @ViewBag.Empresas
                                             }
                                         </div>
                                         @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
                                     </div>
+                                </div>
+                                <br />
+                                <div class="row clearfix">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <strong>Nombre del producto</strong>
-                                            <div>@Html.LabelFor(m => m.Descripcion, Model.Descripcion)</div>
+                                            @if (Model.Descripcion != null)
+                                            {
+                                                <div>@Html.LabelFor(m => m.Descripcion, Model.Descripcion)</div>
+                                            }
+                                            else
+                                            {
+                                                <div>@Html.LabelFor(m => m.Descripcion, "Seleccione un producto de la lista")</div>
+                                            }
 
                                             @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "alert-danger" })
                                         </div>
@@ -85,14 +99,23 @@
                                             @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row clearfix">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <strong>Descripción:</strong>
-                                            @Html.TextBoxFor(m => m.Ubicacion, new { @class = "form-control", placeholder = "Ubicacion" })
+                                            <strong>Ubicación:</strong>
+                                            @Html.TextBoxFor(m => m.Ubicacion, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(m => m.Ubicacion, "", new { @class = "alert-danger" })
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <strong>Justificación:</strong>
+                                            <div class="blockquote blockquote-info btn-round">
+                                                @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control no-resize", @maxlength = "230", @rows = "3" })
+                                            </div>
+                                        </div>
+                                        @Html.ValidationMessageFor(m => m.Observaciones, "", new { @class = "alert-danger" })
                                     </div>
                                     <div class="col-md-1">
                                         <b>&nbsp; </b>
@@ -162,44 +185,9 @@
                                 <div class="row clearfix">
                                     <div class="table-responsive">
                                         @Html.Action("gvProductosPartial")
-                                        @*<table class="table table table-bordered table-striped table-hover js-basic-example dataTable filterable" name="RequisicionProductos">
-                                                <thead>
-                                                    <tr>
-                                                        <td><b>Categoría</b></td>
-                                                        <td><b>Línea</b></td>
-                                                        <td><b>Producto</b></td>
-                                                        <td><b>Existencias</b></td>
-                                                        <td><b>Ubicación</b></td>
-                                                        <td><b>Acción</b></td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach (var cat in ViewBag.Productos)
-                                                    {
-                                                        <tr>
-                                                            <td>@cat.Nombre </td>
-                                                            <td>@cat.Descripcion </td>
-                                                            <td>@cat.Acronimo</td>
-                                                            <td>
-                                                                <a href="@Url.Action("EditarUnidadMedida", "Producto", new { Id = cat.IdUnidadMedida })">
-                                                                    <i class="material-icons">edit</i>
-                                                                    <span class='icon-name'></span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    }
-                                                </tbody>
-                                            </table>*@
                                     </div>
                                 </div>
-                                @*<div class="row clearfix">
-                                        <div class="col-md-6">
-                                            Pagina @(ViewBag.Productos.PageCount < ViewBag.Productos.PageNumber ? 0 : ViewBag.Productos.PageNumber) de @ViewBag.Productos.PageCount
-                                        </div>
-                                        <div class="col-md-6 text-right">
-                                            @Html.PagedListPager((IPagedList)ViewBag.Productos, page => Url.Action("UnidadMedida", new { page, @class = "btn btn-primary btn-simple" }))
-                                        </div>
-                                    </div>*@
+
                             </div>
                         </div>
                     </div>

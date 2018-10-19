@@ -14,13 +14,12 @@
         android:layout_marginRight="85dp"
         android:layout_marginBottom="5dp"
         android:layout_weight="1"
+        android:textSize="30sp"
         android:text="@string/message_acept"
         style="@style/SagasTheme.Button"
-        android:textColor="@color/colorTextButtonLogin"
-        android:textSize="18sp"
-         />
-    <!--
-    android:backgroundTint="@color/colorButtonLogin"
-    tools:ignore="UnusedAttribute"
-    -->
+   />
+    <!--tools:ignore="UnusedAttribute"
+ android:backgroundTint="@color/colorButtonLogin"
+ android:text="@string/message_acept"
+ android:textColor="@color/colorTextButtonLogin"-->
 </LinearLayout>

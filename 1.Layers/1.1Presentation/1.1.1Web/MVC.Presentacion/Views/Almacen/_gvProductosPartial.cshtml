@@ -3,89 +3,64 @@
     {
         settings.Name = "gvProductos";
         settings.CallbackRouteValues = new { Controller = "Almacen", Action = "gvProductosPartial" };
-
         settings.KeyFieldName = "IdProducto";
+
         settings.SettingsExport.EnableClientSideExportAPI = true;
         settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
         settings.Toolbars.Add(i =>
         {
-
             i.EnableAdaptivity = true;
             i.Items.Add(exportitem =>
             {
                 exportitem.Command = GridViewToolbarCommand.ExportToXls;
                 exportitem.Name = "CustomExportToXLS";
                 exportitem.Text = "Expotar a XLS";
-                exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
-                //exportitem.Image.IconID = DevExpress.Web.ASPxThemes.IconID.ExportExporttoxls16x16office2013;
-            });
-            //i.Items.Add(GridViewToolbarCommand.ExportToXlsx).Text = "Export to XLSX(DataAware)";
+                exportitem.ItemStyle.CssClass = "btn btn-success btn-round";                
+            });         
             i.Items.Add(exportitem =>
             {
                 exportitem.Command = GridViewToolbarCommand.ExportToXlsx;
                 exportitem.Name = "CustomExportToXLSX";
-                exportitem.Text = "Export to XLSX";
-                exportitem.ItemStyle.CssClass = "btn btn-success btn-round";
-                //exportitem.Image.IconID = DevExpress.Web.ASPxThemes.IconID.ExportExporttoxlsx16x16office2013;
+                exportitem.Text = "Exportar a XLSX";
+                exportitem.ItemStyle.CssClass = "btn btn-success btn-round";                
             });
             i.ItemAlign = GridToolbarItemAlign.Right;
         });
-
         settings.SettingsPager.Visible = true;
-
-        settings.Settings.ShowFilterRow = true;
-        //settings.AutoFilterCellEditorInitialize += (s, e) =>
-        //{
-        //    if (e.Column.FieldName == "Descripcion")
-        //    {
-        //        e.Editor.CssClass = "";
-        //        ((ASPxTextBox)e.Editor).NullText = "filter";
-        //        ((ASPxTextBox)e.Editor).CssClass = "";
-
-        //    }
-        //};
-
+        settings.Settings.ShowFilterRow = true;     
         settings.SettingsBehavior.AllowSelectByRowClick = true;
         settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
-
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
-
-        settings.Styles.Table.CssClass = "table table-striped";
+        //settings.Styles.Table.CssClass = "table table-striped";
         settings.Styles.HeaderPanel.CssClass = "";
         settings.Styles.FilterRow.CssClass = "";
-
-        //settings.Styles.HeaderFilterItem.CssClass = "form-control";
-        //settings.Styles.Header.CssClass = "btn btn-primary btn-simple";
-        //settings.StylesEditors.TextBox.CssClass = "form-control";
         settings.StylesFilterControl.ImageButton.CssClass = "form-control";
-
-        //settings.Styles.FilterRow.CssClass = "table table-hover ";
-
-        //settings.StylesEditors.TextBox.CssClass.Remove(1);
-        //settings.StylesEditors.TextBox.CssClass = "form-control";
-        // settings.Styles.Row.CssClass = "table-striped";
         settings.Columns.Add("Descripcion");
         settings.Columns.Add("Categoria");
         settings.Columns.Add("ProductoLinea");
-        settings.Columns.Add("Cantidad");
+        //settings.Columns.Add("Cantidad");
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Cantidad";
+            c.Caption = "Cantidad";
+            c.ColumnType = MVCxGridViewColumnType.TextBox;
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            c.CellStyle.HorizontalAlign = System.Web.UI.WebControls.HorizontalAlign.Right;
+            c.Settings.SortMode = DevExpress.XtraGrid.ColumnSortMode.Custom;
+            var colSettings = c.PropertiesEdit as TextBoxProperties;
+            colSettings.DisplayFormatString = "n2";
+        });
         settings.Columns.Add("Ubicacion");
         settings.Columns.Add(c =>
         {
             c.Caption = "Acción";
             c.SetDataItemTemplateContent(d =>
             {
-
-                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Editar", new { id = d.KeyValue }) + "><i class='material-icons'>edit</i> <span class='icon-name'></span></a>"));
-
-                //if (User.IsInRole("Sueldos / Eliminar"))
-                //{
-                //    ViewContext.Writer.Write(string.Format("<li><a  href='#' class='deleteSalaryConfirmation' id='deleteSalaryConfirmation=" + d.KeyValue + "' data-id='" + d.KeyValue + "' data-name='" + c.Grid.GetRowValues(c.VisibleIndex, "CompanyAreas.PositionName") + "' title='Eliminar'><i class='glyphicon glyphicon-trash'></i> Eliminar</a></li>"));
-                //}
-
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Editar", new { id = d.KeyValue }) + "><i class='material-icons'>edit</i> <span class='icon-name'></span></a>"));              
             });
         });
     });
@@ -95,5 +70,3 @@
     }
 }
 @grid.Bind(Model).GetHtml()
-
-

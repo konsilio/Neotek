@@ -25,7 +25,7 @@
                 android:paddingBottom="15dp"
                 android:text="@string/Calibracion"
                 android:textAlignment="center"
-                android:textSize="30sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/TVCalibracionEstacionEstacionACalibrar"
@@ -78,7 +78,7 @@
                 android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>

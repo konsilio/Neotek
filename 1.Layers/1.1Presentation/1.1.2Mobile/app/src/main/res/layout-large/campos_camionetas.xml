@@ -13,7 +13,7 @@
         android:layout_weight="5"
         android:text=""
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="24sp" />
 
     <EditText
         android:id="@+id/ETConfiguracionCamionetasCantidad"
@@ -21,11 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_weight="5"
         android:ems="10"
-        android:inputType="number"
         android:labelFor="@id/TVCamposCamionetasTipoCilindro"
+        android:inputType="number"
         android:maxLength="2"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textSize="24sp"
         tools:ignore="Autofill,LabelFor" />
 
 </LinearLayout>

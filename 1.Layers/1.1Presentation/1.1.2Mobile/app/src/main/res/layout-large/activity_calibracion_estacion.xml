@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.CalibracionPipaActivity">
+    tools:context=".Activity.CalibracionEstacionActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,29 +16,29 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/TVCalibracionPipaActivityTitulo"
+                android:id="@+id/TVCalibracionEstacionActivityTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:text="@string/Calibracion"
                 android:textAlignment="center"
-                android:textSize="24sp" />
+                android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/TVCalibracionPipaActivityTituloPipa"
+                android:id="@+id/TVCalibracionEstacionEstacionACalibrar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="5dp"
-                android:text="@string/selecciona_la_pipa_de_salida_calibracion" />
+                android:text="@string/seleccione_la_estacion_de_carburacion_a_calibrar" />
 
             <Spinner
-                android:id="@+id/SCalibracionPipaActivityListaPipa"
+                android:id="@+id/SCalibracionEstacionActivityListaEstaciones"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -46,7 +46,7 @@
                 android:padding="20dp" />
 
             <TextView
-                android:id="@+id/TVCalibracionPipaTituloMediro"
+                android:id="@+id/TVCalibracionEstacionActivityMedidor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -56,41 +56,21 @@
                 android:text="@string/selecciona_el_tipo_de_medidor_porcentual" />
 
             <Spinner
-                android:id="@+id/SCalibracionPipaActivityMedidor"
+                android:id="@+id/SCalibracionEstacionActivityListaMedidor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:padding="20dp" />
 
-            <TextView
-                android:id="@+id/TVCalibracionPipaActivityDestinoPuruebas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:paddingTop="15dp"
-                android:paddingBottom="5dp"
-                android:text="@string/selecciona_destino_de_las_pruebas"
-                android:visibility="gone" />
-
-            <Spinner
-                android:id="@+id/SCalibracionPipaActivityPruebas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:padding="20dp"
-                android:visibility="gone" />
-
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 
             <Button
-                android:id="@+id/BtnCalibracionPipaActivityGuardar"
+                android:id="@+id/BtnCalibracionEstacionAceptar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="85dp"
@@ -98,7 +78,7 @@
                 android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="24sp"
+                android:textSize="30sp"
                 tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>

@@ -25,7 +25,7 @@
                 android:paddingBottom="15dp"
                 android:text="@string/Calibracion"
                 android:textAlignment="center"
-                android:textSize="24sp" />
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/TVCalibracionPipaActivityTituloPipa"
@@ -95,10 +95,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="85dp"
                 android:layout_marginRight="85dp"
-                android:backgroundTint="@color/colorButtonLogin"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="24sp"
+                android:backgroundTint="@color/colorButtonLogin"
+                android:textSize="30sp"
                 tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>
