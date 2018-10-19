@@ -282,5 +282,12 @@ namespace Application.MainModule.Servicios.Compras
 
             return oc;
         }
+        //public static OrdenCompra DeterminarEstatosPorEntradas(OrdenCompra oc, List<OrdenCompraProducto> productos)
+        //{
+        //    if (productos.Where(x => x.Ca) )
+        //    {
+
+        //    }
+        //}
     }
 }

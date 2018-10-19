@@ -101,7 +101,6 @@ namespace Application.MainModule.Flujos
         public RespuestaDto ActualizarAlmacen(AlmacenDTO dto)
         {
             //Validar permisos
-
             var almacen = ProductoAlmacenServicio.ObtenerAlmacen(dto.IdProducto, dto.IdEmpresa);
             var entity = ProductoAlmacenServicio.AlmacenEntity(almacen);
             var prod = ProductoServicio.ObtenerProducto(dto.IdProducto);
