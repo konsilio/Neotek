@@ -128,7 +128,7 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
                  R.layout.custom_spinner,
                  lista_estacion_salida
          ));
-         presenter.GetList(session.getToken());
+         presenter.GetList(session.getToken(),EsTraspasoEstacionFinal);
 
          BtnTraspasoEstacionActivityAceptar.setOnClickListener(v -> {
              ValidarForm();

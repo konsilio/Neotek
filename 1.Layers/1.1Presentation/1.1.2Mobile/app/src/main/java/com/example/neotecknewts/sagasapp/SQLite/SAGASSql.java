@@ -424,7 +424,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         //endregion
         //region Calibración
         db.execSQL("CREATE TABLE "+ TABLE_CALIBRACION+"(" +
-                        "Id PRIMARY KEY AUTOINCREMENT,"+
+                        "Id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                         "Tipo TEXT,"+
                         "ClaveOperacion TEXT,"+
                         "IdCAlmacenGas INTEGER,"+
@@ -432,7 +432,6 @@ public class SAGASSql extends SQLiteOpenHelper {
                         "NombreCAlmacenGas TEXT,"+
                         "NombreMedidor TEXT,"+
                         "PorcentajeCalibracion DOUBLE,"+
-                        "IdDestinoCalibracion INTEGER,"+
                         "IdDestinoCalibracion INTEGER,"+
                         "P5000 INTEGER,"+
                         "Porcentaje INTEGER,"+

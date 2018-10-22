@@ -239,5 +239,17 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.Calibracion(dto,esFinal), Request);
         }
+
+        [Route("catalogos/traspaso/{esPipa}")]
+        public HttpResponseMessage GetCatalogoTraspaso(bool esPipa)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoTraspaso(esPipa),Request);
+        }
+
+        [Route("traspaso/{esFinal}/{esPipa}")]
+        public HttpResponseMessage PostTraspaso(TraspasoDto dto,bool esFinal, bool esPipa)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.Traspaso(dto,esFinal,esPipa),Request);
+        }
     }
 }

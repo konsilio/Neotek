@@ -15,9 +15,9 @@ public class TraspasoEstacionPresenterImpl implements TraspasoEstacionPresenter 
     }
 
     @Override
-    public void GetList(String token) {
+    public void GetList(String token,boolean esFinal) {
         view.onShowProgress(R.string.message_cargando);
-        interactor.GetList(token);
+        interactor.GetList(token,esFinal);
     }
 
     @Override
