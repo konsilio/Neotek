@@ -50,6 +50,11 @@ namespace Application.MainModule.Servicios.Catalogos
             return BuscarPorOperadorChofer(opCh.IdOperadorChofer).FirstOrDefault();
         }
 
+        public static PuntoVenta Obtener(UnidadAlmacenGas unidadAlmacen)
+        {
+            return new PuntoVentaDataAccess().BuscarPorUnidadAlmacenGas(unidadAlmacen.IdCAlmacenGas);
+        }
+
         public static List<PuntoVenta> BuscarPorOperadorChofer(int idOperadorChofer)
         {
             return new PuntoVentaDataAccess().BuscarPorOperadorChofer(idOperadorChofer);

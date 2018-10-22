@@ -69,5 +69,22 @@ namespace Application.MainModule.DTOs.Almacen
         public decimal DescargaAcumMesLt { get; set; }
         public decimal DescargaAcumAnioKg { get; set; }
         public decimal DescargaAcumAnioLt { get; set; }
+
+        public decimal RecargaKg { get; set; }
+        public decimal RecargaLt { get; set; }
+        public decimal RecargaDiaKg { get; set; }
+        public decimal RecargaDiaLt { get; set; }
+        public decimal RecargaMesKg { get; set; }
+        public decimal RecargaMesLt { get; set; }
+        public decimal RecargaAnioKg { get; set; }
+        public decimal RecargaAnioLt { get; set; }
+        public decimal RecargaAcumDiaKg { get; set; }
+        public decimal RecargaAcumDiaLt { get; set; }
+        public decimal RecargaAcumMesKg { get; set; }
+        public decimal RecargaAcumMesLt { get; set; }
+        public decimal RecargaAcumAnioKg { get; set; }
+        public decimal RecargaAcumAnioLt { get; set; }
+
+        public string NombreOperador { get; set; }
     }
 }

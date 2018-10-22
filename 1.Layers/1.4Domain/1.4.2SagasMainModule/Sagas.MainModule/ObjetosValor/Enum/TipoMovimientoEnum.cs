@@ -9,10 +9,13 @@ namespace Sagas.MainModule.ObjetosValor.Enum
     public class TipoMovimientoEnum
     {
         public static byte Entrada = (byte)tipoMovimiento.Entrada;
+
+        public static byte Salida = (byte)tipoMovimiento.Salida;
     }
 
     enum tipoMovimiento : byte
     {
         Entrada = 1,
+        Salida = 2,
     }
 }
