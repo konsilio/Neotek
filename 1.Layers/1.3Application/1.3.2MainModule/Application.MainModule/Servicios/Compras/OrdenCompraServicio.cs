@@ -282,10 +282,10 @@ namespace Application.MainModule.Servicios.Compras
 
             return oc;
         }
-        public static OrdenCompra DeterminarEstatosPorEntradas(OrdenCompra oc, List<OrdenCompraProducto> productos)
+        public static OrdenCompra DeterminarEstatusPorEntradas(OrdenCompra oc, List<OrdenCompraProducto> productos)
         {
             if (productos.Where(x => x.CantidadEntregada.Equals(x.Cantidad)).Count().Equals(productos.Count))
-                oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Compra_exitosa;
+                oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
             else
                 oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Proceso_compra;
             return oc;

@@ -9,7 +9,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
     public static class RequisicionAdapter
     {
         #region ToDTO
-        public static RequisicionDTO ToDTO(Sagas.MainModule.Entidades.Requisicion _requisicion)
+        public static RequisicionDTO ToDTO(Requisicion _requisicion)
         {
             RequisicionDTO requiscionDTO = new RequisicionDTO()
             {
@@ -28,7 +28,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
             };
             return requiscionDTO;
         }
-        public static RequisicionDTO ToDTORevision(RequisicionDTO requiscionDTO, Sagas.MainModule.Entidades.Requisicion _requisicion)
+        public static RequisicionDTO ToDTORevision(RequisicionDTO requiscionDTO, Requisicion _requisicion)
         {
             requiscionDTO.IdRequisicion = _requisicion.IdRequisicion;
             requiscionDTO.IdRequisicionEstatus = _requisicion.IdRequisicionEstatus;
@@ -38,7 +38,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
             requiscionDTO.MotivoCancelacion = _requisicion.MotivoCancelacion;
             return requiscionDTO;
         }
-        public static RequisicionDTO ToDTOAutorizacion(RequisicionDTO requiscionDTO, Sagas.MainModule.Entidades.Requisicion _requisicion)
+        public static RequisicionDTO ToDTOAutorizacion(RequisicionDTO requiscionDTO, Requisicion _requisicion)
         {
             requiscionDTO.IdRequisicionEstatus = _requisicion.IdRequisicionEstatus;
             requiscionDTO.MotivoCancelacion = _requisicion.MotivoCancelacion;
@@ -46,12 +46,12 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
             requiscionDTO.FechaAutorizacion = _requisicion.FechaAutorizacion.Value;
             return requiscionDTO;
         }
-        public static List<RequisicionDTO> ToDTO(List<Sagas.MainModule.Entidades.Requisicion> _requisiciones)
+        public static List<RequisicionDTO> ToDTO(List<Requisicion> _requisiciones)
         {
             List<RequisicionDTO> requisicionesDTO = _requisiciones.ToList().Select(x => ToDTO(x)).ToList();
             return requisicionesDTO;
         }
-        public static RequisicionAutorizacionDTO ToAutDTO(Sagas.MainModule.Entidades.Requisicion _requisicion)
+        public static RequisicionAutorizacionDTO ToAutDTO(Requisicion _requisicion)
         {
             RequisicionAutorizacionDTO _requisicionDTO = new RequisicionAutorizacionDTO();
             _requisicionDTO.IdRequisicion = _requisicion.IdRequisicion;
@@ -77,7 +77,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
         {
             return lestatus.Select(x => ToDTO(x)).ToList();
         }
-        public static RequisicionRevisionDTO ToRevDTO(Sagas.MainModule.Entidades.Requisicion _requisicion)
+        public static RequisicionRevisionDTO ToRevDTO(Requisicion _requisicion)
         {
             RequisicionRevisionDTO requiscionEDTO = new RequisicionRevisionDTO
             {
@@ -95,9 +95,9 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
         }
         #endregion
         #region FromDTO
-        public static Sagas.MainModule.Entidades.Requisicion FromDTO(RequisicionDTO dto)
+        public static Requisicion FromDTO(RequisicionDTO dto)
         {
-            return new Sagas.MainModule.Entidades.Requisicion()
+            return new Requisicion()
             {
                 IdUsuarioSolicitante = dto.IdUsuarioSolicitante,
                 IdEmpresa = dto.IdEmpresa,
@@ -110,9 +110,9 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
                 Productos = RequisicionProductoAdapter.FromDTO(dto.Productos)
             };
         }
-        public static Sagas.MainModule.Entidades.Requisicion FromDTO(RequisicionCancelaDTO _requisicionDTO, Sagas.MainModule.Entidades.Requisicion entidadAnterior)
+        public static Requisicion FromDTO(RequisicionCancelaDTO _requisicionDTO, Requisicion entidadAnterior)
         {
-            Sagas.MainModule.Entidades.Requisicion _requisicion = FromEntity(entidadAnterior);
+            Requisicion _requisicion = FromEntity(entidadAnterior);
             _requisicion.IdRequisicion = _requisicionDTO.IdRequisicion;
             _requisicion.IdRequisicionEstatus = _requisicionDTO.IdRequisicionEstatus;
             _requisicion.IdUsuarioRevision = _requisicionDTO.IdUsuarioRevision;
@@ -129,9 +129,9 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
             }
             return _requisicion;
         }
-        public static Sagas.MainModule.Entidades.Requisicion FromDTO(RequisicionCancelaDTO _requisicion)
+        public static Requisicion FromDTO(RequisicionCancelaDTO _requisicion)
         {
-            Sagas.MainModule.Entidades.Requisicion requiscionDTO = new Sagas.MainModule.Entidades.Requisicion()
+            Requisicion requiscionDTO = new Requisicion()
             {
                 NumeroRequisicion = _requisicion.NumeroRequisicion,
                 MotivoCancelacion = _requisicion.MotivoCancelacion,
@@ -139,7 +139,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
             };
             return requiscionDTO;
         }
-        public static Sagas.MainModule.Entidades.Requisicion FromDTORevision(RequisicionDTO requiscionDTO, Sagas.MainModule.Entidades.Requisicion _requisicion)
+        public static Requisicion FromDTORevision(RequisicionDTO requiscionDTO, Requisicion _requisicion)
         {
             _requisicion.IdRequisicion = requiscionDTO.IdRequisicion;
             _requisicion.IdRequisicionEstatus = requiscionDTO.IdRequisicionEstatus;
@@ -149,7 +149,7 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
             _requisicion.MotivoCancelacion = requiscionDTO.MotivoCancelacion;
             return _requisicion;
         }
-        public static Sagas.MainModule.Entidades.Requisicion FromDTOAutorizacion(RequisicionDTO requiscionDTO, Sagas.MainModule.Entidades.Requisicion _requisicion)
+        public static Requisicion FromDTOAutorizacion(RequisicionDTO requiscionDTO, Requisicion _requisicion)
         {
             _requisicion.IdRequisicionEstatus = requiscionDTO.IdRequisicionEstatus;
             _requisicion.MotivoCancelacion = requiscionDTO.MotivoCancelacion;
@@ -157,9 +157,9 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
             _requisicion.FechaAutorizacion = requiscionDTO.FechaAutorizacion;
             return _requisicion;
         }
-        public static Sagas.MainModule.Entidades.Requisicion UnirFromDTO(RequisicionDTO _requisicion, List<RequisicionProductoDTO> _prod)
+        public static Requisicion UnirFromDTO(RequisicionDTO _requisicion, List<RequisicionProductoDTO> _prod)
         {
-            Sagas.MainModule.Entidades.Requisicion requiscionDTO = new Sagas.MainModule.Entidades.Requisicion()
+            Requisicion requiscionDTO = new Requisicion()
             {
                 IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
                 IdEmpresa = _requisicion.IdEmpresa,
@@ -173,9 +173,9 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
             };
             return requiscionDTO;
         }
-        public static Sagas.MainModule.Entidades.Requisicion FromDTO(RequisicionRevisionDTO _requisicion)
+        public static Requisicion FromDTO(RequisicionRevisionDTO _requisicion)
         {
-            Sagas.MainModule.Entidades.Requisicion requiscionDTO = new Sagas.MainModule.Entidades.Requisicion()
+            Requisicion requiscionDTO = new Requisicion()
             {
                 IdUsuarioSolicitante = _requisicion.IdUsuarioSolicitante,
                 NumeroRequisicion = _requisicion.NumeroRequisicion,
@@ -187,27 +187,27 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
             };
             return requiscionDTO;
         }
-        public static Sagas.MainModule.Entidades.Requisicion FromDTO(RequisicionRevPutDTO _requisicionDTO, Sagas.MainModule.Entidades.Requisicion entidadAnterior)
+        public static Requisicion FromDTO(RequisicionRevPutDTO _requisicionDTO, Requisicion entidadAnterior)
         {//Revision
-            Sagas.MainModule.Entidades.Requisicion _requisicion = FromEntity(entidadAnterior);
+            Requisicion _requisicion = FromEntity(entidadAnterior);
             _requisicion.IdRequisicionEstatus = _requisicionDTO.IdRequisicionEstatus;
             _requisicion.IdUsuarioRevision = _requisicionDTO.IdUsuarioRevision;
             _requisicion.OpinionAlmacen = _requisicionDTO.OpinionAlmacen;
             _requisicion.FechaRevision = _requisicionDTO.FechaRevision;
             return _requisicion;
         }
-        public static Sagas.MainModule.Entidades.Requisicion FromDTO(RequisicionAutPutDTO _requisicionDTO, Sagas.MainModule.Entidades.Requisicion entidadAnterior)
+        public static Requisicion FromDTO(RequisicionAutPutDTO _requisicionDTO, Requisicion entidadAnterior)
         {//Autorizacion
-            Sagas.MainModule.Entidades.Requisicion _requisicion = FromEntity(entidadAnterior);
+            Requisicion _requisicion = FromEntity(entidadAnterior);
             _requisicion.IdUsuarioAutorizacion = _requisicionDTO.IdUsuarioAutorizacion;
             _requisicion.FechaAutorizacion = _requisicionDTO.FechaAutorizacion;
             _requisicion.IdRequisicionEstatus = _requisicionDTO.IdRequisicionEstatus;
 
             return _requisicion;
         }
-        public static Sagas.MainModule.Entidades.Requisicion FromEntity(Sagas.MainModule.Entidades.Requisicion _entidadAnterior)
+        public static Requisicion FromEntity(Requisicion _entidadAnterior)
         {
-            Sagas.MainModule.Entidades.Requisicion _endidad = new Sagas.MainModule.Entidades.Requisicion()
+            Requisicion _endidad = new Requisicion()
             {
                 IdRequisicion = _entidadAnterior.IdRequisicion,
                 IdUsuarioSolicitante = _entidadAnterior.IdUsuarioSolicitante,
@@ -252,9 +252,9 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
         {
             return lProdDTO.ToList().Select(x => FromEntity(x)).ToList();
         }
-        public static Sagas.MainModule.Entidades.Requisicion FromEntity(Sagas.MainModule.Entidades.Requisicion _entidadAnterior, List<Sagas.MainModule.Entidades.RequisicionProducto> _productos)
+        public static Requisicion FromEntity(Requisicion _entidadAnterior, List<Sagas.MainModule.Entidades.RequisicionProducto> _productos)
         {
-            Sagas.MainModule.Entidades.Requisicion _endidad = FromEntity(_entidadAnterior);
+            Requisicion _endidad = FromEntity(_entidadAnterior);
             _endidad.Productos = FromEntity(_productos);
             return _endidad;
         }

@@ -59,7 +59,7 @@ namespace MVC.Presentacion.Controllers
                     {
                         ModelState.AddModelError(error.Key, error.Value);
                     }
-                if (Resp.MensajesError != null)
+                if (Resp.MensajesError != null & !Resp.MensajesError.Count.Equals(0))
                     Mensaje = Resp.MensajesError[0];
             }
             return Mensaje;
@@ -149,7 +149,7 @@ namespace MVC.Presentacion.Controllers
             var model = AlmacenServicio.BuscarRegistroAlmacen(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             return PartialView("_RegistroPartial", model);
         }
-        public ActionResult SalidaMercancia()
+        public ActionResult SalidaMercancia(string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
@@ -158,6 +158,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
+            if(msj != null) ViewBag.Mensaje = msj;
             return View();
         }
         public ActionResult Salida(int? id, RequisicionSalidaDTO model = null)
@@ -165,25 +166,26 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
-            if (model == null)
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);            
+            if (id != null)
                 model = AlmacenServicio.BuscarRequisicionSalida(id ?? 0, tkn);
-            return View();
+            else
+                model = AlmacenServicio.BuscarRequisicionSalida(model.IdRequisicion, tkn);
+            ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault(e => e.IdEmpresa.Equals(model.IdEmpresa)).NombreComercial;
+            return View(model);
         }
         public ActionResult GenerarSalidas(RequisicionSalidaDTO model)
         {
             if (Session["StringToken"] == null) return View(AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             tkn = Session["StringToken"].ToString();
-
             var respuesta = AlmacenServicio.RegistrarSalida(model, tkn);
             if (respuesta.Exito)
-                return RedirectToAction("Salida", new { msj = respuesta.Mensaje });
+                return RedirectToAction("SalidaMercancia", new { msj = respuesta.Mensaje });
             else
             {
                 TempData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("Salida");
+                return RedirectToAction("Salida", model);
             }
-
         }
 
         [ValidateInput(false)]

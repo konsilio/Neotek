@@ -197,13 +197,15 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
 
         public static OrdenCompraProducto FromEntity(OrdenCompraProducto _prod)
         {
+            var p = new ProductoDataAccess().BuscarProducto(_prod.IdProducto);
             return new OrdenCompraProducto()
             {
+                IdOrdenCompra = _prod.IdOrdenCompra,
                 IdProducto = _prod.IdProducto,
                 ProductoServicioTipo = _prod.ProductoServicioTipo,
                 IdCentroCosto = _prod.IdCentroCosto,
-                Producto = _prod.Descripcion,
-                Categoria = _prod.Categoria,
+                Producto = p.Descripcion,
+                Categoria = p.Categoria.Descripcion,
                 Cantidad = _prod.Cantidad,
                 Linea = _prod.Linea,
                 UnidadMedida = _prod.UnidadMedida,

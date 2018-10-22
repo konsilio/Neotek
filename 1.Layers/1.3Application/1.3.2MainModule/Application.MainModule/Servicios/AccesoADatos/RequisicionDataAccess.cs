@@ -16,37 +16,37 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-        public Sagas.MainModule.Entidades.Requisicion Buscar(int IdRequisicion)
+        public Requisicion Buscar(int IdRequisicion)
         {
-            return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetSingle(x => x.IdRequisicion.Equals(IdRequisicion) && x.IdRequisicionEstatus.Equals(0));
+            return uow.Repository<Requisicion>().GetSingle(x => x.IdRequisicion.Equals(IdRequisicion) && x.IdRequisicionEstatus.Equals(0));
         }
         public int BuscarUltimaRequi()
         {
-            if (uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetAll().ToList().Count.Equals(0))
+            if (uow.Repository<Requisicion>().GetAll().ToList().Count.Equals(0))
                 return 0;
             else
-                return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetAll().ToList().Last().IdRequisicion;
+                return uow.Repository<Requisicion>().GetAll().ToList().Last().IdRequisicion;
         }
-        public Sagas.MainModule.Entidades.Requisicion BuscarPorNumeroRequisicion(string NumRequisicion)
+        public Requisicion BuscarPorNumeroRequisicion(string NumRequisicion)
         {
-            return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetSingle(x => x.NumeroRequisicion.Equals(NumRequisicion));
+            return uow.Repository<Requisicion>().GetSingle(x => x.NumeroRequisicion.Equals(NumRequisicion));
         }
-        public Sagas.MainModule.Entidades.Requisicion BuscarPorIdRequisicion(int IdRequisicion)
+        public Requisicion BuscarPorIdRequisicion(int IdRequisicion)
         {
-            return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetSingle(x => x.IdRequisicion.Equals(IdRequisicion));
+            return uow.Repository<Requisicion>().GetSingle(x => x.IdRequisicion.Equals(IdRequisicion));
         }
-        public List<Sagas.MainModule.Entidades.Requisicion> BuscarTodas()
+        public List<Requisicion> BuscarTodas()
         {
-            return uow.Repository<Sagas.MainModule.Entidades.Requisicion>().GetAll().ToList();
+            return uow.Repository<Requisicion>().GetAll().ToList();
         }
-        public RespuestaDto InsertarNueva(Sagas.MainModule.Entidades.Requisicion _req)
+        public RespuestaDto InsertarNueva(Requisicion _req)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Insert(_req);
+                    uow.Repository<Requisicion>().Insert(_req);
                     uow.SaveChanges();
                     _respuesta.Id = _req.IdRequisicion;
                     _respuesta.Mensaje = _req.NumeroRequisicion;
@@ -64,14 +64,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public RespuestaDto Actualizar(Sagas.MainModule.Entidades.Requisicion _req)
+        public RespuestaDto Actualizar(Requisicion _req)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Update(_req);
+                    uow.Repository<Requisicion>().Update(_req);
                     uow.SaveChanges();
                     _respuesta.Exito = true;
                     _respuesta.Mensaje = Exito.OK;
@@ -87,14 +87,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public RespuestaDto Actualizar(Sagas.MainModule.Entidades.Requisicion _req, List<RequisicionProducto> _reqProd)
+        public RespuestaDto Actualizar(Requisicion _req, List<RequisicionProducto> _reqProd)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<Sagas.MainModule.Entidades.Requisicion>().Update(_req);
+                    uow.Repository<Requisicion>().Update(_req);
                     foreach (RequisicionProducto _prod in _reqProd)
                         uow.Repository<RequisicionProducto>().Update(_prod);
                     uow.SaveChanges();
