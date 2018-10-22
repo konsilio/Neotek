@@ -264,7 +264,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsPasoIniciaLPipa",true);
                     view.getContext().startActivity(intent);
                 }else if(menuItem.getHeaderMenu().equals("Calibración - Unidad de Gas") &&
-                        menuItem.getName().equals("Estación Carb. (Inicial)")
+                        menuItem.getName().equals("Estación Carb.(Inicial)")
                         ){
                     Intent intent = new Intent(view.getContext(),
                             CalibracionEstacionActivity.class);
@@ -272,14 +272,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsCalibracionEstacionFinal",false);
                     view.getContext().startActivity(intent);
                 }else if(menuItem.getHeaderMenu().equals("Calibración - Unidad de Gas") &&
-                        menuItem.getName().equals("Estación Carb. (Final)")){
+                        menuItem.getName().equals("Estación Carb.(Final)")){
                     Intent intent = new Intent(view.getContext(),
                             TraspasoPipaActivity.class);
                     intent.putExtra("EsCalibracionEstacionInicial",false);
                     intent.putExtra("EsCalibracionEstacionFinal",true);
                     view.getContext().startActivity(intent);
                 }else if(menuItem.getHeaderMenu().equals("Calibración - Unidad de Gas") &&
-                        menuItem.getName().equals("Pipa (Inicial)")
+                        menuItem.getName().equals("Pipa(Inicial)")
                         ){
                     Intent intent = new Intent(view.getContext(),
                             CalibracionEstacionActivity.class);
@@ -287,7 +287,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     intent.putExtra("EsCalibracionPipaFinal",false);
                     view.getContext().startActivity(intent);
                 }else if(menuItem.getHeaderMenu().equals("Calibración - Unidad de Gas") &&
-                        menuItem.getName().equals("Pipa (Final)")){
+                        menuItem.getName().equals("Pipa(Final)")){
                     Intent intent = new Intent(view.getContext(),
                             TraspasoPipaActivity.class);
                     intent.putExtra("EsCalibracionPipaInicial",false);

@@ -39,7 +39,6 @@ public class CalibracionPipaInteractorImpl implements CalibracionPipaInteractor 
         Call<DatosCalibracionDTO> call = restClient.getDatosCalibracion(
                 false,
                 true,
-                esCalibracionPipaFinal,
                 token,
                 "application/json"
         );

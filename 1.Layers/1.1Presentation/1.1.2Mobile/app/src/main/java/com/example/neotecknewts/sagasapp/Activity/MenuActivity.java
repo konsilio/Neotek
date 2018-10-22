@@ -10,6 +10,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.neotecknewts.sagasapp.Adapter.MenuAdapter;
@@ -142,6 +143,11 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
                 getResources().getString(mensaje), true);
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main,menu);
+        return true;
+    }
 
     //metodo que oculta el progreso
     @Override
@@ -167,4 +173,6 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         menu.addAll(menuDTOs);
         adapter.notifyDataSetChanged();
     }
+
+
 }
