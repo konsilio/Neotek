@@ -361,10 +361,12 @@ namespace Application.MainModule.Flujos
                 return TraspasoAdapter.ToDTO(estaciones,pipas,predeterminada,medidores);
         }
 
-        public RespuestaDto Traspaso(TraspasoDto dto,bool esFinal, bool esPipa)
+        public RespuestaDto Traspaso(TraspasoDto dto,bool esFinal)
         {
+            var resp = TraspasoServicio.EvaluarClaveOperacion(dto);
+            if (resp.Exito) return resp;
 
-            return null;
+            return TraspasoServicio.Traspaso(dto,esFinal,TokenServicio.ObtenerIdEmpresa());
         }
     }
 }

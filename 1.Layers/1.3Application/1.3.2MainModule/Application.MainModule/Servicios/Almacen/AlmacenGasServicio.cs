@@ -1530,5 +1530,9 @@ namespace Application.MainModule.Servicios.Almacenes
         //        PorcentajeAnteriorGeneral = almacenGeneralPorcent,
         //    };
         //}
+        public static AlmacenGasTraspaso ObtenerTraspaso(string claveOperacion)
+        {
+            return new AlmacenGasDataAccess().BuscarTraspaso(claveOperacion);
+        }
     }
 }

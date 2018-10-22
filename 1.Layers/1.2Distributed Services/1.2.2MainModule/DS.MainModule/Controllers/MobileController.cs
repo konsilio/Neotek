@@ -246,10 +246,10 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoTraspaso(esPipa),Request);
         }
 
-        [Route("traspaso/{esFinal}/{esPipa}")]
-        public HttpResponseMessage PostTraspaso(TraspasoDto dto,bool esFinal, bool esPipa)
+        [Route("traspaso/{esFinal}")]
+        public HttpResponseMessage PostTraspaso(TraspasoDto dto,bool esFinal)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.Traspaso(dto,esFinal,esPipa),Request);
+            return RespuestaHttp.crearRespuesta(_mobile.Traspaso(dto,esFinal),Request);
         }
     }
 }

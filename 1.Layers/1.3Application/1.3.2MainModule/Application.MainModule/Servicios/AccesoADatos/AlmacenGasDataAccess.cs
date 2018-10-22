@@ -789,6 +789,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
+        public AlmacenGasTraspaso BuscarTraspaso(string claveOperacion)
+        {
+            return uow.Repository<AlmacenGasTraspaso>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
+        }
     }
 }
       

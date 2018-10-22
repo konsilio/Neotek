@@ -13,5 +13,6 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal PorcentajeSalida { get; set; }
         public string ClaveOperacion { get; set; }
         public List<String> Imagenes { get; set; }
+        public DateTime FechaRegistro { get; set; }
     }
 }

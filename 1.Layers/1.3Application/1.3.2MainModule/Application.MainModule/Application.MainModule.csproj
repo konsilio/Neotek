@@ -67,6 +67,7 @@
     <Compile Include="AdaptadoresDTO\Catalogo\OperadorChoferAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\CalibracionAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\TraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="DTOs\Mobile\DatosTraspasoDto.cs" />
     <Compile Include="DTOs\Mobile\EstacionesDto.cs" />
     <Compile Include="DTOs\Mobile\PipaDto.cs" />
+    <Compile Include="DTOs\Mobile\TraspasoDto.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionSalidaDTO.cs" />
     <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />
     <Compile Include="DTOs\Ventas\RegistrarVentasMovimientosDTO.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="Servicios\Mobile\ClientesServicio.cs" />
     <Compile Include="DTOs\NotificacionDTO.cs" />
     <Compile Include="Servicios\Catalogos\PrecioVentaGasServicio.cs" />
+    <Compile Include="Servicios\Mobile\TraspasoServicio.cs" />
     <Compile Include="Servicios\Mobile\VentaServicio.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEstatusDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />
