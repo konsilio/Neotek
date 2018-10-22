@@ -43,7 +43,7 @@
             c.Caption = "Acción";
             c.SetDataItemTemplateContent(d =>
             {
-                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Salidas", new { id = d.KeyValue }) + "><i class='material-icons'>forward</i> <span class='icon-name'></span></a>"));
+                ViewContext.Writer.Write(string.Format("<a href=" + Url.Action("Salida", new { id = d.KeyValue }) + "><i class='material-icons'>forward</i> <span class='icon-name'></span></a>"));
             });
         });
     });

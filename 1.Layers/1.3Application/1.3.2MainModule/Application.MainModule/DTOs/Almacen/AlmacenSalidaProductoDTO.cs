@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Exceptions.MainModule.Validaciones;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +17,8 @@ namespace Application.MainModule.DTOs.Almacen
         public string Descripcion { get; set; }
         public int IdUsuarioEntrega { get; set; }
         public int IdUsuarioRecibe { get; set; }
+        [Required(ErrorMessage = Error.R0002)]        
+        [Display(Name = "Cantidad")]
         public decimal Cantidad { get; set; }
         public string UnidadMedida { get; set; }
         public string Ubicacion { get; set; }

@@ -17,8 +17,7 @@ namespace Exceptions.MainModule
             {
                 lista.Add(inn.Message);
                 inn = inn.InnerException;
-            }
-
+            }          
             return lista;
         }
     }

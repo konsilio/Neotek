@@ -8,6 +8,12 @@
         new Script { ExtensionSuite = ExtensionSuite.Editors },
         new Script { ExtensionSuite = ExtensionSuite.GridView }
     )
+<script type="text/javascript">
+    var numReq = '@ViewBag.Mensaje';
+    if (numReq != '') {
+        $(window).on("load", showNotification('alert-success', numReq, 'top', 'center', '', ''));
+    }
+</script>
 <div class="page-loader-wrapper">
     <div class="loader">
         <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
@@ -16,7 +22,7 @@
 </div>
 <section class="content home">
     <div class="container-fluid">
-        <div class="block-header">
+        <div class="block-header"> 
             <div class="row clearfix">
                 <div class="col-lg-5 col-md-5 col-sm-12">
                     <h2>Salida de Mercancia</h2>

@@ -5,8 +5,8 @@
     <td>@Html.LabelFor(m => m.Ubicacion, Model.Ubicacion)</td>
     <td>@Html.LabelFor(m => m.UnidadMedida, Model.UnidadMedida)</td>
     <td>@Html.LabelFor(m => m.Requeridos, Model.Requeridos.ToString())</td>    
-    <td>@Html.LabelFor(m => m.CantidadAnterior, Model.CantidadAnterior)</td>
-    <td>@Html.LabelFor(m => m.CantidadFinal, Model.CantidadFinal)</td>
+    <td>@Html.LabelFor(m => m.CantidadActual, Model.CantidadActual.ToString("n2"))</td>
+    <td>@Html.LabelFor(m => m.CantidadEntregada, Model.CantidadEntregada.ToString("n2"))</td>
     <td>
         @if (Model.Autorizado)
         {

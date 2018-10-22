@@ -7,6 +7,7 @@ namespace MVC.Presentacion.Models.OrdenCompra
 {
     public class OrdenCompraComplementoDTO : OrdenCompraDTO
     {
-      public decimal MontoAPagar { get; set; }
+        public decimal MontoAPagar { get; set; }
+        public List<ProductoOCDTO> ProductoOCDTO { get; set; }
     }
 }

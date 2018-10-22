@@ -52,7 +52,7 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.RegistroAlmacen(idEmpresa));
         }
-        [Route("buscar/almacen/requisicion/{idEmpresa}")]
+        [Route("buscar/almacen/requisicion/{idRequisicon}")]
         public HttpResponseMessage GetRequisiconAlmacen(short idRequisicon)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.BuscarRequsicionSalida(idRequisicon));

@@ -7,6 +7,7 @@ using Sagas.MainModule.Entidades;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.Servicios.Almacenes;
+using MVC.Presentacion.App_Code;
 
 namespace Application.MainModule.AdaptadoresDTO.Almacenes
 {
@@ -34,7 +35,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 IdRequisicion = r.IdRequisicion,
                 IdRequisicionEstatus = r.IdRequisicionEstatus,
                 NumeroRequisicion = r.NumeroRequisicion,
-                UsuarioSolicitante = r.Solicitante.Nombre,
+                UsuarioSolicitante = string.Concat(r.Solicitante.Nombre, " ", r.Solicitante.Apellido1),
                 MotivoRequisicion = r.MotivoRequisicion,
                 RequeridoEn = r.RequeridoEn,
                 FechaRequerida = r.FechaRequerida,
@@ -43,16 +44,18 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
         }
         public static AlmacenSalidaProductoDTO FromDTO(RequisicionProducto p)
         {
+            var almacen = ProductoAlmacenServicio.ObtenerAlmacen(p.IdProducto, p.Requisicion.IdEmpresa);
             return new AlmacenSalidaProductoDTO()
             {
                 IdRequisicion = p.IdRequisicion,
                 Orden = p.Orden,
                 IdProducto = p.IdProducto,
                 Descripcion = p.Producto.Descripcion,
+                Ubicacion = almacen.Ubicacion,
                 Requeridos = p.Cantidad,
                 CantidadEntregada = p.CantidadEntregada ?? 0,
                 UnidadMedida = p.Producto.UnidadMedida.Descripcion,
-                CantidadActual = ProductoAlmacenServicio.ObtenerAlmacen(p.IdProducto, p.Requisicion.IdEmpresa).Cantidad,
+                CantidadActual = almacen.Cantidad,
                 Autorizado = p.AutorizaEntrega ?? false,
             };
         }

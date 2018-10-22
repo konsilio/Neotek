@@ -18,6 +18,8 @@ namespace MVC.Presentacion.Models.Almacen
         public string UnidadMedida { get; set; }
         public string Ubicacion { get; set; }
         public decimal Requeridos { get; set; }
+        public decimal CantidadEntregada { get; set; }
+        public decimal CantidadActual { get; set; }
         public decimal CantidadAnterior { get; set; }
         public decimal CantidadFinal { get; set; }
         public string UrlDocSalida { get; set; }
