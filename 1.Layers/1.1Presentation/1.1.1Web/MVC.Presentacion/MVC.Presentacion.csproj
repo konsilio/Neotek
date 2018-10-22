@@ -11487,6 +11487,7 @@
     <Content Include="Views\Almacen\_SalidaRequisicionesPartial.cshtml" />
     <Content Include="Views\Almacen\Salida.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AlmacenSalidaDTO.cshtml" />
+    <Content Include="Views\Shared\_Perfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

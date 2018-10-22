@@ -13,5 +13,6 @@ namespace Application.MainModule.DTOs.Seguridad
         public int IdUsuario { get; set; }
         public bool SuperUsuario { get; set; }
         public bool AdminCentral { get; set; }
+        public string UrlImg { get; set; }
     }
 }

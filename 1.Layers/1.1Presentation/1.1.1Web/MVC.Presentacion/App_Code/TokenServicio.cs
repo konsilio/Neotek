@@ -48,5 +48,12 @@ namespace MVC.Presentacion.App_Code
 
             return EsSuperUsuario != null ? Convert.ToBoolean(EsSuperUsuario.Value) : false;
         }
+        public static string ObtenerNombre(string token)
+        {
+            var claims = ObtenerClaims(token);
+            var Nombre = claims.FirstOrDefault(x => x.Type.Equals(TokenEtiquetasEnum.NombreUsuario));
+
+            return  Nombre.Value;
+        }
     }
 }

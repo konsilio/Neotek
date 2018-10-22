@@ -42,6 +42,7 @@ namespace MVC.Presentacion.Controllers
                 if (respuesta.Exito)
                 {
                     Session["StringToken"] = respuesta.token;
+                    Session["Perfil"] = respuesta.Mensaje;
                     return View();
                 }
                 else
