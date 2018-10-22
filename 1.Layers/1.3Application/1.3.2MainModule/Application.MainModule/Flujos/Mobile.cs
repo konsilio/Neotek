@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sagas.MainModule.Entidades;
+using Application.MainModule.Servicios.Ventas;
 
 namespace Application.MainModule.Flujos
 {
@@ -367,6 +368,18 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
             return TraspasoServicio.Traspaso(dto,esFinal,TokenServicio.ObtenerIdEmpresa());
+        }
+
+        public RespuestaDto Estaciones()
+        {
+            var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
+            var puntosventa = CajaGeneralServicio.ObtenerPuntosVenta();
+            return null;
+        }
+
+        public RespuestaDto anticipo_y_cortes(bool esAnticipo)
+        {
+            return null;
         }
     }
 }

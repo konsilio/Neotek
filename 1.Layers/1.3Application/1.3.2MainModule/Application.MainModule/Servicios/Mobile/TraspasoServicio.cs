@@ -31,7 +31,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.FechaRegistro = DateTime.Now;
             adapter.DatosProcesados = false;
 
-            return null;//Queda pendiente ver el metodo que se utilizara para el traspaso
+            return AlmacenGasServicio.InsertarTraspaso(adapter);//Queda pendiente ver el metodo que se utilizara para el traspaso
         }
 
         public static int ObtenerOrden()

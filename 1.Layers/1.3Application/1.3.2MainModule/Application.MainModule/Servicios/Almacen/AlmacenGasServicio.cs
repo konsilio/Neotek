@@ -1534,5 +1534,10 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarTraspaso(claveOperacion);
         }
+
+        public static RespuestaDto InsertarTraspaso(AlmacenGasTraspaso dto)
+        {
+            return new AlmacenGasDataAccess().Insertar(dto);
+        }
     }
 }

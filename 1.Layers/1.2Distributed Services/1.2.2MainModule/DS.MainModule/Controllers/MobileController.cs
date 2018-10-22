@@ -251,5 +251,16 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.Traspaso(dto,esFinal),Request);
         }
+        //Anticipos y corte
+        [Route("catalogos/anticipo-y-corte/estaciones")]
+        public HttpResponseMessage GetEstaciones()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.Estaciones(),Request);
+        }
+        [Route("anticipos-y-cortes/{esAnticipo}")]
+        public HttpResponseMessage PostAnticipo(bool esAnticipo)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.anticipo_y_cortes(esAnticipo), Request);
+        }
     }
 }

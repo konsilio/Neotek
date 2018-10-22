@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs.Mobile;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
@@ -793,6 +794,28 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public AlmacenGasTraspaso BuscarTraspaso(string claveOperacion)
         {
             return uow.Repository<AlmacenGasTraspaso>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
+        }
+
+        public RespuestaDto Insertar(AlmacenGasTraspaso traspaso)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            try
+            {
+                uow.Repository<AlmacenGasTraspaso>().Insert(traspaso);
+                uow.SaveChanges();
+                _respuesta.Id = traspaso.IdCAlmacenGasEntrada;
+                _respuesta.EsInsercion = true;
+                _respuesta.Exito = true;
+                _respuesta.ModeloValido = true;
+                _respuesta.Mensaje = Exito.OK;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Exito = false;
+                _respuesta.Mensaje = string.Format(Error.C0002, "del la recarga.");
+                _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+            }
+            return _respuesta;
         }
     }
 }

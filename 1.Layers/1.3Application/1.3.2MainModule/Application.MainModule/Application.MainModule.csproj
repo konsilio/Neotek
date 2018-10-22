@@ -68,8 +68,10 @@
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\CalibracionAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\TraspasoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\VentasEstacionesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
     <Compile Include="DTOs\Almacen\AplicaAutoConsumoDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaCalibracionDto.cs" />
@@ -94,9 +96,12 @@
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
+    <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
     <Compile Include="DTOs\Mobile\AutoconsumoDTO.cs" />
     <Compile Include="DTOs\Mobile\CalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\CamionetaDto.cs" />
+    <Compile Include="DTOs\Mobile\CorteDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosAnticiposCorteDto.cs" />
     <Compile Include="DTOs\Mobile\DatosAutoconsumoDto.cs" />
     <Compile Include="DTOs\Mobile\DatosCalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\DatosRecargaDto.cs" />
