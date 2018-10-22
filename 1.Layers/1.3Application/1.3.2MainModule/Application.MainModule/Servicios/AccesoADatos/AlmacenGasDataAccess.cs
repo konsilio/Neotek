@@ -244,10 +244,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                             uow.Repository<AlmacenGasRecargaFoto>().Update(x)
                         );
 
-                    // Agregar al modelo de dominio AlmacenGasMovimiento
-                    //if (aplicaRecarga.AGMovimiento != null)
-                    //    uow.Repository<AlmacenGasMovimiento>().Insert(aplicaRecarga.MovInventario);
-                    if(uow.repositories.Count > 0)
+                    if (aplicaRecarga.MovimientoEntrada != null)
+                        uow.Repository<AlmacenGasMovimiento>().Insert(aplicaRecarga.MovimientoEntrada);
+
+                    if (aplicaRecarga.MovimientoSalida != null)
+                        uow.Repository<AlmacenGasMovimiento>().Insert(aplicaRecarga.MovimientoSalida);
+                                        
+                    if (uow.repositories.Count > 0)
                         uow.SaveChanges();
                     //_respuesta.Id = aplicaRecarga.IdCAlmacenGas;
                     //_respuesta.Exito = true;
@@ -292,9 +295,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                             uow.Repository<AlmacenGasTraspasoFoto>().Update(x)
                         );
 
-                    // Agregar al modelo de dominio AlmacenGasMovimiento
-                    //if (aplicaTraspaso.AGMovimiento != null)
-                    //    uow.Repository<AlmacenGasMovimiento>().Insert(aplicaTraspaso.MovInventario);
+                    if (aplicaTraspaso.MovimientoEntrada != null)
+                        uow.Repository<AlmacenGasMovimiento>().Insert(aplicaTraspaso.MovimientoEntrada);
+
+                    if (aplicaTraspaso.MovimientoSalida != null)
+                        uow.Repository<AlmacenGasMovimiento>().Insert(aplicaTraspaso.MovimientoSalida);
+
                     if (uow.repositories.Count > 0)
                         uow.SaveChanges();
                     //_respuesta.Id = aplicaTraspaso.IdCAlmacenGas;

@@ -28,7 +28,7 @@ namespace Application.MainModule.DTOs.Almacen
         public decimal SalidaLt { get; set; }
         public decimal CantidadAnteriorKg { get; set; }
         public decimal CantidadAnteriorLt { get; set; }
-        public decimal PorcentajeAnterior { get; set; }
+        public decimal? PorcentajeAnterior { get; set; }
         public decimal? P5000Anterior { get; set; }
         public decimal CAlmEntradaDiaKg { get; set; }
         public decimal CAlmEntradaDiaLt { get; set; }
@@ -84,6 +84,20 @@ namespace Application.MainModule.DTOs.Almacen
         public decimal RecargaAcumMesLt { get; set; }
         public decimal RecargaAcumAnioKg { get; set; }
         public decimal RecargaAcumAnioLt { get; set; }
+        public decimal TraspasoKg { get; set; }
+        public decimal TraspasoLt { get; set; }
+        public decimal TraspasoDiaKg { get; set; }
+        public decimal TraspasoDiaLt { get; set; }
+        public decimal TraspasoMesKg { get; set; }
+        public decimal TraspasoMesLt { get; set; }
+        public decimal TraspasoAnioKg { get; set; }
+        public decimal TraspasoAnioLt { get; set; }
+        public decimal TraspasoAcumDiaKg { get; set; }
+        public decimal TraspasoAcumDiaLt { get; set; }
+        public decimal TraspasoAcumMesKg { get; set; }
+        public decimal TraspasoAcumMesLt { get; set; }
+        public decimal TraspasoAcumAnioKg { get; set; }
+        public decimal TraspasoAcumAnioLt { get; set; }
 
         public string NombreOperador { get; set; }
     }
