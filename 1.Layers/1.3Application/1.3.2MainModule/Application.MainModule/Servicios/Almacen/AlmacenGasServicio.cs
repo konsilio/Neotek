@@ -1828,12 +1828,12 @@ namespace Application.MainModule.Servicios.Almacen
             return aplicaciones;
         }
 
-        public static AplicaTomaLecturaDto AplicarTomaLectura(AlmacenGasTomaLectura TomaLecturaInicial, List<AlmacenGasTomaLectura> TomaLecturasFinales)
+        public static AplicaTomaLecturaDto AplicarTomaLectura(AlmacenGasTomaLectura TomaLecturaInicial)
         {
             AplicaTomaLecturaDto apCaliDto = new AplicaTomaLecturaDto()
             {
                 TomaLecturaLecturaInicial = TomaLecturaInicial,
-                TomaLecturasFinales = TomaLecturasFinales,
+                //TomaLecturasFinales = TomaLecturasFinales,
                 unidadAlmacenGas = AlmacenGasServicio.ObtenerUnidadAlamcenGas(TomaLecturaInicial)
             };
 
@@ -1854,10 +1854,14 @@ namespace Application.MainModule.Servicios.Almacen
 
         public static AplicaTomaLecturaDto AplicarTomaLecturaProceso(AplicaTomaLecturaDto apLectDto)
         {
-            apLectDto.TomaLecturaLecturaFinal = apLectDto.TomaLecturasFinales.FirstOrDefault(x => x.IdCAlmacenGas.Equals(apLectDto.TomaLecturaLecturaInicial.IdCAlmacenGas));
+            //apLectDto.TomaLecturaLecturaFinal = apLectDto.TomaLecturasFinales.FirstOrDefault(x => x.IdCAlmacenGas.Equals(apLectDto.TomaLecturaLecturaInicial.IdCAlmacenGas));
 
-            if (apLectDto.TomaLecturaLecturaFinal == null)
-                return new AplicaTomaLecturaDto();
+            //if (apLectDto.TomaLecturaLecturaFinal == null)
+            //    return new AplicaTomaLecturaDto();
+
+            apLectDto.AlmacenGas = ObtenerAlmacenGasTotal(apLectDto.Empresa);
+
+            AlmacenGasMovimiento ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas, apLectDto.CalibracionLecturaFinal.FechaAplicacion.Value);
 
             switch (apLectDto.identidadUA)
             {
