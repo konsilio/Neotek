@@ -24,7 +24,7 @@ public class TraspasoEstacionInteractorImpl implements TraspasoEstacionInteracto
     }
 
     @Override
-    public void GetList(String token) {
+    public void GetList(String token,boolean esFinal) {
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()

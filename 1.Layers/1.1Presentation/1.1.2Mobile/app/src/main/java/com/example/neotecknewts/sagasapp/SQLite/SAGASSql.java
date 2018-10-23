@@ -15,6 +15,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 
 import java.util.DoubleSummaryStatistics;
@@ -65,6 +66,10 @@ public class SAGASSql extends SQLiteOpenHelper {
     private static final String TABLE_AUTOCONSUMO_IMAGENES = "autoconsumos_imagenes";
     private static final String TABLE_CALIBRACION = "calibracion";
     private static final String TABLE_CALIBRACION_IMAGENES = "calibracion_imagenes";
+    private static final String TABLE_TRASPASOS = "traspasos";
+    private static final String TABLE_TRASPASOS_IMAGENES = "traspasos_imagenes";
+    private static final String TABLE_ANTICIPOS = "anticipos";
+    private static final String TABLE_CORTES ="cortes";
 
     public static final String TIPO_RECARGA_CAMIONETA = "C";
     public static final String TIPO_RECARGA_ESTACION_CARBURACION =  "EC";
@@ -74,6 +79,8 @@ public class SAGASSql extends SQLiteOpenHelper {
     public static final String TIPO_AUTOCONSUMO_PIPAS = "ACP";
     public static final String TIPO_CALIBRACION_PIPA = "CALP";
     public static final String TIPO_CALIBRACION_ESTACION = "CALES";
+    public static final String TIPO_TRASPASO_ESTACION = "TEC";
+    public static final String TIPO_TRASPASO_PIPA = "TP";
 
     //endregion
 
@@ -422,9 +429,10 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
+
         //region Calibración
         db.execSQL("CREATE TABLE "+ TABLE_CALIBRACION+"(" +
-                        "Id PRIMARY KEY AUTOINCREMENT,"+
+                        "Id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                         "Tipo TEXT,"+
                         "ClaveOperacion TEXT,"+
                         "IdCAlmacenGas INTEGER,"+
@@ -433,20 +441,71 @@ public class SAGASSql extends SQLiteOpenHelper {
                         "NombreMedidor TEXT,"+
                         "PorcentajeCalibracion DOUBLE,"+
                         "IdDestinoCalibracion INTEGER,"+
-                        "IdDestinoCalibracion INTEGER,"+
                         "P5000 INTEGER,"+
                         "Porcentaje INTEGER,"+
                         "CantidadFotografias INTEGER,"+
+                        "Tipo TEXT,"+
+                        "Fecha DATETIME,"+
                         "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
-        //region Imagenes Calibración
+        //region Tabla de Imagenes Calibración
         db.execSQL("CREATE TABLE "+TABLE_CALIBRACION_IMAGENES+"(" +
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "ClaveOperacion TEXT,"+
                 "Url TEXT," +
                 "Imagen TEXT," +
                 "Falta BOOLEAN DEFAULT 1" +
+                ")");
+        //endregion
+
+        //region Traspasos
+        db.execSQL("CREATE TABLE "+TABLE_TRASPASOS+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT,"+
+                "CantidadFotos INTEGER,"+
+                "IdCAlmacenGasEntrada INTEGER,"+
+                "IdCAlmacenGasSalida INTEGER,"+
+                "IdTipoMedidorSalida INTEGER,"+
+                "NombreMedidor TEXT,"+
+                "P5000Entrada INTEGER,"+
+                "P5000Salida INTEGER,"+
+                "PorcentajeSalida DOUBLE,"+
+                "Falta BOOLEAN DEFAULT 1"+
+                ")",null);
+        //endregion
+        //region Tabla de Imagenes traspasos
+        db.execSQL("CREATE TABLE "+TABLE_TRASPASOS_IMAGENES+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "Imagen TEXT,"+
+                "Url TEXT,"+
+                "ClaveOperacion TEXT,"+
+                "Falta BOOLEAN DEFAULT 1"+
+                ")",null);
+
+        //endregion
+
+        //region Tabla de Anticipos
+        db.execSQL("CREATE TABLE "+TABLE_ANTICIPOS+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT,"+
+                "IdEstacion INTEGER," +
+                "Anticipo INTEGER," +
+                "Fecha DATETAIME," +
+                "Hora TEXT,"+
+                "Falta BOOLEAN DEFAULT 1"+
+                ")");
+        //endregion
+
+        //region Tabla de Cortes
+        db.execSQL("CREATE TABLE "+TABLE_CORTES+"(" +
+                "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "ClaveOperacion TEXT,"+
+                "Fecha DATE,"+
+                "IdEstacion INTEGER," +
+                "FechaCorte DATETAIME," +
+                "Hora TEXT,"+
+                "Falta BOOLEAN DEFAULT 1"+
                 ")");
         //endregion
     }
@@ -498,6 +557,10 @@ public class SAGASSql extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_AUTOCONSUMO_IMAGENES);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_CALIBRACION);
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_CALIBRACION_IMAGENES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_TRASPASOS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_TRASPASOS_IMAGENES);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_ANTICIPOS);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_CORTES);
         onCreate(db);
     }
     //endregion
@@ -1997,5 +2060,108 @@ public class SAGASSql extends SQLiteOpenHelper {
         return inserts;
     }
 
+    public Cursor GetRecargas() {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_RECARGAS,
+                null);
+    }
+
+    public Cursor GetTraspasos() {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_TRASPASOS,
+                null);
+    }
+
+    public  Long InsertTraspaso(TraspasoDTO traspasoDTO){
+        ContentValues values = new ContentValues();
+        values.put("ClaveOperacion",traspasoDTO.getClaveOperacion());
+        values.put("CantidadFotos",traspasoDTO.getCantidadDeFotos());
+        values.put("IdCAlmacenGasEntrada",traspasoDTO.getIdCAlmacenGasEntrada());
+        values.put("IdCAlmacenGasSalida",traspasoDTO.getIdCAlmacenGasSalida());
+        values.put("IdTipoMedidorSalida",traspasoDTO.getIdTipoMedidorSalida());
+        values.put("NombreMedidor",traspasoDTO.getNombreMedidor());
+        values.put("P5000Entrada",traspasoDTO.getP5000Entrada());
+        values.put("P5000Salida",traspasoDTO.getP5000Salida());
+        values.put("PorcentajeSalida",traspasoDTO.getPorcentajeSalida());
+        values.put("Fecha",traspasoDTO.getFecha().toString());
+        return this.getWritableDatabase().insert(
+                TABLE_TRASPASOS,
+                null,
+                values
+        );
+    }
+
+    public Cursor GetTraspasoByClaveOperacion(String claveOperacion){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_TRASPASOS+
+                "WHERE ClaveOperacion = '"+claveOperacion+"'",null);
+    }
+
+    public Integer EliminarTraspasos(String claveOperacion){
+        return this.getWritableDatabase().delete(
+                TABLE_TRASPASOS,
+                "WHERE ClaveOperacion = '"+claveOperacion+"'",
+                null
+        );
+    }
+
+    public Long[] InsertImagenesTraspaso(TraspasoDTO traspasoDTO) {
+        Long[] registros = new Long[traspasoDTO.getImagenes().size()];
+        for(int x = 0; x<traspasoDTO.getImagenes().size();x++){
+            ContentValues values = new ContentValues();
+            values.put("Imagen",traspasoDTO.getImagenes().get(x));
+            values.put("Url",traspasoDTO.getImagenesUri().get(x).toString());
+            values.put("ClaveOperacion",traspasoDTO.getClaveOperacion());
+            registros[x] = this.getWritableDatabase().insert(
+                    TABLE_TRASPASOS_IMAGENES,
+                    null,
+                    values
+            );
+        }
+        return registros;
+    }
+
+    public Cursor GetImagenesTraspaso(String claveOperacion){
+        return this.getReadableDatabase().rawQuery(
+                "SELECT * FROM "+TABLE_TRASPASOS_IMAGENES+"WHERE ClaveOperacion = '"+
+                        claveOperacion+"'",null
+        );
+    }
+
+    public Cursor GetAnticipos() {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_ANTICIPOS,
+                null);
+    }
+
+    public Cursor GetAnticipoByClaveOperacion(String claveOperacion){
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_ANTICIPOS+
+                "WHERE ClaveOperacion = '"+claveOperacion+"'",null);
+    }
+
+    public Integer EliminarAnticipo(String claveOperacion){
+        return this.getWritableDatabase().delete(
+                TABLE_ANTICIPOS,
+                "WHERE ClaveOperacion = '"+claveOperacion+"'",
+                null
+        );
+    }
+
+    public Cursor GetCortes() {
+        return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_CORTES,
+                null);
+    }
+
+    public Cursor GetCorte(String claveOperacion){
+        return  this.getReadableDatabase().rawQuery(
+                "SELECT * FROM "+TABLE_CORTES+
+                        "WHERE ClaveOperacion = '"+claveOperacion+"'",
+                null
+        );
+    }
+
+    public Integer EliminarCorte(String claveOperacion){
+        return this.getWritableDatabase().delete(
+                TABLE_CORTES,
+                "WHERE ClaveOperacion = '"+claveOperacion+"'",
+                null
+        );
+    }
     //endregion
 }

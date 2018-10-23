@@ -63,5 +63,11 @@ namespace Application.MainModule.Servicios.Mobile
 
             return EvaluarClaveOperacion(cal);
         }
+
+        public static RespuestaDto EvaluarClaveOperacion(TraspasoDto dto)
+        {
+            var tras = AlmacenGasServicio.ObtenerTraspaso(dto.ClaveOperacion);
+            return EvaluarClaveOperacion(tras); 
+        }
     }
 }

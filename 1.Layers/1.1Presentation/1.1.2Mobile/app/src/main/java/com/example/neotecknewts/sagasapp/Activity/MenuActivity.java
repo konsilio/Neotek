@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -12,12 +13,14 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.neotecknewts.sagasapp.Adapter.MenuAdapter;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Presenter.MenuPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.MenuPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Semaforo;
 import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.util.ArrayList;
@@ -46,6 +49,8 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
 
     //cuadro de progreso
     ProgressDialog progressDialog;
+
+    Semaforo semaforo;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,9 +148,25 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
                 getResources().getString(mensaje), true);
     }
+    @SuppressLint("NewApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main,menu);
+        semaforo = new Semaforo(this);
+        MenuItem pendientes = menu.findItem(R.id.pendientes);
+        MenuItem libres = menu.findItem(R.id.libres);
+        if(semaforo.VerificarEstatus()) {
+            pendientes.setVisible(true);
+            //pendientes.setTooltipText("Actualmente tienes registros pendientes en el dispositivo");
+            Toast.makeText(this,
+                    "Actualmente tienes registros pendientes en el dispositivo",
+                    Toast.LENGTH_LONG).show();
+        }else {
+            libres.setVisible(true);
+            //libres.setTooltipText("No tienes ningun registro pendiente");
+            Toast.makeText(this, "No tienes ningun registro pendiente",
+                    Toast.LENGTH_LONG).show();
+        }
         return true;
     }
 
