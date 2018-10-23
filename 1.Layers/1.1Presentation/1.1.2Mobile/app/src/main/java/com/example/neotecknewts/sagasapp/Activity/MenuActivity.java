@@ -126,6 +126,44 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.pendientes:
+                Tooltip.make(this,
+                        new Tooltip.Builder(101)
+                                .withStyleId(R.style.TooltipError)
+                                .anchor(new Point(size.x - 45,45), Tooltip.Gravity.BOTTOM)
+                                .closePolicy(new Tooltip.ClosePolicy()
+                                        .insidePolicy(true, false)
+                                        .outsidePolicy(true, false), 3000)
+                                .activateDelay(800)
+                                .showDelay(300)
+                                .text("Existen datos pendientes en el dispositivo")
+                                .maxWidth(500)
+                                .withArrow(true)
+                                .withOverlay(true)
+                                .typeface(Typeface.DEFAULT)
+                                .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+                                .build()
+                ).show();
+                return true;
+            case R.id.libres:
+                Tooltip.make(this,
+                        new Tooltip.Builder(101)
+                                .withStyleId(R.style.TooltipGood)
+                                .anchor(new Point(size.x - 45,45), Tooltip.Gravity.BOTTOM)
+                                .closePolicy(new Tooltip.ClosePolicy()
+                                        .insidePolicy(true, false)
+                                        .outsidePolicy(true, false), 3000)
+                                .activateDelay(800)
+                                .showDelay(300)
+                                .text("No tienes datos pendientes de enviar")
+                                .maxWidth(500)
+                                .withArrow(true)
+                                .withOverlay(true)
+                                .typeface(Typeface.DEFAULT)
+                                .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+                                .build()
+                ).show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
