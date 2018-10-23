@@ -11,6 +11,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +49,9 @@ public class TraspasoDTO implements Serializable{
 
     @SerializedName("CantidadDeFotos")
     private int CantidadDeFotos;
+
+    @SerializedName("FechaRegistro")
+    private Date Fecha;
 
     public TraspasoDTO(){
         this.Imagenes = new ArrayList<>();
@@ -140,5 +144,13 @@ public class TraspasoDTO implements Serializable{
 
     public void setCantidadDeFotos(int cantidadDeFotos) {
         CantidadDeFotos = cantidadDeFotos;
+    }
+
+    public Date getFecha() {
+        return Fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        Fecha = fecha;
     }
 }

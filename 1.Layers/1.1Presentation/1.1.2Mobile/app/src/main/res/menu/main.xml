@@ -6,7 +6,7 @@
         android:icon="@mipmap/ic_libre"
         android:orderInCategory="1"
         android:title=""
-        android:visible="true"
+        android:visible="false"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/pendientes"
