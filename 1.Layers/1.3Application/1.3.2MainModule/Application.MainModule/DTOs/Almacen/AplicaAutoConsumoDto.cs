@@ -47,8 +47,7 @@ namespace Application.MainModule.DTOs.Almacen
 
         public string Concepto { get; set; }// Revisar si puede ser catálogo de apoyo
 
-
-        public AlmacenGasMovimiento MovimientoEntrada { get; set; }
+                
         public AlmacenGasMovimiento MovimientoSalida { get; set; }
     }
 }

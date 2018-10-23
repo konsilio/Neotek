@@ -98,6 +98,34 @@ namespace Application.MainModule.DTOs.Almacen
         public decimal TraspasoAcumMesLt { get; set; }
         public decimal TraspasoAcumAnioKg { get; set; }
         public decimal TraspasoAcumAnioLt { get; set; }
+        public decimal AutoconsumoKg { get; set; }
+        public decimal AutoconsumoLt { get; set; }
+        public decimal AutoconsumoDiaKg { get; set; }
+        public decimal AutoconsumoDiaLt { get; set; }
+        public decimal AutoconsumoMesKg { get; set; }
+        public decimal AutoconsumoMesLt { get; set; }
+        public decimal AutoconsumoAnioKg { get; set; }
+        public decimal AutoconsumoAnioLt { get; set; }
+        public decimal AutoconsumoAcumDiaKg { get; set; }
+        public decimal AutoconsumoAcumDiaLt { get; set; }
+        public decimal AutoconsumoAcumMesKg { get; set; }
+        public decimal AutoconsumoAcumMesLt { get; set; }
+        public decimal AutoconsumoAcumAnioKg { get; set; }
+        public decimal AutoconsumoAcumAnioLt { get; set; }
+        public decimal CalibracionKg { get; set; }
+        public decimal CalibracionLt { get; set; }
+        public decimal CalibracionDiaKg { get; set; }
+        public decimal CalibracionDiaLt { get; set; }
+        public decimal CalibracionMesKg { get; set; }
+        public decimal CalibracionMesLt { get; set; }
+        public decimal CalibracionAnioKg { get; set; }
+        public decimal CalibracionAnioLt { get; set; }
+        public decimal CalibracionAcumDiaKg { get; set; }
+        public decimal CalibracionAcumDiaLt { get; set; }
+        public decimal CalibracionAcumMesKg { get; set; }
+        public decimal CalibracionAcumMesLt { get; set; }
+        public decimal CalibracionAcumAnioKg { get; set; }
+        public decimal CalibracionAcumAnioLt { get; set; }
 
         public string NombreOperador { get; set; }
     }
