@@ -486,14 +486,13 @@
                                 </h6>
                                 <p class="m-b-0" style="font-size:10px">
                                    @if (Session["Perfil"] != null)
-            {
+                                   {
                                         @Session["Perfil"].ToString().Split('|')[2]
-                                    }
+                                   }
                                     else
-                                    {
+                                   {
                                         <label>Error de carga</label>
-                                    }
-
+                                   }
                                 </p>
                             </div>
                         </div>
