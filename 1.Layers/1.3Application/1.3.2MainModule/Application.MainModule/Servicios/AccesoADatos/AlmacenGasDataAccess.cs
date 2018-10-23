@@ -555,6 +555,25 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                     && x.IdAlmacenGas.Equals(idAlmacenGas)).LastOrDefault();
         }
 
+        public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas, byte idTipoEvento, byte idTipoMovimiento)
+        {
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                && x.IdAlmacenGas.Equals(idAlmacenGas)
+                                                                && x.IdTipoEvento.Equals(idTipoEvento)
+                                                                && x.IdTipoMovimiento.Equals(idTipoMovimiento)).LastOrDefault();
+        }
+
+        public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas, byte idTipoEvento, byte idTipoMovimiento, short year, byte mes, byte dia)
+        {
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                && x.IdAlmacenGas.Equals(idAlmacenGas)
+                                                                && x.IdTipoEvento.Equals(idTipoEvento)
+                                                                && x.IdTipoMovimiento.Equals(idTipoMovimiento)
+                                                                && x.Year.Equals(year)
+                                                                && x.Mes.Equals(mes)
+                                                                && x.Dia.Equals(dia)).LastOrDefault();
+        }
+
         public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas, short year, byte mes, byte dia)
         {
             return BuscarMovimientosEnInventario(idEmpresa, idAlmacenGas, year, mes, dia).LastOrDefault();
@@ -758,6 +777,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<AlmacenGasTomaLectura> BuscarTodasLecturasNoProcesadas()
         {
             return uow.Repository<AlmacenGasTomaLectura>().Get(x => !x.DatosProcesados).ToList();
+        }
+        public List<AlmacenGasTomaLectura> BuscarTodasLecturasNoProcesadas(byte idTipoEvento)
+        {
+            return uow.Repository<AlmacenGasTomaLectura>().Get(x => x.IdTipoEvento.Equals(idTipoEvento)
+                                                                && !x.DatosProcesados).ToList();
         }
         public List<AlmacenGasCalibracion> BuscarTodasCalibracionesNoProcesadas()
         {

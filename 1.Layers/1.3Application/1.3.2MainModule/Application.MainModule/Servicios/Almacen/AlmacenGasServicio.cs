@@ -184,6 +184,10 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return new AlmacenGasDataAccess().BuscarTodasLecturasNoProcesadas();
         }
+        public static List<AlmacenGasTomaLectura> ObtenerLecturasNoProcesadas(byte idTipoEvento)
+        {
+            return new AlmacenGasDataAccess().BuscarTodasLecturasNoProcesadas(idTipoEvento);
+        }
         public static List<UnidadAlmacenGas> ObtenerEstaciones(short idEmpresa)
         {
             return new AlmacenGasDataAccess().BuscarTodosEstacionCarburacion(idEmpresa);
@@ -307,7 +311,7 @@ namespace Application.MainModule.Servicios.Almacen
 
             return ObtenerUnidadAlamcenGas(calibracion.IdCAlmacenGas);
         }
-        public static UnidadAlmacenGas ObtenerUnidadAlamcenGas(AlmacenGasTomaLectura tomaLectura)
+        public static UnidadAlmacenGas ObtenerUnidadAlmacenGas(AlmacenGasTomaLectura tomaLectura)
         {
             if (tomaLectura != null)
             {
@@ -451,12 +455,28 @@ namespace Application.MainModule.Servicios.Almacen
             return new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas);
         }
 
+        public static AlmacenGasMovimiento ObtenerUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas, byte idTipoEvento, byte idTipoMovimiento)
+        {
+            return new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas, idTipoEvento, idTipoMovimiento);
+        }
+
         public static AlmacenGasMovimiento ObtenerUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas, DateTime fecha)
         {
             var ulMov = new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
             if (ulMov != null) return ulMov;
 
             ulMov = ObtenerUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas);
+            if (ulMov != null) return ulMov;
+
+            return AlmacenGasAdapter.FromInit();
+        }
+
+        public static AlmacenGasMovimiento ObtenerUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas, byte idTipoEvento, byte idTipoMovimiento, DateTime fecha)
+        {
+            var ulMov = new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas, idTipoEvento, idTipoMovimiento, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
+            if (ulMov != null) return ulMov;
+
+            ulMov = ObtenerUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas, idTipoEvento, idTipoMovimiento);
             if (ulMov != null) return ulMov;
 
             return AlmacenGasAdapter.FromInit();
@@ -1811,57 +1831,61 @@ namespace Application.MainModule.Servicios.Almacen
             return fotos;
         }
 
-        public static List<AplicaTomaLecturaDto> AplicarTomaLectura()
+        public static List<AplicaTomaLecturaDto> AplicarTomaLecturaInicial()
         {
             List<AplicaTomaLecturaDto> aplicaciones = new List<AplicaTomaLecturaDto>();
-            List<AlmacenGasTomaLectura> TomaLecturasGas = ObtenerLecturasNoProcesadas();
+            List<AlmacenGasTomaLectura> TomaLecturasGas = ObtenerLecturasNoProcesadas(TipoEventoEnum.Inicial);
 
-            List<AlmacenGasTomaLectura> TomaLecturasGasIniciales = TomaLecturasGas.Where(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial)).ToList();
-            List<AlmacenGasTomaLectura> TomaLecturasGasFinales = TomaLecturasGas.Where(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final)).ToList();
-
-            if (TomaLecturasGasIniciales != null && TomaLecturasGasIniciales.Count > 0)
+            if (TomaLecturasGas != null && TomaLecturasGas.Count > 0)
             {
-                TomaLecturasGasIniciales.ForEach(x => aplicaciones.Add(AplicarTomaLectura(x, TomaLecturasGasFinales)));
+                TomaLecturasGas.ForEach(x => aplicaciones.Add(AplicarTomaLecturaInicial(x)));
                 //new AlmacenGasTomaLecturaDataAccess().Actualizar(aplicaciones);
             }
 
             return aplicaciones;
         }
 
-        public static AplicaTomaLecturaDto AplicarTomaLectura(AlmacenGasTomaLectura TomaLecturaInicial)
+        public static AplicaTomaLecturaDto AplicarTomaLecturaInicial(AlmacenGasTomaLectura TomaLecturaInicial)
         {
-            AplicaTomaLecturaDto apCaliDto = new AplicaTomaLecturaDto()
+            AplicaTomaLecturaDto apLecturaDto = new AplicaTomaLecturaDto()
             {
                 TomaLecturaLecturaInicial = TomaLecturaInicial,
-                //TomaLecturasFinales = TomaLecturasFinales,
-                unidadAlmacenGas = AlmacenGasServicio.ObtenerUnidadAlamcenGas(TomaLecturaInicial)
+                unidadAlmacenGas = AlmacenGasServicio.ObtenerUnidadAlmacenGas(TomaLecturaInicial)
             };
 
-            apCaliDto.Empresa = EmpresaServicio.Obtener(apCaliDto.unidadAlmacenGas);
-            apCaliDto = AplicarTomaLectura(apCaliDto);
+            apLecturaDto.Empresa = EmpresaServicio.Obtener(apLecturaDto.unidadAlmacenGas);
+            apLecturaDto = AplicarTomaLecturaInicial(apLecturaDto);
 
-            return apCaliDto;
+            return apLecturaDto;
         }
 
-        public static AplicaTomaLecturaDto AplicarTomaLectura(AplicaTomaLecturaDto apLectDto)
+        public static AplicaTomaLecturaDto AplicarTomaLecturaInicial(AplicaTomaLecturaDto apLectDto)
         {
             apLectDto.identidadUA = IdentificarTipoUnidadAlamcenGas(apLectDto.unidadAlmacenGas);
-            AplicarTomaLecturaProceso(apLectDto);
+            AplicarTomaLecturaInicialProceso(apLectDto);
 
             new AlmacenGasDataAccess().Actualizar(apLectDto);
             return apLectDto;
         }
 
-        public static AplicaTomaLecturaDto AplicarTomaLecturaProceso(AplicaTomaLecturaDto apLectDto)
+        public static AplicaTomaLecturaDto AplicarTomaLecturaInicialProceso(AplicaTomaLecturaDto apLectDto)
         {
-            //apLectDto.TomaLecturaLecturaFinal = apLectDto.TomaLecturasFinales.FirstOrDefault(x => x.IdCAlmacenGas.Equals(apLectDto.TomaLecturaLecturaInicial.IdCAlmacenGas));
+            apLectDto.AlmacenGas = ObtenerAlmacenGasTotal(apLectDto.Empresa.IdEmpresa);
+            var fecha = apLectDto.TomaLecturaLecturaInicial.FechaAplicacion.AddDays(-1);
+            AlmacenGasMovimiento ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas, TipoEventoEnum.TomaLectura, TipoMovimientoEnum.LectInicial, apLectDto.TomaLecturaLecturaInicial.FechaAplicacion);
+            if (ulMov.IdEmpresa > 0)
+            {
+                ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas, TipoEventoEnum.TomaLectura, TipoMovimientoEnum.LectFinal, apLectDto.TomaLecturaLecturaInicial.FechaAplicacion);
+                if (ulMov.IdEmpresa <= 0)
+                { }
 
-            //if (apLectDto.TomaLecturaLecturaFinal == null)
-            //    return new AplicaTomaLecturaDto();
+            }
 
-            apLectDto.AlmacenGas = ObtenerAlmacenGasTotal(apLectDto.Empresa);
 
-            AlmacenGasMovimiento ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas, apLectDto.CalibracionLecturaFinal.FechaAplicacion.Value);
+                ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas, TipoEventoEnum.TomaLectura, TipoMovimientoEnum.LectFinal, fecha);
+
+            if (ulMov.IdEmpresa <= 0)
+                return new AplicaTomaLecturaDto();
 
             switch (apLectDto.identidadUA)
             {
