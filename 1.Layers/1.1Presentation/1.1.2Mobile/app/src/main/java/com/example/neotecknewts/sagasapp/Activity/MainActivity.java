@@ -183,10 +183,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
     public void startActivity(ArrayList<MenuDTO> menuDTOs){
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
         intent.putExtra("lista",menuDTOs);
-        ActivityOptions options =
-                ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-        startActivity(intent,options.toBundle());
+        startActivity(intent);
     }
 
 

@@ -472,7 +472,8 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "PorcentajeSalida DOUBLE,"+
                 "Tipo TEXT,"+
                 "Fecha TEXT,"+
-                "Falta BOOLEAN DEFAULT 1"+
+                "Falta BOOLEAN DEFAULT 1,"+
+                "EsFinal BOOLEAN"+
                 ")");
         //endregion
         //region Tabla de Imagenes traspasos
@@ -2071,7 +2072,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                 null);
     }
 
-    public  Long InsertTraspaso(TraspasoDTO traspasoDTO){
+    public  Long InsertTraspaso(TraspasoDTO traspasoDTO,boolean esFinal,String tipo){
         ContentValues values = new ContentValues();
         values.put("ClaveOperacion",traspasoDTO.getClaveOperacion());
         values.put("CantidadFotos",traspasoDTO.getCantidadDeFotos());
@@ -2083,6 +2084,8 @@ public class SAGASSql extends SQLiteOpenHelper {
         values.put("P5000Salida",traspasoDTO.getP5000Salida());
         values.put("PorcentajeSalida",traspasoDTO.getPorcentajeSalida());
         values.put("Fecha",traspasoDTO.getFecha().toString());
+        values.put("EsFinal",esFinal);
+        values.put("Tipo",tipo);
         return this.getWritableDatabase().insert(
                 TABLE_TRASPASOS,
                 null,
@@ -2099,6 +2102,14 @@ public class SAGASSql extends SQLiteOpenHelper {
         return this.getWritableDatabase().delete(
                 TABLE_TRASPASOS,
                 "WHERE ClaveOperacion = '"+claveOperacion+"'",
+                null
+        );
+    }
+
+    public  Integer EliminarImagenesTraspasos(String claveOperacion){
+        return this.getWritableDatabase().delete(
+                TABLE_TRASPASOS_IMAGENES,
+                " WHERE ClaveOperacion = '"+claveOperacion+"'",
                 null
         );
     }
@@ -2121,7 +2132,7 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Cursor GetImagenesTraspaso(String claveOperacion){
         return this.getReadableDatabase().rawQuery(
-                "SELECT * FROM "+TABLE_TRASPASOS_IMAGENES+"WHERE ClaveOperacion = '"+
+                "SELECT * FROM "+TABLE_TRASPASOS_IMAGENES+" WHERE ClaveOperacion = '"+
                         claveOperacion+"'",null
         );
     }
@@ -2133,13 +2144,13 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Cursor GetAnticipoByClaveOperacion(String claveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_ANTICIPOS+
-                "WHERE ClaveOperacion = '"+claveOperacion+"'",null);
+                " WHERE ClaveOperacion = '"+claveOperacion+"'",null);
     }
 
     public Integer EliminarAnticipo(String claveOperacion){
         return this.getWritableDatabase().delete(
                 TABLE_ANTICIPOS,
-                "WHERE ClaveOperacion = '"+claveOperacion+"'",
+                " WHERE ClaveOperacion = '"+claveOperacion+"'",
                 null
         );
     }
@@ -2152,7 +2163,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetCorte(String claveOperacion){
         return  this.getReadableDatabase().rawQuery(
                 "SELECT * FROM "+TABLE_CORTES+
-                        "WHERE ClaveOperacion = '"+claveOperacion+"'",
+                        " WHERE ClaveOperacion = '"+claveOperacion+"'",
                 null
         );
     }
@@ -2160,7 +2171,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarCorte(String claveOperacion){
         return this.getWritableDatabase().delete(
                 TABLE_CORTES,
-                "WHERE ClaveOperacion = '"+claveOperacion+"'",
+                " WHERE ClaveOperacion = '"+claveOperacion+"'",
                 null
         );
     }
