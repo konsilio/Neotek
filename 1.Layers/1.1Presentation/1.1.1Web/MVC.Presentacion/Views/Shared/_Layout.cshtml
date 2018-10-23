@@ -461,15 +461,36 @@
                         <div class="user-info m-b-20">
                             <div class="image">
                                 <a href="profile.html">
-                                    <img src="../../fonts/Logo GMG.JPG" alt="User">
+                                    @if (Session["Perfil"] != null)
+                                    {
+                                        <img id="@Session["Perfil"].ToString().Split('|')[0]" src="@Session["Perfil"].ToString().Split('|')[0]" />
+                                    }
+                                    else
+                                    {
+                                        <img src="../../fonts/Logo GMG.JPG" alt="User">
+                                    }
                                 </a>
                             </div>
                             <div class="detail">
                                 <h6>
-                                    <asp:Label ID="lblNombre" Text="Michael" />
+                                    @if (Session["Perfil"] != null)
+                                    {
+                                        @Session["Perfil"].ToString().Split('|')[1]
+                                    }
+                                    else
+                                    {
+                                        <label>Error de carga</label>
+                                    }
                                 </h6>
-                                <p class="m-b-0">
-                                    <asp:Label ID="lblUsuario" Text="-----"></asp:Label>
+                                <p class="m-b-0" style="font-size:10px">
+                                    @if (Session["Perfil"] != null)
+                                    {
+                                        @Session["Perfil"].ToString().Split('|')[2]
+                                    }
+                                    else
+                                    {
+                                        <label>Error de carga</label>
+                                    }
                                 </p>
                             </div>
                         </div>
@@ -545,6 +566,5 @@
 
 <script src="~/assets/plugins/momentjs/moment.js"></script>
 <script src="~/assets/bundles/mainscripts.bundle.js"></script>
-
 
 @Styles.Render("~/Content/css")

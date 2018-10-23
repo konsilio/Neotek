@@ -41,14 +41,14 @@ namespace Application.MainModule.Servicios.Seguridad
                     new Claim(TokenEtiquetasEnum.EsAdminCentral, usuario.AdminCentral ? "true": "false"),
                     new Claim(TokenEtiquetasEnum.EsSuperUsuario, usuario.SuperUsuario ? "true": "false"),
                 };
-
+               
                 var min = Math.Truncate(FechasFunciones.ObtenerMinutosEntreDosFechas(DateTime.Now, new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59)));
-
+                var us = UsuarioServicio.Obtener(usuario.IdUsuario);
                 return new RespuestaAutenticacionDto()
                 {
                     IdUsuario = usuario.IdUsuario,
                     Exito = true,
-                    Mensaje = Exito.OK,
+                    Mensaje = string.Concat(us.Empresa.UrlLogotipo180px, "|", us.Nombre, " ", us.Apellido1, "|", us.NombreUsuario),
                     token = TokenGenerator.GenerateTokenJwt(claims, autDto.Password, Convert.ToInt32(min).ToString())
                 };
             }
@@ -72,9 +72,7 @@ namespace Application.MainModule.Servicios.Seguridad
                 Mensaje = aut.Mensaje,
                 token = aut.token,
                 listMenu = aut.Exito ? MenuServicio.Crear(aut.IdUsuario) : null,
-            };
-
-        
+            };        
         }       
 
         private static UsuarioAplicacionDto AutenticarUsuarioDeEmpresa(AutenticacionDto autDto)
@@ -82,12 +80,13 @@ namespace Application.MainModule.Servicios.Seguridad
             var usuario = new UsuarioDataAccess().Buscar(autDto.IdEmpresa, autDto.Usuario, autDto.Password);
             if (usuario != null)
             {
-                var autUsuario =  new UsuarioAplicacionDto()
+                var autUsuario = new UsuarioAplicacionDto()
                 {
                     autenticado = true,
                     SuperUsuario = usuario.EsSuperAdmin,
                     IdEmpresa = usuario.IdEmpresa,
-                    IdUsuario = usuario.IdUsuario,            
+                    IdUsuario = usuario.IdUsuario,
+                    UrlImg = usuario.Empresa.UrlLogotipo180px,      
                 };
 
                 if (usuario.EsAdministracionCentral)
