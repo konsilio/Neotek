@@ -433,7 +433,6 @@ public class SAGASSql extends SQLiteOpenHelper {
         //region Calibración
         db.execSQL("CREATE TABLE "+ TABLE_CALIBRACION+"(" +
                         "Id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                        "Tipo TEXT,"+
                         "ClaveOperacion TEXT,"+
                         "IdCAlmacenGas INTEGER,"+
                         "IdTipoMedidor INTEGER,"+
@@ -442,7 +441,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                         "PorcentajeCalibracion DOUBLE,"+
                         "IdDestinoCalibracion INTEGER,"+
                         "P5000 INTEGER,"+
-                        "Porcentaje INTEGER,"+
+                        "Porcentaje DOUBLE,"+
                         "CantidadFotografias INTEGER,"+
                         "Tipo TEXT,"+
                         "Fecha DATETIME,"+
@@ -471,8 +470,10 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "P5000Entrada INTEGER,"+
                 "P5000Salida INTEGER,"+
                 "PorcentajeSalida DOUBLE,"+
+                "Tipo TEXT,"+
+                "Fecha TEXT,"+
                 "Falta BOOLEAN DEFAULT 1"+
-                ")",null);
+                ")");
         //endregion
         //region Tabla de Imagenes traspasos
         db.execSQL("CREATE TABLE "+TABLE_TRASPASOS_IMAGENES+"(" +
@@ -481,7 +482,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Url TEXT,"+
                 "ClaveOperacion TEXT,"+
                 "Falta BOOLEAN DEFAULT 1"+
-                ")",null);
+                ")");
 
         //endregion
 
@@ -2091,7 +2092,7 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Cursor GetTraspasoByClaveOperacion(String claveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_TRASPASOS+
-                "WHERE ClaveOperacion = '"+claveOperacion+"'",null);
+                " WHERE ClaveOperacion = '"+claveOperacion+"'",null);
     }
 
     public Integer EliminarTraspasos(String claveOperacion){

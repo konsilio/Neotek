@@ -3,6 +3,8 @@ package com.example.neotecknewts.sagasapp.Activity;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -11,9 +13,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.neotecknewts.sagasapp.Adapter.MenuAdapter;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
@@ -25,6 +27,8 @@ import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.sephiroth.android.library.tooltip.Tooltip;
 
 /**
  * Created by neotecknewts on 02/08/18.
@@ -51,6 +55,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     ProgressDialog progressDialog;
 
     Semaforo semaforo;
+    Point size;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,8 +113,10 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         //DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.HORIZONTAL);
         DividerItemDecoration decoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.HORIZONTAL                                                                                                                           );
         recyclerView.addItemDecoration(decoration);
-
-
+        semaforo = new Semaforo(this);
+        Display display = getWindowManager().getDefaultDisplay();
+        size = new Point();
+        display.getSize(size);
 
     }
 
@@ -118,6 +125,44 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
+                return true;
+            case R.id.pendientes:
+                Tooltip.make(this,
+                        new Tooltip.Builder(101)
+                                .withStyleId(R.style.TooltipError)
+                                .anchor(new Point(size.x - 45,45), Tooltip.Gravity.BOTTOM)
+                                .closePolicy(new Tooltip.ClosePolicy()
+                                        .insidePolicy(true, false)
+                                        .outsidePolicy(true, false), 3000)
+                                .activateDelay(800)
+                                .showDelay(300)
+                                .text("Existen datos pendientes en el dispositivo")
+                                .maxWidth(500)
+                                .withArrow(true)
+                                .withOverlay(true)
+                                .typeface(Typeface.DEFAULT)
+                                .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+                                .build()
+                ).show();
+                return true;
+            case R.id.libres:
+                Tooltip.make(this,
+                        new Tooltip.Builder(101)
+                                .withStyleId(R.style.TooltipGood)
+                                .anchor(new Point(size.x - 45,45), Tooltip.Gravity.BOTTOM)
+                                .closePolicy(new Tooltip.ClosePolicy()
+                                        .insidePolicy(true, false)
+                                        .outsidePolicy(true, false), 3000)
+                                .activateDelay(800)
+                                .showDelay(300)
+                                .text("No tienes datos pendientes de enviar")
+                                .maxWidth(500)
+                                .withArrow(true)
+                                .withOverlay(true)
+                                .typeface(Typeface.DEFAULT)
+                                .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+                                .build()
+                ).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -152,20 +197,48 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main,menu);
-        semaforo = new Semaforo(this);
+
         MenuItem pendientes = menu.findItem(R.id.pendientes);
         MenuItem libres = menu.findItem(R.id.libres);
         if(semaforo.VerificarEstatus()) {
             pendientes.setVisible(true);
-            //pendientes.setTooltipText("Actualmente tienes registros pendientes en el dispositivo");
-            Toast.makeText(this,
-                    "Actualmente tienes registros pendientes en el dispositivo",
-                    Toast.LENGTH_LONG).show();
+            Tooltip.make(this,
+                    new Tooltip.Builder(101)
+                            .withStyleId(R.style.TooltipError)
+                            .anchor(new Point(size.x - 45,45), Tooltip.Gravity.BOTTOM)
+                            .closePolicy(new Tooltip.ClosePolicy()
+                                    .insidePolicy(true, false)
+                                    .outsidePolicy(true, false), 3000)
+                            .activateDelay(800)
+                            .showDelay(300)
+                            .text("Existen datos pendientes en el dispositivo")
+                            .maxWidth(500)
+                            .withArrow(true)
+                            .withOverlay(true)
+                            .typeface(Typeface.DEFAULT)
+                            .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+                            .build()
+            ).show();
         }else {
             libres.setVisible(true);
-            //libres.setTooltipText("No tienes ningun registro pendiente");
-            Toast.makeText(this, "No tienes ningun registro pendiente",
-                    Toast.LENGTH_LONG).show();
+
+            Tooltip.make(this,
+                    new Tooltip.Builder(101)
+                            .withStyleId(R.style.TooltipGood)
+                            .anchor(new Point(size.x - 45,45), Tooltip.Gravity.BOTTOM)
+                            .closePolicy(new Tooltip.ClosePolicy()
+                                    .insidePolicy(true, false)
+                                    .outsidePolicy(true, false), 3000)
+                            .activateDelay(800)
+                            .showDelay(300)
+                            .text("No tienes datos pendientes de enviar")
+                            .maxWidth(500)
+                            .withArrow(true)
+                            .withOverlay(true)
+                            .typeface(Typeface.DEFAULT)
+                            .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+                            .build()
+            ).show();
         }
         return true;
     }
