@@ -1,6 +1,6 @@
 ﻿@model MVC.Presentacion.Models.Requisicion.RequisicionDTO
 @{
-    string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdminCentral).Equals(false) ? "disabled" : "";
+    string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdmin).Equals(false) ? "disabled" : "";
     string EnabledEsNueva = Convert.ToBoolean(ViewBag.EsNueva).Equals(true) ? "" : "disabled";
     string txtbutton = ViewBag.BtnCrear == null ? "Crear" : ViewBag.BtnCrear;
 }
@@ -36,18 +36,26 @@
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="card">
                                 <div class="header">
-                                   <strong>Crear</strong> nueva requisición
+                                    <strong>Crear</strong> nueva requisición
                                 </div>
                                 <div class="body">
                                     <div class="row clearfix">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" @EnabledAdminCentral data-live-search="true">
-                                                    @foreach (var lst in ViewBag.Empresas)
-                                                    {
-                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                                    }
-                                                </select>
+                                                @if (ViewBag.EsAdmin)
+                                                {
+                                                    <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                        @foreach (var lst in ViewBag.Empresas)
+                                                        {
+                                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                        }
+                                                    </select>
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" class="form-control" disabled value="@ViewBag.Empresas" />
+                                                    @Html.HiddenFor(m => m.IdEmpresa)
+                                                }
                                                 @Html.HiddenFor(m => m.IdEmpresa)
                                             </div>
                                         </div>
@@ -65,7 +73,7 @@
                                             <b>Fecha requerida:</b>
                                             <div class="input-group">
                                                 <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
-                                                @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })                                               
+                                                @Html.TextBoxFor(c => c.FechaRequerida, new { @class = "form-control date", @placeholder = "formato: dd/mm/aaaa" })
                                             </div>
                                             @Html.ValidationMessageFor(m => m.FechaRequerida, "", new { @class = "alert-danger" })
                                         </div>
@@ -115,51 +123,50 @@
                                         <div class="row clearfix">
                                             <div class="col-lg-2">
                                                 <b>Tipo de compra:</b>
-                                                <select name="IdTipoProducto" id="selectTipo" class="form-control show-tick" onchange='filtrarProd()'>
+                                                <select name="IdTipoProducto" id="selectTipo" class="form-control z-index show-tick" onchange='filtrarProd()'>
+                                                    <option value="0">Seleccione</option>
                                                     <option value="2">Producto</option>
                                                     <option value="3">Servicio</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-4">
                                                 <b>Producto:</b>
-                                                <select id="productos" name="IdProducto" class="form-control z-index show-tick selectpicker" data-live-search="true">
-                                                    <option value="0">Seleccione uno</option>
-                                                    @if (ViewBag.Productos != null)
-                                                    {
-                                                        foreach (var lst in ViewBag.Productos)
+                                                <select id="productos" name="IdProducto" class="form-control z-index show-tick" data-live-search="true">
+                                                    <option value="0">No hay productos</option>
+                                                    @*@if (ViewBag.Productos != null)
                                                         {
-                                                            if (Model != null)
+                                                            foreach (var lst in ViewBag.Productos)
                                                             {
-                                                                if (lst.IdProducto == Model.IdProducto)
+                                                                if (Model != null)
                                                                 {
-                                                                    <option value="@lst.IdProducto" selected>@lst.Descripcion</option>
+                                                                    if (lst.IdProducto == Model.IdProducto)
+                                                                    {
+                                                                        <option value="@lst.IdProducto" selected>@lst.Descripcion</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <option value="@lst.IdProducto">@lst.Descripcion</option>
+                                                                    }
                                                                 }
                                                                 else
                                                                 {
                                                                     <option value="@lst.IdProducto">@lst.Descripcion</option>
                                                                 }
                                                             }
-                                                            else
-                                                            {
-                                                                <option value="@lst.IdProducto">@lst.Descripcion</option>
-                                                            }
-                                                        }
-                                                    }
+                                                        }*@
                                                 </select>
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-md-2">
                                                 <strong>
-                                                    <label> Cantidad: <b id="unidadPord"> </b> </label>
+                                                    <label> Cantidad: <b id="unidadPord"></b> </label>
                                                 </strong>
-                                                <div class="form-group">
-                                                    <input type="number" id="Cantidad" class="form-control" placeholder="Cantidad" name="Cantidad" value="@Model.Cantidad" />
-                                                </div>
+                                                @Html.TextBoxFor(m => m.Cantidad, Model.Cantidad.ToString(), new { @class="form-control", @type="number" })
+                                                @*<input  id="Cantidad" class="form-control number" placeholder="Cantidad" name="Cantidad" value="@Model.Cantidad" />*@
                                                 @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "alert-danger" })
-                                                @*<asp:Label runat="server" ID="reqCant" CssClass="alert-danger" Visible="false" Text="Campo requerido" />*@
                                             </div>
                                             <div class="col-lg-3">
                                                 <b>Centro de costo:</b>
-                                                <select class="form-control z-index show-tick selectpicker" data-live-search="true" name="IdCentroCosto">
+                                                <select class="form-control z-index show-tick" data-live-search="true" name="IdCentroCosto">
                                                     <option value="0">Seleccione uno</option>
                                                     @foreach (var lst in ViewBag.CentrosCostos)
                                                     {
@@ -198,7 +205,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    }                                    
+                                    }
                                     <!--Grid productos agregados nueva requisicion-->
                                     @if (Model.Productos != null)
                                     {

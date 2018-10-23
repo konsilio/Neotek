@@ -8,6 +8,8 @@ var Busqueda = function () {
     var url = "/Requisicion/BuscarPorNumeroRequisicion";
     var clave = $('#txtNumRequisicion').val();
     var id = $('#ddlEmpresas').find('option:selected').val();
+    if (typeof id === "undefined")
+        id = 0;
     var str = '';
     $.getJSON(url, { numRequisicon: clave, idEmpresa: id }, function (data) {
         $("#contenido").empty();

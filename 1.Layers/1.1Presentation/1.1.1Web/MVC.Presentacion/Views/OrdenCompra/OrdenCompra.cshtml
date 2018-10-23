@@ -3,11 +3,6 @@
 
 <html>
 <head>
-
-    <style>
-        .calculaPrecio {
-        }
-    </style>
     <script type="text/javascript">
         var CalcularImporte = function () {
 
@@ -76,7 +71,6 @@
 
     </script>
 </head>
-
 <body>
     @using (Html.BeginForm("CrearOrdenCompra", "OrdenCompra", FormMethod.Post))
     {
@@ -183,9 +177,9 @@
                                     </div>
                                 </div>
                             }
-                            <div class="row clearfix">
+                            <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
-                                    <table class="table table-hover">
+                                    <table class="table table-bordered">
                                         <thead>
                                             <tr>
                                                 <td><b>Tipo</b></td>
@@ -290,6 +284,6 @@
         </div>
     }
 </body>
-@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
-@Scripts.Render("~/Scripts/jquery-ui.js")
+@*@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+@Scripts.Render("~/Scripts/jquery-ui.js")*@
 </html>

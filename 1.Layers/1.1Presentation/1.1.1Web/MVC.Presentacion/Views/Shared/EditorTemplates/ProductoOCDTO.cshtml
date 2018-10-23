@@ -11,7 +11,6 @@
 @Html.HiddenFor(m => m.EsGas)
 @Html.HiddenFor(m => m.EsTransporteGas)
 @Html.HiddenFor(m => m.EsActivoVenta)
-
 <tr>
     <td>@Model.ProductoServicioTipo</td>
     <td>@Model.Producto</td>
@@ -22,8 +21,8 @@
     <td>@Model.UnidadMedida</td>
     <td>@Model.Aplicacion</td>
     <td>@Model.CentroCosto</td>
-    <td width="350px">
-    <select class="selectpicker" data-live-search="true"  name="IdProveedor">
+    <td>
+    <select class="selectpicker show-tick" data-live-search="true"  width="350px"  name="IdProveedor">
         @foreach (var item in ViewBag.Proveedores)
         {
             <option value="@item.Value">@item.Text</option>

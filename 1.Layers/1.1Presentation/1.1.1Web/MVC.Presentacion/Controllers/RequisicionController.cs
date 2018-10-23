@@ -35,11 +35,14 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult Requisicion(RequisicionDTO model = null)
         {
-            if (Session["StringToken"] == null) return View("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             ViewBag.EsNueva = true;
-            ViewBag.EsAdminCentral = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
             ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
             ViewBag.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(tkn);
@@ -49,7 +52,7 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult RequisicionAlternativa(int? id, byte? estatus)
         {
-            if (Session["StringToken"] == null) return View("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var model = RequisicionServicio.RquisicionAlternativa(id.Value, estatus.Value, tkn);
             ViewBag.EsNueva = false;
@@ -72,7 +75,7 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult RequisicionRevision(int? id, byte? estatus)
         {
-            if (Session["StringToken"] == null) return View("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var model = RequisicionServicio.RequisicionRevision(id.Value, estatus.Value, tkn);
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
@@ -110,7 +113,7 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult Autorizacion(RequisicionAutorizacionModel model = null)
         {
-            if (Session["StringToken"] == null) return View("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = RequisicionServicio.FinalizarAutorizacion(model, tkn);
             if (respuesta.Exito)
@@ -130,7 +133,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.EsNueva = true;
-            ViewBag.EsAdminCentral = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
             ViewBag.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(tkn);
             var newModel = RequisicionServicio.AgregarProducto(model, Session["StringToken"].ToString());
@@ -139,7 +142,7 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult Editar(RequisicionDTO model, int id)
         {
-            if (Session["StringToken"] == null) return View("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var newModel = RequisicionServicio.ActivarEditar(model, id, (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"], tkn);
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
@@ -152,7 +155,7 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult Borrar(RequisicionDTO model, int id)
         {
-            if (Session["StringToken"] == null) return View("Index", "Home", AutenticacionServicio.InitIndex(new LoginModel()));
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var newModel = RequisicionServicio.ActivarBorrar(model, id, (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"], tkn);
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
@@ -186,7 +189,7 @@ namespace MVC.Presentacion.Controllers
                 return View("Requisicion", model);
             }
         }
-        public ActionResult CrearCancelar(RequisicionModel model)
+        public ActionResult CrearCancelar(int id)
         {
             return View();
         }
@@ -214,6 +217,8 @@ namespace MVC.Presentacion.Controllers
         public JsonResult BuscarPorNumeroRequisicion(string numRequisicon, short idEmpresa)
         {
             tkn = Session["StringToken"].ToString();
+            if (idEmpresa.Equals(0))
+                idEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
             var list = RequisicionServicio.BuscarRequisiciones(idEmpresa, tkn)
                 .Where(req => req.NumeroRequisicion.Contains(numRequisicon))
                 .OrderByDescending(x => x.IdRequisicion).ToList();
