@@ -462,9 +462,8 @@
                             <div class="image">
                                 <a href="profile.html">
                                     @if (Session["Perfil"] != null)
-            {
+                                    {
                                         <img id="@Session["Perfil"].ToString().Split('|')[0]" src="@Session["Perfil"].ToString().Split('|')[0]" />
-                                        @*<img src="@ViewBag.Logo" alt="User">*@
                                     }
                                     else
                                     {
@@ -474,25 +473,24 @@
                             </div>
                             <div class="detail">
                                 <h6>
-                                  @if (Session["Perfil"] != null)
-                                  {
-                                      @Session["Perfil"].ToString().Split('|')[1]
+                                    @if (Session["Perfil"] != null)
+                                    {
+                                        @Session["Perfil"].ToString().Split('|')[1]
                                     }
-                                  else
-                                  {
+                                    else
+                                    {
                                         <label>Error de carga</label>
                                     }
-
                                 </h6>
                                 <p class="m-b-0" style="font-size:10px">
-                                   @if (Session["Perfil"] != null)
-                                   {
+                                    @if (Session["Perfil"] != null)
+                                    {
                                         @Session["Perfil"].ToString().Split('|')[2]
-                                   }
+                                    }
                                     else
-                                   {
+                                    {
                                         <label>Error de carga</label>
-                                   }
+                                    }
                                 </p>
                             </div>
                         </div>
