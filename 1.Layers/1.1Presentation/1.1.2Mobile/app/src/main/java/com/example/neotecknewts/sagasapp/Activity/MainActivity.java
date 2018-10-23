@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -182,7 +183,10 @@ public class MainActivity extends AppCompatActivity implements MainView{
     public void startActivity(ArrayList<MenuDTO> menuDTOs){
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
         intent.putExtra("lista",menuDTOs);
-        startActivity(intent);
+        ActivityOptions options =
+                ActivityOptions.makeCustomAnimation(this, android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+        startActivity(intent,options.toBundle());
     }
 
 

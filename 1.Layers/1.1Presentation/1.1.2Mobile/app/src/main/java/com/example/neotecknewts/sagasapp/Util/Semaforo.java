@@ -61,10 +61,6 @@ public class Semaforo {
             ban = true;
         if(finalizarDescargaSQL.GetFinalizarDescargas().getCount()>0)
             ban = true;
-        if(sagasSql.GetAutoconsumos().getCount()>0)
-            ban = true;
-        if(sagasSql.GetCalibraciones().getCount()>0)
-            ban = true;
         if(sagasSql.GetLecturasIniciales().getCount()>0 )
             ban = true;
         if(sagasSql.GetLecturasFinales().getCount()>0)
@@ -89,7 +85,10 @@ public class Semaforo {
         if(sagasSql.GetVentas().getCount()>0){
             ban = true;
         }
-
+        if(sagasSql.GetAutoconsumos().getCount()>0)
+            ban = true;
+        if(sagasSql.GetCalibraciones().getCount()>0)
+            ban = true;
         return ban;
     }
 
