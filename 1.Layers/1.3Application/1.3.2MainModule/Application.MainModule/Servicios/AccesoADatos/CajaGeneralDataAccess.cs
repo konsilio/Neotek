@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
-   public class CajaGeneralDataAccess
+    public class CajaGeneralDataAccess
     {
         private SagasDataUow uow;
 
@@ -22,14 +22,15 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<VentaPuntoDeVenta> Buscar()
         {
-            return uow.Repository<VentaPuntoDeVenta>().Get().ToList();
+            bool noProcesados = false;
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.DatosProcesados.Equals(noProcesados)).ToList();
         }
 
         public List<VentaMovimiento> BuscarTodos()
         {
             return uow.Repository<VentaMovimiento>().Get().ToList();
         }
-      
+
         public List<VentaMovimiento> Buscar(short idEmpresa)
         {
             return uow.Repository<VentaMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -48,7 +49,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public List<VentaPuntoDeVenta> BuscarPorCve(string cve)
         {
-            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FolioOperacionDia.Equals(cve)).ToList();           
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FolioOperacionDia.Equals(cve)).ToList();
+        }
+
+        public List<VentaPuntoDeVenta> BuscarPorPV(int puntoDeVenta)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdPuntoVenta.Equals(puntoDeVenta)).ToList();
         }
 
         public List<VentaCorteAnticipoEC> BuscarPorCveEC(string cve)
@@ -65,6 +71,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get().ToList();
         }
+        public RespuestaDto Actualizar(VentaPuntoDeVenta pv)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.VentaPuntoDeVenta>().Update(pv);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.Id = pv.IdPuntoVenta;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "de Venta Punto De Venta");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public RespuestaDto Actualizar(List<VentaPuntoDeVenta> pv)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -76,7 +106,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     {
                         uow.Repository<Sagas.MainModule.Entidades.VentaPuntoDeVenta>().Update(_pv);
                     }
-                    uow.SaveChanges();                   
+                    uow.SaveChanges();
                     _respuesta.Exito = true;
                     _respuesta.EsActulizacion = true;
                     _respuesta.ModeloValido = true;
@@ -117,15 +147,37 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
+        public RespuestaDto Actualizar(VentaCorteAnticipoEC pv)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.VentaCorteAnticipoEC>().Update(pv);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "de Cortes Anticipos"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
         public RespuestaDto Actualizar(VentaMovimiento pv)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
-                {                   
-                    uow.Repository<Sagas.MainModule.Entidades.VentaMovimiento>().Update(pv);                    
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.VentaMovimiento>().Update(pv);
                     uow.SaveChanges();
                     _respuesta.Id = pv.IdPuntoVenta;
                     _respuesta.Exito = true;
@@ -154,7 +206,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
                         uow.Repository<VentaMovimiento>().Insert(_pv);
                     }
                     uow.SaveChanges();
-                   // _respuesta.Id = pv.IdPuntoVenta;
+                    // _respuesta.Id = pv.IdPuntoVenta;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del movimiento de venta");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+        public RespuestaDto Insertar(VentaMovimiento pv)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<VentaMovimiento>().Insert(pv);
+                    uow.SaveChanges();
+                    _respuesta.Id = pv.IdPuntoVenta;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
