@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Util;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
@@ -23,6 +24,8 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
 import com.example.neotecknewts.sagasapp.Model.RespuestaRecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaTraspasoDTO;
+import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.SQLite.FinalizarDescargaSQL;
@@ -35,6 +38,8 @@ import com.google.gson.GsonBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -64,6 +69,7 @@ public class Lisener{
     public static final String VENTA = "Venta";
     public static final String Autoconsumo = "Autoconsumo";
     public static final String Calibracion = "Calibracion";
+    public static final String Traspaso = "Traspaso";
 
     private  String token;
 
@@ -143,6 +149,9 @@ public class Lisener{
                 case Calibracion:
                     completo = Calibracion();
                     break;
+                case Traspaso:
+                    completo = Traspaso();
+                    break;
             }
         };
 
@@ -154,6 +163,146 @@ public class Lisener{
         }
     }
 
+    private boolean Traspaso() {
+        if(ServicioDisponible()){
+            Log.w("Inciando",new Date()+" Revisando los traspasos");
+            Cursor cursor = sagasSql.GetTraspasos();
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            if(cursor.moveToFirst()){
+                TraspasoDTO traspasoDTO;
+                while (!cursor.isAfterLast()){
+                    traspasoDTO = new TraspasoDTO();
+                    try {
+                        traspasoDTO.setFecha(
+                                format.parse(
+                                    cursor.getString(
+                                            cursor.getColumnIndex("Fecha")
+                                    )
+                                )
+                        );
+                        traspasoDTO.setCantidadDeFotos(
+                                cursor.getInt(
+                                        cursor.getColumnIndex("CantidadDeFotos")
+                                )
+                        );
+                        traspasoDTO.setClaveOperacion(
+                                cursor.getString(
+                                        cursor.getColumnIndex("ClaveOperacion")
+                                )
+                        );
+                        traspasoDTO.setIdCAlmacenGasEntrada(
+                                cursor.getInt(
+                                        cursor.getColumnIndex("IdCAlmacenGasEntrada")
+                                )
+                        );
+                        traspasoDTO.setIdCAlmacenGasSalida(
+                                cursor.getInt(
+                                        cursor.getColumnIndex("IdCAlmacenGasSalida")
+                                )
+                        );
+                        traspasoDTO.setIdTipoMedidorSalida(
+                                cursor.getInt(
+                                        cursor.getColumnIndex("IdTipoMedidorSalida")
+                                )
+                        );
+                        traspasoDTO.setNombreMedidor(
+                                cursor.getString(
+                                        cursor.getColumnIndex("NombreMedidor")
+                                )
+                        );
+                        traspasoDTO.setP5000Entrada(
+                                cursor.getInt(
+                                        cursor.getColumnIndex("P5000Entrada")
+                                )
+                        );
+                        traspasoDTO.setP5000Salida(
+                                cursor.getInt(
+                                        cursor.getColumnIndex("P5000Salida")
+                                )
+                        );
+                        traspasoDTO.setPorcentajeSalida(
+                                cursor.getDouble(
+                                        cursor.getColumnIndex("PorcentajeSalida")
+                                )
+                        );
+                        Cursor imagenes = sagasSql.GetImagenesTraspaso(traspasoDTO.getClaveOperacion());
+                        imagenes.moveToFirst();
+                        while (!imagenes.isAfterLast()){
+                            traspasoDTO.getImagenes().add(
+                                    cursor.getString(
+                                            cursor.getColumnIndex("Imagen")
+                                    )
+                            );
+                            traspasoDTO.getImagenesUri().add(
+                                    new URI(
+                                            cursor.getString(
+                                                    cursor.getColumnIndex("Url")
+                                            )
+                                    )
+                            );
+                            imagenes.moveToNext();
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                    boolean esFinal = cursor.getInt(cursor.getColumnIndex("EsFinal")) > 0;
+                    String tipo = cursor.getString(cursor.getColumnIndex("Tipo"));
+                    if(Registrar(traspasoDTO,tipo,esFinal)) {
+                        sagasSql.EliminarTraspasos(traspasoDTO.getClaveOperacion());
+                        sagasSql.EliminarImagenesTraspasos(traspasoDTO.getClaveOperacion());
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (this.sagasSql.GetTraspasos().getCount()==0);
+    }
+    private  boolean Registrar(TraspasoDTO dto,String tipo,boolean esFinal){
+        if(ServicioDisponible()){
+            Log.w("Iniciando",new Date()+"Envio del traspaso: "+dto.getClaveOperacion());
+            Gson gson = new GsonBuilder()
+                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                    .create();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Constantes.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+            RestClient restClient = retrofit.create(RestClient.class);
+            Call<RespuestaTraspasoDTO> call = restClient.postTraspaso(
+                    dto,
+                    tipo.equals(SAGASSql.TIPO_TRASPASO_ESTACION),
+                    tipo.equals(SAGASSql.TIPO_TRASPASO_PIPA),
+                    esFinal,
+                    token,
+                    "application/json"
+            );
+            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            call.enqueue(new Callback<RespuestaTraspasoDTO>() {
+                @Override
+                public void onResponse(Call<RespuestaTraspasoDTO> call,
+                                       Response<RespuestaTraspasoDTO> response) {
+                    RespuestaTraspasoDTO data = response.body();
+                    if (response.isSuccessful()) {
+                        Log.w("IniciarDescarga", "Success");
+                        _registrado = call.isExecuted() && response.isSuccessful();
+                    } else {
+                        _registrado = false;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<RespuestaTraspasoDTO> call, Throwable t) {
+                    Log.e("error", t.toString());
+                    _registrado = false;
+                }
+            });
+        }
+        return _registrado;
+    }
     private boolean Calibracion() {
         if(ServicioDisponible()){
             Log.w("Iniciando",new Date()+" Revisado de los autoconsumos");
