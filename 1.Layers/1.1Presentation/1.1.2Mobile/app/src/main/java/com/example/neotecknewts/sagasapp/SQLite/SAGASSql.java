@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
@@ -492,8 +493,10 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "ClaveOperacion TEXT,"+
                 "IdEstacion INTEGER," +
-                "Anticipo INTEGER," +
+                "NombreEstacion TEXT,"+
+                "Anticipo DOUBLE," +
                 "Fecha DATETAIME," +
+                "Total DOUBLE,"+
                 "Hora TEXT,"+
                 "Falta BOOLEAN DEFAULT 1"+
                 ")");
@@ -2173,6 +2176,23 @@ public class SAGASSql extends SQLiteOpenHelper {
                 TABLE_CORTES,
                 " WHERE ClaveOperacion = '"+claveOperacion+"'",
                 null
+        );
+    }
+
+    public Long InsertAnticipo(AnticiposDTO dto) {
+        ContentValues values = new ContentValues();
+        values.put("ClaveOperacion",dto.getClaveOperacion());
+        values.put("Anticipo",dto.getAnticipar());
+        values.put("Hora",dto.getHora());
+        values.put("IdEstacion",dto.getIdEstacion());
+        values.put("NombreEstacion",dto.getNombreEstacion());
+        values.put("Total",dto.getTotal());
+        values.put("Fecha",dto.getFecha().toString());
+
+        return this.getWritableDatabase().insert(
+          TABLE_ANTICIPOS,
+          null,
+          values
         );
     }
     //endregion

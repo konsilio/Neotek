@@ -54,7 +54,7 @@ namespace Application.MainModule.Servicios.Mobile
             return ClienteServicio.Modificar(adapter);
         }
 
-        public static List<ClienteDTO> BuscadorClientes(string criterio)
+        public static DatosClientesDto BuscadorClientes(string criterio)
         {
             var clientes =  ClienteServicio.BuscadorClientes(criterio);
 

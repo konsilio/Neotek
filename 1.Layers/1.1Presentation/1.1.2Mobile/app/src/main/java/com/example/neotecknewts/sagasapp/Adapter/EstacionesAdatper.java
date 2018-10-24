@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Activity.AnticipoTablaActivity;
+import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosEstacionesDTO;
 import com.example.neotecknewts.sagasapp.R;
 
@@ -28,6 +29,7 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
     private List<DatosEstacionesDTO> itemObjects;
     private Context context;
     private boolean EsAnticipo,EsCorte;
+    private AnticiposDTO anticiposDTO;
 
     public EstacionesAdatper(Context activity,List<DatosEstacionesDTO> itemObjects,
                              boolean EsAnticipo,boolean EsCorte){
@@ -54,6 +56,9 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final DatosEstacionesDTO mObject = getItem(position);
+        anticiposDTO = new AnticiposDTO();
+        anticiposDTO.setIdEstacion(mObject.getIdCAlmacenGas());
+        anticiposDTO.setNombreEstacion(mObject.getNombreCAlmacen());
         if(holder instanceof HeaderViewHolder){
             ((HeaderViewHolder)holder).header.setText(mObject.getNombreCAlmacen());
             ((HeaderViewHolder) holder).title.setText((EsCorte) ?
@@ -66,6 +71,7 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
                 //intent.putExtra("IdCAlmacenGas",mObject.getIdCAlmacenGas());
                 intent.putExtra("EsAnticipo",EsAnticipo);
                 intent.putExtra("EsCorte",EsCorte);
+                intent.putExtra("anticiposDTO",anticiposDTO);
                 v.getContext().startActivity(intent);
             });
         }
