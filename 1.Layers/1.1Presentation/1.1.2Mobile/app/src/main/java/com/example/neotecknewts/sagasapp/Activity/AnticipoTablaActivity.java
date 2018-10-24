@@ -1,5 +1,8 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -13,7 +16,11 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
+import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenter;
+import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
+import com.example.neotecknewts.sagasapp.Util.Session;
 import com.example.neotecknewts.sagasapp.Util.Tabla;
 
 import java.text.NumberFormat;
@@ -35,6 +42,10 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     ArrayList<String[]> elementos;
     boolean EsAnticipo,EsCorte;
     AnticiposDTO anticiposDTO;
+    AnticipoTablaPresenter presenter;
+    Session session;
+    ProgressDialog progressDialog;
+    SAGASSql sagasSql;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +87,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         getString(R.string.hacer_anticipo));
         TVAnticipoTablaActivityP5000.setVisibility((EsCorte)? View.VISIBLE:View.GONE);
         TLAnticipoTablaActivityTabla = findViewById(R.id.TLAnticipoTablaActivityTabla);
+        presenter = new AnticipoTablaPresenterImpl(this);
         Tabla tabla = new Tabla(this, TLAnticipoTablaActivityTabla);
         tabla.Cabecera(R.array.header_tabla_anticipo);
         elementos = new ArrayList<>();
@@ -88,7 +100,8 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             total += i*100;
         }
         tabla.agregarFila(elementos);
-
+        session = new Session(this);
+        sagasSql = new SAGASSql(this);
         TVAnticipoTablaActivityTotal.setText(format.format(total));
     }
 
@@ -118,19 +131,94 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                 }else{
                     anticiposDTO.setAnticipar(Double.parseDouble(cantidad));
                     anticiposDTO.setFecha(new Date());
-                    SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                    anticiposDTO.setTotal(total);
+                    SimpleDateFormat format = new SimpleDateFormat("HH:mm",
+                            Locale.getDefault());
                     String hour = format.format(new Date());
                     anticiposDTO.setHora(format.format(new Date()));
-                    Intent intent = new Intent(AnticipoTablaActivity.this,
-                            VerReporteActivity.class);
-                    intent.putExtra("EsAnticipo",EsAnticipo);
-                    intent.putExtra("EsCorte",EsCorte);
-                    intent.putExtra("anticiposDTO",anticiposDTO);
-                    startActivity(intent);
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                            new SimpleDateFormat("ddMMyyyyhhmmssS");
+                    String clave_unica = "ANT"+s.format(new Date());
+                    anticiposDTO.setClaveOperacion(clave_unica);
+                    presenter.Anticipo(anticiposDTO,sagasSql,session.getToken());
                 }
             }
         }
         else{
+            startIntent();
+        }
+    }
+
+    @Override
+    public void onShowProgress(int message_cargando) {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage(getString(message_cargando));
+        progressDialog.setTitle(R.string.project_id);
+        progressDialog.show();
+    }
+
+    @Override
+    public void HiddeProgress() {
+        if(progressDialog!= null && progressDialog.isShowing()){
+            progressDialog.hide();
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onSuccess() {
+        startIntent();
+    }
+
+    @Override
+    public void onError(String mensaje) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.error_titulo);
+        builder.setMessage(mensaje);
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
+           dialogInterface.dismiss();
+
+        });
+        builder.create().show();
+    }
+
+    @Override
+    public void onSuccessAndroid() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.error_titulo);
+        builder.setMessage(R.string.mensaje_exito_papeleta_android);
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
+            dialogInterface.dismiss();
+            startIntent();
+        });
+        builder.create().show();
+    }
+
+    @Override
+    public void onError(Object ob) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.error_titulo);
+        builder.setMessage("");
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
+            dialogInterface.dismiss();
+
+        });
+        builder.create().show();
+    }
+
+    private void startIntent(){
+        if(EsAnticipo){
+            Intent intent = new Intent(AnticipoTablaActivity.this,
+                    VerReporteActivity.class);
+            intent.putExtra("EsAnticipo",EsAnticipo);
+            intent.putExtra("EsCorte",EsCorte);
+            intent.putExtra("anticiposDTO",anticiposDTO);
+            startActivity(intent);
+        }else if(EsCorte){
             Intent intent = new Intent(AnticipoTablaActivity.this,
                     VerReporteActivity.class);
             intent.putExtra("EsAnticipo",EsAnticipo);

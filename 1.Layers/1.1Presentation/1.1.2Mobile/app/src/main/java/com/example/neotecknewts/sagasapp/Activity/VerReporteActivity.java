@@ -28,6 +28,10 @@ import com.example.neotecknewts.sagasapp.Util.Session;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -111,10 +115,7 @@ public class VerReporteActivity extends AppCompatActivity {
             }
             if(EsAnticipo){
                 anticiposDTO = (AnticiposDTO) bundle.getSerializable("anticiposDTO");
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
-                        new SimpleDateFormat("ddMMyyyyhhmmssS");
-                String clave_unica = "ANT"+s.format(new Date());
-                anticiposDTO.setClaveOperacion(clave_unica);
+
                 setTitle("Nota Anticipo");
                 GenerarReporteAnticipo();
             }else if (EsCorte){
@@ -462,9 +463,8 @@ public class VerReporteActivity extends AppCompatActivity {
         format = NumberFormat.getCurrencyInstance();
         HtmlReporte = HtmlReporte.replace("[{Monto-anticipo}]","$"+String.valueOf(
                 anticiposDTO.getAnticipar()));
-        StringReporte = StringReporte.replace("[{Monto-anticipo}]",
-                "$"+String.valueOf(anticiposDTO.getNombreEstacion())
-        );
+        StringReporte = StringReporte.replace("[{Monto-anticipo}]","$"+String.valueOf(
+                anticiposDTO.getAnticipar()));
         StringReporte = StringReporte.replace("[{Usuario-entrego}]",
                 anticiposDTO.getNombreEstacion());
         StringReporte = StringReporte.replace("[{Usuario-recibi}]",
@@ -889,7 +889,7 @@ public class VerReporteActivity extends AppCompatActivity {
                                                 encodedBytes, 0,
                                                 encodedBytes.length);
                                         final String data = new String(
-                                                encodedBytes, "US-ASCII");
+                                                encodedBytes,Charset.forName("UTF-8"));
                                         readBufferPosition = 0;
 
                                         handler.post(new Runnable() {
@@ -927,8 +927,8 @@ public class VerReporteActivity extends AppCompatActivity {
         try {
 
             // the text typed by the user
-            String msg = StringReporte;
-            msg += "\n";
+            String msg = Convert( StringReporte);
+            msg += "\n\n\n";
             mmOutputStream.write(msg.getBytes());
             Log.w("Activo","Data Sent");
 
@@ -954,5 +954,22 @@ public class VerReporteActivity extends AppCompatActivity {
         }
     }
 
-
+    public String Convert(String text)
+    {
+        String newText="";
+        char[]charArray=text.toCharArray();
+        for(char c: charArray)
+        {
+            switch(c)
+            {
+                case 'í':
+                    newText+= "i";
+                    break;
+                default:
+                    newText += c;
+                    break;
+            }
+        }
+        return newText;
+    }
 }

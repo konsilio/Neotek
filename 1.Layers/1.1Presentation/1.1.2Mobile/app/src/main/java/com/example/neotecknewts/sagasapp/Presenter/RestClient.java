@@ -1,6 +1,7 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
+import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.ClienteDTO;
@@ -24,7 +25,9 @@ import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaClienteDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
@@ -336,4 +339,17 @@ public interface RestClient {
             @Path(value = "esPipa") boolean esPipa,
             @Header("Authorization") String token,
             @Header("Content-type") String contentType);
+
+    @POST(Constantes.POST_ANTICIPO)
+    Call<RespuestaAnticipoDTO> postAnticipo(
+            @Body AnticiposDTO anticiposDTO,
+            @Header("Authorization") String token,
+            @Header("Content-type") String contentType
+    );
+
+    @GET(Constantes.GET_CATALOGO_VENTAS_ESTACIONES)
+    Call<RespuestaEstacionesVentaDTO> getEstaciones(
+            @Header("Authorization") String token,
+            @Header("Content-type") String contentType
+    );
 }

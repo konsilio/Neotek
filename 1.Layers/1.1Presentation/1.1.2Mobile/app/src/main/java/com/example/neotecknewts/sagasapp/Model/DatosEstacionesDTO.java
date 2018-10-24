@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class DatosEstacionesDTO implements Serializable {
 
-    @SerializedName("IdCAlmacenGas")
+    @SerializedName("IdAlmacenGas")
     private int IdCAlmacenGas;
 
     @SerializedName("NombreCAlmacen")
