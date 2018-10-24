@@ -67,7 +67,11 @@
     <Compile Include="AdaptadoresDTO\Catalogo\OperadorChoferAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PaisAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\AlmacenAutoconsumoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\AlmacenTraspasoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\AnticiposCortesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\CalibracionAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\TraspasoAdapter.cs" />
+    <Compile Include="AdaptadoresDTO\Mobile\VentasEstacionesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
     <Compile Include="DTOs\Almacen\AplicaAutoConsumoDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaCalibracionDto.cs" />
@@ -75,7 +79,7 @@
     <Compile Include="DTOs\Almacen\AplicaTraspasoDto.cs" />
     <Compile Include="DTOs\Almacen\InventarioAnteriorDto.cs" />
     <Compile Include="DTOs\Almacen\RegistroDTO.cs" />
-    <Compile Include="DTOs\Almacen\RemanenteDto.cs" />
+    <Compile Include="DTOs\Almacen\RemaDto.cs" />
     <Compile Include="DTOs\Catalogo\PrecioVentaEstatusDTO.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\PrecioVentaGasAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Catalogo\ProductoAdapter.cs" />
@@ -91,15 +95,22 @@
     <Compile Include="AdaptadoresDTO\Mobile\TipoRegimenAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Compras\OrdenCompraPagoAdapter.cs" />
     <Compile Include="DTOs\Almacen\AlmacenSalidaProductoDTO.cs" />
+    <Compile Include="DTOs\Compras\ComplementoDTO.cs" />
     <Compile Include="DTOs\Mobile\AlmacenAlternoDto.cs" />
+    <Compile Include="DTOs\Mobile\AnticipoDto.cs" />
     <Compile Include="DTOs\Mobile\AutoconsumoDTO.cs" />
     <Compile Include="DTOs\Mobile\CalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\CamionetaDto.cs" />
+    <Compile Include="DTOs\Mobile\CorteDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosAnticiposCorteDto.cs" />
     <Compile Include="DTOs\Mobile\DatosAutoconsumoDto.cs" />
     <Compile Include="DTOs\Mobile\DatosCalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\DatosRecargaDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosTraspasoDto.cs" />
     <Compile Include="DTOs\Mobile\EstacionesDto.cs" />
     <Compile Include="DTOs\Mobile\PipaDto.cs" />
+    <Compile Include="DTOs\Mobile\TraspasoDto.cs" />
+    <Compile Include="DTOs\Requisicion\RequisicionSalidaDTO.cs" />
     <Compile Include="DTOs\Ventas\CajaGeneralDTO.cs" />
     <Compile Include="DTOs\Ventas\RegistrarVentasMovimientosDTO.cs" />
     <Compile Include="DTOs\Ventas\VentaCorteAnticipoDTO.cs" />
@@ -212,6 +223,7 @@
     <Compile Include="Servicios\Mobile\ClientesServicio.cs" />
     <Compile Include="DTOs\NotificacionDTO.cs" />
     <Compile Include="Servicios\Catalogos\PrecioVentaGasServicio.cs" />
+    <Compile Include="Servicios\Mobile\TraspasoServicio.cs" />
     <Compile Include="Servicios\Mobile\VentaServicio.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionEstatusDTO.cs" />
     <Compile Include="DTOs\Respuesta\RespuestaCompraDto.cs" />
@@ -250,7 +262,7 @@
     <Compile Include="DTOs\Seguridad\UserRol.cs" />
     <Compile Include="DTOs\Seguridad\UsuarioRolDto.cs" />
     <Compile Include="DTOs\Seguridad\UsuariosModel.cs" />
-    <Compile Include="Flujos\Almacen.cs" />
+    <Compile Include="Flujos\Almacenes.cs" />
     <Compile Include="Flujos\Catalogos.cs" />
     <Compile Include="Flujos\Compras.cs" />
     <Compile Include="Flujos\Inventarios.cs" />
@@ -340,6 +352,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\1.1Presentation\1.1.1Web\MVC.Presentacion\MVC.Presentacion.csproj">
+      <Project>{1751630E-103C-41AD-A84C-DAE1B576F0A5}</Project>
+      <Name>MVC.Presentacion</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\1.4Domain\1.4.2SagasMainModule\Sagas.MainModule\Sagas.MainModule.csproj">
       <Project>{ff128402-ecef-4aae-a189-3a61e225b25e}</Project>
       <Name>Sagas.MainModule</Name>

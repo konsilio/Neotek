@@ -1,4 +1,4 @@
-﻿using Application.MainModule.Servicios.Almacen;
+﻿using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Ventas;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Compras;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
@@ -233,7 +233,7 @@ namespace Application.MainModule.Servicios.Compras
         }
         public static OrdenCompraDTO AgregarDatosRequisicion(OrdenCompraDTO dto)
         {
-            var datosreq = Requisicion.RequisicionServicio.BuscarRequisicionPorId(dto.IdRequisicion);
+            var datosreq = Requisiciones.RequisicionServicio.BuscarRequisicionPorId(dto.IdRequisicion);
             dto.MotivoRequisicion = datosreq.MotivoRequisicion;
             dto.RequeridoEn = datosreq.RequeridoEn;
             return dto;
@@ -282,5 +282,13 @@ namespace Application.MainModule.Servicios.Compras
 
             return oc;
         }
+        public static OrdenCompra DeterminarEstatusPorEntradas(OrdenCompra oc, List<OrdenCompraProducto> productos)
+        {
+            if (productos.Where(x => x.CantidadEntregada.Equals(x.Cantidad)).Count().Equals(productos.Count))
+                oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.EnComplementoCompra;
+            else
+                oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Proceso_compra;
+            return oc;
+        }   
     }
 }

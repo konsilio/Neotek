@@ -1,7 +1,7 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;

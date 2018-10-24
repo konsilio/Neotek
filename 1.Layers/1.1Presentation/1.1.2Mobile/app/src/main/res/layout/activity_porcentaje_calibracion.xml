@@ -24,7 +24,7 @@
                 android:paddingBottom="15dp"
                 android:text="@string/Calibracion"
                 android:textAlignment="center"
-                android:textSize="30sp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/TVCalibracionPorcentajeActivitySubtitulo"
@@ -35,7 +35,7 @@
                 android:paddingBottom="15dp"
                 android:text="@string/calibracion_pipa"
                 android:textAlignment="center"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -48,7 +48,7 @@
                 android:paddingBottom="15dp"
                 android:text="@string/porcentaje_de_calibracion"
                 android:textAlignment="center"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_marginRight="15dp"
                 android:text="@string/registra_el_porcentaje_de_calibracion_configurado"
                 android:textAlignment="center"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                 <NumberPicker
                     android:id="@+id/NPCalibracionPorcentajeActivityEntero"
                     android:layout_width="wrap_content"
-                    android:layout_height="180dp"
+                    android:layout_height="90dp"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:scaleY="2">
@@ -94,7 +94,7 @@
                 <NumberPicker
                     android:id="@+id/NPCalibracionPorcentajeActivityDecimal"
                     android:layout_width="wrap_content"
-                    android:layout_height="180dp"
+                    android:layout_height="90dp"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:scaleY="2">
@@ -116,13 +116,15 @@
                 android:id="@+id/BtnCalibracionPipaActivitySiguiente"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="85dp"
-                android:layout_marginRight="85dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                style="@style/SagasTheme.Button"
+                android:padding="15sp"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
-                android:backgroundTint="@color/colorButtonLogin"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 tools:ignore="UnusedAttribute" />
+            <!--                android:backgroundTint="@color/colorButtonLogin"-->
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

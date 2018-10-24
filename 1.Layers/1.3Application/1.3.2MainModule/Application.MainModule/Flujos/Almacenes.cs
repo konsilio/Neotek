@@ -1,55 +1,93 @@
-﻿using Application.MainModule.AdaptadoresDTO.Almacen;
+﻿using Application.MainModule.AdaptadoresDTO.Almacenes;
+using Application.MainModule.AdaptadoresDTO.Compras;
+using Application.MainModule.AdaptadoresDTO.Requisiciones;
+using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Compras;
+using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Compras;
-using Application.MainModule.Servicios.Requisicion;
+using Application.MainModule.Servicios.Requisiciones;
+using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Constantes;
 using System;
 using System.Collections.Generic;
-using Sagas.MainModule.ObjetosValor.Constantes;
+using System.Linq;
 
 namespace Application.MainModule.Flujos
 {
-    public class Almacen
+    public class Almacenes
     {
         public RespuestaDto GenerarEntradaProducto(OrdenCompraEntradasDTO dto)
         {
-            List<Sagas.MainModule.Entidades.Almacen> _almacen = new List<Sagas.MainModule.Entidades.Almacen>();
-            List<Sagas.MainModule.Entidades.Almacen> _almacenCrear = new List<Sagas.MainModule.Entidades.Almacen>();
+            List<Almacen> _almacen = new List<Almacen>();
+            List<Almacen> _almacenCrear = new List<Almacen>();
             List<AlmacenEntradaProducto> entradas = new List<AlmacenEntradaProducto>();
-
+            var oc = OrdenCompraServicio.Buscar(dto.IdOrdenCompra);
+            var ProductosOC = ProductosOCAdapter.FromEntity(oc.Productos.ToList());
             foreach (var prod in dto.Productos)
             {
+                ProductosOC.FirstOrDefault(x => x.IdProducto.Equals(prod.IdProducto)).CantidadEntregada = prod.Cantidad;
+                prod.FechaEntrada = dto.FechaEntrada;
                 var _Almacen = ProductoAlmacenServicio.ObtenerAlmacen(prod.IdProducto, dto.IdEmpresa);
                 if (_Almacen == null)
                 {
                     prod.CantidadAnterior = 0;
-                    prod.CantidadFinal = prod.Cantidad;
-                    var nuevoAlmacen = ProductoAlmacenServicio.GenaraAlmacenNuevo(prod.IdProducto, dto.IdEmpresa, prod.Cantidad);                    
+                    prod.CantidadFinal = prod.Cantidad;                   
+                    var nuevoAlmacen = ProductoAlmacenServicio.GenaraAlmacenNuevo(prod.IdProducto, dto.IdEmpresa, prod.Cantidad);
                     nuevoAlmacen = ProductoAlmacenServicio.GenerarAlmacenConEntradaProcuto(prod, dto.IdOrdenCompra, nuevoAlmacen);
                     _almacenCrear.Add(nuevoAlmacen);
                 }
                 else
                 {
                     _Almacen.FechaActualizacion = DateTime.Today;
-                    prod.CantidadAnterior = _Almacen.Cantidad;                  
+                    prod.CantidadAnterior = _Almacen.Cantidad;
                     var AlmacenActualizar = ProductoAlmacenServicio.AlmacenEntity(_Almacen);
                     AlmacenActualizar.Cantidad = CalcularAlmacenServicio.ObtenerSumaEntradaAlmacen(AlmacenActualizar.Cantidad, prod.Cantidad);
-                    prod.CantidadFinal = CalcularAlmacenServicio.ObtenerSumaEntradaAlmacen(AlmacenActualizar.Cantidad, prod.Cantidad); ;
+                    prod.CantidadFinal = AlmacenActualizar.Cantidad;
                     _almacen.Add(AlmacenActualizar);
                     var EntradaProd = ProductoAlmacenServicio.GenerarAlmacenEntradaProcuto(prod, dto.IdOrdenCompra, _Almacen);
                     entradas.Add(EntradaProd);
                 }
             }
-            var respEntrada = ProductoAlmacenServicio.EntradaAlmcacenProductos(_almacen, _almacenCrear, entradas);
-            if (respEntrada.Exito)
+            var ocEntity =  OrdenCompraServicio.DeterminarEstatusPorEntradas(OrdenComprasAdapter.FromEntity(oc), ProductosOC);
+            return ProductoAlmacenServicio.EntradaAlmcacenProductos(_almacen, _almacenCrear, entradas, ocEntity, ProductosOC);
+        }
+        public RespuestaDto GenerarSalidaProducto(RequisicionSalidaDTO dto)
+        {
+            List<Almacen> _almacen = new List<Almacen>();
+            List<AlmacenSalidaProducto> Salidas = new List<AlmacenSalidaProducto>();
+
+            var _requisicion = RequisicionServicio.Buscar(dto.IdRequisicion);
+            List<RequisicionProducto> _productos = RequisicionProductoAdapter.FromEntity(_requisicion.Productos.ToList());
+
+            foreach (var prod in dto.Productos)
             {
-                return new Compras().FinalizarEntradaProductoOrdenCompra(new DTOs.OrdenCompraDTO { IdOrdenCompra = dto.IdOrdenCompra });
+                var _Almacen = ProductoAlmacenServicio.ObtenerAlmacen(prod.IdProducto, dto.IdEmpresa);
+                if (_Almacen == null)
+                    return ProductoAlmacenServicio.NoExiste();
+                else
+                {
+                    _productos.FirstOrDefault(x => x.IdProducto.Equals(prod.IdProducto)).CantidadEntregada = prod.Cantidad;                   
+                    _Almacen.FechaActualizacion = DateTime.Today;
+                    prod.CantidadAnterior = _Almacen.Cantidad;
+                    prod.IdUsuarioEntrega = TokenServicio.ObtenerIdUsuario();
+                    prod.FechaEntrada = DateTime.Now;
+                    var AlmacenActualizar = ProductoAlmacenServicio.AlmacenEntity(_Almacen);
+                    AlmacenActualizar.Cantidad = CalcularAlmacenServicio.ObtenerRestaSalidaAlmacen(AlmacenActualizar.Cantidad, prod.Cantidad);
+                    prod.CantidadFinal = AlmacenActualizar.Cantidad;
+                    if (prod.CantidadFinal < 0)
+                        return ProductoAlmacenServicio.CantidadInsuficiente();
+                    _almacen.Add(AlmacenActualizar);
+                    var SalidaProd = ProductoAlmacenServicio.GenerarAlmacenSalidaProcuto(prod, dto.IdRequisicion, _Almacen);
+                    Salidas.Add(SalidaProd);
+                }
             }
-            return respEntrada;
+            _requisicion = RequisicionAdapter.FromEntity(RequisicionServicio.DeterminaEstatusPorSalidas(_requisicion, _productos));
+            return ProductoAlmacenServicio.SalidaAlmcacenProductos(_almacen, Salidas, _requisicion, _productos);
         }
         public OrdenCompraEntradasDTO BuscarOrdenCompra(int Id)
         {
@@ -67,7 +105,6 @@ namespace Application.MainModule.Flujos
         public RespuestaDto ActualizarAlmacen(AlmacenDTO dto)
         {
             //Validar permisos
-
             var almacen = ProductoAlmacenServicio.ObtenerAlmacen(dto.IdProducto, dto.IdEmpresa);
             var entity = ProductoAlmacenServicio.AlmacenEntity(almacen);
             var prod = ProductoServicio.ObtenerProducto(dto.IdProducto);
@@ -75,7 +112,7 @@ namespace Application.MainModule.Flujos
             entity.FechaActualizacion = DateTime.Now;
             RespuestaDto resp = new RespuestaDto();
             if (dto.Cantidad < entity.Cantidad)
-            {                
+            {
                 AlmacenSalidaProductoDTO salida = new AlmacenSalidaProductoDTO
                 {
                     IdProducto = dto.IdProducto,
@@ -111,11 +148,16 @@ namespace Application.MainModule.Flujos
         public List<RegistroDTO> RegistroAlmacen(short idEmpresa)
         {
             //Validar Permisos
-                      
+
             var Entradas = ProductoAlmacenServicio.BuscarEntradasTodo(idEmpresa);
             var Salidas = ProductoAlmacenServicio.BuscarSalidaTodo(idEmpresa);
 
             return ProductoAlmacenServicio.UnirRegistros(Salidas, Entradas);
+        }
+        public RequisicionSalidaDTO BuscarRequsicionSalida(int idRequisicion)
+        {
+            var req = RequisicionServicio.Buscar(idRequisicion);
+            return AlmacenAdapter.FromDTO(req);
         }
     }
 }

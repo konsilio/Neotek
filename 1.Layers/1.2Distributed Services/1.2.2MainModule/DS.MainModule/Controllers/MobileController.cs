@@ -239,5 +239,28 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.Calibracion(dto,esFinal), Request);
         }
+
+        [Route("catalogos/traspaso/{esPipa}")]
+        public HttpResponseMessage GetCatalogoTraspaso(bool esPipa)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoTraspaso(esPipa),Request);
+        }
+
+        [Route("traspaso/{esFinal}")]
+        public HttpResponseMessage PostTraspaso(TraspasoDto dto,bool esFinal)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.Traspaso(dto,esFinal),Request);
+        }
+        //Anticipos y corte
+        [Route("catalogos/anticipo-y-corte/estaciones")]
+        public HttpResponseMessage GetEstaciones()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.Estaciones(),Request);
+        }
+        [Route("anticipos-y-cortes/{esAnticipo}")]
+        public HttpResponseMessage PostAnticipo(bool esAnticipo)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.anticipo_y_cortes(esAnticipo), Request);
+        }
     }
 }

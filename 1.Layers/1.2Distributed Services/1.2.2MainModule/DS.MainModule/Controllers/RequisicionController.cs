@@ -15,11 +15,11 @@ namespace DS.MainModule.Controllers
     [RoutePrefix("api/requisicion")]
     public class RequisicionController : ApiController
     {
-        private Requisicion _requisicion;
+        private Requisiciones _requisicion;
 
         public RequisicionController()
         {
-            _requisicion = new Requisicion();
+            _requisicion = new Requisiciones();
         }
 
         [Route("guardar/requisicion")]

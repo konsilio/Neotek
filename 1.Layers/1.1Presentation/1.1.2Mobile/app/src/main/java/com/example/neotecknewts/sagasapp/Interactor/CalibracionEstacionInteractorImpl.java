@@ -39,7 +39,6 @@ public class CalibracionEstacionInteractorImpl implements CalibracionEstacionInt
         Call<DatosCalibracionDTO> call = restClient.getDatosCalibracion(
                 true,
                 false,
-                esCalibracionEstacionFinal,
                 token,
                 "application/json"
         );

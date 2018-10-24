@@ -1,4 +1,5 @@
 ﻿using MVC.Presentacion.Models;
+using MVC.Presentacion.Models.Almacen;
 using MVC.Presentacion.Models.Catalogos;
 using MVC.Presentacion.Models.OrdenCompra;
 using MVC.Presentacion.Models.Requisicion;
@@ -38,6 +39,7 @@ namespace MVC.Presentacion.Agente
         public EntradaMercanciaModel _entradaMercancia;
         public OperadorChoferModel Operador;
         public OrdenCompraComplementoGasDTO _complementoGas;
+        public RequisicionSalidaDTO _RequisicionSalida;
 
         public List<ClienteLocacionMod> _cteLocacion;
         public List<RequisicionDTO> _listaRequisicion;
@@ -2830,9 +2832,9 @@ namespace MVC.Presentacion.Agente
         public void BuscarRegistroAlmacen(int id, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["GetRegistroAlmacen"];
-            GetListaRegistroAlmacen(id, tkn).Wait();
+            GetRequisiconAlmacen(id, tkn).Wait();
         }
-        private async Task GetListaRegistroAlmacen(int id, string Token)
+        private async Task GetRequisiconAlmacen(int id, string Token)
         {
             using (var client = new HttpClient())
             {
@@ -2859,6 +2861,44 @@ namespace MVC.Presentacion.Agente
                 }
                 _listaRegistroAlmacen = list;
             }
+        }
+        public void BuscarRequsicionSalida(int id, string tkn)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["GetRequisiconAlmacen"];
+            GetListaRegistroSalida(id, tkn).Wait();
+        }
+        private async Task GetListaRegistroSalida(int id, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                RequisicionSalidaDTO dto = new RequisicionSalidaDTO();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiRoute, id.ToString())).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        dto = await response.Content.ReadAsAsync<RequisicionSalidaDTO>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    dto = new RequisicionSalidaDTO();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+                _RequisicionSalida = dto;
+            }
+        }
+        public void RegistrarSalida(RequisicionSalidaDTO dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PostGuardarSalida"];
+            LLamada(dto, token, MetodoRestConst.Post).Wait();
         }
         #endregion
 

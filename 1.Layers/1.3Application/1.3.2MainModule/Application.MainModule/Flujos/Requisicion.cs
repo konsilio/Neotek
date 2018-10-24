@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.Servicios.Requisicion;
+using Application.MainModule.Servicios.Requisiciones;
 using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.AccesoADatos;
-using Application.MainModule.AdaptadoresDTO.Requisicion;
+using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.Compras;
 using Exceptions.MainModule.Validaciones;
+using Sagas.MainModule.Entidades;
 
 namespace Application.MainModule.Flujos
 {
-    public class Requisicion
+    public class Requisiciones
     {
         public RespuestaDto InsertRequisicionNueva(RequisicionDTO _req)
         {
@@ -90,7 +91,7 @@ namespace Application.MainModule.Flujos
         public RespuestaDto CancelarRequisicion(RequisicionCancelaDTO _req)
         {
             return RequisicionServicio.CancelarRequisicion(_req);
-        }
+        }        
         public List<RequisicionEstatusDTO> ListaEstatus()
         {
             return RequisicionAdapter.ToDTO(RequisicionServicio.RequisiconEstatus());

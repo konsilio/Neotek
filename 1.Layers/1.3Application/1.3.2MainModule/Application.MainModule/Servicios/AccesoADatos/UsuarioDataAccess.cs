@@ -146,7 +146,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         private Usuario IntegrarRoles(Usuario usuario)
         {
-            usuario.Roles = usuario.UsuarioRoles.Select(x => x.Role).ToList();
+            if(usuario != null)
+                if(usuario.UsuarioRoles != null && usuario.UsuarioRoles.Count > 0)
+                    usuario.Roles = usuario.UsuarioRoles.Select(x => x.Role).ToList();
 
             return usuario;
         }

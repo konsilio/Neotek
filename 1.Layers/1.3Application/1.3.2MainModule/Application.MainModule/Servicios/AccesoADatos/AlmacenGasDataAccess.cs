@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.MainModule.DTOs.Mobile;
 
 namespace Application.MainModule.Servicios.AccesoADatos
 {
@@ -503,6 +504,46 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                 && x.Year.Equals(year)).ToList();
         }
 
+        public List<AlmacenGasMovimiento> BuscarUltimosMovimientosPorUnidadAlamcenGasConTipoEvento(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, short year, byte mes, byte dia)
+        {
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                && x.IdCAlmacenGasPrincipal.Equals(idCAlmacenGas)
+                                                                && x.IdTipoEvento != null
+                                                                && x.IdTipoEvento.Value.Equals(idTipoEvento)
+                                                                && x.Year.Equals(year)
+                                                                && x.Mes.Equals(mes)
+                                                                && x.Dia.Equals(dia)).ToList();
+        }
+        public List<AlmacenGasMovimiento> BuscarUltimosMovimientosPorUnidadAlamcenGasConTipoEvento(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, short year, byte mes)
+        {
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                && x.IdCAlmacenGasPrincipal.Equals(idCAlmacenGas)
+                                                                && x.IdTipoEvento != null
+                                                                && x.IdTipoEvento.Value.Equals(idTipoEvento)
+                                                                && x.Year.Equals(year)
+                                                                && x.Mes.Equals(mes)).ToList();
+        }
+        public List<AlmacenGasMovimiento> BuscarUltimosMovimientosPorUnidadAlamcenGasConTipoEvento(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, short year)
+        {
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                && x.IdCAlmacenGasPrincipal.Equals(idCAlmacenGas)
+                                                                && x.IdTipoEvento != null
+                                                                && x.IdTipoEvento.Value.Equals(idTipoEvento)
+                                                                && x.Year.Equals(year)).ToList();
+        }
+        public AlmacenGasMovimiento BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, short year, byte mes, byte dia)
+        {
+            return BuscarUltimosMovimientosPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, idTipoEvento, year, mes, dia).LastOrDefault();
+        }
+        public AlmacenGasMovimiento BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, short year, byte mes)
+        {
+            return BuscarUltimosMovimientosPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, idTipoEvento, year, mes).LastOrDefault();
+        }
+        public AlmacenGasMovimiento BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, short year)
+        {
+            return BuscarUltimosMovimientosPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, idTipoEvento, year).LastOrDefault();
+        }
+
         public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas)
         {
             return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -736,6 +777,33 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 uow.Repository<AlmacenGasCalibracion>().Insert(carburacion);
                 uow.SaveChanges();
                 _respuesta.Id = carburacion.IdCAlmacenGas;
+                _respuesta.EsInsercion = true;
+                _respuesta.Exito = true;
+                _respuesta.ModeloValido = true;
+                _respuesta.Mensaje = Exito.OK;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Exito = false;
+                _respuesta.Mensaje = string.Format(Error.C0002, "del la recarga.");
+                _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+            }
+            return _respuesta;
+        }
+
+        public AlmacenGasTraspaso BuscarTraspaso(string claveOperacion)
+        {
+            return uow.Repository<AlmacenGasTraspaso>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
+        }
+
+        public RespuestaDto Insertar(AlmacenGasTraspaso traspaso)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            try
+            {
+                uow.Repository<AlmacenGasTraspaso>().Insert(traspaso);
+                uow.SaveChanges();
+                _respuesta.Id = traspaso.IdCAlmacenGasEntrada;
                 _respuesta.EsInsercion = true;
                 _respuesta.Exito = true;
                 _respuesta.ModeloValido = true;

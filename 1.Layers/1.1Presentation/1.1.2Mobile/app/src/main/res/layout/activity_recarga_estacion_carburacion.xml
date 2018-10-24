@@ -21,21 +21,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="15dp"
-                android:paddingTop="20dp"
+                android:paddingTop="10sp"
+                android:paddingBottom="10sp"
                 android:text="@string/datos_inciales"
                 android:textAlignment="center"
-                android:textSize="30sp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/TVRecargaEstacionCarburacionActivityPipaSalida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
                 android:padding="5dp"
-                android:text="@string/selecciona_la_pipa_de_salida" />
+                android:text="@string/selecciona_la_pipa_de_salida"
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/SRecargaEstacionCarburacionActivityListaPipa"
@@ -51,10 +52,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
                 android:padding="5dp"
-                android:text="@string/selecciona_medidor_porcentual_salida" />
+                android:text="@string/selecciona_medidor_porcentual_salida"
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/SRecargaEstacionCarburacionActivityListaMedidorPipa"
@@ -76,10 +78,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
                 android:padding="5dp"
-                android:text="@string/selecciona_estacion_destino" />
+                android:text="@string/selecciona_estacion_destino"
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/SRecargaEstacionCarburacionActivityListaEstacion"
@@ -95,10 +98,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
                 android:padding="5dp"
-                android:text="@string/selecciona_medidor_porcentual_estacion" />
+                android:text="@string/selecciona_medidor_porcentual_estacion"
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/SRecargaEstacionCarburacionActivityListaMedidorPorcentualDestino"
@@ -120,12 +124,12 @@
                 android:id="@+id/BtnRecargaEstacionCarburacionActivityAceptar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="85dp"
-                android:layout_marginRight="85dp"
-                android:backgroundTint="@color/colorButtonLogin"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                style="@style/SagasTheme.Button"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>

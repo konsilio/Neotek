@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     //clase de la session
     Session session;
+    //Token que genera firebase
+    String fb_token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         }else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(usuario).matches()) {
             showDialog(getResources().getString(R.string.invalid_email));
         }else{
-            String fb_token = "";
+            //String fb_token = "";
             try{
                 //se codifica la contraseña en SHA256
                 Log.e("SAAAA", Utilidades.getHash(contraseña));
@@ -237,7 +240,8 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 //showDialog(getResources().getString(R.string.login_sucess));
                 Log.w("success",getResources().getString(R.string.login_sucess));
                 //se crea la sesion
-                session.createLoginSession(contraseña,usuario,usuarioDTO.getToken(),IdEmpresa);
+                session.createLoginSession(contraseña,usuario,usuarioDTO.getToken(),IdEmpresa,
+                        fb_token,"");
                 ArrayList<MenuDTO> menuDTOs = new ArrayList<MenuDTO>(Arrays.asList(usuarioDTO.getListMenu()));
                 startActivity(menuDTOs);
             }

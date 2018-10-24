@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,12 +22,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="15dp"
-                android:paddingTop="25dp"
+                android:paddingTop="10sp"
+                android:paddingBottom="10sp"
                 android:text="@string/Recarga_de_gas"
                 android:textAlignment="center"
                 android:textColor="@color/colorTextLogin"
-                android:textSize="30sp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/TVRecargaCamionetaActivityTituloCamionetas"
@@ -34,9 +35,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="25dp"
+                android:paddingTop="10sp"
                 android:text="@string/Selecciona_la_camioneta"
-                android:textSize="24sp" />
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/SRecargaCamionetaActivityListaCamionetas"
@@ -52,8 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:text="Selecciona el almacen"
-                android:textSize="24sp" />
+                android:text="@string/selecciona_el_almacen"
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/SRecargaCamionetaEstacion"
@@ -73,13 +74,13 @@
                 android:id="@+id/BRecargaCamionetaActivityGuardar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="85dp"
-                android:layout_marginRight="85dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/colorButtonLogin"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="5sp"
+                android:layout_marginRight="35dp"
+                style="@style/SagasTheme.Button"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
-                android:textSize="30sp"
+                android:textSize="18sp"
                 tools:ignore="UnusedAttribute" />
         </LinearLayout>
     </ScrollView>

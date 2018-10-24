@@ -1,5 +1,5 @@
 ﻿using Application.MainModule.Servicios.AccesoADatos;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Sagas.MainModule.Entidades;
 using System;

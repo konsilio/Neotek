@@ -1,7 +1,7 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Mobile;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Mobile;
 using Application.MainModule.Servicios.Seguridad;
@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sagas.MainModule.Entidades;
+using Application.MainModule.Servicios.Ventas;
 
 namespace Application.MainModule.Flujos
 {
@@ -346,6 +347,39 @@ namespace Application.MainModule.Flujos
                 }
             }
             return list;
+        }
+
+        public DatosTraspasoDto CatalogoTraspaso(bool esPipa)
+        {
+            var medidores = TipoMedidorGasServicio.Obtener();
+            var pipas = AlmacenGasServicio.ObtenerPipas(TokenServicio.ObtenerIdEmpresa());
+            var estaciones = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa());
+            var puntoVenta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var predeterminada = puntoVenta.IdCAlmacenGas;
+            if (esPipa)
+                return TraspasoAdapter.ToDTO(pipas,predeterminada, medidores);
+            else
+                return TraspasoAdapter.ToDTO(estaciones,pipas,predeterminada,medidores);
+        }
+
+        public RespuestaDto Traspaso(TraspasoDto dto,bool esFinal)
+        {
+            var resp = TraspasoServicio.EvaluarClaveOperacion(dto);
+            if (resp.Exito) return resp;
+
+            return TraspasoServicio.Traspaso(dto,esFinal,TokenServicio.ObtenerIdEmpresa());
+        }
+
+        public RespuestaDto Estaciones()
+        {
+            var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
+            var puntosventa = CajaGeneralServicio.ObtenerPuntosVenta();
+            return null;
+        }
+
+        public RespuestaDto anticipo_y_cortes(bool esAnticipo)
+        {
+            return null;
         }
     }
 }

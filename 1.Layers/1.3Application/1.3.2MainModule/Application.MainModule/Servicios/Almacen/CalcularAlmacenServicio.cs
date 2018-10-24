@@ -4,13 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.MainModule.Servicios.Almacen
+namespace Application.MainModule.Servicios.Almacenes
 {
     public static class CalcularAlmacenServicio
     {
         public static decimal ObtenerSumaEntradaAlmacen(decimal TotalAlmacenActual, decimal TotalEntrada)
         {
             return TotalAlmacenActual + TotalEntrada;
+        }
+        public static decimal ObtenerRestaSalidaAlmacen(decimal TotalAlmacenActual, decimal TotalEntrada)
+        {
+            return TotalAlmacenActual - TotalEntrada;
         }
         public static decimal ObtenerDiferneciaMovimiento(decimal cantidadMayor, decimal cantidadMenor)
         {
