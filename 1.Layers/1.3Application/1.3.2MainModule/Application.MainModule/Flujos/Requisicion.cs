@@ -88,7 +88,7 @@ namespace Application.MainModule.Flujos
             }
             return RequisicionServicio.UpDateRequisicionAutoriza(newReq, prodEdit);
         }        
-        public RespuestaDto CancelarRequisicion(RequisicionCancelaDTO _req)
+        public RespuestaDto CancelarRequisicion(RequisicionDTO _req)
         {
             return RequisicionServicio.CancelarRequisicion(_req);
         }        

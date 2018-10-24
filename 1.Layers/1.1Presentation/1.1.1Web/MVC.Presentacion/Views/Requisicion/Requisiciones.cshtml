@@ -13,9 +13,10 @@
 
 
 <script type="text/javascript">
-    var numReq = '@ViewBag.NumeroRequisicion';
+    var Mensaje = '@ViewBag.Msj';
+    var tipo = '@ViewBag.Tipo';
     if (numReq != '') {
-        $(window).on("load", showNotification('alert-success', numReq, 'top', 'center', '', ''));
+        $(window).on("load", showNotification(tipo, Mensaje, 'top', 'center', '', ''));
     }
 </script>
 @using (Html.BeginForm("Requisicion", "Requisicion", FormMethod.Post))

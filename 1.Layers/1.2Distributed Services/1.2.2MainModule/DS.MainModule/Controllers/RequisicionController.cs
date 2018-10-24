@@ -53,7 +53,7 @@ namespace DS.MainModule.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.ActualizarRequisicionAutorizacion(req));
         }
         [Route("cancela/requisicion")]
-        public HttpResponseMessage PutCancelarRequisicion(RequisicionCancelaDTO req)
+        public HttpResponseMessage PutCancelarRequisicion(RequisicionDTO req)
         {
             return Request.CreateResponse(HttpStatusCode.OK, _requisicion.CancelarRequisicion(req));
         }

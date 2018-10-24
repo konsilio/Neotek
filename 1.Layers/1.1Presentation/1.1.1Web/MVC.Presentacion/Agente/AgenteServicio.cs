@@ -2362,7 +2362,7 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutActulizarAutorizacion"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
-        public void ActualizarRequisicionCancelar(RequisicionCancelaDTO dto, string token)
+        public void ActualizarRequisicionCancelar(RequisicionDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutCancelarRequisicion"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();

@@ -226,6 +226,10 @@ namespace MVC.Presentacion.App_Code
             agente.BuscarListaUsuarios(idEmpresa, token);
             return agente._listaUsuarios;
         }
+        public static UsuarioDTO BuscarUsuario(int IdUsuario, string tkn)
+        {
+           return ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn).FirstOrDefault(x => x.IdUsuario.Equals(IdUsuario));
+        }
         public static RespuestaDTO ActualizaCredencialesUser(UsuarioDTO cc, string tkn)
         {
             encryptaPWD(cc);

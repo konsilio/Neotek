@@ -152,8 +152,14 @@ namespace MVC.Presentacion.App_Code
             var respuestaReq = new AgenteServicio();
             respuestaReq.GuardarRequisicon(dto, tkn);
             return respuestaReq._RespuestaDTO;
-        }      
-        #region Revicion Requisicion
+        }
+        public static RespuestaDTO CancelarRequisicion(RequisicionDTO dto, string tkn)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.ActualizarRequisicionCancelar(dto, tkn);
+            return respuestaReq._RespuestaDTO;
+        }
+        #region Revision Requisicion
         public static RespuestaDTO FinalizarRevision(RequisicionRevisionModel model, string _tok)
         {
             List<RequisicionProdReviPutDTO> lProd = new List<RequisicionProdReviPutDTO>();

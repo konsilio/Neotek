@@ -3,6 +3,7 @@ using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
 using System;
@@ -53,10 +54,17 @@ namespace Application.MainModule.Servicios.Requisiciones
             entity.IdRequisicionEstatus = status;
             return new RequisicionDataAccess().Actualizar(entity);
         }
-        public static RespuestaDto CancelarRequisicion(RequisicionCancelaDTO _req)
+        public static RespuestaDto CancelarRequisicion(RequisicionDTO _req)
         {
             var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
-            return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
+            var entity = RequisicionAdapter.FromEntity(entidad);
+            entity.IdRequisicionEstatus = RequisicionEstatusEnum.Cerrada;
+            entity.MotivoCancelacion = _req.MotivoCancelacion;
+            var respuesta = new RequisicionDataAccess().Actualizar(entity);
+            if (respuesta.Exito)            
+                respuesta.Mensaje = String.Format(Exito.OKCancelacion, "Requisicion", entity.NumeroRequisicion);
+            return respuesta;
+            
         }
         public static RequisicionProducto BuscarRequisiconProductoPorId(int idProd, int idReq)
         {

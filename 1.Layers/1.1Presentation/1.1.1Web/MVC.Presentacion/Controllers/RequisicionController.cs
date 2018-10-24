@@ -23,6 +23,14 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             TempData["ListProductosRequisicion"] = null;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            if (ViewData["RespuestaDTO"] != null)
+            {
+                if (!((RespuestaDTO)ViewData["RespuestaDTO"]).Exito)
+                    ViewBag.Tipo = "alert-danger";
+                ViewBag.NumeroRequisicion = ((RespuestaDTO)ViewData["RespuestaDTO"]).Mensaje;
+            }
+            else
+                ViewBag.Tipo = "alert-success";
             if (!string.IsNullOrEmpty(msj)) ViewBag.NumeroRequisicion = msj;
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
@@ -46,8 +54,8 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
             ViewBag.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(tkn);
-            if (ViewData["RespuestaDTO"] != null)            
-                Validar((RespuestaDTO)ViewData["RespuestaDTO"]);            
+            if (ViewData["RespuestaDTO"] != null)
+                Validar((RespuestaDTO)ViewData["RespuestaDTO"]);
             return View(RequisicionServicio.InitRequisicion(tkn));
         }
         public ActionResult RequisicionAlternativa(int? id, byte? estatus)
@@ -58,16 +66,15 @@ namespace MVC.Presentacion.Controllers
             ViewBag.EsNueva = false;
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            ViewBag.reqOpinion = model.RequisicionRevision.OpinionAlmacen;
             if (model.RequisicionEstatus.Equals(RequisicionEstatusEnum.Creada))
             {
-                ViewBag.reqOpinion = model.RequisicionRevision.OpinionAlmacen;
                 ViewBag.btnCrear = "Finalizar";
                 ViewBag.formactionBtnCrear = "Revicion";
                 ViewBag.OtraAccion = "R";
             }
             else
             {
-                ViewBag.reqOpinion = model.RequisicionRevision.OpinionAlmacen;
                 ViewBag.btnCrear = "Autorizar";
                 ViewBag.formactionBtnCrear("Autorizar");
             }
@@ -79,7 +86,7 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             var model = RequisicionServicio.RequisicionRevision(id.Value, estatus.Value, tkn);
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-            ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            ViewBag.Usuarios = CatalogoServicio.BuscarUsuario(model.IdUsuarioSolicitante, tkn);
             return View("RequisicionRevision", model);
         }
         public ActionResult RequisicionAutorizacion(int? id, byte? estatus)
@@ -102,7 +109,7 @@ namespace MVC.Presentacion.Controllers
             tkn = Session["StringToken"].ToString();
             var respuesta = RequisicionServicio.FinalizarRevision(model, tkn);
             if (respuesta.Exito)
-                return RedirectToAction("Requisiciones", new { msj = string.Concat("Revision exitosa de ", model.NumeroRequisicion)});
+                return RedirectToAction("Requisiciones", new { msj = string.Concat("Revision exitosa de ", model.NumeroRequisicion) });
             else
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
@@ -175,7 +182,7 @@ namespace MVC.Presentacion.Controllers
             if (respuesta.Exito)
             {
                 TempData["ListProductosRequisicion"] = null;
-                return RedirectToAction("Requisiciones", new { msj = string.Concat("Se genero: ", respuesta.Mensaje)});
+                return RedirectToAction("Requisiciones", new { msj = string.Concat("Se genero: ", respuesta.Mensaje) });
             }
             else
             {
@@ -189,8 +196,12 @@ namespace MVC.Presentacion.Controllers
                 return View("Requisicion", model);
             }
         }
-        public ActionResult CrearCancelar(int id)
+        public ActionResult CrearCancelar(RequisicionRevisionModel model)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var Respuesta = RequisicionServicio.CancelarRequisicion(new RequisicionDTO { IdRequisicion = model.IdRequisicion, MotivoCancelacion = model.MotivoCancela }, tkn);
+
             return View();
         }
         public ActionResult RequisicionChecarRevicion(RequisicionModel model, string cbRevision, bool checkResp = false)
