@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -17,15 +18,21 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
@@ -39,6 +46,7 @@ public class VerReporteActivity extends AppCompatActivity {
     RecargaDTO recargaDTO;
     TraspasoDTO traspasoDTO;
     VentaDTO ventaDTO;
+    AnticiposDTO anticiposDTO;
     private String StringReporte,HtmlReporte;
 
     // android built in classes for bluetooth operations
@@ -54,6 +62,8 @@ public class VerReporteActivity extends AppCompatActivity {
     int readBufferPosition;
     volatile boolean stopWorker;
     String device_select;
+    NumberFormat format;
+    Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +110,12 @@ public class VerReporteActivity extends AppCompatActivity {
                 GenerarReporteTraspasoPipa(traspasoDTO);
             }
             if(EsAnticipo){
+                anticiposDTO = (AnticiposDTO) bundle.getSerializable("anticiposDTO");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                        new SimpleDateFormat("ddMMyyyyhhmmssS");
+                String clave_unica = "ANT"+s.format(new Date());
+                anticiposDTO.setClaveOperacion(clave_unica);
+                setTitle("Nota Anticipo");
                 GenerarReporteAnticipo();
             }else if (EsCorte){
                 setTitle("Nota de corte de caja");
@@ -176,7 +192,7 @@ public class VerReporteActivity extends AppCompatActivity {
         WVVerReporteActivityReporte.loadDataWithBaseURL(null, HtmlReporte,
                 "text/HTML", "UTF-8", null);
 
-
+        session = new Session(this);
     }
 
     private void GenerarReporte(VentaDTO ventaDTO) {
@@ -385,33 +401,33 @@ public class VerReporteActivity extends AppCompatActivity {
 
     private void GenerarReporteAnticipo() {
         HtmlReporte = "<body>" +
-                "<h3>Reporte-Anticipo</h3>" +
-                "<table>" +
+                "<h2 style='text-align: center; font-weight: bold; font-size:20px;'><u>Reporte-Anticipo</u></h2>" +
+                "<table width='100%'  style='margin:5px;'>" +
                 "<tbody>" +
                 "<tr>" +
-                "<td>Clave Anticipo</td>" +
-                "<td>[{ClaveTraspaso}]</td>" +
+                "<td style='width:20%;'>Clave Anticipo</td>" +
+                "<td style='text-align: right; font-weight: bold;'>[{ClaveTraspaso}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td>Fecha</td>" +
-                "<td>[{Fecha}]</td>" +
+                "<td style='text-align: right; font-weight: bold;'>[{Fecha}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td>Hora</td>" +
-                "<td>[{Hora}]</td>" +
+                "<td style='text-align: right; font-weight: bold;'>[{Hora}]</td>" +
                 "</tr>" +
                 "</tbody>" +
                 "</table>" +
                 "<hr>" +
-                "<table>" +
+                "<table width='100%'  style='margin:5px;'>" +
                 "<tbody>" +
                 "<tr>" +
-                "<td>Estación</td>"+
-                "<td>[{Estacion}]</td>" +
+                "<td style='width:20%;'>Estación</td>"+
+                "<td style='text-align: right; font-weight: bold;'>[{Estacion}]</td>" +
                 "</tr>" +
                 "<tr>" +
                 "<td>Monto anticipado: </td>" +
-                "<td>[{Monto-anticipo}]</td>" +
+                "<td style='text-align: right; font-weight: bold;'>[{Monto-anticipo}]</td>" +
                 "</tr>" +
                 "</tbody>" +
                 "</body>";
@@ -433,6 +449,26 @@ public class VerReporteActivity extends AppCompatActivity {
                 "[{Usuario-entrego}]__________\n\n"+
                 "Recibí\n"+
                         "[{Usuario-recibi}]__________\n\n";
+        HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
+        StringReporte = StringReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
+                new SimpleDateFormat("dd/MM/yyyy");
+        HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(anticiposDTO.getFecha()));
+        StringReporte = StringReporte.replace("[{Fecha}]",fdate.format(anticiposDTO.getFecha()));
+        HtmlReporte = HtmlReporte.replace("[{Hora}]",anticiposDTO.getHora());
+        StringReporte = StringReporte.replace("[{Hora}]",anticiposDTO.getHora());
+        HtmlReporte = HtmlReporte.replace("[{Estacion}]",anticiposDTO.getNombreEstacion());
+        StringReporte = StringReporte.replace("[{Estacion}]",anticiposDTO.getNombreEstacion());
+        format = NumberFormat.getCurrencyInstance();
+        HtmlReporte = HtmlReporte.replace("[{Monto-anticipo}]","$"+String.valueOf(
+                anticiposDTO.getAnticipar()));
+        StringReporte = StringReporte.replace("[{Monto-anticipo}]",
+                "$"+String.valueOf(anticiposDTO.getNombreEstacion())
+        );
+        StringReporte = StringReporte.replace("[{Usuario-entrego}]",
+                anticiposDTO.getNombreEstacion());
+        StringReporte = StringReporte.replace("[{Usuario-recibi}]",
+                anticiposDTO.getNombreEstacion());
     }
 
     private void GenerarReporteTraspasoPipa(TraspasoDTO traspasoDTO) {

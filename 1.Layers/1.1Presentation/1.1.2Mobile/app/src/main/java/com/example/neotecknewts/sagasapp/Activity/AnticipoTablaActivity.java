@@ -12,11 +12,16 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Tabla;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class AnticipoTablaActivity extends AppCompatActivity implements AnticipoTablaView{
     Button BtnAnticipoTablaActivityRegresar,BtnAnticipoTablaActivityHacerAnticipo;
@@ -29,6 +34,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     float total;
     ArrayList<String[]> elementos;
     boolean EsAnticipo,EsCorte;
+    AnticiposDTO anticiposDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         if(bundle!= null){
             EsAnticipo = bundle.getBoolean("EsAnticipo",false);
             EsCorte = bundle.getBoolean("EsCorte",false);
+            anticiposDTO = (AnticiposDTO) bundle.getSerializable("anticiposDTO");
         }
         BtnAnticipoTablaActivityRegresar = findViewById(R.id.BtnAnticipoTablaActivityRegresar);
         BtnAnticipoTablaActivityHacerAnticipo = findViewById(R.id.
@@ -109,10 +116,16 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     }));
                     builder.create().show();
                 }else{
+                    anticiposDTO.setAnticipar(Double.parseDouble(cantidad));
+                    anticiposDTO.setFecha(new Date());
+                    SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                    String hour = format.format(new Date());
+                    anticiposDTO.setHora(format.format(new Date()));
                     Intent intent = new Intent(AnticipoTablaActivity.this,
                             VerReporteActivity.class);
                     intent.putExtra("EsAnticipo",EsAnticipo);
                     intent.putExtra("EsCorte",EsCorte);
+                    intent.putExtra("anticiposDTO",anticiposDTO);
                     startActivity(intent);
                 }
             }
