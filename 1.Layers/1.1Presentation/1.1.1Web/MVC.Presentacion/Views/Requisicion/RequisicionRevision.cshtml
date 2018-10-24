@@ -8,16 +8,19 @@
     <title>RequisicionRevision</title>
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
     <link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <script src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
     <style type="text/css">
     </style>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#btnFinalizar").click(function () {
-                var form = $(this).parent("form");
-                form.attr('action', '<%= Url.RouteUrl(new { Controller = "Requisicion", Action = "Revisar" }) %>');
-                form.attr('method', 'post');
+        var Cancelar = function () {
+            var url = "/Requisicion/Cancelar";
+            var id = '@Model.IdRequisicion'
+            var motivo = $("#MotivoCancela").val()
+            $.get(url, { IdRequisicion: id, MotivoCancela: motivo }, function () {
+
+                window.location.href = '@Url.Action("Requisiciones", "Requisicion")';
             });
-        });
+        };
     </script>
 
 </head>
@@ -68,6 +71,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <br />
                                     <div class="row clearfix z-index" id="divCamposRequi">
                                         <div class="col-lg-3">
                                             <b>Fecha requerida:</b>
@@ -175,7 +179,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
+                        <h4 class="title" id="ModalCancelarLabel">Motivo de cancelación</h4>
                     </div>
                     <div class="modal-body">
                         <div class="body">
@@ -189,7 +193,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-raised btn-primary btn-round" value="Cancelar" formaction="Cancelar" />
+                        <button type="button" id="btnCancelar" class="btn btn-raised btn-primary btn-round" onclick="Cancelar()">Cancelar</button>
                         <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
                     </div>
                 </div>

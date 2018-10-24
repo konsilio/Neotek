@@ -110,35 +110,35 @@ namespace Application.MainModule.AdaptadoresDTO.Requisiciones
                 Productos = RequisicionProductoAdapter.FromDTO(dto.Productos)
             };
         }
-        public static Requisicion FromDTO(RequisicionCancelaDTO _requisicionDTO, Requisicion entidadAnterior)
-        {
-            Requisicion _requisicion = FromEntity(entidadAnterior);
-            _requisicion.IdRequisicion = _requisicionDTO.IdRequisicion;
-            _requisicion.IdRequisicionEstatus = _requisicionDTO.IdRequisicionEstatus;
-            _requisicion.IdUsuarioRevision = _requisicionDTO.IdUsuarioRevision;
-            _requisicion.MotivoCancelacion = _requisicionDTO.MotivoCancelacion;
-            if (_requisicionDTO.IdUsuarioRevision != 0)
-            {
-                _requisicion.IdUsuarioRevision = _requisicionDTO.IdUsuarioRevision;
-                _requisicion.FechaRevision = _requisicionDTO.FechaAutorizacion;
-            }
-            else
-            {
-                _requisicion.IdUsuarioAutorizacion = _requisicionDTO.IdUsuarioAutorizacion;
-                _requisicion.FechaAutorizacion = _requisicionDTO.FechaAutorizacion;
-            }
-            return _requisicion;
-        }
-        public static Requisicion FromDTO(RequisicionCancelaDTO _requisicion)
-        {
-            Requisicion requiscionDTO = new Requisicion()
-            {
-                NumeroRequisicion = _requisicion.NumeroRequisicion,
-                MotivoCancelacion = _requisicion.MotivoCancelacion,
-                IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
-            };
-            return requiscionDTO;
-        }
+        //public static Requisicion FromDTO(RequisicionCancelaDTO _requisicionDTO, Requisicion entidadAnterior)
+        //{
+        //    Requisicion _requisicion = FromEntity(entidadAnterior);
+        //    _requisicion.IdRequisicion = _requisicionDTO.IdRequisicion;
+        //    _requisicion.IdRequisicionEstatus = _requisicionDTO.IdRequisicionEstatus;
+        //    _requisicion.IdUsuarioRevision = _requisicionDTO.IdUsuarioRevision;
+        //    _requisicion.MotivoCancelacion = _requisicionDTO.MotivoCancelacion;
+        //    if (_requisicionDTO.IdUsuarioRevision != 0)
+        //    {
+        //        _requisicion.IdUsuarioRevision = _requisicionDTO.IdUsuarioRevision;
+        //        _requisicion.FechaRevision = _requisicionDTO.FechaAutorizacion;
+        //    }
+        //    else
+        //    {
+        //        _requisicion.IdUsuarioAutorizacion = _requisicionDTO.IdUsuarioAutorizacion;
+        //        _requisicion.FechaAutorizacion = _requisicionDTO.FechaAutorizacion;
+        //    }
+        //    return _requisicion;
+        //}
+        //public static Requisicion FromDTO(RequisicionCancelaDTO _requisicion)
+        //{
+        //    Requisicion requiscionDTO = new Requisicion()
+        //    {
+        //        NumeroRequisicion = _requisicion.NumeroRequisicion,
+        //        MotivoCancelacion = _requisicion.MotivoCancelacion,
+        //        IdRequisicionEstatus = _requisicion.IdRequisicionEstatus,
+        //    };
+        //    return requiscionDTO;
+        //}
         public static Requisicion FromDTORevision(RequisicionDTO requiscionDTO, Requisicion _requisicion)
         {
             _requisicion.IdRequisicion = requiscionDTO.IdRequisicion;

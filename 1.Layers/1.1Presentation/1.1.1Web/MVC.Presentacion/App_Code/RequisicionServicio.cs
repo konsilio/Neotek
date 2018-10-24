@@ -153,7 +153,7 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.GuardarRequisicon(dto, tkn);
             return respuestaReq._RespuestaDTO;
         }
-        public static RespuestaDTO CancelarRequisicion(RequisicionDTO dto, string tkn)
+        public static RespuestaDTO CancelarRequisicion(RequisicionCancelaDTO dto, string tkn)
         {
             var respuestaReq = new AgenteServicio();
             respuestaReq.ActualizarRequisicionCancelar(dto, tkn);

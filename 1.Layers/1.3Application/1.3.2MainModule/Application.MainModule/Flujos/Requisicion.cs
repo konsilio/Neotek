@@ -10,6 +10,7 @@ using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.Compras;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 
 namespace Application.MainModule.Flujos
 {
@@ -88,9 +89,16 @@ namespace Application.MainModule.Flujos
             }
             return RequisicionServicio.UpDateRequisicionAutoriza(newReq, prodEdit);
         }        
-        public RespuestaDto CancelarRequisicion(RequisicionDTO _req)
+        public RespuestaDto CancelarRequisicion(RequisicionCancelaDTO _req)
         {
-            return RequisicionServicio.CancelarRequisicion(_req);
+            var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
+            var entity = RequisicionAdapter.FromEntity(entidad);
+            entity.IdRequisicionEstatus = RequisicionEstatusEnum.Cerrada;
+            entity.MotivoCancelacion = _req.MotivoCancelacion;
+            var respuesta = RequisicionServicio.CancelarRequisicion(entity);
+            if (respuesta.Exito)
+                respuesta.Mensaje = String.Format(Exito.OKCancelacion, "Requisicion", entity.NumeroRequisicion);
+            return respuesta;
         }        
         public List<RequisicionEstatusDTO> ListaEstatus()
         {

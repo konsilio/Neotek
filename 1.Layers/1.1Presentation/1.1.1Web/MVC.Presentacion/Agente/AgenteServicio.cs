@@ -953,10 +953,10 @@ namespace MVC.Presentacion.Agente
             }
         }
         
-        public void BuscarListaPuntosVentaId(short idEmpresa, string tkn)
+        public void BuscarListaPuntosVentaId(short _idEmpresa, string tkn)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetPuntosVentaId"];
-            GetListaPVId(tkn, idEmpresa).Wait();
+            GetListaPVId(tkn, _idEmpresa).Wait();
         }
         private async Task GetListaPVId(string Token, short idEmpresa)
         {
@@ -968,7 +968,7 @@ namespace MVC.Presentacion.Agente
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(string.Concat(ApiCatalgos, idEmpresa)).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                         lus = await response.Content.ReadAsAsync<List<PuntoVentaModel>>();
                     else
@@ -2362,7 +2362,7 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutActulizarAutorizacion"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
-        public void ActualizarRequisicionCancelar(RequisicionDTO dto, string token)
+        public void ActualizarRequisicionCancelar(RequisicionCancelaDTO dto, string token)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutCancelarRequisicion"];
             LLamada(dto, token, MetodoRestConst.Put).Wait();

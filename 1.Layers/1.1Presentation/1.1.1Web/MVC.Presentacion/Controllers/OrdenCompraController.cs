@@ -23,6 +23,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
             ViewBag.IVAs = CatalogoServicio.ListaIVA();
             ViewBag.IEPs = CatalogoServicio.ListaIEPS();
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             return View(model);
         }
         public ActionResult OrdenCompraAutorizacion(int? id)
@@ -49,12 +50,14 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
-                string tkn = Session["StringToken"].ToString();
-                ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
-                ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
-                ViewBag.IVAs = CatalogoServicio.ListaIVA();
-                ViewBag.IEPs = CatalogoServicio.ListaIEPS();
-                return View("OrdenCompra", model);
+                TempData["RespuestaDTO"] = Respuesta;
+                return RedirectToAction("OrdenCompra", new { id = model.IdRequisicion });
+                //string tkn = Session["StringToken"].ToString();
+                //ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
+                //ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
+                //ViewBag.IVAs = CatalogoServicio.ListaIVA();
+                //ViewBag.IEPs = CatalogoServicio.ListaIEPS();
+                //return View("OrdenCompra", model);
             }
         }
         public ActionResult Ordenes(int? pageO, int? pageR, string msj = null)

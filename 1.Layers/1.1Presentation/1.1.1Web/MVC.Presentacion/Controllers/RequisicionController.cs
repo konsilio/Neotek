@@ -91,12 +91,12 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult RequisicionAutorizacion(int? id, byte? estatus)
         {
-            if (Session["StringToken"] == null) return View("Index", "Home");
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
 
             tkn = Session["StringToken"].ToString();
             var model = RequisicionServicio.RequisicionAutorizacion(id.Value, estatus.Value, tkn);
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-            ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            ViewBag.Usuarios = CatalogoServicio.BuscarUsuario(model.IdUsuarioSolicitante, tkn);
             if (ViewData["RespuestaDTO"] != null)
             {
                 ViewBag.MensajeError = Validar((RespuestaDTO)ViewData["RespuestaDTO"]);
@@ -105,7 +105,7 @@ namespace MVC.Presentacion.Controllers
         }
         public ActionResult Revision(RequisicionRevisionModel model = null)
         {
-            if (Session["StringToken"] == null) return View("Index", "Home");
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = RequisicionServicio.FinalizarRevision(model, tkn);
             if (respuesta.Exito)
@@ -196,13 +196,14 @@ namespace MVC.Presentacion.Controllers
                 return View("Requisicion", model);
             }
         }
-        public ActionResult CrearCancelar(RequisicionRevisionModel model)
+        public ActionResult Cancelar(int? IdRequisicion, string MotivoCancela = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var Respuesta = RequisicionServicio.CancelarRequisicion(new RequisicionDTO { IdRequisicion = model.IdRequisicion, MotivoCancelacion = model.MotivoCancela }, tkn);
+            var Respuesta = RequisicionServicio.CancelarRequisicion(new RequisicionCancelaDTO { IdRequisicion = IdRequisicion ?? 0 , MotivoCancelacion = MotivoCancela }, tkn);
 
-            return View();
+            ViewData["RespuestaDTO"] = Respuesta;
+           return RedirectToAction("Requisiciones");           
         }
         public ActionResult RequisicionChecarRevicion(RequisicionModel model, string cbRevision, bool checkResp = false)
         {
