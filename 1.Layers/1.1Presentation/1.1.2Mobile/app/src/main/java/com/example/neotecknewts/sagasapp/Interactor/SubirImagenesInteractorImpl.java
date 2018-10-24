@@ -33,6 +33,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import retrofit2.Call;
@@ -2023,6 +2024,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (esTraspasoEstacionFinal)? "F":"I";
         clave_unica += s.format(new Date());
         traspasoDTO.setClaveOperacion(clave_unica);
+        traspasoDTO.setFecha((Date) Calendar.getInstance().getTime());
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2060,15 +2062,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         if (servicio_intentos == 3) {
-            registrar_local_traspaso(sagasSql,traspasoDTO);
+            registrar_local_traspaso(sagasSql,traspasoDTO,esTraspasoEstacionFinal,SAGASSql.TIPO_TRASPASO_ESTACION);
             registro_local = true;
         }
 
         //endregion
         //region Realiza el registro del autoconsumo
-
-
-
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
@@ -2079,9 +2078,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        int intentos_post = 0;
+        /*int intentos_post = 0;
         registra_reacrga = true;
-        while(intentos_post<3) {
+        while(intentos_post<3) {*/
             Call<RespuestaTraspasoDTO> call = restClient.postTraspaso(
                     traspasoDTO,
                     true,
@@ -2099,6 +2098,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     if (response.isSuccessful()) {
                         Log.w("IniciarDescarga", "Success");
                         subirImagenesPresenter.onSuccessRegistroRecarga();
+                        registra_reacrga = true;
                     } else {
                         registra_reacrga = false;
                         switch (response.code()) {
@@ -2121,31 +2121,42 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         }
                         registra_reacrga= false;
                     }
+                    if(response.code()>=300){
+                        registrar_local_traspaso(sagasSql,traspasoDTO,esTraspasoEstacionFinal,
+                                SAGASSql.TIPO_TRASPASO_ESTACION);
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.Traspaso);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaTraspasoDTO> call, Throwable t) {
                     Log.e("error", t.toString());
                     registra_reacrga = false;
-                    subirImagenesPresenter.errorSolicitud(t.getMessage());
+                    registrar_local_traspaso(sagasSql,traspasoDTO,esTraspasoEstacionFinal,
+                            SAGASSql.TIPO_TRASPASO_ESTACION);
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.Traspaso);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-            intentos_post++;
+          /*  intentos_post++;
             if(registra_reacrga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local_traspaso(sagasSql,traspasoDTO);
             registro_local = true;
         }
         if(registro_local ){
-            /*Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);*/
+            //Lisener lisener = new Lisener(sagasSql,token);
+            //lisener.CrearRunable(Lisener.RecargaCamioneta);
             subirImagenesPresenter.onSuccessRegistroAndroid();
-        }
+        }*/
         //endregion
     }
 
@@ -2158,6 +2169,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (esTraspasoPipaFinal)? "F":"I";
         clave_unica += s.format(new Date());
         traspasoDTO.setClaveOperacion(clave_unica);
+        traspasoDTO.setFecha((java.sql.Date) Calendar.getInstance().getTime());
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2195,7 +2207,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         if (servicio_intentos == 3) {
-            registrar_local_traspaso(sagasSql,traspasoDTO);
+            registrar_local_traspaso(sagasSql,traspasoDTO,esTraspasoPipaFinal,
+                    SAGASSql.TIPO_TRASPASO_PIPA);
             registro_local = true;
         }
 
@@ -2212,9 +2225,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        int intentos_post = 0;
+        /*int intentos_post = 0;
         registra_reacrga = true;
-        while(intentos_post<3) {
+        while(intentos_post<3) {*/
             Call<RespuestaTraspasoDTO> call = restClient.postTraspaso(
                     traspasoDTO,
                     false,
@@ -2254,31 +2267,43 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         }
                         registra_reacrga= false;
                     }
+                    if(response.code()>=300){
+                        registrar_local_traspaso(sagasSql,traspasoDTO,esTraspasoPipaFinal,
+                                SAGASSql.TIPO_TRASPASO_PIPA);
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.Traspaso);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaTraspasoDTO> call, Throwable t) {
                     Log.e("error", t.toString());
+                    registrar_local_traspaso(sagasSql,traspasoDTO,esTraspasoPipaFinal,
+                            SAGASSql.TIPO_TRASPASO_PIPA);
                     registra_reacrga = false;
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.Traspaso);
                     subirImagenesPresenter.errorSolicitud(t.getMessage());
                 }
             });
-            intentos_post++;
+
+            /*intentos_post++;
             if(registra_reacrga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local_traspaso(sagasSql,traspasoDTO);
             registro_local = true;
-        }
-        if(registro_local ){
-            /*Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);*/
+        }*/
+        /*if(registro_local ){
+            //Lisener lisener = new Lisener(sagasSql,token);
+            //lisener.CrearRunable(Lisener.RecargaCamioneta);
             subirImagenesPresenter.onSuccessRegistroAndroid();
-        }
+        }*/
         //endregion
     }
 
@@ -2340,14 +2365,14 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        int intentos_post = 0;
+        /*int intentos_post = 0;
         registra_reacrga = true;
-        while(intentos_post<3) {
+        while(intentos_post<3) {*/
             Call<RespuestaTraspasoDTO> call = restClient.postCalibracion(
                     calibracionDTO,
                     true,
@@ -2385,33 +2410,40 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         }else {
                             subirImagenesPresenter.errorSolicitud(response.message());
                         }
-                        registra_reacrga= false;
+                        if(response.code()>=300){
+                            registrar_local_calibracion(sagasSql,calibracionDTO);
+                            subirImagenesPresenter.onSuccessRegistroAndroid();
+                            Lisener lisener = new Lisener(sagasSql,token);
+                            lisener.CrearRunable(Lisener.Calibracion);
+                        }
+                        //registra_reacrga= false;
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaTraspasoDTO> call, Throwable t) {
                     Log.e("error", t.toString());
-                    registra_reacrga = false;
                     subirImagenesPresenter.errorSolicitud(t.getMessage());
+                    registrar_local_calibracion(sagasSql,calibracionDTO);
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.Calibracion);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_reacrga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local_calibracion(sagasSql,calibracionDTO);
             registro_local = true;
         }
         if(registro_local ){
-            /*Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);*/
             subirImagenesPresenter.onSuccessRegistroAndroid();
-        }
+        }*/
         //endregion
     }
 
@@ -2549,9 +2581,21 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     }
 
     private void registrar_local_calibracion(SAGASSql sagasSql, CalibracionDTO calibracionDTO){
-
+        if(sagasSql.GetCalibracionByClaveOperacion(calibracionDTO.getClaveOperacion()).getCount()==0){
+            sagasSql.InsertarCalibracion(calibracionDTO,SAGASSql.TIPO_CALIBRACION_PIPA);
+            if(sagasSql.GetFotografiasCalibracion(calibracionDTO.getClaveOperacion()).getCount()==0){
+                sagasSql.InsertarImagenesCalibracion(calibracionDTO);
+            }
+        }
     }
-    private void registrar_local_traspaso(SAGASSql sagasSql, TraspasoDTO traspasoDTO) {
+    private void registrar_local_traspaso(SAGASSql sagasSql, TraspasoDTO traspasoDTO,
+                                          boolean esFinal,String tipo) {
+        if(sagasSql.GetTraspasoByClaveOperacion(traspasoDTO.getClaveOperacion()).getCount()==0){
+            sagasSql.InsertTraspaso(traspasoDTO,esFinal,tipo);
+            if(sagasSql.GetImagenesTraspaso(traspasoDTO.getClaveOperacion()).getCount()==0){
+                sagasSql.InsertImagenesTraspaso(traspasoDTO);
+            }
+        }
     }
 
     private void registrar_local_autoconsumo(SAGASSql sagasSql, AutoconsumoDTO autoconsumoDTO,
@@ -2598,9 +2642,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @param clave_unica        Cadena {@link String} que reprecenta la clave unica de la operación
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx >
      */
-    public void registrar_descarga_local(IniciarDescargaSQL iniciarDescargaSQL,
-                                         IniciarDescargaDTO iniciarDescargaDTO,
-                                         String clave_unica){
+    private void registrar_descarga_local(IniciarDescargaSQL iniciarDescargaSQL,
+                                          IniciarDescargaDTO iniciarDescargaDTO,
+                                          String clave_unica){
         if(iniciarDescargaSQL.GetDescargaByClaveOperacion(clave_unica).getCount()== 0){
             iniciarDescargaSQL.InsertDescarga(iniciarDescargaDTO,clave_unica);
             if(iniciarDescargaSQL.GetImagenesDescargaByClaveUnica(clave_unica).getCount()==0){
@@ -2623,9 +2667,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx
      * @date 28/08/2018
      */
-    public void registrar_finalizar_local(FinalizarDescargaSQL finalizarDescargaSQL,
-                                          FinalizarDescargaDTO finalizarDescargaDTO,
-                                          String clave_unica){
+    private void registrar_finalizar_local(FinalizarDescargaSQL finalizarDescargaSQL,
+                                           FinalizarDescargaDTO finalizarDescargaDTO,
+                                           String clave_unica){
         if(finalizarDescargaSQL.GetFinalizarDescargaByClaveOperacion(clave_unica).getCount()==0){
             finalizarDescargaSQL.InsertFinalizarDescarga(finalizarDescargaDTO,clave_unica);
             if(finalizarDescargaSQL.GetImagenesFinalizarDescargaByClaveOperacion(clave_unica)

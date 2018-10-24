@@ -10,44 +10,45 @@ using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.Servicios.Seguridad;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.DTOs.Compras;
-using Application.MainModule.AdaptadoresDTO.Almacen;
+using Application.MainModule.AdaptadoresDTO;
 using Sagas.MainModule.ObjetosValor.Constantes;
 using Exceptions.MainModule.Validaciones;
+using Application.MainModule.AdaptadoresDTO.Almacenes;
 
-namespace Application.MainModule.Servicios.Almacen
+namespace Application.MainModule.Servicios.Almacenes
 {
     public static class ProductoAlmacenServicio
     {
 
-        public static RespuestaDto EntradaAlmcacenProductos(Sagas.MainModule.Entidades.Almacen _almacen, AlmacenEntradaProducto prod)
+        public static RespuestaDto EntradaAlmcacenProductos(Almacen _almacen, AlmacenEntradaProducto prod)
         {
             return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, prod);
         }
-        public static RespuestaDto SalidaAlmcacenProductos(Sagas.MainModule.Entidades.Almacen _almacen, AlmacenSalidaProducto prod)
+        public static RespuestaDto SalidaAlmcacenProductos(Almacen _almacen, AlmacenSalidaProducto prod)
         {
             return new AlmacenDataAccess().ActualizarAlmacenSalida(_almacen, prod);
         }
-        public static RespuestaDto Actualiza(Sagas.MainModule.Entidades.Almacen _almacen)
+        public static RespuestaDto Actualiza(Almacen _almacen)
         {
             return new AlmacenDataAccess().Actualizar(_almacen);
         }
-        public static RespuestaDto EntradaAlmcacenProductos(List<Sagas.MainModule.Entidades.Almacen> _almacen, List<Sagas.MainModule.Entidades.Almacen> _almacenCrear, List<AlmacenEntradaProducto> prod)
+        public static RespuestaDto EntradaAlmcacenProductos(List<Almacen> _almacen, List<Almacen> _almacenCrear, List<AlmacenEntradaProducto> prod, OrdenCompra oc, List<OrdenCompraProducto> ocp)
         {
-            return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, _almacenCrear, prod);
+            return new AlmacenDataAccess().ActualizarAlmacenEntradas(_almacen, _almacenCrear, prod, oc, ocp);
         }
-        public static RespuestaDto SalidaAlmcacenProductos(List<Sagas.MainModule.Entidades.Almacen> _almacen, List<AlmacenSalidaProducto> prod, Sagas.MainModule.Entidades.Requisicion _requisicion, List<RequisicionProducto> _productos)
+        public static RespuestaDto SalidaAlmcacenProductos(List<Almacen> _almacen, List<AlmacenSalidaProducto> prod, Sagas.MainModule.Entidades.Requisicion _requisicion, List<RequisicionProducto> _productos)
         {
             return new AlmacenDataAccess().ActualizarAlmacenSalidas(_almacen, prod, _requisicion, _productos);
         }
-        public static AlmacenEntradaProducto GenerarAlmacenEntradaProcuto(AlmacenEntradaDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
+        public static AlmacenEntradaProducto GenerarAlmacenEntradaProcuto(AlmacenEntradaDTO dto, int idOC, Almacen _alm)
         {
             return AlmacenProductoAdapter.FromDTO(dto, idOC, _alm);
         }
-        public static AlmacenSalidaProducto GenerarAlmacenSalidaProcuto(AlmacenSalidaProductoDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
+        public static AlmacenSalidaProducto GenerarAlmacenSalidaProcuto(AlmacenSalidaProductoDTO dto, int idOC, Almacen _alm)
         {
             return AlmacenProductoAdapter.FromDTO(dto, idOC, _alm);
         }
-        public static Sagas.MainModule.Entidades.Almacen GenerarAlmacenConEntradaProcuto(AlmacenEntradaDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
+        public static Almacen GenerarAlmacenConEntradaProcuto(AlmacenEntradaDTO dto, int idOC, Almacen _alm)
         {
             _alm.Entradas.Add(AlmacenProductoAdapter.FromDTO(dto, idOC, _alm));
             return _alm;
@@ -56,25 +57,25 @@ namespace Application.MainModule.Servicios.Almacen
         {
             return AlmacenProductoAdapter.ToDTO(oc, req);
         }
-        public static Sagas.MainModule.Entidades.Almacen ObtenerAlmacen(int Idpord, short idEmpresa)
+        public static Almacen ObtenerAlmacen(int Idpord, short idEmpresa)
         {
             return new AlmacenDataAccess().ProductoAlmacen(Idpord, idEmpresa);
         }
-        public static RespuestaDto InsertarAlmacen(Sagas.MainModule.Entidades.Almacen almacen)
+        public static RespuestaDto InsertarAlmacen(Almacen almacen)
         {
             return new AlmacenDataAccess().Insertar(almacen);
         }
-        public static Sagas.MainModule.Entidades.Almacen AlmacenEntity(Sagas.MainModule.Entidades.Almacen almacen)
+        public static Almacen AlmacenEntity(Almacen almacen)
         {
             return AlmacenAdapter.FromEmtity(almacen);
         }
-        public static RespuestaDto InsertarAlmacenEntrada(List<Sagas.MainModule.Entidades.Almacen> _almacen, List<AlmacenEntradaProducto> prod)
+        public static RespuestaDto InsertarAlmacenEntrada(List<Almacen> _almacen, List<AlmacenEntradaProducto> prod)
         {
             return new AlmacenDataAccess().InsertarAlmacenEntradas(_almacen, prod);
         }
-        public static Sagas.MainModule.Entidades.Almacen GenaraAlmacenNuevo(int Idpord, short idEmpresa, decimal cantidad)
+        public static Almacen GenaraAlmacenNuevo(int Idpord, short idEmpresa, decimal cantidad)
         {
-            return new Sagas.MainModule.Entidades.Almacen()
+            return new Almacen()
             {
                 IdEmpresa = idEmpresa,
                 IdProduto = Idpord,
@@ -85,7 +86,7 @@ namespace Application.MainModule.Servicios.Almacen
                 Entradas = new List<AlmacenEntradaProducto>()
             };
         }
-        public static List<Sagas.MainModule.Entidades.Almacen> BuscarAlmacen(short idEmpresa)
+        public static List<Almacen> BuscarAlmacen(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())
                 if (idEmpresa.Equals(0))
@@ -94,7 +95,7 @@ namespace Application.MainModule.Servicios.Almacen
                     return new AlmacenDataAccess().ListaProductosAlmacen(idEmpresa);
             else
                 return new AlmacenDataAccess().ListaProductosAlmacen(TokenServicio.ObtenerIdEmpresa());
-        }
+        }       
         public static List<AlmacenEntradaProducto> BuscarEntradasTodo(short idEmpresa)
         {
             if (TokenServicio.ObtenerEsAdministracionCentral())

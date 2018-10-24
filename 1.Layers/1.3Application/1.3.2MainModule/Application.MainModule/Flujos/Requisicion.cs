@@ -5,7 +5,7 @@ using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Requisiciones;
 using Application.MainModule.Servicios.Notificacion;
 using Application.MainModule.Servicios.AccesoADatos;
-using Application.MainModule.AdaptadoresDTO.Requisicion;
+using Application.MainModule.AdaptadoresDTO.Requisiciones;
 using Application.MainModule.Servicios;
 using Application.MainModule.Servicios.Compras;
 using Exceptions.MainModule.Validaciones;

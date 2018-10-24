@@ -1,4 +1,4 @@
-﻿using Application.MainModule.Servicios.Almacen;
+﻿using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Ventas;
 using System;
 using System.Collections.Generic;
@@ -13,8 +13,8 @@ namespace Application.MainModule.Servicios
         public static void Actualizar()
         {
             AlmacenGasServicio.ProcesarInventario();
-            CajaGeneralServicio.CargarVentasMovimientos();
-            CajaGeneralServicio.ProcesarSaldos();
+            //  CajaGeneralServicio.CargarVentasMovimientos();
+            CajaGeneralServicio.ProcesarVentasPuntosDeVenta();
             ImagenServicio.LimpiarImagenes();
         }
     }

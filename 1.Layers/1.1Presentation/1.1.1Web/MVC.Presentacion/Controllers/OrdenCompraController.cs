@@ -105,8 +105,8 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = OrdenCompraServicio.RegistrarEntrada(model, tkn);
-            if (respuesta.Exito && respuesta.Mensaje.Equals("OK"))
-                return RedirectToAction("Ordenes");
+            if (respuesta.Exito )
+                return RedirectToAction("Ordenes", new { msj = respuesta.Mensaje });
             else
             {
                 TempData["RespuestaDTO"] = respuesta;

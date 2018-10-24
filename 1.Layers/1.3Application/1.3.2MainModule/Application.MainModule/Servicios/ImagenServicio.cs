@@ -1,6 +1,6 @@
 ﻿using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Compras;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;

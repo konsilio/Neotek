@@ -8,7 +8,7 @@
 using System;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.AdaptadoresDTO.Mobile;
 using Sagas.MainModule.ObjetosValor.Enum;
 using Sagas.MainModule.Entidades;

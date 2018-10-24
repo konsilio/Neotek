@@ -1,0 +1,20 @@
+﻿@model MVC.Presentacion.Models.Almacen.AlmacenSalidaDTO
+<tr>
+    @Html.HiddenFor(m => m.IdProducto)
+    <td>@Html.LabelFor(m => m.Descripcion, Model.Descripcion)</td>
+    <td>@Html.LabelFor(m => m.Ubicacion, Model.Ubicacion)</td>
+    <td>@Html.LabelFor(m => m.UnidadMedida, Model.UnidadMedida)</td>
+    <td>@Html.LabelFor(m => m.Requeridos, Model.Requeridos.ToString())</td>    
+    <td>@Html.LabelFor(m => m.CantidadActual, Model.CantidadActual.ToString("n2"))</td>
+    <td>@Html.LabelFor(m => m.CantidadEntregada, Model.CantidadEntregada.ToString("n2"))</td>
+    <td>
+        @if (Model.Autorizado)
+        {
+            @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", @type = "number" })
+        }
+        else
+        {
+            @Html.Label("No autorizado")
+        }
+    </td>
+</tr>

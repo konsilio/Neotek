@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace Application.MainModule.AdaptadoresDTO.Almacen
+namespace Application.MainModule.AdaptadoresDTO.Almacenes
 {
     public static class AlmacenProductoAdapter
     {
-        public static OrdenCompraEntradasDTO ToDTO(OrdenCompra oc, Sagas.MainModule.Entidades.Requisicion req)
+        public static OrdenCompraEntradasDTO ToDTO(OrdenCompra oc, Requisicion req)
         {
             return new OrdenCompraEntradasDTO()
             {
@@ -59,7 +59,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
         {
             return prod.Select(x => ToDTO(x)).ToList();
         }
-        public static AlmacenEntradaProducto FromDTO(AlmacenEntradaDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
+        public static AlmacenEntradaProducto FromDTO(AlmacenEntradaDTO dto, int idOC, Almacen _alm)
         {
             var oc = new OrdenCompraDataAccess().Buscar(idOC);
             if (oc != null)
@@ -95,14 +95,14 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 };
             }           
         }
-        public static AlmacenSalidaProducto FromDTO(AlmacenSalidaProductoDTO dto, int idOC, Sagas.MainModule.Entidades.Almacen _alm)
+        public static AlmacenSalidaProducto FromDTO(AlmacenSalidaProductoDTO dto, int idReq, Almacen _alm)
         {            
-            var oc = new OrdenCompraDataAccess().Buscar(idOC);
-            if (oc != null)
+            var req = new RequisicionDataAccess().BuscarPorIdRequisicion(idReq);
+            if (req != null)
             {
                 return new AlmacenSalidaProducto()
                 {
-                    IdRequisicion = oc.IdRequisicion,
+                    IdRequisicion = req.IdRequisicion,
                     IdAlmacen = _alm.IdAlmacen,
                     IdProducto = dto.IdProducto,
                     IdUsuarioEntrega = dto.IdUsuarioEntrega,
@@ -110,7 +110,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                     Cantidad = dto.Cantidad,
                     CantidadAnterior = dto.CantidadAnterior,
                     CantidadFinal = dto.CantidadFinal,
-                    Observaciones_ = idOC.Equals(0) ? dto.Observaciones_ : oc.NumOrdenCompra,
+                    Observaciones_ = idReq.Equals(0) ? dto.Observaciones_ : req.NumeroRequisicion,
                     FechaEntrada = dto.FechaEntrada,
                     FechaRegistro = DateTime.Now
                 };
@@ -126,13 +126,13 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                     Cantidad = dto.Cantidad,
                     CantidadAnterior = dto.CantidadAnterior,
                     CantidadFinal = dto.CantidadFinal,
-                    Observaciones_ = idOC.Equals(0) ? dto.Observaciones_ : oc.NumOrdenCompra,
+                    Observaciones_ = idReq.Equals(0) ? dto.Observaciones_ : req.NumeroRequisicion,
                     FechaEntrada = DateTime.Now,
                     FechaRegistro = DateTime.Now
                 };
             }
         }
-        public static AlmacenDTO ToDTO(Sagas.MainModule.Entidades.Almacen entidad)
+        public static AlmacenDTO ToDTO(Almacen entidad)
         {
             var prod = ProductoServicio.ObtenerProducto(entidad.IdProduto);
             return new AlmacenDTO()
@@ -151,7 +151,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacen
                 ProductoLinea = prod.LineaProducto.Descripcion
             };
         }
-        public static List<AlmacenDTO> ToDTO(List<Sagas.MainModule.Entidades.Almacen> entidad)
+        public static List<AlmacenDTO> ToDTO(List<Almacen> entidad)
         {
             return entidad.Select(x => ToDTO(x)).ToList();
         }

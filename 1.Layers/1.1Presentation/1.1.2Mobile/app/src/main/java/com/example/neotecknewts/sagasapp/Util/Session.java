@@ -46,6 +46,10 @@ public class Session {
 
     public static final String KEY_ID_EMPRESA = "idEmpresa";
 
+    //Variable de session para los mensajes de los tikets
+    public static final String KEY_MENSAJE = "mensaje";
+
+    public static final String KEY_FB_TOKEN = "fbToken";
 
     // Constructor
     public Session(Context context){
@@ -55,7 +59,8 @@ public class Session {
     }
 
 
-    public void createLoginSession(String password, String email, String token, int idEmpresa){
+    public void createLoginSession(String password, String email, String token, int idEmpresa,
+                                   String fb_token,String mensaje){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -69,6 +74,9 @@ public class Session {
 
         editor.putInt(KEY_ID_EMPRESA,idEmpresa);
 
+        editor.putString(KEY_MENSAJE,mensaje);
+
+        editor.putString(KEY_FB_TOKEN,fb_token);
         // commit changes
         editor.commit();
     }

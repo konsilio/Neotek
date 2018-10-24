@@ -1,0 +1,39 @@
+﻿<div class="user-info m-b-20">
+    <div class="image">
+        <a href="profile.html">
+            @if (ViewBag.Logo != null)
+            {
+                <img id="@ViewBag.Logo" src="@Url.Content(ViewBag.Logo)" />
+                    @*<img src="@ViewBag.Logo" alt="User">*@
+            }
+            else
+            {
+                <img src="../../fonts/Logo GMG.JPG" alt="User">
+            }
+        </a>
+    </div>
+    <div class="detail">
+        <h6>
+            @if (ViewBag.Nombre != null)
+            {
+                @ViewBag.Nombre
+            }
+            else
+            {
+                <label>Error de carga</label>
+            }
+
+        </h6>
+        <p class="m-b-0">
+            @if (ViewBag.Usuario != null)
+            {
+                @ViewBag.Usuario
+            }
+            else
+            {
+                <label>Error de carga</label>
+            }
+
+        </p>
+    </div>
+</div>

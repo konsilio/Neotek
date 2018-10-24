@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.MainModule.AdaptadoresDTO.Almacen
+namespace Application.MainModule.AdaptadoresDTO.Almacenes
 {
     public class AlmacenGasAdapter
     {

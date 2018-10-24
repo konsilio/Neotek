@@ -62,93 +62,192 @@ namespace Application.MainModule.Servicios.Ventas
             };
         }
 
-        public static void ProcesarSaldos()
+        public static void ProcesarVentasPuntosDeVenta()
         {
-            CalcularSaldoMovimientoVentas();
+            ProcesarMovimientoVentas();
         }
 
-        public static List<VentaMovimiento> CalcularSaldoMovimientoVentas()
+        public static void ProcesarMovimientoVentas()
         {
-            List<VentaMovimiento> movimientos = new List<VentaMovimiento>();
-            List<PuntoVenta> punto = ObtenerPuntosVenta();
-            foreach (var pvx in punto)
+            List<VentaPuntoDeVenta> ventaspv = ObtenerVentasPuntosVentaNoProc();//obtenerVentasPuntoVentaNoProc no procesadas
+
+            if (ventaspv != null && ventaspv.Count > 0)
             {
-                movimientos = ObtenerVentaMovimiento(pvx.IdPuntoVenta);
-                if (movimientos != null && movimientos.Count > 0)
-                {
-                    movimientos.ForEach(x => movimientos.Add(ActualizarSaldos(x)));
-                }
+                ActualizarTotalesVentas(ventaspv); //se actualizan totales de VentasPuntoVenta
+                CargarAVentasMovimientos(ventaspv);//guardar Ventas (de VentaPuntoDeVenta) a Tabla VentasMovimiento
             }
-            return movimientos;
+
+            List<VentaCorteAnticipoEC> CortesAnticipos = ObtenerVentasCorteAnticipoNoProc();//Obtener existencia de anticipos no procesados
+            if (CortesAnticipos != null && CortesAnticipos.Count() > 0)
+            {
+                CargarAnticiposAMovimientos(CortesAnticipos);//Guardar Anticipos en Tabla VentasMovimiento
+            }
+
         }
-        public static List<VentaMovimiento> ObtenerVentaMovimiento(int puntoventa)
+        public static VentaMovimiento ObtenerVentaMovimiento(int puntoventa, short orden)
+        {
+            return new CajaGeneralDataAccess().Buscar(puntoventa).Where(x => x.Orden.Equals(orden)).FirstOrDefault();
+        }
+
+        public static List<VentaMovimiento> ObtenerListaMovimientos(int puntoventa)
         {
             return new CajaGeneralDataAccess().Buscar(puntoventa);
         }
-
-        public static List<PuntoVenta> ObtenerPuntosVenta()
+        public static VentaMovimiento ObtenerVentasMovimientos(int puntoventa, short orden)
         {
-            return new PuntoVentaDataAccess().BuscarTodos();
+            return new CajaGeneralDataAccess().Buscar(puntoventa).Where(x => x.Orden.Equals(orden)).FirstOrDefault();
         }
-
-        public static VentaMovimiento ActualizarSaldos(VentaMovimiento vm)
+        public static VentaPuntoDeVenta ObtenerPuntoVenta(int puntoventa, short orden)
         {
-            VentaMovimiento Updt = new VentaMovimiento();
-            if (vm.Saldo != 0)
-            {
-                vm.Saldo = CalcularPreciosVentaServicio.ObtenerSaldoActual(vm.IdPuntoVenta);
-                if (vm.Ingreso > 0)
-                {
-                    Updt.Saldo = CalcularPreciosVentaServicio.ObtenerSumaSaldoVenta(vm.Ingreso, vm.Saldo);
-                }
-                else if (vm.Egreso > 0)
-                {
-                    Updt.Saldo = CalcularPreciosVentaServicio.ObtenerSaldoVentaEgreso(vm.Egreso, vm.Saldo);
-                }
-                new CajaGeneralDataAccess().Actualizar(Updt);
-            }
-
-            return Updt;
+            return new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.Orden.Equals(orden)).FirstOrDefault();
         }
-
-        public static void CargarVentasMovimientos()
-        {
-            //bool noProcesados = false;
-
-            //var ventas = ObtenerVentasPuntosVenta().Where(x=> x.DatosProcesados.Equals(noProcesados));
-            //_lus.OrderByDescending(x => x.FechaAplicacion).ToList();
-            var ventas = ObtenerVentasCortesAnticipos();
-            if (ventas != null && ventas.Count() > 0)
-            {
-                var rep = CajaGeneralAdapter.FromDtoVtaM(ventas);
-               new CajaGeneralDataAccess().Insertar(rep);
-
-            }
-        }
-
-        public static List<VentaPuntoDeVenta> ObtenerVentasPuntosVenta()
+        public static List<VentaPuntoDeVenta> ObtenerPuntosVenta()
         {
             return new CajaGeneralDataAccess().Buscar();
         }
-        public static List<VentaCorteAnticipoEC> ObtenerVentasCorteAnticipo()
+        
+        public static void ActualizarTotalesVentas(List<VentaPuntoDeVenta> vm)
         {
-            return new CajaGeneralDataAccess().BuscarAnticiposC();
+            VentaPuntoDeVenta Updt = new VentaPuntoDeVenta();
+            // List<VentaPuntoDeVenta> lst = vm.GroupBy(x => x.IdPuntoVenta).SelectMany(gr => gr).ToList(); //VentaspuntosDeVentaAgrupados- por punto de venta
+            var lst = vm.GroupBy(x => x.IdPuntoVenta).ToList(); //VentaspuntosDeVentaAgrupados- por punto de venta
+            //Actualizar Total Dia      
+            foreach (var _lst in lst)
+            {
+                int position = 0;
+                foreach (var item in _lst)
+                {
+                    position++;
+                    Updt = ObtenerPuntoVenta(item.IdPuntoVenta, item.Orden);
+                    if (item.Total > 0)
+                    {
+                        item.TotalDia = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "TotalDia"); //Obtener Saldo actual por punto de venta - TotalDia
+                        item.TotalMes = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "TotalMes"); //Obtener Saldo actual por punto de venta - TotalMes
+                        item.TotalAnio = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "TotalAnio"); //Obtener Saldo actual por punto de venta - TotalAnio
+
+                        Updt.TotalDia = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, item.TotalDia); //se agrega el Total de venta al TotalDia por punto de venta
+                        Updt.TotalMes = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, item.TotalMes); //se agrega el Total de venta al TotalMes por punto de venta
+                        Updt.TotalAnio = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Total, item.TotalAnio); //se agrega el Total de venta al TotalAnio por punto de venta
+                    }
+                    if (item.Iva > 0)
+                    {
+                        item.IvaDia = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "IvaDia"); //Obtener Saldo actual por punto de venta - IvaDia
+                        item.IvaMes = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "IvaMes"); //Obtener Saldo actual por punto de venta - IvaMes
+                        item.IvaAnio = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "IvaAnio"); //Obtener Saldo actual por punto de venta - IvaAnio
+
+                        Updt.IvaDia = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Iva, item.IvaDia); //se agrega el Iva de venta al IvaDia por punto de venta
+                        Updt.IvaMes = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Iva, item.IvaMes); //se agrega el Iva de venta al IvaMes por punto de venta
+                        Updt.IvaAnio = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Iva, item.IvaAnio); //se agrega el Iva de venta al IvaAnio por punto de venta
+                    }
+                    if (item.Subtotal > 0)
+                    {
+                        item.SubtotalDia = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "SubtotalDia"); //Obtener Saldo actual por punto de venta - SubtotalDia
+                        item.SubtotalMes = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "SubtotalMes"); //Obtener Saldo actual por punto de venta - SubtotalMes
+                        item.SubtotalAnio = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "SubtotalAnio"); //Obtener Saldo actual por punto de venta - SubtotalAnio
+
+                        Updt.SubtotalDia = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Subtotal, item.SubtotalDia); //se agrega el Subtotal de venta al SubtotalDia por punto de venta
+                        Updt.SubtotalMes = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Subtotal, item.SubtotalMes); //se agrega el Subtotal de venta al SubtotalMes por punto de venta
+                        Updt.SubtotalAnio = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Subtotal, item.SubtotalAnio); //se agrega el Subtotal de venta al SubtotalAnio por punto de venta
+                    }
+
+                    if (item.Descuento > 0)
+                    {
+                        item.DescuentoDia = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "DescuentoDia"); //Obtener Saldo actual por punto de venta - DescuentoDia
+                        item.DescuentoMes = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "DescuentoMes"); //Obtener Saldo actual por punto de venta - DescuentoMes
+                        item.DescuentoAnio = CalcularPreciosVentaServicio.ObtenerSaldoActual(item.IdPuntoVenta, item.Orden, position, "DescuentoAnio"); //Obtener Saldo actual por punto de venta - DescuentoAnio
+
+                        Updt.DescuentoDia = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Descuento, item.DescuentoDia); //se agrega el Descuento de venta al DescuentoDia por punto de venta
+                        Updt.DescuentoMes = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Descuento, item.DescuentoMes); //se agrega el Descuento de venta al DescuentoMes por punto de venta
+                        Updt.DescuentoAnio = CalcularPreciosVentaServicio.ObtenerSumaTotalVenta(item.Descuento, item.DescuentoAnio); //se agrega el Descuento de venta al DescuentoAnio por punto de venta
+
+                    }
+                    Updt.DatosProcesados = true;
+                    var rep = CajaGeneralAdapter.FromEntity(Updt);
+                    new CajaGeneralDataAccess().Actualizar(rep);
+                }
+            }
+        }
+        public static void ActualizarSaldos(List<VentaMovimiento> vm, string from)
+        {
+            VentaMovimiento Updt = new VentaMovimiento();
+            int position = 0;
+            foreach (var _lst in vm)
+            {
+                position++;
+                Updt = ObtenerVentaMovimiento(_lst.IdPuntoVenta, _lst.Orden);
+                _lst.Saldo = CalcularPreciosVentaServicio.ObtenerSaldoActual(_lst.IdPuntoVenta, _lst.Orden, position);
+                if (from == "PuntosVenta")
+                {
+                    if (_lst.Ingreso > 0 )//Actualiza saldo proveniente de Puntos venta
+                    {
+                        Updt.Saldo = CalcularPreciosVentaServicio.ObtenerSumaSaldoVenta(_lst.Ingreso, _lst.Saldo);
+                    }
+                    else if (_lst.Egreso > 0 )//Actualiza saldo proveniente de Puntos venta
+                    {
+                        Updt.Saldo = CalcularPreciosVentaServicio.ObtenerSaldoVentaEgreso(_lst.Egreso, _lst.Saldo);
+                    }
+                }
+                else
+                {
+                    if (_lst.Egreso > 0)
+                    {
+                        Updt.Saldo = CalcularPreciosVentaServicio.ObtenerSaldoVentaEgreso(_lst.Egreso, _lst.Saldo);
+                    }
+                }
+                var rep = CajaGeneralAdapter.FromEntity(Updt);
+                new CajaGeneralDataAccess().Actualizar(rep);
+
+
+            }
+
         }
 
-        public static List<RegistrarVentasMovimientosDTO> ObtenerVentasCortesAnticipos()
+        public static void CargarAVentasMovimientos(List<VentaPuntoDeVenta> lst)
         {
-            List<RegistrarVentasMovimientosDTO> _lst = new List<RegistrarVentasMovimientosDTO>();
-            bool noProcesados = false;
-            bool Procesados = false;
-            List<VentaPuntoDeVenta> VentasPV = ObtenerVentasPuntosVenta().Where(x => x.DatosProcesados.Equals(noProcesados)).OrderByDescending(x => x.FechaRegistro).ToList();
-            List<VentaCorteAnticipoEC> VentasCortes = ObtenerVentasCorteAnticipo().Where(x => x.DatosProcesados.Equals(noProcesados)).OrderByDescending(x => x.FechaRegistro).ToList();
-            if ((VentasPV != null && VentasPV.Count() > 0)|| (VentasCortes != null && VentasCortes.Count() > 0))
+            List<RegistrarVentasMovimientosDTO> _lst = MergedLst(lst, null);
+            List<VentaMovimiento> VtasMov = AdaptadoresDTO.Ventas.CajaGeneralAdapter.FromDtoVtaM(_lst);
+            new CajaGeneralDataAccess().Insertar(VtasMov);
+
+            var listaMov = VtasMov.GroupBy(x => x.IdPuntoVenta).ToList(); //VentaspuntosDeVentaAgrupados - por punto de venta
+
+            foreach (var _lMov in listaMov)
             {
-                _lst = MergedLst(VentasPV, VentasCortes);               
-                VentasPV.ForEach(x => x.DatosProcesados = Procesados);
-               new CajaGeneralDataAccess().Actualizar(VentasPV);
+                ActualizarSaldos(_lMov.ToList(),"PuntosVenta");
             }
-            return _lst;
+        }
+        public static void CargarAnticiposAMovimientos(List<VentaCorteAnticipoEC> lst)
+        {
+            //insertar movimientos de anticipos en tabla movimientos
+            bool Procesados = true;
+            foreach (var li in lst)
+            {
+                RegistrarVentasMovimientosDTO _lstmov = MergeLstAnticipos(li);
+
+                VentaMovimiento Vtasanticipos = AdaptadoresDTO.Ventas.CajaGeneralAdapter.FromDTO(_lstmov);
+
+                new CajaGeneralDataAccess().Insertar(Vtasanticipos);
+                li.DatosProcesados = Procesados;
+                var rep = CajaGeneralAdapter.FromEntity(li);
+                new CajaGeneralDataAccess().Actualizar(rep);
+
+            }
+            //actualizar totales de VentasMovimientos
+            var puntosventa = lst.GroupBy(x => x.IdPuntoVenta);
+
+            foreach (var x in puntosventa)
+            {/*Seleccionar ultimo registro del movimiento, perteneciente a los insertados de los anticipos*/
+                ActualizarSaldos(ObtenerListaMovimientos(x.Select(z => z.IdPuntoVenta).FirstOrDefault()),"");
+            }
+
+        }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPuntosVentaNoProc()
+        {
+            return new CajaGeneralDataAccess().Buscar();
+        }
+        public static List<VentaCorteAnticipoEC> ObtenerVentasCorteAnticipoNoProc()
+        {
+            bool noProcesados = false;
+            return new CajaGeneralDataAccess().BuscarAnticiposC().Where(x => x.DatosProcesados.Equals(noProcesados)).OrderByDescending(x => x.FechaAplicacion).ToList();
         }
 
         public static List<RegistrarVentasMovimientosDTO> MergedLst(List<VentaPuntoDeVenta> pv, List<VentaCorteAnticipoEC> vca)
@@ -188,10 +287,37 @@ namespace Application.MainModule.Servicios.Ventas
                 PuntoVenta = v.PuntoVenta,
                 OperadorChoferNombre = v.OperadorChofer,
                 FechaRegistro = v.FechaRegistro,
+                FechaAplicacion = v.FechaAplicacion ?? DateTime.Now,
+                Descripcion = "",
+                IdCAlmacenGas = new PuntoVentaDataAccess().Buscar(v.IdPuntoVenta).IdCAlmacenGas,
             }).ToList();
 
             return lstFinal;
         }
-               
+
+        public static RegistrarVentasMovimientosDTO MergeLstAnticipos(VentaCorteAnticipoEC v)
+        {
+            RegistrarVentasMovimientosDTO lstFinal = new RegistrarVentasMovimientosDTO();
+
+            lstFinal.IdEmpresa = v.IdEmpresa;
+            lstFinal.Year = v.Year;
+            lstFinal.Mes = v.Mes;
+            lstFinal.Dia = v.Dia;
+            lstFinal.Orden = (short)(CalcularPreciosVentaServicio.ObtenerConsecutivoOrden() + 1);//v.Orden,
+            lstFinal.IdPuntoVenta = v.IdPuntoVenta;
+            lstFinal.IdCliente = 0;//v.IdCliente,
+            lstFinal.IdOperadorChofer = v.IdOperadorChofer;
+            lstFinal.FolioOperacionDia = v.FolioOperacionDia;
+            lstFinal.FolioVenta = v.FolioOperacion;//v.FolioVenta,
+            lstFinal.Egreso = v.TotalAnticipado;
+            lstFinal.PuntoVenta = v.PuntoVenta;
+            lstFinal.OperadorChoferNombre = v.OperadorChofer;
+            lstFinal.FechaRegistro = v.FechaRegistro;
+            lstFinal.FechaAplicacion = v.FechaAplicacion;
+            lstFinal.Descripcion = v.TipoOperacion;
+            lstFinal.IdCAlmacenGas = new PuntoVentaDataAccess().Buscar(v.IdPuntoVenta).IdCAlmacenGas;
+
+            return lstFinal;
+        }
     }
 }

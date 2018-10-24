@@ -1,0 +1,147 @@
+﻿@model MVC.Presentacion.Models.Almacen.RequisicionSalidaDTO
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="50" height="50" alt="Alpino"></div>
+        <p>Procesando</p>
+    </div>
+</div>
+<section class="content home">
+    <div class="container-fluid">
+        @using (Html.BeginForm("GenerarSalidas", "Almacen", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => m.IdRequisicion)
+            @Html.HiddenFor(m => m.IdEmpresa)
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Requisición</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Almacén</li>
+                            <li class="breadcrumb-item">Salidas de Mercancía</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            @ViewBag.Empresas
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <label>Número de Requisición:</label>&nbsp;
+                                                <label>@Model.NumeroRequisicion</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix z-index" id="divCamposRequi">
+                                    <div class="col-lg-3">
+                                        <b>Fecha requerida:</b>
+                                        <input type="text" value="@Model.FechaRequerida" name="FechaRequerida" disabled class="form-control" />
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <b>Solicitante:</b>
+                                        <div>
+                                            @Model.UsuarioSolicitante
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group form-float">
+                                            <b>Motivo de compra:</b>
+                                            @Html.TextAreaFor(m => m.MotivoRequisicion, new { @class = "form-control no-resize btn-round", @disabled = "disabled", @placeholder = "Error de carga", @rows = "4" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group form-float">
+                                            <b>Se requiere en:</b>
+                                            @Html.TextAreaFor(m => m.RequeridoEn, new { @class = "form-control no-resize btn-round", @disabled = "disabled", @placeholder = "Error de carga", @rows = "4" })
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (ViewBag.MensajeError != null)
+                                {
+                                    <br />
+                                    <div class="row clearfix">
+                                        <div id="divCampos" class="container">
+                                            <div class="alert alert-danger">
+                                                <div class="alert-icon">
+                                                    <i class="zmdi zmdi-block"></i>
+                                                </div>
+                                                <strong>
+                                                    <label>@ViewBag.MensajeError</label>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                <br />
+                                <div class="row clearfix">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <td><strong>Producto</strong></td>
+                                                    <td><strong>Ubicaciòn</strong></td>
+                                                    <td><strong>Unidad</strong></td>
+                                                    <td><strong>Requeridos</strong></td>
+                                                    <td><strong>Existencias</strong></td>
+                                                    <td><strong>Entregados</strong></td>
+                                                    <td><strong>Cantidad</strong></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @Html.EditorFor(m => m.Productos)
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                @if (ViewBag.ProductosOC != null)
+                                {
+                                    <div class="row clearfix">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <td><strong>Orden de Compra</strong></td>
+                                                        <td><strong>Producto</strong></td>
+                                                        <td><strong>Unidad</strong></td>
+                                                        <td><strong>Cantidad a Comprar</strong></td>
+                                                        <td><strong>Estatus</strong></td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var p in ViewBag.ProductosOC)
+                                                    {
+                                                        <tr>
+                                                            <td>p.NumOrdenCompra</td>
+                                                            <td>p.Descripcion</td>
+                                                            <td>p.UnidadMedida</td>
+                                                            <td>p.CantidadAComprar</td>
+                                                            <td>p.Estatus</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="row clearfix">
+                                    <input type="submit" value="Aceptar" id="btnFinalizar" class="btn btn-raised btn-primary btn-round waves-effect" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

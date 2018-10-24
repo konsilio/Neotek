@@ -1,6 +1,6 @@
 ﻿using Application.MainModule.DTOs;
 using Application.MainModule.DTOs.Mobile;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
 using System;

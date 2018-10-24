@@ -3,7 +3,7 @@ using System.Linq;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.DTOs.Requisicion;
 
-namespace Application.MainModule.AdaptadoresDTO.Requisicion
+namespace Application.MainModule.AdaptadoresDTO.Requisiciones
 {
     public static class RequisicionProductoAdapter
     {

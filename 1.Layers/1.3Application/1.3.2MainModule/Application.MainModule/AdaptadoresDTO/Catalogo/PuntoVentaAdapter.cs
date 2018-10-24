@@ -1,5 +1,5 @@
 ﻿using Application.MainModule.DTOs.Catalogo;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Seguridad;
 using Sagas.MainModule.Entidades;

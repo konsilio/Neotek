@@ -1,6 +1,6 @@
 ﻿using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
-using Application.MainModule.Servicios.Almacen;
+using Application.MainModule.Servicios.Almacenes;
 using Exceptions.MainModule.Validaciones;
 using System;
 using System.Collections.Generic;
@@ -62,6 +62,12 @@ namespace Application.MainModule.Servicios.Mobile
             var cal = AlmacenGasServicio.ObtenerCalibracion(dto.ClaveOperacion);
 
             return EvaluarClaveOperacion(cal);
+        }
+
+        public static RespuestaDto EvaluarClaveOperacion(TraspasoDto dto)
+        {
+            var tras = AlmacenGasServicio.ObtenerTraspaso(dto.ClaveOperacion);
+            return EvaluarClaveOperacion(tras); 
         }
     }
 }

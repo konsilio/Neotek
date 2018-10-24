@@ -7,18 +7,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
+import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Presenter.CalibracionEstacionPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.CalibracionEstacionPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class CalibracionEstacionActivity extends AppCompatActivity
         implements CalibracionEstacionView{
@@ -34,6 +39,7 @@ public class CalibracionEstacionActivity extends AppCompatActivity
     Session session;
     CalibracionEstacionPresenter presenter;
     String[] lista_estacion,lista_medidor;
+    ArrayAdapter medidores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +67,41 @@ public class CalibracionEstacionActivity extends AppCompatActivity
                 SCalibracionEstacionActivityListaMedidor);
         lista_estacion = new String[]{"Estación No. 1","Estacion No. 2"};
         lista_medidor = new String[]{"Magnatel","Rotogate"};
+        SCalibracionEstacionActivityListaEstaciones.setAdapter(new ArrayAdapter<>(
+                this,
+                R.layout.custom_spinner,
+                lista_estacion
+        ));
+        SCalibracionEstacionActivityListaMedidor.setAdapter(new ArrayAdapter<>(
+                this,
+                R.layout.custom_spinner,
+                lista_medidor
+        ));
         SCalibracionEstacionActivityListaEstaciones.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                calibracionDTO.setIdCAlmacenGas(1);
-                calibracionDTO.setNombreCAlmacenGas("Estación No. 1");
+                if(dto!=null) {
+                    for (DatosCalibracionDTO.EstacionDTO estacionDTO:
+                            dto.getEstaciones()) {
+                        if(estacionDTO.getNombreAlmacen().
+                                equals(parent.getItemAtPosition(position).toString())) {
+                            calibracionDTO.setIdTipoMedidor(estacionDTO.getIdTipoMedidor());
+                            calibracionDTO.setNombreMedidor(estacionDTO.getMedidor()
+                                    .getNombreTipoMedidor());
+                            calibracionDTO.setCantidadFotografias(estacionDTO.getMedidor()
+                                    .getCantidadFotografias());
+                            calibracionDTO.setIdCAlmacenGas(estacionDTO.getIdAlmacenGas());
+                            calibracionDTO.setNombreCAlmacenGas(estacionDTO.getNombreAlmacen());
+                             int pos = medidores.getPosition(estacionDTO.getMedidor().getNombreTipoMedidor());
+                             SCalibracionEstacionActivityListaMedidor.setSelection(pos);
+                        }
+                    }
+                }else{
+                    calibracionDTO.setIdCAlmacenGas(1);
+                    calibracionDTO.setNombreCAlmacenGas("Estación No. 1");
+                }
+
             }
 
             @Override
@@ -79,9 +114,22 @@ public class CalibracionEstacionActivity extends AppCompatActivity
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                calibracionDTO.setIdTipoMedidor(1);
-                calibracionDTO.setNombreMedidor("Magnatel");
-                calibracionDTO.setCantidadFotografias(1);
+                if(dto!=null){
+                    for (MedidorDTO medidorDTO:
+                         dto.getMedidores()) {
+                        if(medidorDTO.getNombreTipoMedidor().equals(
+                                parent.getItemAtPosition(position).toString())) {
+                            calibracionDTO.setIdTipoMedidor(medidorDTO.getIdTipoMedidor());
+                            calibracionDTO.setNombreMedidor(medidorDTO.getNombreTipoMedidor());
+                            calibracionDTO.setCantidadFotografias(medidorDTO.
+                                    getCantidadFotografias());
+                        }
+                    }
+                }else {
+                    calibracionDTO.setIdTipoMedidor(1);
+                    calibracionDTO.setNombreMedidor("Magnatel");
+                    calibracionDTO.setCantidadFotografias(1);
+                }
             }
 
             @Override
@@ -120,6 +168,22 @@ public class CalibracionEstacionActivity extends AppCompatActivity
     public void onSuccessList(DatosCalibracionDTO dto) {
         if(dto!=null) {
             this.dto = dto;
+            lista_medidor = new String[dto.getMedidores().size()];
+            for (int x=0;x<dto.getMedidores().size();x++) lista_medidor[x] =
+                    dto.getMedidores().get(x).getNombreTipoMedidor();
+            SCalibracionEstacionActivityListaMedidor.setAdapter(new ArrayAdapter<>(
+                    this,
+                    R.layout.custom_spinner,
+                    lista_medidor
+            ));
+            for (int x = 0; x<dto.getEstaciones().size();x++) lista_estacion[x]= dto.getEstaciones()
+                    .get(x).getNombreAlmacen();
+            medidores = new ArrayAdapter<>(
+                    this,
+                    R.layout.custom_spinner,
+                    lista_estacion
+            );
+            SCalibracionEstacionActivityListaMedidor.setAdapter(medidores);
         }
     }
 

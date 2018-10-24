@@ -18,12 +18,8 @@ namespace Application.MainModule.DTOs.Requisicion
         public string NumeroRequisicion { get; set; }
         public string UsuarioSolicitante { get; set; }
         public string MotivoRequisicion { get; set; }
-        public string RequeridoEn { get; set; }
-        public int IdProveedor { get; set; }
-        public string Proveedor { get; set; }
+        public string RequeridoEn { get; set; }     
         public DateTime FechaRequerida { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Fecha de entrada")]
         public DateTime FechaSalida { get; set; }
         public List<AlmacenSalidaProductoDTO> Productos { get; set; }
     }
