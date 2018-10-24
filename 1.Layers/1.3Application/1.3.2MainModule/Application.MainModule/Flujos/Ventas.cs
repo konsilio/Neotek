@@ -15,11 +15,14 @@ namespace Application.MainModule.Flujos
     {
         public List<CajaGeneralDTO> CajaGeneral()
         {
+
+            CajaGeneralServicio.ProcesarVentasPuntosDeVenta();
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
 
             if (TokenServicio.EsSuperUsuario())
                 return CajaGeneralServicio.Obtener().ToList();
+           
             else
                 return CajaGeneralServicio.Obtener().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
@@ -41,6 +44,7 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
+        
             return CajaGeneralServicio.ObtenerCE(cveReporte).ToList();
         }
 

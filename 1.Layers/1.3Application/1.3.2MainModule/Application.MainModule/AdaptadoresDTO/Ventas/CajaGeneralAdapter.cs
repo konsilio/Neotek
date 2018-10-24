@@ -251,8 +251,36 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         {
             return DTO.ToList().Select(x => FromDtoCE(x)).ToList();
         }
-
-        public static VentaMovimiento FromDtoVtaM(RegistrarVentasMovimientosDTO pvDTO)
+        public static VentaMovimiento FromDTO(RegistrarVentasMovimientosDTO pvDTO)
+        {
+            return new VentaMovimiento()
+            {
+                IdEmpresa = pvDTO.IdEmpresa,
+                Year = pvDTO.Year,
+                Mes = pvDTO.Mes,
+                Dia = pvDTO.Dia,
+                Orden = pvDTO.Orden,
+                IdTipoMovimiento = pvDTO.IdTipoMovimiento,
+                IdPuntoVenta = pvDTO.IdPuntoVenta,
+                IdCliente = pvDTO.IdCliente,
+                IdOperadorChofer = pvDTO.IdOperadorChofer,
+                IdCAlmacenGas = pvDTO.IdCAlmacenGas,
+                FolioOperacionDia = pvDTO.FolioOperacionDia,
+                FolioVenta = pvDTO.FolioVenta,
+                FolioAnticipo = pvDTO.FolioAnticipo,
+                FolioCorteCaja = pvDTO.FolioCorteCaja,
+                TipoMovimiento = pvDTO.TipoMovimiento,
+                Descripcion = pvDTO.Descripcion,
+                Ingreso = pvDTO.Ingreso,
+                Egreso = pvDTO.Egreso,
+                Saldo = pvDTO.Saldo,
+                PuntoVenta = pvDTO.PuntoVenta,
+                OperadorChoferNombre = pvDTO.OperadorChoferNombre,
+                FechaAplicacion = pvDTO.FechaAplicacion,
+                FechaRegistro = DateTime.Now
+            };
+        }
+        public static VentaMovimiento FromDtoVtaMov(RegistrarVentasMovimientosDTO pvDTO)
         {
             return new VentaMovimiento()
             {
@@ -283,7 +311,137 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
         }
         public static List<VentaMovimiento> FromDtoVtaM(List<RegistrarVentasMovimientosDTO> DTO)
         {
-            return DTO.ToList().Select(x => FromDtoVtaM(x)).ToList();
+            return DTO.ToList().Select(x => FromDtoVtaMov(x)).ToList();
+        }
+
+        public static VentaPuntoDeVenta FromEntity(VentaPuntoDeVenta venta)
+        {
+            return new VentaPuntoDeVenta()
+            {
+                IdEmpresa = venta.IdEmpresa,
+                Year = venta.Year,
+                Mes = venta.Mes,
+                Dia = venta.Dia,
+                Orden = venta.Orden,
+                IdPuntoVenta = venta.IdPuntoVenta,
+                IdCliente = venta.IdCliente,
+                IdOperadorChofer = venta.IdOperadorChofer,
+                IdTipoVenta = venta.IdTipoVenta,
+                IdFactura = venta.IdFactura,
+                FolioOperacionDia = venta.FolioOperacionDia,
+                FolioVenta = venta.FolioVenta,
+                RequiereFactura = venta.RequiereFactura,
+                VentaACredito = venta.VentaACredito,
+                //Subtotal = venta.Subtotal,
+                //Descuento = venta.Descuento,
+                //Iva = venta.Iva,
+                //Total = venta.Total,
+                PorcentajeIva = venta.PorcentajeIva,
+                //EfectivoRecibido = venta.EfectivoRecibido,
+                CambioRegresado = venta.CambioRegresado,
+                PuntoVenta = venta.PuntoVenta,
+                RazonSocial = venta.RazonSocial,
+                RFC = venta.RFC,
+                ClienteConCredito = venta.ClienteConCredito,
+                OperadorChofer = venta.OperadorChofer,
+                DatosProcesados = venta.DatosProcesados,
+                FechaRegistro = venta.FechaRegistro,
+                Subtotal = venta.Subtotal,
+                SubtotalDia = venta.SubtotalDia,
+                SubtotalMes = venta.SubtotalMes,
+                SubtotalAnio = venta.SubtotalAnio,
+                SubtotalAcumDia = venta.SubtotalAcumDia,
+                SubtotalAcumMes = venta.SubtotalAcumMes,
+                SubtotalAcumAnio = venta.SubtotalAcumAnio,
+                Descuento = venta.Descuento,
+                DescuentoDia = venta.DescuentoDia,
+                DescuentoMes = venta.DescuentoMes,
+                DescuentoAnio = venta.DescuentoAnio,
+                DescuentoAcumDia = venta.DescuentoAcumDia,
+                DescuentoAcumMes = venta.DescuentoAcumMes,
+                DescuentoAcumAnio = venta.DescuentoAcumAnio,
+                Iva = venta.Iva,
+                IvaDia = venta.IvaDia,
+                IvaMes = venta.IvaMes,
+                IvaAnio = venta.IvaAnio,
+                IvaAcumDia = venta.IvaAcumDia,
+                IvaAcumMes = venta.IvaAcumMes,
+                IvaAcumAnio = venta.IvaAcumAnio,
+                Total = venta.Total,
+                TotalDia = venta.TotalDia,
+                TotalMes = venta.TotalMes,
+                TotalAnio = venta.TotalAnio,
+                TotalAcumDia = venta.TotalAcumDia,
+                TotalAcumMes = venta.TotalAcumMes,
+                TotalAcumAnio = venta.TotalAcumAnio,
+                EfectivoRecibido = venta.EfectivoRecibido,
+                EfectivoRecibidoDia = venta.EfectivoRecibidoDia,
+                EfectivoRecibidoMes = venta.EfectivoRecibidoMes,
+                EfectivoRecibidoAnio = venta.EfectivoRecibidoAnio,
+                EfectivoRecibidoAcumDia = venta.EfectivoRecibidoAcumDia,
+                EfectivoRecibidoAcumMes = venta.EfectivoRecibidoAcumMes,
+                EfectivoRecibidoAcumAnio = venta.EfectivoRecibidoAcumAnio,
+            };
+        }
+
+        public static VentaMovimiento FromEntity(VentaMovimiento venta)
+        {
+            return new VentaMovimiento()
+            {
+                IdEmpresa = venta.IdEmpresa,
+                Year = venta.Year,
+                Mes = venta.Mes,
+                Dia = venta.Dia,
+                Orden = venta.Orden,
+                IdTipoMovimiento = venta.IdTipoMovimiento,
+                IdPuntoVenta = venta.IdPuntoVenta,
+                IdCliente = venta.IdCliente,
+                IdOperadorChofer = venta.IdOperadorChofer,
+                IdCAlmacenGas = venta.IdCAlmacenGas,
+                FolioOperacionDia = venta.FolioOperacionDia,
+                FolioVenta = venta.FolioVenta,
+                FolioAnticipo = venta.FolioAnticipo,
+                FolioCorteCaja = venta.FolioCorteCaja,
+                TipoMovimiento = venta.TipoMovimiento,
+                Descripcion = venta.Descripcion,
+                Ingreso = venta.Ingreso,
+                Egreso = venta.Egreso,
+                Saldo = venta.Saldo,
+                PuntoVenta = venta.PuntoVenta,
+                OperadorChoferNombre = venta.OperadorChoferNombre,
+                FechaAplicacion = venta.FechaAplicacion,
+                FechaRegistro = venta.FechaRegistro,
+            };
+        }
+
+        public static VentaCorteAnticipoEC FromEntity(VentaCorteAnticipoEC venta)
+        {
+            return new VentaCorteAnticipoEC()
+            {
+                IdEmpresa = venta.IdEmpresa,
+                Year = venta.Year,
+                Mes = venta.Mes,
+                Dia = venta.Dia,
+                Orden = venta.Orden,               
+                IdTipoOperacion = venta.IdTipoOperacion,
+                IdPuntoVenta = venta.IdPuntoVenta,
+                IdCAlmacenGas = venta.IdCAlmacenGas,
+                IdOperadorChofer = venta.IdOperadorChofer,
+                IdUsuarioRecibe = venta.IdUsuarioRecibe,
+                FolioOperacionDia = venta.FolioOperacionDia,
+                FolioOperacion = venta.FolioOperacion,
+                TotalVenta = venta.TotalVenta,
+                TotalAnticipado = venta.TotalAnticipado,
+                MontoRecortadoAnticipado = venta.MontoRecortadoAnticipado,
+                TipoOperacion = venta.TipoOperacion,
+                PuntoVenta = venta.PuntoVenta,
+                OperadorChofer = venta.OperadorChofer,
+                UsuarioRecibe = venta.UsuarioRecibe,
+                DatosProcesados = venta.DatosProcesados,
+                FechaCorteAnticipo = venta.FechaCorteAnticipo,
+                FechaAplicacion = venta.FechaAplicacion,
+                FechaRegistro = venta.FechaRegistro,
+            };
         }
     }
 }

@@ -28,8 +28,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EnviarDatosInteractoriImpl implements EnviarDatosInteractor {
-    public EnviarDatosPresenter enviarDatosPresenter;
-    public boolean esta_disponible,registro_local,registra_lectura;
+    private EnviarDatosPresenter enviarDatosPresenter;
+    private boolean esta_disponible,registro_local,registra_lectura;
 
     public EnviarDatosInteractoriImpl(EnviarDatosPresenterImpl enviarDatosPresenter) {
         this.enviarDatosPresenter =  enviarDatosPresenter;
