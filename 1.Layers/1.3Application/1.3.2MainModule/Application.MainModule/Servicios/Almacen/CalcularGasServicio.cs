@@ -97,13 +97,13 @@ namespace Application.MainModule.Servicios.Almacenes
             return cantidadActualKg + (capacidadKg * cantidad);
         }
 
-        public static decimal ObtenerLitrosFinalesAlmacenPrinAlt(decimal litrosInicialesEnAlmacen, decimal litrosDescargados, decimal litrosRecargados)
+        public static decimal ObtenerLitrosFinalesAlmacenPrinAlt(decimal litrosInicialesEnAlmacen, decimal litrosDescargados, decimal litrosRecargados, decimal litrosCarburados)
         {
-            //Fórmula: Litros Iniciales del día + entradas de gas en el día - salidas de gas en el día
+            //Fórmula: Litros Iniciales + entradas de gas - salidas de gas
             //Litros Iniciales -> litrosInicialesEnAlmacen
             //Entradas de gas -> litrosDescargados
-            //Salidas de gas -> litrosRecargados
-            return litrosInicialesEnAlmacen + litrosDescargados - litrosRecargados;
+            //Salidas de gas -> litrosRecargados y litrosCarburados
+            return litrosInicialesEnAlmacen + litrosDescargados - litrosRecargados - litrosCarburados;
         }
     }
 }

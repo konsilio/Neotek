@@ -1917,7 +1917,7 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             AplicaTomaLecturaDto apLecturaDto = new AplicaTomaLecturaDto()
             {
-                TomaLecturaLecturaFinal = TomaLecturaFinal,
+                TomaLecturaLectura = TomaLecturaFinal,
                 //TomaLecturasFinales = TomaLecturasGasFinales,
                 unidadAlmacenGas = AlmacenGasServicio.ObtenerUnidadAlmacenGas(TomaLecturaFinal)
             };
@@ -2100,25 +2100,47 @@ namespace Application.MainModule.Servicios.Almacenes
         }
 
         public static AplicaTomaLecturaDto AplicarTomaLecturaFinalAlmacenPrincipal(AplicaTomaLecturaDto apLectDto)
-        {
+        {   
             AlmacenGasMovimiento ulMovLecturaInicial = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLectura.IdCAlmacenGas, TipoEventoEnum.TomaLectura, TipoMovimientoEnum.LectInicial);
             AlmacenGasMovimiento ulMovDescarga = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLectura.IdCAlmacenGas, TipoEventoEnum.Descarga, TipoMovimientoEnum.Entrada);
             AlmacenGasMovimiento ulMovRecarga = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLectura.IdCAlmacenGas, TipoEventoEnum.Recarga, TipoMovimientoEnum.Salida);
+            AlmacenGasMovimiento ulMovAutoConsumo = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLectura.IdCAlmacenGas, TipoEventoEnum.AutoConsumo, TipoMovimientoEnum.Salida);
 
             if (ulMovLecturaInicial == null)
                 return new AplicaTomaLecturaDto();
 
-            decimal litrosFinales = CalcularGasServicio.ObtenerLitrosFinalesAlmacenPrinAlt(ulMovLecturaInicial.CantidadActualLt, ulMovDescarga.CAlmEntradaDiaLt, ulMovRecarga.CAlmSalidaDiaLt);
+            decimal litrosDescargados = ulMovDescarga != null
+                ? ulMovDescarga.CAlmEntradaDiaLt
+                : 0;
+
+            decimal litrosRecarcados = ulMovRecarga != null 
+                ? ulMovRecarga.CAlmSalidaDiaLt
+                : 0;
+            decimal litrosCarburados = ulMovAutoConsumo != null
+                ? ulMovAutoConsumo.CAlmSalidaDiaLt
+                : 0;
+
+            decimal litrosFinales = CalcularGasServicio.ObtenerLitrosFinalesAlmacenPrinAlt(ulMovLecturaInicial.CantidadActualLt, litrosDescargados, litrosRecarcados, litrosCarburados);
             decimal kilosFinales = CalcularGasServicio.ObtenerKilogramosDesdeLitros(litrosFinales, apLectDto.Empresa.FactorLitrosAKilos);
             decimal litrosEnTanque = CalcularGasServicio.ObtenerLitrosEnElTanque(apLectDto.unidadAlmacenGas.CapacidadTanqueLt.Value, apLectDto.unidadAlmacenGas.PorcentajeActual);
             decimal kilosEnTanque = CalcularGasServicio.ObtenerKilogramosDesdeLitros(litrosEnTanque, apLectDto.Empresa.FactorLitrosAKilos);
-            decimal SalidaGasDia = CalcularGasServicio.ObtenerDiferenciaLitros();
+            //decimal SalidaGasDia = CalcularGasServicio.ObtenerDiferenciaLitros();
+
+            apLectDto.AlmacenGasAnterior = ObtenerAlmacenGasTotal(apLectDto.Empresa.IdEmpresa);
+            apLectDto.AlmacenGas = apLectDto.AlmacenGasAnterior;
+
+            apLectDto.AlmacenGas.CantidadActualKg = ;
+            apLectDto.AlmacenGas.CantidadActualLt = ;
+            apLectDto.AlmacenGas.PorcentajeActual = ;
+            apLectDto.AlmacenGas.CantidadActualGeneralKg = ;
+            apLectDto.AlmacenGas.CantidadActualGeneralLt = ;
+            apLectDto.AlmacenGas.PorcentajeActualGeneral = ;
 
             apLectDto.unidadAlmacenGas.PorcentajeActual = apLectDto.TomaLecturaLectura.Porcentaje.Value;
             apLectDto.unidadAlmacenGas.P5000Actual = null;
 
-            apLectDto.unidadAlmacenGas.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdePorcentaje(apLectDto.unidadAlmacenGas.CapacidadTanqueLt.Value, apLectDto.unidadAlmacenGas.PorcentajeActual);
-            apLectDto.unidadAlmacenGas.CantidadActualKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(apLectDto.unidadAlmacenGas.CantidadActualLt, apLectDto.Empresa.FactorLitrosAKilos);
+            apLectDto.unidadAlmacenGas.CantidadActualLt = litrosEnTanque;
+            apLectDto.unidadAlmacenGas.CantidadActualKg = kilosEnTanque;
             apLectDto.TomaLecturaLectura.DatosProcesados = true;
             return apLectDto;
         }

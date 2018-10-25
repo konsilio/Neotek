@@ -26,6 +26,7 @@ namespace Application.MainModule.DTOs.Almacen
 
 
         public AlmacenGas AlmacenGas { get; set; }
+        public AlmacenGas AlmacenGasAnterior { get; set; }
 
 
 
