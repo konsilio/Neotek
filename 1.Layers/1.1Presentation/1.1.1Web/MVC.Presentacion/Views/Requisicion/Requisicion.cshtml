@@ -132,28 +132,7 @@
                                             <div class="col-lg-4">
                                                 <b>Producto:</b>
                                                 <select id="productos" name="IdProducto" class="form-control z-index show-tick" data-live-search="true">
-                                                    <option value="0">No hay productos</option>
-                                                    @*@if (ViewBag.Productos != null)
-                                                        {
-                                                            foreach (var lst in ViewBag.Productos)
-                                                            {
-                                                                if (Model != null)
-                                                                {
-                                                                    if (lst.IdProducto == Model.IdProducto)
-                                                                    {
-                                                                        <option value="@lst.IdProducto" selected>@lst.Descripcion</option>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <option value="@lst.IdProducto">@lst.Descripcion</option>
-                                                                    }
-                                                                }
-                                                                else
-                                                                {
-                                                                    <option value="@lst.IdProducto">@lst.Descripcion</option>
-                                                                }
-                                                            }
-                                                        }*@
+                                                    <option value="0">No hay productos</option>                                                 
                                                 </select>
                                             </div>
                                             <div class="col-md-2">
@@ -209,9 +188,9 @@
                                     <!--Grid productos agregados nueva requisicion-->
                                     @if (Model.Productos != null)
                                     {
-                                        <div class="row clearfix">
+                                        <div class="row clearfix blockquote blockquote-info btn-round">
                                             <div class="table-responsive">
-                                                <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="RequisicionProductos">
+                                                <table class="table table-hover" name="RequisicionProductos">
                                                     <thead>
                                                         <tr>
                                                             <td><b>Tipo</b></td>

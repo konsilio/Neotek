@@ -19,8 +19,7 @@ namespace Application.MainModule.Flujos
         public RespuestaDto InsertRequisicionNueva(RequisicionDTO _req)
         {
             if (_req.Productos == null || _req.Productos.Count.Equals(0))
-                return new RespuestaDto() { Exito= false, MensajesError = new List<string>() { string.Format(Error.R0006, "Productos") } }; 
-
+                return new RespuestaDto() { Exito = false, MensajesError = new List<string>() { string.Format(Error.R0006, "Productos") } };
             var _requisicion = RequisicionAdapter.FromDTO(_req);
             _requisicion = CalcularOrdenCompraServicio.CalcularAlmacenProcutos(_requisicion);
             var ListaRequisiciones = RequisicionServicio.IdentificarRequisicones(_requisicion);
@@ -34,8 +33,8 @@ namespace Application.MainModule.Flujos
                     resp.Id = respuesta.Id;
                     resp.Mensaje = string.IsNullOrEmpty(resp.Mensaje) ? respuesta.Mensaje : string.Concat(resp.Mensaje, " ,", respuesta.Mensaje);
                     resp.Exito = true;
-                    resp.EsInsercion = true;          
-                        NotificarServicio.RequisicionNueva(RequisicionServicio.Buscar(resp.Id));
+                    resp.EsInsercion = true;
+                    NotificarServicio.RequisicionNueva(RequisicionServicio.Buscar(resp.Id));
                 }
                 else
                 {
@@ -43,7 +42,7 @@ namespace Application.MainModule.Flujos
                     resp.MensajesError.AddRange(respuesta.MensajesError != null ? respuesta.MensajesError : new List<string>());
                 }
             }
-            return resp;     
+            return resp;
         }
         public List<RequisicionDTO> BuscarRequisicionesPorEmpresa(short idEmpresa)
         {
@@ -67,28 +66,26 @@ namespace Application.MainModule.Flujos
             var newReq = RequisicionAdapter.FromEntity(ReqAnterior);
             newReq.IdUsuarioAutorizacion = _req.IdUsuarioAutorizacion;
             newReq.FechaAutorizacion = _req.FechaAutorizacion;
-            newReq.IdRequisicionEstatus = _req.IdRequisicionEstatus;
 
-            var ReqProd = RequisicionProductoAdapter.FromDTO(_req.ListaProductos);
             var prodEdit = RequisicionProductoAdapter.FromEntity(new RequisicionDataAccess().BuscarProductoRequisicion(_req.IdRequisicion));
             foreach (var item in prodEdit)
             {
-                foreach (var prod in ReqProd)
+                foreach (var prod in _req.ListaProductos)
                 {
                     if (item.IdProducto.Equals(prod.IdProducto))
                     {
                         item.AutorizaCompra = prod.AutorizaCompra;
                         item.AutorizaEntrega = prod.AutorizaEntrega;
-                        if (prod.AutorizaEntrega.Value)
-                        {
-                            //Notificar
-                        }
                         item.CantidadAComprar = prod.CantidadAComprar;
                     }
                 }
             }
-            return RequisicionServicio.UpDateRequisicionAutoriza(newReq, prodEdit);
-        }        
+            newReq = RequisicionServicio.DeterminaEstatusPorAutorizacion(newReq, prodEdit);
+            var Respuesta = RequisicionServicio.UpDateRequisicionAutoriza(newReq, prodEdit);
+            if (Respuesta.Exito && (newReq.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Autoriza_entrega) || newReq.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Autorizacion_parcial)))
+                NotificarServicio.ProductoAutorizado(newReq, prodEdit);
+            return Respuesta;
+        }
         public RespuestaDto CancelarRequisicion(RequisicionCancelaDTO _req)
         {
             var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
@@ -99,7 +96,7 @@ namespace Application.MainModule.Flujos
             if (respuesta.Exito)
                 respuesta.Mensaje = String.Format(Exito.OKCancelacion, "Requisicion", entity.NumeroRequisicion);
             return respuesta;
-        }        
+        }
         public List<RequisicionEstatusDTO> ListaEstatus()
         {
             return RequisicionAdapter.ToDTO(RequisicionServicio.RequisiconEstatus());

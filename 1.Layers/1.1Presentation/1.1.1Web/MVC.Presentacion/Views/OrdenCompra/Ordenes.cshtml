@@ -1,6 +1,7 @@
 ﻿@using MVC.Presentacion.Models.OrdenCompra;
 @using PagedList.Mvc;
 @using PagedList;
+@using System.Configuration;
 @model OrdenesCompraModel
 @{
     string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdminCentral).Equals(false) ? "disabled" : "";
@@ -77,9 +78,9 @@
                                                 <tr>
                                                     <td>@_req.NombreComercial</td>
                                                     <td>@_req.NumeroRequisicion</td>
-                                                    <td>@_req.FechaRequerida</td>
+                                                    <td>@_req.FechaRequerida.ToString(ConfigurationManager.AppSettings["FechaHora_F24H"])</td>
                                                     <td>@_req.UsuarioSolicitante</td>
-                                                    <td>@_req.RequisicionEstatus</td>
+                                                    <td>Generar orden de compra</td>
                                                     <td>
                                                         <a ID="lblAction" href="@Url.Action("OrdenCompra", "OrdenCompra", new { id = _req.IdRequisicion })">
                                                             <i class="material-icons">launch</i>

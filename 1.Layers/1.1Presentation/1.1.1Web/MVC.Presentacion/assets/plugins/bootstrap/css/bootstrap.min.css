@@ -3335,6 +3335,18 @@ tbody.collapse.show {
         margin-left: -1px;
     }
 
+    .btn-group .btn {  
+    float: none;
+    display: inline-block;
+}
+ .btn + .dropdown-toggle { 
+    margin-left: -4px;
+}
+
+/*.table-responsive {
+  overflow-y: visible !important;
+}*/
+
 .btn-toolbar {
     display: -webkit-box;
     display: -ms-flexbox;

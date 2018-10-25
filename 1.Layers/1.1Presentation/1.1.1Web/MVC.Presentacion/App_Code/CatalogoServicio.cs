@@ -1133,6 +1133,19 @@ namespace MVC.Presentacion.App_Code
         {
             return ListaProveedores(tkn).SingleOrDefault(x => x.IdProveedor.Equals(id));
         }
+        //public static List<ProveedorDTO> ListaProveedoresGas(string tkn)
+        //{
+        //    ListaProveedores(tkn).Where(x => x.EsGas).ToList();
+        //}
+        //public static List<ProveedorDTO> ListaProveedoresTransporte(string tkn)
+        //{
+        //    ListaProveedores(tkn).Where(x => x.EsTransporte).ToList();
+        //}
+        //public static List<ProveedorDTO> ListaProveedoresNoGasTransporte(string tkn)
+        //{
+        //    ListaProveedores(tkn).Where(x => x.EsGas.Equals(false) && x.EsTransporte.Equalas(false)).ToList();
+        //}
+
         #endregion
 
         #region Cuentas contables      

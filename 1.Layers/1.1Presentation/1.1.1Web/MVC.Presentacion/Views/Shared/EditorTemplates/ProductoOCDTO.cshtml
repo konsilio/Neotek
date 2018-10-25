@@ -21,7 +21,8 @@
     <td>@Model.UnidadMedida</td>
     <td>@Model.Aplicacion</td>
     <td>@Model.CentroCosto</td>
-    <td>
+    
+    <td>      
         @Html.DropDownListFor(model => model.IdProveedor, ViewBag.Proveedores as IEnumerable<SelectListItem>, new { @class = "form-control z-index show-tick" })
     </td>
     <td width="350px">@Html.DropDownListFor(model => model.IdCuentaContable, ViewBag.CuentasContables as IEnumerable<SelectListItem>, new { @class = "form-control z-index show-tick" })</td>

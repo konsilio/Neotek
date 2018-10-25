@@ -52,8 +52,7 @@ $(document).ready(function () {
         form.attr('action', '<%= Url.RouteUrl(new { Controller = "OrdenCompra", Action = "CrearOrdenCompra" }) %>');
         form.attr('method', 'post');
     });
-});
-$(window).load(function () {
+
     $('.table-responsive').on('show.bs.dropdown', function () {
         $('.table-responsive').css("overflow", "inherit");
     });

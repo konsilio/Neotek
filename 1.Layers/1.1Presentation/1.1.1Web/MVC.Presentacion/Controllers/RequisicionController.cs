@@ -137,10 +137,13 @@ namespace MVC.Presentacion.Controllers
             if (TempData["ListProductosRequisicion"] != null)
                 model.Productos = (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"];
             tkn = Session["StringToken"].ToString();
-            ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-            ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            ViewBag.EsNueva = true;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
+            ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            ViewBag.EsNueva = true;          
             ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
             ViewBag.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(tkn);
             var newModel = RequisicionServicio.AgregarProducto(model, Session["StringToken"].ToString());

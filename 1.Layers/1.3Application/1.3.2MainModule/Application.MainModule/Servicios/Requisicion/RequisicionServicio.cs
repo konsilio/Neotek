@@ -105,5 +105,14 @@ namespace Application.MainModule.Servicios.Requisiciones
                 _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Solicitante_Notificado;
             return _requisicion;
         }
+        public static Requisicion DeterminaEstatusPorAutorizacion(Requisicion _requisicion, List<RequisicionProducto> _productos)
+        {
+            _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Autorizacion_parcial;
+            if (_productos.Where(x => x.AutorizaEntrega.Equals(true)).Count().Equals(_productos.Count))
+                _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_entrega;
+            if (_productos.Where(x => x.AutorizaCompra.Equals(true)).Count().Equals(_productos.Count))
+                _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_compra;           
+            return _requisicion;
+        }
     }
 }
