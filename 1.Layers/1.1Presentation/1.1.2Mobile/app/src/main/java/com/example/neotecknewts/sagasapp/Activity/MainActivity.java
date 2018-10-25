@@ -1,6 +1,5 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
-import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +24,7 @@ import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 import com.example.neotecknewts.sagasapp.Presenter.LoginPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.LoginPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Permisos;
 import com.example.neotecknewts.sagasapp.Util.Session;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -64,11 +64,15 @@ public class MainActivity extends AppCompatActivity implements MainView{
     //Token que genera firebase
     String fb_token;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        if(Utilidades.checkAndRequestPermissions(this).size()>0){
+            Permisos permisos = new Permisos(this);
+            permisos.permisos();
+        }
         //se inicializa la session
         session = new Session(getApplicationContext());
 

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -16,6 +17,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
+import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
@@ -42,6 +44,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     ArrayList<String[]> elementos;
     boolean EsAnticipo,EsCorte;
     AnticiposDTO anticiposDTO;
+    CorteDTO corteDTO;
     AnticipoTablaPresenter presenter;
     Session session;
     ProgressDialog progressDialog;
@@ -56,6 +59,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             EsAnticipo = bundle.getBoolean("EsAnticipo",false);
             EsCorte = bundle.getBoolean("EsCorte",false);
             anticiposDTO = (AnticiposDTO) bundle.getSerializable("anticiposDTO");
+            corteDTO = (CorteDTO) bundle.getSerializable("corteDTO");
         }
         BtnAnticipoTablaActivityRegresar = findViewById(R.id.BtnAnticipoTablaActivityRegresar);
         BtnAnticipoTablaActivityHacerAnticipo = findViewById(R.id.
@@ -91,6 +95,17 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         Tabla tabla = new Tabla(this, TLAnticipoTablaActivityTabla);
         tabla.Cabecera(R.array.header_tabla_anticipo);
         elementos = new ArrayList<>();
+        SPAnticipoTablaActivityFechaCorte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                corteDTO.setFecha(new Date(adapterView.getItemAtPosition(i).toString()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //corteDTO.setFecha(null);
+            }
+        });
 
         NumberFormat format = NumberFormat.getCurrencyInstance();
         for(int i = 0; i < 15; i++)
@@ -145,6 +160,11 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             }
         }
         else{
+            corteDTO.setP5000Final(0);
+            corteDTO.setP5000Inicial(0);
+            corteDTO.setLitrosCorte(0);
+            corteDTO.setAnticipos(0);
+            corteDTO.setMontoCorte(0);
             startIntent();
         }
     }
@@ -223,6 +243,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     VerReporteActivity.class);
             intent.putExtra("EsAnticipo",EsAnticipo);
             intent.putExtra("EsCorte",EsCorte);
+            intent.putExtra("corteDTO",corteDTO);
             startActivity(intent);
         }
     }

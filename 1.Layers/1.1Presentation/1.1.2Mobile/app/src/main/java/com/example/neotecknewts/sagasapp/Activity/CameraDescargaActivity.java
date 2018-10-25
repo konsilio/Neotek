@@ -348,10 +348,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
                 Log.w("Prueba","prueba"+permissions(permissionList));
 
-                if (permissions(permissionList)) {
+                //if (permissions(permissionList)) {
 
                     openCameraIntent();
-                }
+                //}
             }
         });
 

@@ -229,10 +229,10 @@ public class CameraLecturaActivity extends AppCompatActivity {
 
             Log.w("Prueba","prueba"+permissions(permissionList));
 
-            if (permissions(permissionList)) {
+           // if (permissions(permissionList)) {
 
                 openCameraIntent();
-            }
+            //}
         });
 
         BtnCameraLecturaFotoNitidaNo.setOnClickListener(v -> openCameraIntent());

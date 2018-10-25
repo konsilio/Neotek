@@ -377,9 +377,27 @@ namespace Application.MainModule.Flujos
             return AnticiposCortesAdapter.ToDTO(estaciones);
         }
 
-        public RespuestaDto anticipo_y_cortes(bool esAnticipo)
+        public RespuestaDto anticipo(AnticipoDto dto)
         {
-            return null;
+            var resp = VentaServicio.EvaluarClaveOperacion(dto);
+             
+            if (resp.Exito) return resp;
+
+            var anticipos = VentaServicio.ObtenerAnticipos(TokenServicio.ObtenerIdEmpresa());
+            var estacion = AlmacenGasServicio.ObtenerAlmacen(dto.IdCAlmacenGas);
+
+            return VentaServicio.Anticipo(dto,TokenServicio.ObtenerIdEmpresa(),TokenServicio.ObtenerIdUsuario(),anticipos, estacion);
+        }
+
+        public RespuestaDto corte(CorteDto dto)
+        {
+            var resp = VentaServicio.EvaluarClaveOperacion(dto);
+            if (resp.Exito) return resp;
+
+            var cortes = VentaServicio.ObtenerCortes(TokenServicio.ObtenerIdEmpresa());
+            var estacion = AlmacenGasServicio.ObtenerAlmacen(dto.IdCAlmacenGas);
+
+            return VentaServicio.Corte(dto,TokenServicio.ObtenerIdEmpresa(),TokenServicio.ObtenerIdUsuario(), cortes, estacion);
         }
     }
 }
