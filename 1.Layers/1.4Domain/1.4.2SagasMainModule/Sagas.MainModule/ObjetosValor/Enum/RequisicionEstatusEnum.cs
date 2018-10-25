@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sagas.MainModule.ObjetosValor.Enum
+﻿namespace Sagas.MainModule.ObjetosValor.Enum
 {
     public static class RequisicionEstatusEnum
     {
@@ -15,10 +9,12 @@ namespace Sagas.MainModule.ObjetosValor.Enum
         public static byte Revision_parcial = (byte)ReqEstatusEnum.Revision_parcial;
         public static byte Revision_no_exitosa = (byte)ReqEstatusEnum.Revision_no_exitosa;
         public static byte Autoriza_entrega = (byte)ReqEstatusEnum.Autoriza_entrega;
-      public static byte Cerrada = (byte)ReqEstatusEnum.Cerrada;
+        public static byte Cerrada = (byte)ReqEstatusEnum.Cerrada;
         public static byte Orden_de_compra_generada = (byte)ReqEstatusEnum.Orden_de_compra_generada;
         public static byte Solicitante_Notificado = (byte)ReqEstatusEnum.Solicitante_Notificado;
         public static byte Autorizacion_finalizada = (byte)ReqEstatusEnum.Autoriza_entrega;
+        public static byte Autoriza_compra = (byte)ReqEstatusEnum.Autoriza_compra;
+        public static byte Autorizacion_parcial = (byte)ReqEstatusEnum.Autorizacion_parcial;
     }
 
     enum ReqEstatusEnum
@@ -32,6 +28,8 @@ namespace Sagas.MainModule.ObjetosValor.Enum
         Cerrada = 7,
         Orden_de_compra_generada = 8,
         Solicitante_Notificado = 9,
-        Autorizacion_finalizada = 10
+        Autorizacion_finalizada = 10,
+        Autoriza_compra = 11,
+        Autorizacion_parcial = 12
     }
 }

@@ -74,6 +74,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     uow.Repository<Requisicion>().Update(_req);
                     uow.SaveChanges();
                     _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
                     _respuesta.Mensaje = Exito.OK;
                 }
                 catch (Exception ex)

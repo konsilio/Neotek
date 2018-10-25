@@ -222,10 +222,8 @@ namespace Application.MainModule.Flujos
         {
             var ExistePago = BuscarPagos(dto.OrdenCompraExpedidor.IdOrdenCompra);
             if (!ExistePago.Count.Equals(0)) return OrdenCompraServicio.PagoExistenteExpedidor();
-
             var ocExperidro = OrdenCompraServicio.Buscar(dto.OrdenCompraExpedidor.IdOrdenCompra);
             ocExperidro.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.SolicitudPago;
-
             var respActualiza = OrdenCompraServicio.Actualizar(OrdenComprasAdapter.FromEntity(ocExperidro));
             if (respActualiza.Exito) NotificarServicio.ConfirmacionPago(ocExperidro); 
 

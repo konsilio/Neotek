@@ -7,8 +7,9 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Requisicion
 {
-    public class RequisicionCancelaDTO : RequisicionDTO
+    public class RequisicionCancelaDTO
     {
-              
+        public int IdRequisicion { get; set; }
+        public string MotivoCancelacion { get; set; }
     }
 }

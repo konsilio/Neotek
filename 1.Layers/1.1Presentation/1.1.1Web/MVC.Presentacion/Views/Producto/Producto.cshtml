@@ -35,7 +35,7 @@
                                             <b>Gasera:</b>
                                             @if (ViewBag.EsAdmin)
                                             {
-                                                <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                <select id="empresas" name="IdEmpresa" class="form-control z-index show-tick" data-live-search="true">
                                                     @foreach (var lst in ViewBag.Empresas)
                                                     {
                                                         <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
@@ -44,7 +44,9 @@
                                             }
                                             else
                                             {
-                                                <input type="text" class="form-control" disabled value="@ViewBag.Empresas" />
+                                                <div>
+                                                    @ViewBag.Empresas
+                                                </div>
                                                 @Html.HiddenFor(m => m.IdEmpresa)
                                             }
                                             @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
@@ -53,7 +55,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <b>Tipo: ¿Es producto o Servicio?</b>
-                                            <select name="IdProductoServicioTipo" id="tipoproducto" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                            <select name="IdProductoServicioTipo" id="tipoproducto" class="form-control z-index show-tick" data-live-search="true">
                                                 <option value="0">Seleccione uno</option>
                                                 <option value="2">Producto</option>
                                                 <option value="3">Servicio</option>
@@ -64,7 +66,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <b>Cuenta contable:</b>
-                                            <select id="cuentacontable" name="IdCuentaContable" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                            <select id="cuentacontable" name="IdCuentaContable" class="form-control z-index show-tick" data-live-search="true">
                                                 @foreach (var cc in ViewBag.CuentasContables)
                                                 {
                                                     if (cc.IdCuentaContable == Model.IdCuentaContable)
@@ -83,7 +85,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <b>Categorías:</b>
-                                            <select name="IdCategoria" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                            <select name="IdCategoria" class="form-control z-index show-tick" data-live-search="true">
                                                 @foreach (var cc in ViewBag.Categorias)
                                                 {
                                                     if (cc.IdCategoria == Model.IdCategoria)
@@ -104,7 +106,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <b>Linea de Productos:</b>
-                                            <select name="IdProductoLinea" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                            <select name="IdProductoLinea" class="form-control z-index show-tick" data-live-search="true">
                                                 @foreach (var cc in ViewBag.LineasProducto)
                                                 {
                                                     if (cc.IdProductoLinea == Model.IdProductoLinea)
@@ -123,7 +125,7 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <b>Unidad de medida:</b>
-                                            <select name="IdUnidadMedida" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                            <select name="IdUnidadMedida" class="form-control z-index show-tick" data-live-search="true">
                                                 @foreach (var cc in ViewBag.UnidadesMedida)
                                                 {
                                                     if (cc.IdUnidadMedida == Model.IdUnidadMedida)
@@ -142,7 +144,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <b>Unidad de medida alternativa: (Opcional)</b>
-                                            <select name="IdUnidadMedida2" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                            <select name="IdUnidadMedida2" class="form-control z-index show-tick" data-live-search="true">
                                                 <option>Seleccione unidad </option>
                                                 @foreach (var cc in ViewBag.UnidadesMedida2)
                                                 {
@@ -174,9 +176,9 @@
                                         </div>
                                         <div id="divServ" style="display:none">
                                             <div class="form-group">
-                                                @Html.CheckBoxFor(m => m.EsTransporteGas, new { id = "cbServicioTransporte" }) 
+                                                @Html.CheckBoxFor(m => m.EsTransporteGas, new { id = "cbServicioTransporte" })
                                                 @*<input id="cbServicioTransporte" name="EsTransporteGas" type="checkbox">*@
-                                                <label for="cbServicioTransporte">
+                                                <label for="cbServicioTransporte" class="z-index:8">
                                                     ¿Es Servicio de transporte?
                                                 </label>
                                             </div>
@@ -355,4 +357,4 @@
         }
     </div>
 </section>
-<script src="~/Scripts/js/CProductoJS.js" ></script>
+<script src="~/Scripts/js/CProductoJS.js"></script>

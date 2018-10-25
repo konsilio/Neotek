@@ -81,12 +81,10 @@ namespace Application.MainModule.Servicios.Almacenes
             resp = new AlmacenGasDataAccess().Insertar(unidad);
             return ObtenerUnidadAlamcenGas((short)resp.Id);
         }
-
         public static RespuestaDto InsertarAutoconsumo(AlmacenGasAutoConsumo adapter)
         {
             return new AlmacenGasDataAccess().Insertar(adapter);
         }
-
         public static AlmacenGas ObtenerAlmacenGasTotal(Empresa empresa)
         {
             if (empresa.AlmacenesGas != null && empresa.AlmacenesGas.Count > 0)
@@ -94,7 +92,6 @@ namespace Application.MainModule.Servicios.Almacenes
 
             return new AlmacenGasDataAccess().BuscarPorEmpresa(empresa.IdEmpresa);
         }
-
         public static RespuestaDto InsertarDescargaGas(AlmacenGasDescarga alm)
         {
             return new AlmacenGasDescargaDataAccess().Insertar(alm);
@@ -107,7 +104,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa);
         }
-
         public static AlmacenGasTomaLectura BuscarUltimaLectura(short idCAlmacenGas, byte idTipoEvento)
         {
             return new AlmacenGasDataAccess().BuscarUltimaLectura(idCAlmacenGas, idTipoEvento);
@@ -318,7 +314,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().ObtenerUnidadAlmacenGasAlterno(idEmpresa);
         }
-
         public static List<UnidadAlmacenGas> ObtenerUnidadesAlmacenGasAlterno(Empresa empresa)
         {
             if (empresa.UnidadesAlmacenGas != null & empresa.UnidadesAlmacenGas.Count > 0)
@@ -487,7 +482,6 @@ namespace Application.MainModule.Servicios.Almacenes
                 ulMovDia, ulMovMes, ulMovAnio
             };
         }
-
         public static AlmacenGasMovimiento ObtenerUltimoMovimientoDeDescargaPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime fecha)
         {
             var movimientos = ObtenerUltimosMovimientosDeDescargasPorUnidadAlmacenGas(idEmpresa, idCAlmacenGas, fecha);
@@ -500,12 +494,10 @@ namespace Application.MainModule.Servicios.Almacenes
 
             return AlmacenGasAdapter.FromInit();
         }
-
         public static AlmacenGasTomaLectura BuscarLecturaPorFecha(short idCAlmacenGas,byte tipoEvento,DateTime fecha)
         {
             return new AlmacenGasDataAccess().BuscarLectura(idCAlmacenGas, tipoEvento, fecha);
         }
-
         public static decimal ObtenerCantidadActualAlmacenGeneral(short IdEmpresa, bool EnLitros = true)
         {
             var almacenGas = new AlmacenGasDataAccess().ProductoAlmacenGas(IdEmpresa);

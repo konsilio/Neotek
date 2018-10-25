@@ -31,6 +31,23 @@ namespace Application.MainModule.Servicios.Notificacion
 
             return html;
         }
+        public static string ProductoAutorizadoEntrega(Sagas.MainModule.Entidades.Requisicion req)
+        {
+            string ruta = Convertir.GetPhysicalPath(string.Concat(_rutaPlantillas, "RequisicionNueva.html"));
+            string html = FileUtilities.ObtenerContenido(ruta);
+
+            html = html.Replace("[[TITULO]]", "PRODUCTO REQUERIDO AUTORIZADO PARA ENTREGA");
+            html = html.Replace("[[SUBTITULO]]", String.Format("Se ha autorizado la entrega de producto de la requisición: {0}.", req.IdRequisicion));
+            html = html.Replace("[[FECHA]]", DateTime.Now.ToShortDateString());
+            html = html.Replace("[[IR_A_SAGAS]]", Convertir.GetUrlBasePath());
+            html = html.Replace("[[NUM_REQ]]", req.NumeroRequisicion);
+            html = html.Replace("[[FECHA_REQUISICION]]", req.FechaRequerida.ToShortDateString());
+            html = html.Replace("[[SOLICITANTE]]", UsuarioServicio.ObtenerNombreCompleto(req.Solicitante));
+            html = html.Replace("[[MOTIVO]]", req.MotivoRequisicion);
+            html = html.Replace("[[WebAppURL]]", ConfigurationManager.AppSettings["RutaPlantillasHtml"]);
+
+            return html;
+        }
         public static string OrdenCompraNueva(Sagas.MainModule.Entidades.OrdenCompra oc)
         {
             string ruta = Convertir.GetPhysicalPath(string.Concat(_rutaPlantillas, "OrdenCompraNueva.html"));

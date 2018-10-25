@@ -3,6 +3,7 @@ using Application.MainModule.DTOs.Compras;
 using Application.MainModule.DTOs.Requisicion;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.AccesoADatos;
+using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Enum;
 using System;
@@ -53,10 +54,9 @@ namespace Application.MainModule.Servicios.Requisiciones
             entity.IdRequisicionEstatus = status;
             return new RequisicionDataAccess().Actualizar(entity);
         }
-        public static RespuestaDto CancelarRequisicion(RequisicionCancelaDTO _req)
+        public static RespuestaDto CancelarRequisicion(Requisicion _req)
         {
-            var entidad = new RequisicionDataAccess().BuscarPorIdRequisicion(_req.IdRequisicion);
-            return new RequisicionDataAccess().Actualizar(RequisicionAdapter.FromDTO(_req, entidad));
+            return new RequisicionDataAccess().Actualizar(_req);   
         }
         public static RequisicionProducto BuscarRequisiconProductoPorId(int idProd, int idReq)
         {
@@ -103,6 +103,15 @@ namespace Application.MainModule.Servicios.Requisiciones
                 _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Cerrada;
             else
                 _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Solicitante_Notificado;
+            return _requisicion;
+        }
+        public static Requisicion DeterminaEstatusPorAutorizacion(Requisicion _requisicion, List<RequisicionProducto> _productos)
+        {
+            _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Autorizacion_parcial;
+            if (_productos.Where(x => x.AutorizaEntrega.Equals(true)).Count().Equals(_productos.Count))
+                _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_entrega;
+            if (_productos.Where(x => x.AutorizaCompra.Equals(true)).Count().Equals(_productos.Count))
+                _requisicion.IdRequisicionEstatus = RequisicionEstatusEnum.Autoriza_compra;           
             return _requisicion;
         }
     }
