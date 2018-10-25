@@ -424,11 +424,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     if (aplicaTomaLectura.unidadAlmacenGas != null)
                         uow.Repository<UnidadAlmacenGas>().Update(aplicaTomaLectura.unidadAlmacenGas);
 
-                    if (aplicaTomaLectura.TomaLecturaLecturaInicial != null)
-                        uow.Repository<AlmacenGasTomaLectura>().Update(aplicaTomaLectura.TomaLecturaLecturaInicialSinNavProp);
+                    if (aplicaTomaLectura.TomaLecturaLectura != null)
+                        uow.Repository<AlmacenGasTomaLectura>().Update(aplicaTomaLectura.TomaLecturaLecturaSinNavProp);
 
-                    if (aplicaTomaLectura.TomaLecturaLecturaInicialFotos != null && aplicaTomaLectura.TomaLecturaLecturaInicialFotos.Count > 0)
-                        aplicaTomaLectura.TomaLecturaLecturaInicialFotos.ToList().ForEach(x =>
+                    if (aplicaTomaLectura.TomaLecturaLecturaFotos != null && aplicaTomaLectura.TomaLecturaLecturaFotos.Count > 0)
+                        aplicaTomaLectura.TomaLecturaLecturaFotos.ToList().ForEach(x =>
                             uow.Repository<AlmacenGasTomaLecturaFoto>().Update(x)
                         );
 
@@ -845,6 +845,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<AlmacenGasCalibracionFoto> BuscarImagenesCalibracion(int idCAlmacenGas)
         {
             return uow.Repository<AlmacenGasCalibracionFoto>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)).ToList();
+        }
+        public List<AlmacenGasTomaLecturaFoto> BuscarImagenesTomaLectura(int idCAlmacenGas)
+        {
+            return uow.Repository<AlmacenGasTomaLecturaFoto>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)).ToList();
         }
         public List<AlmacenGasTomaLectura> BuscarTodasLecturasNoProcesadas()
         {

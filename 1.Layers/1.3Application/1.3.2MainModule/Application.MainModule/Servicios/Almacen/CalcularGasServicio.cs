@@ -95,6 +95,15 @@ namespace Application.MainModule.Servicios.Almacenes
         public static decimal SumarKilogramos(decimal cantidadActualKg, decimal capacidadKg, decimal cantidad)
         {
             return cantidadActualKg + (capacidadKg * cantidad);
-        }        
+        }
+
+        public static decimal ObtenerLitrosFinalesAlmacenPrinAlt(decimal litrosInicialesEnAlmacen, decimal litrosDescargados, decimal litrosRecargados)
+        {
+            //Fórmula: Litros Iniciales del día + entradas de gas en el día - salidas de gas en el día
+            //Litros Iniciales -> litrosInicialesEnAlmacen
+            //Entradas de gas -> litrosDescargados
+            //Salidas de gas -> litrosRecargados
+            return litrosInicialesEnAlmacen + litrosDescargados - litrosRecargados;
+        }
     }
 }

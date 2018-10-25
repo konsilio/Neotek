@@ -12,15 +12,15 @@ namespace Application.MainModule.DTOs.Almacen
     {
         public Empresa Empresa { get; set; }
 
-        public AlmacenGasTomaLectura TomaLecturaLecturaInicial { get; set; }
-        public List<AlmacenGasTomaLecturaFoto> TomaLecturaLecturaInicialFotos { get; set; }
-        public AlmacenGasTomaLectura TomaLecturaLecturaInicialSinNavProp { get; set; }
+        public AlmacenGasTomaLectura TomaLecturaLectura { get; set; }
+        public List<AlmacenGasTomaLecturaFoto> TomaLecturaLecturaFotos { get; set; }
+        public AlmacenGasTomaLectura TomaLecturaLecturaSinNavProp { get; set; }
 
 
-        public List<AlmacenGasTomaLectura> TomaLecturasFinales { get; set; }
-        public AlmacenGasTomaLectura TomaLecturaLecturaFinal { get; set; }
-        public List<AlmacenGasTomaLecturaFoto> TomaLecturaLecturaFinalFotos { get; set; }
-        public AlmacenGasTomaLectura TomaLecturaLecturaFinalSinNavProp { get; set; }
+        //public List<AlmacenGasTomaLectura> TomaLecturasFinales { get; set; }
+        //public AlmacenGasTomaLectura TomaLecturaLecturaFinal { get; set; }
+        //public List<AlmacenGasTomaLecturaFoto> TomaLecturaLecturaFinalFotos { get; set; }
+        //public AlmacenGasTomaLectura TomaLecturaLecturaFinalSinNavProp { get; set; }
 
 
 
