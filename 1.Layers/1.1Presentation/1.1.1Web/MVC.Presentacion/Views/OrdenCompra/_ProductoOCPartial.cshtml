@@ -1,0 +1,48 @@
+
+@using System.Web.UI.WebControls;
+@{
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+}
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gridView";
+    settings.KeyFieldName = "ProductID";
+    settings.Width = Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "Editing", Action = "BatchEditingPartial" };
+    settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Editing", Action = "BatchEditingUpdateModel" };
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.BatchEditSettings.HighlightDeletedRows = false;
+
+    settings.CommandColumn.Visible = true;
+    settings.CommandColumn.ShowDeleteButton = true;
+    settings.CommandColumn.ShowNewButtonInHeader = true;
+    settings.CommandColumn.Width = Unit.Point(50);
+
+    settings.Columns.Add("Producto");
+    settings.Columns.Add("ProductoServicioTipo");
+    settings.Columns.Add("CentroCosto");
+    settings.Columns.Add("CuentaContable");
+    settings.Columns.Add("UnidadMedida");
+    settings.Columns.Add("Aplicacion");
+    settings.Columns.Add("Cantidad");
+    settings.Columns.Add("CantidadAComprar");
+    settings.Columns.Add("Precio");
+    settings.Columns.Add("Descuento");
+    settings.Columns.Add("IVA");
+    settings.Columns.Add("IEPS");
+    settings.Columns.Add("Importe");
+    settings.Columns.Add("ProductName");
+
+    settings.CellEditorInitialize = (s, e) =>
+    {
+        ASPxEdit editor = (ASPxEdit)e.Editor;
+        editor.ValidationSettings.Display = Display.None;
+    };
+    settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
+
+}).Bind(Model).GetHtml()

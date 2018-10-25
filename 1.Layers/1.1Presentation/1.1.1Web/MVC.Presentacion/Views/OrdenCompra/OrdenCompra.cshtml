@@ -1,4 +1,22 @@
 ﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraModel
+
+<script type="text/javascript">
+    MVCxClientGlobalEvents.AddControlsInitializedEventHandler(AttachEditorValueChangedEvent);
+
+    function AttachEditorValueChangedEvent() {
+        var demoOptionNames = ["EditMode", "StartEditAction", "HighlightDeletedRows"];
+        $.each(demoOptionNames, function (i, name) {
+            var editor = ASPxClientControl.GetControlCollection().GetByName(name);
+            editor.ValueChanged.AddHandler(OnChangeDemoOptions);
+        });
+    }
+    function OnChangeDemoOptions() {
+        gridView.PerformCallback();
+    }
+    function OnBeginGridCallback(s, e) {
+        e.customArgs = MVCxClientUtils.GetSerializedEditorValuesInContainer("options");
+    }
+</script>
 <!DOCTYPE html>
 
 <html>
@@ -112,34 +130,7 @@
                                 </div>
                             }
                             <div class="row clearfix blockquote blockquote-info btn-round">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <td><b>Tipo</b></td>
-                                                <td><b>Producto</b></td>
-                                                <td><b>Cantidad</b></td>
-                                                <td><b>Unidad</b></td>
-                                                <td><b>Aplicación</b></td>
-                                                <td><b>Centro de costo</b></td>
-                                                <td style="width:500px !important"><b>Proveedor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                                                <td><strong>Cuenta Contable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
-
-                                                @if (!Model.EsGasTransporte)
-                                                {
-                                                    <td><b>Precio</b></td>
-                                                    <td><b>%Desc</b></td>
-                                                    <td><b>%IVA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                                                    <td><b>%IEPS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                                                    <td><b>Importe</b></td>
-                                                }
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @Html.EditorFor(m => m.OrdenCompraProductos)
-                                        </tbody>
-                                    </table>
-                                </div>
+                                @Html.Action("ProductoOCPartial", new { id = Model. })
                             </div>
 
                             <div class="row clearfix">

@@ -1,12 +1,16 @@
-﻿using MVC.Presentacion.App_Code;
+﻿using DevExpress.Web.Mvc;
+using MVC.Presentacion.Models.Seguridad;
+using MVC.Presentacion.App_Code;
 using MVC.Presentacion.Controllers.Shared;
 using MVC.Presentacion.Models.OrdenCompra;
 using System.Linq;
 using System.Web.Mvc;
 using PagedList;
 using Newtonsoft.Json;
-using MVC.Presentacion.Models.Seguridad;
+
+
 using System;
+using System.Collections.Generic;
 
 namespace MVC.Presentacion.Controllers
 {
@@ -241,6 +245,70 @@ namespace MVC.Presentacion.Controllers
                     Mensaje = Resp.MensajesError[0];
             }
             return Mensaje;
+        }
+
+        [ValidateInput(false)]
+        public ActionResult ProductoOCPartial(int? id)
+        {
+            int IdOC = id ?? 0;
+            var model = OrdenCompraServicio.InitComplementoGas(IdOC, tkn).Productos;
+            return PartialView("_ProductoOCPartial", model);
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult ProductoOCPartialAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] MVC.Presentacion.Models.OrdenCompra.ProductoOCDTO item)
+        {
+            var model = new object[0];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Insert here a code to insert the new item in your model
+                }
+                catch (Exception e)
+                {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            else
+                ViewData["EditError"] = "Please, correct all errors.";
+            return PartialView("_ProductoOCPartial", model);
+        }
+        [HttpPost, ValidateInput(false)]
+        public ActionResult ProductoOCPartialUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] MVC.Presentacion.Models.OrdenCompra.ProductoOCDTO item)
+        {
+            var model = new object[0];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Insert here a code to update the item in your model
+                }
+                catch (Exception e)
+                {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            else
+                ViewData["EditError"] = "Please, correct all errors.";
+            return PartialView("_ProductoOCPartial", model);
+        }
+        [HttpPost, ValidateInput(false)]
+        public ActionResult ProductoOCPartialDelete(System.Int32 IdProducto)
+        {
+            var model = new object[0];
+            if (IdProducto >= 0)
+            {
+                try
+                {
+                    // Insert here a code to delete the item from your model
+                }
+                catch (Exception e)
+                {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            return PartialView("_ProductoOCPartial", model);
         }
     }
 }

@@ -338,6 +338,7 @@
     <Compile Include="Models\OrdenCompra\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraProductoDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenesCompraModel.cs" />
+    <Compile Include="Models\OrdenCompra\ProductoOCDevExpress.cs" />
     <Compile Include="Models\OrdenCompra\ProductoOCDTO.cs" />
     <Compile Include="Models\OrdenCompra\RequisicionOCDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
@@ -11513,6 +11514,7 @@
     <Content Include="Views\Almacen\Salida.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AlmacenSalidaDTO.cshtml" />
     <Content Include="Views\Shared\_Perfil.cshtml" />
+    <Content Include="Views\OrdenCompra\_ProductoOCPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
