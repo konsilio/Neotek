@@ -160,7 +160,7 @@ namespace Application.MainModule.Flujos
                 return ClientesServicio.Registar(cliente,TokenServicio.ObtenerIdEmpresa());
         }
 
-        public List<ClienteDTO> BuscadorClientes(string criterio)
+        public DatosClientesDto BuscadorClientes(string criterio)
         {
             return ClientesServicio.BuscadorClientes(criterio);
         }
@@ -370,11 +370,11 @@ namespace Application.MainModule.Flujos
             return TraspasoServicio.Traspaso(dto,esFinal,TokenServicio.ObtenerIdEmpresa());
         }
 
-        public RespuestaDto Estaciones()
+        public DatosAnticiposCorteDto Estaciones()
         {
             var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
-            var puntosventa = CajaGeneralServicio.ObtenerPuntosVenta();
-            return null;
+
+            return AnticiposCortesAdapter.ToDTO(estaciones);
         }
 
         public RespuestaDto anticipo_y_cortes(bool esAnticipo)
