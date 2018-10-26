@@ -52,6 +52,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FolioOperacionDia.Equals(cve)).ToList();
         }
 
+        public List<VentaPuntoDeVenta> BuscarTodosPV()
+        {
+            return uow.Repository<VentaPuntoDeVenta>().Get().ToList();
+        }
+
         public List<VentaPuntoDeVenta> BuscarPorPV(int puntoDeVenta)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdPuntoVenta.Equals(puntoDeVenta)).ToList();
@@ -66,7 +71,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(x => x.IdPuntoVenta.Equals(idPv)).ToList();
         }
-
+       
         public List<VentaCorteAnticipoEC> BuscarAnticiposC()
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get().ToList();

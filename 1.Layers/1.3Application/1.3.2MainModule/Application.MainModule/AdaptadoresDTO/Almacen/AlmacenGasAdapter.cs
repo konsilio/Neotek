@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.Servicios.Ventas;
 using Sagas.MainModule.Entidades;
 using Sagas.MainModule.ObjetosValor.Constantes;
 using Sagas.MainModule.ObjetosValor.Enum;
@@ -226,7 +227,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 P5000Salida = AutoConsumo.P5000Salida,
                 ClaveOperacion = AutoConsumo.ClaveOperacion,
                 DatosProcesados = AutoConsumo.DatosProcesados,
-                FechaRegistro = AutoConsumo.FechaRegistro,                
+                FechaRegistro = AutoConsumo.FechaRegistro,
             };
         }
 
@@ -252,7 +253,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             return new AlmacenGasCalibracion
             {
                 IdCAlmacenGas = Calibracion.IdCAlmacenGas,
-                IdTipoEvento = Calibracion.IdTipoEvento,                
+                IdTipoEvento = Calibracion.IdTipoEvento,
                 IdDestinoCalibracion = Calibracion.IdDestinoCalibracion,
                 IdOrden = Calibracion.IdOrden,
                 IdTipoMedidor = Calibracion.IdTipoMedidor,
@@ -297,7 +298,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 IdCAlmacenGasPrincipal = 0,
                 IdCAlmacenGasReferencia = null,
                 IdAlmacenEntradaGasDescarga = null,
-                IdAlmacenGasRecarga = null, 
+                IdAlmacenGasRecarga = null,
                 EntradaKg = 0,
                 EntradaLt = 0,
                 SalidaKg = 0,
@@ -325,7 +326,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 CantidadActualTotalKg = 0,
                 CantidadActualTotalLt = 0,
                 PorcentajeAnteriorTotal = 0,
-                PorcentajeActualTotal = 0,                
+                PorcentajeActualTotal = 0,
                 AutoconsumoAcumDiaKg = 0,
                 AutoconsumoAcumDiaLt = 0,
                 AutoconsumoAcumMesKg = 0,
@@ -380,13 +381,13 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 VentaAcumMesLt = 0,
                 VentaAcumAnioKg = 0,
                 VentaAcumAnioLt = 0,
-                
+
                 FolioOperacionDia = null,
                 CAlmacenPrincipalNombre = null,
                 CAlmacenReferenciaNombre = null,
                 OperadorChoferNombre = null,
                 TipoEvento = null,
-                TipoMovimiento = null,                
+                TipoMovimiento = null,
                 PorcentajeAnterior = null,
                 PorcentajeActual = null,
                 P5000Anterior = null,
@@ -564,13 +565,13 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.CalibracionAcumMesKg = ultimoMovimiento.CalibracionAcumMesKg;
             almGMovimiento.CalibracionAcumMesLt = ultimoMovimiento.CalibracionAcumMesLt;
             almGMovimiento.CalibracionAcumAnioKg = ultimoMovimiento.CalibracionAcumAnioKg;
-            almGMovimiento.CalibracionAcumAnioLt = ultimoMovimiento.CalibracionAcumAnioLt;            
+            almGMovimiento.CalibracionAcumAnioLt = ultimoMovimiento.CalibracionAcumAnioLt;
             almGMovimiento.RecargaAcumDiaKg = ultimoMovimiento.RecargaAcumDiaKg;
             almGMovimiento.RecargaAcumDiaLt = ultimoMovimiento.RecargaAcumDiaLt;
             almGMovimiento.RecargaAcumMesKg = ultimoMovimiento.RecargaAcumMesKg;
             almGMovimiento.RecargaAcumMesLt = ultimoMovimiento.RecargaAcumMesLt;
             almGMovimiento.RecargaAcumAnioKg = ultimoMovimiento.RecargaAcumAnioKg;
-            almGMovimiento.RecargaAcumAnioLt = ultimoMovimiento.RecargaAcumAnioLt;            
+            almGMovimiento.RecargaAcumAnioLt = ultimoMovimiento.RecargaAcumAnioLt;
             almGMovimiento.TraspasoAcumDiaKg = ultimoMovimiento.TraspasoAcumDiaKg;
             almGMovimiento.TraspasoAcumDiaLt = ultimoMovimiento.TraspasoAcumDiaLt;
             almGMovimiento.TraspasoAcumMesKg = ultimoMovimiento.TraspasoAcumMesKg;
@@ -585,6 +586,188 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.VentaAcumAnioLt = ultimoMovimiento.VentaAcumAnioLt;
 
             return almGMovimiento;
+        }
+        
+        public static AlmacenGasMovimiento FromEntity(AlmacenGasMovimientoDto Dto, UnidadAlmacenGas unidadEntrada, AlmacenGasMovimiento ultimoMovimiento,InventarioAnteriorDto invAnterior)
+        {
+            var almGMovimiento = FromInit();
+
+            //------Ids y nombres-----------------
+            almGMovimiento.IdEmpresa = Dto.IdEmpresa;
+            almGMovimiento.Year = Dto.Year;
+            almGMovimiento.Mes = Dto.Mes;
+            almGMovimiento.Dia = Dto.Dia;
+            almGMovimiento.Orden = ultimoMovimiento != null && ultimoMovimiento.Orden > 0 ? (short)(ultimoMovimiento.Orden + 1) : (short)1;
+            almGMovimiento.IdTipoMovimiento = TipoMovimientoEnum.Entrada;
+            almGMovimiento.IdTipoEvento = TipoEventoEnum.Venta;
+            almGMovimiento.IdOrdenVenta = Dto.IdOrdenVenta;
+            almGMovimiento.IdAlmacenGas = Dto.IdAlmacenGas;
+            almGMovimiento.IdCAlmacenGasPrincipal = unidadEntrada.IdCAlmacenGas;
+            almGMovimiento.IdCAlmacenGasReferencia = Dto.IdCAlmacenGasReferencia;
+            almGMovimiento.IdAlmacenEntradaGasDescarga = Dto.IdAlmacenEntradaGasDescarga;
+            almGMovimiento.IdAlmacenGasRecarga = Dto.IdAlmacenGasRecarga;
+            almGMovimiento.FolioOperacionDia = Dto.FolioOperacionDia;
+            almGMovimiento.CAlmacenPrincipalNombre = unidadEntrada.Numero;
+            almGMovimiento.CAlmacenReferenciaNombre = Dto.CAlmacenReferenciaNombre;
+            almGMovimiento.OperadorChoferNombre = Dto.OperadorChoferNombre;
+            almGMovimiento.TipoEvento = CajaGeneralServicio.IdentificarTipoEventoString(TipoEventoEnum.Venta).ToString();
+            almGMovimiento.TipoMovimiento = Dto.TipoMovimiento;
+            //------Ids y nombres-----------------
+
+            //------Entrada, Salida y Saldo-----------------            
+            almGMovimiento.EntradaKg = invAnterior.EntradaKg;
+            almGMovimiento.EntradaLt = invAnterior.EntradaLt;
+            almGMovimiento.SalidaKg = invAnterior.EntradaKg;
+            almGMovimiento.SalidaLt = invAnterior.EntradaLt;
+            almGMovimiento.CantidadAnteriorKg = invAnterior.CantidadAnteriorKg;
+            almGMovimiento.CantidadAnteriorLt = invAnterior.CantidadAnteriorLt;
+            almGMovimiento.CantidadActualKg = unidadEntrada.CantidadActualKg;
+            almGMovimiento.CantidadActualLt = unidadEntrada.CantidadActualLt;
+            almGMovimiento.CantidadAcumuladaDiaKg = invAnterior.CantidadAcumuladaDiaKg;
+            almGMovimiento.CantidadAcumuladaDiaLt = invAnterior.CantidadAcumuladaDiaLt;
+            almGMovimiento.CantidadAcumuladaMesKg = invAnterior.CantidadAcumuladaMesKg;
+            almGMovimiento.CantidadAcumuladaMesLt = invAnterior.CantidadAcumuladaMesLt;
+            almGMovimiento.CantidadAcumuladaAnioKg = invAnterior.CantidadAcumuladaAnioKg;
+            almGMovimiento.CantidadAcumuladaAnioLt = invAnterior.CantidadAcumuladaAnioLt;
+            almGMovimiento.PorcentajeActual = unidadEntrada.PorcentajeActual;
+            almGMovimiento.P5000Anterior = Dto.P5000Anterior;
+            almGMovimiento.P5000Actual = Dto.P5000Actual;
+            almGMovimiento.FechaAplicacion = Dto.FechaAplicacion;
+            almGMovimiento.FechaRegistro = DateTime.Now;
+           // almGMovimiento.PorcentajeAnterior = invAnterior.PorcentajeAnterior;
+            //------Entrada, Salida y Saldo-----------------
+
+            //------Entrada, Salida y Saldo Acumulados-----------------
+            //almGMovimiento.CAlmEntradaDiaKg = invAnterior.CAlmEntradaDiaKg;
+            //almGMovimiento.CAlmEntradaDiaLt = invAnterior.CAlmEntradaDiaLt;
+            //almGMovimiento.CAlmSalidaDiaKg = invAnterior.CAlmSalidaDiaKg;
+            //almGMovimiento.CAlmSalidaDiaLt = invAnterior.CAlmSalidaDiaLt;
+            //almGMovimiento.CAlmEntradaMesKg = invAnterior.CAlmEntradaMesKg;
+            //almGMovimiento.CAlmEntradaMesLt = invAnterior.CAlmEntradaMesLt;
+            //almGMovimiento.CAlmSalidaMesKg = invAnterior.CAlmSalidaMesKg;
+            //almGMovimiento.CAlmSalidaMesLt = invAnterior.CAlmSalidaMesLt;
+            //almGMovimiento.CAlmEntradaAnioKg = invAnterior.CAlmEntradaAnioKg;
+            //almGMovimiento.CAlmEntradaAnioLt = invAnterior.CAlmEntradaAnioLt;
+            //almGMovimiento.CAlmSalidaAnioKg = invAnterior.CAlmSalidaAnioKg;
+            //almGMovimiento.CAlmSalidaAnioLt = invAnterior.CAlmSalidaAnioLt;
+            
+            //------Entrada, Salida y Saldo Acumulados-----------------
+                    
+
+            //----Remanente--------------------
+            almGMovimiento.RemaKg = invAnterior.RemaKg;
+            almGMovimiento.RemaLt = invAnterior.RemaLt;
+            almGMovimiento.RemaDiaKg = invAnterior.RemaDiaKg;
+            almGMovimiento.RemaDiaLt = invAnterior.RemaDiaLt;
+            almGMovimiento.RemaMesKg = invAnterior.RemaMesKg;
+            almGMovimiento.RemaMesLt = invAnterior.RemaMesLt;
+            almGMovimiento.RemaAnioKg = invAnterior.RemaAnioKg;
+            almGMovimiento.RemaAnioLt = invAnterior.RemaAnioLt;
+            almGMovimiento.RemaAcumDiaKg = invAnterior.RemaAcumDiaKg;
+            almGMovimiento.RemaAcumDiaLt = invAnterior.RemaAcumDiaLt;
+            almGMovimiento.RemaAcumMesKg = invAnterior.RemaAcumMesKg;
+            almGMovimiento.RemaAcumMesLt = invAnterior.RemaAcumMesLt;
+            almGMovimiento.RemaAcumAnioKg = invAnterior.RemaAcumAnioKg;
+            almGMovimiento.RemaAcumAnioLt = invAnterior.RemaAcumAnioLt;
+            //----Remanente--------------------
+
+          
+
+            return almGMovimiento;
+        }
+
+        public static AlmacenGasMovimiento FromDto(AlmacenGasMovimientoDto pvDTO)
+        {
+            return new AlmacenGasMovimiento()
+            {
+                IdEmpresa = pvDTO.IdEmpresa,
+                Year = pvDTO.Year,
+                Mes = pvDTO.Mes,
+                Dia = pvDTO.Dia,
+                Orden = pvDTO.Orden,
+                IdTipoMovimiento = pvDTO.IdTipoMovimiento,
+                IdTipoEvento = pvDTO.IdTipoEvento,
+                IdOrdenVenta = pvDTO.Orden,
+                IdAlmacenGas = pvDTO.IdAlmacenGas,
+                IdCAlmacenGasPrincipal = pvDTO.IdCAlmacenGasPrincipal,
+                IdCAlmacenGasReferencia = pvDTO.IdCAlmacenGasReferencia,
+                IdAlmacenEntradaGasDescarga = pvDTO.IdAlmacenEntradaGasDescarga,
+                IdAlmacenGasRecarga = pvDTO.IdAlmacenGasRecarga,
+                FolioOperacionDia = pvDTO.FolioOperacionDia,
+                CAlmacenPrincipalNombre = pvDTO.CAlmacenPrincipalNombre,
+                CAlmacenReferenciaNombre = pvDTO.CAlmacenReferenciaNombre,
+                OperadorChoferNombre = pvDTO.OperadorChoferNombre,
+                TipoEvento = pvDTO.TipoEvento,
+                TipoMovimiento = pvDTO.TipoMovimiento,
+                EntradaKg = pvDTO.EntradaKg,
+                EntradaLt = pvDTO.EntradaLt,
+                SalidaKg = pvDTO.SalidaKg,
+                SalidaLt = pvDTO.SalidaLt,
+                CantidadAnteriorKg = pvDTO.CantidadAnteriorKg,
+                CantidadAnteriorLt = pvDTO.CantidadAnteriorLt,
+                CantidadActualKg = pvDTO.CantidadActualKg,
+                CantidadActualLt = pvDTO.CantidadActualLt,
+                CantidadAcumuladaDiaKg = pvDTO.CantidadAcumuladaDiaKg,
+                CantidadAcumuladaDiaLt = pvDTO.CantidadAcumuladaDiaLt,
+                CantidadAcumuladaMesKg = pvDTO.CantidadAcumuladaMesKg,
+                CantidadAcumuladaMesLt = pvDTO.CantidadAcumuladaMesLt,
+                CantidadAcumuladaAnioKg = pvDTO.CantidadAcumuladaAnioKg,
+                CantidadAcumuladaAnioLt = pvDTO.CantidadAcumuladaAnioLt,
+                PorcentajeActual = pvDTO.PorcentajeActual,
+                P5000Anterior = pvDTO.P5000Anterior,
+                P5000Actual = pvDTO.P5000Actual,
+                FechaAplicacion = pvDTO.FechaAplicacion,
+                FechaRegistro = DateTime.Now,
+            };
+        }
+        public static List<AlmacenGasMovimiento> FromDto(List<AlmacenGasMovimientoDto> DTO)
+        {
+            return DTO.ToList().Select(x => FromDto(x)).ToList();
+        }
+
+        public static AlmacenGasMovimiento FromDtoGasMov(AlmacenGasMovimientoDto pvDTO)
+        {
+            return new AlmacenGasMovimiento()
+            {
+                IdEmpresa = pvDTO.IdEmpresa,
+                Year = pvDTO.Year,
+                Mes = pvDTO.Mes,
+                Dia = pvDTO.Dia,
+                Orden = pvDTO.Orden,
+                IdTipoMovimiento = pvDTO.IdTipoMovimiento,
+                IdTipoEvento = pvDTO.IdTipoEvento,
+                IdOrdenVenta = pvDTO.Orden,
+                IdAlmacenGas = pvDTO.IdAlmacenGas,
+                IdCAlmacenGasPrincipal = pvDTO.IdCAlmacenGasPrincipal,
+                IdCAlmacenGasReferencia = pvDTO.IdCAlmacenGasReferencia,
+                IdAlmacenEntradaGasDescarga = pvDTO.IdAlmacenEntradaGasDescarga,
+                IdAlmacenGasRecarga = pvDTO.IdAlmacenGasRecarga,
+                FolioOperacionDia = pvDTO.FolioOperacionDia,
+                CAlmacenPrincipalNombre = pvDTO.CAlmacenPrincipalNombre,
+                CAlmacenReferenciaNombre = pvDTO.CAlmacenReferenciaNombre,
+                OperadorChoferNombre = pvDTO.OperadorChoferNombre,
+                TipoEvento = pvDTO.TipoEvento,
+                TipoMovimiento = pvDTO.TipoMovimiento,
+                EntradaKg = pvDTO.EntradaKg,
+                EntradaLt = pvDTO.EntradaLt,
+                SalidaKg = pvDTO.SalidaKg,
+                SalidaLt = pvDTO.SalidaLt,
+                CantidadAnteriorKg = pvDTO.CantidadAnteriorKg,
+                CantidadAnteriorLt = pvDTO.CantidadAnteriorLt,
+                CantidadActualKg = pvDTO.CantidadActualKg,
+                CantidadActualLt = pvDTO.CantidadActualLt,
+                CantidadAcumuladaDiaKg = pvDTO.CantidadAcumuladaDiaKg,
+                CantidadAcumuladaDiaLt = pvDTO.CantidadAcumuladaDiaLt,
+                CantidadAcumuladaMesKg = pvDTO.CantidadAcumuladaMesKg,
+                CantidadAcumuladaMesLt = pvDTO.CantidadAcumuladaMesLt,
+                CantidadAcumuladaAnioKg = pvDTO.CantidadAcumuladaAnioKg,
+                CantidadAcumuladaAnioLt = pvDTO.CantidadAcumuladaAnioLt,
+                PorcentajeActual = pvDTO.PorcentajeActual,
+                P5000Anterior = pvDTO.P5000Anterior,
+                P5000Actual = pvDTO.P5000Actual,
+                FechaAplicacion = pvDTO.FechaAplicacion,
+                FechaRegistro = DateTime.Now,
+            };
         }
     }
 }

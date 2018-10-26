@@ -607,7 +607,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 && x.Activo
             );
         }
-
         public List<UnidadAlmacenGas> BuscarTodosCamionetas(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -813,6 +812,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
             {
                 _respuesta.Exito = false;
                 _respuesta.Mensaje = string.Format(Error.C0002, "del la recarga.");
+                _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+            }
+            return _respuesta;
+        }
+
+        public RespuestaDto Insertar(List<AlmacenGasMovimiento> ventamov)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            try
+            {
+                foreach (var iventa in ventamov)
+                {
+                    uow.Repository<AlmacenGasMovimiento>().Insert(iventa);
+                }
+                uow.SaveChanges();
+               // _respuesta.Id = traspaso.IdCAlmacenGasEntrada;
+                _respuesta.EsInsercion = true;
+                _respuesta.Exito = true;
+                _respuesta.ModeloValido = true;
+                _respuesta.Mensaje = Exito.OK;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Exito = false;
+                _respuesta.Mensaje = string.Format(Error.C0002, "del gas movimiento");
                 _respuesta.MensajesError = CatchInnerException.Obtener(ex);
             }
             return _respuesta;
