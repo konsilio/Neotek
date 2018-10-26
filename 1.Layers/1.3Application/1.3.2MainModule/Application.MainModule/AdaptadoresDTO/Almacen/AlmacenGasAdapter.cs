@@ -377,6 +377,10 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 DescargaAcumMesLt = 0,
                 DescargaAcumAnioKg = 0,
                 DescargaAcumAnioLt = 0,
+                CAlmLecturaInicialP5000 = 0,
+                CAlmLecturaFinalP5000 = 0,
+                CAlmLecturaInicialMagnatel = 0,
+                CAlmLecturaFinalMagnatel = 0,
                 CAlmEntradaDiaKg = 0,
                 CAlmEntradaDiaLt = 0,
                 CAlmSalidaDiaKg = 0,
@@ -413,7 +417,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 VentaAcumMesLt = 0,
                 VentaAcumAnioKg = 0,
                 VentaAcumAnioLt = 0,
-                
+
                 FolioOperacionDia = null,
                 CAlmacenPrincipalNombre = null,
                 CAlmacenReferenciaNombre = null,
@@ -480,6 +484,18 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 VentaMesLt = null,
                 VentaAnioKg = null,
                 VentaAnioLt = null,
+                VentaLecturasP5000Kg = null,
+                VentaLecturasP5000Lt = null,
+                VentaLecturasMagnatelKg = null,
+                VentaLecturasMagnatelLt = null,
+                VentaLecturasP5000MesKg = null,
+                VentaLecturasP5000MesLt = null,
+                VentaLecturasMagnatelMesKg = null,
+                VentaLecturasMagnatelMesLt = null,
+                VentaLecturasP5000AnioKg = null,
+                VentaLecturasP5000AnioLt = null,
+                VentaLecturasMagnatelAnioKg = null,
+                VentaLecturasMagnatelAnioLt = null,
             };
         }
 
