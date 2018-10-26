@@ -1185,10 +1185,6 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             //------Ids y nombres-----------------
 
             //------Entrada, Salida y Saldo-----------------            
-            //almGMovimiento.EntradaKg = esMovimientoLectInicial ? invAnterior.EntradaKg : 0;
-            //almGMovimiento.EntradaLt = esMovimientoLectInicial ? invAnterior.EntradaLt : 0;
-            //almGMovimiento.SalidaKg = esMovimientoLectInicial ? 0 : invAnterior.SalidaKg;
-            //almGMovimiento.SalidaLt = esMovimientoLectInicial ? 0 : invAnterior.SalidaLt;
             almGMovimiento.CantidadActualKg = unidadAlmacenGas.CantidadActualKg;
             almGMovimiento.CantidadActualLt = unidadAlmacenGas.CantidadActualLt;
             almGMovimiento.CantidadAnteriorKg = invAnterior.CantidadAnteriorKg;
@@ -1200,10 +1196,11 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             //------Entrada, Salida y Saldo-----------------
 
             //------Entrada, Salida y Saldo Acumulados-----------------
-            almGMovimiento.CAlmEntradaDiaKg = invAnterior.CAlmEntradaDiaKg;
-            almGMovimiento.CAlmEntradaDiaLt = invAnterior.CAlmEntradaDiaLt;
-            almGMovimiento.CAlmSalidaDiaKg = invAnterior.CAlmSalidaDiaKg;
-            almGMovimiento.CAlmSalidaDiaLt = invAnterior.CAlmSalidaDiaLt;
+            almGMovimiento.CAlmLecturaInicialMagnatel = unidadAlmacenGas.PorcentajeActual;
+            //almGMovimiento.CAlmEntradaDiaKg = invAnterior.CAlmEntradaDiaKg;
+            //almGMovimiento.CAlmEntradaDiaLt = invAnterior.CAlmEntradaDiaLt;
+            //almGMovimiento.CAlmSalidaDiaKg = invAnterior.CAlmSalidaDiaKg;
+            //almGMovimiento.CAlmSalidaDiaLt = invAnterior.CAlmSalidaDiaLt;
             almGMovimiento.CAlmEntradaMesKg = invAnterior.CAlmEntradaMesKg;
             almGMovimiento.CAlmEntradaMesLt = invAnterior.CAlmEntradaMesLt;
             almGMovimiento.CAlmSalidaMesKg = invAnterior.CAlmSalidaMesKg;
@@ -1212,8 +1209,8 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.CAlmEntradaAnioLt = invAnterior.CAlmEntradaAnioLt;
             almGMovimiento.CAlmSalidaAnioKg = invAnterior.CAlmSalidaAnioKg;
             almGMovimiento.CAlmSalidaAnioLt = invAnterior.CAlmSalidaAnioLt;
-            almGMovimiento.CantidadAcumuladaDiaKg = invAnterior.CantidadAcumuladaDiaKg;
-            almGMovimiento.CantidadAcumuladaDiaLt = invAnterior.CantidadAcumuladaDiaLt;
+            //almGMovimiento.CantidadAcumuladaDiaKg = invAnterior.CantidadAcumuladaDiaKg;
+            //almGMovimiento.CantidadAcumuladaDiaLt = invAnterior.CantidadAcumuladaDiaLt;
             almGMovimiento.CantidadAcumuladaMesKg = invAnterior.CantidadAcumuladaMesKg;
             almGMovimiento.CantidadAcumuladaMesLt = invAnterior.CantidadAcumuladaMesLt;
             almGMovimiento.CantidadAcumuladaAnioKg = invAnterior.CantidadAcumuladaAnioKg;
@@ -1277,7 +1274,6 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.VentaAcumMesLt = ultimoMovimiento.VentaAcumMesLt;
             almGMovimiento.VentaAcumAnioKg = ultimoMovimiento.VentaAcumAnioKg;
             almGMovimiento.VentaAcumAnioLt = ultimoMovimiento.VentaAcumAnioLt;
-
             return almGMovimiento;
         }
     }

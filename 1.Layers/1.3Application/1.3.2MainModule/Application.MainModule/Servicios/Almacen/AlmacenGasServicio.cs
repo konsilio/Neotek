@@ -1951,8 +1951,8 @@ namespace Application.MainModule.Servicios.Almacenes
 
             apLectDto.AlmacenGas = ObtenerAlmacenGasTotal(apLectDto.Empresa.IdEmpresa);
 
-            AlmacenGasMovimiento ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas);
-            AlmacenGasMovimiento ulMovUnidad = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLectura.IdCAlmacenGas);
+            apLectDto.ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas);
+            apLectDto.ulMovUnidad = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLectura.IdCAlmacenGas);
 
             //ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas);
             //ulMovUnidad = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLecturaInicial.IdCAlmacenGas);
@@ -1986,39 +1986,35 @@ namespace Application.MainModule.Servicios.Almacenes
             var invAnterior = new InventarioAnteriorDto
             {
                 NombreOperador = null,
-                CantidadAnteriorKg = ulMovUnidad.CantidadActualKg,
-                CantidadAnteriorLt = ulMovUnidad.CantidadActualLt,
-                PorcentajeAnterior = ulMovUnidad.PorcentajeActual,
-                P5000Anterior = ulMovUnidad.P5000Actual,
+                CantidadAnteriorKg = apLectDto.ulMovUnidad.CantidadActualKg,
+                CantidadAnteriorLt = apLectDto.ulMovUnidad.CantidadActualLt,
+                PorcentajeAnterior = apLectDto.ulMovUnidad.PorcentajeActual,
+                P5000Anterior = apLectDto.ulMovUnidad.P5000Actual,
 
-                CAlmEntradaDiaKg = ulMovUnidad.CAlmEntradaDiaKg,
-                CAlmEntradaDiaLt = ulMovUnidad.CAlmEntradaDiaLt,
-                CAlmEntradaMesKg = ulMovUnidad.CAlmEntradaMesKg,
-                CAlmEntradaMesLt = ulMovUnidad.CAlmEntradaMesLt,
-                CAlmEntradaAnioKg = ulMovUnidad.CAlmEntradaAnioKg,
-                CAlmEntradaAnioLt = ulMovUnidad.CAlmEntradaAnioLt,
-                CAlmSalidaDiaKg = ulMovUnidad.CAlmSalidaDiaKg,
-                CAlmSalidaDiaLt = ulMovUnidad.CAlmSalidaDiaLt,
-                CAlmSalidaMesKg = ulMovUnidad.CAlmSalidaMesKg,
-                CAlmSalidaMesLt = ulMovUnidad.CAlmSalidaMesLt,
-                CAlmSalidaAnioKg = ulMovUnidad.CAlmSalidaAnioKg,
-                CAlmSalidaAnioLt = ulMovUnidad.CAlmSalidaAnioLt,
-                CantidadAcumuladaDiaKg = ulMovUnidad.CantidadAcumuladaDiaKg,
-                CantidadAcumuladaDiaLt = ulMovUnidad.CantidadAcumuladaDiaLt,
-                CantidadAcumuladaMesKg = ulMovUnidad.CantidadAcumuladaMesKg,
-                CantidadAcumuladaMesLt = ulMovUnidad.CantidadAcumuladaMesLt,
-                CantidadAcumuladaAnioKg = ulMovUnidad.CantidadAcumuladaAnioKg,
-                CantidadAcumuladaAnioLt = ulMovUnidad.CantidadAcumuladaAnioLt,
+                CAlmLecturaInicialMagnatel = apLectDto.TomaLecturaLectura.Porcentaje != null ? apLectDto.TomaLecturaLectura.Porcentaje.Value : 0,
+                CAlmLecturaInicialP5000 = apLectDto.TomaLecturaLectura != null ? apLectDto.TomaLecturaLectura.P5000.Value : 0,
+                CAlmEntradaMesKg = apLectDto.ulMovUnidad.CAlmEntradaMesKg,
+                CAlmEntradaMesLt = apLectDto.ulMovUnidad.CAlmEntradaMesLt,
+                CAlmEntradaAnioKg = apLectDto.ulMovUnidad.CAlmEntradaAnioKg,
+                CAlmEntradaAnioLt = apLectDto.ulMovUnidad.CAlmEntradaAnioLt,
+                CAlmSalidaMesKg = apLectDto.ulMovUnidad.CAlmSalidaMesKg,
+                CAlmSalidaMesLt = apLectDto.ulMovUnidad.CAlmSalidaMesLt,
+                CAlmSalidaAnioKg = apLectDto.ulMovUnidad.CAlmSalidaAnioKg,
+                CAlmSalidaAnioLt = apLectDto.ulMovUnidad.CAlmSalidaAnioLt,
+                CantidadAcumuladaMesKg = apLectDto.ulMovUnidad.CantidadAcumuladaMesKg,
+                CantidadAcumuladaMesLt = apLectDto.ulMovUnidad.CantidadAcumuladaMesLt,
+                CantidadAcumuladaAnioKg = apLectDto.ulMovUnidad.CantidadAcumuladaAnioKg,
+                CantidadAcumuladaAnioLt = apLectDto.ulMovUnidad.CantidadAcumuladaAnioLt,
 
-                CantidadAnteriorTotalKg = ulMov.CantidadActualTotalKg,
-                CantidadAnteriorTotalLt = ulMov.CantidadActualTotalLt,
-                PorcentajeAnteriorTotal = ulMov.PorcentajeActualTotal,
-                CantidadAnteriorGeneralKg = ulMov.CantidadActualGeneralKg,
-                CantidadAnteriorGeneralLt = ulMov.CantidadActualGeneralLt,
-                PorcentajeAnteriorGeneral = ulMov.PorcentajeActualGeneral,
+                CantidadAnteriorTotalKg = apLectDto.ulMov.CantidadActualTotalKg,
+                CantidadAnteriorTotalLt = apLectDto.ulMov.CantidadActualTotalLt,
+                PorcentajeAnteriorTotal = apLectDto.ulMov.PorcentajeActualTotal,
+                CantidadAnteriorGeneralKg = apLectDto.ulMov.CantidadActualGeneralKg,
+                CantidadAnteriorGeneralLt = apLectDto.ulMov.CantidadActualGeneralLt,
+                PorcentajeAnteriorGeneral = apLectDto.ulMov.PorcentajeActualGeneral,
             };
 
-            apLectDto.MovimientoUnidad = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas, apLectDto.TomaLecturaLectura, apLectDto.AlmacenGas, ulMovUnidad, apLectDto.Empresa, invAnterior, true);
+            apLectDto.MovimientoUnidad = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas, apLectDto.TomaLecturaLectura, apLectDto.AlmacenGas, apLectDto.ulMov, apLectDto.Empresa, invAnterior, true);
             apLectDto.AlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.AlmacenGas);
             apLectDto.unidadAlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas);
             apLectDto.TomaLecturaLectura = AlmacenGasAdapter.FromEntity(apLectDto.TomaLecturaLectura);
@@ -2030,8 +2026,8 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             apLectDto.AlmacenGas = ObtenerAlmacenGasTotal(apLectDto.Empresa.IdEmpresa);
 
-            AlmacenGasMovimiento ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas);            
-            AlmacenGasMovimiento ulMovUnidad = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLectura.IdCAlmacenGas);
+            apLectDto.ulMov = ObtenerUltimoMovimientoEnInventario(apLectDto.Empresa.IdEmpresa, apLectDto.AlmacenGas.IdAlmacenGas);
+            apLectDto.ulMovUnidad = ObtenerUltimoMovimientoPorUnidadAlmacenGas(apLectDto.Empresa.IdEmpresa, apLectDto.TomaLecturaLectura.IdCAlmacenGas);
             
             switch (apLectDto.identidadUA)
             {
@@ -2045,40 +2041,40 @@ namespace Application.MainModule.Servicios.Almacenes
             var invAnterior = new InventarioAnteriorDto
             {
                 NombreOperador = null,
-                CantidadAnteriorKg = ulMovUnidad.CantidadActualKg,
-                CantidadAnteriorLt = ulMovUnidad.CantidadActualLt,
-                PorcentajeAnterior = ulMovUnidad.PorcentajeActual,
-                P5000Anterior = ulMovUnidad.P5000Actual,
+                CantidadAnteriorKg = apLectDto.ulMovUnidad.CantidadActualKg,
+                CantidadAnteriorLt = apLectDto.ulMovUnidad.CantidadActualLt,
+                PorcentajeAnterior = apLectDto.ulMovUnidad.PorcentajeActual,
+                P5000Anterior = apLectDto.ulMovUnidad.P5000Actual,
+                                
+                CAlmEntradaDiaKg = apLectDto.ulMovUnidad.CAlmEntradaDiaKg,
+                CAlmEntradaDiaLt = apLectDto.ulMovUnidad.CAlmEntradaDiaLt,
+                CAlmEntradaMesKg = apLectDto.ulMovUnidad.CAlmEntradaMesKg,
+                CAlmEntradaMesLt = apLectDto.ulMovUnidad.CAlmEntradaMesLt,
+                CAlmEntradaAnioKg = apLectDto.ulMovUnidad.CAlmEntradaAnioKg,
+                CAlmEntradaAnioLt = apLectDto.ulMovUnidad.CAlmEntradaAnioLt,
+                CAlmSalidaDiaKg = apLectDto.ulMovUnidad.CAlmSalidaDiaKg,
+                CAlmSalidaDiaLt = apLectDto.ulMovUnidad.CAlmSalidaDiaLt,
+                CAlmSalidaMesKg = apLectDto.ulMovUnidad.CAlmSalidaMesKg,
+                CAlmSalidaMesLt = apLectDto.ulMovUnidad.CAlmSalidaMesLt,
+                CAlmSalidaAnioKg = apLectDto.ulMovUnidad.CAlmSalidaAnioKg,
+                CAlmSalidaAnioLt = apLectDto.ulMovUnidad.CAlmSalidaAnioLt,
+                CantidadAcumuladaDiaKg = apLectDto.ulMovUnidad.CantidadAcumuladaDiaKg,
+                CantidadAcumuladaDiaLt = apLectDto.ulMovUnidad.CantidadAcumuladaDiaLt,
+                CantidadAcumuladaMesKg = apLectDto.ulMovUnidad.CantidadAcumuladaMesKg,
+                CantidadAcumuladaMesLt = apLectDto.ulMovUnidad.CantidadAcumuladaMesLt,
+                CantidadAcumuladaAnioKg = apLectDto.ulMovUnidad.CantidadAcumuladaAnioKg,
+                CantidadAcumuladaAnioLt = apLectDto.ulMovUnidad.CantidadAcumuladaAnioLt,
 
-                CAlmEntradaDiaKg = ulMovUnidad.CAlmEntradaDiaKg,
-                CAlmEntradaDiaLt = ulMovUnidad.CAlmEntradaDiaLt,
-                CAlmEntradaMesKg = ulMovUnidad.CAlmEntradaMesKg,
-                CAlmEntradaMesLt = ulMovUnidad.CAlmEntradaMesLt,
-                CAlmEntradaAnioKg = ulMovUnidad.CAlmEntradaAnioKg,
-                CAlmEntradaAnioLt = ulMovUnidad.CAlmEntradaAnioLt,
-                CAlmSalidaDiaKg = ulMovUnidad.CAlmSalidaDiaKg,
-                CAlmSalidaDiaLt = ulMovUnidad.CAlmSalidaDiaLt,
-                CAlmSalidaMesKg = ulMovUnidad.CAlmSalidaMesKg,
-                CAlmSalidaMesLt = ulMovUnidad.CAlmSalidaMesLt,
-                CAlmSalidaAnioKg = ulMovUnidad.CAlmSalidaAnioKg,
-                CAlmSalidaAnioLt = ulMovUnidad.CAlmSalidaAnioLt,
-                CantidadAcumuladaDiaKg = ulMovUnidad.CantidadAcumuladaDiaKg,
-                CantidadAcumuladaDiaLt = ulMovUnidad.CantidadAcumuladaDiaLt,
-                CantidadAcumuladaMesKg = ulMovUnidad.CantidadAcumuladaMesKg,
-                CantidadAcumuladaMesLt = ulMovUnidad.CantidadAcumuladaMesLt,
-                CantidadAcumuladaAnioKg = ulMovUnidad.CantidadAcumuladaAnioKg,
-                CantidadAcumuladaAnioLt = ulMovUnidad.CantidadAcumuladaAnioLt,
-
-                CantidadAnteriorTotalKg = ulMov.CantidadActualTotalKg,
-                CantidadAnteriorTotalLt = ulMov.CantidadActualTotalLt,
-                PorcentajeAnteriorTotal = ulMov.PorcentajeActualTotal,
-                CantidadAnteriorGeneralKg = ulMov.CantidadActualGeneralKg,
-                CantidadAnteriorGeneralLt = ulMov.CantidadActualGeneralLt,
-                PorcentajeAnteriorGeneral = ulMov.PorcentajeActualGeneral,
+                CantidadAnteriorTotalKg = apLectDto.ulMov.CantidadActualTotalKg,
+                CantidadAnteriorTotalLt = apLectDto.ulMov.CantidadActualTotalLt,
+                PorcentajeAnteriorTotal = apLectDto.ulMov.PorcentajeActualTotal,
+                CantidadAnteriorGeneralKg = apLectDto.ulMov.CantidadActualGeneralKg,
+                CantidadAnteriorGeneralLt = apLectDto.ulMov.CantidadActualGeneralLt,
+                PorcentajeAnteriorGeneral = apLectDto.ulMov.PorcentajeActualGeneral,
             };
 
-            apLectDto.MovimientoUnidad = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas, apLectDto.TomaLecturaLectura, apLectDto.AlmacenGas, ulMovUnidad, apLectDto.Empresa, invAnterior, true);
-            apLectDto.AlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.AlmacenGas);
+            apLectDto.MovimientoUnidad = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas, apLectDto.TomaLecturaLectura, apLectDto.AlmacenGas, apLectDto.ulMovUnidad, apLectDto.Empresa, invAnterior, true);
+            //apLectDto.AlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.AlmacenGas);
             apLectDto.unidadAlmacenGas = AlmacenGasAdapter.FromEntity(apLectDto.unidadAlmacenGas);
             apLectDto.TomaLecturaLectura = AlmacenGasAdapter.FromEntity(apLectDto.TomaLecturaLectura);
 
@@ -2090,7 +2086,7 @@ namespace Application.MainModule.Servicios.Almacenes
             apLectDto.unidadAlmacenGas.PorcentajeActual = apLectDto.TomaLecturaLectura.Porcentaje.Value;
             apLectDto.unidadAlmacenGas.P5000Actual = null;
             apLectDto.unidadAlmacenGas.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdePorcentaje(apLectDto.unidadAlmacenGas.CapacidadTanqueLt.Value, apLectDto.unidadAlmacenGas.PorcentajeActual);
-            apLectDto.unidadAlmacenGas.CantidadActualKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(apLectDto.unidadAlmacenGas.CantidadActualLt, apLectDto.Empresa.FactorLitrosAKilos);
+            apLectDto.unidadAlmacenGas.CantidadActualKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(apLectDto.unidadAlmacenGas.CantidadActualLt, apLectDto.Empresa.FactorLitrosAKilos);            
             apLectDto.TomaLecturaLectura.DatosProcesados = true;
             return apLectDto;
         }
