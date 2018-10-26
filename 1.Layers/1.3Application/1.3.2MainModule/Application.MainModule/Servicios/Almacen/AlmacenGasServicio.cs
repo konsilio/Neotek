@@ -85,6 +85,8 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().Insertar(adapter);
         }
+
+
         public static AlmacenGas ObtenerAlmacenGasTotal(Empresa empresa)
         {
             if (empresa.AlmacenesGas != null && empresa.AlmacenesGas.Count > 0)
@@ -1530,6 +1532,36 @@ namespace Application.MainModule.Servicios.Almacenes
         public static RespuestaDto InsertarTraspaso(AlmacenGasTraspaso dto)
         {
             return new AlmacenGasDataAccess().Insertar(dto);
+        }
+
+        public static VentaCorteAnticipoEC ObtenerAnticipo(string claveOperacion)
+        {
+            return new PuntoVentaDataAccess().BuscarAnticipo(claveOperacion);
+        }
+
+        public static List<VentaCorteAnticipoEC> ObetnerAnticipos(short idEmpresa)
+        {
+            return new PuntoVentaDataAccess().Anticipos( idEmpresa);
+        }
+
+        public static RespuestaDto InsertarAnticipo(VentaCorteAnticipoEC adapter)
+        {
+            return new PuntoVentaDataAccess().InsertarCorte(adapter);
+        }
+
+        public static VentaCorteAnticipoEC ObtenerCorte(string claveOperacion)
+        {
+            return new PuntoVentaDataAccess().BuscarCorte(claveOperacion);
+        }
+
+        public static List<VentaCorteAnticipoEC> ObtenerCortes(short idEmpresa)
+        {
+            return new PuntoVentaDataAccess().Cortes(idEmpresa);
+        }
+
+        public static RespuestaDto InsertCorte(VentaCorteAnticipoEC corte)
+        {
+            return new PuntoVentaDataAccess().InsertarCorte(corte);
         }
     }
 }

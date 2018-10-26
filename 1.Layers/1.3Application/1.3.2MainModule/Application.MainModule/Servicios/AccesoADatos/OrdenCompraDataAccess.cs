@@ -29,10 +29,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<OrdenCompra> Buscar(short idEmpresa, byte idOrdenComprEstatus, bool EsGas, bool EsActivoVenta, bool EsTransporteGas)
         {
             return uow.Repository<OrdenCompra>().Get(x => x.Activo
-                                                                  && x.EsGas.Equals(EsGas)
-                                                                  && x.EsActivoVenta.Equals(EsActivoVenta)
-                                                                  && x.EsTransporteGas.Equals(EsTransporteGas)
-                                                                  && x.IdEmpresa.Equals(idEmpresa)
+                                                                  || x.EsGas.Equals(EsGas)
+                                                                  || x.EsActivoVenta.Equals(EsActivoVenta)
+                                                                  || x.EsTransporteGas.Equals(EsTransporteGas)
+                                                                  || x.IdEmpresa.Equals(idEmpresa)
                                                                   && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus)).ToList();
             //return uow.Repository<OrdenCompra>().GetAll().ToList();
         }

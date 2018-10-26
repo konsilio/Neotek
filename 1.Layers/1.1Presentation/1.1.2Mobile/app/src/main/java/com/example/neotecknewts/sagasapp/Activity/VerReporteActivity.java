@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
+import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
@@ -51,6 +52,7 @@ public class VerReporteActivity extends AppCompatActivity {
     TraspasoDTO traspasoDTO;
     VentaDTO ventaDTO;
     AnticiposDTO anticiposDTO;
+    CorteDTO corteDTO;
     private String StringReporte,HtmlReporte;
 
     // android built in classes for bluetooth operations
@@ -120,6 +122,7 @@ public class VerReporteActivity extends AppCompatActivity {
                 GenerarReporteAnticipo();
             }else if (EsCorte){
                 setTitle("Nota de corte de caja");
+                corteDTO = (CorteDTO) bundle.getSerializable("corteDTO");
                 GenerarReporteCorteCaja();
             }
             if(EsVentaCamioneta || EsVentaCarburacion || EsVentaPipa){
@@ -398,6 +401,24 @@ public class VerReporteActivity extends AppCompatActivity {
                         "[{Recibio}]\n\n"+
                         "________________________\n"
                         ;
+        HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",
+                corteDTO.getClaveOperacion());
+        StringReporte = StringReporte.replace("[{ClaveTraspaso}]",
+                corteDTO.getClaveOperacion());
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
+                new SimpleDateFormat("dd/MM/yyyy");
+        HtmlReporte.replace("[{Fecha}]",format.format(corteDTO.getFecha()));
+        StringReporte = StringReporte.replace("[{Fecha}]",format.format(corteDTO.getFecha()));
+
+        HtmlReporte = HtmlReporte.replace("[{Hora}]]",
+                corteDTO.getHora());
+        StringReporte = StringReporte.replace("[{Hora}]",
+                corteDTO.getHora());
+
+        HtmlReporte = HtmlReporte.replace("[{Estacion}]]",
+                corteDTO.getNombreEstacion());
+        StringReporte = StringReporte.replace("[{Estacion}]",
+                corteDTO.getNombreEstacion());
     }
 
     private void GenerarReporteAnticipo() {
