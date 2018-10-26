@@ -87,8 +87,10 @@ public class MainActivity extends AppCompatActivity implements MainView{
         empresaDTOs = new ArrayList<>();
 
 
-        editTextContraseña.setText("saadmin");
-        editTextCorreoElectronico.setText("sa@k.com");
+        //editTextContraseña.setText("saadmin");
+        editTextCorreoElectronico.setText(!session.getAttribute(Session.KEY_EMAIL).equals("") ?
+                session.getAttribute(Session.KEY_EMAIL):"sa@k.com"
+        );
 
 
         //linearLayoutLogin.setVisibility(View.GONE);

@@ -282,7 +282,7 @@ namespace DS.MainModule.Controllers
         [Route("catalogos/venta-gas/otros")]
         public HttpResponseMessage GetOtros()
         {
-            return null;
+             return RespuestaHttp.crearRespuesta(_mobile.catalogoOtros(), Request); ;
         }
        
     }

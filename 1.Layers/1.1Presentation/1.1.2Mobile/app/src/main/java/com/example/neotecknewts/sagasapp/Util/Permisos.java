@@ -23,7 +23,7 @@ public class Permisos {
 
     };
     public Permisos(Activity activity){
-        this.context = activity;
+        this.context = activity.getApplicationContext();
         this.activity = activity;
     }
     public void permisos(){

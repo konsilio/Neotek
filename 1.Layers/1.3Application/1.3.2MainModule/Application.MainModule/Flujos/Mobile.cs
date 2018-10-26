@@ -399,5 +399,14 @@ namespace Application.MainModule.Flujos
 
             return VentaServicio.Corte(dto,TokenServicio.ObtenerIdEmpresa(),TokenServicio.ObtenerIdUsuario(), cortes, estacion);
         }
+
+        public DatosOtrosDto catalogoOtros()
+        {
+            var categoria = ProductoServicio.ObtenerCategorias();
+            var linea = ProductoServicio.ObtenerLineasProducto();
+            var productos = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa());
+
+            return VentasEstacionesAdapter.ToDTO(categoria,linea,productos);
+        }
     }
 }

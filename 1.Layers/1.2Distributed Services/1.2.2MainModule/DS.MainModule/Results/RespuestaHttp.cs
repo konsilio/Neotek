@@ -126,5 +126,10 @@ namespace DS.MainModule.Results
         {
             return request.CreateResponse(HttpStatusCode.OK, respuesta);
         }
+
+        public static HttpResponseMessage crearRespuesta(DatosOtrosDto respuesta, HttpRequestMessage request)
+        {
+            return request.CreateResponse(HttpStatusCode.OK, respuesta);
+        }
     }
 }

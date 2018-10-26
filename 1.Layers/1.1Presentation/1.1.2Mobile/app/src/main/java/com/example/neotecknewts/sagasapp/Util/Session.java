@@ -115,4 +115,8 @@ public class Session {
     public int getIdEmpresa(){
         return pref.getInt(KEY_ID_EMPRESA,0);
     }
+
+    public String getAttribute(String attribute){
+        return pref.getString(attribute,"");
+    }
 }
