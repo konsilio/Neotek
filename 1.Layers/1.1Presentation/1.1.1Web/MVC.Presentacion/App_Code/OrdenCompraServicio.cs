@@ -36,6 +36,7 @@ namespace MVC.Presentacion.App_Code
             var datos = DatosRequisicion(id, _tkn);
             if (datos != null)
             {
+                model.IdOrdenCompra = id;
                 model.IdRequisicion = datos.IdRequisicion;
                 model.NumeroRequisicion = datos.NumeroRequisicion;
                 model.IdSolicitante = datos.IdUsuarioSolicitante;

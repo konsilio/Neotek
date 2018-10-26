@@ -22,11 +22,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             int idOc = id ?? 0;
-            var model = OrdenCompraServicio.InitOrdenCompra(idOc, tkn);
-            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
-            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
-            ViewBag.IVAs = CatalogoServicio.ListaIVA();
-            ViewBag.IEPs = CatalogoServicio.ListaIEPS();
+            var model = OrdenCompraServicio.InitOrdenCompra(idOc, tkn);          
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             return View(model);
         }
@@ -250,32 +246,19 @@ namespace MVC.Presentacion.Controllers
         [ValidateInput(false)]
         public ActionResult ProductoOCPartial(int? id)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
             int IdOC = id ?? 0;
-            var model = OrdenCompraServicio.InitComplementoGas(IdOC, tkn).Productos;
+            ViewBag.IVAs = CatalogoServicio.ListaIVA();
+            ViewBag.IEPs = CatalogoServicio.ListaIEPS();
+            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
+            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
+            var model = OrdenCompraServicio.InitOrdenCompra(IdOC, tkn).OrdenCompraProductos;
             return PartialView("_ProductoOCPartial", model);
-        }
-
+        }   
+       
         [HttpPost, ValidateInput(false)]
-        public ActionResult ProductoOCPartialAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] MVC.Presentacion.Models.OrdenCompra.ProductoOCDTO item)
-        {
-            var model = new object[0];
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Insert here a code to insert the new item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("_ProductoOCPartial", model);
-        }
-        [HttpPost, ValidateInput(false)]
-        public ActionResult ProductoOCPartialUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] MVC.Presentacion.Models.OrdenCompra.ProductoOCDTO item)
+        public ActionResult ProductoOCPartialUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ProductoOCDTO item)
         {
             var model = new object[0];
             if (ModelState.IsValid)
@@ -292,23 +275,6 @@ namespace MVC.Presentacion.Controllers
             else
                 ViewData["EditError"] = "Please, correct all errors.";
             return PartialView("_ProductoOCPartial", model);
-        }
-        [HttpPost, ValidateInput(false)]
-        public ActionResult ProductoOCPartialDelete(System.Int32 IdProducto)
-        {
-            var model = new object[0];
-            if (IdProducto >= 0)
-            {
-                try
-                {
-                    // Insert here a code to delete the item from your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            return PartialView("_ProductoOCPartial", model);
-        }
+        }       
     }
 }
