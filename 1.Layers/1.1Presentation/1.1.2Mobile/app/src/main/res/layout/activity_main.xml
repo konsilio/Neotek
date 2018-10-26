@@ -103,6 +103,7 @@
                         android:hint="@string/login_hint_username"
                         android:inputType="text"
                         android:paddingBottom="5dp"
+                        android:text="op"
                         android:textSize="18sp"
                         tools:ignore="Autofill" />
                     <!--android:textColor="@color/colorTextLogin"

@@ -16,6 +16,7 @@ namespace MVC.Presentacion.Models.Requisicion
         public string RequeridoEn { get; set; }
         public byte RequisicionEstatus { get; set; }
         public string OpinionAlmacen { get; set; }
+        public string MotivoCancelacion { get; set; }
         public List<RequisicionProductoAutorizacionDTO> Productos { get; set; }
     }
 }

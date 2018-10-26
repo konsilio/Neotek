@@ -1,6 +1,7 @@
 ﻿@using MVC.Presentacion.Models.OrdenCompra;
 @using PagedList.Mvc;
 @using PagedList;
+@using System.Configuration;
 @model OrdenesCompraModel
 @{
     string EnabledAdminCentral = Convert.ToBoolean(ViewBag.EsAdminCentral).Equals(false) ? "disabled" : "";
@@ -38,10 +39,12 @@
                             </ul>
                         </div>
                     </div>
+                    <br />
                     <div class="card">
-                        <div class="row clearfix">
-                            <div class="col-sm-4">
-                                <div class="form-group">
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-sm-4">
+                                    <strong>Gasera: </strong>
                                     <select name="IdEmpresa" class="form-control show-tick selectpicker" @EnabledAdminCentral data-live-search="true">
                                         @foreach (var lst in ViewBag.Empresas)
                                         {
@@ -49,17 +52,16 @@
                                         }
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-sm-4" >
-                                <div class="form-group">
-                                    <input name="NumRequisicion" class="form-control" placeholder="N° de Requisición" />
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <strong>Buscar:</strong>
+                                        <input name="NumRequisicion" class="form-control" placeholder="N° de Requisición" />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="body">
-                            <div class="row clearfix">
+                            <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
-                                    <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <td><b>Gasera</b></td>
@@ -76,9 +78,9 @@
                                                 <tr>
                                                     <td>@_req.NombreComercial</td>
                                                     <td>@_req.NumeroRequisicion</td>
-                                                    <td>@_req.FechaRequerida</td>
+                                                    <td>@_req.FechaRequerida.ToString(ConfigurationManager.AppSettings["FechaHora_F24H"])</td>
                                                     <td>@_req.UsuarioSolicitante</td>
-                                                    <td>@_req.RequisicionEstatus</td>
+                                                    <td>Generar orden de compra</td>
                                                     <td>
                                                         <a ID="lblAction" href="@Url.Action("OrdenCompra", "OrdenCompra", new { id = _req.IdRequisicion })">
                                                             <i class="material-icons">launch</i>
@@ -105,6 +107,7 @@
                     <div class="card">
                         <div class="body">
                             <div class="row clearfix">
+
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <input name="NumeroRequisicion" class="form-control" placeholder="N° de Requisición" />
@@ -171,8 +174,9 @@
                                         @Html.ValidationMessageFor(model => model.FechaRequeridaDe, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-sm-1">
-                                        <b>&nbsp; </b>
                                         <div class="input-group">
+                                            <b>&nbsp; </b>
+
                                             <button ID="lblAction" class="tn btn-danger btn-simple btn-round btn-sm" formaction="Buscar">
                                                 <i class="material-icons">search</i>
                                                 <span class="icon-name"></span>
@@ -181,9 +185,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">
+                            <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
-                                    <table class="table table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <table class="table table-hover">
                                         <thead>
                                             <tr>
                                                 <td><strong>Gasera</strong></td>
@@ -240,7 +244,7 @@
                                                                 <span class="icon-name"></span>
                                                             </a>
                                                         }
-                                                        @if ((_oc.EsGas == true || _oc.EsTransporteGas == true ) && _oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.EnComplementoCompra))
+                                                        @if ((_oc.EsGas == true || _oc.EsTransporteGas == true) && _oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.EnComplementoCompra))
                                                         {
                                                             <a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraComplementoGas", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
                                                                 <i class="material-icons">local_gas_station</i>

@@ -128,7 +128,63 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
             }
             return _respuesta;
-        }       
+        }
 
+        public VentaCorteAnticipoEC BuscarAnticipo(string claveOperacion)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().GetSingle(
+                x=>x.FolioOperacion.Equals(claveOperacion)
+                && x.IdTipoOperacion.Equals(1)
+               );
+        }
+
+        public List<VentaCorteAnticipoEC> Anticipos(short idEmpresa)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().Get(
+                    x=>
+                    x.IdEmpresa.Equals(idEmpresa)
+                    && x.IdTipoOperacion.Equals(1)
+                ).ToList();
+        }
+
+        public RespuestaDto InsertarCorte(VentaCorteAnticipoEC anticipo)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<VentaCorteAnticipoEC>().Insert(anticipo);
+                    uow.SaveChanges();
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Id = anticipo.IdPuntoVenta;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "registrar el anticipo");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
+        public VentaCorteAnticipoEC BuscarCorte(string claveOperacion)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().GetSingle(
+                x=>x.FolioOperacion.Equals(claveOperacion)
+                && x.IdTipoOperacion.Equals(2)
+                );
+        }
+
+        public List<VentaCorteAnticipoEC> Cortes(short idEmpresa)
+        {
+            return uow.Repository<VentaCorteAnticipoEC>().Get(
+                x=>x.IdEmpresa.Equals(idEmpresa)
+                ).ToList();
+        }
     }
 }

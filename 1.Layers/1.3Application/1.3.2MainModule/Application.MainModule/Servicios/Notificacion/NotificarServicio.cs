@@ -18,7 +18,7 @@ namespace Application.MainModule.Servicios.Notificacion
 {
     public static class NotificarServicio
     {
-        public static void RequisicionNueva(Sagas.MainModule.Entidades.Requisicion req, bool incluirMensajePush = false)
+        public static void RequisicionNueva(Requisicion req, bool incluirMensajePush = false)
         {
             var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
             var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.RequisicionRevisarExistencia).ToList();
@@ -119,38 +119,38 @@ namespace Application.MainModule.Servicios.Notificacion
             //    Enviar(js, Autorizacion);
             //}
         }
-        public static void ProductoAutorizado(Sagas.MainModule.Entidades.Requisicion req, bool incluirMensajePush = false)
+        public static void ProductoAutorizado(Requisicion req, List<RequisicionProducto> Prod, bool incluirMensajePush = false)
         {
-            //var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
-            //var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.CompraAutorizarOCompra).ToList();
-            //var destinatarios = ObtenerDestinatarios(roles);
-            //var correoDto = new CorreoDto()
-            //{
-            //    De = ObtenerCorreo(usuAplicacion),
-            //    ParaLista = ObtenerCorreo(destinatarios),
-            //    Asunto = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], oc.NumOrdenCompra),
-            //    Mensaje = CorreoHtmlServicio.OrdenCompraNueva(req),
-            //};
-            //Enviar(correoDto);
-            //if (!incluirMensajePush)
-            //{
-            //    var Autorizacion = new KeyValuePair<string, string>("key", string.Concat("=", ConfigurationManager.AppSettings["AppNotificacionKeyAutorizacion"]));
-            //    var js = new FBNotificacionDTO()
-            //    {
-            //        registration_ids = ObtenerKeysMovile(destinatarios).ToArray(),
-            //        data = new Data
-            //        {
-            //            OrderNo = req.NumOrdenCompra.ToString(),
-            //            Tipo = NotificacionPushConst.RT001
-            //        },
-            //        notification = new Notification
-            //        {
-            //            text = string.Format(ConfigurationManager.AppSettings["Asunto_RequisicionRevisarExistencia"], oc.NumOrdenCompra),
-            //            title = NotificacionPushConst.R0001
-            //        }
-            //    };
-            //    Enviar(js, Autorizacion);
-            //}
+            var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
+            var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.CompraAutorizarOCompra).ToList();
+            var destinatarios = ObtenerDestinatarios(roles);
+            var correoDto = new CorreoDto()
+            {
+                De = ObtenerCorreo(usuAplicacion),
+                ParaLista = ObtenerCorreo(destinatarios),
+                Asunto = ConfigurationManager.AppSettings["Asunto_ProductoListoParaEntrega"],
+                Mensaje = CorreoHtmlServicio.ProductoAutorizadoEntrega(req),
+            };
+            Enviar(correoDto);
+            if (!incluirMensajePush)
+            {
+                var Autorizacion = new KeyValuePair<string, string>("key", string.Concat("=", ConfigurationManager.AppSettings["AppNotificacionKeyAutorizacion"]));
+                var js = new FBNotificacionDTO()
+                {
+                    registration_ids = ObtenerKeysMovile(destinatarios).ToArray(),
+                    data = new Data
+                    {
+                        OrderNo = req.IdRequisicion.ToString(),
+                        Tipo = NotificacionPushConst.RT001
+                    },
+                    notification = new Notification
+                    {
+                        text = string.Format(ConfigurationManager.AppSettings["Asunto_ProductoListoParaEntrega"], req.NumeroRequisicion),
+                        title = NotificacionPushConst.R0001
+                    }
+                };
+                Enviar(js, Autorizacion);
+            }
         }
         private static List<Usuario> ObtenerDestinatarios(List<Rol> roles)
         {

@@ -81,7 +81,6 @@ namespace Application.MainModule.Servicios.Almacenes
             resp = new AlmacenGasDataAccess().Insertar(unidad);
             return ObtenerUnidadAlamcenGas((short)resp.Id);
         }
-
         public static RespuestaDto InsertarAutoconsumo(AlmacenGasAutoConsumo adapter)
         {
             return new AlmacenGasDataAccess().Insertar(adapter);
@@ -97,7 +96,6 @@ namespace Application.MainModule.Servicios.Almacenes
 
             return new AlmacenGasDataAccess().BuscarPorEmpresa(empresa.IdEmpresa);
         }
-
         public static RespuestaDto InsertarDescargaGas(AlmacenGasDescarga alm)
         {
             return new AlmacenGasDescargaDataAccess().Insertar(alm);
@@ -110,7 +108,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarTodos(idEmpresa);
         }
-
         public static AlmacenGasTomaLectura BuscarUltimaLectura(short idCAlmacenGas, byte idTipoEvento)
         {
             return new AlmacenGasDataAccess().BuscarUltimaLectura(idCAlmacenGas, idTipoEvento);
@@ -325,7 +322,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().ObtenerUnidadAlmacenGasAlterno(idEmpresa);
         }
-
         public static List<UnidadAlmacenGas> ObtenerUnidadesAlmacenGasAlterno(Empresa empresa)
         {
             if (empresa.UnidadesAlmacenGas != null & empresa.UnidadesAlmacenGas.Count > 0)
@@ -519,6 +515,7 @@ namespace Application.MainModule.Servicios.Almacenes
         }
 
         public static List<AlmacenGasMovimiento> ObtenerUltimosMovimientosPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, byte idTipoMovimiento, DateTime fecha)
+        public static AlmacenGasMovimiento ObtenerUltimoMovimientoDeDescargaPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime fecha)
         {
             var ulMovDia = new AlmacenGasDataAccess().BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, idTipoEvento, idTipoMovimiento, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
             var ulMovMes = new AlmacenGasDataAccess().BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, idTipoEvento, idTipoMovimiento, (short)fecha.Year, (byte)fecha.Month);
@@ -571,7 +568,6 @@ namespace Application.MainModule.Servicios.Almacenes
         {
             return new AlmacenGasDataAccess().BuscarLectura(idCAlmacenGas, tipoEvento, fecha);
         }
-
         public static decimal ObtenerCantidadActualAlmacenGeneral(short IdEmpresa, bool EnLitros = true)
         {
             var almacenGas = new AlmacenGasDataAccess().ProductoAlmacenGas(IdEmpresa);
@@ -2313,6 +2309,36 @@ namespace Application.MainModule.Servicios.Almacenes
         public static RespuestaDto InsertarTraspaso(AlmacenGasTraspaso dto)
         {
             return new AlmacenGasDataAccess().Insertar(dto);
+        }
+
+        public static VentaCorteAnticipoEC ObtenerAnticipo(string claveOperacion)
+        {
+            return new PuntoVentaDataAccess().BuscarAnticipo(claveOperacion);
+        }
+
+        public static List<VentaCorteAnticipoEC> ObetnerAnticipos(short idEmpresa)
+        {
+            return new PuntoVentaDataAccess().Anticipos( idEmpresa);
+        }
+
+        public static RespuestaDto InsertarAnticipo(VentaCorteAnticipoEC adapter)
+        {
+            return new PuntoVentaDataAccess().InsertarCorte(adapter);
+        }
+
+        public static VentaCorteAnticipoEC ObtenerCorte(string claveOperacion)
+        {
+            return new PuntoVentaDataAccess().BuscarCorte(claveOperacion);
+        }
+
+        public static List<VentaCorteAnticipoEC> ObtenerCortes(short idEmpresa)
+        {
+            return new PuntoVentaDataAccess().Cortes(idEmpresa);
+        }
+
+        public static RespuestaDto InsertCorte(VentaCorteAnticipoEC corte)
+        {
+            return new PuntoVentaDataAccess().InsertarCorte(corte);
         }
     }
 }
