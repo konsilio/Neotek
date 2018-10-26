@@ -205,10 +205,10 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.BuscadorClientes(criterio), Request);
         }
-        [Route("venta/{esCamioneta}/{esEstacion}/{esPipa}")]
-        public HttpResponseMessage PostVenta(VentaDTO venta, bool esCamioneta,bool esEstacion,bool esPipa)
+        [Route("venta")]
+        public HttpResponseMessage PostVenta(VentaDTO venta)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.Venta(venta,esCamioneta,esEstacion,esPipa), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.Venta(venta), Request);
         }
         [Route("catalogos/recarga/{esEstacion}/{esPipa}/{esCamioneta}")]
         public HttpResponseMessage GetListaRecargas(bool esEstacion,bool esPipa,bool esCamioneta)
@@ -276,7 +276,7 @@ namespace DS.MainModule.Controllers
         [Route("catalogos/venta-gas/{esLP}/{esCilindroConGas}/{esCilindro}")]
         public HttpResponseMessage GetCatalogosGas(bool esLP,bool esCilindroConGas, bool esCilindro) 
         {
-            return null;
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogosGas(esLP,esCilindroConGas,esCilindro),Request);
     
         }
         [Route("catalogos/venta-gas/otros")]

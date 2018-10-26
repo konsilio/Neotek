@@ -9,7 +9,7 @@ namespace Application.MainModule.DTOs.Mobile
     public class VentaDTO
     {
         public string FolioVenta { get; set; }
-        public short IdCliente { get; set; }
+        public int IdCliente { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Iva { get; set; }
         public decimal Total { get; set; }
