@@ -68,6 +68,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
         public List<PuntoVenta> BuscarTodos()
         {
             return uow.Repository<PuntoVenta>().Get(x => x.Activo).ToList();
@@ -98,6 +99,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<PuntoVenta>().Get(x => x.IdOperadorChofer.Equals(OperadorChofer)
                                                          && x.Activo).ToList();
+        }
+
+        public PuntoVenta BuscarPorUnidadAlmacenGas(short idCAlmacenGas)
+        {
+            return uow.Repository<PuntoVenta>().Get(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
+                                                      && x.Activo).FirstOrDefault();
         }
 
         public RespuestaDto Eliminar(PuntoVenta cteL)

@@ -32,10 +32,18 @@ namespace Application.MainModule.Servicios.Seguridad
         {
             return new UsuarioDataAccess().Buscar(idUsuario);
         }
-             
+
         public static string ObtenerNombreCompleto(Usuario usuario)
         {
             return string.Concat(usuario.Nombre, " ", usuario.Apellido1, " ", usuario.Apellido2);
+        }
+
+        public static string ObtenerNombreCompleto(OperadorChofer operador)
+        {
+            if (operador.Usuario != null)
+                return ObtenerNombreCompleto(operador.Usuario);
+
+            return ObtenerNombreCompleto(Obtener(operador.IdUsuario));
         }
 
         public static RespuestaDto Actualizar(Usuario usuario)

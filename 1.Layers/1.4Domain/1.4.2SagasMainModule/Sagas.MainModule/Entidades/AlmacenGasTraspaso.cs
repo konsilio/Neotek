@@ -34,6 +34,7 @@ namespace Sagas.MainModule.Entidades
         public Nullable<decimal> PorcentajeSalida { get; set; }
         public string ClaveOperacion { get; set; }
         public bool DatosProcesados { get; set; }
+        public System.DateTime FechaAplicacion { get; set; }
         public System.DateTime FechaRegistro { get; set; }
     
         public virtual UnidadAlmacenGas UnidadSalida { get; set; }

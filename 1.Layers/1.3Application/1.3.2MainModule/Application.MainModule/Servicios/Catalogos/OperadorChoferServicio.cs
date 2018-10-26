@@ -30,5 +30,31 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new OperadorChoferDataAccess().BuscarPorUsuario(TokenServicio.ObtenerIdUsuario());
         }
+
+        public static OperadorChofer Obtener(UnidadAlmacenGas unidad)
+        {
+            PuntoVenta puntoVenta;
+            if (unidad.PuntosVenta != null && unidad.PuntosVenta.Count > 0)
+                puntoVenta = unidad.PuntosVenta.FirstOrDefault();
+            else
+                puntoVenta = PuntoVentaServicio.Obtener(unidad);
+
+            if (puntoVenta != null)
+            {
+                if (puntoVenta.OperadorChofer != null)
+                    return puntoVenta.OperadorChofer;
+                else
+                    return Obtener(puntoVenta.IdOperadorChofer);
+            }
+
+            return null;
+        }
+
+        public static string ObtenerNombreCompleto(UnidadAlmacenGas unidad)
+        {
+            var operador = Obtener(unidad);
+
+            return operador != null ? UsuarioServicio.ObtenerNombreCompleto(operador) : "Nombre no disponible";
+        }
     }
 }

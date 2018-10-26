@@ -113,6 +113,10 @@ namespace Sagas.MainModule.Entidades
         public decimal DescargaAcumMesLt { get; set; }
         public decimal DescargaAcumAnioKg { get; set; }
         public decimal DescargaAcumAnioLt { get; set; }
+        public decimal CAlmLecturaInicialP5000 { get; set; }
+        public decimal CAlmLecturaFinalP5000 { get; set; }
+        public decimal CAlmLecturaInicialMagnatel { get; set; }
+        public decimal CAlmLecturaFinalMagnatel { get; set; }
         public decimal CAlmEntradaDiaKg { get; set; }
         public decimal CAlmEntradaDiaLt { get; set; }
         public decimal CAlmSalidaDiaKg { get; set; }
@@ -181,6 +185,18 @@ namespace Sagas.MainModule.Entidades
         public decimal VentaAcumMesLt { get; set; }
         public decimal VentaAcumAnioKg { get; set; }
         public decimal VentaAcumAnioLt { get; set; }
+        public Nullable<decimal> VentaLecturasP5000Kg { get; set; }
+        public Nullable<decimal> VentaLecturasP5000Lt { get; set; }
+        public Nullable<decimal> VentaLecturasMagnatelKg { get; set; }
+        public Nullable<decimal> VentaLecturasMagnatelLt { get; set; }
+        public Nullable<decimal> VentaLecturasP5000MesKg { get; set; }
+        public Nullable<decimal> VentaLecturasP5000MesLt { get; set; }
+        public Nullable<decimal> VentaLecturasMagnatelMesKg { get; set; }
+        public Nullable<decimal> VentaLecturasMagnatelMesLt { get; set; }
+        public Nullable<decimal> VentaLecturasP5000AnioKg { get; set; }
+        public Nullable<decimal> VentaLecturasP5000AnioLt { get; set; }
+        public Nullable<decimal> VentaLecturasMagnatelAnioKg { get; set; }
+        public Nullable<decimal> VentaLecturasMagnatelAnioLt { get; set; }
     
         public virtual AlmacenGasDescarga Descarga { get; set; }
         public virtual AlmacenGas Inventario { get; set; }

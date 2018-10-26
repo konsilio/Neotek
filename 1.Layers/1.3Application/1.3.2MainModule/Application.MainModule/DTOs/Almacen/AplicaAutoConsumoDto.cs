@@ -26,6 +26,7 @@ namespace Application.MainModule.DTOs.Almacen
 
 
         public AlmacenGas AlmacenGas { get; set; }
+        public AlmacenGas AlmacenGasAnterior { get; set; }
 
 
         public UnidadAlmacenGas unidadSalida { get; set; }
@@ -46,12 +47,7 @@ namespace Application.MainModule.DTOs.Almacen
 
         public string Concepto { get; set; }// Revisar si puede ser catálogo de apoyo
 
-
-        public decimal CantidadSINRemanenteKg { get; set; }
-        public decimal CantidadSINRemanenteLt { get; set; }
-        public decimal RemanenteKg { get; set; }
-        public decimal RemanenteLt { get; set; }
-        public decimal CantidadCONRemanenteKg { get; set; }
-        public decimal CantidadCONRemanenteLt { get; set; }
+                
+        public AlmacenGasMovimiento MovimientoSalida { get; set; }
     }
 }
