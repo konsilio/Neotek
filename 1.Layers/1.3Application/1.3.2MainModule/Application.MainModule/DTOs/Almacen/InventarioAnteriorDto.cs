@@ -28,7 +28,7 @@ namespace Application.MainModule.DTOs.Almacen
         public decimal SalidaLt { get; set; }
         public decimal CantidadAnteriorKg { get; set; }
         public decimal CantidadAnteriorLt { get; set; }
-        public decimal PorcentajeAnterior { get; set; }
+        public decimal? PorcentajeAnterior { get; set; }
         public decimal? P5000Anterior { get; set; }
         public decimal CAlmEntradaDiaKg { get; set; }
         public decimal CAlmEntradaDiaLt { get; set; }
@@ -69,5 +69,64 @@ namespace Application.MainModule.DTOs.Almacen
         public decimal DescargaAcumMesLt { get; set; }
         public decimal DescargaAcumAnioKg { get; set; }
         public decimal DescargaAcumAnioLt { get; set; }
+
+        public decimal RecargaKg { get; set; }
+        public decimal RecargaLt { get; set; }
+        public decimal RecargaDiaKg { get; set; }
+        public decimal RecargaDiaLt { get; set; }
+        public decimal RecargaMesKg { get; set; }
+        public decimal RecargaMesLt { get; set; }
+        public decimal RecargaAnioKg { get; set; }
+        public decimal RecargaAnioLt { get; set; }
+        public decimal RecargaAcumDiaKg { get; set; }
+        public decimal RecargaAcumDiaLt { get; set; }
+        public decimal RecargaAcumMesKg { get; set; }
+        public decimal RecargaAcumMesLt { get; set; }
+        public decimal RecargaAcumAnioKg { get; set; }
+        public decimal RecargaAcumAnioLt { get; set; }
+        public decimal TraspasoKg { get; set; }
+        public decimal TraspasoLt { get; set; }
+        public decimal TraspasoDiaKg { get; set; }
+        public decimal TraspasoDiaLt { get; set; }
+        public decimal TraspasoMesKg { get; set; }
+        public decimal TraspasoMesLt { get; set; }
+        public decimal TraspasoAnioKg { get; set; }
+        public decimal TraspasoAnioLt { get; set; }
+        public decimal TraspasoAcumDiaKg { get; set; }
+        public decimal TraspasoAcumDiaLt { get; set; }
+        public decimal TraspasoAcumMesKg { get; set; }
+        public decimal TraspasoAcumMesLt { get; set; }
+        public decimal TraspasoAcumAnioKg { get; set; }
+        public decimal TraspasoAcumAnioLt { get; set; }
+        public decimal AutoconsumoKg { get; set; }
+        public decimal AutoconsumoLt { get; set; }
+        public decimal AutoconsumoDiaKg { get; set; }
+        public decimal AutoconsumoDiaLt { get; set; }
+        public decimal AutoconsumoMesKg { get; set; }
+        public decimal AutoconsumoMesLt { get; set; }
+        public decimal AutoconsumoAnioKg { get; set; }
+        public decimal AutoconsumoAnioLt { get; set; }
+        public decimal AutoconsumoAcumDiaKg { get; set; }
+        public decimal AutoconsumoAcumDiaLt { get; set; }
+        public decimal AutoconsumoAcumMesKg { get; set; }
+        public decimal AutoconsumoAcumMesLt { get; set; }
+        public decimal AutoconsumoAcumAnioKg { get; set; }
+        public decimal AutoconsumoAcumAnioLt { get; set; }
+        public decimal CalibracionKg { get; set; }
+        public decimal CalibracionLt { get; set; }
+        public decimal CalibracionDiaKg { get; set; }
+        public decimal CalibracionDiaLt { get; set; }
+        public decimal CalibracionMesKg { get; set; }
+        public decimal CalibracionMesLt { get; set; }
+        public decimal CalibracionAnioKg { get; set; }
+        public decimal CalibracionAnioLt { get; set; }
+        public decimal CalibracionAcumDiaKg { get; set; }
+        public decimal CalibracionAcumDiaLt { get; set; }
+        public decimal CalibracionAcumMesKg { get; set; }
+        public decimal CalibracionAcumMesLt { get; set; }
+        public decimal CalibracionAcumAnioKg { get; set; }
+        public decimal CalibracionAcumAnioLt { get; set; }
+
+        public string NombreOperador { get; set; }
     }
 }

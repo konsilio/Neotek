@@ -257,10 +257,33 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.Estaciones(),Request);
         }
-        [Route("anticipos-y-cortes/{esAnticipo}")]
-        public HttpResponseMessage PostAnticipo(bool esAnticipo)
+        [Route("anticipos")]
+        public HttpResponseMessage PostAnticipo(AnticipoDto dto)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.anticipo_y_cortes(esAnticipo), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.anticipo(dto), Request);
         }
+        [Route("corte-de-caja")]
+        public HttpResponseMessage PostCorte(CorteDto dto)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.corte(dto),Request);
+        }
+
+        [Route("catalogos/anticipo-y-corte/ventas/{esCorte}/{esAnticipo}")]
+        public HttpResponseMessage GetVentasCortesAnticipos(bool esCorte,bool esAnticipo)
+        {
+            return null;
+        }
+        [Route("catalogos/venta-gas/{esLP}/{esCilindroConGas}/{esCilindro}")]
+        public HttpResponseMessage GetCatalogosGas(bool esLP,bool esCilindroConGas, bool esCilindro) 
+        {
+            return null;
+    
+        }
+        [Route("catalogos/venta-gas/otros")]
+        public HttpResponseMessage GetOtros()
+        {
+            return null;
+        }
+       
     }
 }

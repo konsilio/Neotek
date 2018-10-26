@@ -580,6 +580,7 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.ListaEquipoTrasnporte(), Request);
         }
         #endregion
+
         #region Banco
         [Route("consulta/bancos")]
         public HttpResponseMessage GetListabancos()
@@ -587,6 +588,7 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_catalogos.ListaBanco(), Request);
         }
         #endregion
+
         #region Fomra de pago
         [Route("consulta/formaspago")]
         public HttpResponseMessage GetListaFormasPago()
