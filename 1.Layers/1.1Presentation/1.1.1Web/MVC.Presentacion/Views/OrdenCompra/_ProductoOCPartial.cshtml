@@ -1,4 +1,4 @@
-
+@model List<MVC.Presentacion.Models.OrdenCompra.ProductoOCDTO>
 @using System.Web.UI.WebControls;
 @{
     Html.EnableClientValidation();
@@ -9,14 +9,16 @@
 {
     settings.Name = "gridview";
     settings.KeyFieldName = "IdProducto";
-    settings.CallbackRouteValues = new { Controller = "Editing", Action = "ProductoOCPartialUpdate" };
-    settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "Editing", Action = "BatchEditingUpdateModel" };
+    settings.CallbackRouteValues = new { Controller = "OrdenCompra", Action = "BatchEditingUpdateModel" };
+    settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "OrdenCompra", Action = "BatchEditingUpdateModel" };
 
     settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
     settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
     settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
     settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
     settings.Styles.Table.CssClass = "table";
+    settings.SettingsCommandButton.UpdateButton.Text = "Crear";
+
     settings.Columns.Add(c =>
     {
         c.FieldName = "ProductoServicioTipo";

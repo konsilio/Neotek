@@ -40,19 +40,20 @@ namespace MVC.Presentacion.Controllers
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             return View(model);
         }
-        public ActionResult CrearOrdenCompra(OrdenCompraModel model)
+        public ActionResult CrearOrdenCompra(List<ProductoOCDTO>  model = null)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            var Respuesta = OrdenCompraServicio.GenerarOrdenCompra(model, Session["StringToken"].ToString());
-            if (Respuesta.Exito)
-            {               
-                return RedirectToAction("Ordenes", new { msj = Respuesta.Mensaje });
-            }
-            else
-            {
-                TempData["RespuestaDTO"] = Respuesta;
-                return RedirectToAction("OrdenCompra", new { id = model.IdRequisicion });
-            }
+            //if (Session["StringToken"] == null)
+                return RedirectToAction("Index", "Home");
+            //var Respuesta = OrdenCompraServicio.GenerarOrdenCompra(model, Session["StringToken"].ToString());
+            //if (Respuesta.Exito)
+            //{               
+            //    return RedirectToAction("Ordenes", new { msj = Respuesta.Mensaje });
+            //}
+            //else
+            //{
+            //    TempData["RespuestaDTO"] = Respuesta;
+            //    return RedirectToAction("OrdenCompra", new { id = model.IdRequisicion });
+            //}
         }
         public ActionResult Ordenes(int? pageO, int? pageR, string msj = null)
         {
@@ -244,21 +245,20 @@ namespace MVC.Presentacion.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult ProductoOCPartial(int? id)
+        public ActionResult ProductoOCPartial(OrdenCompraModel model = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            tkn = Session["StringToken"].ToString();
-            int IdOC = id ?? 0;
+            tkn = Session["StringToken"].ToString();        
             ViewBag.IVAs = CatalogoServicio.ListaIVA();
             ViewBag.IEPs = CatalogoServicio.ListaIEPS();
             ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
-            var model = OrdenCompraServicio.InitOrdenCompra(IdOC, tkn).OrdenCompraProductos;
-            return PartialView("_ProductoOCPartial", model);
+            //var model = OrdenCompraServicio.InitOrdenCompra(IdOC, tkn).OrdenCompraProductos;
+            return PartialView("_ProductoOCPartial", model.OrdenCompraProductos);
         }   
        
         [HttpPost, ValidateInput(false)]
-        public ActionResult ProductoOCPartialUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] ProductoOCDTO item)
+        public ActionResult ProductoOCPartialUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] List<ProductoOCDTO> items)
         {
             var model = new object[0];
             if (ModelState.IsValid)
@@ -275,6 +275,12 @@ namespace MVC.Presentacion.Controllers
             else
                 ViewData["EditError"] = "Please, correct all errors.";
             return PartialView("_ProductoOCPartial", model);
-        }       
+        }
+        [ValidateInput(false)]
+        public ActionResult BatchEditingUpdateModel(MVCxGridViewBatchUpdateValues<ProductoOCDTO, int> updateValues)
+        {
+
+            return View();
+        }
     }
 }

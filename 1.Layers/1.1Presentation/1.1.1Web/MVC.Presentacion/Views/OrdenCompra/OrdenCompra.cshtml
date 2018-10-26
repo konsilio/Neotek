@@ -109,6 +109,7 @@
                             }
                             @if (ViewBag.MensajeError != null)
                             {
+                                
                                 <div class="row clearfix">
                                     <div id="divMensajeError" class="container">
                                         <div class="alert alert-danger">
@@ -124,8 +125,9 @@
                             }
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
-                                    @Html.Action("ProductoOCPartial", new { id = Model.IdOrdenCompra })
-                                </div>z
+                                    @*@Html.Action("ProductoOCPartial", new { id = Model.IdRequisicion })*@
+                                    @Html.Partial("_ProductoOCPartial", Model.OrdenCompraProductos)
+                                </div>
                             </div>
                              <div class="row clearfix">
                                 <div class="col-sm-4 center">

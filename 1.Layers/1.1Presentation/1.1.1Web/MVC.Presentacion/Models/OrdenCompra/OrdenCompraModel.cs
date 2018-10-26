@@ -7,7 +7,6 @@ namespace MVC.Presentacion.Models.OrdenCompra
 {
     public class OrdenCompraModel
     {
-        public int IdOrdenCompra { get; set; }
         public int IdRequisicion { get; set; }
         public string NumeroRequisicion { get; set; }
         public int IdSolicitante{ get; set; }
