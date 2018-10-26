@@ -515,7 +515,7 @@ namespace Application.MainModule.Servicios.Almacenes
         }
 
         public static List<AlmacenGasMovimiento> ObtenerUltimosMovimientosPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, byte idTipoMovimiento, DateTime fecha)
-        public static AlmacenGasMovimiento ObtenerUltimoMovimientoDeDescargaPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime fecha)
+        //public static AlmacenGasMovimiento ObtenerUltimoMovimientoDeDescargaPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime fecha)
         {
             var ulMovDia = new AlmacenGasDataAccess().BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, idTipoEvento, idTipoMovimiento, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
             var ulMovMes = new AlmacenGasDataAccess().BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, idTipoEvento, idTipoMovimiento, (short)fecha.Year, (byte)fecha.Month);
