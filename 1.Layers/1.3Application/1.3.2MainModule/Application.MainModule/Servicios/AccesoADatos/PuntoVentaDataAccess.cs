@@ -88,6 +88,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<OperadorChofer>().GetSingle(x => x.IdOperadorChofer.Equals(idOperador)
                                                          && x.Activo);
         }
+
         public OperadorChofer BuscarPorUsuario(int idUsuario)
         {
             return uow.Repository<OperadorChofer>().GetSingle(x => x.IdUsuario.Equals(idUsuario)
@@ -178,6 +179,36 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaCorteAnticipoEC>().Get(
                 x=>x.IdEmpresa.Equals(idEmpresa)
                 ).ToList();
+        }
+
+        public VentaPuntoDeVenta EvaluarFolio(string folioVenta)
+        {
+            return uow.Repository<VentaPuntoDeVenta>().GetSingle(x=>x.FolioVenta.Equals(folioVenta));
+        }
+
+        public RespuestaDto InsertarMobile(VentaPuntoDeVenta venta)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<VentaPuntoDeVenta>().Insert(venta);
+                    uow.SaveChanges();
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Id = venta.IdPuntoVenta;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.S0004, "registrar la venta.");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
         }
     }
 }

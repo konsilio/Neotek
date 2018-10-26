@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Almacenes;
+using Application.MainModule.Servicios.Catalogos;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
 using System;
@@ -104,6 +105,13 @@ namespace Application.MainModule.Servicios.Mobile
         public static RespuestaDto Corte(VentaCorteAnticipoEC adapter)
         {
             return AlmacenGasServicio.InsertCorte(adapter);
+        }
+
+
+        public static RespuestaDto EvaluarClaveOperacion(VentaDTO venta)
+        {
+            var vent = PuntoVentaServicio.EvaluarFolio(venta.FolioVenta);
+            return EvaluarClaveOperacion(vent);
         }
     }
 }
