@@ -2129,12 +2129,12 @@ namespace Application.MainModule.Servicios.Almacenes
             apLectDto.AlmacenGasAnterior = ObtenerAlmacenGasTotal(apLectDto.Empresa.IdEmpresa);
             apLectDto.AlmacenGas = apLectDto.AlmacenGasAnterior;
 
-            apLectDto.AlmacenGas.CantidadActualKg = ;
-            apLectDto.AlmacenGas.CantidadActualLt = ;
-            apLectDto.AlmacenGas.PorcentajeActual = ;
-            apLectDto.AlmacenGas.CantidadActualGeneralKg = ;
-            apLectDto.AlmacenGas.CantidadActualGeneralLt = ;
-            apLectDto.AlmacenGas.PorcentajeActualGeneral = ;
+            //apLectDto.AlmacenGas.CantidadActualKg = ;
+            //apLectDto.AlmacenGas.CantidadActualLt = ;
+            //apLectDto.AlmacenGas.PorcentajeActual = ;
+            //apLectDto.AlmacenGas.CantidadActualGeneralKg = ;
+            //apLectDto.AlmacenGas.CantidadActualGeneralLt = ;
+            //apLectDto.AlmacenGas.PorcentajeActualGeneral = ;
 
             apLectDto.unidadAlmacenGas.PorcentajeActual = apLectDto.TomaLecturaLectura.Porcentaje.Value;
             apLectDto.unidadAlmacenGas.P5000Actual = null;
@@ -2186,6 +2186,19 @@ namespace Application.MainModule.Servicios.Almacenes
             //apLectDto.TomaLecturaLecturaFinalFotos = GenerarImagenes(apLectDto.TomaLecturaLecturaFinal);
             //apLectDto.TomaLecturaLecturaFinal.DatosProcesados = true;
             //apLectDto.TomaLecturaLecturaFinalSinNavProp = AlmacenGasAdapter.FromEntity(apLectDto.TomaLecturaLecturaFinal);
+            return apLectDto;
+        }
+
+        public static AplicaTomaLecturaDto AplicarTomaLecturaFinalPipa(AplicaTomaLecturaDto apLectDto)
+        {
+            apLectDto.unidadAlmacenGas.PorcentajeActual = apLectDto.TomaLecturaLectura.Porcentaje.Value;
+            apLectDto.unidadAlmacenGas.P5000Actual = apLectDto.TomaLecturaLectura.P5000;
+            apLectDto.unidadAlmacenGas.CantidadActualLt = CalcularGasServicio.ObtenerLitrosDesdePorcentaje(apLectDto.unidadAlmacenGas.CapacidadTanqueLt.Value, apLectDto.unidadAlmacenGas.PorcentajeActual);
+            apLectDto.unidadAlmacenGas.CantidadActualKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(apLectDto.unidadAlmacenGas.CantidadActualLt, apLectDto.Empresa.FactorLitrosAKilos);
+            apLectDto.TomaLecturaLectura.DatosProcesados = true;
+
+
+
             return apLectDto;
         }
 

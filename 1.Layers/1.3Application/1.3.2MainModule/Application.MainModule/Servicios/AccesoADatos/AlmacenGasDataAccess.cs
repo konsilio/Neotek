@@ -432,13 +432,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                             uow.Repository<AlmacenGasTomaLecturaFoto>().Update(x)
                         );
 
-                    if (aplicaTomaLectura.TomaLecturaLecturaFinal != null)
-                        uow.Repository<AlmacenGasTomaLectura>().Update(aplicaTomaLectura.TomaLecturaLecturaFinalSinNavProp);
+                    //if (aplicaTomaLectura.TomaLecturaLectura != null)
+                    //    uow.Repository<AlmacenGasTomaLectura>().Update(aplicaTomaLectura.TomaLecturaLecturaFinalSinNavProp);
 
-                    if (aplicaTomaLectura.TomaLecturaLecturaFinalFotos != null && aplicaTomaLectura.TomaLecturaLecturaFinalFotos.Count > 0)
-                        aplicaTomaLectura.TomaLecturaLecturaFinalFotos.ToList().ForEach(x =>
-                            uow.Repository<AlmacenGasTomaLecturaFoto>().Update(x)
-                        );
+                    //if (aplicaTomaLectura.TomaLecturaLecturaFinalFotos != null && aplicaTomaLectura.TomaLecturaLecturaFinalFotos.Count > 0)
+                    //    aplicaTomaLectura.TomaLecturaLecturaFinalFotos.ToList().ForEach(x =>
+                    //        uow.Repository<AlmacenGasTomaLecturaFoto>().Update(x)
+                    //    );
                     
                     if (aplicaTomaLectura.MovimientoUnidad != null)
                         uow.Repository<AlmacenGasMovimiento>().Insert(aplicaTomaLectura.MovimientoUnidad);
