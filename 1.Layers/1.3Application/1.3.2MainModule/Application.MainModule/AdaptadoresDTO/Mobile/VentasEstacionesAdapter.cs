@@ -65,7 +65,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdCliente = venta.IdCliente,
                 RFC = cliente.Rfc,
                 RazonSocial = cliente.RazonSocial,
-                VentaPuntoDeVentaDetalle = ToDTO(venta.Concepto, venta, punto_venta, almacen, idOrden, idEmpresa)
+                VentaPuntoDeVentaDetalle = ToDTO(venta.Concepto, venta, punto_venta, almacen, idOrden, idEmpresa),
             };
         }
 

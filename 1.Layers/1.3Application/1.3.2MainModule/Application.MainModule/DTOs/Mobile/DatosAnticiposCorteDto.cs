@@ -11,5 +11,6 @@ namespace Application.MainModule.DTOs.Mobile
         public List<EstacionesDto> estaciones { get; set; }
         public List<AnticipoDto> anticipos { get; set; }
         public List<CorteDto> cortes { get; set; }
+        public List<DateTime> fechasCorte { get; set; }
     }
 }

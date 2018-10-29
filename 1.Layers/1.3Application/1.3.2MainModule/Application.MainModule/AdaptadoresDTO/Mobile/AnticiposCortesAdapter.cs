@@ -3,6 +3,7 @@ using System.Linq;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.DTOs.Mobile;
 using System;
+using Application.MainModule.DTOs.Respuesta;
 
 namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
@@ -58,6 +59,68 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdOperadorChofer = puntoVenta.IdOperadorChofer,
                 IdPuntoVenta = puntoVenta.IdPuntoVenta,
                 UsuarioRecibe = dto.Recibe
+            };
+        }
+
+        public static DatosAnticiposCorteDto ToDTO(List<VentaPuntoDeVenta> ventas,bool esAnticipos = false)
+        {
+            if (esAnticipos)
+                return new DatosAnticiposCorteDto()
+                {
+                    anticipos = ToDTOAnticipo(ventas)
+                };
+            else
+                return new DatosAnticiposCorteDto()
+                {
+                    cortes = ToDTOCortes(ventas),
+                    fechasCorte = EstraerFechas(ventas)
+                };
+        }
+
+        public static List<DateTime> EstraerFechas(List<VentaPuntoDeVenta> ventas)
+        {
+            List<DateTime> list = new List<DateTime>();
+            foreach (var venta in ventas)
+            {
+                if (!list.Contains(venta.FechaRegistro)) list.Add(venta.FechaRegistro);
+            }
+            return list;
+        }
+
+        public static List<CorteDto> ToDTOCortes(List<VentaPuntoDeVenta> ventas)
+        {
+            
+            return ventas.Select(x=>ToDTO(x)).ToList();
+        }
+
+        public static CorteDto ToDTO(VentaPuntoDeVenta venta)
+        {
+            return new CorteDto()
+            {
+                ClaveOperacion = venta.FolioVenta,
+                Tiket = venta.FolioVenta,
+                Fecha = venta.FechaRegistro,
+                Id = (short) venta.IdPuntoVenta,
+                Monto = venta.Total,
+                Total = venta.Total
+            };
+        }
+
+        public static List<AnticipoDto> ToDTOAnticipo(List<VentaPuntoDeVenta> ventas)
+        {
+            return ventas.Select(x=> ToDTOAn(x)).ToList();
+        }
+
+        public static AnticipoDto ToDTOAn(VentaPuntoDeVenta venta)
+        {
+            return new AnticipoDto()
+            {
+                Tiket = venta.FolioVenta,
+                Fecha = venta.FechaRegistro,
+                Id = (short)venta.IdPuntoVenta,
+                Total = venta.Total,
+                Monto = venta.Total,
+                ClaveOperacion = venta.FolioVenta,
             };
         }
     }

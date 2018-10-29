@@ -426,6 +426,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 var lfinal = BuscarLecturaPorFecha(idCAlmacenGas, TipoEventoEnum.Final,fecha);
                 var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
                 var ventas = PuntoVentaServicio.BuscarPorOperadorChofer(operador.IdOperadorChofer);
+                var venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
                 
                 //Falta agregar los valores de la venta de gas
                 var reporte = new ReporteAdapter().ToDto(almacen, tipoMedidor,linicial,lfinal);

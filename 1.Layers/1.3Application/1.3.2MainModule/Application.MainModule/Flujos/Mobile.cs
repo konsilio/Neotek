@@ -330,6 +330,16 @@ namespace Application.MainModule.Flujos
             return list; 
         }
 
+        public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(short idEstacion, bool esAnticipos)
+        {
+            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
+            var puntoVenta = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(idEstacion));
+
+            var ventas = CajaGeneralServicio.ObtenerVentasPuntosVentaNoProc().OrderBy(x=>x.FechaRegistro).ToList();
+            
+            return AnticiposCortesAdapter.ToDTO(ventas, esAnticipos);
+        }
+
         public RespuestaDto Calibracion(CalibracionDto dto, bool esFinal)
         {
             var resp = CalibracionServicio.EvaluarClaveOperacion(dto);
@@ -450,7 +460,7 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto CatalogosGas(bool esLP, bool esCilindroConGas, bool esCilindro)
         {
-
+            var productos = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa());
             /*if (esLP)
                 
                 return null;
