@@ -177,13 +177,15 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
             var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
             var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);
 
             var cliente = ClienteServicio.Obtener(venta.IdCliente);
-            var ventas = CajaGeneralServicio.ObtenerPuntosVenta();
+            var ventas = CajaGeneralServicio.ObtenerVentas();
             int orden = Orden(ventas);
             var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta, almacen,orden, TokenServicio.ObtenerIdEmpresa());
-            
+
+            adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
             adapter.FolioVenta = venta.FolioVenta;
             adapter.FolioOperacionDia = venta.FolioVenta;
             adapter.FechaRegistro = venta.Fecha;
@@ -192,6 +194,9 @@ namespace Application.MainModule.Flujos
             adapter.Year = (short) venta.Fecha.Year;
             adapter.FechaAplicacion = venta.Fecha;
             adapter.DatosProcesados = false;
+            adapter.RequiereFactura = venta.Factura;
+            adapter.VentaACredito = venta.Credito;
+            adapter.ClienteConCredito = venta.TieneCredito;
 
 
             if (!venta.SinNumero)

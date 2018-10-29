@@ -64,7 +64,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 PuntoVenta = punto_venta.UnidadesAlmacen.Numero,
                 IdCliente = venta.IdCliente,
                 RFC = cliente.Rfc,
-                RazonSocial =cliente.RazonSocial,
+                RazonSocial = cliente.RazonSocial,
                 VentaPuntoDeVentaDetalle = ToDTO(venta.Concepto, venta, punto_venta, almacen, idOrden, idEmpresa)
             };
         }
@@ -92,6 +92,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     Subtotal = concepto.Subtotal,
                     IdProducto = concepto.IdProducto,
                     DescuentoTotal = concepto.Descuento,
+                    CantidadLt = concepto.LitrosDespachados,
+                    
                 });
                 idOrdenDetalle++;
             }
