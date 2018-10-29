@@ -292,8 +292,8 @@ namespace Application.MainModule.Servicios.Ventas
             //unidadSalida.PorcentajeActual = CalcularGasServicio.ObtenerPorcentajeDesdeLitros(unidadSalida.CapacidadTanqueLt.Value, unidadSalida.CantidadActualLt);
 
             AlmacenGasMovimiento ulMov = AlmacenGasServicio.ObtenerUltimoMovimientoEnInventario(Dto.IdEmpresa, Dto.IdAlmacenGas);
-            AlmacenGasMovimiento ulMovDescarga = AlmacenGasServicio.ObtenerUltimoMovimientoDeDescargaPorUnidadAlmacenGas(Dto.IdEmpresa, unidadSalida.IdCAlmacenGas, Dto.FechaAplicacion);
-
+            AlmacenGasMovimiento ulMovDescarga = AlmacenGasServicio.ObtenerUltimoMovimientoPorUnidadAlmacenGas(Dto.IdEmpresa, unidadSalida.IdCAlmacenGas, Dto.FechaAplicacion);
+//ObtenerUltimoMovimientoDeDescargaPorUnidadAlmacenGas
             return new AlmacenGasMovimiento()
             {
                 IdEmpresa = Dto.IdEmpresa,

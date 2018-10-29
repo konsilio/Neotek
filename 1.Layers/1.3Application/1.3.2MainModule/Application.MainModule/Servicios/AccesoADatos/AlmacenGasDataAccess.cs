@@ -735,9 +735,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<UnidadAlmacenGas>().GetSingle(x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
                                                          && x.Activo);
         }
-
-
-
+        
         internal AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, byte tipoEvento, DateTime fecha)
 
         {
@@ -753,9 +751,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             );
 
         }
-
-
-
+        
         public List<UnidadAlmacenGas> BuscarTodas(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -962,12 +958,5 @@ namespace Application.MainModule.Servicios.AccesoADatos
 }
       
 
-        }
+      
 
-        public UnidadAlmacenGas BuscarAlmacen(short idCAlmacenGas)
-        {
-            return uow.Repository<UnidadAlmacenGas>().GetSingle(
-                x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
-                && x.Activo
-            );
-        }
