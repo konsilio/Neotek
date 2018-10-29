@@ -62,6 +62,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 CambioRegresado = venta.Total - venta.Efectivo,
                 IdPuntoVenta = punto_venta.IdPuntoVenta,
                 PuntoVenta = punto_venta.UnidadesAlmacen.Numero,
+                IdCliente = venta.IdCliente,
+                RFC = cliente.Rfc,
+                RazonSocial =cliente.RazonSocial,
                 VentaPuntoDeVentaDetalle = ToDTO(venta.Concepto, venta, punto_venta, almacen, idOrden, idEmpresa)
             };
         }

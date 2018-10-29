@@ -186,6 +186,7 @@ namespace Application.MainModule.Flujos
             
             adapter.FolioVenta = venta.FolioVenta;
             adapter.FolioOperacionDia = venta.FolioVenta;
+            adapter.FechaRegistro = venta.Fecha;
             adapter.Dia = (byte) venta.Fecha.Day;
             adapter.Mes = (byte) venta.Fecha.Month;
             adapter.Year = (short) venta.Fecha.Year;
