@@ -54,11 +54,20 @@ namespace Application.MainModule.Flujos
         /// <returns></returns>
         public RespuestaDto GenerarOrdenesCompra(OrdenCompraCrearDTO oc)
         {
-            RespuestaDto respuesta = new RespuestaDto();
-            respuesta.Exito = true;
+            var resp = PermisosServicio.PuedeRegistrarOrdenCompra();
+            if (!resp.Exito) return resp;
+
+            var Prods = BuscarRequisicion(oc.IdRequisicion).ProductosOC;
+            if (Prods.Count != oc.Productos.Count) return OrdenCompraServicio.NoSeAsignoValorATotosLosProductos();
+
+            //oc.Productos = OrdenCompraServicio.AsignarNuevos(oc)
+
             List<OrdenCompra> locDTO = OrdenCompraServicio.IdentificarOrdenes(oc);
             locDTO = OrdenCompraServicio.AsignarProductos(oc.Productos, locDTO);
             locDTO = CalcularOrdenCompraServicio.CalcularTotales(locDTO);
+
+            RespuestaDto respuesta = new RespuestaDto();
+            respuesta.Exito = true;
             foreach (var ocDTO in locDTO)
             {
                 ocDTO.NumOrdenCompra = FolioServicio.GeneraNumerOrdenCompra(ocDTO);

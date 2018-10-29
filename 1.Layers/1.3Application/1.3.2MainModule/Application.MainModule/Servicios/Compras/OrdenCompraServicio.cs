@@ -147,6 +147,18 @@ namespace Application.MainModule.Servicios.Compras
                 Exito = false,
             };
         }
+        public static RespuestaDto NoSeAsignoValorATotosLosProductos()
+        {
+            string mensaje = Error.OC0002;
+
+            return new RespuestaDto()
+            {
+                ModeloValido = true,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+                Exito = false,
+            };
+        }
         public static RespuestaDto PagoExistentePorteador()
         {
             string mensaje = string.Format(Error.PagoExistente, "el porteador");

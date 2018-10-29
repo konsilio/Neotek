@@ -18,7 +18,6 @@ namespace Exceptions.MainModule.Validaciones
         public const string S0003 = "El Usuario y la contraseña no coinciden";
         public const string S0004 = "No se logró {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
 
-
         public const string R0001 = "Error al guardar la requisición";
         public const string R0002 = "El campo '{0}' es obligatorio.";
         public const string R0003 = "El campo '{0}' el valor debe ser mayor a 0.";
@@ -35,6 +34,7 @@ namespace Exceptions.MainModule.Validaciones
         public const string R0014 = "Falta la opionion de almacen";
 
         public const string OC0001 = "La orden de compra no se actualizo correctamente";
+        public const string OC0002 = "Debes asignar un Proveedor, una Cuenta contable y un precio como minimo a todos los producto";
 
         public const string C0001 = "El '{0}' no coincide con los lineamientos establecidos por el Servicio de Administración Tributaria. Corrígelo por favor.";
         public const string C0002 = "No se logró hacer el registro {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
