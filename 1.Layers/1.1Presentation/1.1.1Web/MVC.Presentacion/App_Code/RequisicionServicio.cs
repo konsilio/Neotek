@@ -17,6 +17,14 @@ namespace MVC.Presentacion.App_Code
             respuestaReq.BuscarRequisiciones(idEmpresa, token);
             return respuestaReq._listaRequisicion;
         }
+        public static List<RequisicionDTO> BuscarRequisicionesOC(string token)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.BuscarRequisiciones(TokenServicio.ObtenerIdEmpresa(token), token);
+            var reqs = respuestaReq._listaRequisicion;
+            return reqs.Where(x => x.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Autorizacion_parcial)
+                || x.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Autoriza_compra)).ToList();
+        }
         public static List<RequisicionDTO> BuscarRequisicionesEntrega(short idEmpresa, string token)
         {
            return BuscarRequisiciones(idEmpresa, token)
@@ -152,8 +160,14 @@ namespace MVC.Presentacion.App_Code
             var respuestaReq = new AgenteServicio();
             respuestaReq.GuardarRequisicon(dto, tkn);
             return respuestaReq._RespuestaDTO;
-        }      
-        #region Revicion Requisicion
+        }
+        public static RespuestaDTO CancelarRequisicion(RequisicionCancelaDTO dto, string tkn)
+        {
+            var respuestaReq = new AgenteServicio();
+            respuestaReq.ActualizarRequisicionCancelar(dto, tkn);
+            return respuestaReq._RespuestaDTO;
+        }
+        #region Revision Requisicion
         public static RespuestaDTO FinalizarRevision(RequisicionRevisionModel model, string _tok)
         {
             List<RequisicionProdReviPutDTO> lProd = new List<RequisicionProdReviPutDTO>();

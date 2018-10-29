@@ -106,6 +106,7 @@
     <Compile Include="DTOs\Mobile\DatosAnticiposCorteDto.cs" />
     <Compile Include="DTOs\Mobile\DatosAutoconsumoDto.cs" />
     <Compile Include="DTOs\Mobile\DatosCalibracionDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosClientesDto.cs" />
     <Compile Include="DTOs\Mobile\DatosRecargaDto.cs" />
     <Compile Include="DTOs\Mobile\DatosTraspasoDto.cs" />
     <Compile Include="DTOs\Mobile\EstacionesDto.cs" />

@@ -31,14 +31,18 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        internal static List<ClienteDTO> FromDTO(List<Cliente> clientes)
+        public static DatosClientesDto FromDTO(List<Cliente> clientes)
         {
+           
             List<ClienteDTO> list = new List<ClienteDTO>();
             foreach (var cliente in clientes)
             {
                 list.Add(FormDTO(cliente));
             }
-            return list;
+            return new DatosClientesDto()
+            {
+                clientes = list
+            };
         }
 
         private static ClienteDTO FormDTO(Cliente cliente)

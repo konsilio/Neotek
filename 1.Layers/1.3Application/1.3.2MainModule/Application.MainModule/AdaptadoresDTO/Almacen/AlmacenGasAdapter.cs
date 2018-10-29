@@ -280,6 +280,39 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             };
         }
 
+        public static AlmacenGasTomaLectura FromEntity(AlmacenGasTomaLectura lectura)
+        {
+            return new AlmacenGasTomaLectura
+            {
+                IdCAlmacenGas = lectura.IdCAlmacenGas,
+                IdOrden = lectura.IdOrden,
+                IdTipoMedidor = lectura.IdTipoMedidor,
+                IdTipoEvento = lectura.IdTipoEvento,
+                P5000 = lectura.P5000,
+                Porcentaje = lectura.Porcentaje,
+                EsEncargadoPuerta = lectura.EsEncargadoPuerta,
+                EsEncargadoAnden = lectura.EsEncargadoAnden,
+                ClaveOperacion = lectura.ClaveOperacion,
+                DatosProcesados = lectura.DatosProcesados,
+                FechaAplicacion = lectura.FechaAplicacion,
+                FechaRegistro = lectura.FechaRegistro,
+            };
+        }
+
+        public static AlmacenGasTomaLecturaFoto FromEntity(AlmacenGasTomaLecturaFoto img)
+        {
+            return new AlmacenGasTomaLecturaFoto
+            {
+                IdCAlmacenGas = img.IdCAlmacenGas,
+                IdOrden = img.IdOrden,
+                IdOrdenFoto = img.IdOrdenFoto,
+                IdImagenDe = img.IdImagenDe,
+                CadenaBase64 = img.CadenaBase64,
+                PathImagen = img.PathImagen,
+                UrlImagen = img.UrlImagen,
+            };
+        }
+
         public static AlmacenGasMovimiento FromInit()
         {
             var fechaRegistro = DateTime.Now;
@@ -345,6 +378,10 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 DescargaAcumMesLt = 0,
                 DescargaAcumAnioKg = 0,
                 DescargaAcumAnioLt = 0,
+                CAlmLecturaInicialP5000 = 0,
+                CAlmLecturaFinalP5000 = 0,
+                CAlmLecturaInicialMagnatel = 0,
+                CAlmLecturaFinalMagnatel = 0,
                 CAlmEntradaDiaKg = 0,
                 CAlmEntradaDiaLt = 0,
                 CAlmSalidaDiaKg = 0,
@@ -448,6 +485,18 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 VentaMesLt = null,
                 VentaAnioKg = null,
                 VentaAnioLt = null,
+                VentaLecturasP5000Kg = null,
+                VentaLecturasP5000Lt = null,
+                VentaLecturasMagnatelKg = null,
+                VentaLecturasMagnatelLt = null,
+                VentaLecturasP5000MesKg = null,
+                VentaLecturasP5000MesLt = null,
+                VentaLecturasMagnatelMesKg = null,
+                VentaLecturasMagnatelMesLt = null,
+                VentaLecturasP5000AnioKg = null,
+                VentaLecturasP5000AnioLt = null,
+                VentaLecturasMagnatelAnioKg = null,
+                VentaLecturasMagnatelAnioLt = null,
             };
         }
 

@@ -2,6 +2,7 @@
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.Servicios.Almacenes;
 using Exceptions.MainModule.Validaciones;
+using Sagas.MainModule.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,11 +46,13 @@ namespace Application.MainModule.Servicios.Mobile
             };
         }
 
+
         public static RespuestaDto EvaluarClaveOperacion(LecturaCamionetaDTO lcdto)
         {
             var alm = AlmacenGasServicio.ObtenerLecturaPorClaveOperacion(lcdto.ClaveProceso);
             return EvaluarClaveOperacion(alm);
         }
+
 
         public static RespuestaDto EvaluarClaveOperacion(RecargaDTO rdto)
         {
@@ -68,6 +71,39 @@ namespace Application.MainModule.Servicios.Mobile
         {
             var tras = AlmacenGasServicio.ObtenerTraspaso(dto.ClaveOperacion);
             return EvaluarClaveOperacion(tras); 
+        }
+
+        public static RespuestaDto EvaluarClaveOperacion(AnticipoDto dto)
+        {
+            var anti = AlmacenGasServicio.ObtenerAnticipo(dto.ClaveOperacion);
+
+            return EvaluarClaveOperacion(anti);
+        }
+
+        public static List<VentaCorteAnticipoEC> ObtenerAnticipos(short idEmpresa)
+        {
+            return AlmacenGasServicio.ObetnerAnticipos(idEmpresa); 
+        }
+
+        public static RespuestaDto Anticipo(VentaCorteAnticipoEC adapter)
+        {
+            return AlmacenGasServicio.InsertarAnticipo(adapter);
+        }
+
+        public static RespuestaDto EvaluarClaveOperacion(CorteDto dto)
+        {
+            var cort = AlmacenGasServicio.ObtenerCorte(dto.ClaveOperacion);
+            return EvaluarClaveOperacion(cort);
+        }
+
+        public static List<VentaCorteAnticipoEC> ObtenerCortes(short idEmpresa)
+        {
+            return AlmacenGasServicio.ObtenerCortes(idEmpresa);
+        }
+
+        public static RespuestaDto Corte(VentaCorteAnticipoEC adapter)
+        {
+            return AlmacenGasServicio.InsertCorte(adapter);
         }
     }
 }

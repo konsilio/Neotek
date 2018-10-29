@@ -87,10 +87,10 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
                 Log.w("Prueba","prueba"+permissions(permissionList));
 
-                if (permissions(permissionList)) {
+               // if (!permissions(permissionList)) {
 
                     openCameraIntent();
-                }
+                //}
             }
         });
 
@@ -101,7 +101,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
                 Log.w("Prueba","prueba"+permissions(permissionList));
 
-                if (permissions(permissionList)) {
+                if (!permissions(permissionList)) {
 
                     openCameraIntent();
                 }

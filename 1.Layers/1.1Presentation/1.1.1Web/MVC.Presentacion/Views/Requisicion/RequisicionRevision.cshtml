@@ -8,16 +8,19 @@
     <title>RequisicionRevision</title>
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
     <link href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <script src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
     <style type="text/css">
     </style>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $("#btnFinalizar").click(function () {
-                var form = $(this).parent("form");
-                form.attr('action', '<%= Url.RouteUrl(new { Controller = "Requisicion", Action = "Revisar" }) %>');
-                form.attr('method', 'post');
+        var Cancelar = function () {
+            var url = "/Requisicion/Cancelar";
+            var id = '@Model.IdRequisicion'
+            var motivo = $("#MotivoCancela").val()
+            $.get(url, { IdRequisicion: id, MotivoCancela: motivo }, function () {
+
+                window.location.href = '@Url.Action("Requisiciones", "Requisicion")';
             });
-        });
+        };
     </script>
 
 </head>
@@ -38,10 +41,9 @@
                         <div class="col-lg-5 col-md-5 col-sm-12">
                             <h2>Compras</h2>
                             <ul class="breadcrumb padding-0">
-                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item active">
-                                    <label id="lblRuta">Requisición / Revisición </label>
-                                </li>
+                                <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Requisición</li>
+                                <li class="breadcrumb-item">Revisición</li>
                             </ul>
                         </div>
                     </div>
@@ -54,36 +56,34 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" disabled data-live-search="true">
-                                                    @foreach (var lst in ViewBag.Empresas)
-                                                    {
-                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                                    }
-                                                </select>
+                                                <strong>Gasera: </strong>
+                                                @foreach (var item in @ViewBag.Empresas)
+                                                {
+                                                    @item.NombreComercial
+                                                }
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <label>Número de Requisición:</label>&nbsp;
-                                                    <label>@Model.NumeroRequisicion</label>
+                                                    <strong>Número de Requisición: </strong>@Model.NumeroRequisicion
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <br />
                                     <div class="row clearfix z-index" id="divCamposRequi">
                                         <div class="col-lg-3">
                                             <b>Fecha requerida:</b>
-                                            <input type="text" value="@Model.FechaRequerida" name="FechaRequerida" disabled class="form-control" />
+                                            <div>
+                                                @Model.FechaRequerida
+                                            </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <b>Solicitante:</b>
-                                            <select id="ddlSoliciante" name="IdUsuarioSolicitante" class="form-control show-tick" disabled data-live-search="true">
-                                                @foreach (var lst in ViewBag.Usuarios)
-                                                {
-                                                    <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1</option>
-                                                }
-                                            </select>
+                                            <div>
+                                                @ViewBag.Usuarios.Nombre @ViewBag.Usuarios.Apellido1
+                                            </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="form-group form-float">
@@ -115,7 +115,7 @@
                                         </div>
                                     }
                                     <br />
-                                    <div class="row clearfix">
+                                    <div class="row clearfix blockquote blockquote-info btn-round">
                                         <div class="table-responsive">
                                             <table id="ListaProductos" class="table table-hover">
                                                 <thead>
@@ -138,7 +138,7 @@
                                     </div>
                                     <div class="row clearfix">
                                         <div class="col-lg-12">
-                                            <h2 class="card-inside-title">Opinión de Almacen</h2>
+                                            <strong>Opinión de Almacen</strong>
                                             <div class="row clearfix ">
                                                 <div class="col-sm-12 blockquote blockquote-info btn-round">
                                                     <div class="form-group">
@@ -158,7 +158,7 @@
                                             </a>
                                         </div>
                                         <div class="col-lg-4 col-md-8 text-center">
-                                            <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
+                                            <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round">
                                                 Cancelar
                                             </a>
                                         </div>
@@ -179,17 +179,21 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
+                        <h4 class="title" id="ModalCancelarLabel">Motivo de cancelación</h4>
                     </div>
                     <div class="modal-body">
                         <div class="body">
-                            <div class="col-sm-12">
-                                <textarea name="MotivoCancela" class="form-control" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></textarea>
+                            <div class="col-sm-12 blockquote blockquote-info btn-round">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        @Html.TextAreaFor(m => m.MotivoCancela, new { @class = "form-control no-resize", @Rows = 4 })
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-raised btn-primary btn-round" value="Cancelar" formaction="Cancelar" />
+                        <button type="button" id="btnCancelar" class="btn btn-raised btn-primary btn-round" onclick="Cancelar()">Cancelar</button>
                         <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
                     </div>
                 </div>

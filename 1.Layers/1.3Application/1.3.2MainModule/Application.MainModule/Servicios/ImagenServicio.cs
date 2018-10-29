@@ -41,12 +41,11 @@ namespace Application.MainModule.Servicios
         public static AlmacenGasTraspasoFoto ObtenerImagen(AlmacenGasTraspasoFoto foto)
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
-            //string a = "CadenaBase64|IdUA|Magnatel|Inicial|.jpeg";
-            //"Cadenabase|Tractor|IdUa|Magnatel|Inicial|60-5|.jpeg"
-
+            //                  0         1     2       3       4      5     6
+            //string a = "CadenaBase64|Tractor|IdUa|Magnatel|Inicial|60-5|.jpeg"
             List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
-            string nombre = string.Concat(campos.ElementAt(1), "_", foto.OrdenImagen, "_", campos.ElementAt(2), "_", campos.ElementAt(3));
-            string extension = campos.ElementAt(4);
+            string nombre = string.Concat(campos.ElementAt(1), "_", campos.ElementAt(2), "_", foto.OrdenImagen, "_", campos.ElementAt(3), "_", campos.ElementAt(4), "_", campos.ElementAt(5));
+            string extension = campos.ElementAt(6);
             foto.CadenaBase64 = campos.ElementAt(0);
 
             foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
@@ -62,11 +61,31 @@ namespace Application.MainModule.Servicios
         public static AlmacenGasAutoConsumoFoto ObtenerImagen(AlmacenGasAutoConsumoFoto foto)
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
-            //string a = "CadenaBase64|IdUA|Magnatel|Inicial|.jpeg";
-
+            //                  0         1     2       3       4      5     6
+            //string a = "CadenaBase64|Tractor|IdUa|Magnatel|Inicial|60-5|.jpeg"
             List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
-            string nombre = string.Concat(campos.ElementAt(1), "_", foto.OrdenImagen, "_", campos.ElementAt(2), "_", campos.ElementAt(3));
-            string extension = campos.ElementAt(4);
+            string nombre = string.Concat(campos.ElementAt(1), "_", campos.ElementAt(2), "_", foto.OrdenImagen, "_", campos.ElementAt(3), "_", campos.ElementAt(4), "_", campos.ElementAt(5));
+            string extension = campos.ElementAt(6);
+            foto.CadenaBase64 = campos.ElementAt(0);
+
+            foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
+            foto.PathImagen = GenerarNombre(nombre, extension, foto.PathImagen);
+            foto.UrlImagen = Convertir.PhysicalPathToUrlPath(foto.PathImagen);
+
+            FileUtilities.GuardarImagen(foto.CadenaBase64, foto.PathImagen);
+            foto.CadenaBase64 = null;
+            campos.Clear();
+            return foto;
+        }
+
+        public static AlmacenGasTomaLecturaFoto ObtenerImagen(AlmacenGasTomaLecturaFoto foto)
+        {
+            // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
+            //                  0         1     2       3       4      5     6
+            //string a = "CadenaBase64|Tractor|IdUa|Magnatel|Inicial|60-5|.jpeg"
+            List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
+            string nombre = string.Concat(campos.ElementAt(1), "_", campos.ElementAt(2), "_", foto.IdOrdenFoto, "_", campos.ElementAt(3), "_", campos.ElementAt(4), "_", campos.ElementAt(5));
+            string extension = campos.ElementAt(6);
             foto.CadenaBase64 = campos.ElementAt(0);
 
             foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);
@@ -82,11 +101,11 @@ namespace Application.MainModule.Servicios
         public static AlmacenGasCalibracionFoto ObtenerImagen(AlmacenGasCalibracionFoto foto)
         {
             // La cadena en el campo foto.CadenaBase64 debe contener el siguiente formato
-            //string a = "CadenaBase64|IdUA|Magnatel|Inicial|.jpeg";
-
+            //                  0         1     2       3       4      5     6
+            //string a = "CadenaBase64|Tractor|IdUa|Magnatel|Inicial|60-5|.jpeg"
             List<string> campos = FilterFunciones.ObtenerFields(foto.CadenaBase64);
-            string nombre = string.Concat(campos.ElementAt(1), "_", foto.IdOrdenFoto, "_", campos.ElementAt(2), "_", campos.ElementAt(3));
-            string extension = campos.ElementAt(4);
+            string nombre = string.Concat(campos.ElementAt(1), "_", campos.ElementAt(2), "_", foto.IdOrdenFoto, "_", campos.ElementAt(3), "_", campos.ElementAt(4), "_", campos.ElementAt(5));
+            string extension = campos.ElementAt(6);
             foto.CadenaBase64 = campos.ElementAt(0);
 
             foto.PathImagen = Convertir.GetPhysicalPath(rutaImagenes);

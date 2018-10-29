@@ -145,6 +145,7 @@
           <Property Name="P5000Salida" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="DatosProcesados" Type="bit" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="datetime" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="AlmacenGasAutoConsumoFoto">
@@ -184,6 +185,7 @@
           <Property Name="Porcentaje" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="DatosProcesados" Type="bit" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="datetime" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="AlmacenGasCalibracionFoto">
@@ -407,6 +409,10 @@
           <Property Name="Mes" Type="tinyint" Nullable="false" />
           <Property Name="Dia" Type="tinyint" Nullable="false" />
           <Property Name="Orden" Type="smallint" Nullable="false" />
+          <Property Name="CAlmLecturaInicialMagnatel" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmLecturaFinalMagnatel" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmLecturaInicialP5000" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="CAlmLecturaFinalP5000" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="CAlmEntradaDiaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="CAlmEntradaDiaLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="CAlmSalidaDiaKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
@@ -531,6 +537,18 @@
           <Property Name="VentaAcumMesLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="VentaAcumAnioKg" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="VentaAcumAnioLt" Type="decimal" Precision="18" Scale="4" Nullable="false" />
+          <Property Name="VentaLecturasP5000Kg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasP5000Lt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasP5000MesKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasP5000MesLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelMesKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelMesLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasP5000AnioKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasP5000AnioLt" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelAnioKg" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelAnioLt" Type="decimal" Precision="18" Scale="4" />
         </EntityType>
         <EntityType Name="AlmacenGasRecarga">
           <Key>
@@ -548,6 +566,7 @@
           <Property Name="ProcentajeEntrada" Type="decimal" Precision="18" Scale="4" />
           <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="DatosProcesados" Type="bit" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="datetime" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="AlmacenGasRecargaCilindro">
@@ -587,6 +606,7 @@
           <Property Name="EsEncargadoAnden" Type="bit" Nullable="false" />
           <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="DatosProcesados" Type="bit" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="datetime" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="AlmacenGasTomaLecturaCilindro">
@@ -637,6 +657,7 @@
           <Property Name="PorcentajeSalida" Type="decimal" Precision="18" Scale="4" />
           <Property Name="ClaveOperacion" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="DatosProcesados" Type="bit" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="datetime" Nullable="false" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="AlmacenGasTraspasoFoto">
@@ -8259,7 +8280,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="ReporteDelDia" Relationship="Sagas.MainModuleModel.FK_ReporteDelDia_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="ReporteDelDia" />
           <NavigationProperty Name="VentaCajaGeneral" Relationship="Sagas.MainModuleModel.FK_VentaCajaGeneral_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="VentaCajaGeneral" />
           <NavigationProperty Name="VentaCorteAnticipoEC" Relationship="Sagas.MainModuleModel.FK_VentaCorteAnticipoEC_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="VentaCorteAnticipoEC" />
-          <NavigationProperty Name="VentaMovimiento" Relationship="Sagas.MainModuleModel.FK_VentaMovimiento_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="VentaMovimiento" />
+          <NavigationProperty Name="VentaMovimiento" Relationship="Sagas.MainModuleModel.FK_VentaMovimiento_CAlmacenGas" FromRole="UnidadAlmacenGas" ToRole="VentaMovimiento" />          
           
           <!--<NavigationProperty Name="CAlmacenGasCalibracion" Relationship="Sagas.MainModuleModel.FK_CAlmacenGasCalibracion_CAlmacenGas" FromRole="CAlmacenGas" ToRole="CAlmacenGasCalibracion" />
           <NavigationProperty Name="CAlmacenGas" Relationship="Sagas.MainModuleModel.FK_CAlmacenGasCalibracion_CAlmacenGas" FromRole="CAlmacenGasCalibracion" ToRole="CAlmacenGas" />-->
@@ -9339,10 +9360,11 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="EsEncargadoAnden" Type="Boolean" Nullable="false" />
           <Property Name="ClaveOperacion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="DatosProcesados" Type="Boolean" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="UnidadAlmacenGas" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLectura_CAlmacenGas" FromRole="AlmacenGasTomaLectura" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Cilindros" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaCilindro_AlmacenGasTomaLectura" FromRole="AlmacenGasTomaLectura" ToRole="AlmacenGasTomaLecturaCilindro" />
-          <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura" FromRole="AlmacenGasTomaLectura" ToRole="AlmacenGasTomaLecturaFoto" />          
+          <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTomaLecturaFoto_AlmacenGasTomaLectura" FromRole="AlmacenGasTomaLectura" ToRole="AlmacenGasTomaLecturaFoto" />
         </EntityType>
         <EntityType Name="AlmacenGasTomaLecturaCilindro">
           <Key>
@@ -9429,13 +9451,14 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="ProcentajeEntrada" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="ClaveOperacion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="DatosProcesados" Type="Boolean" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="UnidadAlmacenSalida" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CAlmacenGas" FromRole="AlmacenGasRecarga" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="UnidadAlmacenEntrada" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CAlmacenGas1" FromRole="AlmacenGasRecarga" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Cilindros" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecargaCilindro_AlmacenGasRecarga" FromRole="AlmacenGasRecarga" ToRole="AlmacenGasRecargaCilindro" />
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecargaFoto_AlmacenGasRecarga" FromRole="AlmacenGasRecarga" ToRole="AlmacenGasRecargaFoto" />
           <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasRecarga_CTipoEvento" FromRole="AlmacenGasRecarga" ToRole="TipoEvento" />
-          <NavigationProperty Name="MovimientosGas" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenGasRecarga" FromRole="AlmacenGasRecarga" ToRole="AlmacenGasMovimiento" />
+          <NavigationProperty Name="MovimientosGas" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenGasRecarga" FromRole="AlmacenGasRecarga" ToRole="AlmacenGasMovimiento" />          
         </EntityType>
         <EntityType Name="AlmacenGasRecargaCilindro">
           <Key>
@@ -9529,11 +9552,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="P5000Salida" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="ClaveOperacion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="DatosProcesados" Type="Boolean" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="UnidadSalida" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumo_CAlmacenGas" FromRole="AlmacenGasAutoConsumo" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="UnidadEntrada" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumo_CAlmacenGas1" FromRole="AlmacenGasAutoConsumo" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumoFoto_AlmacenGasAutoConsumo" FromRole="AlmacenGasAutoConsumo" ToRole="AlmacenGasAutoConsumoFoto" />
-          <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumo_CTipoEvento" FromRole="AlmacenGasAutoConsumo" ToRole="TipoEvento" />
+          <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasAutoConsumo_CTipoEvento" FromRole="AlmacenGasAutoConsumo" ToRole="TipoEvento" />          
         </EntityType>
         <EntityType Name="AlmacenGasAutoConsumoFoto">
           <Key>
@@ -9577,6 +9601,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="UnidadAlmacenGas" Relationship="Sagas.MainModuleModel.FK_AlmacenGasCalibracion_CAlmacenGas" FromRole="AlmacenGasCalibracion" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasCalibracionFoto_AlmacenGasCalibracion" FromRole="AlmacenGasCalibracion" ToRole="AlmacenGasCalibracionFoto" />
           <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasCalibracion_CTipoEvento" FromRole="AlmacenGasCalibracion" ToRole="TipoEvento" />
+          <Property Name="FechaAplicacion" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="AlmacenGasCalibracionFoto">
           <Key>
@@ -9615,11 +9640,12 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="PorcentajeSalida" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="ClaveOperacion" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="DatosProcesados" Type="Boolean" Nullable="false" />
+          <Property Name="FechaAplicacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="UnidadSalida" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CAlmacenGas" FromRole="AlmacenGasTraspaso" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="UnidadEntrada" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CAlmacenGas1" FromRole="AlmacenGasTraspaso" ToRole="UnidadAlmacenGas" />
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspasoFoto_AlmacenGasTraspaso" FromRole="AlmacenGasTraspaso" ToRole="AlmacenGasTraspasoFoto" />
-          <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CTipoEvento" FromRole="AlmacenGasTraspaso" ToRole="TipoEvento" />          
+          <NavigationProperty Name="TipoEvento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasTraspaso_CTipoEvento" FromRole="AlmacenGasTraspaso" ToRole="TipoEvento" />
         </EntityType>
         <EntityType Name="AlmacenGasTraspasoFoto">
           <Key>
@@ -10581,6 +10607,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="DescargaAcumAnioKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="DescargaAcumAnioLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <!--"AlmacenGasMovimientoInventario"-->
+          <Property Name="CAlmLecturaInicialP5000" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmLecturaFinalP5000" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmLecturaInicialMagnatel" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="CAlmLecturaFinalMagnatel" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="CAlmEntradaDiaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="CAlmEntradaDiaLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="CAlmSalidaDiaKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
@@ -10653,6 +10683,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <Property Name="VentaAcumMesLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="VentaAcumAnioKg" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
           <Property Name="VentaAcumAnioLt" Type="Decimal" Nullable="false" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasP5000Kg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasP5000Lt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasP5000MesKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasP5000MesLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelMesKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelMesLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasP5000AnioKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasP5000AnioLt" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelAnioKg" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="VentaLecturasMagnatelAnioLt" Type="Decimal" Precision="18" Scale="4" />
           
           <NavigationProperty Name="Descarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenEntradaGasDescarga" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasDescarga" />
           <NavigationProperty Name="Inventario" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_AlmacenGas" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGas" />
@@ -10661,6 +10703,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <NavigationProperty Name="Fotografias" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoFoto_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoFoto" />
           <NavigationProperty Name="Empresa" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_Empresa" FromRole="AlmacenGasMovimiento" ToRole="Empresa" />          
           <NavigationProperty Name="CTipoMovimiento" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimiento_CTipoMovimiento" FromRole="AlmacenGasMovimiento" ToRole="CTipoMovimiento" />
+          
           <!--<NavigationProperty Name="AlmacenGasMovimientoAutoconsumo" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoAutoconsumo_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoAutoconsumo" />
           <NavigationProperty Name="AlmacenGasMovimientoCalibracion" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoCalibracion_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoCalibracion" />
           <NavigationProperty Name="AlmacenGasMovimientoDescarga" Relationship="Sagas.MainModuleModel.FK_AlmacenGasMovimientoDescarga_AlmacenGasMovimiento" FromRole="AlmacenGasMovimiento" ToRole="AlmacenGasMovimientoDescarga" />
@@ -12596,6 +12639,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasTomaLectura">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasTomaLectura">
               <MappingFragment StoreEntitySet="AlmacenGasTomaLectura">
+                <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
                 <ScalarProperty Name="EsEncargadoAnden" ColumnName="EsEncargadoAnden" />
                 <ScalarProperty Name="EsEncargadoPuerta" ColumnName="EsEncargadoPuerta" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
@@ -12637,6 +12681,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasRecarga">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasRecarga">
               <MappingFragment StoreEntitySet="AlmacenGasRecarga">
+                <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="DatosProcesados" ColumnName="DatosProcesados" />
                 <ScalarProperty Name="ClaveOperacion" ColumnName="ClaveOperacion" />
@@ -12678,6 +12723,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasAutoConsumo">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasAutoConsumo">
               <MappingFragment StoreEntitySet="AlmacenGasAutoConsumo">
+                <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
                 <ScalarProperty Name="Dia" ColumnName="Dia" />
                 <ScalarProperty Name="Mes" ColumnName="Mes" />
@@ -12714,6 +12760,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasCalibracion">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasCalibracion">
               <MappingFragment StoreEntitySet="AlmacenGasCalibracion">
+                <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
                 <ScalarProperty Name="DatosProcesados" ColumnName="DatosProcesados" />
                 <ScalarProperty Name="ClaveOperacion" ColumnName="ClaveOperacion" />
@@ -12744,6 +12791,7 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
           <EntitySetMapping Name="AlmacenGasTraspaso">
             <EntityTypeMapping TypeName="Sagas.MainModuleModel.AlmacenGasTraspaso">
               <MappingFragment StoreEntitySet="AlmacenGasTraspaso">
+                <ScalarProperty Name="FechaAplicacion" ColumnName="FechaAplicacion" />
                 <ScalarProperty Name="Orden" ColumnName="Orden" />
                 <ScalarProperty Name="Dia" ColumnName="Dia" />
                 <ScalarProperty Name="Mes" ColumnName="Mes" />
@@ -13105,6 +13153,10 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
               
               <MappingFragment StoreEntitySet="AlmacenGasMovimientoInventario">
+                <ScalarProperty Name="CAlmLecturaFinalMagnatel" ColumnName="CAlmLecturaFinalMagnatel" />
+                <ScalarProperty Name="CAlmLecturaInicialMagnatel" ColumnName="CAlmLecturaInicialMagnatel" />
+                <ScalarProperty Name="CAlmLecturaFinalP5000" ColumnName="CAlmLecturaFinalP5000" />
+                <ScalarProperty Name="CAlmLecturaInicialP5000" ColumnName="CAlmLecturaInicialP5000" />
                 <ScalarProperty Name="CAlmSalidaAnioLt" ColumnName="CAlmSalidaAnioLt" />
                 <ScalarProperty Name="CAlmSalidaAnioKg" ColumnName="CAlmSalidaAnioKg" />
                 <ScalarProperty Name="CAlmEntradaAnioLt" ColumnName="CAlmEntradaAnioLt" />
@@ -13191,6 +13243,18 @@ advertencia 6002: La tabla o vista 'Sagas.MainModule.dbo.CProductoAsociado' no t
               </MappingFragment>
               
               <MappingFragment StoreEntitySet="AlmacenGasMovimientoVenta">
+                <ScalarProperty Name="VentaLecturasMagnatelAnioLt" ColumnName="VentaLecturasMagnatelAnioLt" />
+                <ScalarProperty Name="VentaLecturasMagnatelAnioKg" ColumnName="VentaLecturasMagnatelAnioKg" />
+                <ScalarProperty Name="VentaLecturasP5000AnioLt" ColumnName="VentaLecturasP5000AnioLt" />
+                <ScalarProperty Name="VentaLecturasP5000AnioKg" ColumnName="VentaLecturasP5000AnioKg" />
+                <ScalarProperty Name="VentaLecturasMagnatelMesLt" ColumnName="VentaLecturasMagnatelMesLt" />
+                <ScalarProperty Name="VentaLecturasMagnatelMesKg" ColumnName="VentaLecturasMagnatelMesKg" />
+                <ScalarProperty Name="VentaLecturasP5000MesLt" ColumnName="VentaLecturasP5000MesLt" />
+                <ScalarProperty Name="VentaLecturasP5000MesKg" ColumnName="VentaLecturasP5000MesKg" />
+                <ScalarProperty Name="VentaLecturasMagnatelLt" ColumnName="VentaLecturasMagnatelLt" />
+                <ScalarProperty Name="VentaLecturasMagnatelKg" ColumnName="VentaLecturasMagnatelKg" />
+                <ScalarProperty Name="VentaLecturasP5000Lt" ColumnName="VentaLecturasP5000Lt" />
+                <ScalarProperty Name="VentaLecturasP5000Kg" ColumnName="VentaLecturasP5000Kg" />
                 <ScalarProperty Name="VentaAcumAnioLt" ColumnName="VentaAcumAnioLt" />
                 <ScalarProperty Name="VentaAcumAnioKg" ColumnName="VentaAcumAnioKg" />
                 <ScalarProperty Name="VentaAcumMesLt" ColumnName="VentaAcumMesLt" />

@@ -31,6 +31,7 @@ namespace Sagas.MainModule.Entidades
         public string ClaveOperacion { get; set; }
         public bool DatosProcesados { get; set; }
         public System.DateTime FechaRegistro { get; set; }
+        public Nullable<System.DateTime> FechaAplicacion { get; set; }
     
         public virtual UnidadAlmacenGas UnidadAlmacenGas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

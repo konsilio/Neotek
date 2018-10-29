@@ -12,20 +12,21 @@ namespace Application.MainModule.DTOs.Almacen
     {
         public Empresa Empresa { get; set; }
 
-        public AlmacenGasTomaLectura TomaLecturaLecturaInicial { get; set; }
-        public List<AlmacenGasTomaLecturaFoto> TomaLecturaLecturaInicialFotos { get; set; }
-        public AlmacenGasTomaLectura TomaLecturaLecturaInicialSinNavProp { get; set; }
+        public AlmacenGasTomaLectura TomaLecturaLectura { get; set; }
+        public List<AlmacenGasTomaLecturaFoto> TomaLecturaLecturaFotos { get; set; }
+        public AlmacenGasTomaLectura TomaLecturaLecturaSinNavProp { get; set; }
 
 
-        public List<AlmacenGasTomaLectura> TomaLecturasFinales { get; set; }
-        public AlmacenGasTomaLectura TomaLecturaLecturaFinal { get; set; }
-        public List<AlmacenGasTomaLecturaFoto> TomaLecturaLecturaFinalFotos { get; set; }
-        public AlmacenGasTomaLectura TomaLecturaLecturaFinalSinNavProp { get; set; }
+        //public List<AlmacenGasTomaLectura> TomaLecturasFinales { get; set; }
+        //public AlmacenGasTomaLectura TomaLecturaLecturaFinal { get; set; }
+        //public List<AlmacenGasTomaLecturaFoto> TomaLecturaLecturaFinalFotos { get; set; }
+        //public AlmacenGasTomaLectura TomaLecturaLecturaFinalSinNavProp { get; set; }
 
 
 
 
         public AlmacenGas AlmacenGas { get; set; }
+        public AlmacenGas AlmacenGasAnterior { get; set; }
 
 
 
@@ -45,11 +46,6 @@ namespace Application.MainModule.DTOs.Almacen
         public string Concepto { get; set; }// Revisar si puede ser catálogo de apoyo
 
 
-        public decimal CantidadSINRemanenteKg { get; set; }
-        public decimal CantidadSINRemanenteLt { get; set; }
-        public decimal RemanenteKg { get; set; }
-        public decimal RemanenteLt { get; set; }
-        public decimal CantidadCONRemanenteKg { get; set; }
-        public decimal CantidadCONRemanenteLt { get; set; }
+        public AlmacenGasMovimiento MovimientoUnidad { get; set; }
     }
 }

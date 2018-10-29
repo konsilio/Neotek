@@ -684,6 +684,27 @@
     <Content Include="assets\js\admin.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="assets\js\chosen\chosen-sprite%402x.png" />
+    <Content Include="assets\js\chosen\chosen-sprite.png" />
+    <Content Include="assets\js\chosen\chosen.css" />
+    <Content Include="assets\js\chosen\chosen.jquery.js" />
+    <Content Include="assets\js\chosen\chosen.jquery.min.js" />
+    <Content Include="assets\js\chosen\chosen.min.css" />
+    <Content Include="assets\js\chosen\chosen.proto.js" />
+    <Content Include="assets\js\chosen\chosen.proto.min.js" />
+    <Content Include="assets\js\chosen\docsupport\chosen.png" />
+    <Content Include="assets\js\chosen\docsupport\init.js" />
+    <Content Include="assets\js\chosen\docsupport\init.proto.js" />
+    <Content Include="assets\js\chosen\docsupport\jquery-1.12.4.min.js" />
+    <Content Include="assets\js\chosen\docsupport\jquery-3.2.1.min.js" />
+    <Content Include="assets\js\chosen\docsupport\oss-credit.png" />
+    <Content Include="assets\js\chosen\docsupport\prism.css" />
+    <Content Include="assets\js\chosen\docsupport\prism.js" />
+    <Content Include="assets\js\chosen\docsupport\prototype-1.7.0.0.js" />
+    <Content Include="assets\js\chosen\docsupport\style.css" />
+    <Content Include="assets\js\chosen\index.html" />
+    <Content Include="assets\js\chosen\index.proto.html" />
+    <Content Include="assets\js\chosen\options.html" />
     <Content Include="assets\js\demo.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -11349,6 +11370,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="assets\js\chosen\composer.json" />
+    <Content Include="assets\js\chosen\LICENSE.md" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DatePickerReady.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -11365,10 +11388,12 @@
     <Content Include="Scripts\js\CProductoJS.js" />
     <Content Include="Scripts\js\CuentasContablesJS.js" />
     <Content Include="Scripts\js\OrdenCompraComplementoGasJS.js" />
+    <Content Include="Scripts\js\OrdenCompraJS.js" />
     <Content Include="Scripts\js\OrdenesJS.js" />
     <Content Include="Scripts\js\RequisicionAutorizacionJS.js" />
     <Content Include="Scripts\js\RequisicionesJS.js" />
     <Content Include="Scripts\js\RequisicionJS.js" />
+    <Content Include="Scripts\js\RequisicionRevicion.js" />
     <Content Include="Scripts\js\UtileriasJS.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment-with-locales.js" />
