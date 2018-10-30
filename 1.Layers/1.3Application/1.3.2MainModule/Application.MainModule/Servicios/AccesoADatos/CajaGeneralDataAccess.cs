@@ -258,5 +258,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
+        public List<VentaPuntoDeVenta> BuscarVentas()
+        {
+            return uow.Repository<VentaPuntoDeVenta>().GetAll().ToList();
+        }
     }
 }

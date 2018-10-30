@@ -9,6 +9,8 @@ using Application.MainModule.AdaptadoresDTO.Seguridad;
 using Application.MainModule.DTOs.Respuesta;
 using Sagas.MainModule.Entidades;
 using Exceptions.MainModule.Validaciones;
+using Application.MainModule.AdaptadoresDTO.Almacenes;
+using Application.MainModule.Servicios.Almacenes;
 
 namespace Application.MainModule.Servicios.Catalogos
 {
@@ -58,8 +60,21 @@ namespace Application.MainModule.Servicios.Catalogos
         }
 
         public static RespuestaDto RegistrarEmpresa(Empresa emp)
-        {
-            return new EmpresaDataAccess().Insertar(emp);
+        {            
+            var resp = new EmpresaDataAccess().Insertar(emp);
+            if (!resp.Exito) return resp;
+
+            Empresa empresa = Obtener((short)resp.Id);
+            AlmacenGas almTotal = AlmacenGasAdapter.FromInit(empresa);
+            resp = new AlmacenGasDataAccess().Insertar(almTotal);
+            if (!resp.Exito) { new EmpresaDataAccess().Eliminar((short)resp.Id); return resp; }
+
+            almTotal = AlmacenGasServicio.Obtener((short)resp.Id);
+            AlmacenGasMovimiento almMov = AlmacenGasAdapter.FromInit(almTotal);            
+            resp = new AlmacenGasDataAccess().Insertar(almMov);
+            if (!resp.Exito) { new AlmacenGasDataAccess().Eliminar(almTotal);  new EmpresaDataAccess().Eliminar(almTotal.IdEmpresa); }
+
+            return resp;
         }
 
         public static RespuestaDto ModificarEmpresa(Empresa emp)

@@ -9,7 +9,7 @@ public class LineaDTO implements Serializable {
     @SerializedName("IdLinea")
     private int IdLinea;
 
-    @SerializedName("Liena")
+    @SerializedName("Nombre")
     private String Linea;
 
     public int getIdLinea() {

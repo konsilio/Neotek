@@ -87,8 +87,10 @@ public class MainActivity extends AppCompatActivity implements MainView{
         empresaDTOs = new ArrayList<>();
 
 
-        editTextContraseña.setText("saadmin");
-        editTextCorreoElectronico.setText("sa@k.com");
+        //editTextContraseña.setText("saadmin");
+        editTextCorreoElectronico.setText(!session.getAttribute(Session.KEY_EMAIL).equals("") ?
+                session.getAttribute(Session.KEY_EMAIL):"sa@k.com"
+        );
 
 
         //linearLayoutLogin.setVisibility(View.GONE);
@@ -245,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 Log.w("success",getResources().getString(R.string.login_sucess));
                 //se crea la sesion
                 session.createLoginSession(contraseña,usuario,usuarioDTO.getToken(),IdEmpresa,
-                        fb_token,"");
+                        fb_token,"","");
                 ArrayList<MenuDTO> menuDTOs = new ArrayList<MenuDTO>(Arrays.asList(usuarioDTO.getListMenu()));
                 startActivity(menuDTOs);
             }

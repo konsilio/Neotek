@@ -21,11 +21,13 @@ namespace Sagas.MainModule.ObjetosValor.Constantes
         public const string Traspaso = "Traspaso";
         public const string Calibracion = "Calibración";
         public const string TomaDeLectura = "Toma de lectura";
+        public const string Arranque = "Arranque Operación";
 
         //Eventos
         public const string Entrada = "Entrada";
         public const string Salida = "Salida";
         public const string LecturaInicial = "Lectura Inicial";
         public const string LecturaFinal = "Lectura Final";
+        public const string EmpresaNueva = "Empresa Nueva";        
     }
 }

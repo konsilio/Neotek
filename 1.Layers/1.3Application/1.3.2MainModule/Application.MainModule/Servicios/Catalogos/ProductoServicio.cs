@@ -202,5 +202,15 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
+
+        public static List<Producto> ObtenerProductoActivoVenta(short idEmpresa)
+        {
+            var empresa = EmpresaServicio.Obtener(idEmpresa);
+
+            if (empresa.EsAdministracionCentral)
+                return new ProductoDataAccess().ListaProductosActivosVenta();
+            else
+                return new ProductoDataAccess().ListaProductosActivosVenta(empresa.IdEmpresa);
+        }
     }
 }

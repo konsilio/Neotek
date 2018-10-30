@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Presenter.ReportePresenterImpl;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
@@ -81,7 +82,7 @@ public class ReporteInteractorImpl implements ReporteInteractor {
     @Override
     public void Reporte(int idUnidad, Date fecha, String token) {
         String mensaje_error = "";
-        Object reporteDTO = null;
+        ReporteDto reporteDTO = null;
         String url  = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()

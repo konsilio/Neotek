@@ -37,16 +37,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<Empresa>().Get(x => x.EsAdministracionCentral.Equals(conAC)).ToList();
         }
 
-        public RespuestaDto Insertar(Empresa _pro)
+        public RespuestaDto Insertar(Empresa _emp)
         {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
-                    uow.Repository<Empresa>().Insert(_pro);
+                    uow.Repository<Empresa>().Insert(_emp);
                     uow.SaveChanges();
-                    _respuesta.Id = _pro.IdEmpresa;
+                    _respuesta.Id = _emp.IdEmpresa;
                     _respuesta.EsInsercion = true;
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
@@ -81,6 +81,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 {
                     _respuesta.Exito = false;
                     _respuesta.Mensaje = string.Format(Error.C0003, "de la Empresa"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
+        public RespuestaDto Eliminar(short id)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<Sagas.MainModule.Entidades.Empresa>().Delete(id);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0009, "de la Empresa");
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }

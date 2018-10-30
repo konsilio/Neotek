@@ -190,7 +190,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 EsLecturaInicialAlmacen = extras.getBoolean("EsLecturaInicialAlmacen");
                 EsLecturaFinalAlmacen = extras.getBoolean("EsLecturaFinalAlmacen");
                 porcentaje_inicial = lecturaAlmacenDTO.getPorcentajeMedidor();
-                porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
+                //porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
                 if(porcentaje_inicial>0) {
                     String val_per = porcentaje_inicial.toString();
                     numberPickerProcentaje.setValue(Integer.parseInt(val_per.split(".")[0]));

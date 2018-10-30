@@ -12,7 +12,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
     {
         public static AlmacenGasTomaLectura FromDTO(LecturaDTO liadto)
         {
-
             return new AlmacenGasTomaLectura()
             {
                 ClaveOperacion = liadto.ClaveProceso,
@@ -20,6 +19,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdTipoMedidor = liadto.IdTipoMedidor,
                 P5000 = liadto.CantidadP5000,
                 Porcentaje = liadto.PorcentajeMedidor,
+                FechaAplicacion = liadto.FechaAplicacion,
             };
         }
         public static AlmacenGasTomaLecturaFoto FromDTO(string cadenaBase64, short idAlmEntrGasLec, int IdOrden , short numOrden)
@@ -48,7 +48,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 ClaveOperacion = lcdto.ClaveProceso,
                 IdCAlmacenGas = lcdto.IdCAlmacenGas,
                 IdOrden = idOrden,                
-                Cilindros = FromDTOCilindro(lcdto, idOrden)
+                Cilindros = FromDTOCilindro(lcdto, idOrden),
+                FechaAplicacion = lcdto.FechaAplicacion
             };
         }
 
@@ -91,7 +92,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        internal static DatosTomaLecturaDto ToDtoReporte(List<UnidadAlmacenGas> alms)
+        public static DatosTomaLecturaDto ToDtoReporte(List<UnidadAlmacenGas> alms)
         {
             return new DatosTomaLecturaDto()
             {
