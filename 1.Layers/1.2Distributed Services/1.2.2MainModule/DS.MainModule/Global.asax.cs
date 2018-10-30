@@ -30,7 +30,7 @@ namespace DS.MainModule
             //QUITAR ESTA LINEA EN PRODUCCION/////////////
             myTimer.Stop();
             //QUITAR ESTA LINEA EN PRODUCCION/////////////
-            ActualizarSistemaServicio.Actualizar();
+            //ActualizarSistemaServicio.Actualizar();
         }
 
         private void Timer()
