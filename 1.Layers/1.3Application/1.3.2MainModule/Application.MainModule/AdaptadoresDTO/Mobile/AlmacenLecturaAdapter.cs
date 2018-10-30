@@ -91,7 +91,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        internal static DatosTomaLecturaDto ToDtoReporte(List<UnidadAlmacenGas> alms)
+        public static DatosTomaLecturaDto ToDtoReporte(List<UnidadAlmacenGas> alms)
         {
             return new DatosTomaLecturaDto()
             {

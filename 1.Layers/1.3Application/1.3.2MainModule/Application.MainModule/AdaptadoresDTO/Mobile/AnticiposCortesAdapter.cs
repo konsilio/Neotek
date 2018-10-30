@@ -3,7 +3,6 @@ using System.Linq;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.DTOs.Mobile;
 using System;
-using Application.MainModule.DTOs.Respuesta;
 
 namespace Application.MainModule.AdaptadoresDTO.Mobile
 {

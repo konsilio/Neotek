@@ -247,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
                 Log.w("success",getResources().getString(R.string.login_sucess));
                 //se crea la sesion
                 session.createLoginSession(contraseña,usuario,usuarioDTO.getToken(),IdEmpresa,
-                        fb_token,"");
+                        fb_token,"","");
                 ArrayList<MenuDTO> menuDTOs = new ArrayList<MenuDTO>(Arrays.asList(usuarioDTO.getListMenu()));
                 startActivity(menuDTOs);
             }

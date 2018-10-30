@@ -409,6 +409,9 @@ namespace Application.MainModule.Servicios.Almacenes
         public static ReporteDiaDTO ReporteDia(DateTime fecha, short idCAlmacenGas)
         {
             var almacen = ObtenerAlmacen(idCAlmacenGas);
+            var reportes = new AlmacenGasDataAccess().ObtenerReportes();
+            int orden = ordenReportes(reportes);
+
             if (almacen.IdCamioneta !=null && almacen.IdCamioneta>0)
             {
                 var cilindros = new AlmacenGasDataAccess().BuscarTodosCilindros(TokenServicio.ObtenerIdEmpresa());
@@ -417,6 +420,7 @@ namespace Application.MainModule.Servicios.Almacenes
 
                 reporte.Fecha = DateTime.Now;
                 reporte.ClaveReporte = "2018FG675DGD43";
+
                 return reporte;
             }
             else
@@ -428,12 +432,32 @@ namespace Application.MainModule.Servicios.Almacenes
                 var ventas = PuntoVentaServicio.BuscarPorOperadorChofer(operador.IdOperadorChofer);
                 var venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
                 
+
                 //Falta agregar los valores de la venta de gas
                 var reporte = new ReporteAdapter().ToDto(almacen, tipoMedidor,linicial,lfinal);
                 reporte.Fecha = DateTime.Now;
                 reporte.ClaveReporte = "2018FG675DGD43";
+                var adapter = new ReporteAdapter().FormDto(reporte, operador,venta);
+                adapter.Dia = (byte)reporte.Fecha.Day;
+                adapter.Mes = (byte)reporte.Fecha.Month;
+                adapter.Year = (short)reporte.Fecha.Year;
+                adapter.FechaRegistro = reporte.Fecha;
+                adapter.FechaReporte = reporte.Fecha;
+                adapter.Orden = (short) orden;
+
                 return reporte;
             }
+        }
+
+        public static int ordenReportes(List<ReporteDelDia> reportes)
+        {
+            if (reportes != null)
+                if (reportes.Count > 0)
+                    return reportes.Count + 1;
+                else
+                    return 1;
+            else
+                return 1;
         }
 
         public static List<AlmacenGasMovimiento> ObtenerMovimientosEnInventario(short idEmpresa, short idAlmacenGas, DateTime fecha)
