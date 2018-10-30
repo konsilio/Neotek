@@ -8,6 +8,7 @@ namespace Application.MainModule.DTOs.Almacen
 {
     public class InventarioAnteriorDto
     {
+        public short Orden { get; set; }
         public decimal RemaKg { get; set; }
         public decimal RemaLt { get; set; }
         public decimal RemaDiaKg { get; set; }

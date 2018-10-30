@@ -12,6 +12,7 @@ namespace Sagas.MainModule.ObjetosValor.Enum
         public static byte Salida = (byte)tipoMovimiento.Salida;
         public static byte LectInicial = (byte)tipoMovimiento.LectInicial;
         public static byte LectFinal = (byte)tipoMovimiento.LectFinal;
+        public static byte Arranque = (byte)tipoMovimiento.Arranque;
     }
 
     enum tipoMovimiento : byte
@@ -20,5 +21,6 @@ namespace Sagas.MainModule.ObjetosValor.Enum
         Salida = 2,
         LectInicial = 3,
         LectFinal = 4,
+        Arranque = 5,
     }
 }
