@@ -129,11 +129,11 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
     public void VerificarErrores() {
         error = false;
         mensajes_error = new ArrayList<>();
-        if(SLecturaAlmacenActivityListaAlmacen.getSelectedItemPosition()<=0){
+        if(SLecturaAlmacenActivityListaAlmacen.getSelectedItemPosition()<0){
             error = true;
             mensajes_error.add("El almacén principal es un valor requerido ");
         }
-        if(SLecturaAlmacenActivityListaMedidor.getSelectedItemPosition()<=0){
+        if(SLecturaAlmacenActivityListaMedidor.getSelectedItemPosition()<0){
             error = true;
             mensajes_error.add("El medidor prorcentual es un valor requerido");
         }
@@ -146,10 +146,12 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
     @Override
     public void onSuccessMedidores(List<MedidorDTO> data) {
         medidorDTOList = data;
-        lista_medidores = new String[data.size()+1];
-        lista_medidores[0] = "Seleccióne";
+        //lista_medidores = new String[data.size()+1];
+        lista_medidores = new String[data.size()];
+        //lista_medidores[0] = "Seleccióne";
         for (int x=0;x<data.size();x++){
-            lista_medidores[x+1]=data.get(x).getNombreTipoMedidor();
+            //lista_medidores[x+1]=data.get(x).getNombreTipoMedidor();
+            lista_medidores[x]=data.get(x).getNombreTipoMedidor();
         }
         SLecturaAlmacenActivityListaMedidor.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,lista_medidores));
@@ -158,10 +160,12 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
     @Override
     public void onSuccessAlmacenes(DatosTomaLecturaDto data) {
         DatosTomaLecturaDtoList = data;
-        lista_almacenes = new String[data.getAlmacenes().size()+1];
-        lista_almacenes[0]= "Seleccióne";
+        //lista_almacenes = new String[data.getAlmacenes().size()+1];
+        lista_almacenes = new String[data.getAlmacenes().size()];
+        //lista_almacenes[0]= "Seleccióne";
         for (int x = 0; x<data.getAlmacenes().size();x++){
-            lista_almacenes[x+1] = data.getAlmacenes().get(x).getNombreAlmacen();
+            //lista_almacenes[x+1] = data.getAlmacenes().get(x).getNombreAlmacen();
+            lista_almacenes[x] = data.getAlmacenes().get(x).getNombreAlmacen();
         }
         SLecturaAlmacenActivityListaAlmacen.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,lista_almacenes));
@@ -223,7 +227,8 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
     public void showProgress(int message_cargando) {
         progressDialog = new ProgressDialog(LecturaAlmacenActivity.this);
         progressDialog.setIndeterminate(true);
-        progressDialog.setTitle(message_cargando);
+        progressDialog.setMessage(getString(message_cargando));
+        progressDialog.setTitle(R.string.project_id);
         progressDialog.show();
     }
 

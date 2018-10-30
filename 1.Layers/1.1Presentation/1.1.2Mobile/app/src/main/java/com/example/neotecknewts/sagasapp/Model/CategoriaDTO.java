@@ -8,7 +8,7 @@ public class CategoriaDTO implements Serializable {
     @SerializedName("IdCategoria")
     private int IdCategoria;
 
-    @SerializedName("Categoria")
+    @SerializedName("Nombre")
     private String Categoria;
 
     public int getIdCategoria() {

@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Presenter;
 import com.example.neotecknewts.sagasapp.Activity.ReporteView;
 import com.example.neotecknewts.sagasapp.Interactor.ReporteInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.ReporteInteractorImpl;
+import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.R;
 
@@ -42,7 +43,7 @@ public class ReportePresenterImpl implements ReportePresenter {
     }
 
     @Override
-    public void onSuccessReport(Object reporteDTO) {
+    public void onSuccessReport(ReporteDto reporteDTO) {
         view.hiddeProgress();
         view.onSuccessReport(reporteDTO);
     }

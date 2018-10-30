@@ -164,22 +164,39 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.FinalizarRecarga(rfdto), Request);
         }
+        /// <summary>
+        /// Permite retornar las unidades del reporte del día
+        /// Falta
+        /// </summary>
+        /// <returns></returns>
         [Route("catalogos/unidades")]
         public HttpResponseMessage GetCatalogoUnidades()
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoUnidades(), Request);
         }
-
+        /// <summary>
+        /// Genera el reporte del dìa, toma como parametros la fecha y el almacen
+        /// Falta
+        /// </summary>
+        /// <param name="fecha"></param>
+        /// <param name="idCAlmacenGas"></param>
+        /// <returns></returns>
         [Route("reportes/reporte-dia/{fecha}/{idCAlmacenGas}")]
         public HttpResponseMessage GetReporteDia(DateTime fecha, short idCAlmacenGas)
         {
             return RespuestaHttp.crearRespuesta(_mobile.ReporteDia(fecha, idCAlmacenGas),Request);
         }
-        [Route("catalogos/anticipos/{esAnticipo}/{esCorteCaja}")]
+        /// <summary>
+        /// No aplica
+        /// </summary>
+        /// <param name="esAnticipo"></param>
+        /// <param name="esCorteCaja"></param>
+        /// <returns></returns>
+        /*[Route("catalogos/anticipos/{esAnticipo}/{esCorteCaja}")]
         public HttpResponseMessage GetEstacionesDeposito(bool esAnticipo,bool esCorteCaja)
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoEstaciones(esAnticipo, esCorteCaja),Request);
-        }
+        }*/
 
         [Route("catalogos/tipo-persona")]
         public HttpResponseMessage GetTipoPersona()
@@ -205,10 +222,10 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.BuscadorClientes(criterio), Request);
         }
-        [Route("venta/{esCamioneta}/{esEstacion}/{esPipa}")]
-        public HttpResponseMessage PostVenta(VentaDTO venta, bool esCamioneta,bool esEstacion,bool esPipa)
+        [Route("venta")]
+        public HttpResponseMessage PostVenta(VentaDTO venta)
         {
-            return RespuestaHttp.crearRespuesta(_mobile.Venta(venta,esCamioneta,esEstacion,esPipa), Request);
+            return RespuestaHttp.crearRespuesta(_mobile.Venta(venta), Request);
         }
         [Route("catalogos/recarga/{esEstacion}/{esPipa}/{esCamioneta}")]
         public HttpResponseMessage GetListaRecargas(bool esEstacion,bool esPipa,bool esCamioneta)
@@ -268,21 +285,28 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.corte(dto),Request);
         }
 
-        [Route("catalogos/anticipo-y-corte/ventas/{esCorte}/{esAnticipo}")]
-        public HttpResponseMessage GetVentasCortesAnticipos(bool esCorte,bool esAnticipo)
+        [Route("catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}")]
+        public HttpResponseMessage GetVentasCortesAnticipos(short estacion,bool esAnticipos)
         {
-            return null;
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos),Request);
         }
+        /// <summary>
+        /// Permite retornar los catalogos de venta de gas 
+        /// Flata ver donde se extrae
+        /// </summary>
+        /// <param name="esLP">Si es Gas LP</param>
+        /// <param name="esCilindroConGas">Si es Cilindro con gas</param>
+        /// <param name="esCilindro">Si es cilindro</param>
+        /// <returns></returns>
         [Route("catalogos/venta-gas/{esLP}/{esCilindroConGas}/{esCilindro}")]
         public HttpResponseMessage GetCatalogosGas(bool esLP,bool esCilindroConGas, bool esCilindro) 
         {
-            return null;
-    
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogosGas(esLP,esCilindroConGas,esCilindro),Request);
         }
         [Route("catalogos/venta-gas/otros")]
         public HttpResponseMessage GetOtros()
         {
-            return null;
+             return RespuestaHttp.crearRespuesta(_mobile.catalogoOtros(), Request); 
         }
        
     }

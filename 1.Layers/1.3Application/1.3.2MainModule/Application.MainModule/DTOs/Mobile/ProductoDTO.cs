@@ -17,6 +17,9 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal IVA { get; set; }
         public decimal IEPS { get; set; }
         public decimal Importe { get; set; }
-
+        public Nullable<int> IdProducto { get; set; }
+        public Nullable<int> IdCategoria { get; set; }
+        public Nullable<int> IdLinea { get; set; }
+        public string Nombre { get; set; }
     }
 }

@@ -10,16 +10,16 @@ public class DatosVentaOtrosDTO extends RespuestaDTO implements Serializable {
     @SerializedName("Categorias")
     private List<CategoriaDTO> Categorias;
 
-    @SerializedName("Lientas")
+    @SerializedName("Lineas")
     private List<LineaDTO> Lineas;
 
-    @SerializedName("Producto")
-    private List<ProductoOtrosDTO> Producto;
+    @SerializedName("Productos")
+    private List<ProductoOtrosDTO> Productos;
 
     public DatosVentaOtrosDTO(){
         this.Categorias = new ArrayList<>();
         this.Lineas = new ArrayList<>();
-        this.Producto = new ArrayList<>();
+        this.Productos = new ArrayList<>();
     }
 
     public List<CategoriaDTO> getCategorias() {
@@ -39,10 +39,10 @@ public class DatosVentaOtrosDTO extends RespuestaDTO implements Serializable {
     }
 
     public List<ProductoOtrosDTO> getProducto() {
-        return Producto;
+        return Productos;
     }
 
     public void setProducto(List<ProductoOtrosDTO> producto) {
-        Producto = producto;
+        Productos = producto;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 
 import java.util.ArrayList;
@@ -13,5 +14,5 @@ public interface ReporteView {
     void onShowProgress(int mensaje);
     void hiddeProgress();
 
-    void onSuccessReport(Object reporteDTO);
+    void onSuccessReport(ReporteDto reporteDTO);
 }

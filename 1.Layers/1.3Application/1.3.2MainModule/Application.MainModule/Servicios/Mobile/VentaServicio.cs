@@ -13,11 +13,9 @@ namespace Application.MainModule.Servicios.Mobile
 {
     public class VentaServicio
     {
-        public static PuntoVenta BuscarFolioVenta(string folioVenta,int idUsuario)
+        public static RespuestaDto BuscarFolioVenta(VentaDTO Venta)
         {
-            var Operador = PuntoVentaServicio.ObtenerOperador(idUsuario);
-
-            return null; /*PuntoVentaServicio.Obtener(Operador); */
+            return GasServicio.EvaluarClaveOperacion(Venta);
         }
 
         public static RespuestaDto EvaluarClaveOperacion(AnticipoDto dto)
