@@ -66,7 +66,7 @@ namespace Application.MainModule.Servicios.Ventas
         {
             List<VentaPuntoDeVentaDetalle> getTot = new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, anio, mes, dia, orden);
             decimal total = 0;
-            if (type == "kg")
+            if (type == "Kg")
             {
                 foreach (var it in getTot)
                 {
@@ -74,7 +74,7 @@ namespace Application.MainModule.Servicios.Ventas
                     total += cant;
                 }
             }
-            else
+            else if (type == "Lt")
             {
                 foreach (var it in getTot)
                 {
