@@ -817,6 +817,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+
+        public List<ReporteDelDia> ObtenerReportes()
+        {
+            return uow.Repository<ReporteDelDia>().GetAll().ToList();
+        }
     }
 }
       
