@@ -32,8 +32,8 @@ namespace Sagas.MainModule.ObjetosValor.Enum
             Traspaso = 6,
             Calibracion = 7,
             TomaLectura = 8,
-            Venta = 9
-            EmpresaNueva = 9
+            Venta = 9,
+            EmpresaNueva = 10
         }
     }
 }

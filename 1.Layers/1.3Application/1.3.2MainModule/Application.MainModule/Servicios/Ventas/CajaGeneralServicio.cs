@@ -51,7 +51,11 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().Actualizar(pv);
         }
+        //
+        public  static List<VentaPuntoDeVenta> ObtenerVentas(){
 
+            return new CajaGeneralDataAccess().BuscarVentas();
+        }
         public static RespuestaDto Actualizar(List<VentaCorteAnticipoEC> pv)
         {
             return new CajaGeneralDataAccess().Actualizar(pv);
