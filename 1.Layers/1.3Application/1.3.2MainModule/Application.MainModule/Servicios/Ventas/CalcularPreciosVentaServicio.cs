@@ -12,6 +12,16 @@ namespace Application.MainModule.Servicios.Ventas
 {
     public class CalcularPreciosVentaServicio
     {
+        public static decimal ObtenerKilogramosRemanentes(decimal p5000Anterior, decimal p5000Actual, decimal magnatelIni, decimal magnatelFin)
+        {
+            var p5000 = p5000Actual - p5000Anterior;
+            var Magnatel = magnatelFin - magnatelIni;
+
+            if (p5000 < Magnatel)
+                return Magnatel - p5000;
+            else
+                return p5000 - Magnatel;
+        }
         public static decimal ObtenerPrecioSalidaKg(decimal precioPemex, decimal utilidadEsperada)
         {
             return precioPemex + utilidadEsperada;
@@ -52,10 +62,33 @@ namespace Application.MainModule.Servicios.Ventas
             return Saldo - Egreso;
         }
 
+        public static decimal ObtenerLtVenta(short empresa, short anio, byte mes, byte dia, short orden, string type)//VentaPuntoDeVentaDetalle
+        {
+            List<VentaPuntoDeVentaDetalle> getTot = new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, anio, mes, dia, orden);
+            decimal total = 0;
+            if (type == "kg")
+            {
+                foreach (var it in getTot)
+                {
+                    decimal cant = it.CantidadKg ?? 0;
+                    total += cant;
+                }
+            }
+            else
+            {
+                foreach (var it in getTot)
+                {
+                    decimal cant = it.CantidadLt ?? 0;
+                    total += cant;
+                }
+            }
+            return total;
+        }
+
         public static decimal ObtenerSaldoActual(int puntoventa)//Movimientos
         {
-           
-           return new CajaGeneralDataAccess().Buscar(puntoventa).OrderByDescending(x => x.Orden).FirstOrDefault().Saldo;          
+
+            return new CajaGeneralDataAccess().Buscar(puntoventa).OrderByDescending(x => x.Orden).FirstOrDefault().Saldo;
 
         }
         public static decimal ObtenerSaldoActual(int puntoventa, short orden, int position)//Movimientos
@@ -69,13 +102,13 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 value = new CajaGeneralDataAccess().Buscar(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().Saldo;
             }
-                      
+
             return value;//Descendingreturn new CajaGeneralDataAccess().Buscar(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().Saldo;
 
         }
         public static decimal ObtenerSaldoActual(int puntoventa, int position, string Tipo, int p, short anio, byte mes, byte dia)//puntps de venta
         {
-                     decimal value = 0;//.OrderByDescending(x => x.FechaAplicacion).FirstOrDefault().TotalDia;
+            decimal value = 0;//.OrderByDescending(x => x.FechaAplicacion).FirstOrDefault().TotalDia;
 
             if (Tipo == "TotalDia")
             {
@@ -115,7 +148,7 @@ namespace Application.MainModule.Servicios.Ventas
             {
                 if (p > 1)
                 {
-                    value =  new CajaGeneralDataAccess().BuscarTodosPV().Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().TotalAcumDia;
+                    value = new CajaGeneralDataAccess().BuscarTodosPV().Where(x => x.DatosProcesados == true && x.Year == anio && x.Mes == mes && x.Dia == dia).OrderByDescending(x => x.Orden).FirstOrDefault().TotalAcumDia;
                 }
                 else
                 {
