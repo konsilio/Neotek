@@ -52,7 +52,8 @@ namespace Application.MainModule.Servicios.Ventas
             return new CajaGeneralDataAccess().Actualizar(pv);
         }
         //
-        public  static List<VentaPuntoDeVenta> ObtenerVentas(){
+        public static List<VentaPuntoDeVenta> ObtenerVentas()
+        {
 
             return new CajaGeneralDataAccess().BuscarVentas();
         }
@@ -84,7 +85,7 @@ namespace Application.MainModule.Servicios.Ventas
             if (ventaspv != null && ventaspv.Count > 0)
             {
                 //ActualizarTotalesVentas(ventaspv); //se actualizan totales de VentasPuntoVenta
-                //  CargarAVentasMovimientos(ventaspv);//guardar Ventas (de VentaPuntoDeVenta) a Tabla VentasMovimiento
+                //CargarAVentasMovimientos(ventaspv);//guardar Ventas (de VentaPuntoDeVenta) a Tabla VentasMovimiento
                 CargarEnAlmacenGasMov(ventaspv);//guardar registro en Almacen gas movimiento y remanentes
             }
 
@@ -277,153 +278,29 @@ namespace Application.MainModule.Servicios.Ventas
                 ActualizarSaldos(_lMov.ToList(), "PuntosVenta", 0);
             }
         }
-        public static AlmacenGasMovimiento AplicarVentaMov(UnidadAlmacenGas unidadSalida, Empresa empresa, AlmacenGasMovimientoDto Dto)
-        {
-            decimal unidadSalidaCantidadKg = unidadSalida.CantidadActualKg;
-            decimal unidadSalidaCantidadLt = unidadSalida.CantidadActualLt;
-            decimal unidadSalidaPorcentaje = unidadSalida.PorcentajeActual;
 
-            AlmacenGasMovimiento ulMov = AlmacenGasServicio.ObtenerUltimoMovimientoEnInventario(Dto.IdEmpresa, Dto.IdAlmacenGas);
-            AlmacenGasMovimiento ulMovSalida = AlmacenGasServicio.ObtenerUltimoMovimientoDeVenta(Dto.IdEmpresa, unidadSalida.IdCAlmacenGas, Dto.FechaAplicacion);
-
-            decimal MaganatelLtIni = 0;
-            decimal MaganatelLtFin = 0;
-            decimal kilogramosRemanentes = CalcularPreciosVentaServicio.ObtenerKilogramosRemanentes(Dto.P5000Anterior ?? 0, Dto.P5000Actual ?? 0, MaganatelLtIni, MaganatelLtFin);
-            decimal litrosRemanentes = CalcularGasServicio.ObtenerLitrosDesdeKilos(kilogramosRemanentes, empresa.FactorLitrosAKilos);
-            decimal UltimaVentaDiaKg = ulMovSalida.VentaDiaKg ?? 0; //UltimaVentaDiaKg
-            decimal UltimaVentaMesKg = ulMovSalida.VentaMesKg ?? 0;
-            decimal UltimaVentaAnioKg = ulMovSalida.VentaAnioKg ?? 0;
-            decimal UltimaVentaDiaLt = ulMovSalida.VentaDiaLt ?? 0;
-            decimal UltimaVentaMesLt = ulMovSalida.VentaMesLt ?? 0;
-            decimal UltimaVentaAnioLt = ulMovSalida.VentaAnioLt ?? 0;
-            short orden = ulMov != null && ulMov.Orden > 0 ? (short)(ulMov.Orden + 1) : (short)1;
-            AlmacenGasMovimiento x = new AlmacenGasMovimiento();
-
-            x.IdEmpresa = Dto.IdEmpresa;
-            x.Year = Dto.Year;
-            x.Mes = Dto.Mes;
-            x.Dia = Dto.Dia;
-            x.Orden = orden;
-            x.IdTipoMovimiento = TipoMovimientoEnum.Salida;
-            x.IdTipoEvento = TipoEventoEnum.Venta;
-            x.IdOrdenVenta = Dto.IdOrdenVenta;
-            x.IdAlmacenGas = Dto.IdAlmacenGas;
-            x.IdCAlmacenGasPrincipal = unidadSalida.IdCAlmacenGas;
-            x.IdCAlmacenGasReferencia = Dto.IdCAlmacenGasReferencia;
-            x.IdAlmacenEntradaGasDescarga = Dto.IdAlmacenEntradaGasDescarga;
-            x.IdAlmacenGasRecarga = Dto.IdAlmacenGasRecarga;
-            x.FolioOperacionDia = Dto.FolioOperacionDia;
-            x.CAlmacenPrincipalNombre = unidadSalida.Numero;
-            x.CAlmacenReferenciaNombre = Dto.CAlmacenReferenciaNombre;
-            x.OperadorChoferNombre = Dto.OperadorChoferNombre;
-            x.TipoEvento = CajaGeneralServicio.IdentificarTipoEventoString(TipoEventoEnum.Venta).ToString();
-            x.TipoMovimiento = CajaGeneralServicio.IdentificarTipoMovimientoString(TipoMovimientoEnum.Salida).ToString();
-            x.EntradaKg = 0;
-            x.EntradaLt = 0;
-            x.SalidaKg = CalcularPreciosVentaServicio.ObtenerLtVenta(Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, orden, "Kg");
-            x.SalidaLt = CalcularPreciosVentaServicio.ObtenerLtVenta(Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, orden, "Lt");
-            x.CantidadAnteriorKg = unidadSalidaCantidadKg;
-            x.CantidadAnteriorLt = unidadSalidaCantidadLt;
-            x.CantidadActualKg = CalcularGasServicio.RestarKilogramos(unidadSalidaCantidadKg, Dto.SalidaKg);
-            x.CantidadActualLt = CalcularGasServicio.RestarKilogramos(unidadSalida.CantidadActualKg, empresa.FactorLitrosAKilos);
-            x.PorcentajeAnterior = unidadSalidaPorcentaje;
-            if (unidadSalida.CapacidadTanqueLt != null && unidadSalida.CapacidadTanqueLt.Value != 0)
-            {
-                x.PorcentajeActual = CalcularGasServicio.ObtenerPorcentajeDesdeLitros(unidadSalida.CapacidadTanqueLt.Value, unidadSalida.CantidadActualLt);
-            }
-            else
-            {
-                x.PorcentajeActual = 0;
-            }
-            x.P5000Anterior = ulMov != null && ulMov.P5000Actual != null ? ulMov.P5000Actual : 0;//ulMovSalida.P5000Actual;
-            x.P5000Actual = ulMov != null && ulMov.P5000Actual != null ? ulMov.P5000Actual : 0;//ulMovSalida.P5000Actual;
-            x.CantidadAcumuladaDiaKg = CalcularGasServicio.SumarKilogramos(ulMov != null ? ulMov.CantidadAcumuladaDiaKg : 0, Dto.SalidaKg);
-            x.CantidadAcumuladaDiaLt = CalcularGasServicio.SumarLitros(ulMov != null ? ulMov.CantidadAcumuladaDiaLt : 0, Dto.SalidaLt);
-            x.CantidadAcumuladaMesKg = CalcularGasServicio.SumarKilogramos(ulMov != null ? ulMov.CantidadAcumuladaMesKg : 0, Dto.SalidaKg);
-            x.CantidadAcumuladaMesLt = CalcularGasServicio.SumarLitros(ulMov != null ? ulMov.CantidadAcumuladaMesLt : 0, Dto.SalidaLt);
-            x.CantidadAcumuladaAnioKg = CalcularGasServicio.SumarKilogramos(ulMov != null ? ulMov.CantidadAcumuladaAnioKg : 0, Dto.SalidaKg);
-            x.CantidadAcumuladaAnioLt = CalcularGasServicio.SumarLitros(ulMov != null ? ulMov.CantidadAcumuladaAnioLt : 0, Dto.SalidaLt);
-
-            x.RemaKg = kilogramosRemanentes;
-            x.RemaLt = litrosRemanentes;
-            x.RemaDiaKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.RemaDiaKg != null ? ulMovSalida.RemaDiaKg.Value : 0, kilogramosRemanentes);
-            x.RemaDiaLt = CalcularGasServicio.SumarLitros(ulMovSalida.RemaDiaLt != null ? ulMovSalida.RemaDiaLt.Value : 0, litrosRemanentes);
-            x.RemaMesKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.RemaMesKg != null ? ulMovSalida.RemaMesKg.Value : 0, kilogramosRemanentes);
-            x.RemaMesLt = CalcularGasServicio.SumarLitros(ulMovSalida.RemaMesLt != null ? ulMovSalida.RemaMesLt.Value : 0, litrosRemanentes);
-            x.RemaAnioKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.RemaAnioKg != null ? ulMovSalida.RemaAnioKg.Value : 0, kilogramosRemanentes);
-            x.RemaAnioLt = CalcularGasServicio.SumarLitros(ulMovSalida.RemaAnioLt != null ? ulMovSalida.RemaAnioLt.Value : 0, litrosRemanentes);
-            x.RemaAcumDiaKg = CalcularGasServicio.SumarKilogramos(ulMov != null ? ulMov.RemaAcumDiaKg : 0, kilogramosRemanentes);
-            x.RemaAcumDiaLt = CalcularGasServicio.SumarLitros(ulMov != null ? ulMov.RemaAcumDiaLt : 0, litrosRemanentes);
-            x.RemaAcumMesKg = CalcularGasServicio.SumarKilogramos(ulMov != null ? ulMov.RemaAcumMesKg : 0, kilogramosRemanentes);
-            x.RemaAcumMesLt = CalcularGasServicio.SumarLitros(ulMov != null ? ulMov.RemaAcumMesLt : 0, litrosRemanentes);
-            x.RemaAcumAnioKg = CalcularGasServicio.SumarKilogramos(ulMov != null ? ulMov.RemaAcumAnioKg : 0, kilogramosRemanentes);
-            x.RemaAcumAnioLt = CalcularGasServicio.SumarLitros(ulMov != null ? ulMov.RemaAcumAnioLt : 0, litrosRemanentes);
-            x.FechaAplicacion = Dto.FechaAplicacion;
-            x.FechaRegistro = DateTime.Now;
-            /***************/
-            x.VentaKg = CalcularPreciosVentaServicio.ObtenerLtVenta(Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, orden, "Kg");
-            x.VentaLt = CalcularPreciosVentaServicio.ObtenerLtVenta(Dto.IdEmpresa, Dto.Year, Dto.Mes, Dto.Dia, orden, "Lt");
-            x.VentaDiaKg = CalcularGasServicio.SumarKilogramos(x.VentaKg ?? 0, UltimaVentaDiaKg);
-            x.VentaDiaLt = CalcularGasServicio.SumarLitros(x.VentaLt ?? 0, UltimaVentaDiaLt);
-            x.VentaMesKg = CalcularGasServicio.SumarKilogramos(x.VentaKg ?? 0, UltimaVentaMesKg);
-            x.VentaMesLt = CalcularGasServicio.SumarLitros(x.VentaLt ?? 0, UltimaVentaMesLt);
-            x.VentaAnioKg = CalcularGasServicio.SumarKilogramos(x.VentaKg ?? 0, UltimaVentaAnioKg);
-            x.VentaAnioLt = CalcularGasServicio.SumarLitros(x.VentaLt ?? 0, UltimaVentaDiaLt);
-            x.VentaAcumDiaKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaAcumDiaKg, x.VentaDiaKg ?? 0);
-            x.VentaAcumDiaLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaAcumDiaLt, x.VentaDiaLt ?? 0);
-            x.VentaAcumMesKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaAcumMesKg, Dto.VentaAcumMesKg);
-            x.VentaAcumMesLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaAcumMesLt, Dto.VentaAcumMesLt);
-            x.VentaAcumAnioKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaAcumAnioKg, Dto.VentaAcumAnioKg);
-            x.VentaAcumAnioLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaAcumAnioLt, Dto.VentaAcumAnioLt);
-            x.VentaLecturasP5000Kg = 0;
-            x.VentaLecturasP5000Lt = 0;
-            x.VentaLecturasMagnatelKg = 0;
-            x.VentaLecturasMagnatelLt = 0;
-            x.VentaLecturasP5000MesKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasP5000MesKg ?? 0, Dto.VentaLecturasP5000MesKg ?? 0);
-            x.VentaLecturasP5000MesLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasP5000MesLt ?? 0, Dto.VentaLecturasP5000MesLt ?? 0);
-            x.VentaLecturasMagnatelMesKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasMagnatelMesKg ?? 0, Dto.VentaLecturasMagnatelMesKg ?? 0);
-            x.VentaLecturasMagnatelMesLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasMagnatelMesLt ?? 0, Dto.VentaLecturasMagnatelMesLt ?? 0);
-            x.VentaLecturasP5000AnioKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasP5000AnioKg ?? 0, Dto.VentaLecturasP5000AnioKg ?? 0);
-            x.VentaLecturasP5000AnioLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasP5000AnioLt ?? 0, Dto.VentaLecturasP5000AnioLt ?? 0);
-            x.VentaLecturasMagnatelAnioKg = CalcularGasServicio.SumarKilogramos(ulMovSalida.VentaLecturasMagnatelAnioKg ?? 0, Dto.VentaLecturasMagnatelAnioKg ?? 0);
-            x.VentaLecturasMagnatelAnioLt = CalcularGasServicio.SumarLitros(ulMovSalida.VentaLecturasMagnatelAnioLt ?? 0, Dto.VentaLecturasMagnatelAnioLt ?? 0);
-
-            return x;
-
-        }
-
-        public static AlmacenGasMovimiento CargarMovimientos(VentaPuntoDeVenta movimiento)
+        public static void CargarMovimientos(VentaPuntoDeVenta movimiento)
         {
             var almacenGas = new PuntoVentaDataAccess().Buscar(movimiento.IdPuntoVenta).IdCAlmacenGas;
             Empresa empresa = EmpresaServicio.Obtener(movimiento.IdEmpresa);
-            UnidadAlmacenGas unidadEntrada = AlmacenGasServicio.ObtenerAlmacen(almacenGas);
+            UnidadAlmacenGas unidadSalida = AlmacenGasServicio.ObtenerAlmacen(almacenGas);
 
             AlmacenGasMovimientoDto entGasMov = ToDto(movimiento);
-            AlmacenGasMovimiento apDescDto = AplicarVentaMov(unidadEntrada, empresa, entGasMov);
+            AlmacenGasMovimiento apDescDto = CajaGeneralAdapter.FromEntity(unidadSalida, empresa, entGasMov);
 
             new AlmacenGasDescargaDataAccess().Insertar(apDescDto);
-            return apDescDto;
-        }
+          
+        }       
 
-        public static List<AlmacenGasMovimiento> CargarMovimientos(List<VentaPuntoDeVenta> lMov)
+        public static void CargarEnAlmacenGasMov(List<VentaPuntoDeVenta> lMov)
         {
-            List<AlmacenGasMovimiento> aplicaciones = new List<AlmacenGasMovimiento>();
-            List<VentaPuntoDeVenta> ventaGas = lMov;
-
-            if (ventaGas != null && ventaGas.Count > 0)
+            if (lMov != null && lMov.Count > 0)
             {
-                ventaGas.ForEach(x => aplicaciones.Add(CargarMovimientos(x)));
+                foreach (var x in lMov)
+                {
+                    CargarMovimientos(x);
+                }
             }
-
-            return aplicaciones;
-        }
-
-        public static void CargarEnAlmacenGasMov(List<VentaPuntoDeVenta> lst)
-        {
-            List<AlmacenGasMovimiento> AppMov = CargarMovimientos(lst);
-            //List<AlmacenGasMovimiento> AGasMov = AdaptadoresDTO.Almacenes.AlmacenGasAdapter.FromDto(_lst);
-            //new AlmacenGasDataAccess().Insertar(AGasMov);
-            // new AlmacenGasDescargaDataAccess().Insertar(AppMov);
         }
         public static void CargarAnticiposAMovimientos(List<VentaCorteAnticipoEC> lst)
         {
@@ -437,7 +314,7 @@ namespace Application.MainModule.Servicios.Ventas
                 var CurrentSaldo = CalcularPreciosVentaServicio.ObtenerSaldoActual(x.Select(w => w.IdPuntoVenta).FirstOrDefault());
                 foreach (var li in x)
                 {/*revisar flujo*/
-                    RegistrarVentasMovimientosDTO _lstmov = MergeAnticipos(li);
+                    RegistrarVentasMovimientosDTO _lstmov = CajaGeneralAdapter.ToDTO(li);
                     VentaMovimiento Vtasanticipos = AdaptadoresDTO.Ventas.CajaGeneralAdapter.FromDTO(_lstmov);
                     new CajaGeneralDataAccess().Insertar(Vtasanticipos);// hace la insercion a movimientos
                     li.DatosProcesados = Procesados;
@@ -563,30 +440,7 @@ namespace Application.MainModule.Servicios.Ventas
 
             return lstFinal;
         }
-        public static RegistrarVentasMovimientosDTO MergeAnticipos(VentaCorteAnticipoEC v)
-        {
-            RegistrarVentasMovimientosDTO lstFinal = new RegistrarVentasMovimientosDTO();
-
-            lstFinal.IdEmpresa = v.IdEmpresa;
-            lstFinal.Year = v.Year;
-            lstFinal.Mes = v.Mes;
-            lstFinal.Dia = v.Dia;
-            lstFinal.Orden = (short)(CalcularPreciosVentaServicio.ObtenerConsecutivoOrden() + 1);//v.Orden,
-            lstFinal.IdPuntoVenta = v.IdPuntoVenta;
-            lstFinal.IdCliente = 0;//v.IdCliente,
-            lstFinal.IdOperadorChofer = v.IdOperadorChofer;
-            lstFinal.FolioOperacionDia = v.FolioOperacionDia;
-            lstFinal.FolioVenta = v.FolioOperacion;//v.FolioVenta,
-            lstFinal.Egreso = v.TotalAnticipado;
-            lstFinal.PuntoVenta = v.PuntoVenta;
-            lstFinal.OperadorChoferNombre = v.OperadorChofer;
-            lstFinal.FechaRegistro = DateTime.Now;
-            lstFinal.FechaAplicacion = v.FechaAplicacion;
-            lstFinal.Descripcion = v.TipoOperacion;
-            lstFinal.IdCAlmacenGas = new PuntoVentaDataAccess().Buscar(v.IdPuntoVenta).IdCAlmacenGas;
-
-            return lstFinal;
-        }
+     
 
         public static List<RegistrarVentasMovimientosDTO> MergeLstAnticipos(List<VentaCorteAnticipoEC> mov)
         {
@@ -620,8 +474,8 @@ namespace Application.MainModule.Servicios.Ventas
             c.Year = v.Year;
             c.Mes = v.Mes;
             c.Dia = v.Dia;
-            c.Orden = 0;
-            c.IdTipoMovimiento = 0;
+            c.Orden = v.Orden;
+            c.IdTipoMovimiento = TipoMovimientoEnum.Salida;
             c.IdTipoEvento = TipoEventoEnum.Venta;
             c.IdOrdenVenta = v.Orden;
             c.IdAlmacenGas = AlmacenGasServicio.ObtenerAlmacen(new PuntoVentaDataAccess().Buscar(v.IdPuntoVenta).IdCAlmacenGas).IdAlmacenGas ?? 0;
@@ -634,7 +488,7 @@ namespace Application.MainModule.Servicios.Ventas
             c.CAlmacenReferenciaNombre = "";
             c.OperadorChoferNombre = v.OperadorChofer;
             c.TipoEvento = IdentificarTipoEventoString(TipoEventoEnum.Venta).ToString();
-            c.TipoMovimiento = "";
+            c.TipoMovimiento = CajaGeneralServicio.IdentificarTipoMovimientoString(TipoMovimientoEnum.Salida).ToString();
             c.EntradaKg = 0;
             c.EntradaLt = 0;
             c.SalidaKg = 0;//definir
@@ -695,18 +549,6 @@ namespace Application.MainModule.Servicios.Ventas
                 ulMovDia, ulMovMes, ulMovAnio
             };
         }
-        public static AlmacenGasMovimiento ObtenerUltimoMovimientoPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime fecha)
-        {
-            var movimientos = ObtenerUltimosMovimientosDeDescargasPorUnidadAlmacenGas(idEmpresa, idCAlmacenGas, fecha);
-
-            if (movimientos.ElementAt(0) != null) return movimientos.ElementAt(0);
-
-            if (movimientos.ElementAt(1) != null) return movimientos.ElementAt(1);
-
-            if (movimientos.ElementAt(2) != null) return movimientos.ElementAt(2);
-
-            return AlmacenGasAdapter.FromInit();
-        }
 
         public static TipoEventoConst IdentificarTipoEventoString(byte evento)
         {
@@ -722,10 +564,6 @@ namespace Application.MainModule.Servicios.Ventas
                 return stringMovimiento.Salida;
 
             return stringMovimiento.Salida;
-        }
-        public static AlmacenGasMovimiento ObtenerUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas)
-        {
-            return new AlmacenGasDataAccess().BuscarUltimoMovimientoEnInventario(idEmpresa, idAlmacenGas);
         }
     }
 }
