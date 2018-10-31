@@ -52,6 +52,7 @@
             android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
             android:text="@string/tomar_foto"
+            android:drawableLeft="@mipmap/ic_camera"
             android:textAlignment="center"
             tools:ignore="ObsoleteLayoutParam" />
 
