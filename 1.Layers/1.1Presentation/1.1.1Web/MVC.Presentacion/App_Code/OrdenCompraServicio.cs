@@ -35,7 +35,7 @@ namespace MVC.Presentacion.App_Code
             OrdenCompraModel model = new OrdenCompraModel();
             var datos = DatosRequisicion(id, _tkn);
             if (datos != null)
-            {               
+            {
                 model.IdRequisicion = datos.IdRequisicion;
                 model.NumeroRequisicion = datos.NumeroRequisicion;
                 model.IdSolicitante = datos.IdUsuarioSolicitante;
@@ -166,6 +166,12 @@ namespace MVC.Presentacion.App_Code
         {
             AgenteServicio agente = new AgenteServicio();
             agente.EnviarConfirmarPago(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ActualizaProductosOrdenCompra(List<OrdenCompraProductoDTO> prods, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.ActualizarProductosOC(prods, tkn);
             return agente._RespuestaDTO;
         }
         public static RespuestaDTO SolicitarPagoExpedidor(OrdenCompraComplementoGasDTO dto, string tkn)

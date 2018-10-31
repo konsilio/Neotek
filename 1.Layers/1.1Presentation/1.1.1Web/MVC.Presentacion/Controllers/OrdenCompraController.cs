@@ -115,13 +115,25 @@ namespace MVC.Presentacion.Controllers
                 return RedirectToAction("EntradaMercancia", model);
             }
         }
-        public ActionResult OrdenCompraComplemento(int id)
+        public ActionResult OrdenCompraComplemento(int? id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            var complemeto = OrdenCompraServicio.InitComplemento(id, tkn);
-            ViewBag.Proveedor = complemeto.Proveedor;
-            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            var complemeto = OrdenCompraServicio.InitComplemento(id ?? 0, tkn);
+            ViewBag.IVAs = CatalogoServicio.ListaIVA();
+            ViewBag.IEPs = CatalogoServicio.ListaIEPS();
+            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
+            ViewBag.CentrosCosto = CatalogoServicio.BuscarCentrosCosto(tkn);
+            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
+            TempData["intIdOrdenCompra"] = id ?? 0; ;
+            if (TempData["RespuestaDTO"] != null) {
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (!Respuesta.Exito)
+                    ViewBag.MensajeError = Validar(Respuesta);
+                else
+                    ViewBag.Msj = Respuesta.Mensaje;
+               
+            }
             return View(complemeto);
         }
         [HttpPost]
@@ -266,6 +278,49 @@ namespace MVC.Presentacion.Controllers
         public ActionResult BatchEditingPartial()
         {
             return PartialView("ProductosOCPartial");
+        }
+
+        //[ValidateInput(false)]
+        //public ActionResult ProductosComplementoGasPartial()
+        //{
+        //    var model = new object[0];
+        //    return PartialView("_ProductosComplementoGasPartial", model);
+        //}
+        [HttpPost, ValidateInput(false)]
+        public ActionResult ProductosComplementoGasPartialUpdate(MVCxGridViewBatchUpdateValues<ProductoOCDTO, int> updateValues)
+        {
+            var model = new object[0];
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Insert here a code to update the item in your model
+                }
+                catch (Exception e)
+                {
+                    ViewData["EditError"] = e.Message;
+                }
+            }
+            else
+                ViewData["EditError"] = "Please, correct all errors.";
+            return PartialView("_ProductosComplementoGasPartial", model);
+        }
+        [HttpPost, ValidateInput(false)]
+        public ActionResult ProductosComplementoPartialUpdate(MVCxGridViewBatchUpdateValues<OrdenCompraProductoDTO, int> updateValues)
+        {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var id = (int)TempData["intIdOrdenCompra"];
+            updateValues.Update = updateValues.Update.Select(x => { x.IdOrdenCompra = id; return x; }).ToList();
+            TempData["RespuestaDTO"] = OrdenCompraServicio.ActualizaProductosOrdenCompra(updateValues.Update, tkn);
+            return RedirectToAction("OrdenCompraComplemento", new { id = id });
+        }
+
+        [ValidateInput(false)]
+        public ActionResult ProductComplementoPartial()
+        {
+            var model = new object[0];
+            return PartialView("_ProductComplementoPartial", model);
         }
     }
 }

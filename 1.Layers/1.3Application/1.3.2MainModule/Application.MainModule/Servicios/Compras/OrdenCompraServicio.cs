@@ -301,6 +301,28 @@ namespace Application.MainModule.Servicios.Compras
             else
                 oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Proceso_compra;
             return oc;
-        }   
+        }
+        public static List<OrdenCompraProducto> BuscarProductosPorOrdenCompra(int idOrdeCompra)
+        {
+            return new OrdenCompraProductoDataAccess().Buscar(idOrdeCompra);
+        }
+        public static RespuestaDto ActualzarProductos(List<OrdenCompraProducto> productos)
+        {
+            return new OrdenCompraProductoDataAccess().Actualizar(productos);
+        }
+        public static List<OrdenCompraProducto> AplicarCambiosOrdenCompraProducto(List<OrdenCompraProducto> Prods, List<OrdenCompraProducto> Entitys)
+        {
+            foreach (var Entity in Entitys)
+            {
+                var prod = Prods.FirstOrDefault(x => x.IdProducto.Equals(Entity.IdProducto));
+                Entity.IdCentroCosto = prod.IdCentroCosto;            
+                Entity.Precio = prod.Precio;
+                Entity.Descuento = prod.Descuento;
+                Entity.IVA = prod.IVA;
+                Entity.IEPS = prod.IEPS;
+                Entity.Importe = prod.Importe;
+            }
+            return Entitys;
+        }
     }
 }

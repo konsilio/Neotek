@@ -133,7 +133,6 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 TipoDeCambioDOF = oc.TipoDeCambioDOF,
             };            
         }
-
         public static OrdenCompraEstatusDTO ToDTO(OrdenCompraEstatus est)
         {
             return new OrdenCompraEstatusDTO()

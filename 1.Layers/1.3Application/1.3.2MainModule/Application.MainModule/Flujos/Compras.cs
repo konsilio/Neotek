@@ -152,6 +152,22 @@ namespace Application.MainModule.Flujos
 
             return OrdenCompraServicio.Actualizar(entity);
         }
+        public RespuestaDto ActulizarOrdenCompraProducto(List<OrdenCompraProductoDTO> listDTO)
+        {
+            int idOC = listDTO.FirstOrDefault().IdOrdenCompra;
+            var prodsEntity = ProductosOCAdapter.FromEntity(OrdenCompraServicio.BuscarProductosPorOrdenCompra(idOC));
+            var prodOC = ProductosOCAdapter.FromDTO(listDTO);
+
+            var resPord = OrdenCompraServicio.ActualzarProductos(OrdenCompraServicio.AplicarCambiosOrdenCompraProducto(prodOC, prodsEntity));
+            if (resPord.Exito)
+            {
+                var oc = OrdenCompraServicio.Buscar(idOC);
+                oc.Total = prodOC.Sum(x => x.Importe);
+                var entity = OrdenComprasAdapter.FromEntity(oc);
+                return OrdenCompraServicio.Actualizar(entity);
+            }
+            return resPord;        
+        }
         public List<OrdenCompraDTO> ListaOrdenCompra(short IdEmpresa)
         {
             var resp = PermisosServicio.PuedeConsultarOrdenCompra();

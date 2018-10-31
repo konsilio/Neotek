@@ -1,10 +1,17 @@
-@model List<MVC.Presentacion.Models.OrdenCompra.ProductoOCDTO>
-
 @{
-    var grid = Html.DevExpress().GridView(settings => {
-        settings.Name = "ProductosOC";
-        settings.CallbackRouteValues = new { Controller = "OrdenCompra", Action = "ProductosOCPartial" };
-        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "OrdenCompra", Action = "BatchEditingUpdateModel" };
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "ProductosComplementoGas";
+        settings.CallbackRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartial" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartialUpdate" };
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
 
         settings.KeyFieldName = "IdProducto";
 
@@ -18,7 +25,7 @@
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
-
+        
         settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
         settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
         settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
@@ -105,72 +112,11 @@
                 p.ValueType = typeof(int);
                 p.DataSource = ViewBag.Proveedores;
             });
-        });    
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Precio";
-            c.EditorProperties().SpinEdit(p =>
-            {
-                p.DisplayFormatString = "c";
-                p.DisplayFormatInEditMode = true;
-                p.MinValue = 0;
-                p.MaxValue = 1000000;
-            });
         });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Descuento";
-            c.EditorProperties().SpinEdit(p =>
-            {
-                p.DisplayFormatString = "{0} %";
-                p.MinValue = 0;
-                p.MaxValue = 100;
-            });
-        });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "IVA";
-            c.Caption = "IVA";
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.EditorProperties().ComboBox(p =>
-            {
-                p.TextField = "Text";
-                p.ValueField = "Value";
-                p.ValueType = typeof(int);
-                p.DataSource = ViewBag.IVAs;
-            });
-        });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "IEPS";
-            c.Caption = "IEPS";
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.EditorProperties().ComboBox(p =>
-            {
-                p.TextField = "Text";
-                p.ValueField = "Value";
-                p.ValueType = typeof(int);
-                p.DataSource = ViewBag.IEPs;
-            });
-        });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Importe";
-            c.Settings.ShowEditorInBatchEditMode = false;
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
-            c.ReadOnly = true;
-            c.EditorProperties().SpinEdit(p =>
-            {
-                p.DisplayFormatString = "c";
-            });
-        });
-        settings.CellEditorInitialize = (s, e) =>
-        {
-            ASPxEdit editor = (ASPxEdit)e.Editor;
-            editor.ValidationSettings.Display = Display.None;
-        };
-        settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
     });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
 }
 @grid.Bind(Model).GetHtml()

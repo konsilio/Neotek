@@ -87,7 +87,7 @@ namespace Application.MainModule.Servicios.Compras
             }
             return ocs;
         }
-        public static Sagas.MainModule.Entidades.Requisicion CalcularAlmacenProcutos(Sagas.MainModule.Entidades.Requisicion _requisicion)
+        public static Requisicion CalcularAlmacenProcutos(Requisicion _requisicion)
         {
             int x = 0;
             foreach (RequisicionProducto _prod in _requisicion.Productos)

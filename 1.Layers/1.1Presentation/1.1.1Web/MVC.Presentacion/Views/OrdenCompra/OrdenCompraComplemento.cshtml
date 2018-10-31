@@ -1,65 +1,23 @@
-﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraComplementoDTO
-
-<style>
-    .calculaPrecio {
-    }
-</style>
+﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraDTO
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
 <script type="text/javascript">
-    var CalcularImporte = function () {
-        var index;
-        var idtxtPrec;
-        var idtxtDesc;
-        var idddlIVA;
-        var idddlIEPS;
-        var precio = 0;
-        var descuento = 0;
-        var cantidad = 0;
-        var iva;
-        var ieps;
-        var total;
-        var subtotal;
-        var id = $(".calculaPrecio").prevObject[0].activeElement.id;
-        if (id == "")
-            id = $(".calculaPrecio").prevObject[0].activeElement.dataset.id;
-
-        if (id.includes("Precio")) {
-            index = id.replace("OrdenCompraProductos_", "").replace("__Precio", "");
-        }
-        if (id.includes("Descuento")) {
-            index = id.replace("OrdenCompraProductos_", "").replace("__Descuento", "");
-        }
-        if (id.includes("IVA")) {
-            index = id.replace("OrdenCompraProductos_", "").replace("__IVA", "");
-        }
-        if (id.includes("IEPS")) {
-            index = id.replace("OrdenCompraProductos_", "").replace("__IEPS", "");
-        }
-
-        idtxtPrec = "#OrdenCompraProductos_" + index + "__Precio";
-        idtxtDesc = "#OrdenCompraProductos_" + index + "__Descuento";
-        idddlIVA = "#OrdenCompraProductos_" + index + "__IVA";
-        idddlIEPS = "#OrdenCompraProductos_" + index + "__IEPS";
-        idCantidad = "OrdenCompraProductos_" + index + "__CantidadAComprar";
-        idTotlaImporte = "OrdenCompraProductos_" + index + "__Importe";
-
-        precio = parseFloat($(idtxtPrec).val());
-        cantidad = parseFloat($("label[for = '" + idCantidad + "']").text());
-        descuento = ((precio * cantidad) * ($(idtxtDesc).val() / 100));
-        subtotal = (precio * cantidad) - (descuento);
-        iva = ((subtotal) * ($(idddlIVA + " option:selected").val().replace("IVA", "") / 100));
-        ieps = ((subtotal) * ($(idddlIEPS + " option:selected").val().replace("IEPS", "") / 100));
-        total = subtotal + iva + ieps;
-        $("label[for = '" + idTotlaImporte + "']").text(total.toFixed(2));
+    var mensaje = '@ViewBag.Msj';
+    if (mensaje != '') {
+        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
     }
-
-    $(document).ready(function () {
-        $("#btnCrear").click(function () {
-            var form = $(this).parent("form");
-            form.attr('action', '<%= Url.RouteUrl(new { Controller = "OrdenCompra", Action = "CrearOrdenCompra" }) %>');
-            form.attr('method', 'post');
-        });
-    });
 </script>
+<script src="~/Scripts/js/OrdenCompraComplementoJS.js"></script>
 <div class="page-loader-wrapper">
     <div class="loader">
         <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
@@ -81,7 +39,7 @@
                             <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
                             <li class="breadcrumb-item">Compras</li>
                             <li class="breadcrumb-item">Ordern de Compra</li>
-                            <li class="breadcrumb-item">Nueva</li>
+                            <li class="breadcrumb-item">Complemento</li>
                         </ul>
                     </div>
                 </div>
@@ -98,6 +56,10 @@
                                     <div class="input-group">
                                         <b>Número de Requisición:</b>&nbsp;
                                         <label> @Model.NumeroRequisicion</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <b>Número de Orden de Compra:</b>&nbsp;
+                                        <label> @Model.NumOrdenCompra</label>
                                     </div>
                                 </div>
                             </div>
@@ -164,29 +126,26 @@
                             </div>
                         }
                         <div class="row clearfix">
+                            <div class="col-md-4">
+                                <select name="IdProveedor" class="form-control show-tick z-index" data-live-search="true">
+                                    @foreach (var item in ViewBag.Proveedores)
+                                    {
+                                        if (item.IdProveedor == Model.IdProveedor)
+                                        {
+                                            <option value="@item.IdProveedor" selected="selected">@item.NombreComercial</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.IdProveedor">@item.NombreComercial</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row clearfix blockquote blockquote-info btn-round">
                             <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <td><b>Tipo</b></td>
-                                            <td><b>Producto</b></td>
-                                            <td><b>Cantidad</b></td>
-                                            <td><b>Unidad</b></td>
-                                            <td><b>Aplicación</b></td>
-                                            <td><b>Centro de costo</b></td>
-                                            <td><b>Proveedor</b></td>
-                                            <td><b>Cuenta Contable</b></td>
-                                            <td><b>Precio</b></td>
-                                            <td><b>%Desc</b></td>
-                                            <td><b>%IVA</b></td>
-                                            <td><b>%IEPS</b></td>
-                                            <td><b>Importe</b></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @Html.EditorFor(m => m.Productos)
-                                    </tbody>
-                                </table>
+                                @Html.Partial("_ProductComplementoPartial", Model.Productos)
                             </div>
                         </div>
                     </div>
@@ -234,7 +193,7 @@
                                 <h2><strong>Resumen de pagos</strong></h2>
                             </div>
                             <div class="body">
-                                <div class="row clearfix">
+                                <div class="row clearfix blockquote blockquote-info btn-round">
                                     <div class="table-responsive">
                                         <table class="table table-hover">
                                             <thead>

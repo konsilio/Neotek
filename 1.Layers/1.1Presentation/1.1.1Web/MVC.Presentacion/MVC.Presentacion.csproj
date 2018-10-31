@@ -11390,6 +11390,7 @@
     <Content Include="Scripts\js\CProductoJS.js" />
     <Content Include="Scripts\js\CuentasContablesJS.js" />
     <Content Include="Scripts\js\OrdenCompraComplementoGasJS.js" />
+    <Content Include="Scripts\js\OrdenCompraComplementoJS.js" />
     <Content Include="Scripts\js\OrdenCompraJS.js" />
     <Content Include="Scripts\js\OrdenesJS.js" />
     <Content Include="Scripts\js\RequisicionAutorizacionJS.js" />
@@ -11516,6 +11517,8 @@
     <Content Include="Views\Shared\EditorTemplates\AlmacenSalidaDTO.cshtml" />
     <Content Include="Views\Shared\_Perfil.cshtml" />
     <Content Include="Views\OrdenCompra\_ProductosOCPartial.cshtml" />
+    <Content Include="Views\OrdenCompra\_ProductosComplementoGasPartial.cshtml" />
+    <Content Include="Views\OrdenCompra\_ProductComplementoPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
