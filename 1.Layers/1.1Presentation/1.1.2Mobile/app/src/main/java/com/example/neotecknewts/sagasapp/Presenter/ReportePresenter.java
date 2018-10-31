@@ -16,4 +16,6 @@ public interface ReportePresenter {
     void Reporte(int id, Date fecha,String token);
 
     void onSuccessReport(ReporteDto reporteDTO);
+
+    void onError(ReporteDto reporteDTO);
 }

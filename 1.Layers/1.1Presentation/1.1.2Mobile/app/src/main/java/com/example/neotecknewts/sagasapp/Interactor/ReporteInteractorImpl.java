@@ -81,8 +81,6 @@ public class ReporteInteractorImpl implements ReporteInteractor {
 
     @Override
     public void Reporte(int idUnidad, Date fecha, String token) {
-        String mensaje_error = "";
-        ReporteDto reporteDTO = null;
         String url  = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
@@ -95,10 +93,50 @@ public class ReporteInteractorImpl implements ReporteInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<List<UnidadesDTO>> call = restClient.getUnidades(token,"application/json");
+        Call<ReporteDto> call = restClient.getReporte(
+                idUnidad,
+                fecha,
+                token,
+                "application/json"
+        );
+        call.enqueue(new Callback<ReporteDto>() {
+            @Override
+            public void onResponse(Call<ReporteDto> call,
+                                   Response<ReporteDto> response) {
+                ReporteDto reporteDTO  = response.body();
+                if(response.isSuccessful()){
+                    Log.w("Success","Se han cargado ");
 
-        presenter.onSuccessReport(reporteDTO);
-        presenter.onError(mensaje_error);
+                    presenter.onSuccessReport(reporteDTO);
+
+                }else{
+                    switch (response.code()) {
+                        case 404:
+                            Log.w("Error","not found");
+
+                            break;
+                        case 500:
+                            Log.w("Error", "server broken");
+
+                            break;
+                        default:
+                            Log.w("Error", "Error desconocido: "+response.code());
+
+                            break;
+                    }
+                    if(reporteDTO!=null)
+                        presenter.onError(reporteDTO);
+                    else
+                        presenter.onError("Error no. "+response.code()+":"+response.message());
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReporteDto> call, Throwable t) {
+                presenter.onError(t.getMessage());
+            }
+        });
     }
 
 }

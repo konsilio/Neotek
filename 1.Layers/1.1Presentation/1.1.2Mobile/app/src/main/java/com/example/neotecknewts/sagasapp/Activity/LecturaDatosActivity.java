@@ -281,16 +281,17 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
     public void onSuccessEstacionesCarburacion(DatosTomaLecturaDto data) {
         DatosTomaLecturaDto = data;
         ListaCarburacion = new String[DatosTomaLecturaDto.getAlmacenes().size()+1];
-        ListaCarburacion[0] = "Seleccione";
+        //ListaCarburacion[0] = "Seleccione";
         for (int x = 0;x<data.getAlmacenes().size();x++){
-            ListaCarburacion[x+1]=data.getAlmacenes().get(x).getNombreAlmacen();
+            //ListaCarburacion[x+1]=data.getAlmacenes().get(x).getNombreAlmacen();
+            ListaCarburacion[x]=data.getAlmacenes().get(x).getNombreAlmacen();
         }
         SLecturaDatosActivityListaCarburacion.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaCarburacion));
     }
 
     private AlertDialog.Builder CrearAlerta(int titulo,String mensaje){
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this,R.style.AlertDialog);
         alert.setTitle(titulo);
         alert.setMessage(mensaje);
         return alert;

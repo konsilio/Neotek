@@ -86,7 +86,7 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
     @Override
     public void VerificarCampos() {
         if(SAutoconsumoInvetarioActivityInventario.getSelectedItemPosition()<0){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
             builder.setTitle(R.string.error_titulo);
             builder.setMessage(getString(R.string.mensjae_error_campos)+
                     "\nLa unidad de entrada es un valor requerido");
@@ -134,7 +134,7 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
 
     @Override
     public void onError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept, (dialog, which) -> dialog.dismiss());

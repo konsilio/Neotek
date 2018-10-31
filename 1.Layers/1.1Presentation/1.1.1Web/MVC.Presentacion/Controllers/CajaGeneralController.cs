@@ -18,11 +18,13 @@ namespace MVC.Presentacion.Controllers
 
             ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
             var Pagina = page ?? 1;
+            ViewBag.CboxEntidad = VentasServicio.ListaVentasCajaGral(_tkn, "Entidad").Select(x => x.PuntoVenta).Distinct();
+            ViewBag.CboxConcepto = VentasServicio.ListaVentasCajaGral(_tkn, "").Select(x => x.TipoMovimiento).Distinct();
             if (ViewBag.EsSuperUser)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn,"").ToPagedList(Pagina, 20);
-                ViewBag.CboxEnitdad = VentasServicio.ListaVentasCajaGral(_tkn, "").Distinct();
+                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn, "").ToPagedList(Pagina, 20);
+
             }
             else
             {
@@ -61,7 +63,7 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.MensajeError = TempData["RespuestaDTOError"];
             }
             else
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
+                ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View();
         }
         public ActionResult Buscar(CajaGeneralCamionetaModel _model, int? page)
@@ -181,7 +183,7 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsSuperUser)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn,"").ToPagedList(Pagina, 20);
+                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn, "").ToPagedList(Pagina, 20);
             }
             else
             {

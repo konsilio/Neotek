@@ -49,6 +49,7 @@
     <Reference Include="DevExpress.RichEdit.v17.2.Core, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Web.ASPxThemes.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.DemoData.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Web.Mvc5.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Web.v17.2, Version=17.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -338,6 +339,7 @@
     <Compile Include="Models\OrdenCompra\OrdenCompraProductoCrearDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenCompraProductoDTO.cs" />
     <Compile Include="Models\OrdenCompra\OrdenesCompraModel.cs" />
+    <Compile Include="Models\OrdenCompra\ProductoOCDevExpress.cs" />
     <Compile Include="Models\OrdenCompra\ProductoOCDTO.cs" />
     <Compile Include="Models\OrdenCompra\RequisicionOCDTO.cs" />
     <Compile Include="Models\Requisicion\RequisicionAutorizacionDTO.cs" />
@@ -11388,6 +11390,7 @@
     <Content Include="Scripts\js\CProductoJS.js" />
     <Content Include="Scripts\js\CuentasContablesJS.js" />
     <Content Include="Scripts\js\OrdenCompraComplementoGasJS.js" />
+    <Content Include="Scripts\js\OrdenCompraComplementoJS.js" />
     <Content Include="Scripts\js\OrdenCompraJS.js" />
     <Content Include="Scripts\js\OrdenesJS.js" />
     <Content Include="Scripts\js\RequisicionAutorizacionJS.js" />
@@ -11513,6 +11516,9 @@
     <Content Include="Views\Almacen\Salida.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AlmacenSalidaDTO.cshtml" />
     <Content Include="Views\Shared\_Perfil.cshtml" />
+    <Content Include="Views\OrdenCompra\_ProductosOCPartial.cshtml" />
+    <Content Include="Views\OrdenCompra\_ProductosComplementoGasPartial.cshtml" />
+    <Content Include="Views\OrdenCompra\_ProductComplementoPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -11554,7 +11560,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57857</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

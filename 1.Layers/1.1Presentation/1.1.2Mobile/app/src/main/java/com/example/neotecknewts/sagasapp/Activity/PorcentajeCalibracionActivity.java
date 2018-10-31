@@ -67,7 +67,7 @@ public class PorcentajeCalibracionActivity extends AppCompatActivity implements 
             PorcentajeCalibracion = Double.parseDouble(porcentaje);
             confirmar();
         }else{
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
             builder.setTitle(R.string.error_titulo);
             builder.setMessage("El procentaje de calibración es un valor requerido.");
             builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
@@ -87,7 +87,7 @@ public class PorcentajeCalibracionActivity extends AppCompatActivity implements 
 
     @Override
     public void onErrorPorcentaje(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
@@ -100,7 +100,7 @@ public class PorcentajeCalibracionActivity extends AppCompatActivity implements 
     @Override
     public void confirmar() {
         if(porcentaje_original!= PorcentajeCalibracion){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
             builder.setTitle(R.string.title_alert_message);
             builder.setMessage(R.string.confirmacion_configuracion);
             builder.setNegativeButton(R.string.label_no,((dialog, which) -> {

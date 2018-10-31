@@ -517,6 +517,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.Activo).ToList();
         }
 
+
         public List<AlmacenGasMovimiento> BuscarMovimientosEnInventario(short idEmpresa, short idAlmacenGas, short year, byte mes, byte dia)
         {
             return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -1011,6 +1012,29 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<ReporteDelDia>().GetAll().ToList();
 
+        }
+
+        public RespuestaDto Insertar(ReporteDelDia reporte)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            try
+            {
+                uow.Repository<ReporteDelDia>().Insert(reporte);
+                uow.SaveChanges();
+                _respuesta.Id = (int)reporte.IdCAlmacenGas;
+                _respuesta.EsInsercion = true;
+                _respuesta.Exito = true;
+                _respuesta.ModeloValido = true;
+                _respuesta.Mensaje = Exito.OK;
+
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Exito = false;
+                _respuesta.Mensaje = string.Format(Error.C0002, "del la recarga.");
+                _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+            }
+            return _respuesta;
         }
     }
 }

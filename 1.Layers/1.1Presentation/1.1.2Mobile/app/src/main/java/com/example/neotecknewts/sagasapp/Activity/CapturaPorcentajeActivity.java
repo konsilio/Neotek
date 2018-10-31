@@ -479,7 +479,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         if(keyCode == KeyEvent.KEYCODE_BACK) {
             if(iniciar&& almacen) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
                 builder.setTitle(R.string.title_alert_message);
                 builder.setMessage(R.string.message_goback_diabled);
                 builder.setNegativeButton(getString(R.string.label_no), new DialogInterface.OnClickListener() {
@@ -502,7 +502,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 builder.show();
                 return false;
             }else if (iniciar) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
                 builder.setTitle(R.string.title_alert_message);
                 builder.setMessage(R.string.message_goback_diabled);
                 builder.setNegativeButton(getString(R.string.label_no), new DialogInterface.OnClickListener() {

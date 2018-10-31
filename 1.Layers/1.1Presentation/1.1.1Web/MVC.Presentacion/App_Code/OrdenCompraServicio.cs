@@ -82,19 +82,21 @@ namespace MVC.Presentacion.App_Code
         {
             OrdenCompraCrearDTO oc = new OrdenCompraCrearDTO();
             oc.IdRequisicion = model.IdRequisicion;
-            oc.Productos = ObtenerProductosGrid(model.OrdenCompraProductos);
+            oc.Productos = ObtenerProductosGrid(model, Tkn);
             oc.IdOrdenCompraEstatus = OrdenCompraEstatusEnum.Espera_autorizacion;
             oc.FechaAutorizacion = Convert.ToDateTime(DateTime.Today.ToShortDateString());
             return GenerarOrdenesCompra(oc, Tkn);
         }
-        private static List<OrdenCompraProductoCrearDTO> ObtenerProductosGrid(List<ProductoOCDTO> Prods)
+        private static List<OrdenCompraProductoCrearDTO> ObtenerProductosGrid(OrdenCompraModel model, string _tkn)
         {
+            var ProdRequ = DatosRequisicion(model.IdRequisicion, _tkn).ProductosOC;
             List<OrdenCompraProductoCrearDTO> lp = new List<OrdenCompraProductoCrearDTO>();
-            foreach (var _prd in Prods)
+            foreach (var _prd in model.OrdenCompraProductos)
             {
+                var pr = ProdRequ.FirstOrDefault(x => x.IdProducto.Equals(_prd.IdProducto));
                 OrdenCompraProductoCrearDTO p = new OrdenCompraProductoCrearDTO();
                 p.IdProducto = _prd.IdProducto;
-                p.IdCentroCosto = _prd.IdCentroCosto;
+                p.IdCentroCosto = pr.IdCentroCosto;
                 p.IdCuentaContable = _prd.IdCuentaContable;
                 p.IdProveedor = _prd.IdProveedor;
                 p.Precio = _prd.Precio;
@@ -164,6 +166,12 @@ namespace MVC.Presentacion.App_Code
         {
             AgenteServicio agente = new AgenteServicio();
             agente.EnviarConfirmarPago(dto, tkn);
+            return agente._RespuestaDTO;
+        }
+        public static RespuestaDTO ActualizaProductosOrdenCompra(List<OrdenCompraProductoDTO> prods, string tkn)
+        {
+            AgenteServicio agente = new AgenteServicio();
+            agente.ActualizarProductosOC(prods, tkn);
             return agente._RespuestaDTO;
         }
         public static RespuestaDTO SolicitarPagoExpedidor(OrdenCompraComplementoGasDTO dto, string tkn)

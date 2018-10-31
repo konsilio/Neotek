@@ -108,6 +108,7 @@
     <Compile Include="DTOs\Mobile\DatosAutoconsumoDto.cs" />
     <Compile Include="DTOs\Mobile\DatosCalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\DatosClientesDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosGasVentaDto.cs" />
     <Compile Include="DTOs\Mobile\DatosOtrosDto.cs" />
     <Compile Include="DTOs\Mobile\DatosRecargaDto.cs" />
     <Compile Include="DTOs\Mobile\DatosTraspasoDto.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Servicios\AccesoADatos\AlmacenEntradaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenSalidaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />
+    <Compile Include="Servicios\AccesoADatos\OrdenCompraProductoDataAccess.cs" />
     <Compile Include="Servicios\Almacen\RemanenteServicio.cs" />
     <Compile Include="Servicios\Compras\CalcularPagoServicio.cs" />
     <Compile Include="Servicios\Compras\OrdenCompraPagoServicio.cs" />

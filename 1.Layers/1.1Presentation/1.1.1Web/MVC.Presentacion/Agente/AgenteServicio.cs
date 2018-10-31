@@ -1233,8 +1233,10 @@ namespace MVC.Presentacion.Agente
 
                 // _listaCajaGral = lus.OrderByDescending(x=> x.FechaAplicacion).ToList();
                 if (type == "Entidad")
-                {                   
-
+                {
+                    _listaCajaGral = (from x in lus
+                                      orderby x.PuntoVenta
+                                      select x).Distinct().ToList();                                     
                 }
 
                 else
@@ -2735,6 +2737,11 @@ namespace MVC.Presentacion.Agente
         {
             this.ApiOrdenCompra = ConfigurationManager.AppSettings["GetListaPagos"];
             GetListaPago(oc, tkn).Wait();
+        }
+        public void ActualizarProductosOC(List<OrdenCompraProductoDTO> dto, string token)
+        {
+            this.ApiRoute = ConfigurationManager.AppSettings["PutAutorizarProductoOordenCompra"];
+            LLamada(dto, token, MetodoRestConst.Put).Wait();
         }
         private async Task GetListaPago(int idoc, string Token)
         {

@@ -50,6 +50,7 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public Nullable<decimal> FactorConvTransporte { get; set; }
         public Nullable<decimal> PrecioTransporte { get; set; }
         public Nullable<decimal> Casetas { get; set; }
+        public decimal MontoAPagar { get; set; }
         public List<OrdenCompraProductoDTO> Productos { get; set; }
     }
 }

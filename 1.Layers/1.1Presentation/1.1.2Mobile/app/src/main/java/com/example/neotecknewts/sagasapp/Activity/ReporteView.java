@@ -15,4 +15,6 @@ public interface ReporteView {
     void hiddeProgress();
 
     void onSuccessReport(ReporteDto reporteDTO);
+
+    void onErrorMessage(ReporteDto reporteDTO);
 }

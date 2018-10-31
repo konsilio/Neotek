@@ -126,5 +126,10 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_compras.SolicitarPagoPorteador(oc), Request);
         }
+        [Route("actualiza/productos/ordencompra")]
+        public HttpResponseMessage PutAutorizarProductoOordenCompra(List<OrdenCompraProductoDTO> ocProds)
+        {
+            return RespuestaHttp.crearRespuesta(_compras.ActulizarOrdenCompraProducto(ocProds), Request);
+        }
     }
 }

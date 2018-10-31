@@ -127,6 +127,35 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
             };
             return _prodDTO;
         }
+        public static OrdenCompraProducto FromDTO(OrdenCompraProductoDTO _prod)
+        {
+            Producto p = new ProductoDataAccess().BuscarProducto(_prod.IdProducto);
+            OrdenCompraProducto _prodDTO = new OrdenCompraProducto()
+            {
+                IdProducto = _prod.IdProducto,
+                ProductoServicioTipo = p.TipoServicioOProducto.Nombre,
+                IdCentroCosto = _prod.IdCentroCosto,
+                Producto = p.Descripcion,
+                Categoria = _prod.Categoria,
+                Cantidad = _prod.Cantidad,
+                Linea = _prod.Linea,
+                UnidadMedida = p.UnidadMedida.Acronimo,
+                UnidadMedida2 = _prod.UnidadMedida2,
+                Descripcion = _prod.Descripcion,
+                Precio = _prod.Precio,
+                Descuento = _prod.Descuento,
+                IVA = _prod.IVA,
+                IEPS = _prod.IEPS,
+                Importe = _prod.Importe,
+                EsActivoVenta = _prod.EsActivoVenta,
+                EsGas = _prod.EsGas,
+            };
+            return _prodDTO;
+        }
+        public static List<OrdenCompraProducto> FromDTO(List<OrdenCompraProductoDTO> _prods)
+        {
+            return _prods.ToList().Select(x => FromDTO(x)).ToList();
+        }
         public static OrdenCompraProductoCrearDTO ToDTOc(OrdenCompraProducto _prod)
         {
             var prodRequ = RequisicionServicio.BuscarRequisiconProductoPorId(_prod.IdProducto, _prod.OrdenCompra.IdRequisicion);
@@ -181,6 +210,7 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
                 Cantidad = p.Cantidad,
                 IdCentroCosto = p.IdCentroCosto,
                 CentroCosto = p.CentroCosto.Descripcion,
+                IdCuentaContable = p.OrdenCompra.IdCuentaContable,
                 CuentaContable = CuentaContableServicio.ObtenerCuentaContable(p.OrdenCompra.IdCuentaContable).Descripcion,            
                 Descuento = p.Descuento,
                 IVA = p.IVA,
@@ -194,7 +224,6 @@ namespace Application.MainModule.AdaptadoresDTO.Compras
         {
           return _prods.ToList().Select(x => ToDTOx(x)).ToList();
         }
-
         public static OrdenCompraProducto FromEntity(OrdenCompraProducto _prod)
         {
             var p = new ProductoDataAccess().BuscarProducto(_prod.IdProducto);

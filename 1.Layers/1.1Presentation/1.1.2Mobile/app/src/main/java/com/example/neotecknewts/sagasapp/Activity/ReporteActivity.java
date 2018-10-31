@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -84,7 +85,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
         });
         String[] list_unidades = new String[]{"Seleccione", "Pipa No. 1", "Camioneta No. 1", "Estación No. 1",
                 "Pipa No. 2", "Camioneta No. 2", "Estación No. 2"};
-        //presenter.GetUnidades(session.getToken());
+        presenter.GetUnidades(session.getToken());
         SReporteActivityListUnidades.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner, list_unidades));
         SReporteActivityListUnidades.setOnItemSelectedListener(
@@ -121,7 +122,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
             error = true;
             mensajes.add("La fecha a obtener el reporte es requerido");
         }
-        if(SReporteActivityListUnidades.getSelectedItemPosition()<=0){
+        if(SReporteActivityListUnidades.getSelectedItemPosition()<0){
             error = true;
             mensajes.add("La unidad es un valor requerido");
         }
@@ -179,7 +180,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
     public void hiddeProgress() {
         if(progressDialog!= null && progressDialog.isShowing()){
             progressDialog.hide();
-
+            progressDialog.dismiss();
         }
     }
 
@@ -214,6 +215,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
         protected String[] doInBackground(String... strings) {
             String[] text = new String[2];
             if(EsReporteDelDia){
+                //presenter.Reporte(1,fecha,session.getToken());
                 //presenter.Reporte(unidadesDTO.getIdAlmacenGas(),fecha,session.getToken());
                 String formato_reporte_pipa_text ="Reporte-[{Elemento}] \n" +
                         "\n" +
@@ -671,5 +673,16 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
         reporte_con_formato = new String[2];
         reporte_con_formato[0] = formato_reporte_pipa_text;
         reporte_con_formato[1] = formato_reporte_pipa_html;
+    }
+
+    @Override
+    public void onErrorMessage(ReporteDto reporteDTO) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+        builder.setTitle(R.string.error_titulo);
+        builder.setMessage(reporteDTO.getMensajesError());
+        builder.setCancelable(false);
+        builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
+            dialogInterface.dismiss();
+        });
     }
 }

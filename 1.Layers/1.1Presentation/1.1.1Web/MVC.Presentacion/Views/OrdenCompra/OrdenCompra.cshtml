@@ -1,4 +1,16 @@
-﻿@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraModel
+﻿@*@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraModel*@
+@model MVC.Presentacion.Models.OrdenCompra.OrdenCompraModel
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+
 <!DOCTYPE html>
 
 <html>
@@ -6,7 +18,8 @@
     <script src="~/Scripts/js/OrdenCompraJS.js"></script>
 </head>
 <body>
-    @using (Html.BeginForm("CrearOrdenCompra", "OrdenCompra", FormMethod.Post))
+    @*@using (Html.BeginForm("CrearOrdenCompra", "OrdenCompra", FormMethod.Post))*@
+    @using (Html.BeginForm())
     {
         @Html.HiddenFor(m => m.IdEmpresa)
         @Html.HiddenFor(m => m.IdSolicitante)
@@ -98,6 +111,7 @@
                             }
                             @if (ViewBag.MensajeError != null)
                             {
+
                                 <div class="row clearfix">
                                     <div id="divMensajeError" class="container">
                                         <div class="alert alert-danger">
@@ -113,49 +127,21 @@
                             }
                             <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <td><b>Tipo</b></td>
-                                                <td><b>Producto</b></td>
-                                                <td><b>Cantidad</b></td>
-                                                <td><b>Unidad</b></td>
-                                                <td><b>Aplicación</b></td>
-                                                <td><b>Centro de costo</b></td>
-                                                <td style="width:500px !important"><b>Proveedor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                                                <td><strong>Cuenta Contable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
-
-                                                @if (!Model.EsGasTransporte)
-                                                {
-                                                    <td><b>Precio</b></td>
-                                                    <td><b>%Desc</b></td>
-                                                    <td><b>%IVA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                                                    <td><b>%IEPS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                                                    <td><b>Importe</b></td>
-                                                }
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @Html.EditorFor(m => m.OrdenCompraProductos)
-                                        </tbody>
-                                    </table>
+                                    @*@Html.Action("ProductoOCPartial", new { id = Model.IdRequisicion })*@
+                                    @Html.Partial("_ProductosOCPartial", Model.OrdenCompraProductos)
                                 </div>
                             </div>
-
-                            <div class="row clearfix">
+                            <div class="row clearfix">                                
                                 <div class="col-sm-4 center">
-                                    <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
-                                </div>
-                                <div class="col-sm-4 center">
-                                    <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
+                                    <a href="@Url.Action("Ordenes", "OrdenCompra")"  class="btn btn-raised btn-primary btn-round">
                                         Cancelar
                                     </a>
                                 </div>
-                                <div class="col-sm-4 center">
+                                @*<div class="col-sm-4 center">
                                     <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
                                         Crear
                                     </a>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     </div>
@@ -176,48 +162,48 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="body">
-                            <div class="col-sm-12">
-                                <asp:TextBox ID="txtMotivoCancela" TextMode="MultiLine" CssClass="form-control tex" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></asp:TextBox>
+            <div class="modal fade" id="ModalCancelar" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="title" id="ModalCancelarLabel">Motivo de cancelcion</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="body">
+                                <div class="col-sm-12">
+                                    <asp:TextBox ID="txtMotivoCancela" TextMode="MultiLine" CssClass="form-control tex" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></asp:TextBox>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" Text="Cancelar" OnClick="btnCancelar_Click" Enabled="false" />
-                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                        <div class="modal-footer">
+                            <asp:Button ID="btnCancelar" CssClass="btn btn-raised btn-primary btn-round" Text="Cancelar" OnClick="btnCancelar_Click" Enabled="false" />
+                            <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal fade" id="ModalMensaje" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="title" id="ModalMensajeLabel">Orden de Compra exitosa</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="body">
-                            <div class="col-sm-12">
-                                <asp:Label ID="lblMensajeOrdenCompra" TextMode="MultiLine" />
+            <div class="modal fade" id="ModalMensaje" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="title" id="ModalMensajeLabel">Orden de Compra exitosa</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="body">
+                                <div class="col-sm-12">
+                                    <asp:Label ID="lblMensajeOrdenCompra" TextMode="MultiLine" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <asp:Button ID="btnCrear12" CssClass="btn btn-raised btn-primary btn-round" Text="Crear" OnClick="BtnCrear_Click" />
-                        <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                        <div class="modal-footer">
+                            <asp:Button ID="btnCrear12" CssClass="btn btn-raised btn-primary btn-round" Text="Crear" OnClick="BtnCrear_Click" />
+                            <button type="button" class="btn btn-danger btn-simple btn-round waves-effect" data-dismiss="modal">Regresar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     }
 </body>
 @*@Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
-@Scripts.Render("~/Scripts/jquery-ui.js")*@
+    @Scripts.Render("~/Scripts/jquery-ui.js")*@
 </html>

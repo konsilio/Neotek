@@ -43,7 +43,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new ReporteDiaDTO()
             {
-                IdCamioneta = almacen.IdCamioneta.Value,
+                IdCAlmacenGas = almacen.IdCamioneta.Value,
                 NombreCAlmacen = almacen.Numero,
                 Carburacion = 0,
                 KilosDeVenta = 0,
@@ -61,7 +61,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             
             return new ReporteDelDia()
             {
-                IdCAlmacenGas = (short) reporte.IdCamioneta,
+                IdCAlmacenGas = (short) reporte.IdCAlmacenGas,
                 LitrosVenta = reporte.LitrosVenta,
                 ImporteContado = reporte.Importe,
                 PuntoVenta = reporte.NombreCAlmacen,
@@ -71,7 +71,6 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdPuntoVenta = puntoVenta.IdPuntoVenta,
                 ImporteCredito = reporte.ImporteCredito,
                 KilosVenta = reporte.KilosDeVenta,
-
             };
         }
     }

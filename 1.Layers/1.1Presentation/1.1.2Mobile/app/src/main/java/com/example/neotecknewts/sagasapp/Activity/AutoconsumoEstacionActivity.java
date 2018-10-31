@@ -122,7 +122,7 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
 
     @Override
     public void onErrorLista(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept, (dialog, which) -> dialog.dismiss());
@@ -172,7 +172,7 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
 
     @Override
     public void mostrarError(ArrayList<String> mensajes) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getString(R.string.mensjae_error_campos)).append("\n");

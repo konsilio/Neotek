@@ -142,7 +142,7 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
 
     @Override
     public void onError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept,(dialog,which)->{dialog.dismiss();});
@@ -189,7 +189,7 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
 
     @Override
     public void MostrarErrores(List<String> mensajes) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getString(R.string.mensjae_error_campos)).append("\n");
@@ -203,7 +203,7 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
 
     @Override
     public void DialogoBack() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.title_alert_message);
         builder.setMessage(R.string.message_continuar);
         builder.setNegativeButton(R.string.message_cancel, (dialog, which) -> dialog.dismiss());

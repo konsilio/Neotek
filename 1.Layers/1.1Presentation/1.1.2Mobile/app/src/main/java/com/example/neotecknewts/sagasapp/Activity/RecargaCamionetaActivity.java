@@ -75,7 +75,7 @@ public class RecargaCamionetaActivity extends AppCompatActivity implements Recar
     public void ValidarForm(){
         if(SRecargaCamionetaActivityListaCamionetas.getSelectedItemPosition()<=0){
             AlertDialog.Builder builder = new AlertDialog.Builder(
-                    RecargaCamionetaActivity.this);
+                    RecargaCamionetaActivity.this,R.style.AlertDialog);
             builder.setPositiveButton(R.string.message_acept, (dialog, which) -> dialog.dismiss());
             builder.setTitle(R.string.error_titulo);
             builder.setMessage("Debes selecciónar una camioenta, ya que es un valor requerido");
@@ -87,7 +87,7 @@ public class RecargaCamionetaActivity extends AppCompatActivity implements Recar
     @Override
     public void GoBackWindow() {
         AlertDialog.Builder builder = new AlertDialog.Builder(
-                RecargaCamionetaActivity.this);
+                RecargaCamionetaActivity.this,R.style.AlertDialog);
         builder.setTitle(R.string.title_alert_message);
         builder.setMessage(R.string.message_goback_diabled);
         builder.setNegativeButton(R.string.message_cancel, (dialog, which) -> dialog.dismiss());
@@ -134,7 +134,7 @@ public class RecargaCamionetaActivity extends AppCompatActivity implements Recar
     @Override
     public void onError(String mensaje) {
         AlertDialog.Builder builder = new AlertDialog.Builder(
-                RecargaCamionetaActivity.this);
+                RecargaCamionetaActivity.this,R.style.AlertDialog);
         builder.setTitle(R.string.title_alert_message);
         builder.setMessage(getString(R.string.error_conexion)+"\n"+mensaje);
         builder.setNegativeButton(R.string.message_acept, (dialog, which) -> dialog.dismiss());
