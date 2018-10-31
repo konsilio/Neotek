@@ -1200,12 +1200,12 @@ namespace MVC.Presentacion.Agente
         }
         #endregion
         #region Caja General
-        public void BuscarListaVentaCajaGral(string tkn)
+        public void BuscarListaVentaCajaGral(string tkn, string type)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaCajaGral"];
-            GetListaCajaGral(tkn).Wait();
+            GetListaCajaGral(tkn,type).Wait();
         }
-        private async Task GetListaCajaGral(string Token)
+        private async Task GetListaCajaGral(string Token, string type)
         {
             using (var client = new HttpClient())
             {
@@ -1231,8 +1231,16 @@ namespace MVC.Presentacion.Agente
                     client.Dispose(); ;
                 }
 
-                _listaCajaGral = lus.OrderByDescending(x=> x.FechaAplicacion).ToList();
-                
+                // _listaCajaGral = lus.OrderByDescending(x=> x.FechaAplicacion).ToList();
+                if (type == "Entidad")
+                {                   
+
+                }
+
+                else
+                {
+                    _listaCajaGral = lus.OrderByDescending(x => x.Orden).ToList();
+                }
             }
         }
         

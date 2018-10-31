@@ -451,13 +451,14 @@ namespace Application.MainModule.Servicios.Almacenes
                 reporte.Fecha = DateTime.Now;
                 reporte.ClaveReporte = "2018FG675DGD43";
                 var adapter = new ReporteAdapter().FormDto(reporte, operador,venta);
+                adapter.FolioOperacionDia = reporte.ClaveReporte;
                 adapter.Dia = (byte)reporte.Fecha.Day;
                 adapter.Mes = (byte)reporte.Fecha.Month;
                 adapter.Year = (short)reporte.Fecha.Year;
                 adapter.FechaRegistro = reporte.Fecha;
                 adapter.FechaReporte = reporte.Fecha;
                 adapter.Orden = (short) orden;
-
+                var respuesta = new AlmacenGasDataAccess().Insertar(adapter);
                 return reporte;
             }
         }
@@ -549,6 +550,31 @@ namespace Application.MainModule.Servicios.Almacenes
                 ulMovDia, ulMovMes, ulMovAnio
             };
         }
+        public static List<AlmacenGasMovimiento> ObtenerUltimosMovimientosVentasAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime fecha, Byte TEvento)
+        {
+            var ulMovDia = new AlmacenGasDataAccess().BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, TEvento, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
+            var ulMovMes = new AlmacenGasDataAccess().BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, TEvento, (short)fecha.Year, (byte)fecha.Month);
+            var ulMovAnio = new AlmacenGasDataAccess().BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, TEvento, (short)fecha.Year);
+
+            return new List<AlmacenGasMovimiento>()
+            {
+                ulMovDia, ulMovMes, ulMovAnio
+            };
+        }
+
+        public static AlmacenGasMovimiento ObtenerUltimoMovimientoDeVenta(short idEmpresa, short idCAlmacenGas, DateTime fecha)
+        {
+            var movimientos = ObtenerUltimosMovimientosVentasAlmacenGas(idEmpresa, idCAlmacenGas, fecha,TipoEventoEnum.Venta);
+
+            if (movimientos.ElementAt(0) != null) return movimientos.ElementAt(0);
+
+            if (movimientos.ElementAt(1) != null) return movimientos.ElementAt(1);
+
+            if (movimientos.ElementAt(2) != null) return movimientos.ElementAt(2);
+
+            return AlmacenGasAdapter.FromInit();
+        }
+
 
         public static List<AlmacenGasMovimiento> ObtenerUltimosMovimientosPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, byte idTipoMovimiento, DateTime fecha)
         //public static AlmacenGasMovimiento ObtenerUltimoMovimientoDeDescargaPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime fecha)

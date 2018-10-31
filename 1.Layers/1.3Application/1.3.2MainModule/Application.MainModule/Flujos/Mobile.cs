@@ -458,18 +458,23 @@ namespace Application.MainModule.Flujos
             return VentasEstacionesAdapter.ToDTO(categoria,linea,productos);
         }
 
-        public RespuestaDto CatalogosGas(bool esLP, bool esCilindroConGas, bool esCilindro)
+        public List<DatosGasVentaDto> CatalogosGas(bool esLP, bool esCilindroConGas, bool esCilindro)
         {
-            var productos = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa());
-            /*if (esLP)
-                
-                return null;
-            if (esCilindroConGas)
-                return null;
-            if (esCilindro)
-                return null;*/
-            return null;
-        }
+            var productosGas = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa(),true);
+            var unidad = AlmacenGasServicio.ObtenerCamionetas(TokenServicio.ObtenerIdEmpresa());
+            var camioneta = unidad[0];
+            var cilindrosConGas = AlmacenGasServicio.ObtenerCilindros(camioneta);
+            var precios = PuntoVentaServicio.ObtenerPreciosVenta(TokenServicio.ObtenerIdEmpresa());
+            var cilindros = AlmacenGasServicio.ObtenerCilindros();
 
+            if (esLP)
+                return VentasEstacionesAdapter.ToDTO(productosGas, precios);
+            else if (esCilindroConGas)
+                return VentasEstacionesAdapter.ToDTO(camioneta); 
+            else if (esCilindro)
+                return VentasEstacionesAdapter.ToDTOC(cilindros);
+
+            return VentasEstacionesAdapter.ToDTO(camioneta);
+        }
     }
 }

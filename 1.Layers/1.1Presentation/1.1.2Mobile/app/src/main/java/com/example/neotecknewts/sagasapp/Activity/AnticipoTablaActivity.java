@@ -123,7 +123,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     @Override
     public void VerificarCampos() {
         if(EsAnticipo){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
             if(ETAnticipoTablaActivityAnticipo.getText().toString().equals("")){
 
                 builder.setTitle(R.string.error_titulo);
@@ -165,6 +165,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             corteDTO.setLitrosCorte(0);
             corteDTO.setAnticipos(0);
             corteDTO.setMontoCorte(0);
+            presenter.Corte(corteDTO,sagasSql,session.getToken());
             startIntent();
         }
     }
@@ -193,7 +194,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
 
     @Override
     public void onError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setCancelable(false);
@@ -206,7 +207,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
 
     @Override
     public void onSuccessAndroid() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(R.string.mensaje_exito_papeleta_android);
         builder.setCancelable(false);
@@ -219,7 +220,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
 
     @Override
     public void onError(Object ob) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage("");
         builder.setCancelable(false);

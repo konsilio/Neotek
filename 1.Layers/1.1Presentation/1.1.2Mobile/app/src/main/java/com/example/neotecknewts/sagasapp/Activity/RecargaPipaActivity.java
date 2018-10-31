@@ -142,7 +142,8 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
     }
 
     private  void mensajeError(ArrayList<String> mensajes){
-        AlertDialog.Builder builder = new AlertDialog.Builder(RecargaPipaActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(RecargaPipaActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getString(R.string.mensjae_error_campos)).append("\n");
@@ -215,7 +216,8 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
 
     @Override
     public void onError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(RecargaPipaActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(RecargaPipaActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept, (dialog, which) -> dialog.dismiss());

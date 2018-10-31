@@ -1,17 +1,10 @@
+@model  List<MVC.Presentacion.Models.OrdenCompra.OrdenCompraProductoDTO>
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
         settings.Name = "ProductosComplementoGas";
-        settings.CallbackRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartial" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartialUpdate" };
-
-        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
-        settings.SettingsBehavior.ConfirmDelete = true;
-
-        settings.CommandColumn.Visible = true;
-        settings.CommandColumn.ShowNewButton = true;
-        settings.CommandColumn.ShowDeleteButton = true;
-        settings.CommandColumn.ShowEditButton = true;
+        settings.CallbackRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartialUpdate" };
+        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoGasPartialUpdate" };
 
         settings.KeyFieldName = "IdProducto";
 
@@ -25,14 +18,12 @@
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
         settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
-        
+
         settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
         settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
         settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
         settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
         settings.Styles.Table.CssClass = "table";
-        settings.SettingsCommandButton.UpdateButton.Text = "Crear";
-        settings.SettingsCommandButton.UpdateButton.Styles.CssPostfix = "btn btn-raised btn-primary btn-round btn-md";
 
         settings.Columns.Add(c =>
         {
@@ -66,7 +57,6 @@
             c.Caption = "Unidad";
             c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
             c.Settings.AllowSort = DefaultBoolean.False;
-
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(c =>
@@ -75,17 +65,20 @@
             c.Caption = "Detalle";
             c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
             c.Settings.AllowSort = DefaultBoolean.False;
-
             c.EditFormSettings.Visible = DefaultBoolean.False;
         });
         settings.Columns.Add(c =>
         {
-            c.FieldName = "CentroCosto";
+            c.FieldName = "IdCentroCosto";
             c.Caption = "Centro Costo";
-            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
             c.Settings.AllowSort = DefaultBoolean.False;
-
-            c.EditFormSettings.Visible = DefaultBoolean.False;
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.TextField = "Descripcion";
+                p.ValueField = "IdCentroCosto";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.CentrosCosto;
+            });
         });
         settings.Columns.Add(c =>
         {
@@ -100,23 +93,12 @@
                 p.DataSource = ViewBag.CuentasContables;
             });
         });
-        settings.Columns.Add(c =>
+        settings.CellEditorInitialize = (s, e) =>
         {
-            c.FieldName = "IdProveedor";
-            c.Caption = "Proveedor";
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.EditorProperties().ComboBox(p =>
-            {
-                p.TextField = "NombreComercial";
-                p.ValueField = "IdProveedor";
-                p.ValueType = typeof(int);
-                p.DataSource = ViewBag.Proveedores;
-            });
-        });
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+            editor.ValidationSettings.Display = Display.None;
+        };
+        settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
     });
-    if (ViewData["EditError"] != null)
-    {
-        grid.SetEditErrorText((string)ViewData["EditError"]);
-    }
 }
 @grid.Bind(Model).GetHtml()

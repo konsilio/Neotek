@@ -53,7 +53,7 @@ namespace MVC.Presentacion.Models.OrdenCompra
         public short CantidadFotosTractor { get; set; }       
         //Papeleta
         public decimal PrecioConIVA { get; set; }
-        public List<ProductoOCDTO> Productos { get; set; }
+        public List<OrdenCompraProductoDTO> Productos { get; set; }
         public OrdenCompraDTO OrdenCompraExpedidor { get; set; }
         public OrdenCompraDTO OrdenCompraPorteador { get; set; }
         public List<ImagenDTO> Fotos { get; set; }

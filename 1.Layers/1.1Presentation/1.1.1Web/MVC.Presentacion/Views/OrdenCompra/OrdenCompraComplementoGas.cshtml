@@ -1,14 +1,25 @@
 ﻿
 @model  MVC.Presentacion.Models.OrdenCompra.OrdenCompraComplementoGasDTO
-
-<style>
-    .calculaPrecio {
+@Html.DevExpress().GetStyleSheets(
+            new StyleSheet { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.Editors },
+            new StyleSheet { ExtensionSuite = ExtensionSuite.GridView }
+        )
+@Html.DevExpress().GetScripts(
+            new Script { ExtensionSuite = ExtensionSuite.NavigationAndLayout },
+            new Script { ExtensionSuite = ExtensionSuite.Editors },
+            new Script { ExtensionSuite = ExtensionSuite.GridView }
+        )
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+<script type="text/javascript">
+    var mensaje = '@ViewBag.Msj';
+    if (mensaje != '') {
+        $(window).on("load", showNotification('alert-success', mensaje, 'top', 'center', '', ''));
     }
-</style>
-<script>
-
 </script>
-<link rel="stylesheet" href="~/assets/plugins/light-gallery/css/lightgallery.css">
+<script src="~/Scripts/js/OrdenCompraComplementoGasJS.js"></script>
+
 <div class="page-loader-wrapper">
     <div class="loader">
         <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
@@ -107,7 +118,8 @@
                         }
                         <div class="row clearfix blockquote blockquote-info btn-round">
                             <div class="table-responsive">
-                                @Html.Action("ProductosComplementoGasPartial")
+                                @*@Html.Action("ProductosComplementoGasPartial")*@
+                                @Html.Partial("_ProductosComplementoGasPartial", Model.Productos)
                                 @*<table class="table table-hover">
                                         <thead>
                                             <tr>

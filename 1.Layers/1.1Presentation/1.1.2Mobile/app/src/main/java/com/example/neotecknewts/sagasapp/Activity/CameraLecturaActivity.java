@@ -245,7 +245,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
             try {
                 //lecturaDTO.getImagenes().add(imageurl);
                 lecturaDTO.getImagenesURI().add(new URI(imageUri.toString()));
-                lecturaDTO.setCantidadFotografias(lecturaDTO.getCantidadFotografias()+1);
+                lecturaDTO.setCantidadFotografias(lecturaDTO.getCantidadFotografias());
                 //lecturaDTO.setImagenP5000(imageurl);
                 //lecturaDTO.setImagenP5000URI(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
@@ -450,7 +450,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
     }
 
     private AlertDialog.Builder CrearDialogo(int Titulo, String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(Titulo);
         builder.setMessage(mensaje);
 

@@ -161,7 +161,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     _respuesta.Exito = true;
                     _respuesta.ModeloValido = true;
                     _respuesta.Mensaje = Exito.OK;
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     _respuesta.Exito = false;
                     _respuesta.Mensaje = string.Format(Error.C0002, " del autoconsumo");
@@ -267,7 +268,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
 
         public void Actualizar(AplicaRecargaDto aplicaRecarga)
-        {            
+        {
             using (uow)
             {
                 try
@@ -277,7 +278,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
                     if (aplicaRecarga.unidadSalida != null)
                         uow.Repository<UnidadAlmacenGas>().Update(aplicaRecarga.unidadSalida);
-                                        
+
                     if (aplicaRecarga.RecargaLecturaInicialSinNavProp != null)
                         uow.Repository<AlmacenGasRecarga>().Update(aplicaRecarga.RecargaLecturaInicialSinNavProp);
 
@@ -299,7 +300,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
                     if (aplicaRecarga.MovimientoSalida != null)
                         uow.Repository<AlmacenGasMovimiento>().Insert(aplicaRecarga.MovimientoSalida);
-                                        
+
                     if (uow.repositories.Count > 0)
                         uow.SaveChanges();
                     //_respuesta.Id = aplicaRecarga.IdCAlmacenGas;
@@ -424,7 +425,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 {
                     if (aplicaCalibracion.unidadAlmacenGas != null)
                         uow.Repository<UnidadAlmacenGas>().Update(aplicaCalibracion.unidadAlmacenGas);
-                    
+
                     if (aplicaCalibracion.CalibracionLecturaInicialSinNavProp != null)
                         uow.Repository<AlmacenGasCalibracion>().Update(aplicaCalibracion.CalibracionLecturaInicialSinNavProp);
 
@@ -488,7 +489,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                     //    aplicaTomaLectura.TomaLecturaLecturaFinalFotos.ToList().ForEach(x =>
                     //        uow.Repository<AlmacenGasTomaLecturaFoto>().Update(x)
                     //    );
-                    
+
                     if (aplicaTomaLectura.MovimientoUnidad != null)
                         uow.Repository<AlmacenGasMovimiento>().Insert(aplicaTomaLectura.MovimientoUnidad);
 
@@ -515,6 +516,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.IdEstacionCarburacion != null
                                                             && x.Activo).ToList();
         }
+
 
         public List<AlmacenGasMovimiento> BuscarMovimientosEnInventario(short idEmpresa, short idAlmacenGas, short year, byte mes, byte dia)
         {
@@ -640,6 +642,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return BuscarUltimosMovimientosPorUnidadAlamcenGas(idEmpresa, idCAlmacenGas).LastOrDefault();
         }
+
+
         public AlmacenGasMovimiento BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, byte idTipoMovimiento, short year, byte mes, byte dia)
         {
             return BuscarUltimosMovimientosPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, idTipoEvento, idTipoMovimiento, year, mes, dia).LastOrDefault();
@@ -668,7 +672,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public AlmacenGasMovimiento BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(short idEmpresa, short idCAlmacenGas, byte idTipoEvento, byte idTipoMovimiento)
         {
             return BuscarUltimosMovimientosPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, idTipoEvento, idTipoMovimiento).LastOrDefault();
-        }        
+        }
 
         public AlmacenGasMovimiento BuscarUltimoMovimientoEnInventario(short idEmpresa, short idAlmacenGas)
         {
@@ -719,11 +723,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return BuscarMovimientosConTipoEvento(idEmpresa, idTipoEvento, year).LastOrDefault();
         }
-        
+
         public UnidadAlmacenGas ObtenerUnidadAlmacenGasAlterno(short idEmpresa)
         {
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
-                                                                  && x.Activo 
+                                                                  && x.Activo
                                                                   && x.EsAlterno).FirstOrDefault();
         }
         public List<UnidadAlmacenGas> ObtenerUnidadesAlmacenGasAlterno(short idEmpresa)
@@ -745,23 +749,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                        && x.Activo && x.IdPipa != null).ToList();
         }
 
-
-
         public UnidadAlmacenGas BuscarAlmacen(short idCAlmacenGas)
-
         {
-
             return uow.Repository<UnidadAlmacenGas>().GetSingle(
-
                 x => x.IdCAlmacenGas.Equals(idCAlmacenGas)
-
                 && x.Activo
-
             );
-
         }
-
-
 
         public List<UnidadAlmacenGas> BuscarTodosCamionetas(short idEmpresa)
         {
@@ -795,8 +789,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.Activo);
         }
 
-
-
         internal AlmacenGasTomaLectura BuscarLectura(short idCAlmacenGas, byte tipoEvento, DateTime fecha)
 
         {
@@ -812,8 +804,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             );
 
         }
-
-
 
         public List<UnidadAlmacenGas> BuscarTodas(short idEmpresa)
         {
@@ -837,7 +827,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                            && x.EsAlterno.Equals(almacenAlterno)
                                                            && x.Activo).ToList();
-            
+
             return uow.Repository<UnidadAlmacenGas>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                             && x.EsGeneral.Equals(almacenGral)
                                                             && x.Activo).ToList();
@@ -861,7 +851,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public AlmacenGasTomaLectura BuscarClaveOperacion(string claveOperacion)
         {
             return uow.Repository<AlmacenGasTomaLectura>().GetSingle(x => x.ClaveOperacion.Equals(claveOperacion));
-        }        
+        }
         public List<AlmacenGasRecargaFoto> BuscarImagenes(int idAlmacenGasRecarga)
         {
             return uow.Repository<AlmacenGasRecargaFoto>().Get(x => x.IdAlmacenGasRecarga.Equals(idAlmacenGasRecarga)).ToList();
@@ -993,10 +983,63 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+
+        public RespuestaDto Insertar(List<AlmacenGasMovimiento> ventamov)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            try
+            {
+                foreach (var iventa in ventamov)
+                {
+                    uow.Repository<AlmacenGasMovimiento>().Insert(iventa);
+                }
+                uow.SaveChanges();
+                // _respuesta.Id = traspaso.IdCAlmacenGasEntrada;
+                _respuesta.EsInsercion = true;
+                _respuesta.Exito = true;
+                _respuesta.ModeloValido = true;
+                _respuesta.Mensaje = Exito.OK;
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Exito = false;
+                _respuesta.Mensaje = string.Format(Error.C0002, "del gas movimiento");
+                _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+            }
+            return _respuesta;
+        }
         public List<ReporteDelDia> ObtenerReportes()
         {
             return uow.Repository<ReporteDelDia>().GetAll().ToList();
+
+        }
+
+        public RespuestaDto Insertar(ReporteDelDia reporte)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            try
+            {
+                uow.Repository<ReporteDelDia>().Insert(reporte);
+                uow.SaveChanges();
+                _respuesta.Id = (int)reporte.IdCAlmacenGas;
+                _respuesta.EsInsercion = true;
+                _respuesta.Exito = true;
+                _respuesta.ModeloValido = true;
+                _respuesta.Mensaje = Exito.OK;
+
+            }
+            catch (Exception ex)
+            {
+                _respuesta.Exito = false;
+                _respuesta.Mensaje = string.Format(Error.C0002, "del la recarga.");
+                _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+            }
+            return _respuesta;
         }
     }
 }
-      
+
+
+
+
+

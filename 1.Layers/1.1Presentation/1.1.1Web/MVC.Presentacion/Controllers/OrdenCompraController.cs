@@ -131,8 +131,7 @@ namespace MVC.Presentacion.Controllers
                 if (!Respuesta.Exito)
                     ViewBag.MensajeError = Validar(Respuesta);
                 else
-                    ViewBag.Msj = Respuesta.Mensaje;
-               
+                    ViewBag.Msj = Respuesta.Mensaje;               
             }
             return View(complemeto);
         }
@@ -207,7 +206,6 @@ namespace MVC.Presentacion.Controllers
                 return new JsonResult();
             }
         }
-
         public ActionResult OrdenCompraPago(int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
@@ -235,12 +233,22 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             int IdOC = id ?? 0;
+            TempData["intIdOrdenCompra"] = IdOC;
             var complemeto = OrdenCompraServicio.InitComplementoGas(IdOC, tkn);
             ViewBag.IVAs = CatalogoServicio.ListaIVA();
             ViewBag.IEPs = CatalogoServicio.ListaIEPS();
-            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
-            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
-            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
+            ViewBag.CentrosCosto = CatalogoServicio.BuscarCentrosCosto(tkn);
+            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
+            TempData["intIdOrdenCompra"] = id ?? 0; ;
+            if (TempData["RespuestaDTO"] != null)
+            {
+                var Respuesta = (RespuestaDTO)TempData["RespuestaDTO"];
+                if (!Respuesta.Exito)
+                    ViewBag.MensajeError = Validar(Respuesta);
+                else
+                    ViewBag.Msj = Respuesta.Mensaje;
+            }
             return View(complemeto);
         }
         private string Validar(RespuestaDTO Resp = null)
@@ -279,31 +287,15 @@ namespace MVC.Presentacion.Controllers
         {
             return PartialView("ProductosOCPartial");
         }
-
-        //[ValidateInput(false)]
-        //public ActionResult ProductosComplementoGasPartial()
-        //{
-        //    var model = new object[0];
-        //    return PartialView("_ProductosComplementoGasPartial", model);
-        //}
         [HttpPost, ValidateInput(false)]
-        public ActionResult ProductosComplementoGasPartialUpdate(MVCxGridViewBatchUpdateValues<ProductoOCDTO, int> updateValues)
+        public ActionResult ProductosComplementoGasPartialUpdate(MVCxGridViewBatchUpdateValues<OrdenCompraProductoDTO, int> updateValues)
         {
-            var model = new object[0];
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Insert here a code to update the item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            return PartialView("_ProductosComplementoGasPartial", model);
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
+            tkn = Session["StringToken"].ToString();
+            var id = (int)TempData["intIdOrdenCompra"];
+            updateValues.Update = updateValues.Update.Select(x => { x.IdOrdenCompra = id; return x; }).ToList();
+            TempData["RespuestaDTO"] = OrdenCompraServicio.ActualizaProductosOrdenCompra(updateValues.Update, tkn);
+            return RedirectToAction("OrdenCompraComplementoGas", new { id = id });
         }
         [HttpPost, ValidateInput(false)]
         public ActionResult ProductosComplementoPartialUpdate(MVCxGridViewBatchUpdateValues<OrdenCompraProductoDTO, int> updateValues)

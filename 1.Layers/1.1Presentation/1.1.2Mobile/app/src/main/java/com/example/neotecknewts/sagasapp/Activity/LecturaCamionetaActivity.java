@@ -163,7 +163,8 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
 
     @Override
     public void onErrorCamionetas() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaCamionetaActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaCamionetaActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(getString(R.string.error_titulo));
         builder.setMessage(R.string.error_conexion);
         builder.setPositiveButton(R.string.message_acept, (dialog, which) -> dialog.dismiss());
@@ -172,7 +173,8 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
     }
     @Override
     public void mensajeError(List<String> mensaje_error){
-        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaCamionetaActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaCamionetaActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(getString(R.string.error_titulo));
         StringBuilder mensaje = new StringBuilder(getString(R.string.mensjae_error_campos)+"\n");
         for(String men : mensaje_error){
@@ -186,7 +188,8 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
 
     @Override
     public void dialogoRetornar(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaCamionetaActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaCamionetaActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.title_alert_message);
         builder.setMessage(R.string.message_goback_diabled);
         builder.setPositiveButton(R.string.message_acept,(dialog,which)->{
