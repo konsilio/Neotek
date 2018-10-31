@@ -169,7 +169,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
 
     public void DialogoError(ArrayList<String> mensajes){
         AlertDialog.Builder builder = new AlertDialog.Builder(
-                ConfiguracionCamionetaActivity.this);
+                ConfiguracionCamionetaActivity.this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         StringBuilder mensaje = new StringBuilder(getString(R.string.mensjae_error_campos)+"\n");
         for (String men:mensajes){

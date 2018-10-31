@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
         //editTextContraseña.setText("saadmin");
         editTextCorreoElectronico.setText(!session.getAttribute(Session.KEY_EMAIL).equals("") ?
-                session.getAttribute(Session.KEY_EMAIL):"sa@k.com"
+                session.getAttribute(Session.KEY_EMAIL):""
         );
 
 
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
 /// funcion que muestra el dialogo
     private void showDialog(String mensaje){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder1.setMessage(mensaje);
         builder1.setCancelable(true);
 
@@ -229,7 +229,11 @@ public class MainActivity extends AppCompatActivity implements MainView{
         }
 
         spinnerGaseras.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, empresas));
-
+        if(session!= null)
+            for (EmpresaDTO empresa :empresaDTOs){
+                if(empresa.getIdEmpresa()==session.getIdEmpresa())
+                    spinnerGaseras.setSelection(empresaDTOs.indexOf(empresa));
+            }
     }
     
 

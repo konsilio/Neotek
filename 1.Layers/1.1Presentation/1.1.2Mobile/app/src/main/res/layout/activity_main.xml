@@ -34,14 +34,14 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="50sp"
-                    android:layout_height="50sp"
+                    android:layout_width="90sp"
+                    android:layout_height="90sp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginStart="144dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="144dp"
                     android:layout_marginBottom="64dp"
-                    android:src="@drawable/logo"
+                    android:src="@mipmap/ic_sagas_launcher"
                     app:layout_constraintBottom_toTopOf="@+id/textView18"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +103,6 @@
                         android:hint="@string/login_hint_username"
                         android:inputType="text"
                         android:paddingBottom="5dp"
-                        android:text="op"
                         android:textSize="18sp"
                         tools:ignore="Autofill" />
                     <!--android:textColor="@color/colorTextLogin"

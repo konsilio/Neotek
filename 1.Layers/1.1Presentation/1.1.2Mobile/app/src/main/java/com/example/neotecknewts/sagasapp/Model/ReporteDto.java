@@ -56,6 +56,8 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
     @SerializedName("TOtrasVentas")
     private double TOtrasVentas;
 
+    @SerializedName("IdCAlmacenGas")
+    private int IdCAlmacenGas;
 
     public ReporteDto(){
         this.tanques = new ArrayList<>();
@@ -188,6 +190,14 @@ public class ReporteDto extends RespuestaDTO implements Serializable {
 
     public void setOtrasVentas(List<OtrasVentasDTO> otrasVentas) {
         this.otrasVentas = otrasVentas;
+    }
+
+    public int getIdCAlmacenGas() {
+        return IdCAlmacenGas;
+    }
+
+    public void setIdCAlmacenGas(int idCAlmacenGas) {
+        IdCAlmacenGas = idCAlmacenGas;
     }
 
     public class TanquesDto {

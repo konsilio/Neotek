@@ -196,7 +196,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             if (datos.getMensajesError().length() > 0) {
                 mensaje = datos.getMensaje();
             }
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
             builder.setTitle(getString(R.string.error_titulo));
             builder.setMessage(mensaje);
             builder.setPositiveButton(R.string.message_acept, ((dialog, which) -> {
@@ -205,7 +205,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             builder.create();
             builder.show();
         }else{
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
             builder.setTitle(getString(R.string.error_titulo));
             builder.setMessage("No se ha obtenido respuesta con el servidor, verifique su conexión");
             builder.setPositiveButton(R.string.message_acept, ((dialog, which) -> {
@@ -265,7 +265,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
 
     @Override
     public void mostrarDialogoErrores(ArrayList<String> mensajes) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getString(R.string.mensjae_error_campos)).append("\n");
@@ -282,7 +282,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
 
     @Override
     public void onError(String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(getString(R.string.error_titulo));
         builder.setMessage(message);
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
@@ -294,7 +294,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
 
     @Override
     public void onErrorRegistro(RespuestaClienteDTO data) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(getString(R.string.error_titulo));
         if(data!=null) {
             builder.setMessage(data.getMensaje());

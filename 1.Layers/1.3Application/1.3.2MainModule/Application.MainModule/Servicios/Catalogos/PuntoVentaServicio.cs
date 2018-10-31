@@ -95,5 +95,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().InsertarMobile(venta);
         }
+
+        public static List<PrecioVenta> ObtenerPreciosVenta(short idEmpresa)
+        {
+            return new PuntoVentaDataAccess().PreciosVenta(idEmpresa);
+        }
     }
 }

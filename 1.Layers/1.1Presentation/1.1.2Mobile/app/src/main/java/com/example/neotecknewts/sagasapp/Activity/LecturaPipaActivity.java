@@ -166,7 +166,8 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void DialogoCamposVacios(ArrayList<String> mensaje) {
-        AlertDialog.Builder dialogo = new AlertDialog.Builder(LecturaPipaActivity.this);
+        AlertDialog.Builder dialogo = new AlertDialog.Builder(LecturaPipaActivity.this,
+                R.style.AlertDialog);
         dialogo.setTitle(R.string.error_titulo);
         StringBuilder mensaje_dialogo = new StringBuilder(getString(R.string.mensjae_error_campos));
         for (String texto: mensaje
@@ -187,7 +188,8 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void DialogoRetornar() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaPipaActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaPipaActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.title_alert_message);
         builder.setMessage(R.string.message_continuar);
         builder.setNegativeButton(R.string.message_cancel, new DialogInterface.OnClickListener() {
@@ -251,7 +253,8 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onError() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaPipaActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaPipaActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.title_alert_message);
         builder.setMessage(R.string.titulo_error_papeleta);
         builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {

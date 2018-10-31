@@ -47,4 +47,10 @@ public class ReportePresenterImpl implements ReportePresenter {
         view.hiddeProgress();
         view.onSuccessReport(reporteDTO);
     }
+
+    @Override
+    public void onError(ReporteDto reporteDTO) {
+        view.hiddeProgress();
+        view.onErrorMessage(reporteDTO);
+    }
 }

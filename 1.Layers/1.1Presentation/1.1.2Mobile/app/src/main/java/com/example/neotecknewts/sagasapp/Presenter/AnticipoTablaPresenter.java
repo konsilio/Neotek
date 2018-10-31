@@ -1,6 +1,7 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
+import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 public interface AnticipoTablaPresenter {
@@ -13,4 +14,6 @@ public interface AnticipoTablaPresenter {
     void onSuccessAndroid();
 
     void onError(Object ob);
+
+    void Corte(CorteDTO corteDTO, SAGASSql sagasSql, String token);
 }

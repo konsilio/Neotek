@@ -126,7 +126,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
 
     //funcion que muestra un aviso o un dialogo que se puede cancelar o aceptar
     private void showDialog(String mensaje){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder1.setMessage(mensaje);
         builder1.setCancelable(true);
 
@@ -151,7 +151,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
     }
     //funcion que muestra un aviso o un dialogo que solo se puede aceptar
     private void showDialogAceptar(String mensaje){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder1.setMessage(mensaje);
         builder1.setCancelable(true);
 
@@ -244,7 +244,7 @@ public class FinalizarDescargaActivity extends AppCompatActivity implements Fina
 
     @Override
     public void messageError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));

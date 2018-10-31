@@ -451,13 +451,14 @@ namespace Application.MainModule.Servicios.Almacenes
                 reporte.Fecha = DateTime.Now;
                 reporte.ClaveReporte = "2018FG675DGD43";
                 var adapter = new ReporteAdapter().FormDto(reporte, operador,venta);
+                adapter.FolioOperacionDia = reporte.ClaveReporte;
                 adapter.Dia = (byte)reporte.Fecha.Day;
                 adapter.Mes = (byte)reporte.Fecha.Month;
                 adapter.Year = (short)reporte.Fecha.Year;
                 adapter.FechaRegistro = reporte.Fecha;
                 adapter.FechaReporte = reporte.Fecha;
                 adapter.Orden = (short) orden;
-
+                var respuesta = new AlmacenGasDataAccess().Insertar(adapter);
                 return reporte;
             }
         }

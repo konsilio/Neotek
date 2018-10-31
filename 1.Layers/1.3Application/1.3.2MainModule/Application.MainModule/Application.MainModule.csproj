@@ -107,6 +107,7 @@
     <Compile Include="DTOs\Mobile\DatosAutoconsumoDto.cs" />
     <Compile Include="DTOs\Mobile\DatosCalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\DatosClientesDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosGasVentaDto.cs" />
     <Compile Include="DTOs\Mobile\DatosOtrosDto.cs" />
     <Compile Include="DTOs\Mobile\DatosRecargaDto.cs" />
     <Compile Include="DTOs\Mobile\DatosTraspasoDto.cs" />

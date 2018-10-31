@@ -203,14 +203,14 @@ namespace Application.MainModule.Servicios.Catalogos
             };
         }
 
-        public static List<Producto> ObtenerProductoActivoVenta(short idEmpresa)
+        public static List<Producto> ObtenerProductoActivoVenta(short idEmpresa,bool esGas = false)
         {
             var empresa = EmpresaServicio.Obtener(idEmpresa);
 
             if (empresa.EsAdministracionCentral)
                 return new ProductoDataAccess().ListaProductosActivosVenta();
             else
-                return new ProductoDataAccess().ListaProductosActivosVenta(empresa.IdEmpresa);
+                return new ProductoDataAccess().ListaProductosActivosVenta(empresa.IdEmpresa, esGas);
         }
     }
 }

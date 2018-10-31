@@ -640,7 +640,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
     }
     //se muestra un cuadro de dialogo con un mensaje
     private void showDialogAceptar(String titulo, String mensaje){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder1.setTitle(titulo);
         builder1.setMessage(mensaje);
         builder1.setCancelable(false);
@@ -695,7 +695,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
      */
     @Override
     public void onSuccessRegistroPapeleta() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.titulo_exito_registro_papeleta);
         builder.setMessage(R.string.mensaje_exito_papeleta_registro_en_servicio);
         builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
@@ -718,7 +719,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
      */
     @Override
     public void onSuccessRegistroAndroid(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.titulo_exito_registro_papeleta_android);
         builder.setMessage(R.string.mensaje_exito_papeleta_android);
         builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
@@ -743,7 +745,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
      */
     @Override
     public void showError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.titulo_error_papeleta);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
@@ -758,7 +761,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
 
     @Override
     public void onRegistrarIniciarDescarga() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.titulo_exito_registro_papeleta);
         builder.setMessage(R.string.mensaje_exito_papeleta_registro_en_servicio);
         builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
@@ -776,7 +780,8 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
 
     @Override
     public void onSuccessRegistroRecarga() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(SubirImagenesActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.titulo_exito_registro_papeleta);
         builder.setMessage(R.string.mensaje_exito_papeleta_registro_en_servicio);
         builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {

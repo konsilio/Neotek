@@ -173,7 +173,8 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
 
     @Override
     public void onError() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaAlmacenActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaAlmacenActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(R.string.error_conexion);
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {
@@ -185,7 +186,8 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
 
     @Override
     public void DialogoRetroceder() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(LecturaAlmacenActivity.this);
+        AlertDialog.Builder alert = new AlertDialog.Builder(LecturaAlmacenActivity.this,
+                R.style.AlertDialog);
         alert.setTitle(R.string.title_alert_message);
         alert.setMessage(R.string.message_continuar);
         alert.setPositiveButton(R.string.message_acept, (dialog, which) -> {
@@ -210,7 +212,8 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
 
     @Override
     public void DialogoError(ArrayList<String> mensajes_error) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaAlmacenActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(LecturaAlmacenActivity.this,
+                R.style.AlertDialog);
         builder.setTitle(R.string.app_name);
         builder.setMessage(R.string.error_titulo);
         StringBuilder dialogo = new StringBuilder(getString(R.string.mensjae_error_campos)+"\n");
