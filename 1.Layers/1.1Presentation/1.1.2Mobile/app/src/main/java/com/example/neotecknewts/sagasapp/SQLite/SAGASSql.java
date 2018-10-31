@@ -11,6 +11,7 @@ import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
+import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
@@ -2170,7 +2171,19 @@ public class SAGASSql extends SQLiteOpenHelper {
                 null
         );
     }
-
+    public Long InserCorte(CorteDTO corteDTO) {
+        ContentValues values = new ContentValues();
+        values.put("ClaveOperacion",corteDTO.getClaveOperacion());
+        values.put("Fecha",corteDTO.getFecha().toString());
+        values.put("IdEstacion",corteDTO.getIdEstacion());
+        values.put("FechaCorte",corteDTO.getFecha().toString());
+        values.put("Hora",corteDTO.getHora());
+        return this.getWritableDatabase().insert(
+                TABLE_CORTES,
+                null,
+                values
+        );
+    }
     public Integer EliminarCorte(String claveOperacion){
         return this.getWritableDatabase().delete(
                 TABLE_CORTES,
@@ -2195,5 +2208,7 @@ public class SAGASSql extends SQLiteOpenHelper {
           values
         );
     }
+
+
     //endregion
 }

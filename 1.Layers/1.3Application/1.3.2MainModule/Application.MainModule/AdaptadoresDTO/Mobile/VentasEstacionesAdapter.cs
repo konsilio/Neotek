@@ -3,6 +3,7 @@ using System.Linq;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.DTOs.Mobile;
 using System;
+using Application.MainModule.DTOs.Respuesta;
 
 namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
@@ -99,5 +100,54 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             }
             return list;
         }
+
+        public static List<DatosGasVentaDto> ToDTO(List<Producto> productosGas, List<PrecioVenta> precios)
+        {
+            return productosGas.Select(x => ToDTO(x, precios)).ToList();
+        }
+
+        public static DatosGasVentaDto ToDTO(Producto productoGas, List<PrecioVenta> precios)
+        {
+            var precio = precios.Find(x => x.IdProducto.Equals(productoGas.IdProducto));
+            return new DatosGasVentaDto()
+            {
+                Nombre = productoGas.Descripcion,
+                Id= productoGas.IdProducto,
+                PrecioUnitario = precio.PrecioSalidaKg.Value,
+                
+            };
+        }
+
+        public static List<DatosGasVentaDto> ToDTO(UnidadAlmacenGas camioneta)
+        {
+            return camioneta.Camioneta.Cilindros.Select(x => ToDTO(x)).ToList();
+        }
+
+        public static DatosGasVentaDto ToDTO(CamionetaCilindro cilindro)
+        {
+            return new DatosGasVentaDto()
+            {
+                Id = cilindro.IdCilindro,
+                Existencia = cilindro.Cantidad,
+                PrecioUnitario = cilindro.UnidadAlmacenGasCilindro.Precio,
+                Nombre = "Cilindro " + cilindro.UnidadAlmacenGasCilindro.CapacidadKg
+            };
+        }
+
+        public static List<DatosGasVentaDto> ToDTOC(List<UnidadAlmacenGasCilindro> cilindros)
+        {
+            List<DatosGasVentaDto> list = new List<DatosGasVentaDto>();
+            foreach (var cilindro in cilindros)
+            {
+                list.Add(new DatosGasVentaDto()
+                {
+                    Nombre = "Cilindro "+ cilindro.CapacidadKg,
+                    PrecioUnitario =cilindro.Precio,
+                    Id = cilindro.IdCilindro
+                });
+            }
+            return list;
+        }
+
     }
 }

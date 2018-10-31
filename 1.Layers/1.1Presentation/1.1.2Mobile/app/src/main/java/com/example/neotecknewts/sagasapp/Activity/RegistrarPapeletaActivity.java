@@ -401,7 +401,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
     //metodo que muestra un mensaje
     private void showDialog(String mensaje){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder1.setMessage(mensaje);
         builder1.setCancelable(true);
 
@@ -464,7 +464,8 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public void messageError(int mensaje) {
         Log.w("Mensaje",getResources().getString(mensaje));
         //showDialog(getResources().getString(mensaje));
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(RegistrarPapeletaActivity.this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(
+                RegistrarPapeletaActivity.this,R.style.AlertDialog);
         builder1.setMessage(mensaje);
         builder1.setCancelable(true);
 
@@ -529,7 +530,8 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
      */
     @Override
     public void onSuccessRegistrarPapeleta() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this.getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getApplicationContext(),
+                R.style.AlertDialog);
         builder.setTitle("Listo");
         builder.setMessage("Papeleta registrada");
         builder.show();
@@ -553,7 +555,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
     @Override
     public void messageError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));

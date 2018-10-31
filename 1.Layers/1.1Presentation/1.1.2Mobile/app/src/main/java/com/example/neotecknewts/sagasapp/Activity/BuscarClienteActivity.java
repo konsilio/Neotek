@@ -102,7 +102,7 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
 
     @Override
     public void onError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept,(dialog, which) -> dialog.dismiss());

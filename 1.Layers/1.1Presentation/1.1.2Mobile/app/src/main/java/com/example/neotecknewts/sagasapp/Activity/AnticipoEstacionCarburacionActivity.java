@@ -93,7 +93,7 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
 
     @Override
     public void onError(String error) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(error);
         builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) ->
@@ -103,7 +103,7 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
 
     @Override
     public void onError(RespuestaEstacionesVentaDTO data) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(data.getMensajesError());
         builder.setPositiveButton(R.string.message_acept,((dialogInterface, i) ->

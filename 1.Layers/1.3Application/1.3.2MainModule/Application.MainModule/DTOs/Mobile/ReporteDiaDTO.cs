@@ -14,7 +14,7 @@ namespace Application.MainModule.DTOs.Mobile
 {
     public class ReporteDiaDTO
     {
-        public int IdCamioneta { get; set; }
+        public int IdCAlmacenGas { get; set; }
         public string NombreCAlmacen { get; set; }
         public MedidorDto Medidor { get; set; }
         public string ClaveReporte { get; set; }

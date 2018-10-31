@@ -5,6 +5,7 @@ import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.ClienteDTO;
+import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosClientesDTO;
@@ -25,8 +26,10 @@ import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaClienteDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaCorteDto;
 import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
@@ -44,6 +47,7 @@ import com.example.neotecknewts.sagasapp.Model.UsuarioLoginDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
 
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -352,4 +356,15 @@ public interface RestClient {
             @Header("Authorization") String token,
             @Header("Content-type") String contentType
     );
+    @POST(Constantes.GET_REPORTE)
+    Call<ReporteDto> getReporte(@Path(value = "idCAlmacenGas") int idCAlmacenGas,
+                                @Path(value = "fecha") Date fecha,
+                                @Header("Authorization") String token,
+                                @Header("Content-type") String contentType
+    );
+
+    @POST(Constantes.POST_CORTE)
+    Call<RespuestaCorteDto> postCorte(@Body CorteDTO corteDTO,
+                                      @Header("Authorization") String token,
+                                      @Header("Content-type") String contenType);
 }

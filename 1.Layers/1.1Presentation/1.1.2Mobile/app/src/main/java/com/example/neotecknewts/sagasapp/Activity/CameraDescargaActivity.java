@@ -149,6 +149,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsLecturaFinalPipa= false;
                 EsLecturaInicialAlmacen = false;
                 EsLecturaFinalAlmacen = false;
+                setTitle(R.string.title_iniciar_descarga);
             }
             //se acomoda la vista en modo Finalizar descarga y se les da valor a las variables realcionadas con finalizar descarga
             else if(extras.getBoolean("EsDescargaFinalizar")){
@@ -171,6 +172,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsLecturaFinalPipa= false;
                 EsLecturaInicialAlmacen = false;
                 EsLecturaFinalAlmacen = false;
+                setTitle(R.string.title_finalizar_descarga);
             }else if (extras.getBoolean("EsLecturaInicial") ||
                     extras.getBoolean("EsLecturaFinal")){
                 lecturaDTO = (LecturaDTO) extras.getSerializable("lecturaDTO");
@@ -183,6 +185,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsLecturaFinalPipa= false;
                 EsLecturaInicialAlmacen = false;
                 EsLecturaFinalAlmacen = false;
+                setTitle(R.string.toma_de_lectura);
             }else if (extras.getBoolean("EsLecturaInicialPipa")||
                     extras.getBoolean("EsLecturaFinalPipa")){
                 lecturaPipaDTO = (LecturaPipaDTO) extras.getSerializable("lecturaPipaDTO");
@@ -195,6 +198,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsLecturaFinalPipa= extras.getBoolean("EsLecturaFinalPipa");
                 EsLecturaInicialAlmacen = false;
                 EsLecturaFinalAlmacen = false;
+                setTitle(R.string.toma_de_lectura);
+                textViewMensaje.setText("");
             }else if (extras.getBoolean("EsLecturaInicialAlmacen")||
                     extras.getBoolean("EsLecturaFinalAlmacen")){
                 lecturaAlmacenDTO = (LecturaAlmacenDTO) extras.
@@ -209,6 +214,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsLecturaFinalPipa = false;
                 EsLecturaInicialAlmacen = extras.getBoolean("EsLecturaInicialAlmacen");
                 EsLecturaFinalAlmacen = extras.getBoolean("EsLecturaFinalAlmacen");
+                setTitle(R.string.toma_de_lectura);
             }else if(extras.getBoolean("EsRecargaEstacionInicial") ||
                     extras.getBoolean("EsRecargaEstacionFinal")){
                 recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
@@ -585,7 +591,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK){
             if(iniciar) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
                 builder.setTitle(R.string.title_alert_message);
                 builder.setMessage(R.string.message_goback_diabled);
                 builder.setNegativeButton(getString(R.string.label_no), new DialogInterface.OnClickListener() {

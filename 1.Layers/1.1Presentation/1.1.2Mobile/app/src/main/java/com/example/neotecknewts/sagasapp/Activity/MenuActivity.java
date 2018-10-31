@@ -171,7 +171,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
     }
     //metodo que muestra algun mensaje
     private void showDialog(String mensaje){
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder1.setMessage(mensaje);
         builder1.setCancelable(true);
 

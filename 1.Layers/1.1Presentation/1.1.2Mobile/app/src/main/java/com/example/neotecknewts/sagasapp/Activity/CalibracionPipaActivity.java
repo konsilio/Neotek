@@ -175,7 +175,7 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
 
     @Override
     public void errorDialog(ArrayList<String> mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         StringBuilder stringBuilder  = new StringBuilder();
         stringBuilder.append(getString(R.string.mensjae_error_campos)).append("\n");
@@ -189,7 +189,7 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
 
     @Override
     public void dialogoGoBack() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setTitle(R.string.title_alert_message);
         builder.setMessage(R.string.message_continuar);
@@ -240,7 +240,7 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
 
     @Override
     public void onError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setTitle(R.string.title_alert_message);
         builder.setMessage(mensaje);

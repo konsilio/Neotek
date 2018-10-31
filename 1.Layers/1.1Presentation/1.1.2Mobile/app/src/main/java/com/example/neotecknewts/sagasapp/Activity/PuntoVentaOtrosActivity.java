@@ -115,7 +115,8 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
                 intent.putExtra("EsVentaPipa",EsVentaPipa);
                 startActivity(intent);
             }else{
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this,
+                        R.style.AlertDialog);
                 builder.setTitle(R.string.error_titulo);
                 builder.setMessage(R.string.No_venta);
                 builder.setPositiveButton(R.string.message_acept,
@@ -251,7 +252,8 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
                     list_producto
             ));
         }else{
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,
+                    R.style.AlertDialog);
             builder.setTitle(R.string.error_titulo);
             builder.setMessage("Ha surgido unn error desconocido");
             builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
@@ -261,7 +263,7 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
 
     @Override
     public void onError(DatosVentaOtrosDTO dtos) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(dtos.getMensajesError());
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
@@ -270,7 +272,7 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
 
     @Override
     public void onError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
