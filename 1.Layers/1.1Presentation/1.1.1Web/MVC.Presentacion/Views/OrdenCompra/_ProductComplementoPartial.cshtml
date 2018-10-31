@@ -67,15 +67,7 @@
             c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
             c.Settings.AllowSort = DefaultBoolean.False;
             c.EditFormSettings.Visible = DefaultBoolean.False;
-        });
-        //settings.Columns.Add(c =>
-        //{
-        //    c.FieldName = "CentroCosto";
-        //    c.Caption = "Centro Costo";
-        //    c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
-        //    c.Settings.AllowSort = DefaultBoolean.False;
-        //    c.EditFormSettings.Visible = DefaultBoolean.False;
-        //});
+        });     
         settings.Columns.Add(c =>
         {
             c.FieldName = "IdCentroCosto";
@@ -162,20 +154,7 @@
             {
                 p.DisplayFormatString = "c";
             });
-        });
-        settings.Columns.Add(c =>
-        {
-            c.Visible = false;
-            c.FieldName = "IdOrdenCompra";
-            c.Settings.ShowEditorInBatchEditMode = false;
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
-            c.ReadOnly = true;
-            c.EditorProperties().SpinEdit(p =>
-            {
-                p.DisplayFormatString = "c";
-            });
-        });
+        });      
         settings.CellEditorInitialize = (s, e) =>
         {
             ASPxEdit editor = (ASPxEdit)e.Editor;
