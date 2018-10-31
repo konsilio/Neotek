@@ -167,6 +167,7 @@ namespace Application.MainModule.Servicios.Ventas
                 }
             }
         }
+
         public static void ActualizarSaldos(List<VentaMovimiento> vm, string from)
         {
             VentaMovimiento Updt = new VentaMovimiento();
@@ -318,6 +319,10 @@ namespace Application.MainModule.Servicios.Ventas
             lstFinal.IdCAlmacenGas = new PuntoVentaDataAccess().Buscar(v.IdPuntoVenta).IdCAlmacenGas;
 
             return lstFinal;
+        }
+        public static List<VentaPuntoDeVenta>  ObtenerVentas()
+        {
+            return new CajaGeneralDataAccess().BuscarVentas(); 
         }
     }
 }

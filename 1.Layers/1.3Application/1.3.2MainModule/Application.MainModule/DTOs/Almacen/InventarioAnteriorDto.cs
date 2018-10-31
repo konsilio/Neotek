@@ -8,6 +8,7 @@ namespace Application.MainModule.DTOs.Almacen
 {
     public class InventarioAnteriorDto
     {
+        public short Orden { get; set; }
         public decimal RemaKg { get; set; }
         public decimal RemaLt { get; set; }
         public decimal RemaDiaKg { get; set; }
@@ -30,6 +31,10 @@ namespace Application.MainModule.DTOs.Almacen
         public decimal CantidadAnteriorLt { get; set; }
         public decimal? PorcentajeAnterior { get; set; }
         public decimal? P5000Anterior { get; set; }
+        public decimal CAlmLecturaInicialP5000 { get; set; }
+        public decimal CAlmLecturaFinalP5000 { get; set; }
+        public decimal CAlmLecturaInicialMagnatel { get; set; }
+        public decimal CAlmLecturaFinalMagnatel { get; set; }
         public decimal CAlmEntradaDiaKg { get; set; }
         public decimal CAlmEntradaDiaLt { get; set; }
         public decimal CAlmSalidaDiaKg { get; set; }

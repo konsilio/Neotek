@@ -171,10 +171,49 @@ namespace Application.MainModule.Flujos
             return ReporteAlmacen;
         }
 
-        public RespuestaDto Venta(VentaDTO venta,bool esCamioneta, bool esEstacion, bool esPipa)
+        public RespuestaDto Venta(VentaDTO venta)
         {
-            var resp = VentaServicio.BuscarFolioVenta(venta.FolioVenta,TokenServicio.ObtenerIdUsuario());
-            return null;
+            var resp = VentaServicio.BuscarFolioVenta(venta);
+            if (resp.Exito) return resp;
+
+            var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
+            var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
+            var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);
+
+            var cliente = ClienteServicio.Obtener(venta.IdCliente);
+            var ventas = CajaGeneralServicio.ObtenerVentas();
+            int orden = Orden(ventas);
+            var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta, almacen,orden, TokenServicio.ObtenerIdEmpresa());
+
+            adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
+            adapter.FolioVenta = venta.FolioVenta;
+            adapter.FolioOperacionDia = venta.FolioVenta;
+            adapter.FechaRegistro = venta.Fecha;
+            adapter.Dia = (byte) venta.Fecha.Day;
+            adapter.Mes = (byte) venta.Fecha.Month;
+            adapter.Year = (short) venta.Fecha.Year;
+            adapter.FechaAplicacion = venta.Fecha;
+            adapter.DatosProcesados = false;
+            adapter.RequiereFactura = venta.Factura;
+            adapter.VentaACredito = venta.Credito;
+            adapter.ClienteConCredito = venta.TieneCredito;
+
+
+            if (!venta.SinNumero)
+                adapter.IdCliente = venta.IdCliente;
+
+            return PuntoVentaServicio.InsertMobile(adapter);
+        }
+
+        public int Orden(List<VentaPuntoDeVenta> ventas)
+        {
+            if (ventas != null)
+                if (ventas.Count == 0)
+                    return 1;
+                else
+                    return ventas.Count + 1;
+            else
+                return 1;
         }
 
         public DatosRecargaDto CatalogoRecargas(bool esEstacion, bool esPipa, bool esCamioneta)
@@ -291,6 +330,16 @@ namespace Application.MainModule.Flujos
             return list; 
         }
 
+        public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(short idEstacion, bool esAnticipos)
+        {
+            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
+            var puntoVenta = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(idEstacion));
+
+            var ventas = CajaGeneralServicio.ObtenerVentasPuntosVentaNoProc().OrderBy(x=>x.FechaRegistro).ToList();
+            
+            return AnticiposCortesAdapter.ToDTO(ventas, esAnticipos);
+        }
+
         public RespuestaDto Calibracion(CalibracionDto dto, bool esFinal)
         {
             var resp = CalibracionServicio.EvaluarClaveOperacion(dto);
@@ -399,5 +448,28 @@ namespace Application.MainModule.Flujos
 
             return VentaServicio.Corte(dto,TokenServicio.ObtenerIdEmpresa(),TokenServicio.ObtenerIdUsuario(), cortes, estacion);
         }
+
+        public DatosOtrosDto catalogoOtros()
+        {
+            var categoria = ProductoServicio.ObtenerCategorias();
+            var linea = ProductoServicio.ObtenerLineasProducto();
+            var productos = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa());
+
+            return VentasEstacionesAdapter.ToDTO(categoria,linea,productos);
+        }
+
+        public RespuestaDto CatalogosGas(bool esLP, bool esCilindroConGas, bool esCilindro)
+        {
+            var productos = ProductoServicio.ObtenerProductoActivoVenta(TokenServicio.ObtenerIdEmpresa());
+            /*if (esLP)
+                
+                return null;
+            if (esCilindroConGas)
+                return null;
+            if (esCilindro)
+                return null;*/
+            return null;
+        }
+
     }
 }

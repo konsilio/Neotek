@@ -234,6 +234,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<Producto>().GetSingle(x => x.IdProducto.Equals(idProducto)
                                                           && x.Activo);
         }
+
         public CategoriaProducto BuscarCategoria(short idCategoria)
         {
             return uow.Repository<CategoriaProducto>().GetSingle(x => x.IdCategoria.Equals(idCategoria)
@@ -307,5 +308,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<ProductoAsociado>().Get(x => x.IdProducto.Equals(idProdcuto)).ToList();
         }
+
+        public List<Producto> ListaProductosActivosVenta(int idEmpresa = 0,bool esGas = false)
+        {
+            if(idEmpresa!= 0)
+                return uow.Repository<Producto>().Get(x => x.Activo.Equals(true) && x.EsActivoVenta.Equals(true) && x.EsGas.Equals(esGas)).ToList();
+            return uow.Repository<Producto>().Get(x => x.Activo.Equals(true) && x.EsActivoVenta.Equals(true) && x.EsGas.Equals(esGas)).ToList();
+        }
+
     }
 }

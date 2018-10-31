@@ -19,6 +19,7 @@ namespace Sagas.MainModule.ObjetosValor.Enum
         public static byte Traspaso = (byte)tipoEvento.Traspaso;
         public static byte Calibracion = (byte)tipoEvento.Calibracion;
         public static byte TomaLectura = (byte)tipoEvento.TomaLectura;
+        public static byte EmpresaNueva = (byte)tipoEvento.EmpresaNueva;
 
         enum tipoEvento : byte
         {
@@ -29,7 +30,8 @@ namespace Sagas.MainModule.ObjetosValor.Enum
             AutoConsumo = 5,
             Traspaso = 6,
             Calibracion = 7,
-            TomaLectura = 8
+            TomaLectura = 8,
+            EmpresaNueva = 9
         }
     }
 }

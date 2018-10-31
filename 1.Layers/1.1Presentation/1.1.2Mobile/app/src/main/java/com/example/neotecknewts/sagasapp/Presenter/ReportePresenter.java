@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
+import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 
 import java.util.Date;
@@ -14,5 +15,5 @@ public interface ReportePresenter {
 
     void Reporte(int id, Date fecha,String token);
 
-    void onSuccessReport(Object reporteDTO);
+    void onSuccessReport(ReporteDto reporteDTO);
 }

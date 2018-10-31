@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Presenter.ReportePresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
@@ -459,8 +460,8 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
     }
 
     @Override
-    public void onSuccessReport(Object reporteDTO) {
-        reporteDTO = reporteDTO;
+    public void onSuccessReport(ReporteDto reporteDTO) {
+        this.reporteDTO = reporteDTO;
         String formato_reporte_pipa_text ="Reporte-[{Elemento}] \n" +
                 "\n" +
                 "Clave Reporte:[{ClaveReporte}] \n" +

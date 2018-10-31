@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sagas.MainModule.Entidades;
 using Application.MainModule.DTOs.Mobile;
+using Application.MainModule.DTOs.Catalogo;
 
 namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
@@ -21,7 +22,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 LitrosVenta = 0,
                 Precio = 0,
                 Importe = 0,
-                ImporteCredito = 0
+                ImporteCredito = 0,
+                
             };
         }
 
@@ -51,6 +53,25 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 ImporteCredito = 0,
                 OtrasVentas = new List<OtrasVentasDto>(),
                 Tanques = new List<TanquesDto>()
+            };
+        }
+
+        public ReporteDelDia FormDto(ReporteDiaDTO reporte,OperadorChoferDTO operador,PuntoVenta puntoVenta)
+        {
+            
+            return new ReporteDelDia()
+            {
+                IdCAlmacenGas = (short) reporte.IdCamioneta,
+                LitrosVenta = reporte.LitrosVenta,
+                ImporteContado = reporte.Importe,
+                PuntoVenta = reporte.NombreCAlmacen,
+                IdOperadorChofer = operador.IdOperadorChofer,
+                OperadorChofer = operador.Nombre+" "+operador.Apellido1+" "+operador.Apellido2,
+                IdEmpresa =operador.IdEmpresa,
+                IdPuntoVenta = puntoVenta.IdPuntoVenta,
+                ImporteCredito = reporte.ImporteCredito,
+                KilosVenta = reporte.KilosDeVenta,
+
             };
         }
     }

@@ -101,14 +101,17 @@
     <Compile Include="DTOs\Mobile\AutoconsumoDTO.cs" />
     <Compile Include="DTOs\Mobile\CalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\CamionetaDto.cs" />
+    <Compile Include="DTOs\Mobile\CategoriaDto.cs" />
     <Compile Include="DTOs\Mobile\CorteDto.cs" />
     <Compile Include="DTOs\Mobile\DatosAnticiposCorteDto.cs" />
     <Compile Include="DTOs\Mobile\DatosAutoconsumoDto.cs" />
     <Compile Include="DTOs\Mobile\DatosCalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\DatosClientesDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosOtrosDto.cs" />
     <Compile Include="DTOs\Mobile\DatosRecargaDto.cs" />
     <Compile Include="DTOs\Mobile\DatosTraspasoDto.cs" />
     <Compile Include="DTOs\Mobile\EstacionesDto.cs" />
+    <Compile Include="DTOs\Mobile\LineaDto.cs" />
     <Compile Include="DTOs\Mobile\PipaDto.cs" />
     <Compile Include="DTOs\Mobile\TraspasoDto.cs" />
     <Compile Include="DTOs\Requisicion\RequisicionSalidaDTO.cs" />

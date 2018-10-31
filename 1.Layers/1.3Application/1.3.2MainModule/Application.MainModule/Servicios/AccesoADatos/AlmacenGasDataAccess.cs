@@ -46,6 +46,31 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
+        public RespuestaDto Insertar(AlmacenGasMovimiento _almMov)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<AlmacenGasMovimiento>().Insert(_almMov);
+                    uow.SaveChanges();
+                    _respuesta.Id = _almMov.IdAlmacenGas;
+                    _respuesta.EsInsercion = true;
+                    _respuesta.Exito = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0002, "del movimiento de almacén");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
         public RespuestaDto Insertar(UnidadAlmacenGas _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -65,6 +90,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 {
                     _respuesta.Exito = false;
                     _respuesta.Mensaje = string.Format(Error.C0002, "de la unidad de almacén");
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
+        }
+
+        public RespuestaDto Eliminar(AlmacenGas _alm)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+                    uow.Repository<AlmacenGas>().Delete(_alm.IdAlmacenGas);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0009, "del Almacén total y general");
                     _respuesta.MensajesError = CatchInnerException.Obtener(ex);
                 }
             }
@@ -425,7 +474,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
                         uow.Repository<UnidadAlmacenGas>().Update(aplicaTomaLectura.unidadAlmacenGas);
 
                     if (aplicaTomaLectura.TomaLecturaLectura != null)
-                        uow.Repository<AlmacenGasTomaLectura>().Update(aplicaTomaLectura.TomaLecturaLecturaSinNavProp);
+                        uow.Repository<AlmacenGasTomaLectura>().Update(aplicaTomaLectura.TomaLecturaLectura);
 
                     if (aplicaTomaLectura.TomaLecturaLecturaFotos != null && aplicaTomaLectura.TomaLecturaLecturaFotos.Count > 0)
                         aplicaTomaLectura.TomaLecturaLecturaFotos.ToList().ForEach(x =>
@@ -942,6 +991,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 _respuesta.MensajesError = CatchInnerException.Obtener(ex);
             }
             return _respuesta;
+        }
+
+        public List<ReporteDelDia> ObtenerReportes()
+        {
+            return uow.Repository<ReporteDelDia>().GetAll().ToList();
         }
     }
 }

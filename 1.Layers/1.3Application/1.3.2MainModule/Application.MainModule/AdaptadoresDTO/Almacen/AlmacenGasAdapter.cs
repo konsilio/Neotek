@@ -61,6 +61,26 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             };
         }
 
+        public static AlmacenGas FromInit(Empresa emp)
+        {
+            return new AlmacenGas
+            {
+                IdEmpresa = emp.IdEmpresa,
+                CapacidadTotalLt = 0,
+                CapacidadTotalKg = 0,
+                CantidadActualLt = 0,
+                CantidadActualKg = 0,
+                PorcentajeActual = 0,
+                CapacidadGeneralLt = 0,
+                CapacidadGeneralKg = 0,
+                CantidadActualGeneralLt = 0,
+                CantidadActualGeneralKg = 0,
+                PorcentajeActualGeneral = 0,
+                Activo = true,
+                FechaRegistro = DateTime.Now,
+            };
+        }
+
         public static CamionetaCilindro FromEntity(CamionetaCilindro cilindro)
         {
             return new CamionetaCilindro
@@ -497,6 +517,25 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 VentaLecturasMagnatelAnioKg = null,
                 VentaLecturasMagnatelAnioLt = null,
             };
+        }
+
+        public static AlmacenGasMovimiento FromInit(AlmacenGas alm)
+        {
+            var almMov = FromInit();
+
+            almMov.IdEmpresa = alm.IdEmpresa;
+            almMov.Year = (short)alm.FechaRegistro.Year;
+            almMov.Mes = (byte)alm.FechaRegistro.Month;
+            almMov.Dia = (byte)alm.FechaRegistro.Day;
+            almMov.Orden = 1;
+            almMov.IdTipoEvento = TipoEventoEnum.EmpresaNueva;
+            almMov.IdTipoMovimiento = TipoMovimientoEnum.Arranque;            
+            almMov.IdAlmacenGas = alm.IdAlmacenGas;
+
+            almMov.TipoEvento = AlmacenGasConst.EmpresaNueva;
+            almMov.TipoMovimiento = AlmacenGasConst.Arranque;
+
+            return almMov;
         }
 
         public static AlmacenGasMovimiento FromEntity(UnidadAlmacenGas unidadEntrada, AlmacenGasDescarga descarga, AlmacenGas almacenGasTotal, AlmacenGasMovimiento ultimoMovimiento, Empresa empresa, InventarioAnteriorDto invAnterior)
@@ -1170,7 +1209,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.Year = (short)lectura.FechaAplicacion.Year;
             almGMovimiento.Mes = (byte)lectura.FechaAplicacion.Month;
             almGMovimiento.Dia = (byte)lectura.FechaAplicacion.Day;
-            almGMovimiento.Orden = ultimoMovimiento != null && ultimoMovimiento.Orden > 0 ? (short)(ultimoMovimiento.Orden + 1) : (short)1;
+            almGMovimiento.Orden = invAnterior.Orden;
             almGMovimiento.IdTipoMovimiento = esMovimientoLectInicial ? TipoMovimientoEnum.LectInicial : TipoMovimientoEnum.LectFinal;
             almGMovimiento.IdTipoEvento = TipoEventoEnum.TomaLectura;
             almGMovimiento.IdAlmacenGas = almacenGasTotal.IdAlmacenGas;
@@ -1185,10 +1224,6 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             //------Ids y nombres-----------------
 
             //------Entrada, Salida y Saldo-----------------            
-            //almGMovimiento.EntradaKg = esMovimientoLectInicial ? invAnterior.EntradaKg : 0;
-            //almGMovimiento.EntradaLt = esMovimientoLectInicial ? invAnterior.EntradaLt : 0;
-            //almGMovimiento.SalidaKg = esMovimientoLectInicial ? 0 : invAnterior.SalidaKg;
-            //almGMovimiento.SalidaLt = esMovimientoLectInicial ? 0 : invAnterior.SalidaLt;
             almGMovimiento.CantidadActualKg = unidadAlmacenGas.CantidadActualKg;
             almGMovimiento.CantidadActualLt = unidadAlmacenGas.CantidadActualLt;
             almGMovimiento.CantidadAnteriorKg = invAnterior.CantidadAnteriorKg;
@@ -1200,10 +1235,11 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             //------Entrada, Salida y Saldo-----------------
 
             //------Entrada, Salida y Saldo Acumulados-----------------
-            almGMovimiento.CAlmEntradaDiaKg = invAnterior.CAlmEntradaDiaKg;
-            almGMovimiento.CAlmEntradaDiaLt = invAnterior.CAlmEntradaDiaLt;
-            almGMovimiento.CAlmSalidaDiaKg = invAnterior.CAlmSalidaDiaKg;
-            almGMovimiento.CAlmSalidaDiaLt = invAnterior.CAlmSalidaDiaLt;
+            almGMovimiento.CAlmLecturaInicialMagnatel = unidadAlmacenGas.PorcentajeActual;
+            //almGMovimiento.CAlmEntradaDiaKg = invAnterior.CAlmEntradaDiaKg;
+            //almGMovimiento.CAlmEntradaDiaLt = invAnterior.CAlmEntradaDiaLt;
+            //almGMovimiento.CAlmSalidaDiaKg = invAnterior.CAlmSalidaDiaKg;
+            //almGMovimiento.CAlmSalidaDiaLt = invAnterior.CAlmSalidaDiaLt;
             almGMovimiento.CAlmEntradaMesKg = invAnterior.CAlmEntradaMesKg;
             almGMovimiento.CAlmEntradaMesLt = invAnterior.CAlmEntradaMesLt;
             almGMovimiento.CAlmSalidaMesKg = invAnterior.CAlmSalidaMesKg;
@@ -1212,8 +1248,8 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.CAlmEntradaAnioLt = invAnterior.CAlmEntradaAnioLt;
             almGMovimiento.CAlmSalidaAnioKg = invAnterior.CAlmSalidaAnioKg;
             almGMovimiento.CAlmSalidaAnioLt = invAnterior.CAlmSalidaAnioLt;
-            almGMovimiento.CantidadAcumuladaDiaKg = invAnterior.CantidadAcumuladaDiaKg;
-            almGMovimiento.CantidadAcumuladaDiaLt = invAnterior.CantidadAcumuladaDiaLt;
+            //almGMovimiento.CantidadAcumuladaDiaKg = invAnterior.CantidadAcumuladaDiaKg;
+            //almGMovimiento.CantidadAcumuladaDiaLt = invAnterior.CantidadAcumuladaDiaLt;
             almGMovimiento.CantidadAcumuladaMesKg = invAnterior.CantidadAcumuladaMesKg;
             almGMovimiento.CantidadAcumuladaMesLt = invAnterior.CantidadAcumuladaMesLt;
             almGMovimiento.CantidadAcumuladaAnioKg = invAnterior.CantidadAcumuladaAnioKg;
@@ -1277,7 +1313,6 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.VentaAcumMesLt = ultimoMovimiento.VentaAcumMesLt;
             almGMovimiento.VentaAcumAnioKg = ultimoMovimiento.VentaAcumAnioKg;
             almGMovimiento.VentaAcumAnioLt = ultimoMovimiento.VentaAcumAnioLt;
-
             return almGMovimiento;
         }
     }

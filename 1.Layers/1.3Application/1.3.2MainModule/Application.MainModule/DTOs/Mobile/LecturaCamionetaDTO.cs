@@ -12,14 +12,7 @@ namespace Application.MainModule.DTOs.Mobile
 {
     public class LecturaCamionetaDTO
     {
-        /// <summary>
-        /// Clave de operación
-        /// </summary>
         public String ClaveProceso { get; set; }
-
-        /// <summary>
-        /// Id de IdCAlmacenGas (Id de la camioneta)
-        /// </summary>
         public short IdCAlmacenGas { get; set; }
 
         /// <summary>
@@ -36,5 +29,6 @@ namespace Application.MainModule.DTOs.Mobile
         /// Contiene los ids de los cilindros
         /// </summary>
         public List<short> IdCilindro { get; set; }
+        public DateTime FechaAplicacion { get; set; }
     }
 }

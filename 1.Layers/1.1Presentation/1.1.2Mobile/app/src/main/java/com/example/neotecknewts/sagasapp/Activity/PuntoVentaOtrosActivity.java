@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,9 @@ import android.widget.TableLayout;
 import com.example.neotecknewts.sagasapp.Model.CategoriaDTO;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosVentaOtrosDTO;
+import com.example.neotecknewts.sagasapp.Model.LineaDTO;
+import com.example.neotecknewts.sagasapp.Model.ProductoDTO;
+import com.example.neotecknewts.sagasapp.Model.ProductoOtrosDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaOtrosPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaOtrosPresenterImpl;
@@ -23,6 +28,7 @@ import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
 import com.example.neotecknewts.sagasapp.Util.Tabla;
 
+import java.lang.reflect.Array;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +47,7 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
     DatosVentaOtrosDTO otrosDTO;
     VentaDTO ventaDTO;
     boolean EsVentaCamioneta,EsVentaCarburacion,EsVentaPipa;
+    int idCategoria,idLinea,idProducto;
 
     Session session;
     @Override
@@ -89,6 +96,9 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
             conceptoDTO.setDescuento(0);
             conceptoDTO.setIdTipoGas(0);
             conceptoDTO.setConcepto(ETProductoVentaOtrosConcepto.getText().toString());
+            conceptoDTO.setIdCategoria(idCategoria);
+            conceptoDTO.setIdLinea(idLinea);
+            conceptoDTO.setIdProducto(idProducto);
 
 
             ventaDTO.getConcepto().add(conceptoDTO);
@@ -117,9 +127,9 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
         session = new Session(this);
         presenter = new PuntoVentaOtrosPresenterImpl(this);
 
-        list_categoria = new String[]{"Categoria 1"};
-        list_linea = new String[]{"Linea 1"};
-        list_producto = new String[]{"Lámparas"};
+        list_categoria = new String[]{"Categoria 1","Otro"};
+        list_linea = new String[]{"Linea 1","Otro"};
+        list_producto = new String[]{"Lámparas","Otro"};
 
         SPuntoVentaOtrosCategoria.setAdapter(new ArrayAdapter<>(
                 this,
@@ -136,7 +146,69 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
                 R.layout.custom_spinner,
                 list_producto
         ));
+        SPuntoVentaOtrosCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if(adapterView.getItemAtPosition(i).toString().equals("Otro"))
+                        idCategoria = -1;
+                    if(otrosDTO!= null && otrosDTO.getCategorias()!=null){
+                        for(CategoriaDTO categoriaDTO : otrosDTO.getCategorias()){
+                            if(categoriaDTO.getCategoria().equals(
+                                    adapterView.getItemAtPosition(i).toString()
+                            )){
+                                idCategoria = categoriaDTO.getIdCategoria();
+                            }
+                        }
+                    }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                idCategoria = 0;
+            }
+        });
+        SPuntoVentaOtrosLinea.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(adapterView.getItemAtPosition(i).toString().equals("Otro"))
+                    idLinea = -1;
+                if(otrosDTO!= null && otrosDTO.getLineas()!=null){
+                    for(LineaDTO lineaDTO : otrosDTO.getLineas()){
+                        if(lineaDTO.getLinea().equals(
+                                adapterView.getItemAtPosition(i).toString()
+                        )){
+                            idCategoria = lineaDTO.getIdLinea();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                idLinea = 0;
+            }
+        });
+        SPuntoVentaOtrosActivityProducto.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(adapterView.getItemAtPosition(i).toString().equals("Otro"))
+                    idProducto = -1;
+                if(otrosDTO!= null && otrosDTO.getProducto()!=null){
+                    for(ProductoOtrosDTO productoDTO : otrosDTO.getProducto()){
+                        if(productoDTO.getProducto().equals(
+                                adapterView.getItemAtPosition(i).toString()
+                        )){
+                            idCategoria = productoDTO.getIdProducto();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                idCategoria = 0;
+            }
+        });
         presenter.getList(session.getToken());
         mostrarConcepto(ventaDTO.getConcepto());
 
@@ -146,9 +218,9 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
     public void onSuccess(DatosVentaOtrosDTO dtos) {
         otrosDTO = dtos;
         if(dtos!=null){
-            list_categoria = new String[dtos.getCategorias().size()];
-            list_linea = new String[dtos.getLineas().size()];
-            list_producto = new String[dtos.getProducto().size()];
+            list_categoria = new String[dtos.getCategorias().size()+1];
+            list_linea = new String[dtos.getLineas().size()+1];
+            list_producto = new String[dtos.getProducto().size()+1];
 
             for (int x =0 ;x<dtos.getCategorias().size();x++) {
                 list_categoria[x] = dtos.getCategorias().get(x).getCategoria();
@@ -159,6 +231,10 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
             for (int x =0 ;x<dtos.getProducto().size();x++) {
                 list_producto[x] = dtos.getProducto().get(x).getProducto();
             }
+            list_categoria[dtos.getCategorias().size()+1] = "Otros";
+            list_linea[dtos.getLineas().size()+1] = "Otros";
+            list_producto[dtos.getProducto().size()+1]= "Otros";
+
             SPuntoVentaOtrosCategoria.setAdapter(new ArrayAdapter<>(
                     this,
                     R.layout.custom_spinner,

@@ -1,4 +1,13 @@
-﻿using System;
+﻿/**
+ *  ConceptoDTO
+ *  Concepto de la venta desde mobile, tine los campos
+ *  utilizados dentro de este del concepto de la venta 
+ *  Developer: Jorge Omar Tovar Martínez jorge.tovar@neoteck.com.mx
+ *  Company: Neoteck
+ *  Date: 29/10/2018 09:56
+ *  Update 29/10/2018 09:56
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +26,7 @@ namespace Application.MainModule.DTOs.Mobile
         public short IdCategoria { get; set; }
         public short IdLinea { get; set; }
         public short IdProducto { get; set; }
+
+        public decimal LitrosDespachados { get; set; }
     }
 }

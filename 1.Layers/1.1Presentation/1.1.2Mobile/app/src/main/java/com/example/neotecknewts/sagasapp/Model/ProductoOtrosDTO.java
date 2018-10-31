@@ -9,8 +9,14 @@ public class ProductoOtrosDTO implements Serializable {
     @SerializedName("IdProducto")
     private int IdProducto;
 
-    @SerializedName("Producto")
+    @SerializedName("Nombre")
     private String Producto;
+
+    @SerializedName("IdCategoria")
+    private int IdCategoria;
+
+    @SerializedName("IdLinea")
+    private int IdLinea;
 
     public int getIdProducto() {
         return IdProducto;
@@ -26,5 +32,21 @@ public class ProductoOtrosDTO implements Serializable {
 
     public void setProducto(String producto) {
         Producto = producto;
+    }
+
+    public int getIdCategoria() {
+        return IdCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        IdCategoria = idCategoria;
+    }
+
+    public int getIdLinea() {
+        return IdLinea;
+    }
+
+    public void setIdLinea(int idLinea) {
+        IdLinea = idLinea;
     }
 }

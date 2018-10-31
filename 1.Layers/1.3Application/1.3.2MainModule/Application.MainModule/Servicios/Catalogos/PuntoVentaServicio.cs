@@ -85,5 +85,15 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
+
+        public static VentaPuntoDeVenta EvaluarFolio(string folioVenta)
+        {
+            return new PuntoVentaDataAccess().EvaluarFolio(folioVenta);
+        }
+
+        public static RespuestaDto InsertMobile(VentaPuntoDeVenta venta)
+        {
+            return new PuntoVentaDataAccess().InsertarMobile(venta);
+        }
     }
 }
