@@ -479,8 +479,8 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             decimal unidadSalidaPorcentaje = unidadSalida.PorcentajeActual;
 
             AlmacenGasMovimiento ulMov = AlmacenGasServicio.ObtenerUltimoMovimientoEnInventario(Dto.IdEmpresa, Dto.IdAlmacenGas, Dto.FechaAplicacion);
-            AlmacenGasMovimiento ulMovGasMov = AlmacenGasServicio.ObtenerUltimoMovimientoEnInventario(Dto.IdEmpresa, Dto.IdAlmacenGas, Dto.FechaAplicacion);
-            AlmacenGasMovimiento ulMovSalida = AlmacenGasServicio.ObtenerUltimoMovimientoEnInventario(Dto.IdEmpresa, Dto.IdAlmacenGas, Dto.FechaAplicacion);//AlmacenGasServicio.ObtenerUltimoMovimientoEnInventario(Dto.IdEmpresa, Dto.IdAlmacenGas, Dto.IdTipoEvento ?? 0, TipoMovimientoEnum.Salida, Dto.FechaAplicacion);
+            AlmacenGasMovimiento ulMovSalida = AlmacenGasServicio.ObtenerUltimoMovimientoPorUnidadAlmacenGas(Dto.IdEmpresa, Dto.IdCAlmacenGasPrincipal, Dto.IdTipoEvento.Value, Dto.IdTipoMovimiento, Dto.FechaAplicacion);//ObtenerUltimoMovimientoEnInventario(Dto.IdEmpresa, Dto.IdAlmacenGas, Dto.FechaAplicacion);
+            //AlmacenGasMovimiento ulMovSalida = AlmacenGasServicio.ObtenerUltimoMovimientoEnInventario(Dto.IdEmpresa, Dto.IdAlmacenGas, Dto.FechaAplicacion);//AlmacenGasServicio.ObtenerUltimoMovimientoEnInventario(Dto.IdEmpresa, Dto.IdAlmacenGas, Dto.IdTipoEvento ?? 0, TipoMovimientoEnum.Salida, Dto.FechaAplicacion);
             //AlmacenGasServicio.ObtenerUltimoMovimientoDeVenta(Dto.IdEmpresa, unidadSalida.IdCAlmacenGas, Dto.FechaAplicacion);
 
             decimal MaganatelLtIni = 0;
@@ -532,8 +532,8 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             {
                 x.PorcentajeActual = 0;
             }
-            x.P5000Anterior = ulMov.P5000Actual ?? 0;//ulMovSalida.P5000Actual;
-            x.P5000Actual = ulMov.P5000Actual ?? 0;//ulMovSalida.P5000Actual;
+            x.P5000Anterior = ulMovSalida.P5000Actual;//ulMovSalida.P5000Actual;
+            x.P5000Actual = ulMovSalida.P5000Actual;//ulMovSalida.P5000Actual;
             x.CantidadAcumuladaDiaKg = CalcularGasServicio.SumarKilogramos(ulMov.VentaAcumDiaKg, x.SalidaKg);
             x.CantidadAcumuladaDiaLt = CalcularGasServicio.SumarLitros(ulMov.VentaAcumDiaLt, x.SalidaLt);
             x.CantidadAcumuladaMesKg = CalcularGasServicio.SumarKilogramos(ulMov.VentaAcumMesKg, x.SalidaKg);
