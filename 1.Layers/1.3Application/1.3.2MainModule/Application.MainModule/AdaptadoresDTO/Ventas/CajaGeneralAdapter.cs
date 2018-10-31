@@ -485,7 +485,7 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
             decimal MaganatelLtIni = 0;
             decimal MaganatelLtFin = 0;
-            decimal kilogramosRemanentes = CalcularPreciosVentaServicio.ObtenerKilogramosRemanentes(Dto.P5000Anterior ?? 0, Dto.P5000Actual ?? 0, MaganatelLtIni, MaganatelLtFin);
+            decimal kilogramosRemanentes = CalcularPreciosVentaServicio.ObtenerKilogramosRemanentes(ulMovSalida.P5000Actual.Value, Dto.P5000Actual.Value, MaganatelLtIni, MaganatelLtFin);
             decimal litrosRemanentes = CalcularGasServicio.ObtenerLitrosDesdeKilos(kilogramosRemanentes, empresa.FactorLitrosAKilos);
             decimal UltimaVentaDiaKg = ulMovSalida.VentaDiaKg ?? 0; //UltimaVentaDiaKg
             decimal UltimaVentaMesKg = ulMovSalida.VentaMesKg ?? 0;
