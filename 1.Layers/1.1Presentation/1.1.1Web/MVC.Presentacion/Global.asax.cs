@@ -18,6 +18,7 @@ namespace MVC.Presentacion
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ModelBinders.Binders.DefaultBinder = new DevExpress.Web.Mvc.DevExpressEditorsBinder();
         }
         protected void Application_AcquireRequestState(object sender, EventArgs e)
         {

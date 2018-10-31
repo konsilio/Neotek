@@ -5,9 +5,7 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.OrdenCompra
 {
-    public class OrdenCompraComplementoDTO : OrdenCompraDTO
+    public class ProductoOCDevExpress
     {
-       
-        //public List<ProductoOCDTO> ProductoOCDTO { get; set; }
     }
 }

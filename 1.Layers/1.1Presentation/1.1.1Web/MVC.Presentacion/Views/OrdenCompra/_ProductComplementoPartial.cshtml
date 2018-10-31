@@ -1,0 +1,187 @@
+@model  List<MVC.Presentacion.Models.OrdenCompra.OrdenCompraProductoDTO>
+
+@{
+    var grid = Html.DevExpress().GridView(settings => {
+        settings.Name = "ProductComplemento";
+        settings.CallbackRouteValues = new { Controller = "OrdenCompra", Action = "ProductComplementoPartial" };
+        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "OrdenCompra", Action = "ProductosComplementoPartialUpdate" };
+
+        settings.KeyFieldName = "IdProducto";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+        settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+        settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+        settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
+        settings.Styles.Table.CssClass = "table";
+        //settings.SettingsCommandButton.UpdateButton.Styles.CssPostfix = "btn btn-raised btn-primary btn-round btn-md";
+
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "ProductoServicioTipo";
+            c.Caption = "Tipo";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Producto";
+            c.Caption = "Producto";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "CantidadAComprar";
+            c.Caption = "Requeridos";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(10);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.Settings.ShowEditorInBatchEditMode = false;
+            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            c.ReadOnly = true;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "UnidadMedida";
+            c.Caption = "Unidad";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Aplicacion";
+            c.Caption = "Detalle";
+            c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditFormSettings.Visible = DefaultBoolean.False;
+        });
+        //settings.Columns.Add(c =>
+        //{
+        //    c.FieldName = "CentroCosto";
+        //    c.Caption = "Centro Costo";
+        //    c.Width = System.Web.UI.WebControls.Unit.Percentage(20);
+        //    c.Settings.AllowSort = DefaultBoolean.False;
+        //    c.EditFormSettings.Visible = DefaultBoolean.False;
+        //});
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdCentroCosto";
+            c.Caption = "Centro Costo";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.TextField = "Descripcion";
+                p.ValueField = "IdCentroCosto";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.CentrosCosto;
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IdCuentaContable";
+            c.Caption = "Cuenta Contable";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.TextField = "Descripcion";
+                p.ValueField = "IdCuentaContable";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.CuentasContables;
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Precio";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditorProperties().SpinEdit(p =>
+            {
+                p.DisplayFormatString = "c";
+                p.DisplayFormatInEditMode = true;
+                p.MinValue = 0;
+                p.MaxValue = 1000000;
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Descuento";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditorProperties().SpinEdit(p =>
+            {
+                p.DisplayFormatString = "{0} %";
+                p.MinValue = 0;
+                p.MaxValue = 100;
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IVA";
+            c.Caption = "IVA";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.TextField = "Text";
+                p.ValueField = "Value";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.IVAs;
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "IEPS";
+            c.Caption = "IEPS";
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.EditorProperties().ComboBox(p =>
+            {
+                p.TextField = "Text";
+                p.ValueField = "Value";
+                p.ValueType = typeof(int);
+                p.DataSource = ViewBag.IEPs;
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Importe";
+            c.Settings.ShowEditorInBatchEditMode = false;
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            c.ReadOnly = true;
+            c.EditorProperties().SpinEdit(p =>
+            {
+                p.DisplayFormatString = "c";
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.Visible = false;
+            c.FieldName = "IdOrdenCompra";
+            c.Settings.ShowEditorInBatchEditMode = false;
+            c.Settings.AllowSort = DefaultBoolean.False;
+            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+            c.ReadOnly = true;
+            c.EditorProperties().SpinEdit(p =>
+            {
+                p.DisplayFormatString = "c";
+            });
+        });
+        settings.CellEditorInitialize = (s, e) =>
+        {
+            ASPxEdit editor = (ASPxEdit)e.Editor;
+            editor.ValidationSettings.Display = Display.None;
+        };
+        settings.ClientSideEvents.BeginCallback = "OnBeginGridCallback";
+    });
+}
+@grid.Bind(Model).GetHtml()

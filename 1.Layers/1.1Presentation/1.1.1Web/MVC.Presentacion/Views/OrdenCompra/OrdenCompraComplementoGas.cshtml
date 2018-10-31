@@ -1,5 +1,5 @@
-﻿@using MVC.Presentacion.Models.OrdenCompra;
-@model OrdenCompraComplementoGasDTO
+﻿
+@model  MVC.Presentacion.Models.OrdenCompra.OrdenCompraComplementoGasDTO
 
 <style>
     .calculaPrecio {
@@ -21,7 +21,7 @@
         {
             @Html.HiddenFor(m => m.FactorLitrosAKilos)
             @*@Html.HiddenFor(m => m.OrdenCompraExpedidor)
-            @Html.HiddenFor(m => m.OrdenCompraPorteador)*@
+                @Html.HiddenFor(m => m.OrdenCompraPorteador)*@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-md-12">
@@ -107,23 +107,24 @@
                         }
                         <div class="row clearfix blockquote blockquote-info btn-round">
                             <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <td><b>Tipo</b></td>
-                                            <td><b>Producto</b></td>
-                                            <td><b>Cantidad</b></td>
-                                            <td><b>Unidad</b></td>
-                                            <td><b>Aplicación</b></td>
-                                            <td><b>Centro de costo</b></td>
-                                            <td><b>Proveedor</b></td>
-                                            <td><b>Cuenta Contable</b></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @Html.EditorFor(m => m.Productos)
-                                    </tbody>
-                                </table>
+                                @Html.Action("ProductosComplementoGasPartial")
+                                @*<table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <td><b>Tipo</b></td>
+                                                <td><b>Producto</b></td>
+                                                <td><b>Cantidad</b></td>
+                                                <td><b>Unidad</b></td>
+                                                <td><b>Aplicación</b></td>
+                                                <td><b>Centro de costo</b></td>
+                                                <td><b>Proveedor</b></td>
+                                                <td><b>Cuenta Contable</b></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @Html.EditorFor(m => m.Productos)
+                                        </tbody>
+                                   </table>*@
                             </div>
                         </div>
                     </div>
@@ -555,31 +556,31 @@
                                                     <div class="col-md-3 form-control-label">
                                                         <label for="lblImporteAPagar">(En pesos)</label>
                                                     </div>
-                                                </div>                                           
-                                                    <br />
-                                                    <div class="row clearfix">
-                                                        <div class="col-md-3 col-sm-4 form-control-label">
-                                                            <label>Folio Fiscal</label>
-                                                        </div>
-                                                        <div class="col-md-9 col-sm-8">
-                                                            <div class="form-group">
-                                                                @Html.TextBoxFor(m => m.OrdenCompraExpedidor.FolioFiscalUUID, new { @class = "form-control", @placeholder = "UUID de la factura" })
-                                                                @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.FolioFiscalUUID, "", new { @class = "alert-danger" })
-                                                            </div>
+                                                </div>
+                                                <br />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-3 col-sm-4 form-control-label">
+                                                        <label>Folio Fiscal</label>
+                                                    </div>
+                                                    <div class="col-md-9 col-sm-8">
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m => m.OrdenCompraExpedidor.FolioFiscalUUID, new { @class = "form-control", @placeholder = "UUID de la factura" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.FolioFiscalUUID, "", new { @class = "alert-danger" })
                                                         </div>
                                                     </div>
-                                                    <div class="row clearfix">
-                                                        <div class="col-md-3 col-sm-4 form-control-label">
-                                                            <label>Folio Factura</label>
-                                                        </div>
-                                                        <div class="col-md-9 col-sm-8">
-                                                            <div class="form-group">
-                                                                @Html.TextBoxFor(m => m.OrdenCompraExpedidor.FolioFactura, new { @class = "form-control", @placeholder = "Folio de la factura" })
-                                                                @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.FolioFactura, "", new { @class = "alert-danger" })
-                                                            </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-3 col-sm-4 form-control-label">
+                                                        <label>Folio Factura</label>
+                                                    </div>
+                                                    <div class="col-md-9 col-sm-8">
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m => m.OrdenCompraExpedidor.FolioFactura, new { @class = "form-control", @placeholder = "Folio de la factura" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraExpedidor.FolioFactura, "", new { @class = "alert-danger" })
                                                         </div>
                                                     </div>
-                                                    <br />                                                
+                                                </div>
+                                                <br />
                                                 <div class="row clearfix">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -682,31 +683,31 @@
                                                     <div class="col-md-3 form-control-label">
                                                         <label for="btnSolicitarPaogPorteador">(En pesos)</label>
                                                     </div>
-                                                </div>                                            
-                                                    <br />
-                                                    <div class="row clearfix">
-                                                        <div class="col-md-3 col-sm-4 form-control-label">
-                                                            <label>Folio Fiscal</label>
-                                                        </div>
-                                                        <div class="col-md-9 col-sm-8">
-                                                            <div class="form-group">
-                                                                @Html.TextBoxFor(m => m.OrdenCompraPorteador.FolioFiscalUUID, new { @class = "form-control", @placeholder = "UUID de la factura" })
-                                                                @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.FolioFiscalUUID, "", new { @class = "alert-danger" })
-                                                            </div>
+                                                </div>
+                                                <br />
+                                                <div class="row clearfix">
+                                                    <div class="col-md-3 col-sm-4 form-control-label">
+                                                        <label>Folio Fiscal</label>
+                                                    </div>
+                                                    <div class="col-md-9 col-sm-8">
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m => m.OrdenCompraPorteador.FolioFiscalUUID, new { @class = "form-control", @placeholder = "UUID de la factura" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.FolioFiscalUUID, "", new { @class = "alert-danger" })
                                                         </div>
                                                     </div>
-                                                    <div class="row clearfix">
-                                                        <div class="col-md-3 col-sm-4 form-control-label">
-                                                            <label>Folio Factura</label>
-                                                        </div>
-                                                        <div class="col-md-9 col-sm-8">
-                                                            <div class="form-group">
-                                                                @Html.TextBoxFor(m => m.OrdenCompraPorteador.FolioFactura, new { @class = "form-control", @placeholder = "Folio de la factura" })
-                                                                @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.FolioFactura, "", new { @class = "alert-danger" })
-                                                            </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-3 col-sm-4 form-control-label">
+                                                        <label>Folio Factura</label>
+                                                    </div>
+                                                    <div class="col-md-9 col-sm-8">
+                                                        <div class="form-group">
+                                                            @Html.TextBoxFor(m => m.OrdenCompraPorteador.FolioFactura, new { @class = "form-control", @placeholder = "Folio de la factura" })
+                                                            @Html.ValidationMessageFor(m => m.OrdenCompraPorteador.FolioFactura, "", new { @class = "alert-danger" })
                                                         </div>
                                                     </div>
-                                                    <br />                                                
+                                                </div>
+                                                <br />
                                                 <div class="row clearfix">
                                                     <div class="col-md-6">
                                                         <div class="form-group">

@@ -54,11 +54,20 @@ namespace Application.MainModule.Flujos
         /// <returns></returns>
         public RespuestaDto GenerarOrdenesCompra(OrdenCompraCrearDTO oc)
         {
-            RespuestaDto respuesta = new RespuestaDto();
-            respuesta.Exito = true;
+            var resp = PermisosServicio.PuedeRegistrarOrdenCompra();
+            if (!resp.Exito) return resp;
+
+            var Prods = BuscarRequisicion(oc.IdRequisicion).ProductosOC;
+            if (Prods.Count != oc.Productos.Count) return OrdenCompraServicio.NoSeAsignoValorATotosLosProductos();
+
+            //oc.Productos = OrdenCompraServicio.AsignarNuevos(oc)
+
             List<OrdenCompra> locDTO = OrdenCompraServicio.IdentificarOrdenes(oc);
             locDTO = OrdenCompraServicio.AsignarProductos(oc.Productos, locDTO);
             locDTO = CalcularOrdenCompraServicio.CalcularTotales(locDTO);
+
+            RespuestaDto respuesta = new RespuestaDto();
+            respuesta.Exito = true;
             foreach (var ocDTO in locDTO)
             {
                 ocDTO.NumOrdenCompra = FolioServicio.GeneraNumerOrdenCompra(ocDTO);
@@ -142,6 +151,22 @@ namespace Application.MainModule.Flujos
             entity.FechaResgistroFactura = Convert.ToDateTime(DateTime.Today.ToShortDateString());
 
             return OrdenCompraServicio.Actualizar(entity);
+        }
+        public RespuestaDto ActulizarOrdenCompraProducto(List<OrdenCompraProductoDTO> listDTO)
+        {
+            int idOC = listDTO.FirstOrDefault().IdOrdenCompra;
+            var prodsEntity = ProductosOCAdapter.FromEntity(OrdenCompraServicio.BuscarProductosPorOrdenCompra(idOC));
+            var prodOC = ProductosOCAdapter.FromDTO(listDTO);
+
+            var resPord = OrdenCompraServicio.ActualzarProductos(OrdenCompraServicio.AplicarCambiosOrdenCompraProducto(prodOC, prodsEntity));
+            if (resPord.Exito)
+            {
+                var oc = OrdenCompraServicio.Buscar(idOC);
+                oc.Total = prodOC.Sum(x => x.Importe);
+                var entity = OrdenComprasAdapter.FromEntity(oc);
+                return OrdenCompraServicio.Actualizar(entity);
+            }
+            return resPord;        
         }
         public List<OrdenCompraDTO> ListaOrdenCompra(short IdEmpresa)
         {
