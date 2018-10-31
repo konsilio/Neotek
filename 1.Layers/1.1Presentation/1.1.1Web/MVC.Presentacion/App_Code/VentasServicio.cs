@@ -11,10 +11,10 @@ namespace MVC.Presentacion.App_Code
     public static class VentasServicio
     {
         #region Caja General
-        public static List<CajaGeneralModel> ListaVentasCajaGral(string token)
+        public static List<CajaGeneralModel> ListaVentasCajaGral(string token, string type)
         {
             var agente = new AgenteServicio();
-            agente.BuscarListaVentaCajaGral(token);
+            agente.BuscarListaVentaCajaGral(token, type);
             return agente._listaCajaGral;
         }
 

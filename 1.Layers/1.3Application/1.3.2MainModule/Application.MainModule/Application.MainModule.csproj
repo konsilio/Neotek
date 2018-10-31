@@ -73,6 +73,7 @@
     <Compile Include="AdaptadoresDTO\Mobile\TraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\VentasEstacionesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
+    <Compile Include="DTOs\Almacen\AlmacenGasMovimientoDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaAutoConsumoDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaCalibracionDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaTomaLecturaDto.cs" />

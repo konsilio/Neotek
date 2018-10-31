@@ -281,6 +281,7 @@
     <Compile Include="ObjetosValor\Constantes\AlmacenGasConst.cs" />
     <Compile Include="ObjetosValor\Constantes\AlmacenConst.cs" />
     <Compile Include="ObjetosValor\Constantes\NotificacionPushConst.cs" />
+    <Compile Include="ObjetosValor\Constantes\TipoEventoConst.cs" />
     <Compile Include="ObjetosValor\Enum\CalibracionDestinoEnum.cs" />
     <Compile Include="ObjetosValor\Enum\enumIVA.cs" />
     <Compile Include="ObjetosValor\Enum\EstatusPrecioVentaEnum.cs" />

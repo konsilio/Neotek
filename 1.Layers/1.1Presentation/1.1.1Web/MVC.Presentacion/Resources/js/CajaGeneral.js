@@ -13,7 +13,7 @@ $(function () {
     $('select').on('change', function () {
         $('#tblfilterable tbody tr').each(function () {
             var value = $('#cbxentidad').find('option:selected').text();//get value to filter of selected
-            alert(value);
+            //alert(value);
             var hiderow = $(this).find("td").eq(1).html();//get value of column entidad
             /*---------------------------------------*/
             var valuec = $('#cbxconcepto').find('option:selected').text();//get value to filter of selected

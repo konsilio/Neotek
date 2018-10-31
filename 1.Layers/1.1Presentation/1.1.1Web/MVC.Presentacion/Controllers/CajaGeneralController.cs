@@ -21,7 +21,8 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsSuperUser)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn).ToPagedList(Pagina, 20);
+                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn,"").ToPagedList(Pagina, 20);
+                ViewBag.CboxEnitdad = VentasServicio.ListaVentasCajaGral(_tkn, "").Distinct();
             }
             else
             {
@@ -180,7 +181,7 @@ namespace MVC.Presentacion.Controllers
             if (ViewBag.EsSuperUser)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn).ToPagedList(Pagina, 20);
+                ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn,"").ToPagedList(Pagina, 20);
             }
             else
             {
