@@ -131,20 +131,17 @@
                                     @Html.Partial("_ProductosOCPartial", Model.OrdenCompraProductos)
                                 </div>
                             </div>
-                            <div class="row clearfix">
+                            <div class="row clearfix">                                
                                 <div class="col-sm-4 center">
-                                    <asp:Button ID="btnRegresar" CssClass="btn btn-raised btn-primary btn-round" Text="Regresar" OnClick="btnRegresar_Click" />
-                                </div>
-                                <div class="col-sm-4 center">
-                                    <a href="#ModalCancelar" data-toggle="modal" id="btnCancel" data-target="#ModalCancelar" class="btn btn-raised btn-primary btn-round disabled">
+                                    <a href="@Url.Action("Ordenes", "OrdenCompra")"  class="btn btn-raised btn-primary btn-round">
                                         Cancelar
                                     </a>
                                 </div>
-                                <div class="col-sm-4 center">
+                                @*<div class="col-sm-4 center">
                                     <a href="#ModalConfirmacion" data-toggle="modal" id="btnok" data-target="#ModalConfirmacion" class="btn btn-raised btn-primary btn-round ">
                                         Crear
                                     </a>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     </div>
