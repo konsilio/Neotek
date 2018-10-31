@@ -1013,7 +1013,8 @@ public class VerReporteActivity extends AppCompatActivity {
                     adevices.add(device.getName());
                 }
                 if(adevices.size()<=0){
-                    AlertDialog.Builder builder= new AlertDialog.Builder(this);
+                    AlertDialog.Builder builder= new AlertDialog.Builder(this,
+                            R.style.AlertDialog);
                     builder.setTitle(R.string.error_titulo);
                     builder.setMessage("No se ha podido encontra ninguna impresora, verique:\n"+
                     " - La impreso este encendida\n - Que la impresora este vinculada al dispositivo");
@@ -1021,7 +1022,8 @@ public class VerReporteActivity extends AppCompatActivity {
                 for (int x = 0;x<adevices.size();x++){
                     lista[x] = adevices.get(x);
                 }
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this,
+                        R.style.AlertDialog);
                 builder.setTitle("Seleccione un dispositivo de la lista");
                 builder.setItems(lista,(dialog, which) -> {
                     device_select = lista[which].toString();

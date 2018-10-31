@@ -153,7 +153,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
 
     @Override
     public void onError(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
@@ -163,7 +163,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
 
     @Override
     public void onError(RespuestaPuntoVenta data) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(data.getMensaje());
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
@@ -189,7 +189,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
 
     @Override
     public void onSuccessAndroid() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
         builder.setTitle(R.string.app_name);
         builder.setMessage(R.string.mensaje_exito_papeleta_android);
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> {

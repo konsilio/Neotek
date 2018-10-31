@@ -73,6 +73,7 @@
     <Compile Include="AdaptadoresDTO\Mobile\TraspasoAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Mobile\VentasEstacionesAdapter.cs" />
     <Compile Include="AdaptadoresDTO\Ventas\CajaGeneralAdapter.cs" />
+    <Compile Include="DTOs\Almacen\AlmacenGasMovimientoDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaAutoConsumoDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaCalibracionDto.cs" />
     <Compile Include="DTOs\Almacen\AplicaTomaLecturaDto.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="DTOs\Mobile\DatosAutoconsumoDto.cs" />
     <Compile Include="DTOs\Mobile\DatosCalibracionDto.cs" />
     <Compile Include="DTOs\Mobile\DatosClientesDto.cs" />
+    <Compile Include="DTOs\Mobile\DatosGasVentaDto.cs" />
     <Compile Include="DTOs\Mobile\DatosOtrosDto.cs" />
     <Compile Include="DTOs\Mobile\DatosRecargaDto.cs" />
     <Compile Include="DTOs\Mobile\DatosTraspasoDto.cs" />

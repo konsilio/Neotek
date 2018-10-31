@@ -23,4 +23,15 @@ namespace Sagas.MainModule.ObjetosValor.Enum
         LectFinal = 4,
         Arranque = 5,
     }
+
+    public enum stringMovimiento { Entrada, Salida };
+
+    public static class SMovimiento
+    {
+        public static string E = stringMovimiento.Entrada.ToString();
+        public static string S = stringMovimiento.Salida.ToString();
+      
+
+
+    }
 }

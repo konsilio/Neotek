@@ -213,7 +213,7 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
     @Override
     public void MostrarErrores(ArrayList<String> mensaje) {
         AlertDialog.Builder builder = new AlertDialog.Builder(
-                RecargaEstacionCarburacionActivity.this);
+                RecargaEstacionCarburacionActivity.this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(getString(R.string.mensjae_error_campos)).append("\n");
@@ -250,7 +250,7 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
     @Override
     public void onError(String mensaje) {
         AlertDialog.Builder builder = new AlertDialog.Builder(
-                RecargaEstacionCarburacionActivity.this);
+                RecargaEstacionCarburacionActivity.this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
 
         builder.setMessage(mensaje);

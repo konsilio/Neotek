@@ -217,5 +217,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
+        public List<PrecioVenta> PreciosVenta(short idEmpresa)
+        {
+            return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa) && x.Activo).ToList();
+        }
     }
 }

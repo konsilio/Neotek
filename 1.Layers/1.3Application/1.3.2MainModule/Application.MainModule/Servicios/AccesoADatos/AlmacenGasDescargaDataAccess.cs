@@ -22,7 +22,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
 
         public RespuestaDto Insertar(AlmacenGasDescarga _AlmDes)
-        {            
+        {
             RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
@@ -52,7 +52,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             using (uow)
             {
                 try
-                {                    
+                {
                     uow.Repository<AlmacenGasDescarga>().Update(_almDes);
                     foreach (var foto in _fotos)
                         uow.Repository<AlmacenGasDescargaFoto>().Insert(foto);
@@ -74,12 +74,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
 
         public void Actualizar(AplicaDescargaDto aplicacionDto)
-        {  
+        {
             using (uow)
             {
                 try
-                {                        
-                    if(aplicacionDto.unidadEntrada != null)
+                {
+                    if (aplicacionDto.unidadEntrada != null)
                         uow.Repository<UnidadAlmacenGas>().Update(aplicacionDto.unidadEntrada);
 
                     if (aplicacionDto.unidadSalida != null)
@@ -104,7 +104,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
                     if (aplicacionDto.Movimiento != null)
                         uow.Repository<AlmacenGasMovimiento>().Insert(aplicacionDto.Movimiento);
-                                        
+
                     uow.SaveChanges();
                     //_respuesta.Id = _almDes.IdAlmacenEntradaGasDescarga;
                     //_respuesta.Exito = true;
@@ -120,6 +120,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
             }
             //return _respuesta;
+        }
+
+        public RespuestaDto Insertar(AlmacenGasMovimiento Movimiento)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+
+                    uow.Repository<AlmacenGasMovimiento>().Insert(Movimiento);
+
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "de la insercion del gas movimiento"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
         }
         public List<AlmacenGasDescarga> BuscarTodas()
         {

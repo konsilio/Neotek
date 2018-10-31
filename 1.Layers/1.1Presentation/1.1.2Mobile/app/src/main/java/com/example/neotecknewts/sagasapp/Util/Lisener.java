@@ -5,10 +5,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.CalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
+import com.example.neotecknewts.sagasapp.Model.CorteDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -17,6 +19,8 @@ import com.example.neotecknewts.sagasapp.Model.LecturaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaCorteDto;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
@@ -53,6 +57,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Lisener{
+    //region Variables estaticas
     public static final String LecturaInicial = "LecturaInicial";
     public static final String LecturaFinal = "LecturaFinal";
     public static final String Papeleta = "Papeleta";
@@ -70,9 +75,11 @@ public class Lisener{
     public static final String Autoconsumo = "Autoconsumo";
     public static final String Calibracion = "Calibracion";
     public static final String Traspaso = "Traspaso";
-
+    public static final String Anticipo = "Anticipo";
+    public static final String CorteDeCaja = "CorteDeCaja";
+    //endregion
+    //region Variables privadas
     private  String token;
-
     private boolean completo ;
     private SAGASSql sagasSql;
     private PapeletaSQL papeletaSQL;
@@ -80,6 +87,8 @@ public class Lisener{
     private FinalizarDescargaSQL finalizarDescargaSQL;
     private boolean EstaDisponible;
     private boolean _registrado;
+    //endregion
+    //region Constructores
     public Lisener(SAGASSql sagasSql,String token){
         this.sagasSql = sagasSql;
         this.token = token;
@@ -92,12 +101,11 @@ public class Lisener{
         this.iniciarDescargaSQL = iniciarDescargaSQL;
         this.token = token;
     }
-
     public Lisener(FinalizarDescargaSQL finalizarDescargaSQL ,String token){
         this.finalizarDescargaSQL = finalizarDescargaSQL;
         this.token = token;
     }
-
+    //endregion
     public void CrearRunable(final String proceso){
         final Runnable myTask = () -> {
             switch (proceso){
@@ -152,6 +160,11 @@ public class Lisener{
                 case Traspaso:
                     completo = Traspaso();
                     break;
+                case Anticipo:
+                    completo = Anticipo();
+                    break;
+                case CorteDeCaja:
+                    completo = Corte();
             }
         };
 
@@ -162,7 +175,188 @@ public class Lisener{
             scheduledFuture.cancel(false);
         }
     }
+    //region Corte de caja
+    private boolean Corte() {
+        if(ServicioDisponible()){
+            Log.w("Iniciando",new Date()+"Revisando cortes");
+            Cursor cursor = sagasSql.GetCortes();
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            if(cursor.moveToFirst()){
+                CorteDTO corteDTO;
+                while (!cursor.isAfterLast()){
+                    try {
+                        corteDTO = new CorteDTO();
+                        corteDTO.setClaveOperacion(
+                                cursor.getString(
+                                    cursor.getColumnIndex("ClaveOperacion")
+                                )
+                        );
+                        corteDTO.setFecha(
+                                new Date(
+                                        cursor.getString(
+                                                cursor.getColumnIndex("Fecha")
+                                        )
+                                )
+                        );
 
+                        corteDTO.setIdEstacion(
+                                cursor.getInt(
+                                        cursor.getColumnIndex("IdEstacion")
+                                )
+                        );
+                        corteDTO.setHora(
+                                cursor.getString(
+                                        cursor.getColumnIndex("Hora")
+                                )
+                        );
+                        //values.put("FechaCorte",corteDTO.getFecha().toString());
+                        if(Registrar(corteDTO,token)){
+                            sagasSql.EliminarCorte(corteDTO.getClaveOperacion());
+                        }
+
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (sagasSql.GetCortes().getCount()==0);
+    }
+
+    private  boolean Registrar(CorteDTO corteDTO,String token){
+        Gson gsons = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofits =  new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gsons))
+                .build();
+        RestClient restClient = retrofits.create(RestClient.class);
+
+
+        Call<RespuestaCorteDto> call = restClient.
+                postCorte(corteDTO,token,"application/json");
+        call.enqueue(new Callback<RespuestaCorteDto>() {
+            @Override
+            public void onResponse(Call<RespuestaCorteDto> call,
+                                   Response<RespuestaCorteDto> response) {
+                RespuestaCorteDto data = response.body();
+                if(response.isSuccessful() && data.isExito()) {
+                    _registrado = call.isExecuted() && response.isSuccessful();
+                }else {
+                    _registrado = false;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaCorteDto> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        return _registrado;
+    }
+    //endregion
+    //region Anticipos
+    private boolean Anticipo() {
+        if(ServicioDisponible()){
+            Log.w("Inciando",new Date()+" Revisando los anticipos");
+            Cursor cursor = sagasSql.GetAnticipos();
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            if(cursor.moveToFirst()){
+                AnticiposDTO anticiposDTO;
+                while (!cursor.isAfterLast()){
+                    anticiposDTO = new AnticiposDTO();
+                    try{
+                        anticiposDTO.setTotal(cursor.getDouble(
+                                cursor.getColumnIndex("Total")
+                        ));
+                        anticiposDTO.setNombreEstacion(
+                                cursor.getString(
+                                        cursor.getColumnIndex("NombreEstacion")
+                                )
+                        );
+                        anticiposDTO.setClaveOperacion(
+                                cursor.getString(
+                                        cursor.getColumnIndex("ClaveOperacion")
+                                )
+                        );
+                        anticiposDTO.setHora(
+                                cursor.getString(
+                                        cursor.getColumnIndex("Hora")
+                                )
+                        );
+                        anticiposDTO.setFecha(
+                                new Date(
+                                cursor.getString(
+                                        cursor.getColumnIndex("Fecha")
+                                )
+                                )
+                        );
+                        anticiposDTO.setAnticipar(
+                                cursor.getDouble(
+                                        cursor.getColumnIndex("Anticipar")
+                                )
+                        );
+                        anticiposDTO.setIdEstacion(
+                                cursor.getInt(
+                                        cursor.getColumnIndex("IdEstacion")
+                                )
+                        );
+                        anticiposDTO.setIdCAlmacen(
+                                cursor.getInt(
+                                        cursor.getColumnIndex("IdCAlmacen")
+                                )
+                        );
+                        if(Registrar(anticiposDTO,token)){
+                            sagasSql.EliminarAnticipo(anticiposDTO.getClaveOperacion());
+                        }
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (sagasSql.GetAnticipos().getCount()==0);
+    }
+
+    private boolean Registrar(AnticiposDTO anticiposDTO, String token) {
+        Gson gsons = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofits =  new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gsons))
+                .build();
+        RestClient restClient = retrofits.create(RestClient.class);
+
+
+        Call<RespuestaAnticipoDTO> call = restClient.
+                postAnticipo(anticiposDTO,token,"application/json");
+        call.enqueue(new Callback<RespuestaAnticipoDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaAnticipoDTO> call,
+                                   Response<RespuestaAnticipoDTO> response) {
+                RespuestaAnticipoDTO data = response.body();
+                if(response.isSuccessful() && data.isExito()) {
+                    _registrado = call.isExecuted() && response.isSuccessful();
+                }else {
+                    _registrado = false;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaAnticipoDTO> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        return _registrado;
+    }
+    //endregion
+    //region Traspasos
     private boolean Traspaso() {
         if(ServicioDisponible()){
             Log.w("Inciando",new Date()+" Revisando los traspasos");
@@ -259,6 +453,7 @@ public class Lisener{
         }
         return (this.sagasSql.GetTraspasos().getCount()==0);
     }
+
     private  boolean Registrar(TraspasoDTO dto,String tipo,boolean esFinal){
         if(ServicioDisponible()){
             Log.w("Iniciando",new Date()+"Envio del traspaso: "+dto.getClaveOperacion());
@@ -303,6 +498,8 @@ public class Lisener{
         }
         return _registrado;
     }
+    //endregion
+    //region Calibracion
     private boolean Calibracion() {
         if(ServicioDisponible()){
             Log.w("Iniciando",new Date()+" Revisado de los autoconsumos");
@@ -339,7 +536,8 @@ public class Lisener{
         return (this.sagasSql.GetCalibraciones().getCount()==0);
 
     }
-
+    //endregion
+    //region Autoconsumo
     private boolean Autoconsumo() {
         if(ServicioDisponible()){
             Log.w("Iniciando",new Date()+" Revisado de los autoconsumos");
@@ -458,7 +656,8 @@ public class Lisener{
         });
         return _registrado;
     }
-
+    //endregion
+    //region Punto de venta
     private boolean PuntoVenta() {
         if(ServicioDisponible()){
             Log.w("Iniciando","Revisando las ventas "+ new Date());
@@ -576,12 +775,13 @@ public class Lisener{
                 _registrado);
         return _registrado;
     }
-
-
+    //endregion
+    //Recarga Estacion
     private boolean RecargaEstacion(){
         return false;
     }
-
+    //endregion
+    //region Recarga camioneta
     private boolean RecargaCamioneta(){
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -647,7 +847,8 @@ public class Lisener{
         }
         return (sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_CAMIONETA).getCount()==0);
     }
-
+    //endregion
+    //region Lectura inicial camioneta
     private boolean LecturaInicialCamioneta(){
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -749,7 +950,8 @@ public class Lisener{
                 _registrado);
         return _registrado;
     }
-
+    //endregion
+    //region Lectura final camioneta
     private boolean LecturaFinalCamioneta(){
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -851,7 +1053,8 @@ public class Lisener{
                 _registrado);
         return _registrado;
     }
-
+    //endregion
+    //region Lectura final almacen
     private boolean LecturaFinalAlmacen(){
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -931,7 +1134,8 @@ public class Lisener{
                 _registrado);
         return _registrado;
     }
-
+    //endregion
+    //region Lectura inicial almacen
     private boolean LecturaInicialAlmacen(){
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1011,7 +1215,8 @@ public class Lisener{
                 _registrado);
         return _registrado;
     }
-
+    //endregion
+    //region Lectura inicial pipa
     private boolean LecturaInicialPipa() {
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1108,7 +1313,8 @@ public class Lisener{
                 _registrado);
         return _registrado;
     }
-
+    //endregion
+    //region Lectura final pipa
     private boolean LecturaFinalPipa() {
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1206,7 +1412,8 @@ public class Lisener{
                 _registrado);
         return _registrado;
     }
-
+    //endregion
+    //region Lectura final estación
     private boolean LecturaFinalizarEstacion() {
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1303,7 +1510,8 @@ public class Lisener{
                 _registrado);
         return _registrado;
     }
-
+    //endregion
+    //region Lectura inicial estación
     private boolean LecturaIniciarEstacion() {
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1400,7 +1608,8 @@ public class Lisener{
             _registrado);
         return _registrado;
     }
-
+    //endregion
+    //region Finalizar descarga
     private boolean FinalizarDescarga() {
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1498,7 +1707,8 @@ public class Lisener{
                 _registrado);
         return _registrado;
     }
-
+    //endregion
+    //region Iniciar descarga
     private boolean IniciarDescargas() {
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1596,7 +1806,8 @@ public class Lisener{
                 _registrado);
         return _registrado;
     }
-
+    //endregion
+    //region Papeleta
     private boolean Papeletas(){
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1711,7 +1922,8 @@ public class Lisener{
                 _registrado);
         return _registrado;
     }
-
+    //endregion
+    //region Estatus servicio
     private boolean ServicioDisponible(){
         Log.v("Servicio","Verifica el estatus del servicio");
         Gson gsons = new GsonBuilder()
@@ -1741,4 +1953,5 @@ public class Lisener{
         });
         return EstaDisponible;
     }
+    //endregion
 }

@@ -95,7 +95,8 @@ public class VentaGasActivity extends AppCompatActivity implements VentaGasActiv
                 intent.putExtra("ventaDTO", ventaDTO);
                 startActivity(intent);
             }else{
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this,
+                        R.style.AlertDialog);
                 builder.setTitle(R.string.error_titulo);
                 builder.setMessage(R.string.No_venta);
                 builder.setPositiveButton(R.string.message_acept,

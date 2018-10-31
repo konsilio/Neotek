@@ -139,11 +139,12 @@
 
     <Button
         android:id="@+id/BtnVentagGasActivtyPagar"
+        style="@style/SagasTheme.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
-        style="@style/SagasTheme.Button"
         android:text="@string/pagar"
         android:textColor="@color/colorTextButtonLogin"
         android:textSize="24sp"
