@@ -1,7 +1,4 @@
 ﻿@model MVC.Presentacion.Models.Catalogos.RolCat
-
-
-
 @*Hidden Fields*@
 <tr class="hideControl">
     <td>@Html.HiddenFor(m => m.RequisicionVerRequisiciones)</td>
@@ -32,6 +29,10 @@
     <td>@Html.HiddenFor(m => m.CompraAutorizarOCompra)</td>
     <td>@Html.HiddenFor(m => m.CompraEntraProductoOCompra)</td>
     <td>@Html.HiddenFor(m => m.CompraAtiendeServicioOCompra)</td>
+    <td>@Html.HiddenFor(m => m.CompraCancelaOCompra)</td>
+    <td>@Html.HiddenFor(m => m.AlmacenActualizaExistencias)</td>
+    <td>@Html.HiddenFor(m => m.AlmacenVerExistencias)</td>
+    <td>@Html.HiddenFor(m => m.AlmacenVerMovimientos)</td>
     <td>@Html.HiddenFor(m => m.IdRol)</td>
     <td>@Html.HiddenFor(m => m.IdEmpresa)</td>
     <td>@Html.HiddenFor(m => m.NombreRol)</td>
@@ -74,8 +75,24 @@
     <td>@Html.CheckBoxFor(m => m.CatModificarEquipoTransporte)</td>
     <td>@Html.CheckBoxFor(m => m.CatEliminarEquipoTransporte)</td>
     <td>@Html.CheckBoxFor(m => m.CatConsultarEquipoTransporte) </td>
+    <td>@Html.CheckBoxFor(m => m.CatInsertarEmpresa) </td>
+    <td>@Html.CheckBoxFor(m => m.CatModificarEmpresa) </td>
+    <td>@Html.CheckBoxFor(m => m.CatEliminarEmpresa) </td>
+    <td>@Html.CheckBoxFor(m => m.CatConsultarEmpresa) </td>
+    <td>@Html.CheckBoxFor(m => m.CatInsertarRol) </td>
+    <td>@Html.CheckBoxFor(m => m.CatModificarRol) </td>
+    <td>@Html.CheckBoxFor(m => m.CatEliminarRol) </td>
+    <td>@Html.CheckBoxFor(m => m.CatConsultarRol) </td>
+    <td>@Html.CheckBoxFor(m => m.CatInsertarPrecioVentaGas) </td>
+    <td>@Html.CheckBoxFor(m => m.CatModificarPrecioVentaGas) </td>
+    <td>@Html.CheckBoxFor(m => m.CatEliminarPrecioVentaGas) </td>
+    <td>@Html.CheckBoxFor(m => m.CatConsultarPrecioVentaGas) </td>
+    <td>@Html.CheckBoxFor(m => m.CatInsertarPrecioVenta) </td>
+    <td>@Html.CheckBoxFor(m => m.CatModificarPrecioVenta) </td>
+    <td>@Html.CheckBoxFor(m => m.CatEliminarPrecioVenta) </td>
+    <td>@Html.CheckBoxFor(m => m.CatConsultarPrecioVenta) </td>
 
-    <td>
+<td>
         <a ID="lbEdit" href="@Url.Action("ActualizaNombreRol", "Roles", new { id = Model.IdRol })">
             <i class="material-icons">edit</i>
             <span class="icon-name"></span>

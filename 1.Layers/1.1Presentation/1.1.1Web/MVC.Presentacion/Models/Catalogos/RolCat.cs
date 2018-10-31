@@ -48,6 +48,22 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool CatModificarEquipoTransporte { get; set; }
         public bool CatEliminarEquipoTransporte { get; set; }
         public bool CatConsultarEquipoTransporte { get; set; }
+        public bool CatInsertarEmpresa { get; set; }
+        public bool CatModificarEmpresa { get; set; }
+        public bool CatEliminarEmpresa { get; set; }
+        public bool CatConsultarEmpresa { get; set; }
+        public bool CatInsertarRol { get; set; }
+        public bool CatModificarRol { get; set; }
+        public bool CatEliminarRol { get; set; }
+        public bool CatConsultarRol { get; set; }
+        public bool CatInsertarPrecioVentaGas { get; set; }
+        public bool CatModificarPrecioVentaGas { get; set; }
+        public bool CatEliminarPrecioVentaGas { get; set; }
+        public bool CatConsultarPrecioVentaGas { get; set; }
+        public bool CatInsertarPrecioVenta { get; set; }
+        public bool CatModificarPrecioVenta { get; set; }
+        public bool CatEliminarPrecioVenta { get; set; }
+        public bool CatConsultarPrecioVenta { get; set; }
 
         /***********************************/
         public bool CompraVerOCompra { get; set; }
@@ -55,6 +71,10 @@ namespace MVC.Presentacion.Models.Catalogos
         public bool CompraAutorizarOCompra { get; set; }
         public bool CompraEntraProductoOCompra { get; set; }
         public bool CompraAtiendeServicioOCompra { get; set; }
+        public bool CompraCancelaOCompra { get; set; }
+        public bool AlmacenActualizaExistencias { get; set; }
+        public bool AlmacenVerExistencias { get; set; }
+        public bool AlmacenVerMovimientos { get; set; }
         public bool RequisicionVerRequisiciones { get; set; }
         public bool RequisicionGenerarNueva { get; set; }
         public bool RequisicionRevisarExistencia { get; set; }
