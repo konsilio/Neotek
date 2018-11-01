@@ -26,9 +26,9 @@
                         <div class="col-lg-5 col-md-5 col-sm-12">
                             <h2>Requisición</h2>
                             <ul class="breadcrumb padding-0">
-                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Requisición</li>
-                                <li class="breadcrumb-item active"> Nueva </li>
+                                <li class="breadcrumb-item"> Nueva </li>
                             </ul>
                         </div>
                     </div>
@@ -53,8 +53,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <input type="text" class="form-control" disabled value="@ViewBag.Empresas" />
-                                                    @Html.HiddenFor(m => m.IdEmpresa)
+                                                    @ViewBag.Empresas                                                  
                                                 }
                                                 @Html.HiddenFor(m => m.IdEmpresa)
                                             </div>

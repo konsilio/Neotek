@@ -1450,5 +1450,15 @@ namespace MVC.Presentacion.App_Code
 
         #endregion
 
+        public static RespuestaDTO SinPermisos()
+        {
+            return new RespuestaDTO()
+            {
+                Exito = false,
+                MensajesError = new List<string> { "No tienes permiso para esta accion" },
+                Mensaje = "No tienes permiso para esta accion"
+            };
+        }
+
     }
 }
