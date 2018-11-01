@@ -22,6 +22,11 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
             RespuestaDTO Resp = new RespuestaDTO();
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tok);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tok);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tok).SingleOrDefault().NombreComercial;
             ViewBag.listaEmpresas = CatalogoServicio.Empresas(_tok);
 
             if (TempData["RespuestaDTO"] != null)
@@ -31,9 +36,9 @@ namespace MVC.Presentacion.Controllers
             if (TempData["RespuestaDTOError"] != null)
             {
                 ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
-                ViewBag.MessageError = TempData["RespuestaDTOError"];
+                //ViewBag.MessageError = TempData["RespuestaDTOError"];
             }
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
+            //ViewBag.MessageError = TempData["RespuestaDTOError"];
 
             return View();
         }
@@ -41,9 +46,13 @@ namespace MVC.Presentacion.Controllers
         public ActionResult Nueva()
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            _tok = Session["StringToken"].ToString();
+            _tok = Session["StringToken"].ToString();           
+            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            {             
+                TempData["RespuestaDTOError"] = CatalogoServicio.SinPermisos();
+                return RedirectToAction("Index");
+            }
             EmpresaModel em = new EmpresaModel();
-
             //Se obtienen los paises         
             ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tok);
             //Se obtienen los estados 
@@ -51,6 +60,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Empresas = null;
 
             if (TempData["RespuestaDTOError"] != null) ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+          
             return View(em);
         }
 
@@ -65,7 +75,7 @@ namespace MVC.Presentacion.Controllers
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
+                TempData["RespuestaDTOError"] = respuesta;
                 return RedirectToAction("Index");
             }
 
@@ -109,9 +119,14 @@ namespace MVC.Presentacion.Controllers
         public ActionResult BorrarEmpresa(short id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            string _tkn = Session["StringToken"].ToString();
+            _tok = Session["StringToken"].ToString();
+            if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
+            {
+                TempData["RespuestaDTOError"] = CatalogoServicio.SinPermisos();
+                return RedirectToAction("Index");
+            }
             Empresa em = new Empresa();
-            var respuesta = CatalogoServicio.EliminaEmpresaSel(id, _tkn);
+            var respuesta = CatalogoServicio.EliminaEmpresaSel(id, _tok);
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;

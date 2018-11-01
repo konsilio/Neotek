@@ -219,23 +219,23 @@
                                                                 <span class="icon-name"></span>
                                                             </a>
                                                         }
-                                                        @if ((_oc.EsGas == false && _oc.EsTransporteGas == false) && _oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_exitosa))
+                                                        @if ((_oc.EsGas == false && _oc.EsTransporteGas == false) && _oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Proceso_compra))
                                                         {
                                                             <a ID="lbAgregarMercancia" href="@Url.Action("EntradaMercancia", "OrdenCompra", new { idOrden = _oc.IdOrdenCompra })">
                                                                 <i class="material-icons"> assignment_turned_in</i>
                                                                 <span class="icon-name"></span>
                                                             </a>
-                                                            <a ID="lbPDF" href="@Url.Action("", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
+                                                            @*<a ID="lbPDF" href="@Url.Action("", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
                                                                 <i class="material-icons">picture_as_pdf</i>
                                                                 <span class="icon-name"></span>
-                                                            </a>
+                                                            </a>*@
                                                         }
                                                         @if (_oc.OrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Compra_cancelada))
                                                         {
-                                                            <a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraResumen", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
+                                                            @*<a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraResumen", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
                                                                 <i class="material-icons">remove_red_eye</i>
                                                                 <span class="icon-name"></span>
-                                                            </a>
+                                                            </a>*@
                                                         }
                                                         @if (_oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.SolicitudPago))
                                                         {
