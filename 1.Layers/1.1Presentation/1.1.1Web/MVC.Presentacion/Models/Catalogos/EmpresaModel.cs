@@ -97,10 +97,10 @@ namespace MVC.Presentacion.Models.Catalogos
         [Required(ErrorMessage = eReq)]
         [Display(Name = "IdPais")]
         public Nullable<byte> IdPais { get; set; }
-             
+
         [Display(Name = "IdEstadoRep")]
         public Nullable<byte> IdEstadoRep { get; set; }
-             
+
         [StringLength(150, MinimumLength = 1, ErrorMessage = eTa)]
         [Display(Name = "Estado")]
         public string EstadoProvincia { get; set; }
@@ -133,55 +133,30 @@ namespace MVC.Presentacion.Models.Catalogos
         [StringLength(10, MinimumLength = 1, ErrorMessage = eTa)]
         [Display(Name = "Núm Int.")]
         public string NumInt { get; set; }
-            
+
         [Display(Name = "Pequeño (180px X 180px")]
         public string UrlLogotipo180px { get; set; }
-               
+
         [Display(Name = "Mediano (500px X 500px)")]
         public string UrlLogotipo500px { get; set; }
-               
+
         [Display(Name = "Grande (1000px X 1000px")]
         public string UrlLogotipo1000px { get; set; }
+        
+        public System.DateTime CierreInventario { get; set; }
+        
+        public decimal FactorCompraLitroAKilos { get; set; }
 
-       // [StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
-       // [Display(Name = "CierreInventario")]
-       // // public DateTime CierreInventario { get; set; }
-       //  public string CierreInventario { get; set; }
+        public decimal FactorFleteGas { get; set; }
+        
+        public decimal FactorGalonALitros { get; set; }
 
-       // [StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
-       // [Display(Name = "FactorCompraLitroAKilos")]
-       // //public decimal FactorCompraLitroAKilos { get; set; }
-       // public string FactorCompraLitroAKilos { get; set; }
+        public decimal FactorLitrosAKilos { get; set; }
 
-       // [StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
-       // [Display(Name = "FactorFleteGas")]
-       // //public decimal FactorFleteGas { get; set; }
-       // public string FactorFleteGas { get; set; }
+        public byte InventarioCrítico { get; set; }
 
-       // [StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
-       // [Display(Name = "FactorGalonALitros")]
-       // //public decimal FactorGalonALitros { get; set; }
-       // public string FactorGalonALitros { get; set; }
-
-       // [StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
-       // [Display(Name = "FactorLitrosAKilos")]
-       //// public decimal FactorLitrosAKilos { get; set; }
-       // public string FactorLitrosAKilos { get; set; }
-
-       // [StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
-       // [Display(Name = "InventarioCrítico")]
-       //// public byte InventarioCrítico { get; set; }
-       // public string InventarioCrítico { get; set; }
-
-       // [StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
-       // [Display(Name = "InventarioSano")]
-       //// public byte InventarioSano { get; set; }
-       // public string InventarioSano { get; set; }
-
-       // [StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
-       // [Display(Name = "MaxRemaGaseraMensual")]
-       //// public decimal MaxRemaGaseraMensual { get; set; }
-       // public string MaxRemaGaseraMensual { get; set; }
+        public byte InventarioSano { get; set; }
+        public decimal MaxRemaGaseraMensual { get; set; }
 
     }
 }

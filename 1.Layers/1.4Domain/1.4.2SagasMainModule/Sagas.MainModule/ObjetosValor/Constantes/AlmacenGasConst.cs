@@ -13,6 +13,7 @@ namespace Sagas.MainModule.ObjetosValor.Constantes
         public const string AlmacenPrincipal = "AlmacenPrincipal";
         public const string Tractor = "Tractor";
         public const string P5000 = "P5000";
+        public const string OperadorChofer = "NuevoOperadorChofer";
 
         //Procesos
         public const string Descarga = "Descarga";

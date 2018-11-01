@@ -65,6 +65,22 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 CatModificarEquipoTransporte = rol.CatModificarEquipoTransporte,
                 CatEliminarEquipoTransporte = rol.CatEliminarEquipoTransporte,
                 CatConsultarEquipoTransporte = rol.CatConsultarEquipoTransporte,
+                CatInsertarEmpresa = rol.CatInsertarEmpresa,
+                CatModificarEmpresa = rol.CatModificarEmpresa,
+                CatEliminarEmpresa = rol.CatEliminarEmpresa,
+                CatConsultarEmpresa = rol.CatConsultarEmpresa,
+                CatInsertarRol = rol.CatInsertarRol,
+                CatModificarRol = rol.CatModificarRol,
+                CatEliminarRol = rol.CatEliminarRol,
+                CatConsultarRol = rol.CatConsultarRol,
+                CatInsertarPrecioVentaGas = rol.CatInsertarPrecioVentaGas,
+                CatModificarPrecioVentaGas = rol.CatModificarPrecioVentaGas,
+                CatEliminarPrecioVentaGas = rol.CatEliminarPrecioVentaGas,
+                CatConsultarPrecioVentaGas = rol.CatConsultarPrecioVentaGas,
+                CatInsertarPrecioVenta = rol.CatInsertarPrecioVenta,
+                CatModificarPrecioVenta = rol.CatModificarPrecioVenta,
+                CatEliminarPrecioVenta = rol.CatEliminarPrecioVenta,
+                CatConsultarPrecioVenta = rol.CatConsultarPrecioVenta,
                 AppCompraVerOCompra = rol.AppCompraVerOCompra,
                 AppCompraEntraGas = rol.AppCompraEntraGas,
                 AppCompraGasIniciarDescarga = rol.AppCompraGasIniciarDescarga,
@@ -96,12 +112,12 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
             return roles.ToList().Select(x => ToDTO(x)).ToList();
         }
 
-      
+
         //get all roles
         public static RolDto ToDTORol(Rol us)
         {
             RolDto rolDTO = new RolDto()
-            {                
+            {
                 IdRol = us.IdRol,
                 Rol1 = us.Rol1,
                 NombreRol = us.NombreRol,
@@ -246,6 +262,22 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 CatModificarEquipoTransporte = rolDTO.CatModificarEquipoTransporte,
                 CatEliminarEquipoTransporte = rolDTO.CatEliminarEquipoTransporte,
                 CatConsultarEquipoTransporte = rolDTO.CatConsultarEquipoTransporte,
+                CatInsertarEmpresa = rolDTO.CatInsertarEmpresa,
+                CatModificarEmpresa = rolDTO.CatModificarEmpresa,
+                CatEliminarEmpresa = rolDTO.CatEliminarEmpresa,
+                CatConsultarEmpresa = rolDTO.CatConsultarEmpresa,
+                CatInsertarRol = rolDTO.CatInsertarRol,
+                CatModificarRol = rolDTO.CatModificarRol,
+                CatEliminarRol = rolDTO.CatEliminarRol,
+                CatConsultarRol = rolDTO.CatConsultarRol,
+                CatInsertarPrecioVentaGas = rolDTO.CatInsertarPrecioVentaGas,
+                CatModificarPrecioVentaGas = rolDTO.CatModificarPrecioVentaGas,
+                CatEliminarPrecioVentaGas = rolDTO.CatEliminarPrecioVentaGas,
+                CatConsultarPrecioVentaGas = rolDTO.CatConsultarPrecioVentaGas,
+                CatInsertarPrecioVenta = rolDTO.CatInsertarPrecioVenta,
+                CatModificarPrecioVenta = rolDTO.CatModificarPrecioVenta,
+                CatEliminarPrecioVenta = rolDTO.CatEliminarPrecioVenta,
+                CatConsultarPrecioVenta = rolDTO.CatConsultarPrecioVenta,
                 AppCompraVerOCompra = rolDTO.AppCompraVerOCompra,
                 AppCompraEntraGas = rolDTO.AppCompraEntraGas,
                 AppCompraGasIniciarDescarga = rolDTO.AppCompraGasIniciarDescarga,
@@ -272,14 +304,14 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
         {
             var catRol = FromEntity(rol);
             if (rolDTO.NombreRol != null) { catRol.NombreRol = rolDTO.NombreRol; } else { catRol.NombreRol = catRol.NombreRol; }
-            
-            return catRol;           
+
+            return catRol;
         }
         public static List<Rol> FromDtoPer(List<RolDto> rolDTO)
         {
-            return  rolDTO.ToList().Select(x => FromDtoPermiso(x)).ToList();
+            return rolDTO.ToList().Select(x => FromDtoPermiso(x)).ToList();
         }
-           
+
         public static Rol FromEntity(Rol rol)
         {
             return new Rol()
@@ -350,7 +382,7 @@ namespace Application.MainModule.AdaptadoresDTO.Seguridad
                 AppTomaLecturaReporteDelDia = rol.AppTomaLecturaReporteDelDia,
                 AppTraspasoEstacionCarb = rol.AppTraspasoEstacionCarb,
                 AppTraspasoPipa = rol.AppTraspasoPipa,
-                
+
             };
         }
 

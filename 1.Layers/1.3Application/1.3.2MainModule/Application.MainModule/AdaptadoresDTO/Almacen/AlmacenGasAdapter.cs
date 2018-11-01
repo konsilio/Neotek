@@ -531,7 +531,8 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almMov.IdTipoEvento = TipoEventoEnum.EmpresaNueva;
             almMov.IdTipoMovimiento = TipoMovimientoEnum.Arranque;            
             almMov.IdAlmacenGas = alm.IdAlmacenGas;
-
+            almMov.CAlmacenPrincipalNombre = AlmacenGasConst.AlmacenPrincipal;
+            almMov.OperadorChoferNombre = AlmacenGasConst.OperadorChofer;
             almMov.TipoEvento = AlmacenGasConst.EmpresaNueva;
             almMov.TipoMovimiento = AlmacenGasConst.Arranque;
 

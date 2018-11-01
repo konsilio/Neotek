@@ -332,6 +332,22 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CatModificarEquipoTransporte = lst[i].CatModificarEquipoTransporte;
                 _lstc.CatEliminarEquipoTransporte = lst[i].CatEliminarEquipoTransporte;
                 _lstc.CatConsultarEquipoTransporte = lst[i].CatConsultarEquipoTransporte;
+                _lstc.CatInsertarEmpresa = lst[i].CatInsertarEmpresa;
+                _lstc.CatModificarEmpresa = lst[i].CatModificarEmpresa;
+                _lstc.CatEliminarEmpresa = lst[i].CatEliminarEmpresa;
+                _lstc.CatConsultarEmpresa = lst[i].CatConsultarEmpresa;
+                _lstc.CatInsertarRol = lst[i].CatInsertarRol;
+                _lstc.CatModificarRol = lst[i].CatModificarRol;
+                _lstc.CatEliminarRol = lst[i].CatEliminarRol;
+                _lstc.CatConsultarRol = lst[i].CatConsultarRol;
+                _lstc.CatInsertarPrecioVentaGas = lst[i].CatInsertarPrecioVentaGas;
+                _lstc.CatModificarPrecioVentaGas = lst[i].CatModificarPrecioVentaGas;
+                _lstc.CatEliminarPrecioVentaGas = lst[i].CatEliminarPrecioVentaGas;
+                _lstc.CatConsultarPrecioVentaGas = lst[i].CatConsultarPrecioVentaGas;
+                _lstc.CatInsertarPrecioVenta = lst[i].CatInsertarPrecioVenta;
+                _lstc.CatModificarPrecioVenta = lst[i].CatModificarPrecioVenta;
+                _lstc.CatEliminarPrecioVenta = lst[i].CatEliminarPrecioVenta;
+                _lstc.CatConsultarPrecioVenta = lst[i].CatConsultarPrecioVenta;
                 /**/
                 _lstc.CompraVerOCompra = lst[i].CompraVerOCompra;
                 _lstc.CompraGenerarOCompra = lst[i].CompraGenerarOCompra;
@@ -440,6 +456,22 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CatModificarEquipoTransporte = lst[i].CatModificarEquipoTransporte;
                 _lstc.CatEliminarEquipoTransporte = lst[i].CatEliminarEquipoTransporte;
                 _lstc.CatConsultarEquipoTransporte = lst[i].CatConsultarEquipoTransporte;
+                _lstc.CatInsertarEmpresa = lst[i].CatInsertarEmpresa;
+                _lstc.CatModificarEmpresa = lst[i].CatModificarEmpresa;
+                _lstc.CatEliminarEmpresa = lst[i].CatEliminarEmpresa;
+                _lstc.CatConsultarEmpresa = lst[i].CatConsultarEmpresa;
+                _lstc.CatInsertarRol = lst[i].CatInsertarRol;
+                _lstc.CatModificarRol = lst[i].CatModificarRol;
+                _lstc.CatEliminarRol = lst[i].CatEliminarRol;
+                _lstc.CatConsultarRol = lst[i].CatConsultarRol;
+                _lstc.CatInsertarPrecioVentaGas = lst[i].CatInsertarPrecioVentaGas;
+                _lstc.CatModificarPrecioVentaGas = lst[i].CatModificarPrecioVentaGas;
+                _lstc.CatEliminarPrecioVentaGas = lst[i].CatEliminarPrecioVentaGas;
+                _lstc.CatConsultarPrecioVentaGas = lst[i].CatConsultarPrecioVentaGas;
+                _lstc.CatInsertarPrecioVenta = lst[i].CatInsertarPrecioVenta;
+                _lstc.CatModificarPrecioVenta = lst[i].CatModificarPrecioVenta;
+                _lstc.CatEliminarPrecioVenta = lst[i].CatEliminarPrecioVenta;
+                _lstc.CatConsultarPrecioVenta = lst[i].CatConsultarPrecioVenta;
                 /**/
                 _lstc.CompraVerOCompra = lst[i].CompraVerOCompra;
                 _lstc.CompraGenerarOCompra = lst[i].CompraGenerarOCompra;
@@ -535,6 +567,22 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CatModificarEquipoTransporte = lst[i].CatModificarEquipoTransporte;
                 _lstc.CatEliminarEquipoTransporte = lst[i].CatEliminarEquipoTransporte;
                 _lstc.CatConsultarEquipoTransporte = lst[i].CatConsultarEquipoTransporte;
+                _lstc.CatInsertarEmpresa = lst[i].CatInsertarEmpresa;
+                _lstc.CatModificarEmpresa = lst[i].CatModificarEmpresa;
+                _lstc.CatEliminarEmpresa = lst[i].CatEliminarEmpresa;
+                _lstc.CatConsultarEmpresa = lst[i].CatConsultarEmpresa;
+                _lstc.CatInsertarRol = lst[i].CatInsertarRol;
+                _lstc.CatModificarRol = lst[i].CatModificarRol;
+                _lstc.CatEliminarRol = lst[i].CatEliminarRol;
+                _lstc.CatConsultarRol = lst[i].CatConsultarRol;
+                _lstc.CatInsertarPrecioVentaGas = lst[i].CatInsertarPrecioVentaGas;
+                _lstc.CatModificarPrecioVentaGas = lst[i].CatModificarPrecioVentaGas;
+                _lstc.CatEliminarPrecioVentaGas = lst[i].CatEliminarPrecioVentaGas;
+                _lstc.CatConsultarPrecioVentaGas = lst[i].CatConsultarPrecioVentaGas;
+                _lstc.CatInsertarPrecioVenta = lst[i].CatInsertarPrecioVenta;
+                _lstc.CatModificarPrecioVenta = lst[i].CatModificarPrecioVenta;
+                _lstc.CatEliminarPrecioVenta = lst[i].CatEliminarPrecioVenta;
+                _lstc.CatConsultarPrecioVenta = lst[i].CatConsultarPrecioVenta;
                 Roles.Add(_lstc);
             }
             return Roles;
@@ -582,7 +630,6 @@ namespace MVC.Presentacion.App_Code
                 _lstc.CatModificarEquipoTransporte = lst[i].CatModificarEquipoTransporte;
                 _lstc.CatEliminarEquipoTransporte = lst[i].CatEliminarEquipoTransporte;
                 _lstc.CatConsultarEquipoTransporte = lst[i].CatConsultarEquipoTransporte;
-
                 _lstc.CatInsertarEmpresa = lst[i].CatInsertarEmpresa;
                 _lstc.CatModificarEmpresa = lst[i].CatModificarEmpresa;
                 _lstc.CatEliminarEmpresa = lst[i].CatEliminarEmpresa;
