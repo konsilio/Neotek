@@ -56,7 +56,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableLeft="@mipmap/ic_camera"
+                android:drawableStart="@mipmap/ic_camera"
+                android:background="@drawable/ripple_effect"
                 android:text="@string/tomar_foto"
                 android:textColor="@color/textcolorButton" />
 

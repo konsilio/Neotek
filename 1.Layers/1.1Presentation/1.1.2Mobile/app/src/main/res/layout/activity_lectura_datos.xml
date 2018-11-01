@@ -84,12 +84,12 @@
                 android:layout_marginRight="45dp"
                 android:layout_marginBottom="15dp"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:padding="15sp"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="24sp"
                 tools:ignore="ObsoleteLayoutParam,UnusedAttribute" />
-<!--                android:backgroundTint="@color/colorButtonLogin"-->
         </LinearLayout>
     </ScrollView>
 

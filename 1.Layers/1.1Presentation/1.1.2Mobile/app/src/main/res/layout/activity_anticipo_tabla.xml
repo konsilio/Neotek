@@ -33,7 +33,8 @@
             <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="200sp"
-                android:scrollbars="vertical">
+                android:scrollbars="vertical"
+                tools:ignore="NestedScrolling">
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -290,17 +291,19 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         style="@style/SagasTheme.Button"
+                        android:background="@drawable/ripple_effect"
                         android:text="@string/regresar"
                         android:textColor="@color/colorTextButtonLogin"
                         android:textSize="18sp"
                         tools:ignore="ButtonStyle,UnusedAttribute" />
-                        <!--android:backgroundTint="@color/colorButtonLogin"-->
+
                     <Button
                         android:id="@+id/BtnAnticipoTablaActivityHacerAnticipo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         style="@style/SagasTheme.Button"
+                        android:background="@drawable/ripple_effect"
                         android:text="@string/hacer_anticipo"
                         android:textColor="@color/colorTextButtonLogin"
                         android:textSize="18sp"

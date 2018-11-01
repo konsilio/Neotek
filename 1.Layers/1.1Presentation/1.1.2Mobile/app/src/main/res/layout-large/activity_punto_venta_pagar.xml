@@ -186,6 +186,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="43dp"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:text="@string/opciones"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="24sp"
@@ -201,6 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:text="@string/message_cancel"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="24sp"
@@ -210,7 +212,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView30"
                 app:layout_constraintVertical_bias="1.0"
                 tools:ignore="UnusedAttribute" />
-<!--                android:backgroundTint="@color/colorButtonLogin"-->
+
             <Button
                 android:id="@+id/BtnPuntoVentaPagarActivityConfirmar"
                 android:layout_width="wrap_content"
@@ -218,6 +220,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="8dp"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:text="@string/confirmar"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="24sp"
@@ -226,7 +229,7 @@
                 app:layout_constraintStart_toEndOf="@+id/BtnPuntoVentaPagarActivityCancelar"
                 app:layout_constraintTop_toBottomOf="@+id/SPuntoVentaActivityCredito"
                 tools:ignore="UnusedAttribute" />
-            <!--android:backgroundTint="@color/colorButtonLogin"-->
+
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

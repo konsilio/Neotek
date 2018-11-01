@@ -130,40 +130,50 @@ public class MainActivity extends AppCompatActivity implements MainView{
         //se obtienen los datos de la vista
         usuario = editTextCorreoElectronico.getText().toString();
         contraseña = editTextContraseña.getText().toString();
-        IdEmpresa = empresaDTOs.get(spinnerGaseras.getSelectedItemPosition()).getIdEmpresa();
+        if(empresaDTOs.size()==0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+            builder.setTitle(R.string.error_titulo);
+            builder.setMessage("No se ha especificado la empresa, o se perdio la conexión al " +
+                    getString(R.string.error_conexion_lista_login));
+            builder.setPositiveButton(R.string.message_acept, (dialogInterface, i) -> {
+                dialogInterface.dismiss();
+                dialogInterface.dismiss();
+            });
+            builder.create().show();
+        }else {
+            IdEmpresa = empresaDTOs.get(spinnerGaseras.getSelectedItemPosition()).getIdEmpresa();
 
-        //se verifica que no haya campos vacios y que sea un correo valido, y en caso contrario se muestra un mensaje
-        if(TextUtils.isEmpty(usuario) || TextUtils.isEmpty(contraseña)){
-            showDialog(getResources().getString(R.string.empty_field));
-        }else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(usuario).matches()) {
-            showDialog(getResources().getString(R.string.invalid_email));
-        }else{
-            //String fb_token = "";
-            try{
-                //se codifica la contraseña en SHA256
-                Log.e("SAAAA", Utilidades.getHash(contraseña));
-                Log.e("SAAAA", IdEmpresa+"");
-                //showDialog( Utilidades.getHash(contraseña));
-                this.contraseña = Utilidades.getHash(contraseña);
-                fb_token =FirebaseInstanceId.getInstance().getToken();
-                Log.w("FireBaseToken",fb_token );
+            //se verifica que no haya campos vacios y que sea un correo valido, y en caso contrario se muestra un mensaje
+            if (TextUtils.isEmpty(usuario) || TextUtils.isEmpty(contraseña)) {
+                showDialog(getResources().getString(R.string.empty_field));
+            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(usuario).matches()) {
+                showDialog(getResources().getString(R.string.invalid_email));
+            } else {
+                //String fb_token = "";
+                try {
+                    //se codifica la contraseña en SHA256
+                    Log.e("SAAAA", Utilidades.getHash(contraseña));
+                    Log.e("SAAAA", IdEmpresa + "");
+                    //showDialog( Utilidades.getHash(contraseña));
+                    this.contraseña = Utilidades.getHash(contraseña);
+                    fb_token = FirebaseInstanceId.getInstance().getToken();
+                    Log.w("FireBaseToken", fb_token);
 
-            }catch (NoSuchAlgorithmException ex){
-                ex.printStackTrace();
+                } catch (NoSuchAlgorithmException ex) {
+                    ex.printStackTrace();
+                }
+                //startActivity();
+                //se completa el objeto para mandar a iniciar sesion
+                UsuarioLoginDTO usuarioLoginDTO = new UsuarioLoginDTO();
+                usuarioLoginDTO.setIdEmpresa(IdEmpresa);
+                usuarioLoginDTO.setPassword(this.contraseña);
+                usuarioLoginDTO.setUsuario(usuario);
+                usuarioLoginDTO.setFbToken(fb_token);
+                //usuarioLoginDTO.setFBToken(FirebaseInstanceId.getInstance().getToken());
+                //por medio del presenter se llama al web service con el objeto de usuario
+                loginPresenter.doLogin(usuarioLoginDTO);
             }
-            //startActivity();
-            //se completa el objeto para mandar a iniciar sesion
-            UsuarioLoginDTO usuarioLoginDTO = new UsuarioLoginDTO();
-            usuarioLoginDTO.setIdEmpresa(IdEmpresa);
-            usuarioLoginDTO.setPassword(this.contraseña);
-            usuarioLoginDTO.setUsuario(usuario);
-            usuarioLoginDTO.setFbToken(fb_token);
-            //usuarioLoginDTO.setFBToken(FirebaseInstanceId.getInstance().getToken());
-            //por medio del presenter se llama al web service con el objeto de usuario
-            loginPresenter.doLogin(usuarioLoginDTO);
         }
-
-
     }
 
 

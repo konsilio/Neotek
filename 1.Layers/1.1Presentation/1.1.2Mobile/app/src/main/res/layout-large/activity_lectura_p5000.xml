@@ -109,6 +109,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:text="@string/message_acept"
@@ -116,7 +117,6 @@
                 android:textSize="36sp"
                 tools:layout_editor_absoluteX="136dp"
                 tools:layout_editor_absoluteY="325dp" />
-            <!--                android:background="@color/colorButtonLogin"-->
         </LinearLayout>
     </ScrollView>
 

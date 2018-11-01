@@ -103,6 +103,7 @@
         android:layout_marginRight="2sp"
         android:text="@string/message_acept"
         style="@style/SagasTheme.Button"
+        android:background="@drawable/ripple_effect"
         android:textColor="@color/colorTextButtonLogin"
         android:textSize="18sp"
         tools:ignore="SpUsage" />

@@ -508,6 +508,7 @@
             <Button
                 android:id="@+id/registrar_button"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_gravity="center"
@@ -523,6 +524,7 @@
             <Button
                 android:id="@+id/limpiar_button"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

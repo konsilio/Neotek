@@ -121,6 +121,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_weight="4"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:padding="15dp"
                 android:text="@string/Generar_reporte"
                 android:textColor="@color/colorTextButtonLogin"

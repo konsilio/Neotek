@@ -16,6 +16,7 @@
         android:layout_weight="1"
         android:textSize="30sp"
         android:text="@string/message_acept"
+        android:background="@drawable/ripple_effect"
         style="@style/SagasTheme.Button"
    />
     <!--tools:ignore="UnusedAttribute"

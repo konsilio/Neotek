@@ -95,6 +95,7 @@
         android:layout_height="70dp"
         android:layout_gravity="center"
         style="@style/SagasTheme.Button"
+        android:background="@drawable/ripple_effect"
         android:text="@string/message_acept"
         android:textColor="@color/colorTextButtonLogin"
         android:textSize="25dp"
