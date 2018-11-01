@@ -16,7 +16,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardElevation="1sp">
+        app:cardElevation="2sp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,11 +28,11 @@
                 android:id="@+id/textViewRuta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5sp"
+                android:layout_marginStart="15sp"
                 android:paddingTop="5sp"
                 android:paddingBottom="5sp"
-                android:text="Prueba"
-                android:textSize="20dp" />
+                android:text=""
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -49,26 +49,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="5sp"
-                android:src="@drawable/logo" />
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
+                android:src="@mipmap/ic_sagas_launcher"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/menu_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="15sp"
                 android:layout_weight="1"
                 android:paddingTop="15sp"
                 android:paddingBottom="15sp"
-                android:text="sample"
+                android:text=""
                 android:textAlignment="center"
                 android:textSize="30sp"
+                android:textStyle="bold"
                 tools:ignore="InefficientWeight" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="5sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginRight="20sp"
                 android:src="@drawable/right"
                 tools:ignore="ContentDescription" />
         </LinearLayout>

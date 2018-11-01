@@ -74,6 +74,55 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         final MenuDTO menuItem = menuItems.get(position);
 
 //se cargan los datos del item de la lista a la vista
+        ImageView icon = holder.imageView;
+        switch (menuItem.getImageRef()){
+            case "ic_papeleta":
+                icon.setImageResource(R.mipmap.ic_papeleta);
+                break;
+            case "ic_iniciar_descarga":
+                icon.setImageResource(R.mipmap.ic_iniciar_descarga);
+                break;
+            case "ic_finalizar_descarga":
+                icon.setImageResource(R.mipmap.ic_finalizar_descarga);
+                break;
+            case "ic_ordenes_compra":
+                icon.setImageResource(R.mipmap.ic_ordenes_compra);
+                break;
+            case "ic_lectura_inicial":
+                icon.setImageResource(R.mipmap.ic_lectura_inicial);
+                break;
+            case  "ic_lectura_final":
+                icon.setImageResource(R.mipmap.ic_lectura_final);
+                break;
+            case  "ic_reporte_dia":
+                icon.setImageResource(R.mipmap.ic_reporte_dia);
+                break;
+            case  "ic_autoconsumo":
+                icon.setImageResource(R.mipmap.ic_autoconsumo);
+                break;
+            case  "ic_calibracion":
+                icon.setImageResource(R.mipmap.ic_calibracion);
+                break;
+            case  "ic_recarga":
+                icon.setImageResource(R.mipmap.ic_recarga);
+                break;
+            case  "ic_traspaso":
+                icon.setImageResource(R.mipmap.ic_traspaso);
+                break;
+            case  "ic_anticipo":
+                icon.setImageResource(R.mipmap.ic_anticipo);
+                break;
+            case  "ic_corte_caja":
+                icon.setImageResource(R.mipmap.ic_corte_caja);
+                break;
+            case "ic_punto_venta":
+                icon.setImageResource(R.mipmap.ic_punto_venta);
+                break;
+
+                default:
+                    icon.setImageResource(R.mipmap.ic_sagas_launcher);
+                    break;
+        }
         TextView textView = holder.nameTextView;
         textView.setText(menuItem.getName());
         TextView textViewruta = holder.textViewRuta;

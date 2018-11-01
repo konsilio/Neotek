@@ -1233,8 +1233,10 @@ namespace MVC.Presentacion.Agente
 
                 // _listaCajaGral = lus.OrderByDescending(x=> x.FechaAplicacion).ToList();
                 if (type == "Entidad")
-                {                   
-
+                {
+                    _listaCajaGral = (from x in lus
+                                      orderby x.PuntoVenta
+                                      select x).Distinct().ToList();                                     
                 }
 
                 else

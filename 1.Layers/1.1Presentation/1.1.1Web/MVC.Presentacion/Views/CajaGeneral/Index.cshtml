@@ -133,11 +133,11 @@
                                     <b>Entidad:</b>
                                     <select id="cbxentidad" class="form-control selectpicker z-index show-tick">
                                         <option value="0">Seleccione</option>
-                                        @if (ViewBag.CajaGeneral != null)
+                                        @if (ViewBag.CboxEntidad != null)
                                         {
-                                            foreach (var lst in ViewBag.CajaGeneral)
+                                            foreach (var lst in ViewBag.CboxEntidad)
                                             {
-                                                <option value="@lst.PuntoVenta">@lst.PuntoVenta</option>
+                                                <option value="@lst">@lst</option>
                                             }
                                         }
                                     </select>
@@ -146,11 +146,11 @@
                                     <b>Concepto:</b>
                                     <select id="cbxconcepto" class="form-control selectpicker z-index show-tick">
                                         <option value="0">Seleccione</option>
-                                        @if (ViewBag.CajaGeneral != null)
+                                        @if (ViewBag.CboxConcepto != null)
                                         {
-                                            foreach (var lst in ViewBag.CajaGeneral)
+                                            foreach (var lst in ViewBag.CboxConcepto)
                                             {
-                                                <option value="@lst.TipoMovimiento">@lst.TipoMovimiento</option>
+                                                <option value="@lst">@lst</option>
                                             }
                                         }
                                     </select>
