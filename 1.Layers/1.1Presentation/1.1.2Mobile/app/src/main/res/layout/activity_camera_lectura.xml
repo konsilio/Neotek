@@ -51,13 +51,14 @@
             android:paddingTop="5dp">
 
             <Button
-                style="@style/SagasTheme.Button"
-                android:textColor="@color/textcolorButton"
                 android:id="@+id/BtnCameraLecturaTomarFoto"
-                android:layout_width="15dp"
+                style="@style/SagasTheme.Button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/tomar_foto" />
+                android:drawableLeft="@mipmap/ic_camera"
+                android:text="@string/tomar_foto"
+                android:textColor="@color/textcolorButton" />
 
         </TableRow>
 
