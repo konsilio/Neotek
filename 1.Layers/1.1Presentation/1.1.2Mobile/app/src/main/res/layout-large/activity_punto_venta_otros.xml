@@ -248,6 +248,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
         style="@style/SagasTheme.Button"
+        android:background="@drawable/ripple_effect"
         android:text="@string/opciones"
         android:textColor="@color/colorTextButtonLogin"
         android:textSize="24sp"
@@ -258,7 +259,7 @@
         app:layout_editor_absoluteX="25dp"
         app:layout_editor_absoluteY="25dp"
         tools:ignore="MissingConstraints,UnusedAttribute" />
-<!--android:backgroundTint="@color/colorButtonLogin"-->
+
     <Button
         android:id="@+id/BtnPuntoVentaOtrosActivityAgregar"
         android:layout_width="wrap_content"
@@ -267,6 +268,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
         style="@style/SagasTheme.Button"
+        android:background="@drawable/ripple_effect"
         android:text="@string/agregar"
         android:textColor="@color/colorTextButtonLogin"
         android:textSize="24sp"
@@ -275,7 +277,6 @@
         app:layout_constraintStart_toEndOf="@+id/BtnPuntoVentaOtrosActivityOpciones"
         app:layout_constraintTop_toBottomOf="@+id/scrollView5"
         tools:ignore="UnusedAttribute" />
-<!--android:backgroundTint="@color/colorButtonLogin"-->
     <Button
         android:id="@+id/BtnPuntoVentaOtrosActivityPagar"
         android:layout_width="wrap_content"
@@ -284,6 +285,7 @@
         android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
         style="@style/SagasTheme.Button"
+        android:background="@drawable/ripple_effect"
         android:text="@string/pagar"
         android:textColor="@color/colorTextButtonLogin"
         android:textSize="24sp"
@@ -292,5 +294,4 @@
         app:layout_constraintStart_toEndOf="@+id/BtnPuntoVentaOtrosActivityAgregar"
         app:layout_constraintTop_toBottomOf="@+id/scrollView5"
         tools:ignore="UnusedAttribute" />
-    <!--android:backgroundTint="@color/colorButtonLogin"-->
 </android.support.constraint.ConstraintLayout>

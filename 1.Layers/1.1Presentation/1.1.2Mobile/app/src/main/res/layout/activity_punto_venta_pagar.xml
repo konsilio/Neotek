@@ -183,6 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:text="@string/opciones"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="14sp"
@@ -191,13 +192,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView32"
                 tools:ignore="UnusedAttribute" />
-<!--android:backgroundTint="@color/colorButtonLogin"-->
+
             <Button
                 android:id="@+id/BtnPuntoVentaPagarActivityCancelar"
                 android:layout_width="97dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:text="@string/message_cancel"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="14sp"
@@ -215,6 +217,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:text="@string/confirmar"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="14sp"

@@ -46,11 +46,15 @@
 
         <Button
             android:id="@+id/button_foto"
+            style="@style/SagasTheme.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/SagasTheme.Button"
-            android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5sp"
+            android:background="@drawable/ripple_effect"
+            android:drawableStart="@mipmap/ic_camera"
+            android:padding="2sp"
             android:text="@string/tomar_foto"
             tools:ignore="ObsoleteLayoutParam" />
 
@@ -86,7 +90,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
+                android:layout_margin="5sp"
                 android:layout_weight="1"
+                android:background="@drawable/ripple_effect"
                 android:gravity="center_vertical"
                 android:text="@string/message_nitida_si"
                 android:textAlignment="center"
@@ -99,7 +105,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
+                android:layout_margin="5sp"
                 android:layout_weight="1"
+                android:background="@drawable/ripple_effect"
                 android:gravity="center_vertical"
                 android:text="@string/message_nitida_no"
                 android:textAlignment="center"
