@@ -28,14 +28,14 @@
     <com.jsibbold.zoomage.ZoomageView
         android:id="@+id/image_view_foto"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        app:zoomage_restrictBounds="false"
+        android:layout_height="390dp"
         app:zoomage_animateOnReset="true"
-        app:zoomage_autoResetMode="UNDER"
         app:zoomage_autoCenter="true"
-        app:zoomage_zoomable="true"
+        app:zoomage_autoResetMode="UNDER"
+        app:zoomage_maxScale="8"
         app:zoomage_minScale="0.6"
-        app:zoomage_maxScale="8" />
+        app:zoomage_restrictBounds="false"
+        app:zoomage_zoomable="true" />
 
     <LinearLayout
         android:id="@+id/layout_photo_button"
@@ -51,8 +51,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
+            android:layout_margin="5sp"
+            android:background="@drawable/ripple_effect"
+            android:drawableStart="@mipmap/ic_camera"
+            android:padding="15sp"
             android:text="@string/tomar_foto"
-            android:drawableLeft="@mipmap/ic_camera"
             android:textAlignment="center"
             tools:ignore="ObsoleteLayoutParam" />
 
@@ -88,8 +91,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
+                android:layout_margin="5sp"
                 android:layout_weight="1"
+                android:background="@drawable/ripple_effect"
                 android:gravity="center_vertical"
+                android:padding="15sp"
                 android:text="@string/message_nitida_si"
                 android:textAlignment="center"
                 tools:ignore="ObsoleteLayoutParam" />
@@ -101,8 +107,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
+                android:layout_margin="5sp"
                 android:layout_weight="1"
+                android:background="@drawable/ripple_effect"
                 android:gravity="center_vertical"
+                android:padding="15sp"
                 android:text="@string/message_nitida_no"
                 android:textAlignment="center"
                 tools:ignore="ObsoleteLayoutParam" />

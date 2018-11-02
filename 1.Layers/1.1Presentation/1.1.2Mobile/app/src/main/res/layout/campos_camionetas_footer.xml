@@ -7,18 +7,18 @@
 
     <Button
         android:id="@+id/BtnCamposCamionetasFooterGuardar"
+        style="@style/SagasTheme.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="85dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15sp"
         android:layout_marginRight="85dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="15sp"
         android:layout_weight="1"
+        android:background="@drawable/ripple_effect"
         android:text="@string/message_acept"
-        style="@style/SagasTheme.Button"
         android:textColor="@color/colorTextButtonLogin"
-        android:textSize="18sp"
-         />
+        android:textSize="18sp" />
     <!--
     android:backgroundTint="@color/colorButtonLogin"
     tools:ignore="UnusedAttribute"

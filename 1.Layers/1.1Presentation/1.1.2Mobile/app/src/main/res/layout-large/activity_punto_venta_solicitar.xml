@@ -49,6 +49,7 @@
                 android:text="@string/seguir_sin_numero"
                 android:textSize="18sp"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:textColor="@color/colorTextButtonLogin"
                 tools:ignore="UnusedAttribute" />
 
@@ -72,6 +73,7 @@
                 android:layout_marginRight="15dp"
                 android:text="@string/registrar_cliente"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="18sp"
                 tools:ignore="UnusedAttribute" />
@@ -108,6 +110,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="15dp"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:textColor="@color/colorTextButtonLogin"
                 android:text="@string/buscar_cliente"
                 android:textSize="24sp"

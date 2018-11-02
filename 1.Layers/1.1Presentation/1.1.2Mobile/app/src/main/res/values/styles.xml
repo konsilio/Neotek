@@ -17,10 +17,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="SagasTheme" parent="Theme.AppCompat.Light"  >
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/colorBackgroundSistemaLogin</item>
+<style name="SagasTheme" parent="Theme.AppCompat.Light.NoActionBar"  >
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+    <!--<item name="android:windowBackground">@color/colorBackgroundSistemaLogin</item>-->
         <item name="android:colorForeground">@color/textColorSistemaLogin</item>
         <item name="colorAccent">@color/primaryTextColor</item>
         <item name="colorPrimary">@color/colorBackgroundNavigationBar</item>
