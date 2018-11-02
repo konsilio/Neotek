@@ -11519,6 +11519,7 @@
     <Content Include="Views\OrdenCompra\_ProductosOCPartial.cshtml" />
     <Content Include="Views\OrdenCompra\_ProductosComplementoGasPartial.cshtml" />
     <Content Include="Views\OrdenCompra\_ProductComplementoPartial.cshtml" />
+    <Content Include="Views\Shared\Error404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
