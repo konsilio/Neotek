@@ -57,5 +57,11 @@ namespace DS.MainModule.Controllers
         {
             return Request.CreateResponse(HttpStatusCode.OK, _almacen.BuscarRequsicionSalida(idRequisicon));
         }
+        [AllowAnonymous]
+        [Route("aplicar/almacen/descarga")]
+        public HttpResponseMessage GetAplicarDescargas()
+        { 
+            return Request.CreateResponse(HttpStatusCode.OK, _almacen.AplicarDescargas());
+        }
     }
 }
