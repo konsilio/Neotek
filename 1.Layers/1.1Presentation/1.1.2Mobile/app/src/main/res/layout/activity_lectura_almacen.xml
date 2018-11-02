@@ -19,7 +19,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="10sp"
                 android:paddingTop="25dp"
                 android:paddingBottom="15dp"
                 android:text="@string/toma_de_lectura_inicial"
@@ -31,8 +33,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10sp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="25dp"
+                android:layout_marginBottom="10sp"
                 android:text="@string/selecciona_almacen_principal" />
 
             <Spinner
@@ -48,8 +51,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10sp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="25dp"
+                android:layout_marginBottom="10sp"
                 android:text="@string/selecciona_el_tipo_de_medidor_porcentual" />
 
             <Spinner
@@ -62,7 +66,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="100sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 

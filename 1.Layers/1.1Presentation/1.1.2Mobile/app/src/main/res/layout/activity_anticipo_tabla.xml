@@ -148,7 +148,7 @@
                         android:id="@+id/textView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
@@ -170,7 +170,7 @@
                         android:id="@+id/textView5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
@@ -198,7 +198,7 @@
                         android:id="@+id/textView7"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
@@ -220,7 +220,7 @@
                         android:id="@+id/textView9"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
@@ -248,7 +248,7 @@
                         android:id="@+id/textView11"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
@@ -277,7 +277,7 @@
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="10dp"
+                android:paddingTop="5dp"
                 android:paddingBottom="5dp">
 
                 <TableRow
@@ -287,10 +287,12 @@
 
                     <Button
                         android:id="@+id/BtnAnticipoTablaActivityRegresar"
+                        style="@style/SagasTheme.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
                         android:layout_weight="1"
-                        style="@style/SagasTheme.Button"
                         android:background="@drawable/ripple_effect"
                         android:text="@string/regresar"
                         android:textColor="@color/colorTextButtonLogin"
@@ -299,10 +301,12 @@
 
                     <Button
                         android:id="@+id/BtnAnticipoTablaActivityHacerAnticipo"
+                        style="@style/SagasTheme.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5sp"
+                        android:layout_marginRight="5sp"
                         android:layout_weight="1"
-                        style="@style/SagasTheme.Button"
                         android:background="@drawable/ripple_effect"
                         android:text="@string/hacer_anticipo"
                         android:textColor="@color/colorTextButtonLogin"

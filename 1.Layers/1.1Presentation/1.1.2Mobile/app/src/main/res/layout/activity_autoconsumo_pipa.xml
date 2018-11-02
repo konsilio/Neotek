@@ -19,7 +19,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="5sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="5sp"
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp"
                 android:text="@string/carburaci_n_de_gas"
@@ -32,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="5sp"
                 android:paddingTop="15dp"
                 android:paddingBottom="5dp"
                 android:text="@string/selecciona_la_pipa_de_salida"
@@ -50,9 +53,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="5sp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="5dp"
+                android:layout_marginBottom="5sp"
                 android:paddingTop="15dp"
+                android:paddingBottom="5dp"
                 android:text="@string/selecciona_la_unidad_de_entrada" />
 
             <Spinner
@@ -65,7 +70,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="100sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 

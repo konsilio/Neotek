@@ -22,7 +22,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="15sp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:text="@string/toma_de_lectura_inicial"
@@ -35,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="5sp"
                 android:paddingTop="5sp"
                 android:text="@string/seleciona_la_estaci_n_de_carburaci_n"
                 android:textAlignment="viewStart"
@@ -55,7 +58,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="5sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="5sp"
                 android:paddingTop="5sp"
                 android:text="@string/selecciona_el_tipo_de_medidor_porcentual"
                 android:textSize="15sp" />
@@ -65,12 +70,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="5sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="5sp"
                 android:padding="20dp" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="50sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 

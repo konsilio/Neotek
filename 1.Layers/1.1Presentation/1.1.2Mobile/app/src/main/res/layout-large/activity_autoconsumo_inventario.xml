@@ -19,9 +19,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="25sp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="15dp"
+                android:layout_marginBottom="25sp"
                 android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:text="@string/carburaci_n_de_gas"
                 android:textAlignment="center"
                 android:textSize="30sp" />
@@ -32,9 +34,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="45dp"
+                android:layout_marginBottom="15sp"
                 android:paddingTop="15dp"
-                android:text="@string/la_salida_es_desde_el_inventario_general" />
+                android:paddingBottom="45dp"
+                android:text="@string/la_salida_es_desde_el_inventario_general"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/TVAutoconsumoInventarioActivityUnidadEntrada"
@@ -42,9 +46,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="5dp"
+                android:layout_marginBottom="15sp"
                 android:paddingTop="15dp"
-                android:text="@string/selecciona_la_unidad_de_entrada" />
+                android:paddingBottom="5dp"
+                android:text="@string/selecciona_la_unidad_de_entrada"
+                android:textSize="24sp" />
 
             <Spinner
                 android:id="@+id/SAutoconsumoInvetarioActivityInventario"
@@ -56,16 +62,17 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="60dp" />
+                android:layout_height="200sp" />
 
             <Button
                 android:id="@+id/BtnAutoconsumoInventarioActivityGuardar"
+                style="@style/SagasTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="85dp"
                 android:layout_marginRight="85dp"
-                style="@style/SagasTheme.Button"
                 android:background="@drawable/ripple_effect"
+                android:padding="15sp"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="30sp"

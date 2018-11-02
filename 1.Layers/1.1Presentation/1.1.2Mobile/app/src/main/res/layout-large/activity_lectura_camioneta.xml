@@ -20,7 +20,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="15sp"
                 android:paddingTop="25dp"
                 android:paddingBottom="15dp"
                 android:text="@string/toma_de_lectura"
@@ -32,8 +34,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="25sp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="25dp"
+                android:layout_marginBottom="25sp"
                 android:text="@string/Selecciona_la_camioneta"
                 android:textSize="24sp" />
 
@@ -43,15 +46,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:padding="20dp" />
+                android:minHeight="50sp" />
 
             <TextView
                 android:id="@+id/TVLecturaCamionetaAcitvityQuien"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="25sp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="20dp"
+                android:layout_marginBottom="25sp"
                 android:text="@string/Quien_eres"
                 android:textSize="24sp" />
 
@@ -61,18 +65,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:padding="20dp" />
+                android:minHeight="50sp" />
 
             <TextView
                 android:id="@+id/TVLecturaCamionetaActivotyRecordatorioUno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"
-                android:paddingLeft="5dp"
-                android:paddingTop="15dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="15dp"
+                android:layout_marginBottom="15sp"
+                android:paddingLeft="5sp"
+                android:paddingRight="5sp"
                 android:text="@string/Recordatorio_uno"
                 android:textSize="30sp" />
 
@@ -91,19 +95,21 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_height="50sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 
             <Button
                 android:id="@+id/BtnLecturaCamionetaActivityAceptar"
+                style="@style/SagasTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="85dp"
+                android:layout_marginTop="20sp"
                 android:layout_marginRight="85dp"
-                style="@style/SagasTheme.Button"
+                android:layout_marginBottom="15dp"
                 android:background="@drawable/ripple_effect"
+                android:padding="20sp"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="25sp"

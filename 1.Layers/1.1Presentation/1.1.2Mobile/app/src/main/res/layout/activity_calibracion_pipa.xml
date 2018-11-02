@@ -20,7 +20,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="5sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="5sp"
                 android:paddingTop="10dp"
                 android:paddingBottom="15dp"
                 android:text="@string/Calibracion"
@@ -32,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="5sp"
                 android:layout_marginRight="15dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="5dp"
@@ -42,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="5sp"
                 android:layout_marginRight="15dp"
                 android:padding="20dp" />
 
@@ -50,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="5sp"
                 android:layout_marginRight="15dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="5dp"
@@ -60,7 +65,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="5sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="5sp"
                 android:padding="20dp" />
 
             <TextView
@@ -85,7 +92,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="100sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 

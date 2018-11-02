@@ -20,9 +20,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="5sp"
                 android:layout_marginRight="15dp"
-                android:paddingBottom="5dp"
+                android:layout_marginBottom="25sp"
                 android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:text="@string/carburaci_n_de_gas"
                 android:textAlignment="center"
                 android:textSize="24sp" />
@@ -66,12 +68,12 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="15sp"
+                android:layout_marginBottom="2sp"
                 android:padding="20dp" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="120sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15sp" />
@@ -79,12 +81,13 @@
             <Button
                 android:id="@+id/BtnAutoconsumoActtivityGuardar"
                 style="@style/SagasTheme.Button"
-                android:background="@drawable/ripple_effect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="95dp"
                 android:layout_marginRight="95dp"
                 android:layout_marginBottom="15sp"
+                android:background="@drawable/ripple_effect"
+                android:padding="20sp"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="30sp"
