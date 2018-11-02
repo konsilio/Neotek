@@ -68,9 +68,13 @@ namespace Application.MainModule.Servicios.Catalogos
             AlmacenGas almTotal = AlmacenGasAdapter.FromInit(empresa);
             resp = new AlmacenGasDataAccess().Insertar(almTotal);
             if (!resp.Exito) { new EmpresaDataAccess().Eliminar((short)resp.Id); return resp; }
+                      
+            UnidadAlmacenGas CalmPrincipal = AlmacenGasAdapter.FromInit(empresa, almTotal);
+            resp = new AlmacenGasDataAccess().Insertar(CalmPrincipal);
+            if (!resp.Exito) { new EmpresaDataAccess().Eliminar((short)resp.Id); return resp; }
 
-            almTotal = AlmacenGasServicio.Obtener((short)resp.Id);
-            AlmacenGasMovimiento almMov = AlmacenGasAdapter.FromInit(almTotal);            
+            almTotal = AlmacenGasServicio.Obtener((short)CalmPrincipal.IdAlmacenGas);
+            AlmacenGasMovimiento almMov = AlmacenGasAdapter.FromInit(almTotal, CalmPrincipal);            
             resp = new AlmacenGasDataAccess().Insertar(almMov);
             if (!resp.Exito) { new AlmacenGasDataAccess().Eliminar(almTotal);  new EmpresaDataAccess().Eliminar(almTotal.IdEmpresa); }
 

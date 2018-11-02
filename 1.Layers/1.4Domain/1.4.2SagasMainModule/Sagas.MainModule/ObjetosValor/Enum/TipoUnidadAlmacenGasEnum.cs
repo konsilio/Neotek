@@ -10,11 +10,13 @@ namespace Sagas.MainModule.ObjetosValor.Enum
     {
         public static byte Movil = (byte)TipoUnidadAlmacenGas.Movil;
         public static byte Fijo = (byte)TipoUnidadAlmacenGas.Fijo;        
+        public static byte Arranque = (byte)TipoUnidadAlmacenGas.Arranque;
     }
 
     public enum TipoUnidadAlmacenGas
     {
         Movil = 1,
         Fijo = 2,
+        Arranque = 3,
     }
 }
