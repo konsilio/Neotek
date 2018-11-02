@@ -106,8 +106,7 @@
                         android:paddingBottom="5dp"
                         android:textSize="18sp"
                         tools:ignore="Autofill" />
-                    <!--android:textColor="@color/colorTextLogin"
-android:textColorHint="@color/colorTextLogin"-->
+
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -142,6 +141,7 @@ android:textColorHint="@color/colorTextLogin"-->
                 <Button
                     android:id="@+id/login_button"
                     style="@style/SagasTheme.Button"
+                    android:background="@drawable/ripple_effect"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -157,8 +157,6 @@ android:textColorHint="@color/colorTextLogin"-->
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_password" />
-                <!--android:background="@color/colorButtonLogin"
-                    android:textColor="@color/colorTextButtonLogin"-->
 
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>

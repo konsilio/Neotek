@@ -94,6 +94,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="25dp"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="24sp"

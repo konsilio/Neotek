@@ -22,7 +22,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="15sp"
                 android:paddingTop="25dp"
                 android:paddingBottom="15dp"
                 android:text="@string/toma_de_lectura_inicial"
@@ -35,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="25dp"
+                android:layout_marginBottom="15sp"
                 android:text="@string/seleciona_la_estaci_n_de_carburaci_n"
                 android:textAlignment="viewStart"
                 android:textSize="24sp" />
@@ -46,6 +48,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:minHeight="50sp"
                 android:padding="20dp"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="126dp" />
@@ -55,8 +58,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="25dp"
+                android:layout_marginBottom="15sp"
                 android:text="@string/selecciona_el_tipo_de_medidor_porcentual"
                 android:textSize="24sp" />
 
@@ -66,16 +70,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:padding="20dp" />
+                android:layout_marginBottom="10sp"
+                android:minHeight="50sp" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="100sp"
+                android:layout_height="200sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 
             <Button
                 android:id="@+id/BLecturaDatosActivityAceptar"
+                style="@style/SagasTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
@@ -83,13 +89,12 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="85dp"
                 android:layout_marginBottom="15dp"
-                style="@style/SagasTheme.Button"
-                android:padding="25sp"
+                android:background="@drawable/ripple_effect"
+                android:padding="20sp"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
                 android:textSize="36sp"
                 tools:ignore="ObsoleteLayoutParam,UnusedAttribute" />
-<!--                android:backgroundTint="@color/colorButtonLogin-->
         </LinearLayout>
     </ScrollView>
 

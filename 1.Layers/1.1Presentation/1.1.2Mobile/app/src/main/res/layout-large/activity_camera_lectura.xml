@@ -19,6 +19,8 @@
             android:id="@+id/TVCameraLecturaActivityTitulo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:layout_marginBottom="15sp"
             android:layout_weight="1"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
@@ -49,10 +51,14 @@
                 style="@style/SagasTheme.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="15sp"
                 android:layout_weight="1"
+                android:background="@drawable/ripple_effect"
                 android:drawableStart="@mipmap/ic_camera"
-                android:textColor="@color/textcolorButton"
+                android:padding="20sp"
                 android:text="@string/tomar_foto"
+                android:textColor="@color/textcolorButton"
                 android:textSize="36sp" />
 
         </TableRow>
@@ -112,6 +118,8 @@
                 android:id="@+id/TvCameraLecturaActivityPregunta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="15sp"
                 android:layout_span="2"
                 android:layout_weight="1"
                 android:text="@string/message_imagen_nitida"
@@ -125,21 +133,25 @@
 
             <Button
                 android:id="@+id/BtnCameraLecturaFotoNitidaSi"
+                style="@style/SagasTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5sp"
                 android:layout_weight="1"
-                style="@style/SagasTheme.Button"
-                android:textColor="@color/textcolorButton"
-                android:text="@string/message_nitida_si" />
+                android:padding="15sp"
+                android:text="@string/message_nitida_si"
+                android:textColor="@color/textcolorButton" />
 
             <Button
                 android:id="@+id/BtnCameraLecturaFotoNitidaNo"
+                style="@style/SagasTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5sp"
                 android:layout_weight="1"
-                style="@style/SagasTheme.Button"
-                android:textColor="@color/textcolorButton"
-                android:text="@string/message_nitida_no" />
+                android:padding="15sp"
+                android:text="@string/message_nitida_no"
+                android:textColor="@color/textcolorButton" />
         </TableRow>
 
     </TableLayout>

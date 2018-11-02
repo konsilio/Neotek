@@ -20,7 +20,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="15sp"
                 android:paddingTop="10dp"
                 android:paddingBottom="15dp"
                 android:text="@string/Calibracion"
@@ -32,17 +34,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="15sp"
                 android:paddingTop="15dp"
                 android:paddingBottom="5dp"
-                android:text="@string/selecciona_la_pipa_de_salida_calibracion" />
+                android:text="@string/selecciona_la_pipa_de_salida_calibracion"
+                android:textSize="24sp" />
 
             <Spinner
                 android:id="@+id/SCalibracionPipaActivityListaPipa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="15sp"
                 android:padding="20dp" />
 
             <TextView
@@ -50,17 +57,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="15sp"
                 android:paddingTop="15dp"
                 android:paddingBottom="5dp"
-                android:text="@string/selecciona_el_tipo_de_medidor_porcentual" />
+                android:text="@string/selecciona_el_tipo_de_medidor_porcentual"
+                android:textSize="24sp" />
 
             <Spinner
                 android:id="@+id/SCalibracionPipaActivityMedidor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"
+                android:layout_marginBottom="15sp"
                 android:padding="20dp" />
 
             <TextView
@@ -85,19 +97,23 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:layout_height="100sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp" />
 
             <Button
                 android:id="@+id/BtnCalibracionPipaActivityGuardar"
+                style="@style/SagasTheme.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="85dp"
+                android:layout_marginTop="15sp"
                 android:layout_marginRight="85dp"
+                android:layout_marginBottom="15sp"
+                android:background="@drawable/ripple_effect"
+                android:padding="20sp"
                 android:text="@string/message_acept"
                 android:textColor="@color/colorTextButtonLogin"
-                style="@style/SagasTheme.Button"
                 android:textSize="30sp"
                 tools:ignore="UnusedAttribute" />
             <!--                android:backgroundTint="@color/colorButtonLogin"-->
