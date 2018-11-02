@@ -42,6 +42,9 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-4">
                                             <div class="form-group">
+                                                <div>
+                                                    <strong>Gasera:</strong>
+                                                </div>
                                                 @if (ViewBag.EsAdmin)
                                                 {
                                                     <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
@@ -55,14 +58,15 @@
                                                 {
                                                     @ViewBag.Empresas                                                  
                                                 }
+
                                                 @Html.HiddenFor(m => m.IdEmpresa)
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <label>Número de Requisición:</label>&nbsp;
-                                                    <Label ID="lblIdRequisicion">@Model.NumeroRequisicion</Label>
+                                                    @*<label>Número de Requisición:</label>&nbsp;
+                                                    <Label ID="lblIdRequisicion">@Model.NumeroRequisicion</Label>*@
                                                 </div>
                                             </div>
                                         </div>
@@ -136,10 +140,9 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <strong>
-                                                    <label> Cantidad: <b id="unidadPord"></b> </label>
+                                                    <label>Cantidad: <b id="unidadPord"></b> </label>
                                                 </strong>
-                                                @Html.TextBoxFor(m => m.Cantidad, Model.Cantidad.ToString(), new { @class="form-control", @type="number" })
-                                                @*<input  id="Cantidad" class="form-control number" placeholder="Cantidad" name="Cantidad" value="@Model.Cantidad" />*@
+                                                @Html.TextBoxFor(m => m.Cantidad, Model.Cantidad.ToString(), new { @class="form-control", @type="number" })                                                
                                                 @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "alert-danger" })
                                             </div>
                                             <div class="col-lg-3">
@@ -167,6 +170,7 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <br />
                                         <div class="row clearfix js-sweetalert">
                                             <div class="col-md-8">
                                                 <b>Aplicación:</b>

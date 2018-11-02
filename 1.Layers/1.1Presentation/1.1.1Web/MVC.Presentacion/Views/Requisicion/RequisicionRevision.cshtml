@@ -17,7 +17,6 @@
             var id = '@Model.IdRequisicion'
             var motivo = $("#MotivoCancela").val()
             $.get(url, { IdRequisicion: id, MotivoCancela: motivo }, function () {
-
                 window.location.href = '@Url.Action("Requisiciones", "Requisicion")';
             });
         };
