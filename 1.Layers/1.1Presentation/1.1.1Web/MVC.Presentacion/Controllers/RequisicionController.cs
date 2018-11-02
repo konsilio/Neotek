@@ -54,9 +54,14 @@ namespace MVC.Presentacion.Controllers
             ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
             ViewBag.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(tkn);
-            if (ViewData["RespuestaDTO"] != null)
-                Validar((RespuestaDTO)ViewData["RespuestaDTO"]);
-            return View(RequisicionServicio.InitRequisicion(tkn));
+            if (ViewData["RespuestaDTO"] != null) Validar((RespuestaDTO)ViewData["RespuestaDTO"]);
+            if (TempData["ListProductosRequisicion"] != null)
+            {
+                model.Productos = (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"];
+                TempData["ListProductosRequisicion"] = model.Productos;
+            }
+            if (model == null) model = RequisicionServicio.InitRequisicion(tkn);
+            return View(model);
         }
         public ActionResult RequisicionAlternativa(int? id, byte? estatus)
         {
@@ -137,44 +142,40 @@ namespace MVC.Presentacion.Controllers
             if (TempData["ListProductosRequisicion"] != null)
                 model.Productos = (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"];
             tkn = Session["StringToken"].ToString();
-            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (ViewBag.EsAdmin)
-                ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-            else
-                ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
-            ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            ViewBag.EsNueva = true;          
-            ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
-            ViewBag.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(tkn);
+            //ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
+            //if (ViewBag.EsAdmin)
+            //    ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
+            //else
+            //    ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
+            //ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            //ViewBag.EsNueva = true;          
+            //ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
+            //ViewBag.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(tkn);           
             var newModel = RequisicionServicio.AgregarProducto(model, Session["StringToken"].ToString());
             TempData["ListProductosRequisicion"] = model.Productos;
-            return View("Requisicion", newModel);
+            return RedirectToAction("Requisicion", newModel);
         }
         public ActionResult Editar(RequisicionDTO model, int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var newModel = RequisicionServicio.ActivarEditar(model, id, (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"], tkn);
-            ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-            ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            ViewBag.EsNueva = true;
-            ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
-            ViewBag.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(tkn);
+           
             TempData["ListProductosRequisicion"] = newModel.Productos;
-            return View("Requisicion", model);
+            return RedirectToAction("Requisicion", newModel);
         }
         public ActionResult Borrar(RequisicionDTO model, int id)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var newModel = RequisicionServicio.ActivarBorrar(model, id, (List<RequisicionProductoDTO>)TempData["ListProductosRequisicion"], tkn);
-            ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-            ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-            ViewBag.EsNueva = true;
-            ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
-            ViewBag.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(tkn);
+            //ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
+            //ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
+            //ViewBag.EsNueva = true;
+            //ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
+            //ViewBag.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(tkn);
             TempData["ListProductosRequisicion"] = newModel.Productos;
-            return View("Requisicion", model);
+            return RedirectToAction("Requisicion", model);
         }
         public ActionResult CrearRequisicion(RequisicionDTO model)
         {
@@ -189,14 +190,8 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
-                ViewBag.EsNueva = true;
-                ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
-                ViewBag.Usuarios = CatalogoServicio.ListaUsuarios(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
-                ViewBag.MensajeError = Validar(respuesta);
-                ViewBag.Productos = CatalogoServicio.ListaProductos(tkn);
-                ViewBag.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(tkn);
-                TempData["ListProductosRequisicion"] = model.Productos;
-                return View("Requisicion", model);
+                ViewData["RespuestaDTO"] = respuesta;
+                return RedirectToAction("Requisicion", model);
             }
         }
         public ActionResult Cancelar(int? IdRequisicion, string MotivoCancela = null)
