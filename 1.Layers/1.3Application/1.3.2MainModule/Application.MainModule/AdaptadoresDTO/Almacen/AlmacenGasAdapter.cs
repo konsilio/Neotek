@@ -246,7 +246,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 P5000Salida = AutoConsumo.P5000Salida,
                 ClaveOperacion = AutoConsumo.ClaveOperacion,
                 DatosProcesados = AutoConsumo.DatosProcesados,
-                FechaRegistro = AutoConsumo.FechaRegistro,                
+                FechaRegistro = AutoConsumo.FechaRegistro,
             };
         }
 
@@ -272,7 +272,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             return new AlmacenGasCalibracion
             {
                 IdCAlmacenGas = Calibracion.IdCAlmacenGas,
-                IdTipoEvento = Calibracion.IdTipoEvento,                
+                IdTipoEvento = Calibracion.IdTipoEvento,
                 IdDestinoCalibracion = Calibracion.IdDestinoCalibracion,
                 IdOrden = Calibracion.IdOrden,
                 IdTipoMedidor = Calibracion.IdTipoMedidor,
@@ -331,7 +331,31 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 UrlImagen = img.UrlImagen,
             };
         }
-
+        public static UnidadAlmacenGas FromInit(string t)
+        {
+            var fechaRegistro = DateTime.Now;
+            return new UnidadAlmacenGas
+            {
+                IdAlmacenGas = 0,
+                IdEmpresa = 0,
+                IdTipoAlmacen = 0,
+                IdTipoMedidor = null, //nullable
+                IdEstacionCarburacion = null, //nullable
+                IdCamioneta = null, //nullable
+                IdPipa = null,//nullable
+                EsGeneral = false,
+                EsAlterno = false,
+                Numero = "",
+                CapacidadTanqueLt = null, //nullable
+                CapacidadTanqueKg = null, //nullable
+                CantidadActualLt = 0,
+                CantidadActualKg = 0,
+                PorcentajeActual = 0,
+                P5000Actual = null, //nullable
+                Activo = true,
+                FechaRegistro = fechaRegistro,
+            };
+            }
         public static AlmacenGasMovimiento FromInit()
         {
             var fechaRegistro = DateTime.Now;
@@ -350,7 +374,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 IdCAlmacenGasPrincipal = 0,
                 IdCAlmacenGasReferencia = null,
                 IdAlmacenEntradaGasDescarga = null,
-                IdAlmacenGasRecarga = null, 
+                IdAlmacenGasRecarga = null,
                 EntradaKg = 0,
                 EntradaLt = 0,
                 SalidaKg = 0,
@@ -378,7 +402,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 CantidadActualTotalKg = 0,
                 CantidadActualTotalLt = 0,
                 PorcentajeAnteriorTotal = 0,
-                PorcentajeActualTotal = 0,                
+                PorcentajeActualTotal = 0,
                 AutoconsumoAcumDiaKg = 0,
                 AutoconsumoAcumDiaLt = 0,
                 AutoconsumoAcumMesKg = 0,
@@ -443,7 +467,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
                 CAlmacenReferenciaNombre = null,
                 OperadorChoferNombre = null,
                 TipoEvento = null,
-                TipoMovimiento = null,                
+                TipoMovimiento = null,
                 PorcentajeAnterior = null,
                 PorcentajeActual = null,
                 P5000Anterior = null,
@@ -519,7 +543,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             };
         }
 
-        public static AlmacenGasMovimiento FromInit(AlmacenGas alm)
+        public static AlmacenGasMovimiento FromInit(AlmacenGas alm, UnidadAlmacenGas unidad)
         {
             var almMov = FromInit();
 
@@ -529,13 +553,28 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almMov.Dia = (byte)alm.FechaRegistro.Day;
             almMov.Orden = 1;
             almMov.IdTipoEvento = TipoEventoEnum.EmpresaNueva;
-            almMov.IdTipoMovimiento = TipoMovimientoEnum.Arranque;            
+            almMov.IdTipoMovimiento = TipoMovimientoEnum.Arranque;
             almMov.IdAlmacenGas = alm.IdAlmacenGas;
-
+            almMov.IdCAlmacenGasPrincipal = unidad.IdCAlmacenGas;
+            almMov.CAlmacenPrincipalNombre = AlmacenGasConst.AlmacenPrincipal;
+            almMov.OperadorChoferNombre = AlmacenGasConst.OperadorChofer;
             almMov.TipoEvento = AlmacenGasConst.EmpresaNueva;
             almMov.TipoMovimiento = AlmacenGasConst.Arranque;
+            almMov.P5000Actual = 0;
+            almMov.P5000Anterior = 0;
 
             return almMov;
+        }
+
+        public static UnidadAlmacenGas FromInit(Empresa emp, AlmacenGas almGas)
+        {
+            var unidadAlm = FromInit("");
+
+            unidadAlm.IdEmpresa = emp.IdEmpresa;      
+            unidadAlm.IdAlmacenGas = almGas.IdAlmacenGas;
+            unidadAlm.IdTipoAlmacen = TipoUnidadAlmacenGasEnum.Arranque;
+
+            return unidadAlm;
         }
 
         public static AlmacenGasMovimiento FromEntity(UnidadAlmacenGas unidadEntrada, AlmacenGasDescarga descarga, AlmacenGas almacenGasTotal, AlmacenGasMovimiento ultimoMovimiento, Empresa empresa, InventarioAnteriorDto invAnterior)
@@ -652,13 +691,13 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.CalibracionAcumMesKg = ultimoMovimiento.CalibracionAcumMesKg;
             almGMovimiento.CalibracionAcumMesLt = ultimoMovimiento.CalibracionAcumMesLt;
             almGMovimiento.CalibracionAcumAnioKg = ultimoMovimiento.CalibracionAcumAnioKg;
-            almGMovimiento.CalibracionAcumAnioLt = ultimoMovimiento.CalibracionAcumAnioLt;            
+            almGMovimiento.CalibracionAcumAnioLt = ultimoMovimiento.CalibracionAcumAnioLt;
             almGMovimiento.RecargaAcumDiaKg = ultimoMovimiento.RecargaAcumDiaKg;
             almGMovimiento.RecargaAcumDiaLt = ultimoMovimiento.RecargaAcumDiaLt;
             almGMovimiento.RecargaAcumMesKg = ultimoMovimiento.RecargaAcumMesKg;
             almGMovimiento.RecargaAcumMesLt = ultimoMovimiento.RecargaAcumMesLt;
             almGMovimiento.RecargaAcumAnioKg = ultimoMovimiento.RecargaAcumAnioKg;
-            almGMovimiento.RecargaAcumAnioLt = ultimoMovimiento.RecargaAcumAnioLt;            
+            almGMovimiento.RecargaAcumAnioLt = ultimoMovimiento.RecargaAcumAnioLt;
             almGMovimiento.TraspasoAcumDiaKg = ultimoMovimiento.TraspasoAcumDiaKg;
             almGMovimiento.TraspasoAcumDiaLt = ultimoMovimiento.TraspasoAcumDiaLt;
             almGMovimiento.TraspasoAcumMesKg = ultimoMovimiento.TraspasoAcumMesKg;
@@ -826,7 +865,7 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.CAlmacenReferenciaNombre = cAlmacenGasReferenciaNombre;
             almGMovimiento.OperadorChoferNombre = invAnterior.NombreOperador;
             almGMovimiento.TipoEvento = AlmacenGasConst.Traspaso;
-            almGMovimiento.TipoMovimiento = esMovimientoEntrada ? AlmacenGasConst.Entrada : AlmacenGasConst.Salida; 
+            almGMovimiento.TipoMovimiento = esMovimientoEntrada ? AlmacenGasConst.Entrada : AlmacenGasConst.Salida;
             //------Ids y nombres-----------------
 
             //------Entrada, Salida y Saldo-----------------            
@@ -1270,13 +1309,13 @@ namespace Application.MainModule.AdaptadoresDTO.Almacenes
             almGMovimiento.PorcentajeActualGeneral = almacenGasTotal.PorcentajeActualGeneral;
             almGMovimiento.PorcentajeAnteriorGeneral = invAnterior.PorcentajeAnteriorGeneral;
             //------Almacen Gas Total y General--------------
-                                    
+
             almGMovimiento.CalibracionAcumDiaKg = ultimoMovimiento.CalibracionAcumDiaKg;
             almGMovimiento.CalibracionAcumDiaLt = ultimoMovimiento.CalibracionAcumDiaLt;
             almGMovimiento.CalibracionAcumMesKg = ultimoMovimiento.CalibracionAcumMesKg;
             almGMovimiento.CalibracionAcumMesLt = ultimoMovimiento.CalibracionAcumMesLt;
             almGMovimiento.CalibracionAcumAnioKg = ultimoMovimiento.CalibracionAcumAnioKg;
-            almGMovimiento.CalibracionAcumAnioLt = ultimoMovimiento.CalibracionAcumAnioLt;                        
+            almGMovimiento.CalibracionAcumAnioLt = ultimoMovimiento.CalibracionAcumAnioLt;
             almGMovimiento.RemaAcumDiaKg = ultimoMovimiento.RemaAcumDiaKg;
             almGMovimiento.RemaAcumDiaLt = ultimoMovimiento.RemaAcumDiaLt;
             almGMovimiento.RemaAcumMesKg = ultimoMovimiento.RemaAcumMesKg;

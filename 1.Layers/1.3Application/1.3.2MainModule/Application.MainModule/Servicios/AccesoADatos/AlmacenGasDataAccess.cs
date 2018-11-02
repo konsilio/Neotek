@@ -95,7 +95,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-
         public RespuestaDto Eliminar(AlmacenGas _alm)
         {
             RespuestaDto _respuesta = new RespuestaDto();
