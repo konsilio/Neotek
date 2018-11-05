@@ -19,6 +19,9 @@
 <body>
     @using (Html.BeginForm("CrearRequisicion", "Requisicion", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.IdEmpresa)
+        @Html.HiddenFor(m => m.FechaRequerida)
+        @Html.HiddenFor(m => m.IdUsuarioSolicitante)
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -57,9 +60,7 @@
                                                 else
                                                 {
                                                     @ViewBag.Empresas                                                  
-                                                }
-
-                                                @Html.HiddenFor(m => m.IdEmpresa)
+                                                }                                               
                                             </div>
                                         </div>
                                         <div class="col-sm-6">

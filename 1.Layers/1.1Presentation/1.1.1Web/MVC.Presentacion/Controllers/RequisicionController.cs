@@ -61,6 +61,10 @@ namespace MVC.Presentacion.Controllers
                 TempData["ListProductosRequisicion"] = model.Productos;
             }
             if (model == null) model = RequisicionServicio.InitRequisicion(tkn);
+            else if (model.IdEmpresa == 0) model = RequisicionServicio.InitRequisicion(tkn);
+
+
+
             return View(model);
         }
         public ActionResult RequisicionAlternativa(int? id, byte? estatus)
