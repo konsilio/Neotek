@@ -134,6 +134,7 @@
             <Button
                 android:id="@+id/BtnCameraLecturaFotoNitidaSi"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5sp"
@@ -145,6 +146,7 @@
             <Button
                 android:id="@+id/BtnCameraLecturaFotoNitidaNo"
                 style="@style/SagasTheme.Button"
+                android:background="@drawable/ripple_effect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5sp"

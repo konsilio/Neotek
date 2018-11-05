@@ -159,5 +159,9 @@ namespace Application.MainModule.Flujos
             var req = RequisicionServicio.Buscar(idRequisicion);
             return AlmacenAdapter.FromDTO(req);
         }
+        public List<AplicaDescargaDto> AplicarDescargas()
+        {
+            return AlmacenGasServicio.AplicarDescargas();
+        }
     }
 }

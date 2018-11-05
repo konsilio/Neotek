@@ -2,7 +2,9 @@ package com.example.neotecknewts.sagasapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,6 +125,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     icon.setImageResource(R.mipmap.ic_sagas_launcher);
                     break;
         }
+        Log.w("Menu "+menuItem.getName(),menuItem.getImageRef());
         TextView textView = holder.nameTextView;
         textView.setText(menuItem.getName());
         TextView textViewruta = holder.textViewRuta;
@@ -130,7 +133,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         LinearLayout linearLayout = holder.linearLayout;
 
         //se declara el comportamiento al recibir el click y las vistas que se deben iniciar
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.card
+        /*holder.itemView*/.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(menuItem.getName().equals("Iniciar Descarga")) {
@@ -399,6 +403,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         public ImageView imageView;
         public LinearLayout linearLayout;
         public TextView textViewRuta;
+        CardView card ;
 
         public ViewHolder(View itemView) {
 
@@ -408,6 +413,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayoutMenu);
             nameTextView = (TextView) itemView.findViewById(R.id.menu_item_name);
             imageView = (ImageView) itemView.findViewById(R.id.image_view_menu_item);
+            card = itemView.findViewById(R.id.CardMenu);
         }
 
     }

@@ -17,7 +17,13 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
+            //ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tok);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tok);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tok).SingleOrDefault().NombreComercial;
+            ViewBag.listaEmpresas = CatalogoServicio.Empresas(_tok);
             RolDto rol = new RolDto()
             {
                 ListaRoles = CatalogoServicio.ObtenerTodosRoles(_tok)

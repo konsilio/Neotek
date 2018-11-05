@@ -108,6 +108,10 @@ namespace Sagas.MainModule.Entidades
         public bool AlmacenVerMovimientos { get; set; }
         public bool CatConsultarCajaGeneral { get; set; }
         public bool CatLiquidarCajaGeneral { get; set; }
+        public bool AppDisposicionEfectivo { get; set; }
+        public bool AppCamionetaPuntoVenta { get; set; }
+        public bool AppEstacionCarbPuntoVenta { get; set; }
+        public bool AppPipaPuntoVenta { get; set; }
     
         public virtual Empresa Empresa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
