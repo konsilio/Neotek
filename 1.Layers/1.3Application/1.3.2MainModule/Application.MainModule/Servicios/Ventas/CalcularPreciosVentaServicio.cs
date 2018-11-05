@@ -106,7 +106,7 @@ namespace Application.MainModule.Servicios.Ventas
             return value;//Descendingreturn new CajaGeneralDataAccess().Buscar(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().Saldo;
 
         }
-        public static decimal ObtenerSaldoActual(int puntoventa, int position, string Tipo, int p, short anio, byte mes, byte dia)//puntps de venta
+        public static decimal ObtenerSaldoActual(int puntoventa, int position, string Tipo, int p, short anio, byte mes, byte dia)//puntos de venta
         {
             decimal value = 0;//.OrderByDescending(x => x.FechaAplicacion).FirstOrDefault().TotalDia;
 
