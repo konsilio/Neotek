@@ -186,6 +186,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsLecturaInicialAlmacen = false;
                 EsLecturaFinalAlmacen = false;
                 setTitle(R.string.toma_de_lectura);
+                textViewMensaje.setText("Fotografia medidor "+lecturaDTO.getNombreTipoMedidor());
             }else if (extras.getBoolean("EsLecturaInicialPipa")||
                     extras.getBoolean("EsLecturaFinalPipa")){
                 lecturaPipaDTO = (LecturaPipaDTO) extras.getSerializable("lecturaPipaDTO");
@@ -368,10 +369,10 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
                 Log.w("Prueba","prueba"+permissions(permissionList));
 
-                if (permissions(permissionList)) {
+                /*if (permissions(permissionList)) {*/
 
                     openCameraIntent();
-                }
+                /*}*/
             }
         });
 

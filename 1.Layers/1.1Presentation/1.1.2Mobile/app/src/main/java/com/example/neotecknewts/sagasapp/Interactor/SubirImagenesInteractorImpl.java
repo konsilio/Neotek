@@ -61,7 +61,18 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         this.subirImagenesPresenter = subirImagenesPresenter;
     }
 
-    //metodos para llamada web service
+    /***
+     * registrarPapeleta
+     * Permite realizar el envio de  los datos de la papeleta al api
+     * tomara los datos del dto de tipo {@link PrecargaPapeletaDTO}
+     * para su registro , retornara una respuesta en caso de ser correcra
+     * en caso cobtrario se guarda en local y se activa el objeto {@link Lisener}
+     * para su envio hasta que se tenga conexion a  este servicio.
+     * @param precargaPapeletaDTO Objeto de tipo {@link PrecargaPapeletaDTO} con los datos de la
+     *                            papeleta
+     * @param token {@link String} que reprecenta el token de usuario
+     * @param papeletaSQL Objeto {@link PapeletaSQL} que permite la conexion a la base de datos local
+     */
     @Override
     public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,
                                   String token, PapeletaSQL papeletaSQL) {
@@ -504,7 +515,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         sagasSql.InsertLecturaImagenes(lecturaDTO);
         sagasSql.InsertLecturaP5000(lecturaDTO);*/
         //region Verifica si el servcio esta disponible
-
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf = new
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        lecturaDTO.setFechaAplicacion(sf.format(new Date()));
         Gson gsons = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -561,7 +574,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         RestClient restClient = retrofit.create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
-        while(intentos_post<3) {
+       /* while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicial(lecturaDTO,
                     token, "application/json");
             Log.w(TAG, retrofit.baseUrl().toString());
@@ -587,23 +600,37 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
-                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        if(data!=null){
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        }else{
+                            subirImagenesPresenter.errorSolicitud(response.message());
+                        }
+                        if(response.code()>=300) {
+                            registrar_local(sagasSql, lecturaDTO, clave_unica);
+                            subirImagenesPresenter.onSuccessRegistroAndroid();
+                            Lisener lisener = new Lisener(sagasSql,token);
+                            lisener.CrearRunable(Lisener.LecturaInicial);
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                     Log.e("error", t.toString());
+                    registrar_local(sagasSql, lecturaDTO, clave_unica);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.LecturaInicial);
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_descarga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local(sagasSql,lecturaDTO,clave_unica);
             registro_local = true;
         }
@@ -611,7 +638,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             subirImagenesPresenter.onSuccessRegistroAndroid();
             Lisener lisener = new Lisener(sagasSql,token);
             lisener.CrearRunable(Lisener.LecturaInicial);
-        }
+        }*/
         //endregion
     }
 
@@ -634,7 +661,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         String clave_unica = "LFEC"+s.format(new Date());
         lecturaDTO.setClaveProceso(clave_unica);
         //region Verifica si el servcio esta disponible
-
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf = new
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        lecturaDTO.setFechaAplicacion(sf.format(new Date()));
         Gson gsons = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")

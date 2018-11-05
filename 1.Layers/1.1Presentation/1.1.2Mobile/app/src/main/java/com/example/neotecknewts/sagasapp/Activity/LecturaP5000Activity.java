@@ -84,6 +84,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
                 max_p5000 = lecturaDTO.getCantidadP5000();
                 p5000 = lecturaDTO.getCantidadP5000();
+                setTitle(R.string.toma_de_lectura);
             }else if(EsLecturaFinal){
                 lecturaDTO  = (LecturaDTO) b.getSerializable ("lecturaDTO");
                 max_p5000 = lecturaDTO.getCantidadP5000();
