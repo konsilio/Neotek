@@ -89,8 +89,8 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
 
         ListaCarburacion = new String[]{"Seleccione","Tipo 1","Tipo 2"};
         ListaTipoMedidor = getResources().getStringArray(R.array.tipos_medidor);
-        /*SLecturaDatosActivityListaCarburacion.setAdapter(new ArrayAdapter<>(this,
-                R.layout.custom_spinner, ListaCarburacion ));*/
+        SLecturaDatosActivityListaCarburacion.setAdapter(new ArrayAdapter<>(this,
+                R.layout.custom_spinner, ListaCarburacion ));
         SLecturaDatosActivityTipoMedidor.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner, ListaTipoMedidor));
 
@@ -100,7 +100,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>0){
+                if(position>=0){
                     for(MedidorDTO medidor:listaDTO){
                         String item = SLecturaDatosActivityTipoMedidor
                                 .getItemAtPosition(position).toString();
@@ -129,12 +129,14 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                for (AlmacenDTO estacion:DatosTomaLecturaDto.getAlmacenes()){
-                    if(estacion.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())){
-                        lecturaDTO.setNombreEstacionCarburacion(estacion.getNombreAlmacen());
-                        lecturaDTO.setIdEstacionCarburacion(estacion.getIdAlmacenGas());
-                        lecturaDTO.setCantidadP5000(estacion.getCantidadP5000());
-                        lecturaDTO.setPorcentajeMedidor(estacion.getPorcentajeMedidor());
+                if(position>=0) {
+                    for (AlmacenDTO estacion : DatosTomaLecturaDto.getAlmacenes()) {
+                        if (estacion.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
+                            lecturaDTO.setNombreEstacionCarburacion(estacion.getNombreAlmacen());
+                            lecturaDTO.setIdEstacionCarburacion(estacion.getIdAlmacenGas());
+                            lecturaDTO.setCantidadP5000(estacion.getCantidadP5000());
+                            lecturaDTO.setPorcentajeMedidor(estacion.getPorcentajeMedidor());
+                        }
                     }
                 }
                 /*if(parent.getItemAtPosition(position).toString().equals("Tipo 1")){
@@ -171,12 +173,12 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void ValidateForm() {
         boolean error = false;
-        ArrayList<String> mensaje = new ArrayList<String>();
-        if(SLecturaDatosActivityListaCarburacion.getSelectedItemPosition()==0) {
+        ArrayList<String> mensaje = new ArrayList<>();
+        if(SLecturaDatosActivityListaCarburacion.getSelectedItemPosition()<0) {
             error = true;
             mensaje.add("La estación de carburación es un campo requerido");
         }
-        if(SLecturaDatosActivityTipoMedidor.getSelectedItemPosition()==0) {
+        if(SLecturaDatosActivityTipoMedidor.getSelectedItemPosition()<0) {
             error = true;
             mensaje.add("El tipo de medidos es un campo requerido");
         }
@@ -255,10 +257,10 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onSuccessMedidores(List<MedidorDTO> data) {
         listaDTO = data;
-        ListaTipoMedidor = new String[data.size()+1];
-        ListaTipoMedidor[0] = "Seleccione";
+        ListaTipoMedidor = new String[data.size()];
+        //ListaTipoMedidor[0] = "Seleccione";
         for (int x = 0;x<data.size();x++){
-            ListaTipoMedidor[x+1]=data.get(x).getNombreTipoMedidor();
+            ListaTipoMedidor[x]=data.get(x).getNombreTipoMedidor();
         }
         SLecturaDatosActivityTipoMedidor.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, ListaTipoMedidor ));
 
@@ -280,7 +282,7 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onSuccessEstacionesCarburacion(DatosTomaLecturaDto data) {
         DatosTomaLecturaDto = data;
-        ListaCarburacion = new String[DatosTomaLecturaDto.getAlmacenes().size()+1];
+        ListaCarburacion = new String[DatosTomaLecturaDto.getAlmacenes().size()];
         //ListaCarburacion[0] = "Seleccione";
         for (int x = 0;x<data.getAlmacenes().size();x++){
             //ListaCarburacion[x+1]=data.getAlmacenes().get(x).getNombreAlmacen();

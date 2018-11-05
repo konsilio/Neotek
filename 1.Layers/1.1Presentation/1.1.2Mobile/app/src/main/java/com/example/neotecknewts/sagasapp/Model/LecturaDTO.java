@@ -52,7 +52,19 @@ public class LecturaDTO implements Serializable {
 
     @SerializedName("ClaveProceso")
     private String ClaveProceso;
+
+    @SerializedName("FechaAplicacion")
+    private String FechaAplicacion;
     //endregion
+
+    public String getFechaAplicacion() {
+        return FechaAplicacion;
+    }
+
+    public void setFechaAplicacion(String fechaAplicacion) {
+        FechaAplicacion = fechaAplicacion;
+    }
+
     //region Constructores
     public LecturaDTO() {
         Imagenes = new ArrayList<>();

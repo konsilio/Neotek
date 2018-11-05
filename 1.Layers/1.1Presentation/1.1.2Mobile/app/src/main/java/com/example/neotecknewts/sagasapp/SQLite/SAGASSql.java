@@ -720,8 +720,8 @@ public class SAGASSql extends SQLiteOpenHelper {
         for (int x = 0; x<lecturaDTO.getImagenesURI().size();x++) {
             ContentValues contentValues = new ContentValues();
             contentValues.put("ClaveProceso", lecturaDTO.getClaveProceso());
-            contentValues.put("Imagen", lecturaDTO.getImagenP5000());
-            contentValues.put("Url", lecturaDTO.getImagenP5000URI().toString());
+            contentValues.put("Imagen", lecturaDTO.getImagenes().toString());
+            contentValues.put("Url", lecturaDTO.getImagenesURI().toString());
             inserts[x] = db.insert(TABLE_LECTURA_INICIAL_IMAGENES,null,contentValues);
         }
         return inserts;
