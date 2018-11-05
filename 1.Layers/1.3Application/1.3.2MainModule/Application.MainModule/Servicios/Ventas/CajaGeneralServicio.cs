@@ -84,8 +84,8 @@ namespace Application.MainModule.Servicios.Ventas
 
             if (ventaspv != null && ventaspv.Count > 0)
             {
-                //ActualizarTotalesVentas(ventaspv); //se actualizan totales de VentasPuntoVenta
-                //CargarAVentasMovimientos(ventaspv);//guardar Ventas (de VentaPuntoDeVenta) a Tabla VentasMovimiento
+                ActualizarTotalesVentas(ventaspv); //se actualizan totales de VentasPuntoVenta
+                CargarAVentasMovimientos(ventaspv);//guardar Ventas (de VentaPuntoDeVenta) a Tabla VentasMovimiento
                 CargarEnAlmacenGasMov(ventaspv);//guardar registro en Almacen gas movimiento y remanentes
             }
 
@@ -136,8 +136,8 @@ namespace Application.MainModule.Servicios.Ventas
 
                 foreach (var item in _lst)
                 {
-                    decimal TotalAcumD = CalcularPreciosVentaServicio.ObtenerSaldoActual(0, posList, "TotalAcumDia", posList + position, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - TotalAnio
-                    decimal TotalAcumM = CalcularPreciosVentaServicio.ObtenerSaldoActual(0, posList, "TotalAcumMes", posList + position, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - TotalAnio
+                    decimal TotalAcumD = CalcularPreciosVentaServicio.ObtenerSaldoActual(0, posList, "TotalAcumDia", posList + position, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - TotalDia
+                    decimal TotalAcumM = CalcularPreciosVentaServicio.ObtenerSaldoActual(0, posList, "TotalAcumMes", posList + position, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - TotalMes
                     decimal TotalAcumA = CalcularPreciosVentaServicio.ObtenerSaldoActual(0, posList, "TotalAcumAnio", posList + position, item.Year, item.Mes, item.Dia); //Obtener Saldo actual por punto de venta - TotalAnio
 
                     position++;

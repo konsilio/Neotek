@@ -375,7 +375,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     e.printStackTrace();
                 }
             }
-            Uri uri = Uri.parse(lecturaDTO.getImagenP5000URI().toString());
+            /*Uri uri = Uri.parse(lecturaDTO.getImagenP5000URI().toString());
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(
@@ -389,7 +389,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 Log.w("Imagen P5000",""+uri.toString());
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
 
         }else if(EsLecturaFinal){//LecturaFinal
             for (int i=0; i<lecturaDTO.getImagenesURI().size();i++){

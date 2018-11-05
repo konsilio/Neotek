@@ -125,6 +125,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
                     " - "+lecturaDTO.getNombreEstacionCarburacion());
             NombreImagen = String.valueOf(lecturaDTO.getIdEstacionCarburacion())+"|"+
                     String.valueOf(lecturaDTO.getNombreTipoMedidor())+"|"+"Inicial";
+            setTitle(R.string.toma_de_lectura);
         }else if (EsLecturaFinal){
             TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
                     " - "+lecturaDTO.getNombreEstacionCarburacion());
