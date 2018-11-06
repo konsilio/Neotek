@@ -238,9 +238,9 @@ namespace MVC.Presentacion.App_Code
             return agente._RespuestaDTO;
         }
 
-        public static RespuestaDTO AgregarRolAlUsuario(UsuariosModel cc, string tkn)
+        public static RespuestaDTO AgregarRolAlUsuario(UsuarioRolModel cc, string tkn)
         {
-            AgregarIdRolToList(cc, tkn);
+          //  AgregarIdRolToList(cc, tkn);
             var agente = new AgenteServicio();
             agente.GuardarRolesAsig(cc, tkn);
             return agente._RespuestaDTO;
@@ -747,10 +747,10 @@ namespace MVC.Presentacion.App_Code
             return agente._lstaAllRoles;
         }
 
-        public static List<RolCat> ObtenerRolesCat(string token)
+        public static List<RolCat> ObtenerRolesCat(string token, short emp)
         {
             var agente = new AgenteServicio();
-            agente.BuscarRolesCat(token);
+            agente.BuscarRolesCat(token,emp);
             return agente._lstaRolesCat;
         }
 

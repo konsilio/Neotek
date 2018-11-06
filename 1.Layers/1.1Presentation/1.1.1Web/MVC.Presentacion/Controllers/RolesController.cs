@@ -13,7 +13,7 @@ namespace MVC.Presentacion.Controllers
     {
         string _tok = string.Empty;
         // GET: Roles
-        public ActionResult Index()
+        public ActionResult Index(short? idempresa)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
@@ -31,7 +31,7 @@ namespace MVC.Presentacion.Controllers
 
             PartialViewModel rolCat = new PartialViewModel()
             {
-                ListaRolesCat = CatalogoServicio.ObtenerRolesCat(_tok),
+                ListaRolesCat = CatalogoServicio.ObtenerRolesCat(_tok, idempresa),
                 ListaRoles = CatalogoServicio.ObtenerTodosRoles(_tok),
                 ListaRolesCom = CatalogoServicio.ObtenerRolesCom(_tok),
                 ListaRequsicion = CatalogoServicio.ObtenerRolesReq(_tok),

@@ -42,7 +42,7 @@
 
 
                 /*****factorLitrosaKilos*****/
-                var url = "/PrecioVenta/GetConfiguracionEmpresa";
+                var url = "/Roles/GetConfiguracionEmpresa";
                 var id = $('#ddlEmpresas').find('option:selected').val();
                 $.getJSON(url, { idEmpresa: id }, function (data) {
                     var factor = data;
