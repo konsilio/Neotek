@@ -22,11 +22,15 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             int idOc = id ?? 0;
-            ViewBag.IVAs = CatalogoServicio.ListaIVA();
-            ViewBag.IEPs = CatalogoServicio.ListaIEPS();
             ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
             var model = OrdenCompraServicio.InitOrdenCompra(idOc, tkn);
+            if (!model.EsGasTransporte)
+            {
+                ViewBag.IVAs = CatalogoServicio.ListaIVA();
+                ViewBag.IEPs = CatalogoServicio.ListaIEPS();               
+            }
+            ViewBag.EsGasTransporte = model.EsGasTransporte;
             TempData["OrdenCompraModel"] = model;
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             return View(model);

@@ -25,7 +25,7 @@
         settings.ClientSideEvents.BatchEditEndEditing = "OnBatchEditEndEditing";
         settings.Styles.Table.CssClass = "table";
         settings.SettingsCommandButton.UpdateButton.Text = "Crear";
-        settings.SettingsCommandButton.UpdateButton.Styles.CssPostfix = "btn btn-raised btn-primary btn-round btn-md";
+        //settings.SettingsCommandButton.UpdateButton.Styles.CssPostfix = "btn btn-raised btn-primary btn-round btn-md";
 
         settings.Columns.Add(c =>
         {
@@ -105,66 +105,70 @@
                 p.ValueType = typeof(int);
                 p.DataSource = ViewBag.Proveedores;
             });
-        });    
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Precio";
-            c.EditorProperties().SpinEdit(p =>
-            {
-                p.DisplayFormatString = "c";
-                p.DisplayFormatInEditMode = true;
-                p.MinValue = 0;
-                p.MaxValue = 1000000;
-            });
         });
-        settings.Columns.Add(c =>
+        if (!ViewBag.EsGasTransporte)
         {
-            c.FieldName = "Descuento";
-            c.EditorProperties().SpinEdit(p =>
+            settings.Columns.Add(c =>
             {
-                p.DisplayFormatString = "{0} %";
-                p.MinValue = 0;
-                p.MaxValue = 100;
+                c.FieldName = "Precio";
+                c.EditorProperties().SpinEdit(p =>
+                {
+                    p.DisplayFormatString = "c";
+                    p.DisplayFormatInEditMode = true;
+                    p.MinValue = 0;
+                    p.MaxValue = 1000000;
+                });
             });
-        });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "IVA";
-            c.Caption = "IVA";
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.EditorProperties().ComboBox(p =>
+            settings.Columns.Add(c =>
             {
-                p.TextField = "Text";
-                p.ValueField = "Value";
-                p.ValueType = typeof(int);
-                p.DataSource = ViewBag.IVAs;
+                c.FieldName = "Descuento";
+                c.EditorProperties().SpinEdit(p =>
+                {
+                    p.DisplayFormatString = "{0} %";
+                    p.MinValue = 0;
+                    p.MaxValue = 100;
+                });
             });
-        });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "IEPS";
-            c.Caption = "IEPS";
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.EditorProperties().ComboBox(p =>
+            settings.Columns.Add(c =>
             {
-                p.TextField = "Text";
-                p.ValueField = "Value";
-                p.ValueType = typeof(int);
-                p.DataSource = ViewBag.IEPs;
+                c.FieldName = "IVA";
+                c.Caption = "IVA";
+                c.Settings.AllowSort = DefaultBoolean.False;
+                c.EditorProperties().ComboBox(p =>
+                {
+                    p.TextField = "Text";
+                    p.ValueField = "Value";
+                    p.ValueType = typeof(int);
+                    p.DataSource = ViewBag.IVAs;
+                });
             });
-        });
-        settings.Columns.Add(c =>
-        {
-            c.FieldName = "Importe";
-            c.Settings.ShowEditorInBatchEditMode = false;
-            c.Settings.AllowSort = DefaultBoolean.False;
-            c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
-            c.ReadOnly = true;
-            c.EditorProperties().SpinEdit(p =>
+            settings.Columns.Add(c =>
             {
-                p.DisplayFormatString = "c";
+                c.FieldName = "IEPS";
+                c.Caption = "IEPS";
+                c.Settings.AllowSort = DefaultBoolean.False;
+                c.EditorProperties().ComboBox(p =>
+                {
+                    p.TextField = "Text";
+                    p.ValueField = "Value";
+                    p.ValueType = typeof(int);
+                    p.DataSource = ViewBag.IEPs;
+                });
             });
-        });
+            settings.Columns.Add(c =>
+            {
+                c.FieldName = "Importe";
+                c.Settings.ShowEditorInBatchEditMode = false;
+                c.Settings.AllowSort = DefaultBoolean.False;
+                c.UnboundType = DevExpress.Data.UnboundColumnType.Decimal;
+                c.ReadOnly = true;
+                c.EditorProperties().SpinEdit(p =>
+                {
+                    p.DisplayFormatString = "c";
+                });
+            });
+        }
+
         settings.CellEditorInitialize = (s, e) =>
         {
             ASPxEdit editor = (ASPxEdit)e.Editor;

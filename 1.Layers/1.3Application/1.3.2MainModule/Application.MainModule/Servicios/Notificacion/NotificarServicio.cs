@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Mail.MainModule.DTO;
 using Infrastructure.Data.Agentes;
 using Sagas.MainModule.ObjetosValor.Constantes;
+using Application.MainModule.Servicios.AccesoADatos;
 
 namespace Application.MainModule.Servicios.Notificacion
 {
@@ -122,8 +123,9 @@ namespace Application.MainModule.Servicios.Notificacion
         public static void ProductoAutorizado(Requisicion req, List<RequisicionProducto> Prod, bool incluirMensajePush = false)
         {
             var usuAplicacion = TokenServicio.ObtenerUsuarioAplicacion();
-            var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.CompraAutorizarOCompra).ToList();
-            var destinatarios = ObtenerDestinatarios(roles);
+            //var roles = RolServicio.ObtenerRoles(usuAplicacion.Empresa).Where(x => x.CompraAutorizarOCompra).ToList();
+            //var destinatarios = ObtenerDestinatarios(roles);
+            var destinatarios = new UsuarioDataAccess().Buscar(TokenServicio.ObtenerIdEmpresa()).Where(x => x.IdUsuario.Equals(req.IdUsuarioSolicitante)).ToList();
             var correoDto = new CorreoDto()
             {
                 De = ObtenerCorreo(usuAplicacion),
