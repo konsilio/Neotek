@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Permisos;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
 import java.net.URI;
@@ -44,6 +45,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     public String imageurl;
     public TextView textViewTitulo;
     public TextView textViewMensaje;
+    public Permisos permisos;
 
     PrecargaPapeletaDTO papeletaDTO;
     public String NombreFoto;
@@ -51,7 +53,8 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-
+        permisos = new Permisos(CameraPapeletaActivity.this);
+        permisos.permisos();
         Bundle extras = getIntent().getExtras();
 
         if (extras !=null){

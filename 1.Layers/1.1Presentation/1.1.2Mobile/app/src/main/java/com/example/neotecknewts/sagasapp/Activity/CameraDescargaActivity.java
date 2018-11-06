@@ -32,6 +32,7 @@ import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Permisos;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
 import java.net.URI;
@@ -89,6 +90,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
     public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
     public boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
+    public Permisos permisos;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -97,6 +99,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
         //Se indica que layout se carga
         setContentView(R.layout.activity_camera);
+        permisos = new Permisos(CameraDescargaActivity.this);
+        permisos.permisos();
 
         //Se inicia obtienen las variables desde la vista
         textViewTitulo = (TextView) findViewById(R.id.textTitulo);

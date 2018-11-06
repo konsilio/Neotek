@@ -30,6 +30,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Permisos;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
 import java.net.URI;
@@ -67,12 +68,16 @@ public class CameraLecturaActivity extends AppCompatActivity {
 
     public Uri imageUri;
     String NombreImagen;
+    public Permisos permisos;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_lectura);
+        Permisos permisos  = new Permisos(CameraLecturaActivity.this);
+        permisos.permisos();
+
         Bundle b = getIntent().getExtras();
         if(b!=null) {
             EsLecturaFinal = b.getBoolean("EsLecturaFinal",false);
