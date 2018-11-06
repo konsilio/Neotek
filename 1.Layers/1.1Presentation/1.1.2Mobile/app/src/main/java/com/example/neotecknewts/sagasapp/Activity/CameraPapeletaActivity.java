@@ -87,10 +87,10 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
                 Log.w("Prueba","prueba"+permissions(permissionList));
 
-               // if (!permissions(permissionList)) {
+                /*if (permissions(permissionList)== false) {*/
 
                     openCameraIntent();
-                //}
+                /*}*/
             }
         });
 
@@ -101,10 +101,10 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
                 Log.w("Prueba","prueba"+permissions(permissionList));
 
-                if (!permissions(permissionList)) {
+                //if (!permissions(permissionList)) {
 
                     openCameraIntent();
-                }
+                //}
             }
         });
 
@@ -136,9 +136,9 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     private void openCameraIntent() {
 
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.TITLE, "New Picture"+new Date().toString());
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-        values.put(MediaStore.Images.Media.CONTENT_TYPE,"image/jpeg");
+       // values.put(MediaStore.Images.Media.CONTENT_TYPE,"image/jpeg");
         imageUri = getContentResolver().insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
