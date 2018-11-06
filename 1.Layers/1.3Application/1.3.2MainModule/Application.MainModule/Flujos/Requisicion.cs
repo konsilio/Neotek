@@ -83,7 +83,7 @@ namespace Application.MainModule.Flujos
             newReq = RequisicionServicio.DeterminaEstatusPorAutorizacion(newReq, prodEdit);
             var Respuesta = RequisicionServicio.UpDateRequisicionAutoriza(newReq, prodEdit);
             if (Respuesta.Exito && (newReq.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Autoriza_entrega) || newReq.IdRequisicionEstatus.Equals(RequisicionEstatusEnum.Autorizacion_parcial)))
-                NotificarServicio.ProductoAutorizado(newReq, prodEdit);
+                NotificarServicio.ProductoAutorizado(ReqAnterior, prodEdit);
             return Respuesta;
         }
         public RespuestaDto CancelarRequisicion(RequisicionCancelaDTO _req)
