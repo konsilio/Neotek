@@ -22,11 +22,15 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             int idOc = id ?? 0;
-            ViewBag.IVAs = CatalogoServicio.ListaIVA();
-            ViewBag.IEPs = CatalogoServicio.ListaIEPS();
             ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn);
             var model = OrdenCompraServicio.InitOrdenCompra(idOc, tkn);
+            if (!model.EsGasTransporte)
+            {
+                ViewBag.IVAs = CatalogoServicio.ListaIVA();
+                ViewBag.IEPs = CatalogoServicio.ListaIEPS();               
+            }
+            ViewBag.EsGasTransporte = model.EsGasTransporte;
             TempData["OrdenCompraModel"] = model;
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             return View(model);
@@ -36,12 +40,16 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             int idOc = id ?? 0;
-            var model = OrdenCompraServicio.BuscarOrdenCompra(idOc, tkn);
+            var model = OrdenCompraServicio.BuscarOrdenCompra(idOc, tkn);            
             ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Select(cc => new SelectListItem { Value = cc.IdCuentaContable.ToString(), Text = cc.Descripcion }).ToList();
-            ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
+            //ViewBag.Proveedores = CatalogoServicio.ListaProveedores(tkn).Select(p => new SelectListItem { Value = p.IdProveedor.ToString(), Text = p.NombreComercial }).ToList();
             ViewBag.IVAs = CatalogoServicio.ListaIVA();
             ViewBag.IEPs = CatalogoServicio.ListaIEPS();
             ViewBag.Estatus = model.IdOrdenCompraEstatus;
+            if (model.EsGas || model.EsTransporteGas)
+                ViewBag.EsGasTransporte = true;
+            else
+                ViewBag.EsGasTransporte = false;
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             return View(model);
         }

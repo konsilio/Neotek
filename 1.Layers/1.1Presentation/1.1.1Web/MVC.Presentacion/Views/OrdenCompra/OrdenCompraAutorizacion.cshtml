@@ -81,7 +81,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <b>Proveedor:</b>&nbsp;
-                                            <label>@ViewBag.NombrePorvedor</label>
+                                            <label>@Model.Proveedor </label>
                                         </div>
                                     </div>
                                 </div>
@@ -94,15 +94,19 @@
                                                 <td><strong>Tipo</strong></td>
                                                 <td><strong>Producto</strong></td>
                                                 <td><strong>Requeridos</strong></td>
-                                                <td><strong>Unidad</strong></td>                                            
+                                                <td><strong>Unidad</strong></td>
                                                 <td><strong>Centro de costo</strong></td>
                                                 <td><strong>Cuenta Contable</strong></td>
                                                 <td><strong>Cantidad</strong></td>
-                                                <td><strong>Precio</strong></td>
-                                                <td><strong>%Desc</strong></td>
-                                                <td><strong>%IVA</strong></td>
-                                                <td><strong>%Ieps</strong></td>
-                                                <td><strong>Importe</strong></td>
+                                               @if (Model.EsTransporteGas == false && Model.EsGas == false)
+                                               {
+                                                    <td><strong>Precio</strong></td>
+                                                    <td><strong>%Desc</strong></td>
+                                                    <td><strong>%IVA</strong></td>
+                                                    <td><strong>%Ieps</strong></td>
+                                                    <td><strong>Importe</strong></td>
+                                                }
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -111,16 +115,33 @@
                                                 <tr>
                                                     <td>@m.ProductoServicioTipo</td>
                                                     <td>@m.Producto</td>
-                                                    <td>@m.CantidadAComprar</td>
-                                                    <td>@m.UnidadMedida</td>                                                    
+                                                    @if (Model.EsTransporteGas == false)
+                                                    {
+                                                        <td>@m.CantidadAComprar</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>N/A</td>
+                                                    }                                              
+                                                    <td>@m.UnidadMedida</td>
                                                     <td>@m.CentroCosto</td>
-                                                    <td>@m.CuentaContable</td>
-                                                    <td>@m.Cantidad</td>
-                                                    <td>@m.Precio</td>
-                                                    <td>@m.Descuento</td>
-                                                    <td>@m.IVA</td>
-                                                    <td>@m.IEPS</td>
-                                                    <td>@m.Importe</td>
+                                                    <td>@m.CuentaContable</td>   
+                                                    @if (Model.EsTransporteGas == false)
+                                                    {
+                                                        <td>@m.Cantidad</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>N/A</td>
+                                                    }                           
+                                                    @if (Model.EsTransporteGas == false && Model.EsGas == false)
+                                                    {                                                        
+                                                        <td>@m.Precio</td>
+                                                        <td>@m.Descuento</td>
+                                                        <td>@m.IVA</td>
+                                                        <td>@m.IEPS</td>
+                                                        <td>@m.Importe</td>
+                                                    }                                                
                                                 </tr>
                                             }
                                         </tbody>
