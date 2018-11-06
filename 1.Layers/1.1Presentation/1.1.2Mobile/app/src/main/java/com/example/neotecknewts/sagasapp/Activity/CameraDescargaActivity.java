@@ -35,6 +35,7 @@ import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -526,7 +527,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     private void openCameraIntent() {
 
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.TITLE, "New Picture"+new Date().toString());
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
         imageUri = getContentResolver().insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
