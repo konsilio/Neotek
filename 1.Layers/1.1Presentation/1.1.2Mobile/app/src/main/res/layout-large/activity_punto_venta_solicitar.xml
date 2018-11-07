@@ -99,6 +99,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="24sp"
+                android:textColor="@color/buttonBackgroundColor"
                 android:autofillHints="@string/Buscar"
                 tools:ignore="LabelFor,UnusedAttribute" />
 

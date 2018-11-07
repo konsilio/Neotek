@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Permisos;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
 import java.net.URI;
@@ -44,6 +45,7 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     public String imageurl;
     public TextView textViewTitulo;
     public TextView textViewMensaje;
+    public Permisos permisos;
 
     PrecargaPapeletaDTO papeletaDTO;
     public String NombreFoto;
@@ -51,7 +53,8 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-
+        permisos = new Permisos(CameraPapeletaActivity.this);
+        permisos.permisos();
         Bundle extras = getIntent().getExtras();
 
         if (extras !=null){
@@ -87,10 +90,10 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
                 Log.w("Prueba","prueba"+permissions(permissionList));
 
-               // if (!permissions(permissionList)) {
+                /*if (permissions(permissionList)== false) {*/
 
                     openCameraIntent();
-                //}
+                /*}*/
             }
         });
 
@@ -101,10 +104,10 @@ public class CameraPapeletaActivity extends AppCompatActivity {
 
                 Log.w("Prueba","prueba"+permissions(permissionList));
 
-                if (!permissions(permissionList)) {
+                //if (!permissions(permissionList)) {
 
                     openCameraIntent();
-                }
+                //}
             }
         });
 
@@ -136,9 +139,9 @@ public class CameraPapeletaActivity extends AppCompatActivity {
     private void openCameraIntent() {
 
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.TITLE, "New Picture"+new Date().toString());
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-        values.put(MediaStore.Images.Media.CONTENT_TYPE,"image/jpeg");
+       // values.put(MediaStore.Images.Media.CONTENT_TYPE,"image/jpeg");
         imageUri = getContentResolver().insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

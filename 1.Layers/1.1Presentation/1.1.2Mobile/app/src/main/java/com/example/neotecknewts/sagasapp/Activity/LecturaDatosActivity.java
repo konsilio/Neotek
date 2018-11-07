@@ -95,12 +95,12 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                 R.layout.custom_spinner, ListaTipoMedidor));
 
         /*lecturaDatosPresenter.getMedidores(session.getToken());*/
-
+        lecturaDatosPresenter.getEstacionesCarburacion(session.getToken(),esFinalizar);
         SLecturaDatosActivityTipoMedidor.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>=0){
+                if(position>=0 && DatosTomaLecturaDto!= null){
                     for(MedidorDTO medidor:listaDTO){
                         String item = SLecturaDatosActivityTipoMedidor
                                 .getItemAtPosition(position).toString();
@@ -124,12 +124,12 @@ public class LecturaDatosActivity extends AppCompatActivity implements View.OnCl
                 lecturaDTO.setNombreTipoMedidor("");
             }
         });
-        lecturaDatosPresenter.getEstacionesCarburacion(session.getToken(),esFinalizar);
+
         SLecturaDatosActivityListaCarburacion.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>=0) {
+                if(position>=0 && DatosTomaLecturaDto!= null) {
                     for (AlmacenDTO estacion : DatosTomaLecturaDto.getAlmacenes()) {
                         if (estacion.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
                             lecturaDTO.setNombreEstacionCarburacion(estacion.getNombreAlmacen());

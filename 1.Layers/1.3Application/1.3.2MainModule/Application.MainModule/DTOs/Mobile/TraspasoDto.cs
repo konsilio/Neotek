@@ -12,7 +12,9 @@ namespace Application.MainModule.DTOs.Mobile
         public decimal P5000Entrada { get; set; }
         public decimal PorcentajeSalida { get; set; }
         public string ClaveOperacion { get; set; }
-        public List<String> Imagenes { get; set; }
+        public List<string> Imagenes { get; set; }
         public DateTime FechaRegistro { get; set; }
+
+        public DateTime FechaAplicacion { get; set; }
     }
 }

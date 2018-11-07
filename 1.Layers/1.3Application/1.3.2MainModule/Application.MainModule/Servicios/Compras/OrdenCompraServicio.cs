@@ -37,7 +37,7 @@ namespace Application.MainModule.Servicios.Compras
         {
             return prods.ToList().Where(x => !x.CantidadAComprar.Equals(0) || x.EsTransporteGas).ToList();
         }
-        public static OrdenCompraRespuestaDTO GuardarOrdenCompra(OrdenCompra oc)
+        public static RespuestaDto GuardarOrdenCompra(OrdenCompra oc)
         {
             return new OrdenCompraDataAccess().InsertarNuevo(oc);
         }
@@ -46,7 +46,8 @@ namespace Application.MainModule.Servicios.Compras
             List<OrdenCompra> nlist = new List<OrdenCompra>();
             foreach (var _prod in ocInicial.Productos)
             {
-                if (!nlist.Exists(x => x.IdProveedor.Equals(_prod.IdProveedor)))
+                var p = Catalogos.ProductoServicio.ObtenerProducto(_prod.IdProducto);
+                    if (!nlist.Exists(x => x.IdProveedor.Equals(_prod.IdProveedor)))
                 {
                     OrdenCompra nOC = new OrdenCompra();
                     nOC.IdProveedor = _prod.IdProveedor;
@@ -57,9 +58,10 @@ namespace Application.MainModule.Servicios.Compras
                     nOC.IdOrdenCompraEstatus = ocInicial.IdOrdenCompraEstatus;
                     nOC.FechaRegistro = DateTime.Today;
                     nOC.IdUsuarioGenerador = TokenServicio.ObtenerIdUsuario();
-                    nOC.EsGas = _prod.EsGas;
-                    nOC.EsTransporteGas = _prod.EsTransporte;
-                    nOC.EsActivoVenta = _prod.EsActivoVenta;
+                    nOC.EsGas = p.EsGas;
+                    nOC.EsTransporteGas = p.EsTransporteGas;
+                    nOC.EsActivoVenta = p.EsActivoVenta;
+                    nOC.Activo = true;
                     nlist.Add(nOC);
                 }
             }

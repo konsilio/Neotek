@@ -32,9 +32,11 @@ import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.TraspasoDTO;
 import com.example.neotecknewts.sagasapp.R;
+import com.example.neotecknewts.sagasapp.Util.Permisos;
 import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -88,6 +90,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     public boolean EsTraspasoEstacionInicial,EsTraspasoEstacionFinal,EsPrimeraParteTraspaso;
     public boolean EsCalibracionEstacionInicial,EsCalibracionEstacionFinal;
     public boolean EsCalibracionPipaInicial,EsCalibracionPipaFinal;
+    public Permisos permisos;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -96,6 +99,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
 
         //Se indica que layout se carga
         setContentView(R.layout.activity_camera);
+        permisos = new Permisos(CameraDescargaActivity.this);
+        permisos.permisos();
 
         //Se inicia obtienen las variables desde la vista
         textViewTitulo = (TextView) findViewById(R.id.textTitulo);
@@ -526,7 +531,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     private void openCameraIntent() {
 
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+        values.put(MediaStore.Images.Media.TITLE, "New Picture"+new Date().toString());
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
         imageUri = getContentResolver().insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);

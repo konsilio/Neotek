@@ -71,20 +71,16 @@ namespace Application.MainModule.Flujos
             foreach (var ocDTO in locDTO)
             {
                 ocDTO.NumOrdenCompra = FolioServicio.GeneraNumerOrdenCompra(ocDTO);
-                OrdenCompraRespuestaDTO orDTO = OrdenCompraServicio.GuardarOrdenCompra(ocDTO);
-                respuesta.Mensaje += string.Concat(orDTO.NumOrdenCompra, " ,");
+                var orDTO = OrdenCompraServicio.GuardarOrdenCompra(ocDTO);
+                respuesta.Mensaje += string.Concat(orDTO.Mensaje, " ,");
                 if (orDTO.Exito)
                 {
-                    respuesta.Id = orDTO.IdOrdenCompra;
+                    respuesta.Id = orDTO.Id;
                     respuesta.EsInsercion = true;
                     RequisicionServicio.UpDateRequisicionEstaus(oc.IdRequisicion, 8);
-                    NotificarServicio.OrdenDeCompraNueva(OrdenCompraServicio.Buscar(orDTO.IdOrdenCompra));
+                    NotificarServicio.OrdenDeCompraNueva(OrdenCompraServicio.Buscar(orDTO.Id));
                 }
-                else
-                {
-                    respuesta.Exito = orDTO.Exito;
-                    respuesta.Mensaje = orDTO.Mensaje;
-                }
+                else return orDTO;
             }
             return respuesta;
         }
