@@ -26,5 +26,7 @@ namespace Application.MainModule.DTOs.Mobile
 
         public short IdTipoMedidor { get; set; }
 
+        public DateTime FechaAplicacion { get; set; }
+
     }
 }
