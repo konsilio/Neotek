@@ -139,10 +139,14 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
                 for (int x =0; x<adapter.getItemCount();x++){
                     View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
                     EditText editText = view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
-                    int[] datos = new int[2];
+                    /*int[] datos = new int[2];
                     datos[0] = adapter.getCilindro(x).getIdCilindro();
-                    datos[1] = Integer.parseInt(editText.getText().toString());
-                    recargaDTO.getCilindros().add(datos);
+                    datos[1] = Integer.parseInt(editText.getText().toString());*/
+                    CilindrosDTO cilindro = new CilindrosDTO();
+                    cilindro.setCantidad(adapter.getCilindro(x).getCantidad());
+                    cilindro.setCilindroKg(adapter.getCilindro(x).getCilindroKg());
+                    cilindro.setIdCilindro(adapter.getCilindro(x).getIdCilindro());
+                    recargaDTO.getCilindros().add(cilindro);
                 }
             }
             Registrar();

@@ -177,16 +177,30 @@ public class VistaOrdenCompraActivity extends AppCompatActivity implements Vista
     //metodo que llena la vista con los datos de la orden de compra seleccionada
     public void fillView(){
         if(ordenCompraDTO!=null) {
+            String NoInt = (ordenCompraDTO.getProveedorNumInt()!=null) ? " Int." +
+                    ordenCompraDTO.getProveedorNumInt():"";
+            String provincia = ( ordenCompraDTO.getProveedorEstadoProvincia()!=null)?
+                    ordenCompraDTO.getProveedorEstadoProvincia():"";
+            String tel2 = (ordenCompraDTO.getProveedorTelefono2()!= null) ?
+                    "," + ordenCompraDTO.getProveedorTelefono2():"";
+            String tel3 = (ordenCompraDTO.getProveedorTelefono3()!=null)?
+                    " y " +ordenCompraDTO.getProveedorTelefono3():"";
+            String cell = (ordenCompraDTO.getProveedorCelular1()!=null)?
+                    ordenCompraDTO.getProveedorCelular1():"";
+            String cell2 = (ordenCompraDTO.getProveedorCelular2() !=null) ?
+                    "," +ordenCompraDTO.getProveedorCelular2():"";
+            String cell3 = (ordenCompraDTO.getProveedorCelular3()!=null) ? " y " +
+                    ordenCompraDTO.getProveedorCelular3():"";
+
             textViewFecha.setText(String.valueOf(ordenCompraDTO.getFechaRequisicion().toString()));
             String proveedor = ordenCompraDTO.getProveedorNombreComercial() + "\n" +
-                    ordenCompraDTO.getProveedorCalle() + " #" + ordenCompraDTO.getProveedorNumExt() + " Int." +
-                    ordenCompraDTO.getProveedorNumInt() + "\n" + ordenCompraDTO.getProveedorColonia() + "\n" +
-                    ordenCompraDTO.getProveedorMunicipio() + " " + ordenCompraDTO.getProveedorEstadoProvincia() + "\n C.P." +
+                    ordenCompraDTO.getProveedorCalle() + " #" + ordenCompraDTO.getProveedorNumExt() +
+                    NoInt + "\n" + ordenCompraDTO.getProveedorColonia() + "\n" +
+                    ordenCompraDTO.getProveedorMunicipio() + " " + provincia + "\n C.P." +
                     ordenCompraDTO.getProveedorCodigoPostal() + "\n \nTels: " +
-                    ordenCompraDTO.getProveedorTelefono1() + "," + ordenCompraDTO.getProveedorTelefono2() + " y " +
-                    ordenCompraDTO.getProveedorTelefono3() + "\nCels:" +
-                    ordenCompraDTO.getProveedorCelular1() + "," + ordenCompraDTO.getProveedorCelular2() + " y " +
-                    ordenCompraDTO.getProveedorCelular3();
+                    ordenCompraDTO.getProveedorTelefono1() +  tel2 +
+                    tel3 + "\nCels:" +
+                    cell +  cell2+ cell3;
             textViewProveedor.setText(proveedor);
 
             tableLayout.removeAllViews();
