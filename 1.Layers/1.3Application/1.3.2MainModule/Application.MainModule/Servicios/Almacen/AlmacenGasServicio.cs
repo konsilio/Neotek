@@ -206,9 +206,18 @@ namespace Application.MainModule.Servicios.Almacenes
             if (uniAlm != null)
                 if (uniAlm.TomasLectura != null)
                     if (uniAlm.TomasLectura.Count > 0)
+                        if (final == false && uniAlm.TomasLectura != null) { 
+                            var lecturas = uniAlm.TomasLectura.Count(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final));
+                            if (lecturas > 0)
+                                return uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final));
+                            else
+                                return uniAlm.TomasLectura.Last();
+                        }
+                        else { 
                         return !final
                             ? uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Final))
                             : uniAlm.TomasLectura.Last(x => x.IdTipoEvento.Equals(TipoEventoEnum.Inicial));
+                        }
             return !final
                 ? BuscarUltimaLectura(uniAlm.IdCAlmacenGas, TipoEventoEnum.Final)
                 : BuscarUltimaLectura(uniAlm.IdCAlmacenGas, TipoEventoEnum.Inicial);
