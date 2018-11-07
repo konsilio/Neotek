@@ -13,7 +13,9 @@ namespace MVC.Presentacion.Controllers
     {
         string _tok = string.Empty;
         // GET: Roles
-        public ActionResult Index()
+
+
+        public ActionResult Index(short? idempresa)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
@@ -23,19 +25,21 @@ namespace MVC.Presentacion.Controllers
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tok);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tok).SingleOrDefault().NombreComercial;
-            ViewBag.listaEmpresas = CatalogoServicio.Empresas(_tok);
-            RolDto rol = new RolDto()
-            {
-                ListaRoles = CatalogoServicio.ObtenerTodosRoles(_tok)
-            };
-
+            ViewBag.listaEmpresas = CatalogoServicio.Empresas(_tok);            
+            
+            var _IdEmpresa = idempresa ?? ((List<EmpresaDTO>)ViewBag.listaEmpresas).FirstOrDefault().IdEmpresa;
+            ViewBag.IdEmpresa = _IdEmpresa;
+            List<RolDto> lstGral = CatalogoServicio.ObtenerRoles(_tok, _IdEmpresa);
+            List<RolCompras> _lstCompra = CatalogoServicio.getListcompras(lstGral);
+            List<RolRequsicion> _lstReq = CatalogoServicio.getListrequisicion(lstGral);
+            List<RolMovilCompra> _lstMC = CatalogoServicio.getListmc(lstGral);
             PartialViewModel rolCat = new PartialViewModel()
             {
-                ListaRolesCat = CatalogoServicio.ObtenerRolesCat(_tok),
-                ListaRoles = CatalogoServicio.ObtenerTodosRoles(_tok),
-                ListaRolesCom = CatalogoServicio.ObtenerRolesCom(_tok),
-                ListaRequsicion = CatalogoServicio.ObtenerRolesReq(_tok),
-                ListaMovilCompra = CatalogoServicio.ObtenerRolesMovilCompra(_tok),
+                //ListaRolesCat = lstGral,
+                ListaRoles = lstGral,
+                ListaRolesCom = _lstCompra,
+                ListaRequsicion = _lstReq,
+                ListaMovilCompra = _lstMC,
             };
 
             if (TempData["RespuestaDTO"] != null)
@@ -48,7 +52,7 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = ViewBag.MessageError;
             }
             ViewBag.MessageError = TempData["RespuestaDTOError"];
-          
+
             return View(rolCat);
         }
 
@@ -56,9 +60,9 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            
+
             var respuesta = CatalogoServicio.AgregarRoles(ObjRol, _tok);
-          
+
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
@@ -108,9 +112,9 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-            
+
             var respuesta = CatalogoServicio.ActualizaNombreRol(rol, _tok);
-         
+
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
@@ -127,10 +131,12 @@ namespace MVC.Presentacion.Controllers
 
         public ActionResult GuardarPermisos(RolDto objrol)
         {
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+
             _tok = Session["StringToken"].ToString();
-           
+
             var respuesta = CatalogoServicio.ActualizaPermisos(objrol, _tok);
-         
+
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
@@ -149,9 +155,9 @@ namespace MVC.Presentacion.Controllers
         public ActionResult GuardarPermisosCompra(RolDto objrol)
         {
             _tok = Session["StringToken"].ToString();
-          
+
             var respuesta = CatalogoServicio.ActualizaPermisosCompra(objrol, _tok);
-          
+
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
@@ -169,9 +175,9 @@ namespace MVC.Presentacion.Controllers
         public ActionResult GuardarPerMovilCompra(RolDto objrol)
         {
             _tok = Session["StringToken"].ToString();
-           
+
             var respuesta = CatalogoServicio.ActualizaPermisosMovilCompra(objrol, _tok);
-    
+
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
@@ -189,9 +195,9 @@ namespace MVC.Presentacion.Controllers
         public ActionResult GuardarPermisoRequisicion(RolDto objrol)
         {
             _tok = Session["StringToken"].ToString();
-           
+
             var respuesta = CatalogoServicio.ActualizaPermisosRequisicion(objrol, _tok);
-        
+
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;

@@ -54,4 +54,12 @@ $(function () {
         }
         cbServicioTransporte
     });
+
+    $('#ddlEmpresasFilter').on('change', function () {
+
+        var id = $(this).val();
+
+        var url = '@Url.Action("Producto", "Producto", new { idempresa = "__param__" })';
+        window.location.href = url.replace('__param__', encodeURIComponent(id));
+    });
 });

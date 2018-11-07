@@ -12,7 +12,6 @@ namespace Application.MainModule.DTOs.Seguridad
         public string Rol1 { get; set; }
         public string NombreRol { get; set; }
         /****************************************/
-
         public bool RequisicionVerRequisiciones { get; set; }
         public bool RequisicionGenerarNueva { get; set; }
         public bool RequisicionRevisarExistencia { get; set; }
@@ -93,12 +92,10 @@ namespace Application.MainModule.DTOs.Seguridad
         public bool AppTomaLecturaReporteDelDia { get; set; }
         public bool AppTraspasoEstacionCarb { get; set; }
         public bool AppTraspasoPipa { get; set; }
-
         public short IdEmpresa { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }
         public List<RolDto> ListaRoles { get; set; }
-
         public List<RolCat> ListaRolesCat { get; set; }
         public List<RolCompras> ListaRolesCom { get; set; }
 

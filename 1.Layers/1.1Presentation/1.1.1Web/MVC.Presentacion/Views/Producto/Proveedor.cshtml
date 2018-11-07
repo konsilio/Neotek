@@ -65,7 +65,7 @@
                                     @Html.ValidationMessageFor(m => m.IdTipoProveedor, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-4">
-                                    <b>Centa contable</b>
+                                    <b>Cuenta contable</b>
                                     <select name="IdCuentaContable" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.CuentasContables)
                                         {
@@ -129,7 +129,7 @@
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-md-4">
-                                    <b>Pais</b>
+                                    <b>País</b>
                                     <select name="IdPais" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.Paises)
                                         {
@@ -267,7 +267,7 @@
                                     @Html.ValidationMessageFor(m => m.IdFormaDePago, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-6">
-                                    <b>Dìas de credito</b>
+                                    <b>Días de crédito</b>
                                     <div class="form-group">
                                         @Html.TextBoxFor(m => m.DiasCredito, new { @class = "form-control", @placeholder = "Días que otorga de crédito" })
                                     </div>
@@ -415,7 +415,7 @@
                                     @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
                                 </div>
                                 <div class="col-md-9">
-                                    <b>Regimen Fiscal</b>
+                                    <b>Régimen Fiscal</b>
                                     <select name="IdRegimenFiscal" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var cc in ViewBag.RegimenesFiscales)
                                         {
@@ -434,7 +434,7 @@
                             </div>
                             <div class="row clearfix">
                                 <div class="col-md-3">
-                                    <b>Rfc</b>
+                                    <b>RFC</b>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="zmdi zmdi-key"></i></span>
                                         @Html.TextBoxFor(m => m.Rfc, new { @class = "form-control key", @placeholder = "Ej: XXX-000000-XXX" })
@@ -460,7 +460,7 @@
                                 else
                                 {
                                 <button btn id="btnUpDate" formaction="EditarProveedor" class="btn btn-primary btn-round">
-                                    <i class="zmdi zmdi-swap"> </i> Terminar Edicion
+                                    <i class="zmdi zmdi-swap"> </i> Terminar Edición
                                 </button>
                                 }
                             </div>

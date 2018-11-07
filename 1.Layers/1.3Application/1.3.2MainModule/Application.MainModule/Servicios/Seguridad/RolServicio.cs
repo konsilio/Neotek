@@ -36,9 +36,9 @@ namespace Application.MainModule.Servicios.Seguridad
             return Obtener(usrRol.IdRol);
         }
 
-        public static List<RolDto> ListaAllRoles()
+        public static List<RolDto> ListaAllRoles(short idEmpresa)
         {
-            List<RolDto> lRoles = AdaptadoresDTO.Seguridad.RolAdapter.ToDTORoles(new RolDataAccess().BuscarTodosRoles());
+            List<RolDto> lRoles = AdaptadoresDTO.Seguridad.RolAdapter.ToDTORoles(new RolDataAccess().Buscar(idEmpresa));
             return lRoles;
         }
 
@@ -52,20 +52,45 @@ namespace Application.MainModule.Servicios.Seguridad
             return new RolDataAccess().BuscarIdRol(idRol);
         }
 
-        public static RespuestaDto ExisteRol(Usuario usuario, Rol rol)
+        public static UsuarioRol Obtener(short idRol, int us)
         {
-            if (usuario.Roles.Contains(rol))
-            {
-                string mensaje = string.Format(Error.ContieneRol, "El usuario", rol.NombreRol);
+            return new RolDataAccess().Buscar(idRol, us);
+        }
+        public static RespuestaDto ExisteRol(Usuario usuario, Rol rol, string type)
+        {
+            var userrol = RolServicio.Obtener(rol.IdRol, usuario.IdUsuario);
 
+            if (userrol != null)//(usuario.UsuarioRoles.Contains(userRol))//(usuario.Roles.Contains(rol))               
+            {
+                if (type == "alta")
+                {
+                    string mensaje = string.Format(Error.ContieneRol, "El usuario", rol.NombreRol);
+
+                    return new RespuestaDto()
+                    {
+                        Exito = false,
+                        Mensaje = mensaje,
+                        MensajesError = new List<string>() { mensaje },
+                    };
+                }
+                else
+                {
+                    string mensaje = "Operacion exitosa";
+                    return new RespuestaDto()
+                    {
+                        Exito = true,
+                        Mensaje = mensaje,
+                        Id = rol.IdRol,
+                        MensajesError = new List<string>() { mensaje },
+                    };
+                }
+            }
+            else {
                 return new RespuestaDto()
                 {
-                    Exito = true,
-                    Mensaje = mensaje,
-                    MensajesError = new List<string>() { mensaje },
+                    Exito = true,                   
                 };
             }
-
             return new RespuestaDto();
         }
 

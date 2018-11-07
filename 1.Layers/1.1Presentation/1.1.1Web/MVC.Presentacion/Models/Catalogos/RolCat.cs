@@ -10,9 +10,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public short IdRol { get; set; }
         public string Rol1 { get; set; }
         public string NombreRol { get; set; }
-
         /***********************************/
-
         public short IdEmpresa { get; set; }
         public bool Activo { get; set; }
         public System.DateTime FechaRegistro { get; set; }

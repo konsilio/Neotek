@@ -214,26 +214,34 @@ namespace MVC.Presentacion.Controllers
         #endregion
         #region Producto
         public ActionResult Producto(int? page, short? idempresa, ProductoDTO model = null)
-        {          
+        {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var Pagina = page ?? 1;
-            ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).ToPagedList(Pagina, 20);
+            var _idEmpresa = idempresa ?? 0;
+            if (!_idEmpresa.Equals(0))
+                ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).Where(x => x.IdEmpresa.Equals(_idEmpresa)).ToPagedList(Pagina, 20);
+            else
+                ViewBag.Productos = CatalogoServicio.ListaProductos(tkn).ToPagedList(Pagina, 20);
             if (idempresa != null)
                 ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn).Where(x => x.IdEmpresa.Equals(idempresa)).ToList();
             else
                 ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
+            ViewBag.IdEmpresa = _idEmpresa;
+
+
             ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn);
             ViewBag.LineasProducto = CatalogoServicio.ListaLineasProducto(tkn);
             ViewBag.UnidadesMedida = CatalogoServicio.ListaUnidadesMedida(tkn);
             ViewBag.UnidadesMedida2 = CatalogoServicio.ListaUnidadesMedida(tkn);
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
             if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
-            if (model != null && model.IdProducto != 0) ViewBag.EsEdicion = true;            
+            if (model != null && model.IdProducto != 0) ViewBag.EsEdicion = true;
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn).SingleOrDefault().NombreComercial;
+
             return View(model);
         }
         public JsonResult GetBuscarCuentasCtbls(short idEmpresa)

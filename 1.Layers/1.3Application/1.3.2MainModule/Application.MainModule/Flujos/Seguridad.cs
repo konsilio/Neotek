@@ -117,8 +117,10 @@ namespace Application.MainModule.Flujos
             var rol = RolServicio.Obtener(uRDto.IdRol);
             if (rol == null) return RolServicio.NoExiste();
 
-            resp = RolServicio.ExisteRol(user, rol);
-            if (resp.Exito) return resp;
+         //   var userrol = RolServicio.Obtener(uRDto.IdRol, uRDto.IdUsuario);            
+
+            resp = RolServicio.ExisteRol(user, rol,"alta");
+            if (!resp.Exito) return resp;
 
             var usuarioRol = UsuarioAdapter.FromDtoRol(uRDto);
             return UsuarioServicio.Insertar(usuarioRol);
@@ -134,9 +136,10 @@ namespace Application.MainModule.Flujos
             var rol = RolServicio.Obtener(usrol.IdRol);
             if (rol == null) return RolServicio.NoExiste();
 
-            resp = RolServicio.ExisteRol(user, rol);
-            if (resp.Exito) return resp;
-
+            //var userrol = RolServicio.Obtener(usrol.IdRol, usrol.IdUsuario);
+          
+            resp = RolServicio.ExisteRol(user, rol,"eliminar");
+            if (!resp.Exito) return resp;
 
             var userol = UsuarioAdapter.FromDtoRol(usrol);
             return UsuarioServicio.Eliminar(userol);
@@ -144,9 +147,9 @@ namespace Application.MainModule.Flujos
         #endregion
 
         #region Roles
-        public List<RolDto> AllRoles()
+        public List<RolDto> AllRoles(short id)
         {
-            return RolServicio.ListaAllRoles().ToList();
+            return RolServicio.ListaAllRoles(id).ToList();
         }
 
         public RespuestaDto AltaRoles(RolDto rolDto)

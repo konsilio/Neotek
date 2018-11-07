@@ -193,25 +193,25 @@ namespace MVC.Presentacion.Agente
                 _lstaRolesCom = (from x in lus where x.NombreRol != "Super Usuario" select x).ToList();
             }
         }
-        public void BuscarRolesCat(string tkn)
+        public void BuscarRoles(string tkn, short emp)
         {
             this.ApiCatalgos = ConfigurationManager.AppSettings["GetListaRoles"];
-            GetListaRolesCat(tkn).Wait();
+            GetListaRoles(tkn, emp).Wait();
         }
 
-        private async Task GetListaRolesCat(string Token)
+        private async Task GetListaRoles(string Token, short emp)
         {
             using (var client = new HttpClient())
             {
-                List<RolCat> lus = new List<RolCat>();
+                List<RolDto> lus = new List<RolDto>();
                 client.BaseAddress = new Uri(UrlBase);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos).ConfigureAwait(false);
+                    HttpResponseMessage response = await client.GetAsync(ApiCatalgos + emp).ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
-                        lus = await response.Content.ReadAsAsync<List<RolCat>>();
+                        lus = await response.Content.ReadAsAsync<List<RolDto>>();
                     else
                     {
                         client.CancelPendingRequests();
@@ -220,11 +220,11 @@ namespace MVC.Presentacion.Agente
                 }
                 catch (Exception)
                 {
-                    lus = new List<RolCat>();
+                    lus = new List<RolDto>();
                     client.CancelPendingRequests();
                     client.Dispose(); ;
                 }
-                _lstaRolesCat = (from x in lus where x.NombreRol != "Super Usuario" select x).ToList();
+                _lstaAllRoles = (from x in lus where x.NombreRol != "Super Usuario" select x).ToList();
             }
         }
         public void BuscarTodosRoles(string tkn)
@@ -619,7 +619,7 @@ namespace MVC.Presentacion.Agente
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
 
-        public void GuardarRolesAsig(UsuariosModel dto, string tkn)
+        public void GuardarRolesAsig(UsuarioRolModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PostAsignarRol"];
             LLamada(dto, tkn, MetodoRestConst.Post).Wait();

@@ -73,15 +73,15 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <b>Nombre de la Undad de Medida</b>
+                                            <b>Nombre de la Unidad de Medida</b>
                                             @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre de la unidad de medida" })
                                             @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <b>Acronimo</b>
-                                            @Html.TextBoxFor(m => m.Acronimo, new { @class = "form-control", placeholder = "Nombre de la unidad de medida" })
+                                            <b>Acrónimo</b>
+                                            @Html.TextBoxFor(m => m.Acronimo, new { @class = "form-control", placeholder = "Acrónimo" })
                                             @Html.ValidationMessageFor(m => m.Acronimo, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -153,7 +153,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Numero" id="txtNumeroFiltro" class="form-control" />
+                                            <input type="text" placeholder="Número" id="txtNumeroFiltro" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -164,8 +164,8 @@
                                                 <tr>
                                                     <td><b>Nombre</b></td>
                                                     <td><b>Descripción</b></td>
-                                                    <td><b>Acronimo</b></td>
-                                                    <td><b>Accion</b></td>
+                                                    <td><b>Acrónimo</b></td>
+                                                    <td><b>Acción</b></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -194,7 +194,7 @@
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-md-6">
-                                        Pagina @(ViewBag.Unidades.PageCount < ViewBag.Unidades.PageNumber ? 0 : ViewBag.Unidades.PageNumber) de @ViewBag.Unidades.PageCount
+                                        Página @(ViewBag.Unidades.PageCount < ViewBag.Unidades.PageNumber ? 0 : ViewBag.Unidades.PageNumber) de @ViewBag.Unidades.PageCount
                                     </div>
                                     <div class="col-md-6 text-right">
                                         @Html.PagedListPager((IPagedList)ViewBag.Unidades, page => Url.Action("UnidadMedida", new { page, @class = "btn btn-primary btn-simple" }))

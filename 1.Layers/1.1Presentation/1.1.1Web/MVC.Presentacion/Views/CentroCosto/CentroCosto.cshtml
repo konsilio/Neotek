@@ -18,7 +18,7 @@
                             <h2>Centro de Costos</h2>
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item">Catalogos </li>
+                                <li class="breadcrumb-item">Catálogos </li>
                                 <li class="breadcrumb-item">Centros de costo</li>
                             </ul>
                         </div>
@@ -33,9 +33,9 @@
                             <div class="body">
                                 <div class="row clearfix">
                                     <div class="col-md-3 form-control-label">
-                                        <label>Numero</label>
+                                        <label>Número</label>
                                         <div class="form-group">
-                                            @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", @placeholder = "Numero de centro de costo" })
+                                            @Html.TextBoxFor(m => m.Numero, new { @class = "form-control", @placeholder = "Número de centro de costo" })
                                             @Html.ValidationMessageFor(m => m.Numero, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                         </div>*@
                                     @*<Label ID="reqVehiculo" class="alert-danger" hidden="hidden">Campo requerido</Label>*@
                                     <div class="col-md-3 form-control-label">
-                                        <label for="ddlUnidadAlmacenGas">Unidad de almacen de gas</label>
+                                        <label for="ddlUnidadAlmacenGas">Unidad de almacén de gas</label>
                                         <div class="form-group">
                                             <select id="IdCAlmacenGas"  class="form-control z-index selectpicker" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
@@ -96,7 +96,7 @@
                                         @Html.ValidationMessageFor(m => m.IdCAlmacenGas, "", new { @class = "alert-danger" })
                                     </div>
                                     <div class="col-md-3 form-control-label">
-                                        <label for="ddlEstacionCarburacion">Estacion de carburación</label>
+                                        <label for="ddlEstacionCarburacion">Estación de carburación</label>
                                         <div class="form-group">
                                             <select id="IdEstacionCarburacion"  class="form-control z-index selectpicker" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
@@ -179,7 +179,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-control-label">
-                                        <label for="txtFiltroNumero">Numero</label>
+                                        <label for="txtFiltroNumero">Número</label>
                                         <div class="form-group">
                                             <input type="text" id="txtFiltroNumero" class="form-control" />
                                         </div>

@@ -38,6 +38,12 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                          && x.Activo);
         }
 
+        public UsuarioRol Buscar(short idRol, int usuario)
+        {
+            return uow.Repository<UsuarioRol>().GetSingle(x => x.IdRol.Equals(idRol)
+                                                         && x.IdUsuario.Equals(usuario));
+        }
+
         public List<Rol> BuscarTodosRoles()
         {
             return uow.Repository<Rol>().Get(x => x.Activo).ToList();

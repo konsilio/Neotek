@@ -17,10 +17,15 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-            ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
-            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;           
+           
             ViewBag.Usuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
-            UsuariosModel rolCat = new UsuariosModel()
+            UsuariosModel model = new UsuariosModel()
             {
                 Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn)
             };
@@ -37,7 +42,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.MessageError = TempData["RespuestaDTOError"];
 
 
-            return View(rolCat);
+            return View(model);
         }
 
         public ActionResult Nuevo()
@@ -88,7 +93,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             ViewBag.IdUser = CatalogoServicio.ObtenerIdUsuario(id, _tkn);
-                    
+
             if (TempData["RespuestaDTOError"] != null)
             {
                 ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
@@ -120,28 +125,48 @@ namespace MVC.Presentacion.Controllers
         }
 
         //vista altas y bajas de Roles - View
-        public ActionResult ActualizaRoles(int id)
+        public ActionResult ActualizaRoles(int id, string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             ViewBag.IdUser = CatalogoServicio.ObtenerIdUsuario(id, _tkn);
             ViewBag.AllRoles = CatalogoServicio.ObtenerTodosRoles(_tkn);
-            if (TempData["RespuestaDTO"] != null)
-            {
-                ViewBag.MessageExito = TempData["RespuestaDTO"];
-            }
-            if (TempData["RespuestaDTOError"] != null)
-            {
-                ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
-                TempData["RespuestaDTOError"] = ViewBag.MessageError;
-            }
+            //if (TempData["RespuestaDTO"] != null)
+            //{
+            //    if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)
+            //        ViewBag.Tipo = "alert-danger";
+            //    ViewBag.Mensaje = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
+            //}
+            //else
+            //    ViewBag.Tipo = "alert-success";
 
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
+            if (!string.IsNullOrEmpty(msj)) 
+            {
+                ViewBag.Msj = msj;
+                if (!(bool)TempData["RespuestaDTO"])
+                    ViewBag.Tipo = "alert-danger";
+                else
+                    ViewBag.Tipo = "alert-success";
+                //ViewBag.Mensaje = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
+            }        
+            else
+                ViewBag.Tipo = "alert-success";
+            //if (TempData["RespuestaDTO"] != null)
+            //{
+            //    ViewBag.MessageExito = TempData["RespuestaDTO"];
+            //}
+            //if (TempData["RespuestaDTOError"] != null)
+            //{
+            //    ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+            //    TempData["RespuestaDTOError"] = ViewBag.MessageError;
+            //}
+
+            //ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View();
         }
 
         //guarda Roles asignado al usuario - operacion
-        public ActionResult GuardarRol(UsuariosModel objUser)
+        public ActionResult GuardarRol(UsuarioRolModel objUser)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
@@ -150,15 +175,20 @@ namespace MVC.Presentacion.Controllers
 
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario });
+                //TempData["RespuestaDTO"] = respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
+                //return RedirectToAction("ActualizaRoles", "Usuarios", new { });
+                TempData["RespuestaDTO"] = respuesta.Exito;
+                return RedirectToAction("ActualizaRoles", new { id = objUser.IdUsuario, msj = string.Concat("Asignacion exitosa de Rol ", objUser.IdRol) });
+
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.Mensaje;
-                return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario });
+                //TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTO"] = respuesta.Exito;
+                //ViewData["RespuestaDTO"] = ViewBag.MensajeError;
+                return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario, msj = respuesta.MensajesError[0] });
             }
 
         }
@@ -221,25 +251,43 @@ namespace MVC.Presentacion.Controllers
 
         }
 
-        public ActionResult BorrarRol(UsuarioRolModel objUser, short id, int idUsr)
+        public ActionResult BorrarRol(UsuarioRolModel objUser, short id, int idUsr, string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
 
             var respuesta = CatalogoServicio.EliminarRolAlUsuario(objUser, idUsr, id, _tok);
 
+            //if (respuesta.Exito)
+            //{
+            //    TempData["RespuestaDTO"] = respuesta.Mensaje;
+            //    TempData["RespuestaDTOError"] = null;
+            //    return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario });
+            //}
+
+            //else
+            //{
+            //    TempData["RespuestaDTOError"] = respuesta;
+            //    return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario });
+
+            //}
+
             if (respuesta.Exito)
             {
-                TempData["RespuestaDTO"] = respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario });
+                //TempData["RespuestaDTO"] = respuesta.Mensaje;
+                //TempData["RespuestaDTOError"] = null;
+                //return RedirectToAction("ActualizaRoles", "Usuarios", new { });
+                TempData["RespuestaDTO"] = respuesta.Exito;
+                return RedirectToAction("ActualizaRoles", new { id = objUser.IdUsuario, msj = string.Concat("Eliminación exitosa del Rol ", objUser.IdRol) });
+
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;
-                return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario });
-
+                //TempData["RespuestaDTOError"] = respuesta.Mensaje;
+                TempData["RespuestaDTO"] = respuesta.Exito;
+                //ViewData["RespuestaDTO"] = ViewBag.MensajeError;
+                return RedirectToAction("ActualizaRoles", "Usuarios", new { id = objUser.IdUsuario, msj = respuesta.MensajesError[0] });
             }
 
         }
