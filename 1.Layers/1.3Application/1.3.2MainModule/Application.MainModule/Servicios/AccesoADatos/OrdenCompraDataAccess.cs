@@ -43,26 +43,32 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public List<OrdenCompra> BuscarTodos()
         {
-            return uow.Repository<OrdenCompra>().GetAll().ToList();
+            return uow.Repository<OrdenCompra>().Get(x => x.Activo).ToList();
         }
-        public OrdenCompraRespuestaDTO InsertarNuevo(OrdenCompra oc)
+        public RespuestaDto InsertarNuevo(OrdenCompra oc)
         {
-            OrdenCompraRespuestaDTO _respuesta = new OrdenCompraRespuestaDTO();
+            RespuestaDto _respuesta = new RespuestaDto();
             using (uow)
             {
                 try
                 {
                     uow.Repository<OrdenCompra>().Insert(oc);
                     uow.SaveChanges();
-                    _respuesta.IdOrdenCompra = oc.IdOrdenCompra;
-                    _respuesta.NumOrdenCompra = oc.NumOrdenCompra;
-                    _respuesta.Mensaje = Exito.OK;
+                    _respuesta.Id = oc.IdOrdenCompra;
+                    _respuesta.Mensaje = oc.NumOrdenCompra;
                     _respuesta.Exito = true;
                 }
                 catch (Exception ex)
                 {
+                    _respuesta.MensajesError = new List<string>();
                     _respuesta.Exito = false;
-                    _respuesta.Mensaje= ex.Message;                           
+                    _respuesta.Mensaje = ex.Message;
+                    if (ex.InnerException != null)
+                    {
+                        _respuesta.MensajesError.Add(ex.InnerException.Message);
+                        if (ex.InnerException.InnerException != null)
+                            _respuesta.MensajesError.Add(ex.InnerException.InnerException.Message);
+                    }
                 }
             }
             return _respuesta;

@@ -69,7 +69,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
-                                            <input id="BtnNuevaReq" type="submit" onclick="location.href='@Url.Action("Requisicion", "Requisicion")'" value="Requisicion" class="btn btn-primary btn-round btn-block" />
+                                            <input id="BtnNuevaReq" type="submit" onclick="location.href='@Url.Action("Requisicion", "Requisicion")'" value="Requisición" class="btn btn-primary btn-round btn-block" />
                                         </div>
                                     </div>
                                     <div class="demo-masked-input">
@@ -175,10 +175,10 @@
                                                             <td>
                                                                 @if (req.IdRequisicionEstatus.Equals(1))
                                                                 {
-                                                                    <a id="lbDgOjo" href="">
+                                                                    @*<a id="lbDgOjo" href="">
                                                                         <i class="material-icons">picture_as_pdf</i>
                                                                         <span class="icon-name"></span>
-                                                                    </a>
+                                                                    </a>*@
                                                                     <a id="lbDgPDF" href="@Url.Action("RequisicionRevision", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })">
                                                                         <i class="material-icons">content_paste</i>
                                                                         <span class="icon-name"></span>
@@ -186,10 +186,10 @@
                                                                 }
                                                                 @if (req.IdRequisicionEstatus.Equals(3) || req.IdRequisicionEstatus.Equals(4))
                                                                 {
-                                                                    <a id="lbDgPDF" href="">
+                                                                    @*<a id="lbDgPDF" href="">
                                                                         <i class="material-icons">picture_as_pdf</i>
                                                                         <span class="icon-name"></span>
-                                                                    </a>
+                                                                    </a>*@
                                                                     <a id="lbAutoriza" href="@Url.Action("RequisicionAutorizacion", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })">
                                                                         <i class="material-icons">spellcheck</i>
                                                                         <span class="icon-name"></span>

@@ -38,7 +38,7 @@
                     <div class="col-md-12">
                         <h2>Compras</h2>
                         <ul class="breadcrumb padding-0">
-                            <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
                             <li class="breadcrumb-item">Compras</li>
                             <li class="breadcrumb-item">Ordern de Compra</li>
                             <li class="breadcrumb-item">Complemento para Gas</li>
@@ -170,9 +170,9 @@
                                                             <span class="input-group-addon">
                                                                 <i class="zmdi zmdi-calendar"></i>
                                                             </span>
-                                                            @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control datetimepicker" })
-                                                            @Html.ValidationMessageFor(m => m.Fecha, "", new { @class = "alert-danger" })
+                                                            @Html.TextBoxFor(m => m.Fecha, new { @class = "form-control datetimepicker" })                                                           
                                                         </div>
+                                                        @Html.ValidationMessageFor(m => m.Fecha, "", new { @class = "alert-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -182,33 +182,33 @@
                                                             <span class="input-group-addon">
                                                                 <i class="zmdi zmdi-calendar"></i>
                                                             </span>
-                                                            @Html.TextBoxFor(m => m.FechaEmbarque, new { @class = "form-control datetimepicker" })
-                                                            @Html.ValidationMessageFor(m => m.FechaEmbarque, "", new { @class = "alert-danger" })
+                                                            @Html.TextBoxFor(m => m.FechaEmbarque, new { @class = "form-control datetimepicker" })                                                           
                                                         </div>
+                                                        @Html.ValidationMessageFor(m => m.FechaEmbarque, "", new { @class = "alert-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Número embarque</label>
-                                                        @Html.TextBoxFor(m => m.NumeroEmbarque, new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(m => m.NumeroEmbarque, "", new { @class = "alert-danger" })
+                                                        @Html.TextBoxFor(m => m.NumeroEmbarque, new { @class = "form-control" })                                                       
                                                     </div>
+                                                    @Html.ValidationMessageFor(m => m.NumeroEmbarque, "", new { @class = "alert-danger" })
                                                 </div>
                                             </div>
                                             <div class="row clearfix">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Valor Carga</label>
-                                                        @Html.TextBoxFor(m => m.ValorCarga, new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(m => m.ValorCarga, "", new { @class = "alert-danger" })
+                                                        @Html.TextBoxFor(m => m.ValorCarga, new { @class = "form-control" })                                                       
                                                     </div>
+                                                    @Html.ValidationMessageFor(m => m.ValorCarga, "", new { @class = "alert-danger" })
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="">Sello</label>
-                                                        @Html.TextBoxFor(m => m.Sello, new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(m => m.Sello, "", new { @class = "alert-danger" })
+                                                        @Html.TextBoxFor(m => m.Sello, new { @class = "form-control" })                                                       
                                                     </div>
+                                                    @Html.ValidationMessageFor(m => m.Sello, "", new { @class = "alert-danger" })
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -306,8 +306,9 @@
                                                                 <i class="zmdi zmdi-calendar"></i>
                                                             </span>
                                                             @Html.TextBoxFor(m => m.FechaEntraGas, new { @class = "form-control datetimepicker" })
-                                                            @Html.ValidationMessageFor(m => m.FechaEntraGas, "", new { @class = "alert-danger" })
+                                                            
                                                         </div>
+                                                        @Html.ValidationMessageFor(m => m.FechaEntraGas, "", new { @class = "alert-danger" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -421,7 +422,7 @@
                                                 <hr>
                                                 <div class="row clearfix">
                                                     <div class="col-md-5 form-control-label">
-                                                        <label for="txtReferenciaPormedioMensualGallon">Referencia promedio mensual MB Non Tet Propano Gallon</label>
+                                                        <label for="txtReferenciaPormedioMensualGallon">Referencia promedio mensual MB Non Tet Propano Galón</label>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -434,7 +435,7 @@
                                                 </div>
                                                 <div class="row clearfix">
                                                     <div class="col-md-5 form-control-label">
-                                                        <label for="txtTarifaServicioGallon">Tarifa de Servicio por gallon</label>
+                                                        <label for="txtTarifaServicioGallon">Tarifa de Servicio por Galón</label>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -462,7 +463,7 @@
                                                 </div>
                                                 <div class="row clearfix">
                                                     <div class="col-md-5 form-control-label">
-                                                        <label for="lbPlPrecioPorGalon">Precio por galon</label>
+                                                        <label for="lbPlPrecioPorGalon">Precio por galón</label>
                                                     </div>
                                                     <div class="col-md-4 text-right">
                                                         <div class="form-group">
