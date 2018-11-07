@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <style name="NumberPickerText" >
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:colorForeground">@color/colorAccent</item>
+    </style>
+    <style name="TabelViewText" >
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:colorForeground">@color/colorAccent</item>
+    </style>
     <style name="SagasTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/colorBackgroundSistemaLogin</item>
         <item name="android:navigationBarColor">@color/colorBackgroundNavigationBar</item>

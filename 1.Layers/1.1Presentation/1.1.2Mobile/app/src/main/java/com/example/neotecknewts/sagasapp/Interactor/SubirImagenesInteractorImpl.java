@@ -143,7 +143,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         RestClient restClient = retrofit.create(RestClient.class);
         int intentos_post = 0;
         registra_papeleta = true;
-        while(intentos_post<3) {
+        /*while(intentos_post<3) {*/
             Call<RespuestaPapeletaDTO> call = restClient.postPapeleta(precargaPapeletaDTO,
                     token, "application/json");
 
@@ -181,27 +181,40 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 break;
                         }
                         //subirImagenesPresenter.onError();
-                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        if(data!=null)
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        else
+                            subirImagenesPresenter.errorSolicitud(response.message());
                         registra_papeleta = false;
-                    }
 
+                    }
+                    if(response.code()>=300){
+                        registrar_local(papeletaSQL,precargaPapeletaDTO,clave_unica);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                        Lisener lisener = new Lisener(papeletaSQL,token);
+                        lisener.CrearRunable(Lisener.Papeleta);
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaPapeletaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
                     registra_papeleta = false;
+                    registrar_local(papeletaSQL,precargaPapeletaDTO,clave_unica);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
+                    Lisener lisener = new Lisener(papeletaSQL,token);
+                    lisener.CrearRunable(Lisener.Papeleta);
                     //subirImagenesPresenter.onError();
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_papeleta){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local(papeletaSQL,precargaPapeletaDTO,clave_unica);
             registro_local = true;
         }
@@ -209,7 +222,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             subirImagenesPresenter.onSuccessRegistroAndroid();
             Lisener lisener = new Lisener(papeletaSQL,token);
             lisener.CrearRunable(Lisener.Papeleta);
-        }
+        }*/
     }
 
     /**
@@ -295,7 +308,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         RestClient restClient = retrofit.create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
-        while(intentos_post<3) {
+        /*while(intentos_post<3) {*/
             Call<RespuestaIniciarDescargaDTO> call = restClient.postDescarga(iniciarDescargaDTO,
                     token, "application/json");
             Log.w(TAG, retrofit.baseUrl().toString());
@@ -327,22 +340,32 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         registra_descarga = false;
                         //subirImagenesPresenter.errorSolicitud(data.getMensaje());
                     }
+                    if(response.code()>=300){
+                        registrar_descarga_local(iniciarDescargaSQL,iniciarDescargaDTO,clave_unica);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                        Lisener lisener = new Lisener(iniciarDescargaSQL,token);
+                        lisener.CrearRunable(Lisener.IniciarDescarga);
+                    }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaIniciarDescargaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
                     registra_descarga = false;
+                    registrar_descarga_local(iniciarDescargaSQL,iniciarDescargaDTO,clave_unica);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
+                    Lisener lisener = new Lisener(iniciarDescargaSQL,token);
+                    lisener.CrearRunable(Lisener.IniciarDescarga);
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_descarga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_descarga_local(iniciarDescargaSQL,iniciarDescargaDTO,clave_unica);
             registro_local = true;
         }
@@ -350,7 +373,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             subirImagenesPresenter.onSuccessRegistroAndroid();
             Lisener lisener = new Lisener(iniciarDescargaSQL,token);
             lisener.CrearRunable(Lisener.IniciarDescarga);
-        }
+        }*/
         //endregion
     }
 
@@ -438,7 +461,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         RestClient restClient = retrofit.create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
-        while(intentos_post<3) {
+        /*while(intentos_post<3) {*/
             Call<RespuestaFinalizarDescargaDTO> call = restClient.postFinalizarDescarga(finalizarDescargaDTO,
                     token, "application/json");
             Log.w(TAG, retrofit.baseUrl().toString());
@@ -464,23 +487,39 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
+                        if(data!=null){
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        }else{
+                            subirImagenesPresenter.errorSolicitud(response.message());
+                        }
                         //subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                    }
+
+                    if(response.code()>=300){
+                        registrar_finalizar_local(finalizarDescargaSQL,finalizarDescargaDTO,clave_unica);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                        Lisener lisener = new Lisener(finalizarDescargaSQL,token);
+                        lisener.CrearRunable(Lisener.FinalizarDescarga);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaFinalizarDescargaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
+                    registrar_finalizar_local(finalizarDescargaSQL,finalizarDescargaDTO,clave_unica);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
+                    Lisener lisener = new Lisener(finalizarDescargaSQL,token);
+                    lisener.CrearRunable(Lisener.FinalizarDescarga);
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_descarga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+       /* }*/
+        /*if(intentos_post==3){
             registrar_finalizar_local(finalizarDescargaSQL,finalizarDescargaDTO,clave_unica);
             registro_local = true;
         }
@@ -488,7 +527,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             subirImagenesPresenter.onSuccessRegistroAndroid();
             Lisener lisener = new Lisener(finalizarDescargaSQL,token);
             lisener.CrearRunable(Lisener.FinalizarDescarga);
-        }
+        }*/
         //endregion
 
     }
@@ -605,12 +644,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         }else{
                             subirImagenesPresenter.errorSolicitud(response.message());
                         }
-                        if(response.code()>=300) {
-                            registrar_local(sagasSql, lecturaDTO, clave_unica);
-                            subirImagenesPresenter.onSuccessRegistroAndroid();
-                            Lisener lisener = new Lisener(sagasSql,token);
-                            lisener.CrearRunable(Lisener.LecturaInicial);
-                        }
+                    }
+                    if(response.code()>=300) {
+                        registrar_local(sagasSql, lecturaDTO, clave_unica);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.LecturaInicial);
                     }
                 }
 
@@ -720,7 +759,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         RestClient restClient = retrofit.create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
-        while(intentos_post<3) {
+        /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinal(lecturaDTO,
                     token, "application/json");
             Log.w(TAG, retrofit.baseUrl().toString());
@@ -746,23 +785,36 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
-                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        if(data!=null)
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        else
+                            subirImagenesPresenter.errorSolicitud(response.message());
+                    }
+                    if(response.code()>= 300){
+                        registrar_local(sagasSql,lecturaDTO,clave_unica);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.LecturaFinal);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                     Log.e("error", t.toString());
+                    registrar_local(sagasSql,lecturaDTO,clave_unica);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.LecturaFinal);
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_descarga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local(sagasSql,lecturaDTO,clave_unica);
             registro_local = true;
         }
@@ -770,7 +822,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             subirImagenesPresenter.onSuccessRegistroAndroid();
             Lisener lisener = new Lisener(sagasSql,token);
             lisener.CrearRunable(Lisener.LecturaFinal);
-        }
+        }*/
         //endregion
         /*sagasSql.IncertarLecturaFinal(lecturaDTO);
         sagasSql.InsertImagenLecturaFinalP5000(lecturaDTO);
@@ -800,6 +852,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LIP"+s.format(new Date());
         lecturaPipaDTO.setClaveProceso(clave_unica);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        lecturaPipaDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -858,7 +913,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         RestClient restClient = retrofit.create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
-        while(intentos_post<3) {
+        /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialPipa(
                     lecturaPipaDTO,  token, "application/json");
             Log.w(TAG, retrofit.baseUrl().toString());
@@ -884,23 +939,36 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
-                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        if(data!=null)
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        else
+                            subirImagenesPresenter.errorSolicitud(response.message());
+                    }
+                    if(response.code()>=300) {
+                        registrar_local(sagasSql,lecturaPipaDTO,clave_unica,false);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.LecturaInicialPipas);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                     Log.e("error", t.toString());
+                    registrar_local(sagasSql,lecturaPipaDTO,clave_unica,false);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.LecturaInicialPipas);
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_descarga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local(sagasSql,lecturaPipaDTO,clave_unica,false);
             registro_local = true;
         }
@@ -908,7 +976,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             subirImagenesPresenter.onSuccessRegistroAndroid();
             Lisener lisener = new Lisener(sagasSql,token);
             lisener.CrearRunable(Lisener.LecturaInicialPipas);
-        }
+        }*/
         //endregion
         /*
         sagasSql.InsertLecturaInicialPipas(lecturaPipaDTO);
@@ -929,7 +997,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
      * @param lecturaPipaDTO Objeto de tipo {@link LecturaPipaDTO} con los datos de lectura de la
      *                       pipa
-     * @author Jorge Omar Tovar Martìnez <jorge.tovar@neoteck.com.mx>
+     * @author Jorge Omar Tovar Martínez <jorge.tovar@neoteck.com.mx>
      * @date 03/09/2018
      */
     @Override
@@ -939,6 +1007,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LFP"+s.format(new Date());
         lecturaPipaDTO.setClaveProceso(clave_unica);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        lecturaPipaDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -997,7 +1068,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         RestClient restClient = retrofit.create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
-        while(intentos_post<3) {
+        /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialPipa(
                     lecturaPipaDTO,  token, "application/json");
             Log.w(TAG, retrofit.baseUrl().toString());
@@ -1023,23 +1094,36 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
-                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        if(data!=null)
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        else
+                            subirImagenesPresenter.errorSolicitud(response.message());
+                    }
+                    if(response.code()>=300){
+                        registrar_local(sagasSql,lecturaPipaDTO,clave_unica,true);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.LecturaFinalPipas);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                     Log.e("error", t.toString());
+                    registrar_local(sagasSql,lecturaPipaDTO,clave_unica,true);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.LecturaFinalPipas);
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_descarga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local(sagasSql,lecturaPipaDTO,clave_unica,true);
             registro_local = true;
         }
@@ -1047,7 +1131,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             subirImagenesPresenter.onSuccessRegistroAndroid();
             Lisener lisener = new Lisener(sagasSql,token);
             lisener.CrearRunable(Lisener.LecturaFinalPipas);
-        }
+        }*/
         //endregion
         /*sagasSql.InsertLecturaFinalPipas(lecturaPipaDTO);
         sagasSql.InsertLecturaFinalPipaP5000(lecturaPipaDTO);
@@ -1076,6 +1160,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LIA"+s.format(new Date());
         lecturaAlmacenDTO.setClaveOperacion(clave_unica);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        lecturaAlmacenDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -1092,10 +1179,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -1134,7 +1223,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         RestClient restClient = retrofit.create(RestClient.class);
         int intentos_post = 0;
         registra_descarga = true;
-        while(intentos_post<3) {
+        /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaInicialAlmacen(
                     lecturaAlmacenDTO,  token, "application/json");
             Log.w(TAG, retrofit.baseUrl().toString());
@@ -1160,23 +1249,36 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
-                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        if(data!=null)
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        else
+                            subirImagenesPresenter.errorSolicitud(response.message());
+                    }
+                    if(response.code()>=300){
+                        registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,false);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                     Log.e("error", t.toString());
+                    registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,false);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
                 }
             });
-            intentos_post++;
+           /* intentos_post++;
             if(registra_descarga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,false);
             registro_local = true;
         }
@@ -1184,13 +1286,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             subirImagenesPresenter.onSuccessRegistroAndroid();
             Lisener lisener = new Lisener(sagasSql,token);
             lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
-        }
+        }*/
         //endregion
         /*sagasSql.InsertLecturaInicialAlmacen(lecturaAlmacenDTO);
         sagasSql.InsertImagenesLecturaInicialAlamacen(lecturaAlmacenDTO);
         subirImagenesPresenter.onSuccessRegistroAndroid();*/
     }
-
 
 
     /**
@@ -1214,6 +1315,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "LFA"+s.format(new Date());
         lecturaAlmacenDTO.setClaveOperacion(clave_unica);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        lecturaAlmacenDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -1230,10 +1334,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -1272,7 +1378,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
         int intentos_post = 0;
         registra_descarga = true;
-        while(intentos_post<3) {
+        /*while(intentos_post<3) {*/
             Call<RespuestaLecturaInicialDTO> call = restClient.postTomaLecturaFinalAlmacen(
                     lecturaAlmacenDTO,  token, "application/json");
             Log.w(TAG, retrofit.baseUrl().toString());
@@ -1298,23 +1404,36 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
-                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        if(data!=null)
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        else
+                            subirImagenesPresenter.errorSolicitud(response.message());
+                    }
+                    if(response.code()>=300){
+                        registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,true);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.LecturaFinalAlmacen);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                     Log.e("error", t.toString());
+                    registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,true);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.LecturaFinalAlmacen);
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_descarga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,true);
             registro_local = true;
         }
@@ -1322,13 +1441,23 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             subirImagenesPresenter.onSuccessRegistroAndroid();
             Lisener lisener = new Lisener(sagasSql,token);
             lisener.CrearRunable(Lisener.LecturaFinalAlmacen);
-        }
+        }*/
         //endregion
         /*sagasSql.InsertLecturaFinalAlmacen(lecturaAlmacenDTO);
         sagasSql.InsertImagenesLecturaFinalAlamacen(lecturaAlmacenDTO);
         subirImagenesPresenter.onSuccessRegistroAndroid();*/
     }
 
+    /**
+     * <h3>registrarRecargaEstacion</h3>
+     * Permite realizar el registro de los datos de la recarga de estaciónes en el api,
+     * en caso de no registrarce se enviara a la base de datos local en el
+     * disposivio
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param recargaDTO Objeto de tipo {@link RecargaDTO} con los datos de la recarga
+     * @param EsRecargaEstacionInicial boolean que determina si es recarga inicial
+     */
     @Override
     public void registrarRecargaEstacion(SAGASSql sagasSql, String token, RecargaDTO recargaDTO,
                                          boolean EsRecargaEstacionInicial) {
@@ -1338,6 +1467,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (EsRecargaEstacionInicial)? "I":"F";
         clave_unica += s.format(new Date());
         recargaDTO.setClaveOperacion(clave_unica);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        recargaDTO.setFechaApliacacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -1354,10 +1486,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -1375,14 +1509,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         if (servicio_intentos == 3) {
-            registrar_local_recarga(sagasSql,recargaDTO,clave_unica);
+            registrar_local_recarga(sagasSql,recargaDTO,clave_unica,EsRecargaEstacionInicial);
             registro_local = true;
         }
 
         //endregion
         //region Realiza el registro de la lectura final de la camioneta
-
-
 
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -1396,7 +1528,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         RestClient restClient = retrofit.create(RestClient.class);
         int intentos_post = 0;
         registra_reacrga = true;
-        while(intentos_post<3) {
+        /*while(intentos_post<3) {*/
             Call<RespuestaRecargaDTO> call = null;
             if(EsRecargaEstacionInicial) {
                 restClient.postRecargaInicial(
@@ -1406,47 +1538,62 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                   recargaDTO,token,"application/json"
                 );
             }
-            Log.w("Url camioneta", call.request().url().toString());
+            Log.w("Url recarga estación ", retrofit.baseUrl().toString());
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaRecargaDTO> call,
                                        Response<RespuestaRecargaDTO> response) {
                     RespuestaRecargaDTO data = response.body();
                     if (response.isSuccessful()) {
-                        Log.w("IniciarDescarga", "Success");
+                        Log.w("Recarga estación", "Success");
                         subirImagenesPresenter.onSuccessRegistroRecarga();
                     } else {
                         switch (response.code()) {
                             case 404:
-                                Log.w("LecturaInicialCamioneta", "not found");
+                                Log.w("Recarga estación", "not found");
                                 break;
                             case 500:
-                                Log.w("LecturaInicialCamioneta", "server broken");
+                                Log.w("Recarga estación", "server broken");
                                 break;
                             default:
-                                Log.w("LecturaInicialCamioneta", "" + response.code());
+                                Log.w("Recarga estación", "" + response.code());
                                 Log.w(" Error", response.message() + " " +
                                         response.raw().toString());
                                 break;
                         }
                         registra_reacrga = false;
-                        subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        if(data!=null)
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        else
+                            subirImagenesPresenter.errorSolicitud(response.message());
+                    }
+                    if(response.code()>=300){
+                        registrar_local_recarga(sagasSql,recargaDTO,recargaDTO.getClaveOperacion(),
+                                EsRecargaEstacionInicial);
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.RecargaEstacion);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
+                    registrar_local_recarga(sagasSql,recargaDTO,recargaDTO.getClaveOperacion(),
+                            EsRecargaEstacionInicial);
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.RecargaEstacion);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_reacrga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
             registrar_local_recarga(sagasSql,recargaDTO,clave_unica);
             registro_local = true;
         }
@@ -1454,18 +1601,32 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             Lisener lisener = new Lisener(sagasSql,token);
             lisener.CrearRunable(Lisener.RecargaCamioneta);
             subirImagenesPresenter.onSuccessRegistroAndroid();
-        }
+        }*/
         //endregion
     }
 
+    /**
+     * registrarRecargaPipa
+     * Permite realizar la recarga de la pipa en el api, se envia como parametro un objeto
+     * con los datos de la recarga de la pipa, en caso de fallar se registra en la base de datos
+     * local de l telefono y se espera a que el servicio este disponible
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param recargaDTO Objeto de tipo {@link RecargaDTO} con los datos de la recarga
+     * @param esRecargaPipaFinal Boolean que especifica si la recarga es final
+     */
     @Override
-    public void registrarRecargaPipa(SAGASSql sagasSql, String token, RecargaDTO recargaDTO, boolean esRecargaPipaFinal) {
+    public void registrarRecargaPipa(SAGASSql sagasSql, String token, RecargaDTO recargaDTO,
+                                     boolean esRecargaPipaFinal) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "RP";
         clave_unica += (esRecargaPipaFinal)? "F":"I";
         clave_unica += s.format(new Date());
         recargaDTO.setClaveOperacion(clave_unica);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        recargaDTO.setFechaApliacacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -1482,10 +1643,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -1503,28 +1666,26 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         if (servicio_intentos == 3) {
-            registrar_local_recarga(sagasSql,recargaDTO,clave_unica);
+            registrar_local_recarga(sagasSql,recargaDTO,clave_unica,esRecargaPipaFinal);
             registro_local = true;
         }
 
         //endregion
         //region Realiza el registro de la lectura final de la camioneta
 
-
-
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
         int intentos_post = 0;
         registra_reacrga = true;
-        while(intentos_post<3) {
+        /*while(intentos_post<3) {*/
             Call<RespuestaRecargaDTO> call = null;
             if(esRecargaPipaFinal) {
                 call= restClient.postRecargaFinal(
@@ -1534,7 +1695,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         recargaDTO,token,"application/json"
                 );
             }
-            Log.w("Url camioneta", retrofit.baseUrl().toString());
+            Log.w("Url recarga pipa", retrofit.baseUrl().toString());
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
                 @Override
                 public void onResponse(Call<RespuestaRecargaDTO> call,
@@ -1558,8 +1719,17 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                         response.raw().toString());
                                 break;
                         }
-
-                        //subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        if(data!=null)
+                            subirImagenesPresenter.errorSolicitud(data.getMensaje());
+                        else
+                            subirImagenesPresenter.errorSolicitud(response.message());
+                    }
+                    if(response.code()>= 300){
+                        registrar_local_recarga(sagasSql,recargaDTO,recargaDTO.getClaveOperacion(),
+                                esRecargaPipaFinal);
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.RecargaPipa);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
                     }
                 }
 
@@ -1567,16 +1737,21 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
                     registra_reacrga = false;
+                    registrar_local_recarga(sagasSql,recargaDTO,recargaDTO.getClaveOperacion(),
+                            esRecargaPipaFinal);
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.RecargaPipa);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-            intentos_post++;
+           /* intentos_post++;
             if(registra_reacrga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
+            }*/
+       /* }*/
+        /*if(intentos_post==3){
             registrar_local_recarga(sagasSql,recargaDTO,clave_unica);
             registro_local = true;
         }
@@ -1584,10 +1759,20 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             Lisener lisener = new Lisener(sagasSql,token);
             lisener.CrearRunable(Lisener.RecargaCamioneta);
             subirImagenesPresenter.onSuccessRegistroAndroid();
-        }
+        }*/
         //endregion
     }
 
+    /**
+     * registrarAutoconsumoEstacion
+     * Permite realizar el registro del auto consumo de la estación de carburación,
+     * se envia como parametro un objeto {@link AutoconsumoDTO} con los datos a registrar en la api
+     * en caso de fallar se registra local en el dispositivo
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param autoconsumoDTO Objeto de tipo {@link AutoconsumoDTO} con los datos del autoconsumo
+     * @param esAutoconsumoEstacionFinal Boolean que determina si el autoconsumo es final
+     */
     @Override
     public void registrarAutoconsumoEstacion(SAGASSql sagasSql, String token, AutoconsumoDTO
             autoconsumoDTO, boolean esAutoconsumoEstacionFinal) {
@@ -1597,6 +1782,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (esAutoconsumoEstacionFinal)? "F":"I";
         clave_unica += s.format(new Date());
         autoconsumoDTO.setClaveOperacion(clave_unica);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -1613,10 +1801,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -1641,8 +1831,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
         //endregion
         //region Realiza el registro del autoconsumo
-
-
 
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -1696,6 +1884,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                 break;
                         }
                         registro_local = true;
+                        if(data!=null)
+                            subirImagenesPresenter.errorSolicitud(data.getMensajesError());
+                        else
+                            subirImagenesPresenter.errorSolicitud(response.message());
                     }
                     if(response.code()>=300) {
                         registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
@@ -1747,6 +1939,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
     }
 
+    /**
+     * registrarAutoconsumoInventario
+     * Realiza el registro de un autoconsumo de inventario, se enviara al api el objeto
+     * dto de tipo {@link AutoconsumoDTO} con los datos del autoconsumo de inventario, en caso
+     *  de que no se registre en el api se almacenara en la base de datos local
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param autoconsumoDTO Objeto de tipo {@link AutoconsumoDTO} con los datos del autoconsumo
+     * @param esAutoconsumoInventarioFinal Boolean que determina si es un autoconsumo final
+     */
     @Override
     public void registrarAutoconsumoInventario(SAGASSql sagasSql, String token, AutoconsumoDTO
             autoconsumoDTO, boolean esAutoconsumoInventarioFinal) {
@@ -1756,6 +1958,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (esAutoconsumoInventarioFinal)? "F":"I";
         clave_unica += s.format(new Date());
         autoconsumoDTO.setClaveOperacion(clave_unica);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -1772,10 +1977,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -1895,6 +2102,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
     }
 
+    /**
+     * registrarAutoconsumoPipa
+     * Permite realizar el registro del autoconsumo de la pipa, se enviara un objeto de
+     * tipo {@link AutoconsumoDTO} al servicio api, en caso de que no se registre se
+     * guardara en local
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param autoconsumoDTO Objeto de tipo {@link AutoconsumoDTO} con los datos del autoconsumo
+     * @param esAutoconsumoPipaFinal Boolean que determina si el autoconsumo es final
+     */
     @Override
     public void registrarAutoconsumoPipa(SAGASSql sagasSql, String token, AutoconsumoDTO
             autoconsumoDTO, boolean esAutoconsumoPipaFinal) {
@@ -1904,6 +2121,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (esAutoconsumoPipaFinal)? "F":"I";
         clave_unica += s.format(new Date());
         autoconsumoDTO.setClaveOperacion(clave_unica);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -1948,8 +2168,6 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
         //endregion
         //region Realiza el registro del autoconsumo
-
-
 
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -2044,6 +2262,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
     }
 
+    /**
+     * registrarTraspasoEstacion
+     * Premite registrar los datos del traspaso de la estacion , tomara un objeto de tipo
+     * {@link TraspasoDTO} con los datos de este para ser registrado en el api , en caso de que
+     * los datos no se registracen se guardaran en la base de datos local
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param traspasoDTO Objeto de tipo {@link TraspasoDTO} con los datos del traspaso
+     * @param esTraspasoEstacionFinal Boolean que determina si es un traspaso final
+     */
     @Override
     public void registrarTraspasoEstacion(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO,
                                           boolean esTraspasoEstacionFinal) {
@@ -2054,6 +2282,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += s.format(new Date());
         traspasoDTO.setClaveOperacion(clave_unica);
         traspasoDTO.setFecha((Date) Calendar.getInstance().getTime());
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        traspasoDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2070,10 +2301,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -2617,6 +2850,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
             }
         }
     }
+
+    /**
+     * registrar_local_traspaso
+     * Permite realizar el registro en local del traspaso, tomara como parametro
+     * el objeto dto {@link TraspasoDTO} con los datos de este
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param traspasoDTO Objeto de tipo {@link TraspasoDTO} con los datos del traspaso
+     * @param esFinal boolean que determina si es final
+     * @param tipo Determina el tipo de traspaso
+     */
     private void registrar_local_traspaso(SAGASSql sagasSql, TraspasoDTO traspasoDTO,
                                           boolean esFinal,String tipo) {
         if(sagasSql.GetTraspasoByClaveOperacion(traspasoDTO.getClaveOperacion()).getCount()==0){
@@ -2627,6 +2870,13 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
     }
 
+    /**
+     * Permite realizar el registro en local de un autoconsumo
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param autoconsumoDTO Objeto de tipo {@link AutoconsumoDTO} con los datos del autoconsumo
+     * @param Tipo Reprecenta una cadena de string que determina e tipo de autoconsumo
+     * @param esFinal boolean que determina si es final
+     */
     private void registrar_local_autoconsumo(SAGASSql sagasSql, AutoconsumoDTO autoconsumoDTO,
                                              String Tipo,boolean esFinal) {
         if(sagasSql.GetAutoconsumo(autoconsumoDTO.getClaveOperacion()).getCount()==0){
@@ -2720,6 +2970,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
     }
 
+    /**
+     * registrar_local
+     * Permite el registro en local de los datos de la lectura de la pipa que estan en
+     * el dto en caso de que no esten registrados
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param lecturaPipaDTO Objeto de tipo {@link LecturaPipaDTO} con los datos de lectura de la
+     *                       pipa
+     * @param clave_unica String con la clave unica del registro
+     * @param es_final Verifica si la lectura es final
+     */
     private void registrar_local(SAGASSql sagasSql, LecturaPipaDTO lecturaPipaDTO,
                                  String clave_unica,boolean es_final) {
         if(!es_final) {
@@ -2739,6 +2999,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
     }
 
+    /**
+     * registrar_local_almacen
+     * Permite realizar el registro en local de la lectura del almacen ya sea
+     * incial o final
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param lecturaAlmacenDTO Objeto de tipo {@link LecturaAlmacenDTO} con los datos a enviar o
+     *                          registrar de la lectura del almacen
+     * @param clave_unica String que reprecenta la clave unica del registro
+     * @param es_final Verifica si es lectura inicial o final
+     */
     private void registrar_local_almacen(SAGASSql sagasSql, LecturaAlmacenDTO lecturaAlmacenDTO,
                                          String clave_unica, boolean es_final) {
         if(!es_final){
@@ -2760,12 +3030,23 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
     }
 
+    /**
+     * registrar_local_recarga
+     * Permite realizar el registro de la recarga en local, para su envio
+     * al api cuando se restablesca la conexión
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param recargaDTO Objeto de tipo {@link RecargaDTO} con los datos de la recarga
+     * @param clave_unica Cadena de tipo {@link String} con la clave única de operación
+     * @param EsRecargaEstacionInicial boolean Determina si es una recarga inicial
+     */
     private void registrar_local_recarga(SAGASSql sagasSql,
                                          RecargaDTO recargaDTO,
-                                         String clave_unica
+                                         String clave_unica,
+                                         boolean EsRecargaEstacionInicial
                                          ) {
             if(sagasSql.GetRecargaByClaveOperacion(recargaDTO.getClaveOperacion()).getCount()==0){
-                sagasSql.InsertRecarga(recargaDTO,SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION);
+                sagasSql.InsertRecarga(recargaDTO,SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION
+                ,EsRecargaEstacionInicial);
                 if(sagasSql.GetImagenesRecarga(recargaDTO.getClaveOperacion()).getCount()==0){
                     sagasSql.InsertarImagesRecarga(recargaDTO);
                 }

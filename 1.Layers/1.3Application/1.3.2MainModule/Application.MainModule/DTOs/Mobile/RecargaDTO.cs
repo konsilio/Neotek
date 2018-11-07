@@ -66,5 +66,9 @@ namespace Application.MainModule.DTOs.Mobile
         /// en la recarga de pipa y de estación carburación
         /// </summary>
         public List<String> Imagenes { get; set; }
+        /// <summary>
+        /// Fecha de registro de la aplicación
+        /// </summary>
+        public DateTime FechaAplicacion { get; set; }
     }
 }

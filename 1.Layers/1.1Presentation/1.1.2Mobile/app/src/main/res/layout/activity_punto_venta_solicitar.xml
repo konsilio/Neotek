@@ -97,6 +97,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:autofillHints="@string/Buscar"
+                android:textColor="@color/buttonBackgroundColor"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:textSize="18sp"

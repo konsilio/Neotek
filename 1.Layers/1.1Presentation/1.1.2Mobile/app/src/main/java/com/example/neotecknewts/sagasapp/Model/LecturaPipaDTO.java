@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public class LecturaPipaDTO implements Serializable {
     @SerializedName("NombreTipoMedidor")
     private String TipoMedidor;
 
-    @SerializedName("CantidadFotografias")
+    @SerializedName("CantidadFotografiasMedidor")
     private int CantidadFotografias;
 
     @SerializedName("Imagenes")
@@ -53,6 +54,10 @@ public class LecturaPipaDTO implements Serializable {
 
     @SerializedName("ClaveProceso")
     private String ClaveProceso;
+
+    @SerializedName("FechaAplicacion")
+    private String FechaAplicacion;
+
     //region Constructores
     public LecturaPipaDTO() {
         Imagenes = new ArrayList<>();
@@ -154,5 +159,13 @@ public class LecturaPipaDTO implements Serializable {
 
     public void setImagenesURI(List<URI> imagenesURI) {
         ImagenesURI = imagenesURI;
+    }
+
+    public String getFechaAplicacion() {
+        return FechaAplicacion;
+    }
+
+    public void setFechaAplicacion(String fechaAplicacion) {
+        FechaAplicacion = fechaAplicacion;
     }
 }

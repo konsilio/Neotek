@@ -43,6 +43,12 @@ public class AutoconsumoDTO implements Serializable{
     @SerializedName("PorcentajeMedidor")
     private double PorcentajeMedidor;
 
+    @SerializedName("IdTipoMedor")
+    private int IdTipoMedidor;
+
+    @SerializedName("FechaAplicacion")
+    private String FechaAplicacion;
+
     public AutoconsumoDTO (){
         this.ImagenesURI = new ArrayList<>();
         this.Imagenes = new ArrayList<>();
@@ -118,5 +124,21 @@ public class AutoconsumoDTO implements Serializable{
 
     public void setPorcentajeMedidor(double porcentajeMedidor) {
         PorcentajeMedidor = porcentajeMedidor;
+    }
+
+    public int getIdTipoMedidor() {
+        return IdTipoMedidor;
+    }
+
+    public void setIdTipoMedidor(int idTipoMedidor) {
+        IdTipoMedidor = idTipoMedidor;
+    }
+
+    public String getFechaAplicacion() {
+        return FechaAplicacion;
+    }
+
+    public void setFechaAplicacion(String fechaAplicacion) {
+        FechaAplicacion = fechaAplicacion;
     }
 }

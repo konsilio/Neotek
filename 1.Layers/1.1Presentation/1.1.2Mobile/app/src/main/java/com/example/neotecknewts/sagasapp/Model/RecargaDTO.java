@@ -1,3 +1,11 @@
+/*
+ * RecargaDTO
+ * Clase modelo DTO que permite almacenar los datos de la recarga
+ * @author Jorge Omar Tovar Martínez jorge.tovar@noeteck.com.mx
+ * @company Neoteck
+ * @date 06/12/2018
+ * @update 06/12/2018
+ */
 package com.example.neotecknewts.sagasapp.Model;
 
 import com.google.gson.annotations.SerializedName;
@@ -40,7 +48,7 @@ public class RecargaDTO implements Serializable {
     private List<URI> ImagenesUri;
 
     @SerializedName("Cilindros")
-    private List<int[]> Cilindros;
+    private List<CilindrosDTO> Cilindros;//Cambiar por List<CilindrosDTO>
 
     @SerializedName("NombreMedidorEntrada")
     private String NombreMedidorEntrada;
@@ -59,6 +67,9 @@ public class RecargaDTO implements Serializable {
 
     @SerializedName("CantidadFotosSalida")
     private int CantidadFotosSalida;
+
+    @SerializedName("FechaApliacacion")
+    private String FechaApliacacion;
 
     public RecargaDTO(){
         this.Imagenes = new ArrayList<>();
@@ -146,11 +157,11 @@ public class RecargaDTO implements Serializable {
         ImagenesUri = imagenesUri;
     }
 
-    public List<int[]> getCilindros() {
+    public List<CilindrosDTO> getCilindros() {
         return Cilindros;
     }
 
-    public void setCilindros(List<int[]> cilindros) {
+    public void setCilindros(List<CilindrosDTO> cilindros) {
         Cilindros = cilindros;
     }
 
@@ -200,5 +211,13 @@ public class RecargaDTO implements Serializable {
 
     public void setCantidadFotosSalida(int cantidadFotosSalida) {
         CantidadFotosSalida = cantidadFotosSalida;
+    }
+
+    public String getFechaApliacacion() {
+        return FechaApliacacion;
+    }
+
+    public void setFechaApliacacion(String fechaApliacacion) {
+        FechaApliacacion = fechaApliacacion;
     }
 }

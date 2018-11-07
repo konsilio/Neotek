@@ -36,6 +36,9 @@ public class LecturaCamionetaDTO implements Serializable {
     @SerializedName("ClaveOperacion")
     private String ClaveOperacion;
 
+    @SerializedName("FechaAplicacion")
+    private String FechaAplicacion;
+
     public LecturaCamionetaDTO(){
         this.Cilindro = new ArrayList<>();
         this.CilindroCantidad = new ArrayList<>();
@@ -104,5 +107,13 @@ public class LecturaCamionetaDTO implements Serializable {
 
     public void setClaveOperacion(String claveOperacion) {
         ClaveOperacion = claveOperacion;
+    }
+
+    public String getFechaAplicacion() {
+        return FechaAplicacion;
+    }
+
+    public void setFechaAplicacion(String fechaAplicacion) {
+        FechaAplicacion = fechaAplicacion;
     }
 }

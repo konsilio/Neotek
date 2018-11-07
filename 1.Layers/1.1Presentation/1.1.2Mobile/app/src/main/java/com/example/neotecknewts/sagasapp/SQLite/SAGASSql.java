@@ -289,7 +289,8 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "ClaveOperacion TEXT,"+
                 "IdCamioneta INTEGER," +
                 "NombreCamioneta TEXT," +
-                "Falta BOOLEAN DEFAULT 1"+
+                "Falta BOOLEAN DEFAULT 1,"+
+                "FechaAplicacion TEXT"+
                 ")");
         //endregion
         //region Tabla lectura_inicial_camioneta_cilindros
@@ -310,7 +311,8 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "IdCamioneta INTEGER," +
                 "NombreCamioneta TEXT," +
                 "EsEncargadoPuerta BOOLEAN DEFAULT 1,"+
-                "Falta BOOLEAN DEFAULT 1"+
+                "Falta BOOLEAN DEFAULT 1,"+
+                "FechaAplicacion TEXT"+
                 ")");
         //endregion
         //region Tabla lectura_final_camioneta_cilindros
@@ -336,7 +338,9 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "P5000Entrada DOUBLE," +
                 "ClaveOperacion TEXT," +
                 "Falta BOOLEAN DEFAULT 1," +
-                "EsTipo TEXT"+
+                "EsTipo TEXT,"+
+                "FechaAplicacion TEXT,"+
+                "EsInicial BOOLEAN DEFAULT 1"+
                 ")");
         //endregion
         //region Tabla de recargas_imagenes
@@ -354,6 +358,7 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "IdCilindro INTEGER," +
                 "Cantidad INTEGER," +
                 "ClaveOperacion TEXT," +
+                "CilindroKg TEXT,"+
                 "Falta BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
@@ -419,7 +424,9 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "PorcentajeMedidor DOUBLE," +
                 "Tipo TEXT,"+
                 "EsFinal BOOLEAN DEFAULT 1,"+
-                "Falta BOOLEAN DEFAULT 1" +
+                "Falta BOOLEAN DEFAULT 1," +
+                "FechaAplicacion TEXT,"+
+                "IdTipoMedidor integer"+
                 ")");
         //endregion
         //region Imagenes Autoconsumos
@@ -475,7 +482,8 @@ public class SAGASSql extends SQLiteOpenHelper {
                 "Tipo TEXT,"+
                 "Fecha TEXT,"+
                 "Falta BOOLEAN DEFAULT 1,"+
-                "EsFinal BOOLEAN"+
+                "EsFinal BOOLEAN,"+
+                "FechaAplicacion TEXT"+
                 ")");
         //endregion
         //region Tabla de Imagenes traspasos
@@ -928,7 +936,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarImagenesLecturaFinal(String ClaveOperacion){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_LECTURA_FINALIZAR_IAMGENES,
-                "ClaveOperacion = "+ClaveOperacion,null);
+                "ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
     //endregion
 
@@ -1052,7 +1060,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarImagenesLecturaInicialPipas(String ClaveOperacion){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_LECTURA_INICIAL_PIPA_IMAGENES,
-                " WHERE ClaveOperacion = '"+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
     //endregion
 
@@ -1428,7 +1436,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetLecturaFinalAlmacenByClaveOperacion(String ClaveOperacion){
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM "+TABLE_LECTURA_FINAL_ALMACEN+
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     /**
@@ -1519,6 +1527,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         contentValues.put("ClaveOperacion",lecturaCamionetaDTO.getClaveOperacion());
         contentValues.put("IdCamioneta",lecturaCamionetaDTO.getIdCamioneta());
         contentValues.put("NombreCamioneta",lecturaCamionetaDTO.getNombreCamioneta());
+        contentValues.put("FechaAplicacion",lecturaCamionetaDTO.getFechaAplicacion());
         return db.insert(TABLE_LECTURA_INICIAL_CAMIONETA,null,contentValues);
     }
 
@@ -1597,7 +1606,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarLecturaFinalCamioneta(String ClaveOperacion){
         return this.getWritableDatabase().delete(
                 TABLE_LECTURA_FINAL_CAMIONETA,
-                " ClaveOperacion = '"+ClaveOperacion,
+                " ClaveOperacion = '"+ClaveOperacion+"'",
                 null
         );
     }
@@ -1640,7 +1649,7 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Integer EliminarCilindrosLecturaFinalCamioneta(String ClaveOperacion){
         return this.getWritableDatabase().delete(TABLE_LECTURA_FINAL_CAMIONETA_CILINDROS,
-                " WHERE ClaveOperacion = "+ClaveOperacion,null);
+                " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
     //endregion
 
@@ -1657,9 +1666,12 @@ public class SAGASSql extends SQLiteOpenHelper {
      *     Long IdRecarga = SAGASsql.InsertRecarga(recargaDTO);
      * </pre>
      * @param recargaDTO Objeto de tipo {@link RecargaDTO} con los valores a registrar
+     * @param tipo String que reprecenta el tipo de recarga
+     * @param EsRecargaEstacionInicial De termina si es una recarga inicial
      * @return Valor de tipo {@link Long} que reprecenta el id en la base de datos
+     *
      */
-    public Long InsertRecarga(RecargaDTO recargaDTO,String tipo){
+    public Long InsertRecarga(RecargaDTO recargaDTO,String tipo, boolean EsRecargaEstacionInicial){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("IdCAlmacenGasSalida",recargaDTO.getIdCAlmacenGasSalida());
@@ -1671,6 +1683,8 @@ public class SAGASSql extends SQLiteOpenHelper {
         values.put("P5000Entrada",recargaDTO.getP5000Entrada());
         values.put("ClaveOperacion",recargaDTO.getClaveOperacion());
         values.put("Tipo",tipo);
+        values.put("FechaAplicacion",recargaDTO.getFechaApliacacion());
+        values.put("EsInicial",EsRecargaEstacionInicial);
         return db.insert(TABLE_RECARGAS,null,values);
     }
 
@@ -1778,8 +1792,9 @@ public class SAGASSql extends SQLiteOpenHelper {
         for (int x =0; x<recargaDTO.getCilindros().size();x++){
             ContentValues values = new ContentValues();
             values.put("ClaveOperacion",recargaDTO.getClaveOperacion());
-            values.put("IdCilindro",recargaDTO.getCilindros().get(x)[0]);
-            values.put("Cantidad",recargaDTO.getCilindros().get(x)[1]);
+            values.put("IdCilindro",recargaDTO.getCilindros().get(x).getIdCilindro());
+            values.put("Cantidad",recargaDTO.getCilindros().get(x).getCantidad());
+            values.put("CilindroKg",recargaDTO.getCilindros().get(x).getCilindroKg());
             _inserts[x] = db.insert(TABLE_RECARGAS_CILINDROS,null,values);
         }
         return _inserts;
@@ -1947,6 +1962,8 @@ public class SAGASSql extends SQLiteOpenHelper {
         values.put("PorcentajeMedidor",autoconsumoDTO.getPorcentajeMedidor());
         values.put("Tipo",tipo);
         values.put("EsFinal",esFinal);
+        values.put("IdTipoMedidor",autoconsumoDTO.getIdTipoMedidor());
+        values.put("FechaAplicacion",autoconsumoDTO.getFechaAplicacion());
         return this.getWritableDatabase().insert(TABLE_AUTOCONSUMO,null,values);
     }
 
@@ -1959,7 +1976,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Cursor GetImagenesAutoconsumo(String claveOperacion){
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+
-                TABLE_AUTOCONSUMO_IMAGENES+" WHERE ClaveOperacion ='"+claveOperacion+"'",
+                TABLE_AUTOCONSUMO_IMAGENES+" WHERE ClaveOperacion = '"+claveOperacion+"'",
                 null);
     }
 
@@ -1974,10 +1991,9 @@ public class SAGASSql extends SQLiteOpenHelper {
      * @author Jorge Omar Tovar Martínez (jorge.tovar@neoteck.com.mx)
      */
     public int EliminarImagenesAutoconsumo(String claveOperacion){
-        int total = this.getWritableDatabase().delete(TABLE_AUTOCONSUMO_IMAGENES,
-                " ClaveOperacion ='"+claveOperacion+"'",null);
-        this.getWritableDatabase().execSQL("VACUUM;");
-        return total;
+        //this.getWritableDatabase().execSQL("VACUUM;");
+        return this.getWritableDatabase().delete(TABLE_AUTOCONSUMO_IMAGENES,
+                " ClaveOperacion = '"+claveOperacion+"'",null);
     }
 
     /**
@@ -2090,6 +2106,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         values.put("Fecha",traspasoDTO.getFecha().toString());
         values.put("EsFinal",esFinal);
         values.put("Tipo",tipo);
+        values.put("FechaAplicacion",traspasoDTO.getFechaAplicacion());
         return this.getWritableDatabase().insert(
                 TABLE_TRASPASOS,
                 null,
