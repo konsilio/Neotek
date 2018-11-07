@@ -11483,7 +11483,7 @@
     <Content Include="Views\Shared\EditorTemplates\RolCompras.cshtml" />
     <Content Include="Views\Clientes\Index.cshtml" />
     <Content Include="Views\Clientes\Nuevo.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\RolCat.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Roles.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolRequsicion.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\RolMovilCompra.cshtml" />
     <Content Include="Views\Clientes\EditarLocaciones.cshtml" />

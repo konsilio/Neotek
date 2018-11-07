@@ -44,6 +44,7 @@
         $('#hide_divCat').css("display", "none");
         $('#catalogos_tabs').css("display", "none");
         $('#MovilCatalogo').css("display", "none");
+        $('#MovilVentas').css("display", "none");
         $('#gvwSistemaReq').css("display", "");
         $('#MovilRequsicion').css("display", "");
         $('#SistemaInventario').css("display", "none");
@@ -95,11 +96,12 @@
         $('#MovilInventario').css("display", "none");
         $('#btnCatalogo').css("display", "none");
         $('#btnCompra').css("display", "");
-        $('#gvwSistemaReq').css("display", "none");
+        $('#gvwSistemaReq').css("display", "none"); 
+        $('#divReq').css("display", "none");
         $('#MovilRequsicion').css("display", "none");
         $('#btnMovilCompra').css("display", "");
         $('#btnRrequisicion').css("display", "none");
-
+        $('#MovilVentas').css("display", "none");
     });
 
     $("#homeInventario").click(function () {

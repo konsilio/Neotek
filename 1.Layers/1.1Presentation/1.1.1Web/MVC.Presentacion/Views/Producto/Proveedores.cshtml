@@ -151,7 +151,7 @@
                                                         <td><b>Nombre</b></td>
                                                         <td><b>RFC</b></td>
                                                         <td><b>Contacto</b></td>
-                                                        <td><b>Telefono</b></td>
+                                                        <td><b>Teléfono</b></td>
                                                         <td><b>Email</b></td>
                                                         <td><b>Acciones</b></td>
                                                     </tr>
@@ -183,7 +183,7 @@
                                     </div>
                                     <div class="row clearfix">
                                         <div class="col-md-6">
-                                            Pagina @(ViewBag.Proveedores.PageCount < ViewBag.Proveedores.PageNumber ? 0 : ViewBag.Proveedores.PageNumber) de @ViewBag.Proveedores.PageCount
+                                            Página @(ViewBag.Proveedores.PageCount < ViewBag.Proveedores.PageNumber ? 0 : ViewBag.Proveedores.PageNumber) de @ViewBag.Proveedores.PageCount
                                         </div>
                                         <div class="col-md-6 text-right">
                                             @Html.PagedListPager((IPagedList)ViewBag.Proveedores, page => Url.Action("Producto", new { page, @class = "btn btn-primary btn-simple" }))

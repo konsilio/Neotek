@@ -88,7 +88,7 @@ namespace DS.MainModule.Controllers
 
         #region Roles
 
-        [Route("roles/listaAllRoles/")]
+        [Route("roles/listaAllRoles/{id}")]
         public HttpResponseMessage GetAllRoles(short id)
         {             
             return Request.CreateResponse(HttpStatusCode.OK, _seguridad.AllRoles(id));

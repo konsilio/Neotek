@@ -40,10 +40,10 @@
             <div class="block-header">
                 <div class="row">
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>Categoria</h2>
+                        <h2>Categoría</h2>
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item active">Producto / Categoria</li>
+                            <li class="breadcrumb-item active">Producto / Categoría</li>
                         </ul>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <b>Nombre:</b>
-                                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre de la categoria" })
+                                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre de la categoría" })
                                             @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -147,7 +147,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Numero" id="txtNumeroFiltro" class="form-control" />
+                                            <input type="text" placeholder="Número" id="txtNumeroFiltro" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                                                 <tr>
                                                     <td><b>Nombre</b></td>
                                                     <td><b>Descripción</b></td>
-                                                    <td><b>Accion</b></td>
+                                                    <td><b>Acción</b></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -186,7 +186,7 @@
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-md-6">
-                                        Pagina @(ViewBag.Categorias.PageCount < ViewBag.Categorias.PageNumber ? 0 : ViewBag.Categorias.PageNumber) de @ViewBag.Categorias.PageCount
+                                        Página @(ViewBag.Categorias.PageCount < ViewBag.Categorias.PageNumber ? 0 : ViewBag.Categorias.PageNumber) de @ViewBag.Categorias.PageCount
                                     </div>
                                     <div class="col-md-6 text-right">
                                         @Html.PagedListPager((IPagedList)ViewBag.Categorias, page => Url.Action("Categoria", new { page, @class = "btn btn-primary btn-simple" }))

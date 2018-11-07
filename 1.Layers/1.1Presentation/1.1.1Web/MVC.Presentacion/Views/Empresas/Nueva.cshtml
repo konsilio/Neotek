@@ -71,7 +71,7 @@
                                         <div class="form-group">
                                             <div>
                                                 <label for="txtRazonS">
-                                                    Razón social:*
+                                                    Razón Social:*
                                                 </label>
                                                 <input type="text" name="RazonSocial" id="txtRazonS" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].RazonSocial)" />
                                                 @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
@@ -81,7 +81,7 @@
                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label for="txtRfc">
-                                                Rfc:*
+                                                RFC:*
                                             </label>
                                             <input type="text" name="Rfc" id="txtRfc" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].Rfc)" />
                                             @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
@@ -232,7 +232,7 @@
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <div class="form-group">
                                             <label for="ddlPais">
-                                                Pais:*
+                                                País:*
                                             </label>
                                             <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
                                                 @foreach (var lst in ViewBag.ListaPaises)

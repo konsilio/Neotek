@@ -17,10 +17,15 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-            ViewBag.listaEmpresas = AutenticacionServicio.EmpresasLogin();
-            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;           
+           
             ViewBag.Usuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
-            UsuariosModel rolCat = new UsuariosModel()
+            UsuariosModel model = new UsuariosModel()
             {
                 Listausuarios = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn)
             };
@@ -37,7 +42,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.MessageError = TempData["RespuestaDTOError"];
 
 
-            return View(rolCat);
+            return View(model);
         }
 
         public ActionResult Nuevo()

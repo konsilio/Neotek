@@ -5,7 +5,7 @@
     string EnabledAdminCentral = ViewBag.EsAdmin == true ? string.Empty : "disabled";
 }
 <meta name="viewport" content="width=device-width" />
-<title>Categoria</title>
+<title>Categoría</title>
 <script language="JavaScript" type="text/javascript" src="~/assets/plugins/jquery/jquery-v3.2.1.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -40,10 +40,10 @@
             <div class="block-header">
                 <div class="row">
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>Linea de Producto</h2>
+                        <h2>Línea de Producto</h2>
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i></a></li>
-                            <li class="breadcrumb-item active">Producto / Linea de Porducto</li>
+                            <li class="breadcrumb-item active">Producto / Línea de Porducto</li>
                         </ul>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="header">
-                                <h2><strong>Crear</strong> nueva linea de producto</h2>
+                                <h2><strong>Crear</strong> nueva línea de producto</h2>
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
@@ -59,7 +59,7 @@
                                         <b>Gasera:</b>
                                         @if (ViewBag.EsAdmin)
                                         {
-                                            <select id="ddlEmpresas" name="IdEmpresa class="form-control selectpicker show-tick" data-live-search="true">
+                                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker show-tick" data-live-search="true">
                                                 @foreach (var lst in ViewBag.Empresas)
                                                 {
                                                     <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
@@ -74,8 +74,8 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <b>Nombre de la linea:</b>
-                                            @Html.TextBoxFor(m => m.Linea, new { @class = "form-control", placeholder = "Nombre de la linea de producto" })
+                                            <b>Nombre de la línea:</b>
+                                            @Html.TextBoxFor(m => m.Linea, new { @class = "form-control", placeholder = "Nombre de la línea de producto" })
                                             @Html.ValidationMessageFor(m => m.Linea, "", new { @class = "alert-danger" })
                                         </div>
                                     </div>
@@ -147,7 +147,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Numero" id="txtNumeroFiltro" class="form-control" />
+                                            <input type="text" placeholder="Número" id="txtNumeroFiltro" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                                                 <tr>
                                                     <td><b>Nombre</b></td>
                                                     <td><b>Descripción</b></td>
-                                                    <td><b>Accion</b></td>
+                                                    <td><b>Acción</b></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -186,7 +186,7 @@
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-md-6">
-                                        Pagina @(ViewBag.Lineas.PageCount < ViewBag.Lineas.PageNumber ? 0 : ViewBag.Lineas.PageNumber) de @ViewBag.Lineas.PageCount
+                                        Página @(ViewBag.Lineas.PageCount < ViewBag.Lineas.PageNumber ? 0 : ViewBag.Lineas.PageNumber) de @ViewBag.Lineas.PageCount
                                     </div>
                                     <div class="col-md-6 text-right">
                                         @Html.PagedListPager((IPagedList)ViewBag.Lineas, page => Url.Action("LineaProducto", new { page, @class = "btn btn-primary btn-simple" }))
