@@ -53,6 +53,9 @@ public class TraspasoDTO implements Serializable{
     @SerializedName("FechaRegistro")
     private Date Fecha;
 
+    @SerializedName("FechaAplicacion")
+    private String FechaAplicacion;
+
     public TraspasoDTO(){
         this.Imagenes = new ArrayList<>();
         this.ImagenesUri = new ArrayList<>();
@@ -152,5 +155,13 @@ public class TraspasoDTO implements Serializable{
 
     public void setFecha(Date fecha) {
         Fecha = fecha;
+    }
+
+    public String getFechaAplicacion() {
+        return FechaAplicacion;
+    }
+
+    public void setFechaAplicacion(String fechaAplicacion) {
+        FechaAplicacion = fechaAplicacion;
     }
 }

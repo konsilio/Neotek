@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Util;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.net.Uri;
 import android.util.Log;
 
@@ -77,6 +78,7 @@ public class Lisener{
     public static final String Traspaso = "Traspaso";
     public static final String Anticipo = "Anticipo";
     public static final String CorteDeCaja = "CorteDeCaja";
+    public static final String RecargaPipa = "RecargaPipa";
     //endregion
     //region Variables privadas
     private  String token;
@@ -148,6 +150,9 @@ public class Lisener{
                 case RecargaEstacion:
                     completo = RecargaEstacion();
                     break;
+                case RecargaPipa:
+                    completo = RecargaPipa();
+                    break;
                 case VENTA:
                     completo = PuntoVenta();
                     break;
@@ -175,6 +180,81 @@ public class Lisener{
             scheduledFuture.cancel(false);
         }
     }
+
+    //region Recarga pipa
+    private boolean RecargaPipa(){
+        if(ServicioDisponible()){
+            boolean registrado;
+            Log.w("Iniciando", "Revisando recarga estación: " + new Date());
+            Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION);
+            RecargaDTO recargaDTO = null;
+            if(cursor.moveToFirst()){
+                while (!cursor.isAfterLast()){
+                    /* Coloco los valores de la base de datos en el DTO */
+                    recargaDTO.setClaveOperacion(cursor.getString(
+                            cursor.getColumnIndex("ClaveOperacion")));
+                    recargaDTO.setIdCAlmacenGasSalida(cursor.getInt(
+                            cursor.getColumnIndex("IdCAlmacenGasSalida")));
+                    recargaDTO.setIdCAlmacenGasEntrada(cursor.getInt(
+                            cursor.getColumnIndex("IdCAlmacenGasEntrada")));
+                    recargaDTO.setIdTipoMedidorSalida(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedidorSalida")));
+                    recargaDTO.setIdTipoMedidorEntrada(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedidorEntrada")));
+                    recargaDTO.setIdTipoEvento(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoEvento")));
+                    recargaDTO.setP5000Salida(cursor.getInt(
+                            cursor.getColumnIndex("P5000Salida")));
+                    recargaDTO.setP5000Entrada(cursor.getInt(
+                            cursor.getColumnIndex("P5000Entrada")));
+                    recargaDTO.setFechaApliacacion(
+                            cursor.getString(
+                                    cursor.getColumnIndex("FechaAplicacion")
+                            )
+                    );
+                    boolean esInicial = cursor.getInt(
+                            cursor.getColumnIndex("EsInicial")
+                    )
+                            > 0;
+                    String tipo = cursor.getString(
+                            cursor.getColumnIndex("Tipo"));
+                    Cursor imagenes = sagasSql.GetImagenesRecarga(recargaDTO.getClaveOperacion());
+                    imagenes.moveToFirst();
+                    while (!imagenes.isAfterLast()){
+                        try {
+                            recargaDTO.getImagenes().add(
+                                    imagenes.getString(
+                                            imagenes.getColumnIndex("Imagen")
+                                    )
+                            );
+
+                            recargaDTO.getImagenesUri().add(
+                                    new URI(imagenes.getString(
+                                            imagenes.getColumnIndex("url")
+                                    ))
+                            );
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        imagenes.moveToNext();
+                    }
+
+                    Log.w("ClaveProceso", recargaDTO.getClaveOperacion());
+                    registrado = RegistrarRecarga(recargaDTO,tipo,esInicial);
+                    if (registrado){
+                        sagasSql.EliminarRecarga(recargaDTO.getClaveOperacion());
+                        sagasSql.EliminarImagenesRecarga(
+                                recargaDTO.getClaveOperacion());
+                    }
+
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_PIPA).getCount()==0);
+    }
+    //endregion
+
     //region Corte de caja
     private boolean Corte() {
         if(ServicioDisponible()){
@@ -258,6 +338,7 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Anticipos
     private boolean Anticipo() {
         if(ServicioDisponible()){
@@ -356,12 +437,14 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Traspasos
     private boolean Traspaso() {
         if(ServicioDisponible()){
             Log.w("Inciando",new Date()+" Revisando los traspasos");
             Cursor cursor = sagasSql.GetTraspasos();
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new
+                    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             if(cursor.moveToFirst()){
                 TraspasoDTO traspasoDTO;
                 while (!cursor.isAfterLast()){
@@ -417,6 +500,11 @@ public class Lisener{
                         traspasoDTO.setPorcentajeSalida(
                                 cursor.getDouble(
                                         cursor.getColumnIndex("PorcentajeSalida")
+                                )
+                        );
+                        traspasoDTO.setFechaAplicacion(
+                                cursor.getString(
+                                        cursor.getColumnIndex("FechaAplicacion")
                                 )
                         );
                         Cursor imagenes = sagasSql.GetImagenesTraspaso(traspasoDTO.getClaveOperacion());
@@ -499,6 +587,7 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Calibracion
     private boolean Calibracion() {
         if(ServicioDisponible()){
@@ -537,7 +626,15 @@ public class Lisener{
 
     }
     //endregion
+
     //region Autoconsumo
+
+    /**
+     * Autoconsumo
+     * Permite realizar el registro de los autoconsumos que estan en local al servicio api
+     * retornara un boolean con respecto al registro de estos
+     * @return boolean con el resultados de los registros
+     */
     private boolean Autoconsumo() {
         if(ServicioDisponible()){
             Log.w("Iniciando",new Date()+" Revisado de los autoconsumos");
@@ -580,6 +677,16 @@ public class Lisener{
                                     cursor.getColumnIndex("PorcentajeMedidor")
                             )
                     );
+                    dto.setFechaAplicacion(
+                            cursor.getString(
+                                    cursor.getColumnIndex("FechaAplicacion")
+                            )
+                    );
+                    dto.setIdTipoMedidor(
+                            cursor.getInt(
+                                    cursor.getColumnIndex("IdTipoMedidor")
+                            )
+                    );
                     /*Coloco las imagenes */
                     Cursor imagenes = sagasSql.GetImagenesAutoconsumo(dto.getClaveOperacion());
                     imagenes.moveToFirst();
@@ -614,6 +721,14 @@ public class Lisener{
         return (this.sagasSql.GetAutoconsumos().getCount()==0);
     }
 
+    /**
+     * Realiza el registro del objeto de {@link AutoconsumoDTO} al servicio api, retornar
+     * un valor boolean del resultado del registro
+     * @param dto Objeto {@link AutoconsumoDTO} con los datos del autoconsumo
+     * @param Tipo Epecifica el tipo de autoconsumo
+     * @param esFinal Especifica si es final
+     * @return boolean con el resultado del registro en la api
+     */
     private boolean Registrar(AutoconsumoDTO dto,String Tipo,boolean esFinal) {
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -657,6 +772,7 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Punto de venta
     private boolean PuntoVenta() {
         if(ServicioDisponible()){
@@ -776,14 +892,141 @@ public class Lisener{
         return _registrado;
     }
     //endregion
-    //Recarga Estacion
+
+    //region Recarga Estacion
+
+    /**
+     * Permite realizar el registro de la recarga de la estación,
+     * retornara un booleano que reprecenta si se completaron todos los registros
+     * @return boolean que reprecenta si se completaron todos los envios
+     */
     private boolean RecargaEstacion(){
-        return false;
+        if(ServicioDisponible()){
+            boolean registrado;
+            Log.w("Iniciando", "Revisando recarga estación: " + new Date());
+            Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION);
+            RecargaDTO recargaDTO = null;
+            if(cursor.moveToFirst()){
+                while (!cursor.isAfterLast()){
+                    /* Coloco los valores de la base de datos en el DTO */
+                    recargaDTO.setClaveOperacion(cursor.getString(
+                            cursor.getColumnIndex("ClaveOperacion")));
+                    recargaDTO.setIdCAlmacenGasSalida(cursor.getInt(
+                            cursor.getColumnIndex("IdCAlmacenGasSalida")));
+                    recargaDTO.setIdCAlmacenGasEntrada(cursor.getInt(
+                            cursor.getColumnIndex("IdCAlmacenGasEntrada")));
+                    recargaDTO.setIdTipoMedidorSalida(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedidorSalida")));
+                    recargaDTO.setIdTipoMedidorEntrada(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoMedidorEntrada")));
+                    recargaDTO.setIdTipoEvento(cursor.getInt(
+                            cursor.getColumnIndex("IdTipoEvento")));
+                    recargaDTO.setP5000Salida(cursor.getInt(
+                            cursor.getColumnIndex("P5000Salida")));
+                    recargaDTO.setP5000Entrada(cursor.getInt(
+                            cursor.getColumnIndex("P5000Entrada")));
+                    recargaDTO.setFechaApliacacion(
+                            cursor.getString(
+                                    cursor.getColumnIndex("FechaAplicacion")
+                            )
+                    );
+                    boolean esInicial = cursor.getInt(
+                            cursor.getColumnIndex("EsInicial")
+                    )
+                            > 0;
+                    String tipo = cursor.getString(
+                            cursor.getColumnIndex("Tipo"));
+                    Cursor imagenes = sagasSql.GetImagenesRecarga(recargaDTO.getClaveOperacion());
+                    imagenes.moveToFirst();
+                    while (!imagenes.isAfterLast()){
+                        try {
+                            recargaDTO.getImagenes().add(
+                                    imagenes.getString(
+                                      imagenes.getColumnIndex("Imagen")
+                                    )
+                            );
+
+                            recargaDTO.getImagenesUri().add(
+                                    new URI(imagenes.getString(
+                                            imagenes.getColumnIndex("url")
+                                    ))
+                            );
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        imagenes.moveToNext();
+                    }
+
+                    Log.w("ClaveProceso", recargaDTO.getClaveOperacion());
+                    registrado = RegistrarRecarga(recargaDTO,tipo,esInicial);
+                    if (registrado){
+                        sagasSql.EliminarRecarga(recargaDTO.getClaveOperacion());
+                        sagasSql.EliminarImagenesRecarga(
+                                recargaDTO.getClaveOperacion());
+                    }
+
+                    cursor.moveToNext();
+                }
+            }
+        }
+        return (sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_ESTACION_CARBURACION).getCount()==0);
     }
+
+    /**
+     * RegistrarRecarga
+     * Permite realizar el registro de la recarga
+     * @param recargaDTO Objeto de tipo {@link RecargaDTO} con los datos de la recarga
+     * @return boolean con la respuesta del registro
+     */
+    private boolean RegistrarRecarga(RecargaDTO recargaDTO,String tipo,boolean esInicial) {
+        Log.w("Registro","Registrando en servicio "+recargaDTO.getClaveOperacion());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaRecargaDTO> call = null;
+        if(esInicial) {
+            restClient.postRecargaInicial(
+                    recargaDTO, token, "application/json");
+        }else{
+            restClient.postRecargaFinal(
+                    recargaDTO,token,"application/json"
+            );
+        }
+        call.enqueue(new Callback<RespuestaRecargaDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaRecargaDTO> call,
+                                   Response<RespuestaRecargaDTO> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        Log.w("Registro","Registro en servicio "+recargaDTO.getClaveOperacion()+": "+
+                _registrado);
+        return _registrado;
+    }
+
     //endregion
+
     //region Recarga camioneta
+
+    /**
+     * RecargaCamioneta
+     * Permite realizart el registro de la recarga de la camioneta desde la base de datos
+     * local , convirtiendo a {@link RecargaDTO} los datos
+     * @return boolean Determina si la recarga fu enviada al api
+     */
     private boolean RecargaCamioneta(){
-        boolean registrado = false;
+        boolean registrado;
         if(ServicioDisponible()) {
             Log.w("Iniciando", "Revisando lectura iniciar camioneta: " + new Date());
             Cursor cursor = sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_CAMIONETA);
@@ -811,13 +1054,9 @@ public class Lisener{
 
                     String tipo = cursor.getString(
                             cursor.getColumnIndex("Tipo"));
-                    if(tipo.equals(SAGASSql.TIPO_RECARGA_CAMIONETA)){
-
-                    }else{
-
-                    }
                     Cursor cantidad = sagasSql.GetCilindrosRecarga(recargaDTO.getClaveOperacion());
-                    /*cantidad.moveToFirst();
+                    cantidad.moveToFirst();
+
                     while (!cantidad.isAfterLast()) {
                         CilindrosDTO row = new CilindrosDTO();
                         row.setCantidad(cursor.getInt(cursor.getColumnIndex(
@@ -826,28 +1065,62 @@ public class Lisener{
                                 "CilindroKg")));
                         row.setIdCilindro(cursor.getInt(cursor.getColumnIndex(
                                 "IdCilindro")));
-                        lecturaDTO.getCilindros().add(row);
-                        lecturaDTO.getIdCilindro().add(cursor.getInt(cursor.getColumnIndex(
-                                "IdCilindro")));
-                        lecturaDTO.getCilindroCantidad().add(cursor.getInt(cursor.getColumnIndex(
-                                "Cantidad")));
+                        recargaDTO.getCilindros().add(row);
                         cantidad.moveToNext();
                     }
 
-                    Log.w("ClaveProceso", lecturaDTO.getClaveOperacion());
-                    registrado = RegistrarLecturaInicialCamioneta(lecturaDTO);
+                    Log.w("ClaveProceso", recargaDTO.getClaveOperacion());
+                    registrado = RegistrarRecargaCamioneta(recargaDTO);
                     if (registrado){
-                        sagasSql.EliminarLecturaInicialCamioneta(lecturaDTO.getClaveOperacion());
+                        sagasSql.EliminarLecturaInicialCamioneta(recargaDTO.getClaveOperacion());
                         sagasSql.EliminarCilindrosLecturaInicialCamioneta(
-                                lecturaDTO.getClaveOperacion());
-                    }*/
+                                recargaDTO.getClaveOperacion());
+                    }
                     cursor.moveToNext();
                 }
             }
         }
         return (sagasSql.GetRecargas(SAGASSql.TIPO_RECARGA_CAMIONETA).getCount()==0);
     }
+
+    /**
+     * RegistrarRecargaCamioneta
+     * permite realizar el registro de la recarga al api , toma como parametro
+     * el objeto de tipo {@link RecargaDTO}
+     * @param recargaDTO Objeto de tipo {@link RecargaDTO} con los datos de la recarga
+     * @return boolean Con la respuesta del registro en la api
+     */
+    private boolean RegistrarRecargaCamioneta(RecargaDTO recargaDTO){
+        Log.w("Registro","Registrando en servicio "+recargaDTO.getClaveOperacion());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaRecargaDTO> call = restClient.postRecarga(
+                recargaDTO,token,"application/json");
+        call.enqueue(new Callback<RespuestaRecargaDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaRecargaDTO> call,
+                                   Response<RespuestaRecargaDTO> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaRecargaDTO> call, Throwable t) {
+                _registrado = false;
+            }
+        });
+        Log.w("Registro","Registro en servicio "+recargaDTO.getClaveOperacion()+": "+
+                _registrado);
+        return _registrado;
+    }
     //endregion
+
     //region Lectura inicial camioneta
     private boolean LecturaInicialCamioneta(){
         boolean registrado = false;
@@ -864,30 +1137,12 @@ public class Lisener{
                     boolean ban = cursor.getInt(
                             cursor.getColumnIndex("EsEncargadoPuerta")) == 1;
                     lecturaDTO.setEsEncargadoPuerta(ban);
-                    /*lecturaDTO.setIdTipoMedior(cursor.getInt(
-                            cursor.getColumnIndex("IdTipoMedior")));*/
-                    /*lecturaDTO.setCantidadFotografias(cursor.getInt(cursor.getColumnIndex(
-                            "CantidadFotografiasMedidor")));*/
-                    /*lecturaDTO.setNombreEstacionCarburacion(cursor.getString(cursor.getColumnIndex(
-                            "NombreEstacionCarburacion")));*/
                     lecturaDTO.setIdCamioneta(cursor.getInt(cursor.getColumnIndex(
                             "IdCamioneta")));
-                    /*lecturaDTO.setPorcentajeMedidor(cursor.getDouble(cursor.getColumnIndex(
-                            "PorcentajeMedidor")));*/
-                    /*Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
-                            lecturaDTO.getClaveOperacion());
-                    Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
-                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
-                            lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
-                            );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        }
-                    }*/
+                    lecturaDTO.setFechaAplicacion(cursor.getString(
+                            cursor.getColumnIndex("FechaAplicacion")
+                    ));
+
                     Cursor cantidad = sagasSql.GetCilindrosLecturaInicialCamioneta(
                             lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
@@ -951,6 +1206,7 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Lectura final camioneta
     private boolean LecturaFinalCamioneta(){
         boolean registrado = false;
@@ -967,30 +1223,11 @@ public class Lisener{
                     boolean ban = cursor.getInt(
                             cursor.getColumnIndex("EsEncargadoPuerta")) == 1;
                     lecturaDTO.setEsEncargadoPuerta(ban);
-                    /*lecturaDTO.setIdTipoMedior(cursor.getInt(
-                            cursor.getColumnIndex("IdTipoMedior")));*/
-                    /*lecturaDTO.setCantidadFotografias(cursor.getInt(cursor.getColumnIndex(
-                            "CantidadFotografiasMedidor")));*/
-                    /*lecturaDTO.setNombreEstacionCarburacion(cursor.getString(cursor.getColumnIndex(
-                            "NombreEstacionCarburacion")));*/
                     lecturaDTO.setIdCamioneta(cursor.getInt(cursor.getColumnIndex(
                             "IdCamioneta")));
-                    /*lecturaDTO.setPorcentajeMedidor(cursor.getDouble(cursor.getColumnIndex(
-                            "PorcentajeMedidor")));*/
-                    /*Cursor Imagen = sagasSql.GetImagenesLecturaFinalPipaByClaveOperacion(
-                            lecturaDTO.getClaveOperacion());
-                    Imagen.moveToFirst();
-                    while (Imagen.isAfterLast()){
-                        String iuri = Imagen.getString(cursor.getColumnIndex("Url"));
-                        try {
-                            lecturaDTO.getImagenesURI().add(new URI(iuri));
-                            lecturaDTO.getImagenes().add(
-                                    cursor.getString(cursor.getColumnIndex("Imagen"))
-                            );
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        }
-                    }*/
+                    lecturaDTO.setFechaAplicacion(cursor.getString(
+                            cursor.getColumnIndex("FechaAplicacion")
+                    ));
                     Cursor cantidad = sagasSql.GetCilindrosLecturaFinalCamioneta(
                             lecturaDTO.getClaveOperacion());
                     cantidad.moveToFirst();
@@ -1054,7 +1291,15 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Lectura final almacen
+
+    /**
+     * LecturaFinalAlmacen
+     * Permite hacer el envio de los datos de la lectura final del almacen en local
+     * al api
+     * @return boolean con la respuesta del registro
+     */
     private boolean LecturaFinalAlmacen(){
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1105,6 +1350,11 @@ public class Lisener{
         return (sagasSql.GetLecturasFinalesAlmacen().getCount()==0);
     }
 
+    /**
+     * Realiza el envio y registro de los datos del dto al api
+     * @param lecturaDTO Objeto Objeto {@link LecturaAlmacenDTO} con los datos de la lectura de almacen
+     * @return boolean con la respuesta del registro
+     */
     private boolean RegistrarLecturaFinalAlmacen(LecturaAlmacenDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
         Gson gson = new GsonBuilder()
@@ -1135,7 +1385,14 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Lectura inicial almacen
+
+    /**
+     * Premite realizar el registro de las lecturas iniciales de almacen en el telefono
+     * al api, retornara un boleano con el resultado del registro
+     * @return boolean con el resultado del registro
+     */
     private boolean LecturaInicialAlmacen(){
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1186,6 +1443,12 @@ public class Lisener{
         return (sagasSql.GetLecturasIncialesAlmacen().getCount()==0);
     }
 
+    /**
+     * RegistrarLecturaInicialAlmacen
+     * Realiza el envio y registro en el api del dto de la lectura del almacen
+     * @param lecturaDTO Objeto {@link LecturaAlmacenDTO} con los datos de la lectura de almacen
+     * @return boolean con la respuesta del registro
+     */
     private boolean RegistrarLecturaInicialAlmacen(LecturaAlmacenDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveOperacion());
         Gson gson = new GsonBuilder()
@@ -1216,9 +1479,17 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Lectura inicial pipa
+
+    /**
+     * LecturaInicialPipa
+     * Registra le lecturas iniciales de la pipa en el api rest, retorna un boolean con la
+     * respuesta del registro
+     * @return boolean con la respuesta del registro de la lectura
+     */
     private boolean LecturaInicialPipa() {
-        boolean registrado = false;
+        boolean registrado;
         if(ServicioDisponible()) {
             Log.w("Iniciando", "Revisando lectura iniciar pipa: " + new Date());
             Cursor cursor = sagasSql.GetLecturasIncialesPipas();
@@ -1284,6 +1555,14 @@ public class Lisener{
         return (sagasSql.GetLecturasIncialesPipas().getCount()==0);
     }
 
+    /**
+     * RegistrarLecturaInicialPipa
+     * Permite realizer el registro en el api de la lectura incial de la pipa
+     * retornara un boolean con los datos del dto
+     * @param lecturaDTO Objeto de tipo {@link LecturaPipaDTO} con los datos de la
+     *                   lectura incial de la pipa
+     * @return boolean con la respuesta del servidor
+     */
     private boolean RegistrarLecturaInicialPipa(LecturaPipaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
         Gson gson = new GsonBuilder()
@@ -1314,6 +1593,7 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Lectura final pipa
     private boolean LecturaFinalPipa() {
         boolean registrado = false;
@@ -1383,6 +1663,14 @@ public class Lisener{
         return sagasSql.GetLecturasFinaesPipas().getCount() == 0;
     }
 
+    /**
+     * RegistrarLecturaFinalPipa
+     * Realiza el envio y registro en el api de la lectura final de la pipa
+     * retornara un boolean con la respuesta del servicio
+     * @param lecturaDTO Objeto de tipo {@link LecturaPipaDTO} con los datos de la
+     *                   lectura final de la pipa
+     * @return boolean Respuesta del registro en la api
+     */
     private boolean RegistrarLecturaFinalPipa(LecturaPipaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
         Gson gson = new GsonBuilder()
@@ -1413,7 +1701,16 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Lectura final estación
+
+    /**
+     * LecturaFinalizarEstacion
+     * Permirte el registro de la lectura final de la estación, convierte los datos
+     * almacenados en la base de datos a un Dto de tipo {@link LecturaDTO} , retornara un
+     * boleano si los datos ha sido registrados en la api
+     * @return boolean con la respuesta del servicio
+     */
     private boolean LecturaFinalizarEstacion() {
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1481,6 +1778,13 @@ public class Lisener{
         return (sagasSql.GetLecturasFinales().getCount()==0);
     }
 
+    /**
+     * Permite realizar el registro de la lectura final de la
+     * estación en el servicio, retornara como parametro un boolean
+     * que indica si fue registrado en el api
+     * @param lecturaDTO Modelo con los datos de la lectura final
+     * @return boolean con la respuesta del registro
+     */
     private boolean RegistrarLecturaFinal(LecturaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
         Gson gson = new GsonBuilder()
@@ -1511,7 +1815,16 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Lectura inicial estación
+
+    /**
+     * LecturaIniciarEstacion
+     * Permite ejecutar el envio de los datos de las lecturas iniciales de estación en
+     * el telefono al servicio , consulta los datos y los pasa de {@link Cursor} a
+     * {@link LecturaDTO} para su envio al api
+     * @return boolean Si todos los datos fueron enviados correctamente
+     */
     private boolean LecturaIniciarEstacion() {
         boolean registrado = false;
         if(ServicioDisponible()) {
@@ -1579,6 +1892,14 @@ public class Lisener{
         return (sagasSql.GetLecturasIniciales().getCount()==0);
     }
 
+    /**
+     * RegistrarLecturaInicial
+     *
+     * Realiza el envio de los datos del Dto de lectura inicial estación  al servicio nuevamente,
+     * retornara un valor boleano en caso de que se guardaron correctamente
+     * @param lecturaDTO Objeto {@link LecturaDTO} con los datos a enviar
+     * @return boolean Con la respuesta del envio
+     */
     private boolean RegistrarLecturaInicial(LecturaDTO lecturaDTO) {
         Log.w("Registro","Registrando en servicio "+lecturaDTO.getClaveProceso());
         Gson gson = new GsonBuilder()
@@ -1609,6 +1930,7 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Finalizar descarga
     private boolean FinalizarDescarga() {
         boolean registrado = false;
@@ -1708,6 +2030,7 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Iniciar descarga
     private boolean IniciarDescargas() {
         boolean registrado = false;
@@ -1807,6 +2130,7 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Papeleta
     private boolean Papeletas(){
         boolean registrado = false;
@@ -1923,6 +2247,7 @@ public class Lisener{
         return _registrado;
     }
     //endregion
+
     //region Estatus servicio
     private boolean ServicioDisponible(){
         Log.v("Servicio","Verifica el estatus del servicio");

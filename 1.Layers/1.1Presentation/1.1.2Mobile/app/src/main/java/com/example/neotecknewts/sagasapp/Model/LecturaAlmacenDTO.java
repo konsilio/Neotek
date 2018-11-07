@@ -44,6 +44,9 @@ public class LecturaAlmacenDTO implements Serializable {
     @SerializedName("ClaveProceso")
     private String ClaveOperacion;
 
+    @SerializedName("FechaAplicacion")
+    private String FechaAplicacion;
+
     public LecturaAlmacenDTO(){
         Imagenes = new ArrayList<>();
         ImagenesURI = new ArrayList<>();
@@ -119,5 +122,13 @@ public class LecturaAlmacenDTO implements Serializable {
 
     public void setImagenes(List<String> imagenes) {
         Imagenes = imagenes;
+    }
+
+    public String getFechaAplicacion() {
+        return FechaAplicacion;
+    }
+
+    public void setFechaAplicacion(String fechaAplicacion) {
+        FechaAplicacion = fechaAplicacion;
     }
 }
