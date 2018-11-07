@@ -37,7 +37,7 @@ namespace Application.MainModule.Servicios.Compras
         {
             return prods.ToList().Where(x => !x.CantidadAComprar.Equals(0) || x.EsTransporteGas).ToList();
         }
-        public static OrdenCompraRespuestaDTO GuardarOrdenCompra(OrdenCompra oc)
+        public static RespuestaDto GuardarOrdenCompra(OrdenCompra oc)
         {
             return new OrdenCompraDataAccess().InsertarNuevo(oc);
         }
@@ -61,6 +61,7 @@ namespace Application.MainModule.Servicios.Compras
                     nOC.EsGas = p.EsGas;
                     nOC.EsTransporteGas = p.EsTransporteGas;
                     nOC.EsActivoVenta = p.EsActivoVenta;
+                    nOC.Activo = true;
                     nlist.Add(nOC);
                 }
             }

@@ -79,8 +79,8 @@ namespace MVC.Presentacion.Controllers
             var model = OrdenCompraServicio.InitOrdenesCompra(tkn);
             if (pageO == null) pageO = 1;
             if (pageR == null) pageR = 1;
-            ViewBag.Ordenes = model.OrdenesCompra.OrderByDescending(x => x.IdRequisicion).ToPagedList(pageO.Value, 20);
-            ViewBag.Requisiciones = model.Requisiciones.ToPagedList(pageR.Value, 20);
+            ViewBag.Ordenes = model.OrdenesCompra.OrderByDescending(x => x.IdRequisicion).ToPagedList(pageO.Value, 10);
+            ViewBag.Requisiciones = model.Requisiciones.ToPagedList(pageR.Value, 10);
             return View();
         }
         public ActionResult Autorizar(int? id, OrdenCompraDTO model)
