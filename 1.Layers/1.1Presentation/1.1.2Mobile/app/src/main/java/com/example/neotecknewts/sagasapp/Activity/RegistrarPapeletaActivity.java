@@ -292,6 +292,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         switch (id) {
             case DATE_DIALOG_ID:
                 return new DatePickerDialog(this,
+                        R.style.datepicker,
                         mDateSetListener,
                         mYear, mMonth, mDay);
         }
@@ -449,6 +450,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public void showProgress(int mensaje) {
         progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
                 getResources().getString(mensaje), true);
+        progressDialog.setProgressStyle(R.style.AlertDialog);
     }
 
     //metodo que oculta el progresso

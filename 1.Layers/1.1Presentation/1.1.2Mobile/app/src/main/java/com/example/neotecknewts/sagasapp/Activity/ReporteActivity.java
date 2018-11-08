@@ -161,7 +161,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
 
     @Override
     public void onErrorMessage(String mensaje) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ReporteActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ReporteActivity.this,R.style.AlertDialog);
         builder.setTitle(R.string.error_titulo);
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept, (dialog, which) -> dialog.dismiss());
@@ -170,7 +170,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
 
     @Override
     public void onShowProgress(int mensaje) {
-        progressDialog = new ProgressDialog(ReporteActivity.this);
+        progressDialog = new ProgressDialog(ReporteActivity.this,R.style.AlertDialog);
         progressDialog.setMessage(getString(mensaje));
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -203,6 +203,7 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
         switch (id) {
             case 0:
                 return new DatePickerDialog(this,
+                        R.style.datepicker,
                         onDateSetListener,
                         mYear, mMonth, mDay);
         }
