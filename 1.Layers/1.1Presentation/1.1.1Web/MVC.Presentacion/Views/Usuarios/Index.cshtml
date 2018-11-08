@@ -50,6 +50,8 @@
                     </div>
                 </div>
                 <div class="card">
+                    <div class="header">
+                    </div>
                     <div class="body">
                         <div class="row clearfix">
                             <div class="col-sm-3">
@@ -94,8 +96,9 @@
                                     </div>
 
                                     <div class="col-sm-3">
-                                        <strong>Correo Elect. (Acceso)</strong>
+                                        <strong>E-mail (Acceso)</strong>
                                         <select id="ddlUser" name="Email1" class="form-control show-tick" data-live-search="true">
+                                            <option value="0">Seleccione..</option>
                                             @foreach (var lst in ViewBag.Usuarios)
                                             {
                                                 <option value="@lst.Email1">@lst.Email1</option>
@@ -118,7 +121,7 @@
                                             <tr>
                                                 <th>Gasera</th>
                                                 <th>Nombre</th>
-                                                <th>Correo Elect. (Acceso)</th>
+                                                <th>E-mail (Acceso)</th>
                                                 <th>Celular</th>
                                                 <th>Teléfono</th>
                                                 <th>Acciones</th>
