@@ -264,6 +264,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                    && x.Linea.Equals(nombre)
                                                                    && x.Activo);
         }
+        public LineaProducto BuscarLineaProducto(short idEmpresa, string nombre, short id)
+        {
+            return uow.Repository<LineaProducto>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                   && x.Linea.Equals(nombre)
+                                                                   && x.IdProductoLinea != id
+                                                                   && x.Activo);
+        }
         public UnidadMedida BuscarUnidadMedida(short idUnidadMedida)
         {
             return uow.Repository<UnidadMedida>().GetSingle(x => x.IdUnidadMedida.Equals(idUnidadMedida)
@@ -274,6 +281,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<UnidadMedida>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)                                                                   
                                                                 && x.Activo
                                                                 && (x.Nombre.Equals(nombre)
+                                                                || x.Acronimo.Equals(acronimo)));
+        }
+        public UnidadMedida BuscarUnidadMedida(short idEmpresa, string nombre, string acronimo, short id)
+        {
+            return uow.Repository<UnidadMedida>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
+                                                                && x.Activo
+                                                                && (x.Nombre.Equals(nombre)
+                                                                && x.IdUnidadMedida != id
                                                                 || x.Acronimo.Equals(acronimo)));
         }
         public List<CategoriaProducto> ListaCategorias()
