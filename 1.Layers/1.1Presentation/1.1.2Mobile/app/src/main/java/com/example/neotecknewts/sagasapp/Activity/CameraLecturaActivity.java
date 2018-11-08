@@ -137,13 +137,17 @@ public class CameraLecturaActivity extends AppCompatActivity {
             NombreImagen = String.valueOf(lecturaDTO.getIdEstacionCarburacion())+"|"+
                     String.valueOf(lecturaDTO.getNombreTipoMedidor())+"|"+"Final";
         }else if (EsLecturaInicialPipa){
+            String pipa_nombre = lecturaPipaDTO.getNombrePipa().isEmpty()?
+                    " ":" - "+lecturaPipaDTO.getNombrePipa();
             TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
-                    " - "+lecturaPipaDTO.getNombrePipa());
+                    pipa_nombre);
             NombreImagen = String.valueOf(lecturaPipaDTO.getIdPipa())+"|"+
                     String.valueOf(lecturaPipaDTO.getTipoMedidor())+"|"+"Inicial";
         }else if (EsLecturaFinalPipa){
+            String pipa_nombre = lecturaPipaDTO.getNombrePipa().isEmpty()?
+                    " ":" - "+lecturaPipaDTO.getNombrePipa();
             TVCameraLecturaActivityFotoEstacion.setText(getString(R.string.tomar_foto_estacion)+
-                    " - "+lecturaPipaDTO.getNombrePipa());
+                    pipa_nombre);
             NombreImagen = String.valueOf(lecturaPipaDTO.getIdPipa())+"|"+
                     String.valueOf(lecturaPipaDTO.getTipoMedidor())+"|"+"Final";
         }
@@ -268,7 +272,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
             try {
                 //lecturaPipaDTO.getImagenes().add(imageurl);
                 lecturaPipaDTO.getImagenesURI().add(new URI(imageUri.toString()));
-                lecturaDTO.setCantidadFotografias(lecturaDTO.getCantidadFotografias()+1);
+                //lecturaDTO.setCantidadFotografias(lecturaDTO.getCantidadFotografias());
                 //lecturaPipaDTO.setImagenP5000(imageurl);
                 //lecturaPipaDTO.setImagenP5000URI(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
