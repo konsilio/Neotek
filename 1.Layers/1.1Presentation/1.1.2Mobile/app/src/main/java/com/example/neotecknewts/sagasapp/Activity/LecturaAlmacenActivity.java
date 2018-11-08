@@ -86,8 +86,6 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
                             lecturaAlmacenDTO.setIdTipoMedior(medidor.getIdTipoMedidor());
                             lecturaAlmacenDTO.setCantidadFotografias(medidor.getCantidadFotografias());
                             lecturaAlmacenDTO.setNombreTipoMedidor(medidor.getNombreTipoMedidor());
-                            lecturaAlmacenDTO.setCantidadFotografias(medidor.getCantidadFotografias());
-
                         }
                     }
                 }
@@ -98,6 +96,7 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
                 lecturaAlmacenDTO.setIdTipoMedior(0);
                 lecturaAlmacenDTO.setNombreTipoMedidor("");
                 lecturaAlmacenDTO.setCantidadFotografias(0);
+
             }
         });
         SLecturaAlmacenActivityListaAlmacen.setOnItemSelectedListener(

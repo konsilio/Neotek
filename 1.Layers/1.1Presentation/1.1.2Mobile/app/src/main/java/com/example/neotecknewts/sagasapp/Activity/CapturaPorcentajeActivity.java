@@ -179,9 +179,11 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 porcentaje_inicial = lecturaPipaDTO.getPorcentajeMedidor();
                 porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
                 if(porcentaje_inicial>0) {
-                    String val_per = porcentaje_inicial.toString();
-                    numberPickerProcentaje.setValue(Integer.parseInt(val_per.split(".")[0]));
-                    numberPickerDecimal.setValue(Integer.parseInt(val_per.split(".")[1]));
+                    int parte_entera = porcentaje_inicial.intValue();
+                    int parte_decimal = (int) (porcentaje_inicial - parte_entera);
+
+                    numberPickerProcentaje.setValue(parte_entera);
+                    numberPickerDecimal.setValue(parte_decimal);
                 }
                 papeleta=false;
                 iniciar=false;
@@ -196,9 +198,11 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 porcentaje_inicial = lecturaAlmacenDTO.getPorcentajeMedidor();
                 //porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
                 if(porcentaje_inicial>0) {
-                    String val_per = porcentaje_inicial.toString();
-                    numberPickerProcentaje.setValue(Integer.parseInt(val_per.split(".")[0]));
-                    numberPickerDecimal.setValue(Integer.parseInt(val_per.split(".")[1]));
+                    int parte_entera = porcentaje_inicial.intValue();
+                    int parte_decimal = (int) (porcentaje_inicial - parte_entera);
+
+                    numberPickerProcentaje.setValue(parte_entera);
+                    numberPickerDecimal.setValue(parte_decimal);
                 }
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
