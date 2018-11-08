@@ -23,6 +23,17 @@ namespace Application.MainModule.Flujos
            return MobileOrdenesCompraServicio.Consultar(IdEmpresa,EsGas,EsActivoVenta,EsTransporteGas);
         }
 
+        public RespuestaDto  ConsultarOCAlternativa(int IdOrdenCompra)
+        {
+            return new RespuestaDto()
+            {
+                Id = MobileOrdenesCompraServicio.Consultar(IdOrdenCompra),
+                Exito = true,
+                Mensaje = "OK"
+            };
+  
+        }
+
         public List<MenuDto> ObtenerMenu()
         {
             int idUsuario = TokenServicio.ObtenerIdUsuario();
