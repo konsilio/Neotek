@@ -47,6 +47,12 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.ConsultarOrdenesCompra(IdEmpresa,EsGas,EsActivoVenta,EsTransporteGas), Request);
         }
 
+        [Route("lista/ordenes/compra/{IdOrdenCompra}")]
+        public HttpResponseMessage GetListaPorteadoresxOrdenCompra(int IdOrdenCompra)
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.ConsultarOCAlternativa(IdOrdenCompra), Request);
+        }
+
         [Route("obtener/menu")]
         public HttpResponseMessage GetObtenerMenu()
         {

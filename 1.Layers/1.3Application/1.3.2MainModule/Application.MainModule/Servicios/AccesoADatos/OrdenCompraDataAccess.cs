@@ -36,6 +36,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                                   && x.IdOrdenCompraEstatus.Equals(idOrdenComprEstatus)).ToList();
             //return uow.Repository<OrdenCompra>().GetAll().ToList();
         }
+
+ 
         public OrdenCompra Buscar(int idOrdenCompr)
         {
             return uow.Repository<OrdenCompra>().GetSingle(x => x.IdOrdenCompra.Equals(idOrdenCompr));
