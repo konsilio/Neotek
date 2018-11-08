@@ -17,6 +17,7 @@
         <item name="android:colorForeground">@color/colorBackgroundSistemaLogin</item>
         <item name="colorAccent">@color/primaryTextColor</item>
         <item name="colorPrimary">@color/colorBackgroundNavigationBar</item>
+        <item name="colorControlHighlight">@color/colorBackgroundSistemaLogin</item>
     </style>
     <style name="AppEnter" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:navigationBarColor">@color/colorBackgroundNavigationBar</item>
@@ -24,6 +25,7 @@
         <item name="android:colorForeground">@color/textColorSistemaLogin</item>
         <item name="colorAccent">@color/primaryTextColor</item>
         <item name="actionBarStyle">@style/ActionBarStyle</item>
+        <item name="colorControlHighlight">@color/colorBackgroundSistemaLogin</item>
     </style>
     <style name="SagasTheme.Button" parent="Widget.AppCompat.Button.Colored">
         <item name="android:colorButtonNormal" >@color/colorBackgroundSistemaLogin</item>
@@ -72,5 +74,11 @@
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="android:colorAccent">@color/primaryTextColor</item>
+    </style>
+    <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primaryTextColor</item>
+        <item name="colorPrimaryDark">@color/buttonBackgroundColor</item>
+        <item name="colorAccent">@color/primaryTextColor</item>
+        <item name="colorControlHighlight">@color/colorBackgroundSistemaLogin</item>
     </style>
 </resources>
