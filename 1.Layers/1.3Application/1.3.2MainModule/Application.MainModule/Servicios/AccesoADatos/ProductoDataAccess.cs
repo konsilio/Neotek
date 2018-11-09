@@ -287,9 +287,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<UnidadMedida>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
                                                                 && x.Activo
-                                                                && (x.Nombre.Equals(nombre)
+                                                                && x.Nombre.Equals(nombre) 
                                                                 && x.IdUnidadMedida != id
-                                                                || x.Acronimo.Equals(acronimo)));
+                                                                && x.Acronimo.Equals(acronimo));
         }
         public List<CategoriaProducto> ListaCategorias()
         {

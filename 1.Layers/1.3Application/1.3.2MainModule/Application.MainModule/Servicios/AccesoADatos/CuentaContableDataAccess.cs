@@ -84,8 +84,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public CuentaContable Buscar(int idCuentaContable)
         {
-            return uow.Repository<CuentaContable>().GetSingle(x => x.IdCuentaContable.Equals(idCuentaContable)
-                                                         && x.Activo);
+            return uow.Repository<CuentaContable>().GetSingle(x => x.IdCuentaContable.Equals(idCuentaContable));
+                                                         //&& x.Activo.Equals(activo));
         }
         public List<CuentaContable> BuscarCuentasContables(int idEmpresa)
         {
