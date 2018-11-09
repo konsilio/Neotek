@@ -34,6 +34,7 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenReferenciaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
@@ -367,4 +368,23 @@ public interface RestClient {
     Call<RespuestaCorteDto> postCorte(@Body CorteDTO corteDTO,
                                       @Header("Authorization") String token,
                                       @Header("Content-type") String contenType);
+
+    /**
+     * getReferenciaOrden
+     * Permite retornar el id de la orden de compra de referencia ya sea de expedidor o de porteador
+     * se envia como parametros el id de la orden que se reuiqere obtener su referencia y el token
+     * del usuario , retornara un objeto de tipo {@link RespuestaOrdenReferenciaDTO} con el id
+     * de la referencia , en caso de que no tenga retornara un cero
+     * @param idOrdenCompra int que reprecenta el id de la orden de compra
+     * @param token {@link String} que contiene el token de seguridad
+     * @param contenType Reprecenta el tipo de contenido que retornara la respuesta
+     * @return Retorna un objeto {@link RespuestaOrdenReferenciaDTO} con el resultado de la solicitud
+     * al api
+     */
+    @POST(Constantes.GET_ORDEN_REFERENCIA)
+    Call<RespuestaOrdenReferenciaDTO> getReferenciaOrden(
+            @Path(value = "IdOrdenCompra") int idOrdenCompra,
+            @Header("Authorization") String token,
+            @Header("Content-type") String contenType
+    );
 }

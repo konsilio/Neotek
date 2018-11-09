@@ -75,7 +75,9 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         }else if (EsLecturaFinalCamioneta){
             TVCamposCamionetasHeaderTitulo.setText(getString(R.string.toma_de_lectura)+" final");
         }else if(EsRecargaCamioneta){
-            TVCamposCamionetasHeaderTitulo.setText(R.string.recarga+" - Camioneta");
+            String estacion = (lecturaCamionetaDTO.getNombreCamioneta().isEmpty())? "":": "+
+                    lecturaCamionetaDTO.getNombreCamioneta();
+            TVCamposCamionetasHeaderTitulo.setText(R.string.recarga+" - Camioneta"+estacion);
             TVCamposCamionetasHeaderInstrucciones.setText(R.string.registra_configuracion_recarga);
             TVCamposCamionetaHader.setVisibility(View.GONE);
         }

@@ -1537,7 +1537,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetLecturaInicialCamionetaByClaveOperacion(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery(
                 "SELECT * FROM "+TABLE_LECTURA_INICIAL_CAMIONETA+
-        " WHERE ClaveOperacion = "+ClaveOperacion,null);
+        " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     public Integer EliminarLecturaInicialCamioneta(String ClaveOperacion){

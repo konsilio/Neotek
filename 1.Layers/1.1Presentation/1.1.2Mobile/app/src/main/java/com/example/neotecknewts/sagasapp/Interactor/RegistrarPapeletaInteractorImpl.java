@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenReferenciaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RegistrarPapeletaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
@@ -144,6 +145,77 @@ public class RegistrarPapeletaInteractorImpl implements RegistrarPapeletaInterac
             public void onFailure(Call<List<MedidorDTO>> call, Throwable t) {
                 Log.e("error", t.toString());
                 registrarPapeletaPresenter.onError();
+            }
+        });
+    }
+
+    /**
+     * getOrderReferencia
+     * Permite retornar la orden de compra que tien de referencia (sea expedidor o porteador),
+     * toma como parametros el tiken de usuario , el id de la orden de compra y si es del
+     * expedidor, retornara un objeto  {@link RespuestaOrdenReferenciaDTO} desde el api
+     * @param token {@link String} que reprecenta el token de usuario
+     * @param idOrdenCompra {@link Integer} que reprecenta el id de la oprden de compra
+     * @param esExpedidor {@link Boolean} que reprecenta si es de expedidor o porteador la orden
+     *                                   que se envia de parametro
+     */
+    @Override
+    public void getOrderReferencia(String token, int idOrdenCompra,boolean esExpedidor) {
+        String url = Constantes.BASE_URL;
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaOrdenReferenciaDTO> call = restClient.getReferenciaOrden(
+                idOrdenCompra,
+                token,
+                "application/json"
+        );
+        Log.w(TAG,retrofit.baseUrl().toString());
+
+        call.enqueue(new Callback<RespuestaOrdenReferenciaDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaOrdenReferenciaDTO> call, Response<RespuestaOrdenReferenciaDTO> response) {
+                if (response.isSuccessful()) {
+                    RespuestaOrdenReferenciaDTO data = response.body();
+                    if(data.isExito()) {
+                        Log.w("Orden de referencia ", "Success");
+                        registrarPapeletaPresenter.onSuccessReferencia(data,esExpedidor);
+                    }else{
+                        //registrarPapeletaPresenter.onError(data.getMensaje());
+                    }
+                }
+                else {
+                    switch (response.code()) {
+                        case 404:
+                            Log.w(TAG,"not found");
+                            //registrarPapeletaPresenter.onError();
+                            break;
+                        case 500:
+                            Log.w(TAG, "server broken");
+                            //registrarPapeletaPresenter.onError();
+                            break;
+                        default:
+                            Log.w(TAG, ""+response.code());
+                            //registrarPapeletaPresenter.onError();
+                            break;
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaOrdenReferenciaDTO> call, Throwable t) {
+                Log.e("error", t.toString());
+                //registrarPapeletaPresenter.onError();
             }
         });
     }

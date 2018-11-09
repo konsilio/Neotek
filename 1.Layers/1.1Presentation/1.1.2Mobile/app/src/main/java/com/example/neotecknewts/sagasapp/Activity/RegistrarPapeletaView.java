@@ -1,8 +1,7 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
-import android.content.Context;
-
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenReferenciaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 
 import java.util.List;
@@ -23,4 +22,6 @@ public interface RegistrarPapeletaView {
     void showMessageError();
 
     void messageError(String mensaje);
+
+    void onSuccessReferencia(RespuestaOrdenReferenciaDTO data, boolean esExpedidor);
 }

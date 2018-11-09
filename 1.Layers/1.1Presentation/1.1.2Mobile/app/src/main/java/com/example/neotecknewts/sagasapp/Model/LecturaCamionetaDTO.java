@@ -33,7 +33,7 @@ public class LecturaCamionetaDTO implements Serializable {
     @SerializedName("Cilindros")
     private List<CilindrosDTO> Cilindros;
 
-    @SerializedName("ClaveOperacion")
+    @SerializedName("ClaveProceso")
     private String ClaveOperacion;
 
     @SerializedName("FechaAplicacion")
