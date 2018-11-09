@@ -175,7 +175,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 EsLecturaFinalPipa = (boolean) extras.get("EsLecturaFinalPipa");
                 EsLecturaInicialAlmacen = false ;
                 EsLecturaFinalAlamacen = false;
-                setTitle("Recarga");
+                setTitle("Lectura");
             }else if(extras.getBoolean("EsLecturaInicialAlmacen")||
                     extras.getBoolean("EsLecturaFinalAlmacen")){
                 lecturaAlmacenDTO = (LecturaAlmacenDTO) extras.
@@ -189,6 +189,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 EsLecturaFinalPipa = false;
                 EsLecturaInicialAlmacen = (boolean) extras.get("EsLecturaInicialAlmacen") ;
                 EsLecturaFinalAlamacen = (boolean)extras.get("EsLecturaFinalAlmacen");
+                setTitle("Lectura");
             }else if (extras.getBoolean("EsRecargaEstacionInicial")||
                     extras.getBoolean("EsRecargaEstacionFinal")){
                 recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
@@ -441,7 +442,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                     e.printStackTrace();
                 }
             }
-            Uri uri = Uri.parse(lecturaPipaDTO.getImagenP5000URI().toString());
+            /*Uri uri = Uri.parse(lecturaPipaDTO.getImagenP5000URI().toString());
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(
@@ -455,7 +456,7 @@ public class SubirImagenesActivity extends AppCompatActivity implements SubirIma
                 Log.w("Imagen P5000",""+uri.toString());
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
         }else if(EsLecturaInicialAlmacen || EsLecturaFinalAlamacen){
             for (int i=0; i<lecturaAlmacenDTO.getImagenesURI().size();i++){
                 try {

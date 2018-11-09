@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DatosTomaLecturaDto implements Serializable {
+
     @SerializedName("Almacenes")
     private List<AlmacenDTO> Almacenes;
+
     @SerializedName("Medidores")
     private List<MedidorDTO> Medidores;
 

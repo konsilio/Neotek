@@ -150,10 +150,16 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                     lecturaDTO.getNombreEstacionCarburacion());
         }else if (EsLecturaInicialPipa){
             TVLecturaP5000Titulo.setText( R.string.toma_de_lectura_inicial);
-            TVLecturaP5000Tipo.setText(getString(R.string.p500)+" "+getString(R.string.Pipa));
+            String pipa_nombre = lecturaPipaDTO.getNombrePipa().isEmpty()?
+                    "":lecturaPipaDTO.getNombrePipa();
+            TVLecturaP5000Tipo.setText(getString(R.string.p500)+" "
+                    +getString(R.string.Pipa)+": "+pipa_nombre);
         }else if (EsLecturaFinalPipa){
             TVLecturaP5000Titulo.setText(R.string.toma_de_lectura_final);
-            TVLecturaP5000Tipo.setText(getString(R.string.p500)+" "+getString(R.string.Pipa));
+            String pipa_nombre = lecturaPipaDTO.getNombrePipa().isEmpty()?
+                    "":lecturaPipaDTO.getNombrePipa();
+            TVLecturaP5000Tipo.setText(getString(R.string.p500)+" "
+                    +getString(R.string.Pipa)+": "+pipa_nombre);
         }
 
         if(EsLecturaInicial||EsLecturaFinal ) {

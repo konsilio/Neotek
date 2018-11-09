@@ -49,4 +49,5 @@ public class Constantes {
     public static final String POST_CORTE = " mobile/corte-de-caja";
     public static final String GET_CATALOGOS_VENTA_GAS = "mobile/catalogos/venta-gas/{esLP}/{esCilindroConGas}/{esCilindro}";
     public static final String GET_CATALOGOS_VENTA_OTROS = "mobile/catalogos/otros";
+    public static final String GET_ORDEN_REFERENCIA = "mobile/ordenes/lista/ordenes/compra/{IdOrdenCompra}";
 }

@@ -4,6 +4,7 @@ import com.example.neotecknewts.sagasapp.Activity.RegistrarPapeletaView;
 import com.example.neotecknewts.sagasapp.Interactor.RegistrarPapeletaInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.RegistrarPapeletaInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenReferenciaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.R;
 
@@ -77,5 +78,17 @@ public class RegistrarPapeletaPresenterImpl implements RegistrarPapeletaPresente
     public void onError(String mensaje) {
         registrarPapeletaView.hideProgress();
         registrarPapeletaView.messageError(mensaje);
+    }
+
+    @Override
+    public void getOrderReferencia(String token, int idOrdenCompra,boolean esExpedidor) {
+        //registrarPapeletaView.showProgress(R.string.message_cargando);
+        interactor.getOrderReferencia(token,idOrdenCompra,esExpedidor);
+    }
+
+    @Override
+    public void onSuccessReferencia(RespuestaOrdenReferenciaDTO data, boolean esExpedidor) {
+        //registrarPapeletaView.hideProgress();
+        registrarPapeletaView.onSuccessReferencia(data,esExpedidor);
     }
 }

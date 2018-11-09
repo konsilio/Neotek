@@ -32,8 +32,12 @@ public class CamionetasAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
         ((CamionetasHolder) viewHolder).ETConfiguracionCamionetasCantidad.setText(
                 String.valueOf(items.get(position).getCantidad())
         );
+        String cantidad  = items.get(position).getCilindroKg().substring(
+                items.get(position).getCilindroKg().indexOf(",")
+        );
+        cantidad = items.get(position).getCilindroKg().replace(cantidad,"");
         ((CamionetasHolder) viewHolder).TVCamposCamionetasTipoCilindro.setText(
-                items.get(position).getCilindroKg()
+                String.valueOf(cantidad)+" kg."
         );
     }
 
