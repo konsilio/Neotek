@@ -43,6 +43,7 @@ public class LecturaCamionetaDTO implements Serializable {
         this.Cilindro = new ArrayList<>();
         this.CilindroCantidad = new ArrayList<>();
         this.Cilindros = new ArrayList<>();
+        this.IdCilindro = new ArrayList<>();
     }
 
     public int getIdCamioneta() {

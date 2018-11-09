@@ -90,7 +90,7 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>0) {
+                if(position>=0) {
                  for (AlmacenDTO almacenDTO:DatosTomaLecturaDto.getAlmacenes()) {
                      if(almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
                          lecturaCamionetaDTO.setIdCamioneta(almacenDTO.getIdAlmacenGas());
@@ -152,10 +152,12 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
     @Override
     public void onSuccessCamionetas(DatosTomaLecturaDto data) {
         DatosTomaLecturaDto = data;
-        list_camionetas = new String[DatosTomaLecturaDto.getAlmacenes().size()+1];
-        list_camionetas[0] = "Seleccióne";
+        //list_camionetas = new String[DatosTomaLecturaDto.getAlmacenes().size()+1];
+        list_camionetas = new String[DatosTomaLecturaDto.getAlmacenes().size()];
+        //list_camionetas[0] = "Seleccióne";
         for (int x=0; x<DatosTomaLecturaDto.getAlmacenes().size();x++){
-            list_camionetas[x+1] = DatosTomaLecturaDto.getAlmacenes().get(x).getNombreAlmacen();
+            //list_camionetas[x+1] = DatosTomaLecturaDto.getAlmacenes().get(x).getNombreAlmacen();
+            list_camionetas[x] = DatosTomaLecturaDto.getAlmacenes().get(x).getNombreAlmacen();
         }
         SLecturaCamionetaActivityListaCamioneta.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,list_camionetas));

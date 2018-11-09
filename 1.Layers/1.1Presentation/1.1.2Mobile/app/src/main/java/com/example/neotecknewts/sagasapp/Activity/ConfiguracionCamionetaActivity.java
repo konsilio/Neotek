@@ -2,11 +2,13 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -100,13 +102,13 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         boolean error = false;
         lista_errores = new ArrayList<>();
         if(EsLecturaInicialCamioneta) {
-            TextView textView;
+            //TextView textView;
             for (int x = 0; x < adapter.getItemCount(); x++) {
                 View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
                 EditText editText = view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
-                textView = view.findViewById(R.id.TVLecturaAlmacenActivityTitulo);
+                //textView = view.findViewById(R.id.TVLecturaAlmacenActivityTitulo);
                 if (!editText.getText().toString().equals("")) {
-                    if (Integer.parseInt(editText.getText().toString()) < 0) {
+                    if (Integer.parseInt(editText.getText().toString()) <= 0) {
                         lista_errores.add("El valor para el cilindo del renglon "+
                                 String.valueOf(x+1)+" es requerido");
                         error = true;
@@ -188,6 +190,30 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
     @Override
     public void getCilindros(ArrayList<CilindrosDTO> cilindrosDTOS) {
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            android.support.v7.app.AlertDialog.Builder builder = new
+                    android.support.v7.app.AlertDialog.Builder(this,R.style.AlertDialog);
+            builder.setTitle(R.string.title_alert_message);
+            builder.setMessage(R.string.message_goback_diabled);
+            builder.setNegativeButton(getString(R.string.label_no), (dialogInterface, i) ->
+                    dialogInterface.dismiss());
+            builder.setPositiveButton(getString(R.string.label_si), (dialogInterface, i) -> {
+                dialogInterface.dismiss();
+                Intent intent = new Intent(ConfiguracionCamionetaActivity.this,
+                        MenuActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            });
+            builder.setCancelable(false);
+            builder.show();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }
