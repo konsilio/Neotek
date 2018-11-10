@@ -1405,6 +1405,7 @@ namespace MVC.Presentacion.App_Code
             model.Numero = cc.Numero;
             model.IdCentroCosto = cc.IdCentroCosto;
             model.Descripcion = cc.Descripcion;
+            model.IdTipoCentroCosto = cc.IdTipoCentroCosto;
             if (!cc.IdEquipoTransporte.Equals(0)) model.IdEquipoTransporte = cc.IdEquipoTransporte;
             if (!cc.IdEstacionCarburacion.Equals(0)) model.IdEstacionCarburacion = cc.IdEstacionCarburacion;
             if (!cc.IdCAlmacenGas.Equals(0)) model.IdCAlmacenGas = cc.IdCAlmacenGas;

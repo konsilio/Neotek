@@ -54,8 +54,7 @@ namespace Application.MainModule.Servicios.Ventas
         //
         public static List<VentaPuntoDeVenta> ObtenerVentas()
         {
-
-            return new CajaGeneralDataAccess().BuscarVentas();
+            return new CajaGeneralDataAccess().BuscarTodosPV();
         }
         public static RespuestaDto Actualizar(List<VentaCorteAnticipoEC> pv)
         {
@@ -315,7 +314,7 @@ namespace Application.MainModule.Servicios.Ventas
                 foreach (var li in x)
                 {/*revisar flujo*/
                     RegistrarVentasMovimientosDTO _lstmov = CajaGeneralAdapter.ToDTO(li);
-                    VentaMovimiento Vtasanticipos = AdaptadoresDTO.Ventas.CajaGeneralAdapter.FromDTO(_lstmov);
+                    VentaMovimiento Vtasanticipos = CajaGeneralAdapter.FromDTO(_lstmov);
                     new CajaGeneralDataAccess().Insertar(Vtasanticipos);// hace la insercion a movimientos
                     li.DatosProcesados = Procesados;
                     var rep = CajaGeneralAdapter.FromEntity(li);
