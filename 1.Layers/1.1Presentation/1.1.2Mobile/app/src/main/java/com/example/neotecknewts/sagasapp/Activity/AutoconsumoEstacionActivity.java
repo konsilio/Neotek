@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosReporteDTO;
 import com.example.neotecknewts.sagasapp.Presenter.AutoconsumoEstacionPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
@@ -30,7 +31,7 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
 
     boolean EsAutoconsumoEstacionInicial, EsAutoconsumoEstacionFinal;
     AutoconsumoDTO autoconsumoDTO;
-    DatosAutoconsumoDTO dto;
+    DatosAutoconsumoDTO dto_resp;
     Session session;
     String[] lista_estaciones,lista_pipa;
     AutoconsumoEstacionPresenterImpl presenter;
@@ -68,6 +69,8 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
         lista_estaciones = new String[]{"Estacion 1","Estacion 2"};
         lista_pipa = new String[]{"Pipa 1","Pipa 2"};
 
+
+
         SAutoconsumoEstacionActivityListaEstaciones.setAdapter(new ArrayAdapter<>(
                 this,
                 R.layout.custom_spinner,
@@ -80,17 +83,45 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
                 lista_pipa
         ));
 
+        presenter.getList(session.getToken(),EsAutoconsumoEstacionFinal);
+
         SAutoconsumoEstacionActivityListaEstaciones.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                autoconsumoDTO.setIdCAlmacenGasSalida(1);
+                if(position>=0) {
+                    if (dto_resp != null && dto_resp.getEstacionSalidaDTOList().size() > 0 &&
+                            !dto_resp.getEstacionEntradaDTOList().isEmpty()) {
+                        for (int x = 0; x < dto_resp.getEstacionSalidaDTOList().size(); x++) {
+                            autoconsumoDTO.setIdCAlmacenGasSalida(
+                                    dto_resp.getEstacionSalidaDTOList().get(x).getIdAlmacenGas()
+                            );
+                            autoconsumoDTO.setIdTipoMedidor(
+                                    dto_resp.getEstacionSalidaDTOList().get(x).getIdTipoMedidor()
+                            );
+                            autoconsumoDTO.setP5000Salida(
+                                    dto_resp.getEstacionSalidaDTOList().get(x).getCantidadP5000()
+                            );
+                            autoconsumoDTO.setNombreTipoMedidor(
+                                    dto_resp.getEstacionSalidaDTOList().get(x).getMedidor()
+                                            .getNombreTipoMedidor()
+                            );
+                            autoconsumoDTO.setPorcentajeMedidor(
+                                    dto_resp.getEstacionSalidaDTOList().get(x).getPorcentajeMedidor()
+                            );
+                        }
+                    }
+                }
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 autoconsumoDTO.setIdCAlmacenGasSalida(0);
+                autoconsumoDTO.setIdCAlmacenGasSalida(0);
+                autoconsumoDTO.setIdTipoMedidor(0);
+                autoconsumoDTO.setP5000Salida(0);
+                autoconsumoDTO.setNombreTipoMedidor("");
             }
         });
 
@@ -98,7 +129,19 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                autoconsumoDTO.setIdCAlmacenGasEntrada(1);
+                if(position>=0 && dto_resp!=null){
+                    if(!dto_resp.getEstacionEntradaDTOList().isEmpty() && dto_resp.getEstacionEntradaDTOList().size()>0){
+                        for (int x =0;x< dto_resp.getEstacionEntradaDTOList().size();x++){
+                            if(parent.getItemAtPosition(position).toString().equals(
+                                    dto_resp.getEstacionEntradaDTOList().get(x).getNombreAlmacen()
+                            )){
+                                autoconsumoDTO.setIdCAlmacenGasEntrada(
+                                        dto_resp.getEstacionEntradaDTOList().get(x).getIdAlmacenGas()
+                                );
+                            }
+                        }
+                    }
+                }
             }
 
             @Override
@@ -108,14 +151,45 @@ public class AutoconsumoEstacionActivity extends AppCompatActivity implements
         });
 
         BtnAutoconsumoActtivityGuardar.setOnClickListener(v -> verificarErrores());
-        presenter.getList(session.getToken(),EsAutoconsumoEstacionFinal);
+
     }
 
     @Override
     public void onSuccessLista(DatosAutoconsumoDTO dto) {
         if(dto!= null) {
-            this.dto = dto;
+            dto_resp = dto;
+            if(dto.getEstacionEntradaDTOList().size()>0 && dto.getEstacionEntradaDTOList()!=null) {
+                lista_estaciones = new String[dto.getEstacionEntradaDTOList().size()];
+                for (int x = 0; x < dto.getEstacionEntradaDTOList().size(); x++) {
+                    lista_estaciones[x] = dto.getEstacionEntradaDTOList().get(x).getNombreAlmacen();
+                }
+                SAutoconsumoEstacionActivityListaUnidades.setAdapter(new ArrayAdapter<>(
+                        this,
+                        R.layout.custom_spinner,
+                        lista_estaciones
+                ));
+            }
+            if(dto.getEstacionSalidaDTOList().size()>0 && dto.getEstacionSalidaDTOList()!=null){
+                lista_pipa = new String[dto.getEstacionSalidaDTOList().size()];
+                for (int x = 0; x < dto.getEstacionSalidaDTOList().size(); x++) {
+                    lista_pipa[x] = dto.getEstacionSalidaDTOList().get(x).getNombreAlmacen();
+                }
 
+                SAutoconsumoEstacionActivityListaEstaciones
+                        .setAdapter(new ArrayAdapter<>(
+                        this,
+                        R.layout.custom_spinner,
+                        lista_pipa
+                ));
+            }
+            if(dto.getPredeterminadaDTO()!=null){
+                for (int x= 0;x<dto.getEstacionEntradaDTOList().size();x++){
+                    if(dto.getEstacionEntradaDTOList().get(x).getIdAlmacenGas()==
+                            dto.getPredeterminadaDTO().getIdAlmacenGas()){
+                        SAutoconsumoEstacionActivityListaUnidades.setSelection(x);
+                    }
+                }
+            }
         }
 
     }

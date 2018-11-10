@@ -863,9 +863,9 @@ public class Lisener{
         RestClient restClient = retrofit.create(RestClient.class);
         Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                 dto,
-                Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION),
+                /*Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION),
                 Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL),
-                Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_PIPAS),
+                Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_PIPAS),*/
                 esFinal,
                 token,
                 "application/json"

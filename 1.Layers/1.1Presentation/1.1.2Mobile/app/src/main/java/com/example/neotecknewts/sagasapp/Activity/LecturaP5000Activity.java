@@ -105,6 +105,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 p5000 = 5000;
             }else if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
                 autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
+                NPLecturaP500CantidadLectura.setValue(autoconsumoDTO.getP5000Salida());
                 max_p5000 = 5000;
                 p5000 = 5000;
             }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
