@@ -34,7 +34,7 @@ public class Session {
     private static final String PREF_NAME = "USER";
 
     // All Shared Preferences Keys
-    private static final String IS_LOGIN = "IsLoggedIn";
+    public static final String IS_LOGIN = "IsLoggedIn";
 
     // User name (make variable public to access from outside)
     public static final String KEY_PASS= "password";
@@ -122,5 +122,17 @@ public class Session {
 
     public String getAttribute(String attribute){
         return pref.getString(attribute,"");
+    }
+
+    public boolean isLogin(){
+        return pref.getBoolean(IS_LOGIN,false);
+    }
+
+    public void logOut() {
+        editor.putBoolean(IS_LOGIN,false);
+        editor.putString(KEY_TOKEN,"");
+        editor.putString(KEY_PASS,"");
+        //editor.putString(KEY_EMAIL,"");
+        editor.commit();
     }
 }

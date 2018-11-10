@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -135,7 +137,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                 Tooltip.make(this,
                         new Tooltip.Builder(101)
                                 .withStyleId(R.style.TooltipError)
-                                .anchor(new Point(size.x - 45,45), Tooltip.Gravity.BOTTOM)
+                                .anchor(new Point(size.x - 120,55), Tooltip.Gravity.BOTTOM)
                                 .closePolicy(new Tooltip.ClosePolicy()
                                         .insidePolicy(true, false)
                                         .outsidePolicy(true, false), 3000)
@@ -154,7 +156,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                 Tooltip.make(this,
                         new Tooltip.Builder(101)
                                 .withStyleId(R.style.TooltipGood)
-                                .anchor(new Point(size.x - 45,45), Tooltip.Gravity.BOTTOM)
+                                .anchor(new Point(size.x - 120,55), Tooltip.Gravity.BOTTOM)
                                 .closePolicy(new Tooltip.ClosePolicy()
                                         .insidePolicy(true, false)
                                         .outsidePolicy(true, false), 3000)
@@ -169,6 +171,14 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
                                 .build()
                 ).show();
                 return true;
+            case R.id.salir:
+                session.logOut();
+                Intent intent = new Intent(MenuActivity.this,SplashActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -210,7 +220,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             Tooltip.make(this,
                     new Tooltip.Builder(101)
                             .withStyleId(R.style.TooltipError)
-                            .anchor(new Point(size.x - 45,45), Tooltip.Gravity.BOTTOM)
+                            .anchor(new Point(size.x - 120,55), Tooltip.Gravity.BOTTOM)
                             .closePolicy(new Tooltip.ClosePolicy()
                                     .insidePolicy(true, false)
                                     .outsidePolicy(true, false), 3000)
@@ -230,7 +240,7 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
             Tooltip.make(this,
                     new Tooltip.Builder(101)
                             .withStyleId(R.style.TooltipGood)
-                            .anchor(new Point(size.x - 45,45), Tooltip.Gravity.BOTTOM)
+                            .anchor(new Point(size.x - 120,55), Tooltip.Gravity.BOTTOM)
                             .closePolicy(new Tooltip.ClosePolicy()
                                     .insidePolicy(true, false)
                                     .outsidePolicy(true, false), 3000)
@@ -273,5 +283,12 @@ public class MenuActivity extends AppCompatActivity implements MenuView {
         adapter.notifyDataSetChanged();
     }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //finish();
+            moveTaskToBack(true);
+        }
+        return false;
+    }
 }
