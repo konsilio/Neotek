@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.DatosReporteDTO;
 import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Presenter.ReportePresenterImpl;
@@ -37,8 +38,8 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
     private Spinner SReporteActivityListUnidades;
 
     private boolean EsReporteDelDia;
-    private List<UnidadesDTO> unidadesDTOS;
-    private UnidadesDTO unidadesDTO;
+    private DatosReporteDTO unidadesDTOS;
+    private DatosReporteDTO.AlmacenesDTO unidadesDTO;
     private ProgressDialog progressDialog;
     private String[]list_unidades;
 
@@ -92,9 +93,9 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(unidadesDTOS!= null && unidadesDTOS.size()>0) {
-                    for (UnidadesDTO unidad : unidadesDTOS) {
-                        if (unidad.getNombre().equals(parent.getItemAtPosition(position).toString())) {
+                if(unidadesDTOS!= null && unidadesDTOS.getAlmacenes().size()>0) {
+                    for (DatosReporteDTO.AlmacenesDTO unidad : unidadesDTOS.getAlmacenes()) {
+                        if (unidad.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
                             unidadesDTO = unidad;
                         }
                     }
@@ -146,11 +147,11 @@ public class ReporteActivity extends AppCompatActivity implements ReporteView{
     }
 
     @Override
-    public void onSuccessGetUnidades(List<UnidadesDTO> data) {
+    public void onSuccessGetUnidades(DatosReporteDTO data) {
         unidadesDTOS = data;
-        list_unidades = new String[data.size()];
-        for (int x =0;x<data.size();x++){
-            list_unidades[x] = data.get(x).getNombreAlmacen();
+        list_unidades = new String[unidadesDTOS.getAlmacenes().size()];
+        for (int x =0;x<unidadesDTOS.getAlmacenes().size();x++){
+            list_unidades[x] = data.getAlmacenes().get(x).getNombreAlmacen();
         }
         SReporteActivityListUnidades.setAdapter(new ArrayAdapter<>(
                 this,
