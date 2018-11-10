@@ -83,7 +83,8 @@ namespace MVC.Presentacion.Agente
         public List<VentaCorteAnticipoModel> _listaCajaGralEstacion;
         public List<AlmacenDTO> _listaAlmacen;
         public List<RegistroDTO> _listaRegistroAlmacen;
-    
+        public List<MovimientosGasModel> _ListaMovimientosGas;
+
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -1370,7 +1371,42 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutLiquidarCajaGralEst"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-        
+        public void BuscarListaMovGas(CajaGeneralCamionetaModel reporte, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutListaMovGas"];
+            GetListaMovimientosGas(reporte, tkn).Wait();
+        }
+        private async Task GetListaMovimientosGas(CajaGeneralCamionetaModel rep, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<MovimientosGasModel> lus = new List<MovimientosGasModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos,rep).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<MovimientosGasModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<MovimientosGasModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+
+                _ListaMovimientosGas = lus;
+
+            }
+        }
 
         #endregion
         #region Paises

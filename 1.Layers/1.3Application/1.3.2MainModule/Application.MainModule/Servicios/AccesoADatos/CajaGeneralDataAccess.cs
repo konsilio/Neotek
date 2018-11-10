@@ -26,8 +26,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.DatosProcesados.Equals(noProcesados)).ToList();
         }
         public List<VentaPuntoDeVentaDetalle> BuscarDetalleVenta(short empresa, short anio, byte mes, byte dia, short orden)
-        {            
-            return uow.Repository<VentaPuntoDeVentaDetalle>().Get(x=> x.IdEmpresa.Equals(empresa)
+        {
+            return uow.Repository<VentaPuntoDeVentaDetalle>().Get(x => x.IdEmpresa.Equals(empresa)
             && x.Year.Equals(anio)
             && x.Mes.Equals(mes)
             && x.Dia.Equals(dia)
@@ -42,6 +42,13 @@ namespace Application.MainModule.Servicios.AccesoADatos
         public List<VentaMovimiento> Buscar(short idEmpresa)
         {
             return uow.Repository<VentaMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
+                                                         ).ToList();
+        }
+
+        public List<AlmacenGasMovimiento> Buscar(short empresa, short year, byte month, byte dia, short orden)
+        {
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.IdEmpresa.Equals(empresa)
+            && x.Year.Equals(year) && x.Mes.Equals(month) && x.Dia.Equals(dia) //&& x.Orden.Equals(orden)
                                                          ).ToList();
         }
         public List<VentaMovimiento> Buscar(int idPv)
@@ -79,10 +86,34 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(x => x.IdPuntoVenta.Equals(idPv)).ToList();
         }
-       
+
         public List<VentaCorteAnticipoEC> BuscarAnticiposC()
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get().ToList();
+        }
+        public RespuestaDto Actualizar(VentaCajaGeneral pv)
+        {
+            RespuestaDto _respuesta = new RespuestaDto();
+            using (uow)
+            {
+                try
+                {
+
+                    uow.Repository<Sagas.MainModule.Entidades.VentaCajaGeneral>().Update(pv);
+                    uow.SaveChanges();
+                    _respuesta.Exito = true;
+                    _respuesta.EsActulizacion = true;
+                    _respuesta.ModeloValido = true;
+                    _respuesta.Mensaje = Exito.OK;
+                }
+                catch (Exception ex)
+                {
+                    _respuesta.Exito = false;
+                    _respuesta.Mensaje = string.Format(Error.C0003, "de la liquidación"); ;
+                    _respuesta.MensajesError = CatchInnerException.Obtener(ex);
+                }
+            }
+            return _respuesta;
         }
         public RespuestaDto Actualizar(VentaPuntoDeVenta pv)
         {

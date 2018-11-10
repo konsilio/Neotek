@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Ventas;
+using Application.MainModule.DTOs.Almacen;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.Seguridad;
@@ -16,16 +17,27 @@ namespace Application.MainModule.Flujos
         public List<CajaGeneralDTO> CajaGeneral()
         {
 
-           // CajaGeneralServicio.ProcesarVentasPuntosDeVenta(); Para pruebas
+           CajaGeneralServicio.ProcesarVentasPuntosDeVenta(); //Para pruebas
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
 
             if (TokenServicio.EsSuperUsuario())
                 return CajaGeneralServicio.Obtener().ToList();
-           
+
             else
                 return CajaGeneralServicio.Obtener().Where(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa())).ToList();
         }
+
+        public List<AlmacenGasMovimientoDto> MovimientosGas(short empresa, short year, byte month, byte dia, short orden)
+        {           
+            var resp = PermisosServicio.PuedeConsultarCajaGeneral();
+            if (!resp.Exito) return null;
+
+            return CajaGeneralServicio.ObtenerPVDetalle(empresa, year, month, dia, orden).ToList();
+
+        }
+
+
 
         public List<CajaGeneralDTO> CajaGeneralIdEmpresa(short IdEmpresa)
         {
@@ -44,7 +56,7 @@ namespace Application.MainModule.Flujos
         {
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
-        
+
             return CajaGeneralServicio.ObtenerCE(cveReporte).ToList();
         }
 
@@ -56,7 +68,10 @@ namespace Application.MainModule.Flujos
             var reporte = CajaGeneralServicio.ObtenerPV(Dto.FolioOperacionDia).ToList();
             if (reporte == null) return CajaGeneralServicio.NoExiste();
 
-            var rep = CajaGeneralAdapter.FromDto(reporte);
+            var rcg = CajaGeneralServicio.ObtenerCG(Dto.FolioOperacionDia);
+
+            var rep = CajaGeneralAdapter.FromDto(rcg);
+          
             return CajaGeneralServicio.Actualizar(rep);
         }
         public RespuestaDto GuardarReporteLiquidadoEst(VentaCorteAnticipoDTO Dto)

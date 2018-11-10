@@ -371,6 +371,7 @@
     <Compile Include="Models\Seguridad\UsuarioRolModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralCamionetaModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralModel.cs" />
+    <Compile Include="Models\Ventas\MovimientosGasModel.cs" />
     <Compile Include="Models\Ventas\VentaCorteAnticipoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -11520,6 +11521,7 @@
     <Content Include="Views\OrdenCompra\_ProductosComplementoGasPartial.cshtml" />
     <Content Include="Views\OrdenCompra\_ProductComplementoPartial.cshtml" />
     <Content Include="Views\Shared\Error404.cshtml" />
+    <Content Include="Views\PuntoVenta\AsignarChofer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

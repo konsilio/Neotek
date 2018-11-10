@@ -8,7 +8,7 @@
 <script language="JavaScript" type="text/javascript">
     $(function () {
         $('#ddlEmpresasFilter').on('change', function () {
-            debugger
+            
             var id = $(this).val();
 
             var url = '@Url.Action("Producto", "Producto", new { idempresa = "__param__" })';

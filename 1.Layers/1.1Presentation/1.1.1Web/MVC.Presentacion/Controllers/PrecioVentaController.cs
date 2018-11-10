@@ -17,16 +17,16 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-         
-            ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
-            if (ViewBag.EsSuperUser)
+
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            if (ViewBag.EsAdmin)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
                 ViewBag.ListaPV = CatalogoServicio.ListaPrecioVenta(0, _tkn);
             }
             else
             {
-                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
                 ViewBag.ListaPV = CatalogoServicio.ListaPrecioVentaIdEmpresa(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             }
 
@@ -58,13 +58,13 @@ namespace MVC.Presentacion.Controllers
             {
                 TempData["RespuestaDTO"] = "Alta Exitosa";//respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index", _ObjModel);
+                return RedirectToAction("Index");
             }
 
             else
             {
                 TempData["RespuestaDTOError"] = respuesta.Mensaje;
-                return RedirectToAction("Index", _ObjModel);
+                return RedirectToAction("Index");
             }
             
         }
@@ -91,13 +91,13 @@ namespace MVC.Presentacion.Controllers
             {
                 //TempData["RespuestaDTO"] = "Baja Exitosa";//respuesta.Mensaje;
                 //TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index", _Obj);
+                return RedirectToAction("Index");
             }
 
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Index", _Obj);
+                return RedirectToAction("Index");
             }
         }
 
@@ -113,13 +113,13 @@ namespace MVC.Presentacion.Controllers
             {
                 //TempData["RespuestaDTO"] = "Cambio Exitoso";//respuesta.Mensaje;
                 //TempData["RespuestaDTOError"] = null;
-                return RedirectToAction("Index", _Obj);
+                return RedirectToAction("Index");
             }
 
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;//.Mensaje;
-                return RedirectToAction("Index", _Obj);
+                return RedirectToAction("Index");
             }
         }
 

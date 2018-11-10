@@ -122,6 +122,7 @@
     <Compile Include="DTOs\Ventas\VentaCorteAnticipoDTO.cs" />
     <Compile Include="DTOs\Ventas\VentaPuntoVentaDTO.cs" />
     <Compile Include="DTOs\ImagenDTO.cs" />
+    <Compile Include="DTOs\Ventas\VPuntoVentaDetalleDTO.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenEntradaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\AlmacenSalidaProductoDataAccess.cs" />
     <Compile Include="Servicios\AccesoADatos\CajaGeneralDataAccess.cs" />

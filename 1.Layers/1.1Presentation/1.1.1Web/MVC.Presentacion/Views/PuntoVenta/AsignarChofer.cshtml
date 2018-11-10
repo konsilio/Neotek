@@ -1,0 +1,100 @@
+﻿@using MVC.Presentacion.Models.Catalogos
+@model  PuntoVentaModel
+
+@{
+    ViewBag.Title = "Catálogo / Punto de Venta";
+}
+
+<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+<script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/assets/js/pages/ui/notifications.js"></script>
+<script type="text/javascript">
+    var message = '@ViewBag.Msj';
+    var tipo = '@ViewBag.Tipo';
+    if (message != '') {
+        $(window).on("load", showNotification(tipo, message, 'top', 'center', '', ''));
+    }
+</script>
+@using (Html.BeginForm("Guardar", "PuntoVenta", FormMethod.Post))
+{
+    <section class="content home">
+        <div class="container-fluid">
+
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Catálogos</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item">PuntoVenta</li>                       
+                        <li class="breadcrumb-item">Asignación de Operador</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="row clearfix">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="card">
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-lg-12">
+                                    <input type="text" name="PuntoVenta" readonly="readonly" class="form-control" value="@ViewBag.ListaPV[0].PuntoVenta" />
+                                    <input type="text" name="IdPuntoVenta" readonly="readonly" hidden="hidden" class="form-control" value="@ViewBag.ListaPV[0].IdPuntoVenta" />
+                                   
+                                </div>
+
+                            </div><br />
+                            <div class="col-sm-12">
+                                <div class="row clearfix">
+                                    <div class="col-sm-5">
+                                      @if (ViewBag.Usuarios != null)
+                                                        {
+                                                          
+                                                                <select name="IdUsuario" class="form-control show-tick">
+                                                                    <option value="0">Seleccione...</option>
+                                                                    @foreach (var lst in ViewBag.Usuarios)
+                                                                    {                                                                       
+                                                                        <option value="@lst.IdUsuario">@lst.Nombre @lst.Apellido1 @lst.Apellido2</option>                                                                       
+                                                                    }
+                                                                </select>
+                                                          
+                                                        }
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <button class="btn btn-raised btn-primary btn-round float-right"> Agregar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>         
+                <div class="body">
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="form-group">
+                                <input type="submit" value="Regresar" formaction=@Url.Action("Index") class="btn btn-raised btn-primary btn-round float-left" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (ViewBag.MessageError != null)
+                    {
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MessageError</label>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+    }

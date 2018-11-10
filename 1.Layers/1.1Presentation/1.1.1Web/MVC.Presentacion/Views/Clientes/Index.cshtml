@@ -47,13 +47,24 @@
                         <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="col-sm-3">
-                                    <strong>Gasera</strong>
-                                    <select name="IdEmpresa" id="ddlEmpresas" class="form-control show-tick" data-live-search="true">
-                                        @foreach (var lst in ViewBag.Empresas)
+                                    <div>
+                                        <strong>Gasera</strong>
+                                    </div>
+                                    <div>
+                                        @if (ViewBag.EsAdmin)
                                         {
-                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                            <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
+                                            </select>
                                         }
-                                    </select>
+                                        else
+                                        {
+                                            @ViewBag.Empresas
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>

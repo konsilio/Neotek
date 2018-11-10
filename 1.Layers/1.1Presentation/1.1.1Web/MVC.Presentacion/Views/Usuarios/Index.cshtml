@@ -54,34 +54,39 @@
                     </div>
                     <div class="body">
                         <div class="row clearfix">
-                            <div class="col-sm-3">
-                                <div>
-                                    <strong>Gasera</strong>
-                                </div>
-                                <div>
-                                    @if (ViewBag.EsAdmin)
-                                    {
-                                        <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                            @foreach (var lst in ViewBag.Empresas)
-                                            {
-                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                            }
-                                        </select>
-                                    }
-                                    else
-                                    {
-                                        @ViewBag.Empresas
-                                    }
+                            <div class="col-sm-12">
+                                <div class="row clearfix">
+                                    <div class="col-sm-3">
+                                        @*<div>*@
+                                        <strong>Gasera</strong>
+                                        @*</div>
+                                            <div>*@
+                                        @if (ViewBag.EsAdmin)
+                                        {
+                                            <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            @ViewBag.Empresas
+                                        }
+                                        @*</div>*@
+                                    </div>
+                                    <div class="col-md-9" style="padding-top:14px">
+                                        <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-primary btn-round float-right" />
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
                         <div class="row clearfix">
-                            <div class="col-md-12">
-                                <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-primary btn-round float-right" />
-                            </div>
-                        </div>
 
+                        </div>
+                        <br />
                         <div class="row clearfix">
                             <div class="col-sm-12">
                                 <div class="row clearfix">
@@ -104,8 +109,9 @@
                                                 <option value="@lst.Email1">@lst.Email1</option>
                                             }
                                         </select>
+                                        
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-lg-5 col-md-5 col-sm-6" style="padding-top:14px">
                                         <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                     </div>
                                 </div>
