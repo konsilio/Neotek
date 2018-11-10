@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.DatosReporteDTO;
 import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.UnidadesDTO;
 import com.example.neotecknewts.sagasapp.Presenter.ReportePresenterImpl;
@@ -32,6 +33,7 @@ public class ReporteInteractorImpl implements ReporteInteractor {
 
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -40,12 +42,12 @@ public class ReporteInteractorImpl implements ReporteInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<List<UnidadesDTO>> call = restClient.getUnidades(token,"application/json");
+        Call<DatosReporteDTO> call = restClient.getUnidades(token,"application/json");
 
-        call.enqueue(new Callback<List<UnidadesDTO>>() {
+        call.enqueue(new Callback<DatosReporteDTO>() {
             @Override
-            public void onResponse(Call<List<UnidadesDTO>> call,
-                                   Response<List<UnidadesDTO>> response) {
+            public void onResponse(Call<DatosReporteDTO> call,
+                                   Response<DatosReporteDTO> response) {
                 if(response.isSuccessful()){
                     Log.w("Success","Se han cargado ");
                     presenter.onSuccessUnidades(response.body());
@@ -72,7 +74,7 @@ public class ReporteInteractorImpl implements ReporteInteractor {
             }
 
             @Override
-            public void onFailure(Call<List<UnidadesDTO>> call, Throwable t) {
+            public void onFailure(Call<DatosReporteDTO> call, Throwable t) {
                 presenter.onError(t.getMessage());
             }
         });
