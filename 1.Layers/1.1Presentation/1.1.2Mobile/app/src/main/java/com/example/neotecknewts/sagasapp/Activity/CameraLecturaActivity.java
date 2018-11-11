@@ -343,7 +343,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
         }else if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
             try {
                 //autoconsumoDTO.getImagenes().add(imageurl);
-                autoconsumoDTO.setCantidadFotos(autoconsumoDTO.getCantidadFotos()+1);
+                //autoconsumoDTO.setCantidadFotos(autoconsumoDTO.getCantidadFotos()+1);
                 autoconsumoDTO.getImagenesURI().add(new URI(imageUri.toString()));
                 Intent intent = new Intent(CameraLecturaActivity.this,
                         CapturaPorcentajeActivity.class);
