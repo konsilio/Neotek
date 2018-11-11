@@ -61,9 +61,37 @@ public class AutoconsumoPipaActivity extends AppCompatActivity implements  Autoc
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                autoconsumoDTO.setIdCAlmacenGasEntrada(1);
-                autoconsumoDTO.setNombreTipoMedidor("Magnatel");
-                autoconsumoDTO.setCantidadFotos(1);
+                if(position>=0) {
+                 if(dto!=null && dto.getEstacionEntradaDTOList().size()>0) {
+                     for (int x =0;x<dto.getEstacionEntradaDTOList().size();x++) {
+                      if(parent.getItemAtPosition(position).toString().equals(
+                              dto.getEstacionEntradaDTOList().get(x).getNombreAlmacen()
+                      )) {
+                          autoconsumoDTO.setIdCAlmacenGasEntrada(
+                                  dto.getEstacionEntradaDTOList().get(x)
+                                  .getIdAlmacenGas()
+                          );
+                          autoconsumoDTO.setNombreTipoMedidor(
+                                  dto.getEstacionEntradaDTOList().get(x)
+                                          .getMedidor().getNombreTipoMedidor()
+                          );
+                          autoconsumoDTO.setIdTipoMedidor(
+                                  dto.getEstacionEntradaDTOList().get(x)
+                                          .getMedidor().getIdTipoMedidor()
+                          );
+                          autoconsumoDTO.setCantidadFotos(
+                                  dto.getEstacionEntradaDTOList().get(x)
+                                          .getMedidor().getCantidadFotografias()
+                          );
+                          autoconsumoDTO.setPorcentajeMedidor(
+                                  dto.getEstacionEntradaDTOList().get(x)
+                                          .getPorcentajeMedidor()
+                          );
+
+                       }
+                     }
+                 }
+                }
             }
 
             @Override
@@ -78,9 +106,24 @@ public class AutoconsumoPipaActivity extends AppCompatActivity implements  Autoc
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                autoconsumoDTO.setIdCAlmacenGasSalida(1);
+                if (position >= 0) {
+                    if(dto!=null && dto.getEstacionSalidaDTOList().size()>0) {
+                        for (int x = 0; x < dto.getEstacionSalidaDTOList().size(); x++) {
+                            if(parent.getItemAtPosition(position).toString().equals(
+                                    dto.getEstacionEntradaDTOList().get(x).getNombreAlmacen()
+                            )) {
+                                autoconsumoDTO.setIdCAlmacenGasSalida(
+                                        dto.getEstacionSalidaDTOList().get(x).getIdAlmacenGas()
+                                );
+                                autoconsumoDTO.setP5000Salida(
+                                        dto.getEstacionSalidaDTOList().get(x)
+                                                .getCantidadP5000()
+                                );
+                            }
+                        }
+                    }
+                }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 autoconsumoDTO.setIdCAlmacenGasSalida(0);
@@ -165,8 +208,15 @@ public class AutoconsumoPipaActivity extends AppCompatActivity implements  Autoc
     public void onSuccessList(DatosAutoconsumoDTO dto) {
         if(dto!=null){
             this.dto = dto;
-            lista_pipa_salida = new String[]{"Pipa 1","Pipa 2"};
-            lista_unidad_entrada = new String[]{"Unidad No. 1","Unidad no. 2"};
+            lista_pipa_salida = new String[dto.getEstacionSalidaDTOList().size()];
+            lista_unidad_entrada = new String[dto.getEstacionEntradaDTOList().size()];
+            for (int x =0 ; x<dto.getEstacionSalidaDTOList().size();x++) {
+                lista_pipa_salida[x]= dto.getEstacionSalidaDTOList().get(x)
+                        .getNombreAlmacen();
+            }
+            for (int x=0;x<dto.getEstacionEntradaDTOList().size();x++){
+                lista_unidad_entrada[x]= dto.getEstacionEntradaDTOList().get(x).getNombreAlmacen();
+            }
             SAutoconsumoPipaActivityListaPipasSalida.setAdapter( new ArrayAdapter<>(
                     this,
                     R.layout.custom_spinner,
