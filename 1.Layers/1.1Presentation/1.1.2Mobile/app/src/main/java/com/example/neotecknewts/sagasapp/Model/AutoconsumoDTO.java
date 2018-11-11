@@ -49,6 +49,9 @@ public class AutoconsumoDTO implements Serializable{
     @SerializedName("FechaAplicacion")
     private String FechaAplicacion;
 
+    @SerializedName("NombreEstacion")
+    private String NombreEstacion;
+
     public AutoconsumoDTO (){
         this.ImagenesURI = new ArrayList<>();
         this.Imagenes = new ArrayList<>();
@@ -140,5 +143,13 @@ public class AutoconsumoDTO implements Serializable{
 
     public void setFechaAplicacion(String fechaAplicacion) {
         FechaAplicacion = fechaAplicacion;
+    }
+
+    public String getNombreEstacion() {
+        return NombreEstacion;
+    }
+
+    public void setNombreEstacion(String nombreEstacion) {
+        NombreEstacion = nombreEstacion;
     }
 }

@@ -83,11 +83,11 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
         BtnLecturaCamionetaActivityAceptar.setOnClickListener(v -> verificarForm());
         list_camionetas = new String[]{"Seleccione","Camioneta Ford","Camioneta Chevy"};
         list_quien = new String[]{"Seleccione","Encargado de Puerta","Encargado del Andén"};
-        lecturaCamionetaPresenter.GetListCamionetas(session.getToken(),EsLecturaFinalCamioneta);
         SLecturaCamionetaActivityListaCamioneta.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,list_camionetas));
         SLecturaCamionetaActivityListaQuien.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,list_quien));
+        lecturaCamionetaPresenter.GetListCamionetas(session.getToken(),EsLecturaFinalCamioneta);
         SLecturaCamionetaActivityListaCamioneta.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override

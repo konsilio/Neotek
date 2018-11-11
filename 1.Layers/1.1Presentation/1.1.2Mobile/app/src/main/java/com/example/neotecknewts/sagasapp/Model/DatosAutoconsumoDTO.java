@@ -46,7 +46,7 @@ public class DatosAutoconsumoDTO extends RespuestaDTO implements Serializable {
         this.predeterminadaDTO = predeterminadaDTO;
     }
 
-    public class EstacionEntradaDTO {
+    public class EstacionEntradaDTO  extends RespuestaDTO implements Serializable{
 
         public EstacionEntradaDTO(){
             this.Cilindros = new ArrayList<>();
@@ -130,7 +130,7 @@ public class DatosAutoconsumoDTO extends RespuestaDTO implements Serializable {
         }
     }
 
-    public class EstacionSalidaDTO {
+    public class EstacionSalidaDTO  extends RespuestaDTO implements Serializable{
         public  EstacionSalidaDTO(){
             this.Cilindros = new ArrayList<>();
         }
@@ -212,7 +212,7 @@ public class DatosAutoconsumoDTO extends RespuestaDTO implements Serializable {
         }
     }
 
-    public class PredeterminadaDTO {
+    public class PredeterminadaDTO  extends RespuestaDTO implements Serializable{
         public PredeterminadaDTO(){
             this.Cilindros = new ArrayList<>();
         }
