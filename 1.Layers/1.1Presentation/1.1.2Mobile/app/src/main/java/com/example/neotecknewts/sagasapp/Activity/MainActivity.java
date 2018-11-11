@@ -239,11 +239,14 @@ public class MainActivity extends AppCompatActivity implements MainView{
         }
 
         spinnerGaseras.setAdapter(new ArrayAdapter<>(this, R.layout.custom_spinner, empresas));
-        if(session!= null)
-            for (EmpresaDTO empresa :empresaDTOs){
-                if(empresa.getIdEmpresa()==session.getIdEmpresa())
-                    spinnerGaseras.setSelection(empresaDTOs.indexOf(empresa));
+        if(session!= null) {
+            if(session.getIdEmpresa()>0) {
+                for (EmpresaDTO empresa : empresaDTOs) {
+                    if (empresa.getIdEmpresa() == session.getIdEmpresa())
+                        spinnerGaseras.setSelection(empresaDTOs.indexOf(empresa));
+                }
             }
+        }
     }
     
 
@@ -264,6 +267,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
                         fb_token,"","");
                 ArrayList<MenuDTO> menuDTOs = new ArrayList<MenuDTO>(Arrays.asList(usuarioDTO.getListMenu()));
                 startActivity(menuDTOs);
+                finish();
             }
         }else{
             showDialog(getResources().getString(R.string.usuario_incorrecto));

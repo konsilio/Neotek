@@ -1861,7 +1861,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -1872,9 +1872,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
             Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                         autoconsumoDTO,
-                        true,
+                       /* true,
                         false,
-                        false,
+                        false,*/
                         esAutoconsumoEstacionFinal,
                         token,
                         "application/json"
@@ -2049,9 +2049,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         while(intentos_post<3) {*/
             Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                     autoconsumoDTO,
-                    false,
+                    /*false,
                     true,
-                    false,
+                    false,*/
                     esAutoconsumoInventarioFinal,
                     token,
                     "application/json"
@@ -2212,9 +2212,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         while(intentos_post<3) {*/
             Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                     autoconsumoDTO,
+                    /*false,
                     false,
-                    false,
-                    true,
+                    true,*/
                     esAutoconsumoPipaFinal,
                     token,
                     "application/json"

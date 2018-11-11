@@ -258,18 +258,18 @@ public interface RestClient {
                                                           boolean esEstacion,
                                                   @Path(value = "esInventario",encoded = true)
                                                           boolean esInventario,
-                                                  @Path(value =  "esPipa",encoded = true)
+                                                  @Path(value =  "esPipas",encoded = true)
                                                           boolean esPipa,
-                                                  @Path(value = "esFinalizar",encoded = true)
+                                                  @Path(value = "esFinal",encoded = true)
                                                           boolean esFinalizar,
                                                   @Header("Authorization") String token,
                                                   @Header("Content-Type") String contentType
                                                   );
     @POST(Constantes.POST_AUTOCONSUMO)
     Call<RespuestaRecargaDTO> postAutorconsumo(@Body AutoconsumoDTO autoconsumoDTO,
-                                               @Path(value = "esEstacion") boolean esEstacion,
+                                               /*@Path(value = "esEstacion") boolean esEstacion,
                                                @Path(value = "esIventario") boolean esInventario,
-                                               @Path(value = "esPipa") boolean esPipa,
+                                               @Path(value = "esPipa") boolean esPipa,*/
                                                @Path(value = "esFinal") boolean esFinal,
                                                @Header("Authorization") String token,
                                                @Header("Content-type") String contentType

@@ -167,7 +167,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
         if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
-                    +" - " +getString(R.string.Estacion));
+                    +" - " +getString(R.string.Estacion)+" "+autoconsumoDTO.getNombreEstacion());
             NombreImagen =
                     (EsAutoconsumoEstacionInicial) ?
                             String.valueOf(autoconsumoDTO.getIdCAlmacenGasSalida())+"|"+
