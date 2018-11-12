@@ -28,9 +28,10 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.ClaveOperacion = dto.ClaveOperacion;
             adapter.IdTipoEvento = (esFinal) ? TipoEventoEnum.Final : TipoEventoEnum.Inicial;
             adapter.DatosProcesados = false;
+            adapter.FechaRegistro = dto.FechaRegistro;
+            adapter.FechaAplicacion = dto.FechaAplicacion;
             if (esFinal)
                 adapter.IdDestinoCalibracion = (dto.IdDestino == 1) ? CalibracionDestinoEnum.MismoTanque : CalibracionDestinoEnum.TanquePortatil;
-            adapter.FechaRegistro = dto.FechaRegistro;
 
             return AlmacenGasServicio.InsertarCalibracion(adapter);
         }
