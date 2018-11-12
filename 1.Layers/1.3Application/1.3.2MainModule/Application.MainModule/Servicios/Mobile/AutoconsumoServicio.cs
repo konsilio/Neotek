@@ -45,6 +45,7 @@ namespace Application.MainModule.Servicios.Mobile
                 adapter.Mes = (byte)dto.FechaRegistro.Month;
                 adapter.Year = (short)dto.FechaRegistro.Year;
                 adapter.Fotografias = AlmacenAutoconsumoAdapter.FormDTO(dto, almacenEntrada, almacenSalida,IdOrden,adapter.IdEmpresa);
+                adapter.FechaAplicacion = dto.FechaAplicacion;
                     
                 return AlmacenGasServicio.InsertarAutoconsumo(adapter);
         }

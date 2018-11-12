@@ -29,6 +29,7 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
 
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -49,7 +50,8 @@ public class LecturaCamionetaInteractorImpl implements LecturaCamionetaInteracto
 
         call.enqueue(new Callback<DatosTomaLecturaDto>() {
             @Override
-            public void onResponse(Call<DatosTomaLecturaDto> call, Response<DatosTomaLecturaDto> response) {
+            public void onResponse(Call<DatosTomaLecturaDto> call,
+                                   Response<DatosTomaLecturaDto> response) {
                 if (response.isSuccessful()) {
                     DatosTomaLecturaDto data = response.body();
                     Log.w("Estatus","Success");

@@ -3,6 +3,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.example.neotecknewts.sagasapp.Model.AlmacenDTO;
 import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.LecturaCamionetaDTO;
+import com.example.neotecknewts.sagasapp.Presenter.LecturaCamionetaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.LecturaCamionetaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
@@ -33,10 +35,10 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
     public Button BtnLecturaCamionetaActivityAceptar;
     public String[] list_camionetas,list_quien;
     public LecturaCamionetaDTO lecturaCamionetaDTO;
-    public LecturaCamionetaPresenterImpl lecturaCamionetaPresenter;
+    public LecturaCamionetaPresenter lecturaCamionetaPresenter;
     public ProgressDialog progressDialog;
     public Session session;
-    public DatosTomaLecturaDto DatosTomaLecturaDto;
+    DatosTomaLecturaDto DatosTomaLecturaDto;
     public List<CilindrosDTO> cilindrosDTOS;
     @SuppressLint("SetTextI18n")
     @Override
@@ -85,12 +87,12 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
                 R.layout.custom_spinner,list_camionetas));
         SLecturaCamionetaActivityListaQuien.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,list_quien));
-        lecturaCamionetaPresenter.GetListCamionetas(session.getToken(),esFinal);
+        lecturaCamionetaPresenter.GetListCamionetas(session.getToken(),EsLecturaFinalCamioneta);
         SLecturaCamionetaActivityListaCamioneta.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>0) {
+                if(position>=0 && DatosTomaLecturaDto.getAlmacenes()!=null) {
                  for (AlmacenDTO almacenDTO:DatosTomaLecturaDto.getAlmacenes()) {
                      if(almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
                          lecturaCamionetaDTO.setIdCamioneta(almacenDTO.getIdAlmacenGas());
@@ -151,14 +153,25 @@ public class LecturaCamionetaActivity extends AppCompatActivity implements Lectu
 
     @Override
     public void onSuccessCamionetas(DatosTomaLecturaDto data) {
-        DatosTomaLecturaDto = data;
-        list_camionetas = new String[DatosTomaLecturaDto.getAlmacenes().size()+1];
-        list_camionetas[0] = "Seleccióne";
-        for (int x=0; x<DatosTomaLecturaDto.getAlmacenes().size();x++){
-            list_camionetas[x+1] = DatosTomaLecturaDto.getAlmacenes().get(x).getNombreAlmacen();
+        this.DatosTomaLecturaDto = new DatosTomaLecturaDto();
+        this.DatosTomaLecturaDto = data;
+        if(this.DatosTomaLecturaDto!=null && !this.DatosTomaLecturaDto.getAlmacenes().isEmpty()) {
+            //list_camionetas = new String[DatosTomaLecturaDto.getAlmacenes().size()+1];
+            list_camionetas = new String[this.DatosTomaLecturaDto.getAlmacenes().size()];
+            //list_camionetas[0] = "Seleccióne";
+            for (int x = 0; x < this.DatosTomaLecturaDto.getAlmacenes().size(); x++) {
+                //list_camionetas[x+1] = DatosTomaLecturaDto.getAlmacenes().get(x).getNombreAlmacen();
+                list_camionetas[x] = this.DatosTomaLecturaDto.getAlmacenes().get(x).getNombreAlmacen();
+            }
+            SLecturaCamionetaActivityListaCamioneta.setAdapter(new ArrayAdapter<>(this,
+                    R.layout.custom_spinner, list_camionetas));
+        }else{
+            AlertDialog.Builder builder= new AlertDialog.Builder(this,R.style.AlertDialog);
+            builder.setTitle(R.string.title_alert_message);
+            builder.setMessage("Ha ocurrido un error al consultar las camionetas");
+            builder.setPositiveButton(R.string.message_acept, (dialog, which) -> dialog.dismiss());
+            builder.create().show();
         }
-        SLecturaCamionetaActivityListaCamioneta.setAdapter(new ArrayAdapter<>(this,
-                R.layout.custom_spinner,list_camionetas));
     }
 
     @Override

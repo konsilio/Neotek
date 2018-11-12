@@ -2,11 +2,13 @@ package com.example.neotecknewts.sagasapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by neotecknewts on 15/08/18.
  */
 
-public class MedidorDTO {
+public class MedidorDTO extends RespuestaDTO  implements Serializable {
     @SerializedName("NombreTipoMedidor")
     private String NombreTipoMedidor;
 

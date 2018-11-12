@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.OrdenCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenReferenciaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RegistrarPapeletaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RegistrarPapeletaPresenterImpl;
@@ -32,6 +33,7 @@ import com.example.neotecknewts.sagasapp.Util.Session;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +42,7 @@ import java.util.List;
  * Created by neotecknewts on 03/08/18.
  */
 
-public class RegistrarPapeletaActivity extends AppCompatActivity implements RegistrarPapeletaView{
+public class RegistrarPapeletaActivity extends AppCompatActivity implements RegistrarPapeletaView {
 
     //variables de la vista
     public Spinner spinnerOrdenCompraExpedidor;
@@ -71,7 +73,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
     private Date fecha;
     private Date fechaEmbarque;
-    public int fechaSeleccionada =0;
+    public int fechaSeleccionada = 0;
     static final int DATE_DIALOG_ID = 0;
 
     //variables para la lista de ordenes de compra y la orden de compra seleccionada
@@ -90,11 +92,14 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
     //lista de medidores para el spinner
     List<MedidorDTO> medidorDTOs;
-
+    boolean inicial_porteador;
+    boolean inicial_expedidor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        inicial_expedidor = false;
+        inicial_porteador = false;
         setContentView(R.layout.activity_registrar_papeleta);
 
         //se inicializan session y presenter
@@ -111,7 +116,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         spinnerOrdenCompraPorteador = (Spinner) findViewById(R.id.spinner_orden_compra_porteador);
         spinnerMedidorTractor = (Spinner) findViewById(R.id.spinner_medidor_tractor);
         textViewFecha = (TextView) findViewById(R.id.textFecha);
-        textViewFechaEmbarque = (TextView) findViewById(R.id.textFechaEmbarque) ;
+        textViewFechaEmbarque = (TextView) findViewById(R.id.textFechaEmbarque);
         editTextNumEmbarque = (EditText) findViewById(R.id.input_embarque);
         editTextNombreExpedidor = (EditText) findViewById(R.id.input_nombre_expedidor);
         editTextNombrePorteador = (EditText) findViewById(R.id.input_nombre_porteador);
@@ -132,7 +137,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
         //se completan los spinners con los adapters
         String[] ordenes = {"prueba", "prueba"};
-        final String [] medidores = {"Magnatel", "Rotogate"};
+        final String[] medidores = {"Magnatel", "Rotogate"};
         spinnerOrdenCompraPorteador.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
         spinnerOrdenCompraExpedidor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, ordenes));
         spinnerMedidorTractor.setAdapter(new ArrayAdapter<String>(this, R.layout.custom_spinner, medidores));
@@ -142,7 +147,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         final ImageButton buttonFecha = (ImageButton) findViewById(R.id.imageBtnFecha);
         buttonFecha.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                fechaSeleccionada=0;
+                fechaSeleccionada = 0;
                 showDialog(DATE_DIALOG_ID);
 
             }
@@ -159,7 +164,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         final ImageButton buttonFechaEmbarque = (ImageButton) findViewById(R.id.imageBtnFechaEmbarque);
         buttonFechaEmbarque.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                fechaSeleccionada=1;
+                fechaSeleccionada = 1;
                 showDialog(DATE_DIALOG_ID);
             }
         });
@@ -186,15 +191,22 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         spinnerOrdenCompraExpedidor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (ordenesCompraDTOExpedidor.size()!=0){
-                    Log.w("Selected",""+position);
+                if (ordenesCompraDTOExpedidor.size() != 0) {
+                    Log.w("Selected", "" + position);
                     ordenCompraDTOExpedidor = ordenesCompraDTOExpedidor.get(spinnerOrdenCompraExpedidor.getSelectedItemPosition());
                     spinnerOrdenCompraExpedidor.getSelectedItemPosition();
                     editTextNombreExpedidor.setText(ordenCompraDTOExpedidor.getProveedorNombreComercial());
                     papeletaDTO.setIdOrdenCompraExpedidor(ordenCompraDTOExpedidor.getIdOrdenCompra());
                     papeletaDTO.setIdOrdenCompraExpedidor(ordenCompraDTOExpedidor.getIdProveedor());
                     editTextNombreExpedidor.setEnabled(false);
+                    if (position >= 0 && inicial_expedidor) {
+                        presenter.getOrderReferencia(session.getToken(),
+                                ordenCompraDTOExpedidor.getIdOrdenCompra(),
+                                true
+                        );
+                    }
                 }
+
             }
 
             @Override
@@ -207,14 +219,20 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         spinnerOrdenCompraPorteador.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (ordenesCompraDTOPorteador.size()!=0){
-                    Log.w("Selected",""+position);
+                if (ordenesCompraDTOPorteador.size() != 0) {
+                    Log.w("Selected", "" + position);
                     ordenCompraDTOPorteador = ordenesCompraDTOPorteador.get(spinnerOrdenCompraPorteador.getSelectedItemPosition());
                     spinnerOrdenCompraPorteador.getSelectedItemPosition();
                     editTextNombrePorteador.setText(ordenCompraDTOPorteador.getProveedorNombreComercial());
                     papeletaDTO.setIdOrdenCompraPorteador(ordenCompraDTOPorteador.getIdOrdenCompra());
                     papeletaDTO.setIdOrdenCompraPorteador(ordenCompraDTOPorteador.getIdProveedor());
                     editTextNombrePorteador.setEnabled(false);
+                    if (position >= 0 && inicial_porteador) {
+                        presenter.getOrderReferencia(session.getToken(),
+                                ordenCompraDTOPorteador.getIdOrdenCompra(),
+                                false
+                        );
+                    }
                 }
             }
 
@@ -230,8 +248,8 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 //if (medidores.size()!=0){
-                    Log.w("Selected",""+position);
-                    tipoMedidor = medidores[spinnerMedidorTractor.getSelectedItemPosition()];
+                Log.w("Selected", "" + position);
+                tipoMedidor = medidores[spinnerMedidorTractor.getSelectedItemPosition()];
                 //}
             }
 
@@ -242,13 +260,15 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
         });
 
-        presenter.getOrdenesCompraExpedidor(session.getIdEmpresa(),session.getTokenWithBearer());
+        presenter.getOrdenesCompraExpedidor(session.getIdEmpresa(), session.getTokenWithBearer());
+        inicial_porteador = true;
+        inicial_expedidor = true;
     }
 
     //metodo que pone el texto de la fecha seleccionada
     private void updateDisplay() {
-        if(fechaSeleccionada==0) {
-            if(fecha==null){
+        if (fechaSeleccionada == 0) {
+            if (fecha == null) {
                 fecha = new Date();
             }
             textViewFecha.setText(
@@ -261,8 +281,8 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
             fecha.setMonth(mMonth);
             fecha.setYear(mYear);
         }
-        if(fechaSeleccionada==1) {
-            if(fechaEmbarque == null){
+        if (fechaSeleccionada == 1) {
+            if (fechaEmbarque == null) {
                 fechaEmbarque = new Date();
             }
             textViewFechaEmbarque.setText(
@@ -287,11 +307,13 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
                     updateDisplay();
                 }
             };
+
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case DATE_DIALOG_ID:
                 return new DatePickerDialog(this,
+                        R.style.datepicker,
                         mDateSetListener,
                         mYear, mMonth, mDay);
         }
@@ -300,7 +322,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
 
 
     //metodo que verifica que los campos esten completos y si no muestra mensjae
-    public void onClickRegistrar(){
+    public void onClickRegistrar() {
         boolean empty = false;
 
         String numeroEmbarque = editTextNumEmbarque.getText().toString();
@@ -317,11 +339,11 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         }
 
         String capTanque = editTextCapTanque.getText().toString();
-            if (TextUtils.isDigitsOnly(capTanque)) {
-                if (capTanque.length() == 0) {
-                    empty = true;
-                }
+        if (TextUtils.isDigitsOnly(capTanque)) {
+            if (capTanque.length() == 0) {
+                empty = true;
             }
+        }
 
         String porcentTanque = editTextPorcentajeTanque.getText().toString();
         if (TextUtils.isDigitsOnly(porcentTanque)) {
@@ -346,32 +368,31 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
             }
         }
 
-        if(TextUtils.isEmpty(numeroEmbarque) || TextUtils.isEmpty(placasTractor) || TextUtils.isEmpty(nombreOperador)
+        if (TextUtils.isEmpty(numeroEmbarque) || TextUtils.isEmpty(placasTractor) || TextUtils.isEmpty(nombreOperador)
                 || TextUtils.isEmpty(producto) || TextUtils.isEmpty(noTanque) || TextUtils.isEmpty(sello)
-                || TextUtils.isEmpty(nombreResponsable) ){
+                || TextUtils.isEmpty(nombreResponsable)) {
             empty = true;
         }
 
-        if(fecha == null || fechaEmbarque == null)
-        {
-            empty=true;
+        if (fecha == null || fechaEmbarque == null) {
+            empty = true;
         }
 
-        if(empty){
+        if (empty) {
             showDialog(getResources().getString(R.string.empty_field));
-        }else{
+        } else {
             buildPapeleta();
         }
     }
 
     //metodo que construye el objeto papeleta
-    public void buildPapeleta(){
+    public void buildPapeleta() {
         SimpleDateFormat sf = new SimpleDateFormat("y-MM-dd HH:mm:ss");
-        String formato_fecha  = String.valueOf(fecha.getYear())+"-"+String.valueOf(fecha.getMonth())+"-"+String.valueOf(fecha.getDate())+" "+String.valueOf(fecha.getHours())
-                +":"+String.valueOf(fechaEmbarque.getMinutes())+":"+String.valueOf(fechaEmbarque.getSeconds());
-        String formato_fecha_embarque = String.valueOf(fechaEmbarque.getYear())+"-"+String.valueOf(fechaEmbarque.getMonth())+"-"+String.valueOf(fechaEmbarque.getDate())+" "+String.valueOf(fechaEmbarque.getHours())
-                +":"+String.valueOf(fechaEmbarque.getMinutes())+":"+String.valueOf(fechaEmbarque.getSeconds());
-                //sf.format(fechaEmbarque);
+        String formato_fecha = String.valueOf(fecha.getYear()) + "-" + String.valueOf(fecha.getMonth()) + "-" + String.valueOf(fecha.getDate()) + " " + String.valueOf(fecha.getHours())
+                + ":" + String.valueOf(fechaEmbarque.getMinutes()) + ":" + String.valueOf(fechaEmbarque.getSeconds());
+        String formato_fecha_embarque = String.valueOf(fechaEmbarque.getYear()) + "-" + String.valueOf(fechaEmbarque.getMonth()) + "-" + String.valueOf(fechaEmbarque.getDate()) + " " + String.valueOf(fechaEmbarque.getHours())
+                + ":" + String.valueOf(fechaEmbarque.getMinutes()) + ":" + String.valueOf(fechaEmbarque.getSeconds());
+        //sf.format(fechaEmbarque);
 
         papeletaDTO.setCapacidadTanque(Double.parseDouble(editTextCapTanque.getText().toString()));
         papeletaDTO.setFecha(formato_fecha);
@@ -395,8 +416,16 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         papeletaDTO.setCantidadFotosTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getCantidadFotografias());
         papeletaDTO.setIdTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getIdTipoMedidor());
         papeletaDTO.setNombreTipoMedidorTractor(medidorDTOs.get(spinnerMedidorTractor.getSelectedItemPosition()).getNombreTipoMedidor());
-
-        startActivity();
+        if (papeletaDTO.getIdOrdenCompraExpedidor() == papeletaDTO.getIdOrdenCompraPorteador()){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialog);
+            builder.setTitle(R.string.mensjae_error_campos);
+            builder.setMessage("La orden de compra de porteador y de expedidor no puede ser la misma");
+            builder.setPositiveButton(R.string.message_acept, (dialog, which) ->
+                    spinnerOrdenCompraExpedidor.setFocusable(true));
+            builder.create().show();
+        }else{
+            startActivity();
+        }
     }
 
     //metodo que muestra un mensaje
@@ -449,6 +478,7 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
     public void showProgress(int mensaje) {
         progressDialog = ProgressDialog.show(this,getResources().getString(R.string.app_name),
                 getResources().getString(mensaje), true);
+        progressDialog.setProgressStyle(R.style.AlertDialog);
     }
 
     //metodo que oculta el progresso
@@ -560,5 +590,34 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
         builder.setMessage(mensaje);
         builder.setPositiveButton(R.string.message_acept,((dialog, which) -> dialog.dismiss()));
         builder.create().show();
+    }
+
+    @Override
+    public void onSuccessReferencia(RespuestaOrdenReferenciaDTO data, boolean esExpedidor) {
+        if(data!=null){
+            if(data.isExito() && data.getId()>0){
+                if(esExpedidor){
+                    for (OrdenCompraDTO or:
+                            this.ordenesCompraDTOPorteador) {
+                        if(or.getIdOrdenCompra()==data.getId()){
+                            if(or.getIdOrdenCompra()== data.getId()){
+                                int index = this.ordenesCompraDTOPorteador.indexOf(or);
+                                spinnerOrdenCompraPorteador.setSelection(index);
+                            }
+                        }
+                    }
+                }else{
+                    for (OrdenCompraDTO or :
+                            this.ordenesCompraDTOPorteador) {
+                        if(or.getIdOrdenCompra()==data.getId()){
+                            if(or.getIdOrdenCompra()== data.getId()){
+                                int index = this.ordenesCompraDTOPorteador.indexOf(or);
+                                spinnerOrdenCompraExpedidor.setSelection(index);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

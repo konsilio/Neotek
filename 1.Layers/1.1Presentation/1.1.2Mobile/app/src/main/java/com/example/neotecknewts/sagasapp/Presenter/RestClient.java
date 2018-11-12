@@ -11,6 +11,7 @@ import com.example.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosClientesDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosEmpresaConfiguracionDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosPuntoVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosReporteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTipoPersonaDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosTraspasoDTO;
@@ -34,6 +35,7 @@ import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaFinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaIniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaLecturaInicialDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenReferenciaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPapeletaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
@@ -239,8 +241,8 @@ public interface RestClient {
     );
 
     @GET(Constantes.GET_UNIDADES)
-    Call<List<UnidadesDTO>> getUnidades(@Header("Authorization") String token,
-                                        @Header("Content-Type") String contentType);
+    Call<DatosReporteDTO> getUnidades(@Header("Authorization") String token,
+                                      @Header("Content-Type") String contentType);
     @GET(Constantes.GET_CATALOGO_RECARGAS)
     Call<Object> getCatalogsRecarga(
             @Path(value = "esEstacion", encoded=true) boolean esEstacion,
@@ -256,18 +258,18 @@ public interface RestClient {
                                                           boolean esEstacion,
                                                   @Path(value = "esInventario",encoded = true)
                                                           boolean esInventario,
-                                                  @Path(value =  "esPipa",encoded = true)
+                                                  @Path(value =  "esPipas",encoded = true)
                                                           boolean esPipa,
-                                                  @Path(value = "esFinalizar",encoded = true)
+                                                  @Path(value = "esFinal",encoded = true)
                                                           boolean esFinalizar,
                                                   @Header("Authorization") String token,
                                                   @Header("Content-Type") String contentType
                                                   );
     @POST(Constantes.POST_AUTOCONSUMO)
     Call<RespuestaRecargaDTO> postAutorconsumo(@Body AutoconsumoDTO autoconsumoDTO,
-                                               @Path(value = "esEstacion") boolean esEstacion,
+                                               /*@Path(value = "esEstacion") boolean esEstacion,
                                                @Path(value = "esIventario") boolean esInventario,
-                                               @Path(value = "esPipa") boolean esPipa,
+                                               @Path(value = "esPipa") boolean esPipa,*/
                                                @Path(value = "esFinal") boolean esFinal,
                                                @Header("Authorization") String token,
                                                @Header("Content-type") String contentType
@@ -367,4 +369,23 @@ public interface RestClient {
     Call<RespuestaCorteDto> postCorte(@Body CorteDTO corteDTO,
                                       @Header("Authorization") String token,
                                       @Header("Content-type") String contenType);
+
+    /**
+     * getReferenciaOrden
+     * Permite retornar el id de la orden de compra de referencia ya sea de expedidor o de porteador
+     * se envia como parametros el id de la orden que se reuiqere obtener su referencia y el token
+     * del usuario , retornara un objeto de tipo {@link RespuestaOrdenReferenciaDTO} con el id
+     * de la referencia , en caso de que no tenga retornara un cero
+     * @param idOrdenCompra int que reprecenta el id de la orden de compra
+     * @param token {@link String} que contiene el token de seguridad
+     * @param contenType Reprecenta el tipo de contenido que retornara la respuesta
+     * @return Retorna un objeto {@link RespuestaOrdenReferenciaDTO} con el resultado de la solicitud
+     * al api
+     */
+    @POST(Constantes.GET_ORDEN_REFERENCIA)
+    Call<RespuestaOrdenReferenciaDTO> getReferenciaOrden(
+            @Path(value = "IdOrdenCompra") int idOrdenCompra,
+            @Header("Authorization") String token,
+            @Header("Content-type") String contenType
+    );
 }

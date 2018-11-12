@@ -1,13 +1,14 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Activity.LecturaCamionetaView;
+import com.example.neotecknewts.sagasapp.Interactor.LecturaCamionetaInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.LecturaCamionetaInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.R;
 
 public class LecturaCamionetaPresenterImpl implements LecturaCamionetaPresenter {
     private LecturaCamionetaView lecturaCamionetaView;
-    private LecturaCamionetaInteractorImpl lecturaCamionetaInteractor;
+    private LecturaCamionetaInteractor lecturaCamionetaInteractor;
     public LecturaCamionetaPresenterImpl ( LecturaCamionetaView lecturaCamionetaView) {
         this.lecturaCamionetaView = lecturaCamionetaView;
         this.lecturaCamionetaInteractor = new LecturaCamionetaInteractorImpl(this);
@@ -27,7 +28,7 @@ public class LecturaCamionetaPresenterImpl implements LecturaCamionetaPresenter 
 
     @Override
     public void onSuccessCamionetas(DatosTomaLecturaDto data) {
-        lecturaCamionetaView.onSuccessCamionetas(data);
         lecturaCamionetaView.hideProgress();
+        lecturaCamionetaView.onSuccessCamionetas(data);
     }
 }

@@ -48,4 +48,10 @@
         <item name="android:textColorPrimary">@color/primaryTextColor</item>
         <item name="colorAccent">@color/primaryTextColor</item>
     </style>
+    <style name="datepicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primaryTextColor</item>
+        <item name="colorPrimaryDark">@color/buttonBackgroundColor</item>
+        <item name="colorAccent">@color/primaryTextColor</item>
+        <item name="colorControlHighlight">@color/colorBackgroundSistemaLogin</item>
+    </style>
 </resources>

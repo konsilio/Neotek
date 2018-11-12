@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by neotecknewts on 15/08/18.
  */
 
-public class AlmacenDTO {
+public class AlmacenDTO extends RespuestaDTO  implements Serializable {
     @SerializedName("NombreAlmacen")
     private String NombreAlmacen;
 
