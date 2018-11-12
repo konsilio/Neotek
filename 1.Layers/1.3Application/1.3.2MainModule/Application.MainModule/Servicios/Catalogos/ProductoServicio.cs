@@ -173,11 +173,23 @@ namespace Application.MainModule.Servicios.Catalogos
         }
         public static bool ExisteLinea(string nombre)
         {
+
             var proDAccess = new ProductoDataAccess();
             var idEmpresa = TokenServicio.ObtenerIdEmpresa();
 
-            var categoria = proDAccess.BuscarLineaProducto(idEmpresa, nombre);
-            if (categoria != null) return true;
+            var linea = proDAccess.BuscarLineaProducto(idEmpresa, nombre);
+            if (linea != null) return true;
+
+            return false;
+        }
+        public static bool ExisteLinea(string nombre, short id)
+        {
+
+            var proDAccess = new ProductoDataAccess();
+            var idEmpresa = TokenServicio.ObtenerIdEmpresa();
+
+            var linea = proDAccess.BuscarLineaProducto(idEmpresa, nombre, id);
+            if (linea != null) return true;
 
             return false;
         }
@@ -186,8 +198,18 @@ namespace Application.MainModule.Servicios.Catalogos
             var proDAccess = new ProductoDataAccess();
             var idEmpresa = TokenServicio.ObtenerIdEmpresa();
 
-            var categoria = proDAccess.BuscarUnidadMedida(idEmpresa, nombre, acronimo);
-            if (categoria != null) return true;
+            var unidad = proDAccess.BuscarUnidadMedida(idEmpresa, nombre, acronimo);
+            if (unidad != null) return true;
+
+            return false;
+        }
+        public static bool ExisteUnidadMedida(string nombre, string acronimo, short id)
+        {
+            var proDAccess = new ProductoDataAccess();
+            var idEmpresa = TokenServicio.ObtenerIdEmpresa();
+
+            var unidad = proDAccess.BuscarUnidadMedida(idEmpresa, nombre, acronimo, id);
+            if (unidad != null) return true;
 
             return false;
         }

@@ -88,11 +88,24 @@ namespace Application.MainModule.Servicios.Catalogos
         }
 
 
-        public static RespuestaDto LineaProducto(LineaProductoCrearDto lpDto, bool esModificacion = false)
+        public static RespuestaDto LineaProducto(LineaProductoCrearDto lpDto)
         {
             var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
-            // Existencia            
+            // Existencia                    
             if (ProductoServicio.ExisteLinea(lpDto.Linea))
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.C0005, "La línea del productos", "Línea de producto"));
+            }
+
+            return respuesta;
+        }
+        public static RespuestaDto LineaProducto(LineaProductoModificarDto lpDto, bool esModificacion = false)
+        {
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
+            // Existencia                    
+            if (ProductoServicio.ExisteLinea(lpDto.Linea, lpDto.IdProductoLinea))
             {
                 respuesta.Exito = false;
                 respuesta.ModeloValido = false;
@@ -107,6 +120,19 @@ namespace Application.MainModule.Servicios.Catalogos
             var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
             // Existencia            
             if (ProductoServicio.ExisteUnidadMedida(uMDto.Nombre, uMDto.Acronimo))
+            {
+                respuesta.Exito = false;
+                respuesta.ModeloValido = false;
+                respuesta.MensajesError.Add(string.Format(Error.C0005, "El nombre o acrónimo", "unidad de medida"));
+            }
+
+            return respuesta;
+        }
+        public static RespuestaDto UnidadMedida(UnidadMedidaModificarDto uMDto, bool esModificacion = false)
+        {
+            var respuesta = new RespuestaDto() { Exito = true, ModeloValido = true, MensajesError = new List<string>() };
+            // Existencia            
+            if (ProductoServicio.ExisteUnidadMedida(uMDto.Nombre, uMDto.Acronimo, uMDto.IdUnidadMedida))
             {
                 respuesta.Exito = false;
                 respuesta.ModeloValido = false;

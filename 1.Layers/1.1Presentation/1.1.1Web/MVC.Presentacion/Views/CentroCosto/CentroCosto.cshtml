@@ -4,12 +4,13 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Centro Costo</title>
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+
     <script src="~/Scripts/js/CentroCostoJS.js"></script>
 </head>
 <body style="padding-top:10px">
     @using (Html.BeginForm("Crear", "CentroCosto", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.IdEmpresa)
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -17,8 +18,8 @@
                         <div class="col-lg-5 col-md-5 col-sm-12">
                             <h2>Centro de Costos</h2>
                             <ul class="breadcrumb padding-0">
-                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item">Catálogos </li>
+                                <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Catálogos</li>
                                 <li class="breadcrumb-item">Centros de costo</li>
                             </ul>
                         </div>
@@ -49,11 +50,18 @@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlTipoCentroCosto">Tipo centro de costo</label>
                                         <div class="form-group">
-                                            <select name=IdTipoCentroCosto  class="form-control z-index selectpicker" data-live-search="true">
+                                            <select name=IdTipoCentroCosto class="form-control z-index" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.TiposCentrosCosto)
                                                 {
-                                                    <option id="@tp.IdTipoCentroCosto">@tp.Descripcion</option>
+                                                    if (tp.IdTipoCentroCosto == Model.IdTipoCentroCosto)
+                                                    {
+                                                        <option id="@tp.IdTipoCentroCosto" selected>@tp.Descripcion</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="@tp.IdTipoCentroCosto">@tp.Descripcion</option>
+                                                    }
                                                 }
                                             </select>
                                         </div>
@@ -64,15 +72,22 @@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlEquipoTransporte">Equipo Transporte</label>
                                         <div class="form-group">
-                                            <select id="IdEquipoTransporte"  class="form-control z-index selectpicker" data-live-search="true">
+                                            <select id="IdEquipoTransporte" class="form-control z-index" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.EquipoTransporte)
                                                 {
-                                                    <option id="@tp.IdEquipoTransporte">@tp.Descripcion</option>
+                                                    if (tp.IdEquipoTransporte == Model.IdEquipoTransporte)
+                                                    {
+                                                        <option id="@tp.IdEquipoTransporte" selected>@tp.Descripcion</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="@tp.IdEquipoTransporte">@tp.Descripcion</option>
+                                                    }
                                                 }
                                             </select>
                                         </div>
-                                      @Html.ValidationMessageFor(m => m.IdTipoCentroCosto, "", new { @class = "alert-danger" })
+                                        @Html.ValidationMessageFor(m => m.IdTipoCentroCosto, "", new { @class = "alert-danger" })
                                     </div>
                                     @*<div class="col-md-3 form-control-label">
                                         <label for="ddlVehiculo">Vehiculo</label>
@@ -85,11 +100,19 @@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlUnidadAlmacenGas">Unidad de almacén de gas</label>
                                         <div class="form-group">
-                                            <select id="IdCAlmacenGas"  class="form-control z-index selectpicker" data-live-search="true">
+                                            <select id="IdCAlmacenGas" class="form-control z-index" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.UnidadAlmacenGas)
                                                 {
-                                                    <option id="@tp.IdCAlmacenGas">@tp.Numero</option>
+                                                    if (tp.IdCAlmacenGas == Model.IdCAlmacenGas)
+                                                    {
+                                                        <option id="@tp.IdCAlmacenGas" seles>@tp.Numero</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="@tp.IdCAlmacenGas">@tp.Numero</option>
+                                                    }
+
                                                 }
                                             </select>
                                         </div>
@@ -98,18 +121,25 @@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlEstacionCarburacion">Estación de carburación</label>
                                         <div class="form-group">
-                                            <select id="IdEstacionCarburacion"  class="form-control z-index selectpicker" data-live-search="true">
+                                            <select id="IdEstacionCarburacion" class="form-control z-index" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.EstacionesCarburacion)
                                                 {
-                                                    <option id="@tp.IdEstacionCarburacion">@tp.Nombre</option>
+                                                    if (tp.IdEstacionCarburacion == Model.IdEstacionCarburacion)
+                                                    {
+                                                        <option id="@tp.IdEstacionCarburacion" selected>@tp.Nombre</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option id="@tp.IdEstacionCarburacion">@tp.Nombre</option>
+                                                    }
                                                 }
                                             </select>
                                         </div>
                                         @Html.ValidationMessageFor(m => m.IdEstacionCarburacion, "", new { @class = "alert-danger" })
                                     </div>
                                     <div class="col-md-3 form-control-label">
-                                       <div><strong>&nbsp; </strong></div> 
+                                        <div><strong>&nbsp; </strong></div>
                                         @if (ViewBag.EsEdicion == null)
                                         {
                                             <button btn id="BtnCrear" formaction="Crear" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
@@ -118,7 +148,7 @@
                                         }
                                         else
                                         {
-                                            <button btn id="btnUpDate" formaction="Modificar" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
+                                            <button btn id="btnUpDate" formaction="ActivarEditar" class="btn btn-primary btn-icon  btn-icon-mini btn-round">
                                                 <i class="zmdi zmdi-swap"></i>
                                             </button>
                                         }
@@ -162,7 +192,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
                             <div class="header">
-                                <strong>Centros de costo</strong>
+                                Centros de <strong>costo</strong>
                             </div>
                             <div class="body">
                                 <div class="row clearfix">
@@ -185,7 +215,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-control-label">
-                                        <label for="ddlFiltroCentroCosto">Tipo centro de costo</label>
+                                        @*<label for="ddlFiltroCentroCosto">Tipo centro de costo</label>
                                         <div class="form-group">
                                             <select class="form-control selectpicker" data-live-search="true">
                                                 @foreach (var item in ViewBag.TiposCentrosCosto)
@@ -193,7 +223,7 @@
                                                     <option value="@item.IdTipoCentroCosto">@item.Descripcion</option>
                                                 }
                                             </select>
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
                                 @if (ViewBag.MensajeError != null)

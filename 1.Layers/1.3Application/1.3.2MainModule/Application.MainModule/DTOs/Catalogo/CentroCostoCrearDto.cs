@@ -15,33 +15,20 @@ namespace Application.MainModule.DTOs.Catalogo
         [Range(minimum: 1, maximum: short.MaxValue, ErrorMessage = Error.R0002)]
         [Display(Name = "Tipo centro de costo")]
         public byte IdTipoCentroCosto { get; set; }
-        
-        [Range(minimum: 1, maximum: short.MaxValue, ErrorMessage = Error.R0002)]
-        [Display(Name = "Equipo Transporte")]
+      
         public Nullable<int> IdEquipoTransporte { get; set; }
-                
-        [Range(minimum: 1, maximum: short.MaxValue, ErrorMessage = Error.R0002)]
-        [Display(Name = "Vehiculo utilitario")]
+      
         public Nullable<int> IdVehiculoUtilitario { get; set; }
 
-        [Range(minimum: 1, maximum: short.MaxValue, ErrorMessage = Error.R0002)]
-        [Display(Name = "Unidad de Alamcen de gas")]
         public Nullable<short> IdCAlmacenGas { get; set; }
 
-        [Range(minimum: 1, maximum: short.MaxValue, ErrorMessage = Error.R0002)]
-        [Display(Name = "Estación de carburación")]
         public Nullable<int> IdEstacionCarburacion { get; set; }
 
-        [Range(minimum: 1, maximum: short.MaxValue, ErrorMessage = Error.R0002)]
-        [Display(Name = "Camioneta")]
+       
         public Nullable<int> IdCamioneta { get; set; }
 
-        [Range(minimum: 1, maximum: short.MaxValue, ErrorMessage = Error.R0002)]
-        [Display(Name = "Pipa")]
         public Nullable<int> IdPipa { get; set; }
 
-        [Range(minimum: 1, maximum: short.MaxValue, ErrorMessage = Error.R0002)]
-        [Display(Name = "Cilindro de gas")]
         public Nullable<int> IdCilindro { get; set; }
 
         [Required(ErrorMessage = Error.R0002)]
