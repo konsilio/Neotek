@@ -4,12 +4,13 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Centro Costo</title>
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
+
     <script src="~/Scripts/js/CentroCostoJS.js"></script>
 </head>
 <body style="padding-top:10px">
     @using (Html.BeginForm("Crear", "CentroCosto", FormMethod.Post))
     {
+        @Html.HiddenFor(m => m.IdEmpresa)
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
@@ -17,8 +18,8 @@
                         <div class="col-lg-5 col-md-5 col-sm-12">
                             <h2>Centro de Costos</h2>
                             <ul class="breadcrumb padding-0">
-                                <li class="breadcrumb-item"><a href="~/DashBoard/Vista/Dashboard.aspx"><i class="zmdi zmdi-home"></i></a></li>
-                                <li class="breadcrumb-item">Catálogos </li>
+                                <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Catálogos</li>
                                 <li class="breadcrumb-item">Centros de costo</li>
                             </ul>
                         </div>
@@ -49,7 +50,7 @@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlTipoCentroCosto">Tipo centro de costo</label>
                                         <div class="form-group">
-                                            <select name=IdTipoCentroCosto class="form-control z-index selectpicker" data-live-search="true">
+                                            <select name=IdTipoCentroCosto class="form-control z-index" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.TiposCentrosCosto)
                                                 {
@@ -71,7 +72,7 @@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlEquipoTransporte">Equipo Transporte</label>
                                         <div class="form-group">
-                                            <select id="IdEquipoTransporte" class="form-control z-index selectpicker" data-live-search="true">
+                                            <select id="IdEquipoTransporte" class="form-control z-index" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.EquipoTransporte)
                                                 {
@@ -99,7 +100,7 @@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlUnidadAlmacenGas">Unidad de almacén de gas</label>
                                         <div class="form-group">
-                                            <select id="IdCAlmacenGas" class="form-control z-index selectpicker" data-live-search="true">
+                                            <select id="IdCAlmacenGas" class="form-control z-index" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.UnidadAlmacenGas)
                                                 {
@@ -120,7 +121,7 @@
                                     <div class="col-md-3 form-control-label">
                                         <label for="ddlEstacionCarburacion">Estación de carburación</label>
                                         <div class="form-group">
-                                            <select id="IdEstacionCarburacion" class="form-control z-index selectpicker" data-live-search="true">
+                                            <select id="IdEstacionCarburacion" class="form-control z-index" data-live-search="true">
                                                 <option id="0">Seleccione uno</option>
                                                 @foreach (var tp in ViewBag.EstacionesCarburacion)
                                                 {
@@ -214,7 +215,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-control-label">
-                                        <label for="ddlFiltroCentroCosto">Tipo centro de costo</label>
+                                        @*<label for="ddlFiltroCentroCosto">Tipo centro de costo</label>
                                         <div class="form-group">
                                             <select class="form-control selectpicker" data-live-search="true">
                                                 @foreach (var item in ViewBag.TiposCentrosCosto)
@@ -222,7 +223,7 @@
                                                     <option value="@item.IdTipoCentroCosto">@item.Descripcion</option>
                                                 }
                                             </select>
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
                                 @if (ViewBag.MensajeError != null)

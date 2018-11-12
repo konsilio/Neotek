@@ -48,7 +48,7 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 ViewData["RespuestaDTO"] = respuesta;
-                return RedirectToAction("CentroCosto", CatalogoServicio.InitCentroCosto(tkn));
+                return RedirectToAction("CentroCosto", model);
             }
         }
         public ActionResult ActivarEditar(int? id, CentroCostoModel model)

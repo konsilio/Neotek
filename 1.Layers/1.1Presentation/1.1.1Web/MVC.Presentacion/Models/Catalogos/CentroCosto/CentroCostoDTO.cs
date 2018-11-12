@@ -10,17 +10,13 @@ namespace MVC.Presentacion.Models.Catalogos
     [Serializable]
     public class CentroCostoDTO
     {
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdCentroCosto")]
-        public int IdCentroCosto { get; set; }
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdEmpresa")]
+      
+        public byte IdCentroCosto { get; set; }
+        
         public short IdEmpresa { get; set; }
 
         public string Empresa { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "IdTipoCentroCosto")]
         public byte IdTipoCentroCosto { get; set; }
 
         public string TipoCentroCosto { get; set; }
@@ -39,20 +35,13 @@ namespace MVC.Presentacion.Models.Catalogos
 
         public int IdCilindro { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Numero")]
         public string Numero { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Descripcion")]
         public string Descripcion { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "Activo")]
+        
         public bool Activo { get; set; }
 
-        [Required(ErrorMessage = Error.R0002)]
-        [Display(Name = "FechaRegistro")]
         public DateTime FechaRegistro { get; set; }
     }
 }

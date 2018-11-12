@@ -1362,6 +1362,7 @@ namespace MVC.Presentacion.App_Code
         {
             return new CentroCostoModel()
             {
+                IdEmpresa = TokenServicio.ObtenerIdEmpresa(Tkn),
                 CentrosCostos = BuscarCentrosCosto(Tkn)
             };
         }
@@ -1438,11 +1439,11 @@ namespace MVC.Presentacion.App_Code
             dto.IdEquipoTransporte = model.IdEquipoTransporte;
             dto.IdEstacionCarburacion = model.IdEstacionCarburacion;
             dto.IdCAlmacenGas = model.IdCAlmacenGas;
-            dto.IdCamioneta = 0;
-            dto.IdCilindro = 0;
-            dto.IdPipa = 0;
-            dto.IdVehiculoUtilitario = 0;
-            dto.IdTipoCentroCosto = 1;
+            dto.IdCamioneta = model.IdCamioneta;
+            dto.IdCilindro = model.IdCilindro;
+            dto.IdPipa = model.IdPipa;
+            dto.IdVehiculoUtilitario = model.IdVehiculoUtilitario;
+            //dto.IdTipoCentroCosto = model.IdCentroCosto;
             return NuevoCentroCosto(dto, tkn);
         }
         #endregion
