@@ -2074,7 +2074,7 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Cursor GetFotografiasCalibracion(String claveOperacion) {
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_CALIBRACION_IMAGENES+
-        "WHERE ClaveOperacion = '"+claveOperacion+"'",null);
+        " WHERE ClaveOperacion = '"+claveOperacion+"'",null);
     }
 
     public Long[] InsertarImagenesCalibracion(CalibracionDTO calibracionDTO) {

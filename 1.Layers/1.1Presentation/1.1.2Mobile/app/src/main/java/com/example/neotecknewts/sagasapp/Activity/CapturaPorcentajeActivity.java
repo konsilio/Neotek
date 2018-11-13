@@ -267,6 +267,15 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                         getString( R.string.Calibracion)+" - Inicial":
                         getString(R.string.Calibracion)+" - Final"
                 );
+                porcentaje_inicial = calibracionDTO.getPorcentajeCalibracion();
+                //porcentaje_inicial = lecturaDTO.getPorcentajeMedidor();
+                if(porcentaje_inicial>0) {
+                    int parte_entera = porcentaje_inicial.intValue();
+                    int parte_decimal = (int) (porcentaje_inicial - parte_entera);
+
+                    numberPickerProcentaje.setValue(parte_entera);
+                    numberPickerDecimal.setValue(parte_decimal);
+                }
                 textView.setText("Registra el porcentaje del magnatel de la Estación");
             }else if(extras.getBoolean("EsCalibracionPipaInicial",false) ||
                     extras.getBoolean("EsCalibracionPipaFinal",false)){
@@ -345,9 +354,9 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
         }else if(EsTraspasoEstacionInicial ||EsTraspasoEstacionFinal){
             traspasoDTO.setPorcentajeSalida(porcentaje);
         }else if (EsCalibracionEstacionInicial || EsCalibracionEstacionFinal){
-            calibracionDTO.setPorcentaje(porcentaje);
+            calibracionDTO.setPorcentajeMedidor2(porcentaje);
         }else if (EsCalibracionPipaInicial || EsCalibracionPipaFinal){
-            calibracionDTO.setPorcentaje(porcentaje);
+            calibracionDTO.setPorcentajeMedidor2(porcentaje);
         }
         startActivity();
     }

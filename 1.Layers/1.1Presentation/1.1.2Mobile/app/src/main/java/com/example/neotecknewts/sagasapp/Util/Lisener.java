@@ -157,7 +157,7 @@ public class Lisener{
                     completo = PuntoVenta();
                     break;
                 case Autoconsumo:
-                    completo = Autoconsumo();
+                    this.completo = Autoconsumo();
                     break;
                 case Calibracion:
                     completo = Calibracion();
@@ -176,7 +176,7 @@ public class Lisener{
         ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
         ScheduledFuture scheduledFuture = timer.
                 scheduleAtFixedRate(myTask, 10, 10, TimeUnit.SECONDS);
-        if(completo) {
+        if(this.completo) {
             scheduledFuture.cancel(false);
         }
     }
@@ -597,7 +597,7 @@ public class Lisener{
      */
     private boolean Calibracion() {
         if(ServicioDisponible()){
-            Log.w("Iniciando",new Date()+" Revisado de los autoconsumos");
+            Log.w("Iniciando",new Date()+" Revisado de las calibraciónes");
             Cursor cursor = sagasSql.GetAutoconsumos();
             if(cursor.moveToFirst()){
                 CalibracionDTO dto;
@@ -687,6 +687,7 @@ public class Lisener{
                     String tipo = cursor.getString(
                             cursor.getColumnIndex("Tipo")
                     );
+                    Log.w("Enviando calibración",dto.getClaveOperacion());
                     if(Registrar(dto,token,esFinal,tipo)){
                         sagasSql.EliminarCalibracion(dto.getClaveOperacion());
                         sagasSql.EliminarImagenesCalibracion(dto.getClaveOperacion());
@@ -724,8 +725,8 @@ public class Lisener{
         Call<RespuestaTraspasoDTO> call = null;
 
         restClient.postCalibracion(dto,
-                tipo.equals(SAGASSql.TIPO_CALIBRACION_ESTACION),
-                tipo.equals(SAGASSql.TIPO_CALIBRACION_PIPA),
+                /*tipo.equals(SAGASSql.TIPO_CALIBRACION_ESTACION),
+                tipo.equals(SAGASSql.TIPO_CALIBRACION_PIPA),*/
                 esFinal,
                 token,
                 "application/json"
@@ -735,11 +736,13 @@ public class Lisener{
             public void onResponse(Call<RespuestaTraspasoDTO> call,
                                    Response<RespuestaTraspasoDTO> response) {
                 _registrado = call.isExecuted() && response.isSuccessful();
+                Log.w("Listo","Registro "+dto.getClaveOperacion());
             }
 
             @Override
             public void onFailure(Call<RespuestaTraspasoDTO> call, Throwable t) {
                 _registrado = false;
+                Log.e("Error","Error registro "+dto.getClaveOperacion());
             }
         });
         Log.w("Registro","Registro en servicio "+dto.getClaveOperacion()+": "+

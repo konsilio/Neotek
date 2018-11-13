@@ -38,13 +38,13 @@ public class DatosCalibracionDTO extends RespuestaDTO implements Serializable {
         @SerializedName("PorcentajeMedidor")
         private float PorcentajeMedidor;
 
-        @SerializedName("CantidadP500")
+        @SerializedName("CantidadP5000")
         private int CantidadP5000;
 
         @SerializedName("IdTipoMedidor")
         private int IdTipoMedidor;
 
-        @SerializedName("medidor")
+        @SerializedName("Medidor")
         private MedidorDTO medidor;
 
         public int getIdAlmacenGas() {

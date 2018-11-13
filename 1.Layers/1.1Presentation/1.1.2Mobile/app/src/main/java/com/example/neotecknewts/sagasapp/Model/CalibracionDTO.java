@@ -18,7 +18,7 @@ import java.util.List;
 
 public class CalibracionDTO implements Serializable {
 
-    @SerializedName("IdCalmacenGas")
+    @SerializedName("IdCAlmacenGas")
     private int IdCAlmacenGas;
 
     @SerializedName("NombreCAlmacenGas")
@@ -33,7 +33,7 @@ public class CalibracionDTO implements Serializable {
     @SerializedName("PorcentajeMedidor1")
     private double PorcentajeCalibracion;
 
-    @SerializedName("IdDestinoCalibracion")
+    @SerializedName("IdDestino")
     private int IdDestinoCalibracion;
 
     @SerializedName("P5000")

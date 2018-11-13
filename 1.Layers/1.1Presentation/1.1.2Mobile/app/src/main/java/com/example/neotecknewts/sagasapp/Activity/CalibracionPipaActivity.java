@@ -82,8 +82,60 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                calibracionDTO.setIdCAlmacenGas(1);
-                calibracionDTO.setNombreCAlmacenGas("Pipa No. 1");
+                if(position>=0) {
+                    if(datosCalibracionDTO.getEstaciones().size()>0 &&
+                            !datosCalibracionDTO.getEstaciones().isEmpty()) {
+                        for (int x=0;x<datosCalibracionDTO.getEstaciones().size();x++) {
+                            if(parent.getItemAtPosition(position).toString().equals(
+                                    datosCalibracionDTO.getEstaciones().get(x).getNombreAlmacen()
+                            )) {
+                                calibracionDTO.setIdCAlmacenGas(
+                                        datosCalibracionDTO.getEstaciones().get(x).getIdAlmacenGas()
+                                );
+                                calibracionDTO.setNombreCAlmacenGas(
+                                        datosCalibracionDTO.getEstaciones().get(x).getNombreAlmacen()
+                                );
+                                calibracionDTO.setIdTipoMedidor(
+                                        datosCalibracionDTO.getEstaciones().get(x).getIdTipoMedidor()
+                                );
+                                calibracionDTO.setNombreMedidor(
+                                        datosCalibracionDTO.getEstaciones().get(x).getMedidor()
+                                                .getNombreTipoMedidor()
+                                );
+                                calibracionDTO.setCantidadFotografias(
+                                        datosCalibracionDTO.getEstaciones().get(x).getMedidor()
+                                                .getCantidadFotografias()
+                                );
+                                calibracionDTO.setP5000(
+                                        datosCalibracionDTO.getEstaciones().get(x).getCantidadP5000()
+                                );
+                                calibracionDTO.setPorcentaje(
+                                        datosCalibracionDTO.getEstaciones().get(x)
+                                                .getPorcentajeMedidor()
+                                );
+                                calibracionDTO.setPorcentajeCalibracion(
+                                        datosCalibracionDTO.getEstaciones().get(x)
+                                                .getPorcentajeMedidor()
+                                );
+                                calibracionDTO.setPorcentajeMedidor2(
+                                        datosCalibracionDTO.getEstaciones().get(x)
+                                                .getPorcentajeMedidor()
+                                );
+                                calibracionDTO.setIdDestinoCalibracion(
+                                        datosCalibracionDTO.getEstaciones().get(x)
+                                                .getIdAlmacenGas()
+                                );
+                            }
+                        }
+                        for (int x =0;x<datosCalibracionDTO.getMedidores().size();x++) {
+                            if (datosCalibracionDTO.getMedidores().get(x).getNombreTipoMedidor()
+                                    .equals(datosCalibracionDTO.getEstaciones().get(x).getMedidor()
+                                            .getNombreTipoMedidor()))
+
+                                SCalibracionPipaActivityMedidor.setSelection(x);
+                        }
+                    }
+                }
             }
 
             @Override
@@ -97,9 +149,22 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                calibracionDTO.setIdTipoMedidor(1);
-                calibracionDTO.setNombreMedidor("Magnatel");
-                calibracionDTO.setCantidadFotografias(1);
+                for (int x =0;x<datosCalibracionDTO.getMedidores().size();x++) {
+                    if (datosCalibracionDTO.getMedidores().get(x).getNombreTipoMedidor()
+                            .equals(parent.getItemAtPosition(position).toString())) {
+                        calibracionDTO.setIdTipoMedidor(
+                                datosCalibracionDTO.getMedidores().get(x).getIdTipoMedidor()
+                        );
+                        calibracionDTO.setNombreMedidor(
+                                datosCalibracionDTO.getMedidores().get(x)
+                                        .getNombreTipoMedidor()
+                        );
+                        calibracionDTO.setCantidadFotografias(
+                                datosCalibracionDTO.getMedidores().get(x)
+                                        .getCantidadFotografias()
+                        );
+                    }
+                }
             }
 
             @Override
@@ -116,8 +181,10 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(SCalibracionPipaActivityPruebas.getSelectedItem().equals("Tanque de la pipa")){
                     EsTanquePipaFinalPruebas = true;
+                    calibracionDTO.setIdDestinoCalibracion(1);
                 }else{
                     EsTanquePipaFinalPruebas = false;
+                    calibracionDTO.setIdDestinoCalibracion(2);
                 }
             }
 
@@ -201,6 +268,7 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                 intent.putExtra("EsCalibracionPipaInicial", EsCalibracionPipaInicial);
                 intent.putExtra("EsCalibracionPipaFinal", EsCalibracionPipaFinal);
                 intent.putExtra("calibracionDTO", calibracionDTO);
+                startActivity(intent);
             }else{
                 Intent intent = new Intent(CalibracionPipaActivity.this,
                         PorcentajeCalibracionActivity.class);
@@ -208,6 +276,7 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
                 intent.putExtra("EsCalibracionPipaFinal", EsCalibracionPipaFinal);
                 intent.putExtra("calibracionDTO", calibracionDTO);
                 intent.putExtra("EsTanquePipaFinalPruebas",EsTanquePipaFinalPruebas);
+                startActivity(intent);
             }
         }));
         builder.setNegativeButton(R.string.message_cancel,((dialog, which) -> dialog.dismiss()));
@@ -235,6 +304,30 @@ public class CalibracionPipaActivity extends AppCompatActivity implements Calibr
     public void onSuccessList(DatosCalibracionDTO dto) {
         if(dto!=null){
             datosCalibracionDTO = dto;
+            if(dto.getEstaciones().size()>0
+                    && !dto.getEstaciones().isEmpty() && dto.getEstaciones()!=null){
+                list_pipa_salida = new String[dto.getEstaciones().size()];
+                for (int x=0;x<dto.getEstaciones().size();x++){
+                    list_pipa_salida[x] = dto.getEstaciones().get(x).getNombreAlmacen();
+                }
+                SCalibracionPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(
+                        this,
+                        R.layout.custom_spinner,
+                        list_pipa_salida
+                ));
+            }
+            if(dto.getMedidores().size()>0 && !dto.getMedidores().isEmpty() &&
+                    dto.getMedidores()!=null){
+                list_tipo_medidor = new String[dto.getMedidores().size()];
+                for (int x=0;x<dto.getMedidores().size();x++){
+                    list_tipo_medidor[x] = dto.getMedidores().get(x).getNombreTipoMedidor();
+                }
+                SCalibracionPipaActivityMedidor.setAdapter(new ArrayAdapter<>(
+                        this,
+                        R.layout.custom_spinner,
+                        list_tipo_medidor
+                ));
+            }
         }
     }
 
