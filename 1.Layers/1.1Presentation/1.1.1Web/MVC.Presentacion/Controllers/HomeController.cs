@@ -39,6 +39,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null)
             {
+                Session["Perfil"] = null;
                 var respuesta = AutenticacionServicio.Autenticar(login.IdEmpresa, login.Usuario, SHA.GenerateSHA256String(login.Password));
                 if (respuesta.Exito)
                 {
