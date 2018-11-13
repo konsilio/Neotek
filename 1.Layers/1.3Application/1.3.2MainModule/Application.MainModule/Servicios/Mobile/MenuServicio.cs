@@ -34,7 +34,7 @@ namespace Application.MainModule.Servicios.Mobile
         private static bool _AppTraspasoEstacionCarb = false;
         private static bool _AppTraspasoPipa = false;
         private static bool _AppDisposicionEfectivo = false;
-        private static bool _AppPuntoVenta = false;
+        //private static bool _AppPuntoVenta = false;
         private static bool _AppCamionetaPuntoVenta = false;
         private static bool _AppEstacionCarbPuntoVenta = false;
         private static bool _AppPipaPuntoVenta = false;
@@ -145,8 +145,9 @@ namespace Application.MainModule.Servicios.Mobile
                     //Calibración camioneta cilindro
                     if (rol.AppCalibracionCamionetaCilindro && !_AppCalibracionCamionetaCilindro)
                     {
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionCamionetaCilindroInicial"]));
-                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionCamionetaCilindroFinal"]));
+                        lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionCamionetaCilindro"]));
+                        //lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionCamionetaCilindroInicial"]));
+                        //lista.Add(ObtenerDatosMenu(ConfigurationManager.AppSettings["AppCalibracionCamionetaCilindroFinal"]));
                         _AppCalibracionCamionetaCilindro = true;
                     }
                     //Recarga - Gas Estación Carb.
@@ -247,13 +248,13 @@ namespace Application.MainModule.Servicios.Mobile
             _AppCalibracionEstacionCarb = false;
             _AppCalibracionPipa = false;
             _AppCalibracionCamionetaCilindro = false;
-            _AppRecargaEstacionCarb = true;
+            _AppRecargaEstacionCarb = false;
             _AppRecargaPipa = false;
             _AppRecargaCamionetaCilindro = false;
             _AppTraspasoEstacionCarb = false;
             _AppTraspasoPipa = false;
             _AppDisposicionEfectivo = false;
-            _AppPuntoVenta = false;
+            //_AppPuntoVenta = false;
             _AppCamionetaPuntoVenta = false;
             _AppEstacionCarbPuntoVenta = false;
             _AppPipaPuntoVenta = false;

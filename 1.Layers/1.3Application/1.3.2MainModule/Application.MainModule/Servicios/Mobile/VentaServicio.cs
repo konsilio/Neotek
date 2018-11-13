@@ -39,6 +39,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.Mes = (byte)dto.Fecha.Month;
             adapter.Year = (short)dto.Fecha.Year;
             adapter.FechaRegistro = DateTime.Now;
+            adapter.FechaAplicacion = dto.Fecha;
             adapter.FechaCorteAnticipo = dto.Fecha;
             adapter.DatosProcesados = false;
             adapter.TipoOperacion = "Anticipo";
@@ -93,6 +94,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.TipoOperacion = "Corte caja";
             adapter.IdTipoOperacion = 2;
             adapter.PuntoVenta = estacion.Numero;
+            adapter.FechaAplicacion = dto.Fecha;
             return GasServicio.Corte(adapter);
         }
     }
