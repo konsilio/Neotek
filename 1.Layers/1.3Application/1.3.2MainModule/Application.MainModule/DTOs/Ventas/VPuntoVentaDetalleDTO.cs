@@ -33,6 +33,22 @@ namespace Application.MainModule.DTOs.Ventas
         public Nullable<decimal> PrecioUnitarioProducto { get; set; }
         public Nullable<decimal> DescuentoUnitarioProducto { get; set; }
         public Nullable<decimal> CantidadProducto { get; set; }
-        public string UnidadMedida { get; set; }
+        /************ReporteDiaPipa*************/        
+        public Nullable<decimal> P5000Inicial { get; set; }
+        public Nullable<decimal> P5000Final { get; set; }
+        public Nullable<decimal> PorcentajeInicial { get; set; }      
+        public Nullable<decimal> PorcentajeFinal { get; set; }
+        public string FolioOperacion { get; set; }
+        public Nullable<decimal> LitrosVendidos { get; set; }
+        public Nullable<decimal> PrecioLitro { get; set; }
+        public Nullable<decimal> totalCredito { get; set; }
+        public Nullable<decimal> totalContado { get; set; }
+        /************ReporteCammioneta*************/
+        public string Concepto { get; set; }
+        public string Salida { get; set; }
+        public string Recepcion { get; set; }
+        public Nullable<decimal> CantidadTotalProd { get; set; }
+        public Nullable<decimal> Total { get; set; }
+
     }
 }

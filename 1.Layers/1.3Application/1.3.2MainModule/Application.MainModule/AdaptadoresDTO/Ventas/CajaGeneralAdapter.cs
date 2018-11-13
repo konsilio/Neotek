@@ -2,6 +2,7 @@
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
+using Application.MainModule.Servicios.Catalogos;
 using Application.MainModule.Servicios.Ventas;
 using Sagas.MainModule.Entidades;
 using System;
@@ -53,6 +54,82 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             return luDTO;
         }
 
+        public static VPuntoVentaDetalleDTO ToDTO(VentaPuntoDeVentaDetalle pv, decimal totalCilindros, decimal CantKg20, decimal CantKg30, decimal CantKg45)
+        {
+            string concepto = "";
+            decimal c = 0;
+            if (CantKg20 != 0)
+                concepto = "20kg";
+            if (CantKg30 != 0)
+                concepto = "30kg";
+            if (CantKg45 != 0)
+                concepto = "45kg";
+
+            VPuntoVentaDetalleDTO usDTO = new VPuntoVentaDetalleDTO()
+            {
+                IdEmpresa = pv.IdEmpresa,
+                Year = pv.Year,
+                Mes = pv.Mes,
+                Dia = pv.Dia,
+                Orden = pv.Orden,
+                OrdenDetalle = pv.OrdenDetalle,
+                IdProducto = pv.IdProducto,
+                IdProductoLinea = pv.IdProductoLinea,
+                IdCategoria = pv.IdCategoria,
+                PrecioUnitarioLt = pv.PrecioUnitarioLt,
+                PrecioUnitarioKg = pv.PrecioUnitarioKg,
+                DescuentoUnitarioLt = pv.DescuentoUnitarioLt,
+                DescuentoUnitarioKg = pv.DescuentoUnitarioKg,
+                CantidadLt = pv.CantidadLt,
+                CantidadKg = pv.CantidadKg,
+                DescuentoTotal = pv.DescuentoTotal,
+                Subtotal = pv.Subtotal,
+                ProductoDescripcion = pv.ProductoDescripcion,
+                ProductoLinea = pv.ProductoLinea,
+                ProductoCategoria = pv.ProductoCategoria,
+                FechaRegistro = pv.FechaRegistro,
+                IdUnidadMedida = pv.IdUnidadMedida,
+                PrecioUnitarioProducto = pv.PrecioUnitarioProducto,
+                DescuentoUnitarioProducto = pv.DescuentoUnitarioProducto,
+                CantidadProducto = pv.CantidadProducto,
+                //Camioneta Reporte del dia Camioneta
+                CantidadTotalProd = totalCilindros,//ventas
+                Concepto = concepto,
+                Total = (totalCilindros * pv.DescuentoUnitarioLt),
+                Salida = "", //LecturaInicial Clindro
+                Recepcion = "",//LecturaFinal Clindro
+            };
+
+
+            return usDTO;
+        }
+
+        public static List<VPuntoVentaDetalleDTO> ToDTO(List<VentaPuntoDeVentaDetalle> lu)
+        {
+            decimal TotalProductos = 0;
+            decimal CantKg20 = 0;
+            decimal CantKg30 = 0;
+            decimal CantKg45 = 0;
+            List<VPuntoVentaDetalleDTO> luDTO = new List<VPuntoVentaDetalleDTO>();
+            var capacidadCilindros = lu.GroupBy(x => x.CantidadKg.Value).ToList();
+            foreach (var l in lu)
+
+            {
+                TotalProductos += l.CantidadProducto.Value;
+                if (l.CantidadKg.Value == 20)
+                    CantKg20 = l.CantidadKg.Value;
+                if (l.CantidadKg.Value == 30)
+                    CantKg30 = l.CantidadKg.Value;
+                if (l.CantidadKg.Value == 45)
+                    CantKg45 = l.CantidadKg.Value;
+
+             luDTO = lu.ToList().Select(x => ToDTO(x, TotalProductos, CantKg20, CantKg30, CantKg45)).ToList();
+            
+            }
+            //cuantos de 20, cuantos de 30, cuantos de 45???????????
+
+           return luDTO;
+        }
 
         public static AlmacenGasMovimientoDto ToDTO(AlmacenGasMovimiento pv)
         {
@@ -242,6 +319,10 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             var vtc = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalCredito;
             var vtco = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).VentaTotalContado;
             var ov = CajaGeneralServicio.ObtenerCG(pv.FolioOperacionDia).OtrasVentas;
+            var almacen = PuntoVentaServicio.Obtener(pv.IdPuntoVenta).IdCAlmacenGas;
+            var EsPipa = AlmacenGasServicio.ObtenerAlmacen(almacen);//(pv.FolioOperacionDia).OtrasVentas;
+            var EsCamioneta = AlmacenGasServicio.ObtenerAlmacen(almacen);
+
 
             VentaPuntoVentaDTO usDTO = new VentaPuntoVentaDTO()
             {
@@ -280,7 +361,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             };
             return usDTO;
         }
-
         public static List<VentaPuntoVentaDTO> ToDTOC(List<VentaPuntoDeVenta> lu)
         {
             List<VentaPuntoVentaDTO> luDTO = lu.ToList().Select(x => ToDTOC(x)).ToList();
@@ -317,7 +397,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             };
             return usDTO;
         }
-
         public static List<VentaCorteAnticipoDTO> ToDTOCE(List<VentaCorteAnticipoEC> lu)
         {
             List<VentaCorteAnticipoDTO> luDTO = lu.ToList().Select(x => ToDTOCE(x)).ToList();
@@ -363,7 +442,6 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             };
             return usDTO;
         }
-
         public static RegistrarVentasMovimientosDTO ToDTO(VentaCorteAnticipoEC v)
         {
             RegistrarVentasMovimientosDTO lstFinal = new RegistrarVentasMovimientosDTO();
@@ -769,6 +847,120 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
         }
 
+        public static VPuntoVentaDetalleDTO ToDto(VentaPuntoDeVentaDetalle pv, decimal totalCilindros, decimal P5000Inicial, decimal P5000Final, decimal PorcentajeInicial, decimal PorcentajeFinal)
+        {
+            VPuntoVentaDetalleDTO usDTO = new VPuntoVentaDetalleDTO()
+            {
+                IdEmpresa = pv.IdEmpresa,
+                Year = pv.Year,
+                Mes = pv.Mes,
+                Dia = pv.Dia,
+                Orden = pv.Orden,
+                OrdenDetalle = pv.OrdenDetalle,
+                IdProducto = pv.IdProducto,
+                IdProductoLinea = pv.IdProductoLinea,
+                IdCategoria = pv.IdCategoria,
+                PrecioUnitarioLt = pv.PrecioUnitarioLt,
+                PrecioUnitarioKg = pv.PrecioUnitarioKg,
+                DescuentoUnitarioLt = pv.DescuentoUnitarioLt,
+                DescuentoUnitarioKg = pv.DescuentoUnitarioKg,
+                CantidadLt = pv.CantidadLt,
+                CantidadKg = pv.CantidadKg,
+                DescuentoTotal = pv.DescuentoTotal,
+                Subtotal = pv.Subtotal,
+                ProductoDescripcion = pv.ProductoDescripcion,
+                ProductoLinea = pv.ProductoLinea,
+                ProductoCategoria = pv.ProductoCategoria,
+                FechaRegistro = pv.FechaRegistro,
+                IdUnidadMedida = pv.IdUnidadMedida,
+                PrecioUnitarioProducto = pv.PrecioUnitarioProducto,
+                DescuentoUnitarioProducto = pv.DescuentoUnitarioProducto,
+                CantidadProducto = pv.CantidadProducto,
+                //Camioneta Reporte del dia
+                CantidadTotalProd = totalCilindros,
+                P5000Inicial = P5000Inicial,
+                P5000Final = P5000Final,
+                PorcentajeInicial = PorcentajeInicial,
+                PorcentajeFinal = PorcentajeFinal,                
+            };
+            return usDTO;
 
+        }
+
+        public static VPuntoVentaDetalleDTO ToDto(VentaCajaGeneral entidad,string Folio,decimal LtVendidos, decimal PrecioLt, decimal P5000Inicial, decimal P5000Final, decimal PorcentajeInicial, decimal PorcentajeFinal)
+        {
+            VPuntoVentaDetalleDTO usDTO = new VPuntoVentaDetalleDTO()
+            {              
+                //Camioneta Reporte del dia Pipa
+               
+                P5000Inicial = P5000Inicial,
+                P5000Final = P5000Final,
+                PorcentajeInicial = PorcentajeInicial,
+                PorcentajeFinal = PorcentajeFinal,
+                FolioOperacion= Folio,
+                LitrosVendidos = LtVendidos,
+                PrecioLitro = PrecioLt,
+                totalCredito = entidad.VentaTotalCredito,
+                totalContado = entidad.VentaTotalContado,
+            };
+            return usDTO;
+
+        }
+
+        public static VPuntoVentaDetalleDTO ToDTOC(VentaCajaGeneral entidad, string Folio, decimal LtVendidos, decimal PrecioLt, decimal P5000Inicial, decimal P5000Final, decimal PorcentajeInicial, decimal PorcentajeFinal)
+        {
+            string concepto = "";
+            decimal c = 0;
+            if (CantKg20 != 0)
+                concepto = "20kg";
+            if (CantKg30 != 0)
+                concepto = "30kg";
+            if (CantKg45 != 0)
+                concepto = "45kg";
+
+            VPuntoVentaDetalleDTO usDTO = new VPuntoVentaDetalleDTO()
+            {
+                IdEmpresa = pv.IdEmpresa,
+                Year = pv.Year,
+                Mes = pv.Mes,
+                Dia = pv.Dia,
+                Orden = pv.Orden,
+                OrdenDetalle = pv.OrdenDetalle,
+                IdProducto = pv.IdProducto,
+                IdProductoLinea = pv.IdProductoLinea,
+                IdCategoria = pv.IdCategoria,
+                PrecioUnitarioLt = pv.PrecioUnitarioLt,
+                PrecioUnitarioKg = pv.PrecioUnitarioKg,
+                DescuentoUnitarioLt = pv.DescuentoUnitarioLt,
+                DescuentoUnitarioKg = pv.DescuentoUnitarioKg,
+                CantidadLt = pv.CantidadLt,
+                CantidadKg = pv.CantidadKg,
+                DescuentoTotal = pv.DescuentoTotal,
+                Subtotal = pv.Subtotal,
+                ProductoDescripcion = pv.ProductoDescripcion,
+                ProductoLinea = pv.ProductoLinea,
+                ProductoCategoria = pv.ProductoCategoria,
+                FechaRegistro = pv.FechaRegistro,
+                IdUnidadMedida = pv.IdUnidadMedida,
+                PrecioUnitarioProducto = pv.PrecioUnitarioProducto,
+                DescuentoUnitarioProducto = pv.DescuentoUnitarioProducto,
+                CantidadProducto = pv.CantidadProducto,
+                //Camioneta Reporte del dia Camioneta
+                CantidadTotalProd = totalCilindros,//ventas
+                Concepto = concepto,
+                Total = (totalCilindros * pv.DescuentoUnitarioLt),
+                Salida = "", //LecturaInicial Clindro
+                Recepcion = "",//LecturaFinal Clindro
+            };
+
+
+            return usDTO;
+        }
+        
+        public static List<VPuntoVentaDetalleDTO> ToDtoC(VentaCajaGeneral entidad, string Folio, decimal LtVendidos, decimal PrecioLt, decimal P5000Inicial, decimal P5000Final, decimal PorcentajeInicial, decimal PorcentajeFinal)
+        {
+            List<VPuntoVentaDetalleDTO> luDTO = lu.ToList().Select(x => ToDTOC(x)).ToList();
+
+        }
     }
 }

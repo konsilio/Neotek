@@ -25,7 +25,69 @@ namespace Application.MainModule.Servicios.Ventas
             List<CajaGeneralDTO> lPventas = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().BuscarTodos());
             return lPventas;
         }
-        /*oBTENER  Lt y Kg vendidos del punto de venta por la cve del reporte tbl VentaPuntoDeVentaDetalle*/
+        // FromEntity(VentaPuntoDeVentaDetalle pv, decimal totalCilindros, decimal P5000Inicial, decimal P5000Final, decimal PorcentajeInicial, decimal PorcentajeFinal)
+              
+        public static List<VPuntoVentaDetalleDTO> ObtenerVentas(short? empresa, short year, byte month, byte dia, short? orden, short? unidad, DateTime? fecha)
+        {
+
+            List<VentaPuntoDeVentaDetalle> _lst = new CajaGeneralDataAccess().BuscarDetalleVenta(empresa.Value, year, month, dia, orden.Value, unidad.Value).ToList();
+                    
+
+            List<VPuntoVentaDetalleDTO> lPventas = CajaGeneralAdapter.ToDTO(_lst);
+            
+            return lPventas;
+        }
+        //Camioneta
+        public static List<VPuntoVentaDetalleDTO> ObtenerRepCamionetas(short unidad, DateTime fecha)
+        {
+
+            var puntoVenta = PuntoVentaServicio.Obtener(unidad).IdPuntoVenta;
+
+            //Obtener Venta Detalle por PV, Fecha
+            var FolioOperacion = new CajaGeneralDataAccess().BuscarPorPV(puntoVenta).Where(x => x.FechaAplicacion.Equals(fecha)).FirstOrDefault().FolioOperacionDia;
+
+            //Obtener Lt vendidos- AlmacenGasMovimiento
+            var Ltvendidos = AlmacenGasServicio.ObtenerMovimientos(FolioOperacion, fecha).FirstOrDefault().SalidaLt;
+
+            //Obtener PrecioLt
+            List<VentaPuntoDeVentaDetalle> _lst = new CajaGeneralDataAccess().BuscarDetalleVenta(null, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day, null, null).ToList();
+            var PrecioLt = _lst.FirstOrDefault().PrecioUnitarioLt;
+
+            //Obtener importe contado - imp credito
+            var importes = ObtenerCG(FolioOperacion);
+            //VPuntoVentaDetalleDTO ent = CajaGeneralAdapter.ToDto(importes, FolioOperacion, Ltvendidos, PrecioLt.Value, LecturasInicial.P5000.Value, LecturasFinal.P5000.Value, LecturasInicial.Porcentaje.Value, LecturasFinal.Porcentaje.Value);
+
+            List<VPuntoVentaDetalleDTO> lPventas = CajaGeneralAdapter.ToDTO(_lst);
+            return lPventas;
+        }
+
+        //Pipa
+        public static VPuntoVentaDetalleDTO ObtenerRepPipas(short? unidad, DateTime fecha)
+        {
+
+            AlmacenGasTomaLectura LecturasInicial = AlmacenGasServicio.BuscarLecturaPorFecha(unidad.Value, TipoEventoEnum.Inicial, fecha);
+            AlmacenGasTomaLectura LecturasFinal = AlmacenGasServicio.BuscarLecturaPorFecha(unidad.Value, TipoEventoEnum.Final, fecha);
+            //Obtener Punto de Venta
+            var puntoVenta = PuntoVentaServicio.Obtener(unidad.Value).IdPuntoVenta;
+
+            //Obtener Venta Detalle por PV, Fecha
+            var FolioOperacion = new CajaGeneralDataAccess().BuscarPorPV(puntoVenta).Where(x => x.FechaAplicacion.Equals(fecha)).FirstOrDefault().FolioOperacionDia;
+
+            //Obtener Lt vendidos- AlmacenGasMovimiento
+            var Ltvendidos = AlmacenGasServicio.ObtenerMovimientos(FolioOperacion, fecha).FirstOrDefault().SalidaLt;
+
+            //Obtener PrecioLt
+            List<VentaPuntoDeVentaDetalle> _lst = new CajaGeneralDataAccess().BuscarDetalleVenta(null, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day, null, null).ToList();
+            var PrecioLt = _lst.FirstOrDefault().PrecioUnitarioLt;
+
+            //Obtener importe contado - imp credito
+            var importes = ObtenerCG(FolioOperacion);
+            VPuntoVentaDetalleDTO ent = CajaGeneralAdapter.ToDto(importes, FolioOperacion, Ltvendidos, PrecioLt.Value, LecturasInicial.P5000.Value, LecturasFinal.P5000.Value, LecturasInicial.Porcentaje.Value, LecturasFinal.Porcentaje.Value);
+
+            return ent;
+        }
+
+        /*OBTENER  Lt y Kg vendidos del punto de venta por la cve del reporte tbl VentaPuntoDeVentaDetalle*/
         public static List<AlmacenGasMovimientoDto> ObtenerPVDetalle(short empresa, short year, byte month, byte dia, short orden)
         {
             List<AlmacenGasMovimientoDto> ldetalles = AdaptadoresDTO.Ventas.CajaGeneralAdapter.ToDTO(new CajaGeneralDataAccess().Buscar(empresa, year, month, dia, orden));
@@ -90,9 +152,9 @@ namespace Application.MainModule.Servicios.Ventas
 
             if (ventaspv != null && ventaspv.Count > 0)
             {
-              //ActualizarTotalesVentas(ventaspv); //se actualizan totales de VentasPuntoVenta
-              //CargarAVentasMovimientos(ventaspv);//guardar Ventas (de VentaPuntoDeVenta) a Tabla VentasMovimiento
-              CargarEnAlmacenGasMov(ventaspv);//guardar registro en Almacen gas movimiento 
+                ActualizarTotalesVentas(ventaspv); //se actualizan totales de VentasPuntoVenta
+                CargarAVentasMovimientos(ventaspv);//guardar Ventas (de VentaPuntoDeVenta) a Tabla VentasMovimiento
+                CargarEnAlmacenGasMov(ventaspv);//guardar registro en Almacen gas movimiento 
             }
 
             List<VentaCorteAnticipoEC> CortesAnticipos = ObtenerVentasCorteAnticipoNoProc();//Obtener existencia de anticipos no procesados
@@ -292,7 +354,7 @@ namespace Application.MainModule.Servicios.Ventas
             UnidadAlmacenGas unidadSalida = AlmacenGasServicio.ObtenerAlmacen(almacenGas);
 
             AlmacenGasMovimientoDto salidaGasMov = ToDto(movimiento, detventas);
-            AlmacenGasMovimiento apDescDto = CajaGeneralAdapter.FromEntity(unidadSalida, empresa, salidaGasMov,LinicialF, Lfinal);
+            AlmacenGasMovimiento apDescDto = CajaGeneralAdapter.FromEntity(unidadSalida, empresa, salidaGasMov, LinicialF, Lfinal);
 
             new AlmacenGasDescargaDataAccess().Insertar(apDescDto);
 
@@ -305,8 +367,8 @@ namespace Application.MainModule.Servicios.Ventas
                 foreach (var x in lMov)
                 {
                     List<VentaPuntoDeVentaDetalle> detventas = ObtenerDetallesVentasNoProc(x.IdEmpresa, x.Year, x.Mes, x.Dia, x.Orden);
-                    AlmacenGasTomaLectura agtl = AlmacenGasServicio.BuscarLecturaPorFecha(new PuntoVentaDataAccess().Buscar(x.IdPuntoVenta).IdCAlmacenGas,1,x.FechaAplicacion.Value);
-                    AlmacenGasTomaLectura agtl2 = AlmacenGasServicio.BuscarLecturaPorFecha(new PuntoVentaDataAccess().Buscar(x.IdPuntoVenta).IdCAlmacenGas,2,x.FechaAplicacion.Value);
+                    AlmacenGasTomaLectura agtl = AlmacenGasServicio.BuscarLecturaPorFecha(new PuntoVentaDataAccess().Buscar(x.IdPuntoVenta).IdCAlmacenGas, 1, x.FechaAplicacion.Value);
+                    AlmacenGasTomaLectura agtl2 = AlmacenGasServicio.BuscarLecturaPorFecha(new PuntoVentaDataAccess().Buscar(x.IdPuntoVenta).IdCAlmacenGas, 2, x.FechaAplicacion.Value);
                     CargarMovimientos(x, detventas, agtl.P5000.Value, agtl2.P5000.Value);
                 }
             }
@@ -354,7 +416,7 @@ namespace Application.MainModule.Servicios.Ventas
 
         public static List<VentaPuntoDeVentaDetalle> ObtenerDetallesVentasNoProc(short empresa, short year, byte month, byte dia, short orden)
         {
-            return new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, year, month, dia, orden);
+            return new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, year, month, dia, orden, null);
         }
         public static List<VentaCorteAnticipoEC> ObtenerVentasCorteAnticipoNoProc()
         {

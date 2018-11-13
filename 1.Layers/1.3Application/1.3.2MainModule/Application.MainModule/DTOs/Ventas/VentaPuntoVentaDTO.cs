@@ -42,6 +42,7 @@ namespace Application.MainModule.DTOs.Ventas
         public decimal VentaTotalContado { get; set; }
         public decimal OtrasVentas { get; set; }
 
-
-    }
+        public Nullable<int>  IdCamioneta { get; set; }
+        public Nullable<int> IdPipa { get; set; }
+}
 }

@@ -41,6 +41,7 @@ namespace MVC.Presentacion.Models.Ventas
         public decimal VentaTotalCredito { get; set; }
         public decimal VentaTotalContado { get; set; }
         public decimal OtrasVentas { get; set; }
-
+        public Nullable<int> IdCamioneta { get; set; }
+        public Nullable<int> IdPipa { get; set; }
     }
 }

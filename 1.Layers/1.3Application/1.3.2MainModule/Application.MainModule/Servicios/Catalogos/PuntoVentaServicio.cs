@@ -54,6 +54,10 @@ namespace Application.MainModule.Servicios.Catalogos
         {
             return new PuntoVentaDataAccess().BuscarPorUnidadAlmacenGas(unidadAlmacen.IdCAlmacenGas);
         }
+        public static PuntoVenta Obtener(short unidadAlmacen)
+        {
+            return new PuntoVentaDataAccess().BuscarPorUnidadAlmacenGas(unidadAlmacen);
+        }
 
         public static List<PuntoVenta> BuscarPorOperadorChofer(int idOperadorChofer)
         {

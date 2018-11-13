@@ -17,7 +17,7 @@ namespace Application.MainModule.Flujos
         public List<CajaGeneralDTO> CajaGeneral()
         {
 
-           CajaGeneralServicio.ProcesarVentasPuntosDeVenta(); //Para pruebas
+         //  CajaGeneralServicio.ProcesarVentasPuntosDeVenta(); //Para pruebas
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
 
@@ -37,7 +37,14 @@ namespace Application.MainModule.Flujos
 
         }
 
+        public List<VPuntoVentaDetalleDTO> MovimientosGasCilindro(short? empresa, short year, byte month, byte dia, short? orden,short? unidad)
+        {
+            var resp = PermisosServicio.PuedeConsultarCajaGeneral();
+            if (!resp.Exito) return null;
 
+            return CajaGeneralServicio.Obtener(empresa.Value, year, month, dia, orden.Value, unidad.Value).ToList();
+
+        }
 
         public List<CajaGeneralDTO> CajaGeneralIdEmpresa(short IdEmpresa)
         {
