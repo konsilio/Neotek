@@ -19,15 +19,17 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            if (mjs != null) ViewBag.Mjs = mjs;           
+            if (mjs != null)
+            {
+                ViewBag.Mjs = mjs;
+            }         
             ViewBag.TiposCentrosCosto = CatalogoServicio.BuscarTipoCentrosCosto(tkn);
             ViewBag.EstacionesCarburacion = CatalogoServicio.GetListaEstacionCarburacion(tkn);
             ViewBag.UnidadAlmacenGas = CatalogoServicio.GetListaUnidadAlmcenGas(TokenServicio.ObtenerIdEmpresa(tkn), tkn);
             ViewBag.EquipoTransporte = CatalogoServicio.GetListaEquiposTransporte(tkn);
             ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             ModelState.Clear();
-            if (ViewData["RespuestaDTO"] != null)
-                Validar((RespuestaDTO)ViewData["RespuestaDTO"]);
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             if (id != null)
             {
                 ViewBag.EsEdicion = true;
@@ -41,13 +43,11 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
             var respuesta = CatalogoServicio.CrearCentroCosto(model, tkn);
-            if (respuesta.Exito)
-            {
-                return RedirectToAction("CentroCosto", "Proceso exitoso");
-            }
+            if (respuesta.Exito)            
+                return RedirectToAction("CentroCosto", new { mjs = "Proceso exitoso" } );            
             else
             {
-                ViewData["RespuestaDTO"] = respuesta;
+                TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("CentroCosto", model);
             }
         }

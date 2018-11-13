@@ -1443,7 +1443,7 @@ namespace MVC.Presentacion.App_Code
             dto.IdCilindro = model.IdCilindro;
             dto.IdPipa = model.IdPipa;
             dto.IdVehiculoUtilitario = model.IdVehiculoUtilitario;
-            //dto.IdTipoCentroCosto = model.IdCentroCosto;
+            dto.IdEmpresa = TokenServicio.ObtenerIdEmpresa(tkn);
             return NuevoCentroCosto(dto, tkn);
         }
         #endregion

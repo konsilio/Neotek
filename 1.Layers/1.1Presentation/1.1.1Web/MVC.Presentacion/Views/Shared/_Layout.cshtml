@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    <title>@ViewBag.Title SAGAS</title>
 
     <link rel="stylesheet" href="~/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" />
@@ -52,7 +52,7 @@
                                     }
                                     else
                                     {
-                                        <img src="../../fonts/Logo GMG.JPG" alt="User">
+                                        <img src="../../fonts/notification_error.png" alt="User">
                                     }
                                 </a>
                             </div>
@@ -80,6 +80,8 @@
                             </div>
                         </div>
                     </li>
+                @if (Session["Perfil"] != null)
+                {
                     <li class="menu_dark"><a href="@Url.Action("Inicio", "Home")"><i class="material-icons">dashboard</i> <span class="icon-name">Dashboard</span></a></li>
                     <li class="menu_dark"><a href="@Url.Action("Requisiciones", "Requisicion")"><i class="material-icons">feedback </i><span class="icon-name">Requisición</span> </a></li>
                     <li>
@@ -99,18 +101,18 @@
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle"><i class="material-icons">attach_money</i><span>Ventas</span> </a>
                         <ul class="ml-menu">
-                            <li><a href="ui_kit.html">Ventas</a></li>
+                            @*<li><a href="ui_kit.html">Ventas</a></li>*@
                             <li>@Html.ActionLink("Caja General", "Index", "CajaGeneral")</li>
                             <li>@Html.ActionLink("Caja General Estación", "Estacion", "CajaGeneral")</li>
                             @*<li>@Html.ActionLink("Caja General Pipa", "Pipa", "CajaGeneral")</li>*@
                         </ul>
                     </li>
-                    <li>
+                    @*<li>
                         <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-assignment"></i><span>Inventario</span> </a>
                         <ul class="ml-menu">
-                            <li><a href="basic-form-elements.html">Requisiciones</a></li>
+                            <li><a href=""></a></li>
                         </ul>
-                    </li>
+                    </li>*@
                     <li>
                         <a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-grid"></i><span>Catálogos</span></a>
                         <ul class="ml-menu">
@@ -135,6 +137,7 @@
                             <li>@Html.ActionLink("Precio de venta Otros", "Index", "PrecioVentaOtro")</li>
                         </ul>
                     </li>
+                }             
                 </ul>
             </div>
         </div>
