@@ -25,15 +25,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
             bool noProcesados = false;
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.DatosProcesados.Equals(noProcesados)).ToList();
         }
-        public List<VentaPuntoDeVentaDetalle> BuscarDetalleVenta(short? empresa, short anio, byte mes, byte dia, short? orden, short? unidad)
+        public List<VentaPuntoDeVentaDetalle> BuscarDetalleVenta(short? empresa, short anio, byte mes, byte dia, short? orden)
         {
             if (empresa != null)
             {
-                return uow.Repository<VentaPuntoDeVentaDetalle>().Get(x => x.IdEmpresa.Equals(empresa)
+                return uow.Repository<VentaPuntoDeVentaDetalle>().Get(x => x.IdEmpresa.Equals(empresa.Value)
                 && x.Year.Equals(anio)
                 && x.Mes.Equals(mes)
-                && x.Dia.Equals(dia)
-                && x.Orden.Equals(orden)).ToList();
+                && x.Dia.Equals(dia)).ToList();
             }
             else
             {

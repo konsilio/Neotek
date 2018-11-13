@@ -371,6 +371,7 @@
     <Compile Include="Models\Seguridad\UsuarioRolModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralCamionetaModel.cs" />
     <Compile Include="Models\Ventas\CajaGeneralModel.cs" />
+    <Compile Include="Models\Ventas\MovimientosGasCilindros.cs" />
     <Compile Include="Models\Ventas\MovimientosGasModel.cs" />
     <Compile Include="Models\Ventas\VentaCorteAnticipoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

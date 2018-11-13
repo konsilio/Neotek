@@ -37,12 +37,12 @@ namespace Application.MainModule.Flujos
 
         }
 
-        public List<VPuntoVentaDetalleDTO> MovimientosGasCilindro(short? empresa, short year, byte month, byte dia, short? orden,short? unidad)
+        public List<VPuntoVentaDetalleDTO> MovimientosGasCilindro(short? empresa, short year, byte month, byte dia, short? orden)
         {
             var resp = PermisosServicio.PuedeConsultarCajaGeneral();
             if (!resp.Exito) return null;
 
-            return CajaGeneralServicio.Obtener(empresa.Value, year, month, dia, orden.Value, unidad.Value).ToList();
+            return CajaGeneralServicio.ObtenerVentas(empresa.Value, year, month, dia, orden.Value).ToList();
 
         }
 

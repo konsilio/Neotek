@@ -49,6 +49,7 @@ namespace Application.MainModule.DTOs.Ventas
         public string Recepcion { get; set; }
         public Nullable<decimal> CantidadTotalProd { get; set; }
         public Nullable<decimal> Total { get; set; }
+        public Nullable<decimal> Carburacion { get; set; }
 
     }
 }

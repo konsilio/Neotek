@@ -84,7 +84,7 @@ namespace MVC.Presentacion.Agente
         public List<AlmacenDTO> _listaAlmacen;
         public List<RegistroDTO> _listaRegistroAlmacen;
         public List<MovimientosGasModel> _ListaMovimientosGas;
-
+        public List<MovimientosGasCilindros> _ListaMovimientosGasC;
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -1405,6 +1405,41 @@ namespace MVC.Presentacion.Agente
 
                 _ListaMovimientosGas = lus;
 
+            }
+        }
+
+        public void BuscarListaMovGasCilindros(MovimientosGasCilindros reporte, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutListaMovGasCilindros"];
+            GetListaMovimientosGasC(reporte, tkn).Wait();
+        }
+        private async Task GetListaMovimientosGasC(MovimientosGasCilindros rep, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<MovimientosGasCilindros> lus = new List<MovimientosGasCilindros>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, rep).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<MovimientosGasCilindros>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<MovimientosGasCilindros>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }             
+
+                _ListaMovimientosGasC = lus;
             }
         }
 

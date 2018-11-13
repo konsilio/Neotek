@@ -172,19 +172,19 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @*@if (ViewBag.ListaPV != null)
+                                                            @if (ViewBag.SalidaGasCilindro != null)
+                                                            {
+                                                                foreach (var item in ViewBag.SalidaGasCilindro)
                                                                 {
-                                                                    foreach (var item in ViewBag.ListaPV)
-                                                                    {
-                                                                        <tr>
-                                                                            <td>@item.Empresa</td>
-                                                                            <td>@item.PrecioPemexKg</td>
-                                                                            <td>@item.UtilidadEsperadaKg</td>
-                                                                            <td>@item.PrecioSalidaKg</td>
-                                                                            <td>@item.FechaProgramada</td>
-                                                                        </tr>
-                                                                    }
-                                                                }*@
+                                                                    <tr>
+                                                                        <td>@item.ProductoDescripcion</td>
+                                                                        <td>@item.Salida</td>
+                                                                        <td>@item.Recepcion</td>
+                                                                        <td>@item.CantidadProducto</td>
+                                                                        <td>$@item.Total</td>
+                                                                    </tr>
+                                                                }
+                                                            }
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -206,19 +206,19 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @*@if (ViewBag.ListaPV != null)
+                                                        @if (ViewBag.SalidaGasCilindro != null)
+                                                        {
+                                                            foreach (var item in ViewBag.SalidaGasCilindro)
                                                             {
-                                                                foreach (var item in ViewBag.ListaPV)
-                                                                {
-                                                                    <tr>
-                                                                        <td>@item.Empresa</td>
-                                                                        <td>@item.PrecioPemexKg</td>
-                                                                        <td>@item.UtilidadEsperadaKg</td>
-                                                                        <td>@item.PrecioSalidaKg</td>
-                                                                        <td>@item.FechaProgramada</td>
-                                                                    </tr>
-                                                                }
-                                                            }*@
+                                                                <tr>
+                                                                    <td>@item.ProductoDescripcion</td>
+                                                                    <td>@item.Salida</td>
+                                                                    <td>@item.Recepcion</td>
+                                                                    <td>@item.CantidadProducto</td>
+                                                                    <td>$@item.Total</td>
+                                                                </tr>
+                                                            }
+                                                        }
                                                     </tbody>
                                                 </table>
                                             </div>

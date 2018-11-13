@@ -54,6 +54,7 @@ namespace MVC.Presentacion.Controllers
             {
                 ViewBag.CajaGeneralCamioneta = TempData["RespuestaCajaGral"];
                 ViewBag.SalidaGas = TempData["RespuestaSalidaGas"];
+                ViewBag.SalidaGasCilindro = TempData["RespuestaSalidaGasCilindro"];
             }
             if (TempData["RespuestaDTO"] != null)
             {
@@ -77,7 +78,7 @@ namespace MVC.Presentacion.Controllers
             ViewBag.CajaGeneralCamioneta = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia, _tkn).ToPagedList(Pagina, 10);
             CajaGeneralCamionetaModel nMod = (CajaGeneralCamionetaModel)ViewBag.CajaGeneralCamioneta[0];
             ViewBag.SalidaGas = VentasServicio.ListaVentasMovimientosGas(nMod, _tkn);//.ToPagedList(Pagina, 10);
-            ViewBag.SalidaGasCilindro = VentasServicio.ListaVentasMovimientosGas(nMod, _tkn);//.ToPagedList(Pagina, 10);
+            ViewBag.SalidaGasCilindro = VentasServicio.ListaVentasMovimientosGasC(nMod, _tkn).GroupBy(x=> x.CantidadKg).Select(grp => grp.First());//.ToPagedList(Pagina, 10);
 
             if (ViewBag.CajaGeneralCamioneta.Count == 0)
             { TempData["RespuestaDTOError"] = "No existe la clave solicitada"; }
@@ -85,6 +86,7 @@ namespace MVC.Presentacion.Controllers
             {
                 TempData["RespuestaCajaGral"] = ViewBag.CajaGeneralCamioneta;
                 TempData["RespuestaSalidaGas"] = ViewBag.SalidaGas;
+                TempData["RespuestaSalidaGasCilindro"] = ViewBag.SalidaGasCilindro;
             }
             return RedirectToAction("Liquidar");
         }
