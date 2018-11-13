@@ -147,7 +147,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new EstacionesDto()
             {
-                IdAlmacenGas = estacion.IdAlmacenGas.Value,
+                IdAlmacenGas = estacion.IdCAlmacenGas,
                 CantidadP5000 = estacion.P5000Actual,
                 IdTipoMedidor = estacion.IdTipoMedidor,
                 NombreAlmacen = estacion.Numero,
@@ -162,7 +162,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 IdTipoMedidor = pipa.IdTipoMedidor,
                 CantidadP5000 = pipa.P5000Actual,
-                IdAlmacenGas = pipa.IdAlmacenGas.Value,
+                IdAlmacenGas = pipa.IdCAlmacenGas,
                 Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x=>x.IdTipoMedidor.Equals(pipa.IdTipoMedidor))),
                 NombreAlmacen = pipa.Numero,
                 PorcentajeMedidor = pipa.PorcentajeActual
