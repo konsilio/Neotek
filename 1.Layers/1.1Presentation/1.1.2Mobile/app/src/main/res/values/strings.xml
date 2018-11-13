@@ -175,7 +175,7 @@
     <string name="calibracion_pipa"><u>Calibración-Pipa</u></string>
     <string name="porcentaje_de_calibracion">Porcentaje de Calibración</string>
     <string name="registra_el_porcentaje_de_calibracion_configurado">Registra el porcentaje de calibracion configurado</string>
-    <string name="confirmacion_configuracion"><![CDATA[El porcentaje configurado no coicide con la configuración predeterminada de la empresa <n>¿Desea continuar con esta configuración?<n>]]></string>
+    <string name="confirmacion_configuracion">El porcentaje configurado no coicide con la configuración predeterminada de la empresa <n>¿Desea continuar con esta configuración?</n></string>
     <string name="Anticipo">Anticipo</string>
     <string name="selecciona_la_estacion_de_carburacion">Selecciona la Estación de Carburación</string>
     <string name="regresar">Regresar</string>

@@ -174,6 +174,23 @@ public class CameraLecturaActivity extends AppCompatActivity {
                                     String.valueOf(autoconsumoDTO.getNombreTipoMedidor())+"|"+"Inicial":
                             String.valueOf(autoconsumoDTO.getIdCAlmacenGasSalida())+"|"+
                                     String.valueOf(autoconsumoDTO.getNombreTipoMedidor())+"|"+"Final";
+            TVCameraLecturaActivityTitulo.setText(getString(R.string.Autoconsumo)+": "
+                    +autoconsumoDTO.getNombreEstacion());
+            setTitle(getString(R.string.Autoconsumo));
+        }
+        if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
+            TVCameraLecturaActivityFotoEstacion.setText(
+                    getString(R.string.tomar_foto_estacion)
+                            +" - " +getString(R.string.Estacion)+" "+autoconsumoDTO.getNombreEstacion());
+            NombreImagen =
+                    (EsAutoconsumoEstacionInicial) ?
+                            String.valueOf(autoconsumoDTO.getIdCAlmacenGasSalida())+"|"+
+                                    String.valueOf(autoconsumoDTO.getNombreTipoMedidor())+"|"+"Inicial":
+                            String.valueOf(autoconsumoDTO.getIdCAlmacenGasSalida())+"|"+
+                                    String.valueOf(autoconsumoDTO.getNombreTipoMedidor())+"|"+"Final";
+            TVCameraLecturaActivityTitulo.setText(getString(R.string.Autoconsumo)+": "
+                    +autoconsumoDTO.getNombreEstacion());
+            setTitle(getString(R.string.Autoconsumo));
         }
         if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
@@ -185,6 +202,9 @@ public class CameraLecturaActivity extends AppCompatActivity {
                                     String.valueOf(autoconsumoDTO.getNombreTipoMedidor())+"|"+"Inicial":
                             String.valueOf(autoconsumoDTO.getIdCAlmacenGasSalida())+"|"+
                                     String.valueOf(autoconsumoDTO.getNombreTipoMedidor())+"|"+"Final";
+            TVCameraLecturaActivityTitulo.setText(getString(R.string.Autoconsumo)+": "
+                    +autoconsumoDTO.getNombreEstacion());
+            setTitle(getString(R.string.Autoconsumo));
         }
         if(EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
@@ -215,12 +235,15 @@ public class CameraLecturaActivity extends AppCompatActivity {
                     getString(R.string.tomar_foto_estacion)
                             +" - " +calibracionDTO.getNombreCAlmacenGas()
             );
+            TVCameraLecturaActivityTitulo.setText(getString(R.string.Calibracion)+": "
+                    +calibracionDTO.getNombreCAlmacenGas());
             NombreImagen =
                     (EsCalibracionEstacionInicial) ?
                             String.valueOf(calibracionDTO.getIdCAlmacenGas())+"|"+
                                     String.valueOf(calibracionDTO.getNombreMedidor())+"|"+"Inicial":
                             String.valueOf(calibracionDTO.getIdCAlmacenGas())+"|"+
                                     String.valueOf(calibracionDTO.getNombreMedidor())+"|"+"Final";
+            setTitle(R.string.Calibracion);
         }
         if(EsCalibracionPipaInicial || EsCalibracionPipaFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
@@ -233,6 +256,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
                                     String.valueOf(calibracionDTO.getNombreMedidor())+"|"+"Inicial":
                             String.valueOf(calibracionDTO.getIdCAlmacenGas())+"|"+
                                     String.valueOf(calibracionDTO.getNombreMedidor())+"|"+"Final";
+            setTitle(R.string.Calibracion);
         }
         BtnCameraLecturaTomarFoto.setOnClickListener(v -> {
             List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
@@ -413,6 +437,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
                 intent.putExtra("EsCalibracionEstacionInicial",EsCalibracionEstacionInicial);
                 intent.putExtra("EsCalibracionEstacionFinal",EsCalibracionEstacionFinal);
                 intent.putExtra("calibracionDTO",calibracionDTO);
+                startActivity(intent);
             }catch (URISyntaxException e){
                 e.printStackTrace();
             }
@@ -425,6 +450,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
                 intent.putExtra("EsCalibracionPipaInicial",EsCalibracionPipaInicial);
                 intent.putExtra("EsCalibracionPipaFinal",EsCalibracionPipaFinal);
                 intent.putExtra("calibracionDTO",calibracionDTO);
+                startActivity(intent);
             }catch (URISyntaxException e){
                 e.printStackTrace();
             }

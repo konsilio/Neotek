@@ -132,14 +132,14 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 setTitle(R.string.Traspaso);
             }else if(EsCalibracionEstacionInicial||EsCalibracionEstacionFinal){
                 calibracionDTO = (CalibracionDTO) b.getSerializable("calibracionDTO");
-                max_p5000 = 5000;
-                p5000 = 5000;
+                max_p5000 = calibracionDTO.getP5000();
+                p5000 = calibracionDTO.getP5000();
                 //min_p5000= 5000;
                 setTitle(R.string.Calibracion);
             }else if(EsCalibracionPipaInicial|| EsCalibracionPipaFinal){
                 calibracionDTO = (CalibracionDTO) b.getSerializable("calibracionDTO");
-                max_p5000 = 5000;
-                p5000 = 5000;
+                max_p5000 = calibracionDTO.getP5000();
+                p5000 = calibracionDTO.getP5000();
                 //min_p5000= 5000;
                 setTitle(R.string.Calibracion);
             }
@@ -390,7 +390,7 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
             }else if(EsAutoconsumoInvetarioInicial || EsAutoconsumoInventarioFinal){
                 autoconsumoDTO.setP5000Salida(CantidadP500);
                 intent.putExtra("EsAutoconsumoInvetarioInicial",EsAutoconsumoInvetarioInicial);
-                intent.putExtra("EsAutoConsumoInventarioFinal",EsAutoconsumoEstacionFinal);
+                intent.putExtra("EsAutoconsumoInventarioFinal",EsAutoconsumoInventarioFinal);
                 intent.putExtra("autoconsumoDTO",autoconsumoDTO);
                 startActivity(intent);
             }else if(EsAutoconsumoPipaInicial || EsAutoconsumoPipaFinal){

@@ -53,10 +53,16 @@ public class PorcentajeCalibracionActivity extends AppCompatActivity implements 
         BtnCalibracionPipaActivitySiguiente = findViewById(R.id.BtnCalibracionPipaActivitySiguiente);
 
         BtnCalibracionPipaActivitySiguiente.setOnClickListener(v->{VerificarPorcentaje();});
-        porcentaje_original = 04.0;
-        NPCalibracionPorcentajeActivityEntero.setMaxValue(99);
-        NPCalibracionPorcentajeActivityDecimal.setMaxValue(9);
-        presenter.getPorcentaje(session.getToken());
+        Double porcentaje = calibracionDTO.getPorcentajeCalibracion();
+        porcentaje_original = calibracionDTO.getPorcentajeCalibracion();
+        int parte_entera = porcentaje.intValue();
+        int decimal = (int)porcentaje_original-parte_entera;
+
+        NPCalibracionPorcentajeActivityEntero.setMaxValue(parte_entera);
+        NPCalibracionPorcentajeActivityEntero.setValue(parte_entera);
+        NPCalibracionPorcentajeActivityDecimal.setMaxValue(decimal);
+        NPCalibracionPorcentajeActivityDecimal.setValue(decimal);
+        //presenter.getPorcentaje(session.getToken());
     }
 
     @Override
@@ -104,13 +110,14 @@ public class PorcentajeCalibracionActivity extends AppCompatActivity implements 
             builder.setTitle(R.string.title_alert_message);
             builder.setMessage(R.string.confirmacion_configuracion);
             builder.setNegativeButton(R.string.label_no,((dialog, which) -> {
+
                 dialog.dismiss();
-                String sp = String.valueOf((porcentaje_original>0)?porcentaje_original:04.0);
-                String[] num = sp.split(".");
-                int parte_entera = (num[0]!=null)?Integer.valueOf(num[0]):0;
-                int parte_decimal = (num[1]!=null)?Integer.valueOf(num[1]):0;
+                Double porcentaje = calibracionDTO.getPorcentajeCalibracion();
+                porcentaje_original = calibracionDTO.getPorcentajeCalibracion();
+                int parte_entera = porcentaje.intValue();
+                int decimal = (int)porcentaje_original-parte_entera;
                 NPCalibracionPorcentajeActivityEntero.setValue(parte_entera);
-                NPCalibracionPorcentajeActivityDecimal.setValue(parte_decimal);
+                NPCalibracionPorcentajeActivityDecimal.setValue(decimal);
             }));
             builder.setPositiveButton(R.string.label_si,((dialog, which) -> {
                 dialog.dismiss();

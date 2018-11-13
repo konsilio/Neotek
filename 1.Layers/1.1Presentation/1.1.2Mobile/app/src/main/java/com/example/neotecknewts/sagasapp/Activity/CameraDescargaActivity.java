@@ -286,8 +286,8 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 traspasoDTO = (TraspasoDTO) extras.getSerializable("traspasoDTO");
                 textViewTitulo.setText("Fotografia del "+traspasoDTO.getNombreMedidor());
                 cantidadFotos = traspasoDTO.getCantidadDeFotos();
-            }else if(extras.getBoolean("EsTraspasoEstacionInicial",false)||
-                    extras.getBoolean("EsTraspasoEstacionFinal",false)){
+            }else if(extras.getBoolean("EsCalibracionEstacionInicial",false)||
+                    extras.getBoolean("EsCalibracionEstacionFinal",false)){
                 EsRecargaPipaFinal = false;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
@@ -307,11 +307,12 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsCalibracionEstacionFinal = extras.getBoolean("EsCalibracionEstacionFinal",
                         false);
                 calibracionDTO = (CalibracionDTO) extras.getSerializable("calibracionDTO");
-
+                setTitle(R.string.Calibracion);
                 textViewTitulo.setText("Fotografia del "+calibracionDTO.getNombreMedidor());
+                textViewMensaje.setText("Fotografia del "+calibracionDTO.getNombreMedidor());
                 cantidadFotos = calibracionDTO.getCantidadFotografias();
-            }else if(extras.getBoolean("EsTraspasoEstacionInicial",false)||
-                    extras.getBoolean("EsTraspasoEstacionFinal",false)){
+            }else if(extras.getBoolean("EsCalibracionPipaInicial",false)||
+                    extras.getBoolean("EsCalibracionPipaFinal",false)){
                 EsRecargaPipaFinal = false;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
@@ -334,7 +335,9 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                         false);
                 calibracionDTO = (CalibracionDTO) extras.getSerializable("calibracionDTO");
                 textViewTitulo.setText("Fotografia del "+calibracionDTO.getNombreMedidor());
+                setTitle(R.string.Calibracion);
                 cantidadFotos = calibracionDTO.getCantidadFotografias();
+                textViewMensaje.setText("Fotografia del "+calibracionDTO.getNombreMedidor());
             }
 
         }

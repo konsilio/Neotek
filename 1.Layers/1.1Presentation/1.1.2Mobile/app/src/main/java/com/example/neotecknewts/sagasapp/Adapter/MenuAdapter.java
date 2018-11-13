@@ -17,6 +17,7 @@ import com.example.neotecknewts.sagasapp.Activity.AutoconsumoEstacionActivity;
 import com.example.neotecknewts.sagasapp.Activity.AutoconsumoInventarioActivity;
 import com.example.neotecknewts.sagasapp.Activity.AutoconsumoPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.CalibracionEstacionActivity;
+import com.example.neotecknewts.sagasapp.Activity.CalibracionPipaActivity;
 import com.example.neotecknewts.sagasapp.Activity.FinalizarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.IniciarDescargaActivity;
 import com.example.neotecknewts.sagasapp.Activity.LecturaAlmacenActivity;
@@ -327,7 +328,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 }else if(menuItem.getHeaderMenu().equals("Calibración - Unidad de Gas") &&
                         menuItem.getName().equals("Estación Carb.(Final)")){
                     Intent intent = new Intent(view.getContext(),
-                            TraspasoPipaActivity.class);
+                            CalibracionEstacionActivity.class);
                     intent.putExtra("EsCalibracionEstacionInicial",false);
                     intent.putExtra("EsCalibracionEstacionFinal",true);
                     view.getContext().startActivity(intent);
@@ -335,14 +336,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                         menuItem.getName().equals("Pipa(Inicial)")
                         ){
                     Intent intent = new Intent(view.getContext(),
-                            CalibracionEstacionActivity.class);
+                            CalibracionPipaActivity.class);
                     intent.putExtra("EsCalibracionPipaInicial",true);
                     intent.putExtra("EsCalibracionPipaFinal",false);
                     view.getContext().startActivity(intent);
                 }else if(menuItem.getHeaderMenu().equals("Calibración - Unidad de Gas") &&
                         menuItem.getName().equals("Pipa(Final)")){
                     Intent intent = new Intent(view.getContext(),
-                            TraspasoPipaActivity.class);
+                            CalibracionPipaActivity.class);
                     intent.putExtra("EsCalibracionPipaInicial",false);
                     intent.putExtra("EsCalibracionPipaFinal",true);
                     view.getContext().startActivity(intent);
