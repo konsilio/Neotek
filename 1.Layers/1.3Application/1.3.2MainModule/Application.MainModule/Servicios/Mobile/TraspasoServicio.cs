@@ -29,6 +29,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.Mes = (byte)dto.FechaRegistro.Month;
             adapter.Year = (short)dto.FechaRegistro.Year;
             adapter.FechaRegistro = DateTime.Now;
+            adapter.FechaAplicacion = dto.FechaAplicacion;
             adapter.DatosProcesados = false;
 
             return AlmacenGasServicio.InsertarTraspaso(adapter);//Queda pendiente ver el metodo que se utilizara para el traspaso
