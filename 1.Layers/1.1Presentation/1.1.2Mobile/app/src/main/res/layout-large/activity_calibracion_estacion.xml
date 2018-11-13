@@ -76,7 +76,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="300sp"
+                android:layout_height="100sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15sp"
                 android:layout_marginRight="15dp"

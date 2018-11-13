@@ -81,7 +81,7 @@ public class CalibracionEstacionActivity extends AppCompatActivity
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(dto!=null) {
+                if(dto!=null && position>=0) {
                     for (DatosCalibracionDTO.EstacionDTO estacionDTO:
                             dto.getEstaciones()) {
                         if(estacionDTO.getNombreAlmacen().
@@ -93,8 +93,15 @@ public class CalibracionEstacionActivity extends AppCompatActivity
                                     .getCantidadFotografias());
                             calibracionDTO.setIdCAlmacenGas(estacionDTO.getIdAlmacenGas());
                             calibracionDTO.setNombreCAlmacenGas(estacionDTO.getNombreAlmacen());
-                             int pos = medidores.getPosition(estacionDTO.getMedidor().getNombreTipoMedidor());
-                             SCalibracionEstacionActivityListaMedidor.setSelection(pos);
+                            calibracionDTO.setP5000(estacionDTO.getCantidadP5000());
+                            calibracionDTO.setPorcentaje(estacionDTO.getPorcentajeMedidor());
+                            calibracionDTO.
+                                    setPorcentajeCalibracion(estacionDTO.getPorcentajeMedidor());
+                            for (int x=0;x<dto.getMedidores().size();x++){
+                                if(calibracionDTO.getIdTipoMedidor()== dto.getMedidores().get(x).getIdTipoMedidor()) {
+                                    SCalibracionEstacionActivityListaMedidor.setSelection(x);
+                                }
+                            }
                         }
                     }
                 }else{
@@ -114,7 +121,7 @@ public class CalibracionEstacionActivity extends AppCompatActivity
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(dto!=null){
+                if(dto!=null && position>=0){
                     for (MedidorDTO medidorDTO:
                          dto.getMedidores()) {
                         if(medidorDTO.getNombreTipoMedidor().equals(
@@ -169,21 +176,25 @@ public class CalibracionEstacionActivity extends AppCompatActivity
         if(dto!=null) {
             this.dto = dto;
             lista_medidor = new String[dto.getMedidores().size()];
-            for (int x=0;x<dto.getMedidores().size();x++) lista_medidor[x] =
+            for (int x=0;x<dto.getMedidores().size();x++) {
+                lista_medidor[x] =
                     dto.getMedidores().get(x).getNombreTipoMedidor();
+            }
             SCalibracionEstacionActivityListaMedidor.setAdapter(new ArrayAdapter<>(
                     this,
                     R.layout.custom_spinner,
                     lista_medidor
             ));
-            for (int x = 0; x<dto.getEstaciones().size();x++) lista_estacion[x]= dto.getEstaciones()
+            for (int x = 0; x<dto.getEstaciones().size();x++) {
+                lista_estacion[x]= dto.getEstaciones()
                     .get(x).getNombreAlmacen();
-            medidores = new ArrayAdapter<>(
+            }
+
+            SCalibracionEstacionActivityListaEstaciones.setAdapter(new ArrayAdapter<>(
                     this,
                     R.layout.custom_spinner,
                     lista_estacion
-            );
-            SCalibracionEstacionActivityListaMedidor.setAdapter(medidores);
+            ));
         }
     }
 
@@ -235,11 +246,13 @@ public class CalibracionEstacionActivity extends AppCompatActivity
             dialog.dismiss();
             Intent intent = new Intent(CalibracionEstacionActivity.this,
                     LecturaP5000Activity.class);
+            calibracionDTO.setIdDestinoCalibracion(1);
             intent.putExtra("EsCalibracionEstacionInicial",EsCalibracionEstacionInicial);
             intent.putExtra("EsCalibracionEstacionFinal",EsCalibracionEstacionFinal);
             intent.putExtra("calibracionDTO",calibracionDTO);
             startActivity(intent);
         }));
+        builder.setNegativeButton(R.string.regresar,((dialog, which) -> dialog.dismiss()));
         builder.create().show();
     }
 }

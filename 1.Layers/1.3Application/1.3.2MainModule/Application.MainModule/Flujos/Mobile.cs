@@ -208,7 +208,7 @@ namespace Application.MainModule.Flujos
             adapter.RequiereFactura = venta.Factura;
             adapter.VentaACredito = venta.Credito;
             adapter.ClienteConCredito = venta.TieneCredito;
-
+            adapter.FechaAplicacion = venta.Fecha;
 
             if (!venta.SinNumero)
                 adapter.IdCliente = venta.IdCliente;
