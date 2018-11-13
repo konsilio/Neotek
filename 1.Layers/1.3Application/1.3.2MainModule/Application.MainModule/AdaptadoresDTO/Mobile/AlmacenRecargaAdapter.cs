@@ -138,7 +138,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new DatosRecargaDto()
             {
                 Pipas = pipasDto,
-                Estaciones = estacionesDto
+                Estaciones = estacionesDto,
+                Medidores = TipoMedidorAdapter.ToDto(tipoMedidores)
             };
         }
 
