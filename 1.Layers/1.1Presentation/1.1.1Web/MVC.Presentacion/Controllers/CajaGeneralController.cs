@@ -16,11 +16,11 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
 
-            ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
             var Pagina = page ?? 1;
             ViewBag.CboxEntidad = VentasServicio.ListaVentasCajaGral(_tkn, "Entidad").Select(x => x.PuntoVenta).Distinct();
             ViewBag.CboxConcepto = VentasServicio.ListaVentasCajaGral(_tkn, "").Select(x => x.TipoMovimiento).Distinct();
-            if (ViewBag.EsSuperUser)
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            if (ViewBag.EsAdmin)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
                 ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGral(_tkn, "").ToPagedList(Pagina, 20);
@@ -28,7 +28,7 @@ namespace MVC.Presentacion.Controllers
             }
             else
             {
-                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
                 ViewBag.CajaGeneral = VentasServicio.ListaVentasCajaGralId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn).ToPagedList(Pagina, 20);
             }
 
@@ -53,6 +53,8 @@ namespace MVC.Presentacion.Controllers
             if (TempData["RespuestaCajaGral"] != null)
             {
                 ViewBag.CajaGeneralCamioneta = TempData["RespuestaCajaGral"];
+                ViewBag.SalidaGas = TempData["RespuestaSalidaGas"];
+                ViewBag.SalidaGasCilindro = TempData["RespuestaSalidaGasCilindro"];
             }
             if (TempData["RespuestaDTO"] != null)
             {
@@ -74,11 +76,17 @@ namespace MVC.Presentacion.Controllers
             var Pagina = page ?? 1;
 
             ViewBag.CajaGeneralCamioneta = VentasServicio.ListaVentasCajaGralCamioneta(_model.FolioOperacionDia, _tkn).ToPagedList(Pagina, 10);
+            CajaGeneralCamionetaModel nMod = (CajaGeneralCamionetaModel)ViewBag.CajaGeneralCamioneta[0];
+            ViewBag.SalidaGas = VentasServicio.ListaVentasMovimientosGas(nMod, _tkn);//.ToPagedList(Pagina, 10);
+            ViewBag.SalidaGasCilindro = VentasServicio.ListaVentasMovimientosGasC(nMod, _tkn).GroupBy(x=> x.CantidadKg).Select(grp => grp.First());//.ToPagedList(Pagina, 10);
+
             if (ViewBag.CajaGeneralCamioneta.Count == 0)
             { TempData["RespuestaDTOError"] = "No existe la clave solicitada"; }
             else
             {
                 TempData["RespuestaCajaGral"] = ViewBag.CajaGeneralCamioneta;
+                TempData["RespuestaSalidaGas"] = ViewBag.SalidaGas;
+                TempData["RespuestaSalidaGasCilindro"] = ViewBag.SalidaGasCilindro;
             }
             return RedirectToAction("Liquidar");
         }

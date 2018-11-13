@@ -17,10 +17,16 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-            ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+          
             ViewBag.TipoPersona = CatalogoServicio.ObtenerTiposPersona(_tkn);
             ViewBag.RegimenFiscal = CatalogoServicio.ObtenerRegimenFiscal(_tkn);
             ViewBag.Clientes = CatalogoServicio.ListaClientes(0,"","", _tkn);
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            if (ViewBag.EsAdmin)
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+            else
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
+
             if (TempData["RespuestaDTO"] != null)
             {
                 ViewBag.MessageExito = TempData["RespuestaDTO"];

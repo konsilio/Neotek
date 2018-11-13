@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
 
-<script type="text/javascript">
+@*<script type="text/javascript">
     var thisIndex = -1;
     $(document).ready(function () {
         $("#tblChoferes tbody").delegate('tr', 'click', function () {
@@ -18,123 +18,62 @@
     });
 
     $(function () {
-        $('select').on('change', function (e) {
-
-            //$('#tblChoferes tbody tr').each(function () {
-            //  $(this).find("td").eq(3).css("background-color", "");
-            //});    
-            //$('#tblChoferes tbody tr td:eq(' + 3 + ')').css("background-color", "none");
-
-            //var _lstId = [];
-
-            //var _lstrows = [];
-
+        $('select').on('change', function () {
+            debugger
             var getIdRepeat = -1;
-            //var currentIndexSelect = $('#tblChoferes tbody tr')[0].rowIndex;
-            var thisIndexSelect = thisIndex;//$(this).index();
-            // var value = $('#tblChoferes tbody tr:eq(' + thisIndexSelect + ')').find('td option:selected').val();
-            var currentSelect = this.value;//$('#usr').find('option:selected').val();
-            //var optionSelected = $("option:selected", this);
-            //var valueSelected = this.value;
-
-            //var val = $(e.target).val();
-            //var text = $(e.target).find("option:selected").text(); //only time the find is required
-            //var name = $(e.target).attr('name');
+            var thisIndexSelect = thisIndex;
+            var currentSelect = this.value;
 
             ////collect the values from selected;
             $('#tblChoferes tbody tr').each(function () {
-                //var customerId = $(this).find("#idtd").html();
                 var value = $(this).find('td option:selected').val();
 
                 var rowindex = $(this).index();
 
-                //_lstrows.push(rowindex);
-                //_lstId.push(value);
                 if (value == currentSelect) {
                     if (thisIndexSelect != rowindex) {
-                        //
                         getIdRepeat = $(this).index();
-                        //  $(this).parent('select').eq(0).attr('selected', 'selected')//.val($(this).val())
-                        // $('#selectBox > option').eq(index).attr('selected', 'selected')
                         return false;
                     }
                 }
 
             });
 
-            //var uniq = _lstId.map((name) => { return { count: 1, name: name } }).reduce((a, b) => {
-            //    a[b.name] = (a[b.name] || 0) + b.count
-            //    return a
-            //}, {})
-
-            //var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1)
-
-            //var isMyObjectEmpty = !Object.keys(duplicates).length;
-
-
-            //if (!isMyObjectEmpty) {
-
-
             if (getIdRepeat >= 0) {
-
-                //var currentSelect = $('#tblChoferes tbody tr').find('td option:selected').val()
-                //var currentId = $('#tblChoferes tbody tr')[0].rowIndex;
-                //if (duplicates == currentSelect) {
-                //myFunction(currentSelect);
-                // $('#tblChoferes tbody tr:eq(' + getIdRepeat + ') td:eq(' + 3 + ') option[value=0]').attr('selected', 'selected');
                 $('#tblChoferes tbody tr:eq(' + getIdRepeat + ') td:eq(' + 3 + ')').css("background-color", "red");
-
-                //$("#tblChoferes tr td:nth-child(4):first").css("background-color", "red");
-                //$("#tblChoferes tbody tr td option[value=0]").attr('selected', 'selected');
-
-                //$("#tblChoferes tr td:nth-child(4):first").css("background-color", "red");
-                //$("#tblChoferes tbody tr td option[value=0]").attr('selected', 'selected');
-                //}
+               // $('#usr').               
+                $('#usr option[value="0"]');
+                $('#tblChoferes tbody tr:eq(' + getIdRepeat + ') td:eq(' + 3 + ')').find('td option:selected').val();
             }
 
-            /********************************/
-            //get new value selected
-
-
-            //var tr = $(this).closest("tr");
-            //tr.find("select option").attr("disabled", ""); //enable everything
-            ////collect the values from selected;
-            //var arr = $.map
-            //(
-            //   tr.find("select option:selected"), function (n) {
-            //       return n.value;
-            //   }
-            // );
-
             /***********GUARDARChofer************/
-
             var url = "/PuntoVenta/Guardar";
             var idChofer = currentSelect;
-            //var idEmpresa = $('#tblChoferes tbody tr:eq(' + currentIndexSelect + ') td:eq(' + 0 + ')').text();
+
             var uri = $('#tblChoferes tbody tr:eq(' + thisIndexSelect + ') td:eq(' + 0 + ')').prevObject[0].activeElement.baseURI;
             var idEmpresa = uri.substring(uri.lastIndexOf('=') + 1);
+            var empresa = $('#tblChoferes tbody tr:eq(' + thisIndexSelect + ') td:eq(' + 0 + ')').html();
             var idPV = uri.substring(uri.lastIndexOf('/') + 1).substring(0, 1);
-
+            debugger
             $.getJSON(url, { idEmpresa: idEmpresa, idChofer: idChofer, idPV: idPV }, function (data) {
-                debugger
-                if (data == "[]") {
-                    window.location.reload(true);
-                    location.reload(true);
+                       if (data == "[]") {
+                   // window.location.reload(true);
+                   // location.reload(true);
 
-                    //get messages Error
                 }
                 else {
-                    //get message Sucess
-                    $('#success').show(true);
-                    location.reload(true);
+
+                    //$('#success').show(true);
+                    //location.reload(true);
                 }
             });
-
-            location.reload(true);
+          
+            window.location.href = '@Url.Action("Index", "PuntoVenta")';
+    
         });
 
     });
-</script>
+</script>*@
 
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
@@ -145,21 +84,45 @@
 </div>
 @using (Html.BeginForm("Registrar", "PuntoVenta", FormMethod.Post))
 {
+    @Html.HiddenFor(m => m.IdPuntoVenta)
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Puntos de Venta</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Catálogos</li>
+                            <li class="breadcrumb-item">Puntos de Venta</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="card">
+                    <div class="header">
+                    </div>
                     <div class="body">
                         <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="col-sm-3">
-                                    <b>Gasera</b>
-                                    <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
-                                        @foreach (var lst in ViewBag.Empresas)
+                                    <div>
+                                        <strong>Gasera</strong>
+                                    </div>
+                                    <div>
+                                        @if (ViewBag.EsAdmin)
                                         {
-                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                            <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
+                                            </select>
                                         }
-                                    </select>
+                                        else
+                                        {
+                                            @ViewBag.Empresas
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -168,27 +131,29 @@
 
                 <div class="card">
                     <div class="body">
-                        <div class="row clearfix">
+                        <div class="row clearfix blockquote blockquote-info btn-round">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="table-responsive">
-                                    <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" id="tblChoferes">
+                                    <table class="table table-striped table-hover" id="tblChoferes">
                                         <thead>
                                             <tr>
+                                                @*<th class="id"></th>*@
                                                 <th>Gasera</th>
                                                 <th>Unidad</th>
                                                 <th>Punto de venta</th>
                                                 <th>Operador/Chofer</th>
-                                                <th>Accion</th>
+                                                <th>Acción</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var item in @ViewBag.ListaPV)
                                             {
                                                 <tr>
+                                                    @*<td class="id">@item.IdPuntoVenta</td>*@
                                                     <td>@item.Empresa</td>
                                                     <td>@item.UnidadesAlmacen</td>
                                                     <td>@item.PuntoVenta</td>
-                                                    @if (ViewBag.Usuarios != null)
+                                                    @*@if (ViewBag.Usuarios != null)
                                                     {
                                                         <td>
                                                             <select id="usr" name="IdUsuario" class="form-control selectpicker z-index show-tick">
@@ -205,13 +170,14 @@
                                                                     }
                                                                 }
                                                             </select>
-                                                        </td>}
-                                                    else
-                                                    {
-                                                        <td>@item.OperadorChofer</td>
+                                                        </td>
                                                     }
+                                                    else
+                                                    {*@
+                                                        <td>@item.OperadorChofer</td>
+                                                    @*  *@
                                                     <td>
-                                                        <a ID="lbEdit" href="@Url.Action("AsignarChofer", "PuntoVenta" , new { idE = item.IdEmpresa,id=item.IdPuntoVenta })">
+                                                        <a ID="lbEdit" href="@Url.Action("AsignarChofer", "PuntoVenta" , new { idE = item.IdEmpresa,idPV=item.IdPuntoVenta })">
                                                             <i class="material-icons">edit</i>
                                                             <span class="icon-name"></span>
                                                         </a>
@@ -271,7 +237,7 @@
     </section>
 
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>*@
 
 

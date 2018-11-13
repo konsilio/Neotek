@@ -49,7 +49,6 @@
                     $("#IdPrecioSalidaLt").val(factor)
                 });
 
-
                 /**********/
 
             });//key up.
@@ -175,18 +174,41 @@
         <section class="content home">
             <div class="container-fluid">
                 <div class="block-header">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <h2>Precio de Venta</h2>
+                            <ul class="breadcrumb padding-0">
+                                <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                                <li class="breadcrumb-item">Catálogos</li>
+                                <li class="breadcrumb-item">Precio de Venta</li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="card">
+                        <div class="header">
+                        </div>
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="col-sm-3">
-                                        <b>Gasera</b>
-                                        <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
-                                            @foreach (var lst in ViewBag.Empresas)
+                                        <div>
+                                            <strong>Gasera</strong>
+                                        </div>
+                                        <div>
+                                            @if (ViewBag.EsAdmin)
                                             {
-                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                    @foreach (var lst in ViewBag.Empresas)
+                                                    {
+                                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                    }
+                                                </select>
                                             }
-                                        </select>
+                                            else
+                                            {
+                                                @ViewBag.Empresas
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -248,6 +270,9 @@
                                         <input name="PrecioSalidaLt" id="IdPrecioSalidaLt" type="text" class="form-control" readonly="readonly" />
                                         <input name="PrecioVentaEstatus" type="text" class="form-control" value="Programada" hidden="hidden" />
                                         <input name="EsGas" type="text" class="form-control" value="true" hidden="hidden" />
+                                        <input type="text" name="Categoria" class="form-control date" hidden="hidden" value="Combustibles" />
+                                        <input type="text" name="Linea" class="form-control date" hidden="hidden" value="Gas" />
+                                        <input type="text" name="Producto" class="form-control date" hidden="hidden" value="Gas" />
                                     </div>
                                 </div>
                                 <div class="col-sm-01">
@@ -269,7 +294,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
-                                    <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                    <input type="submit" id="btnRegistraPrecio" value="Registrar Precio" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
                                 </div>
                             </div>
                         </div>
@@ -307,10 +332,10 @@
                                 </div>
                             </div>
                             <br />
-                            <div class="row clearfix">
+                            <div class="row clearfix blockquote blockquote-info btn-round">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="table-responsive">
-                                        <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" id="tblfilterable" name="PreciosVenta">
+                                        <table class="table table table-striped table-hover" id="tblfilterable" name="PreciosVenta">
                                             <thead>
                                                 <tr>
                                                     <th>Gasera</th>
