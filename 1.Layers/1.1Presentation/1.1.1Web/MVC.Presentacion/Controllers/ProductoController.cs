@@ -14,15 +14,14 @@ namespace MVC.Presentacion.Controllers
         #region Categorías Producto
         public ActionResult Categoria(int? page, CategoriaProductoDTO model = null)
         {
-            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
-            RespuestaDTO Resp = new RespuestaDTO();
+            if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");           
             tkn = Session["StringToken"].ToString();
+            ModelState.Clear();
             var Pagina = page ?? 1;
             ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn).ToPagedList(Pagina, 20); ;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null) Resp = (RespuestaDTO)TempData["RespuestaDTO"];
-            if (model != null && model.IdCategoria != 0) ViewBag.EsEdicion = true;
-            ViewBag.MensajeError = Validar(Resp);
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            if (model != null && model.IdCategoria != 0) ViewBag.EsEdicion = true;            
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -83,13 +82,12 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            RespuestaDTO Resp = new RespuestaDTO();
+            ModelState.Clear();
             var Pagina = page ?? 1;
             ViewBag.Lineas = CatalogoServicio.ListaLineasProducto(tkn).ToPagedList(Pagina, 20); ;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null) Resp = (RespuestaDTO)TempData["RespuestaDTO"];
-            if (model != null && model.IdProductoLinea != 0) ViewBag.EsEdicion = true;
-            ViewBag.MensajeError = Validar(Resp);
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
+            if (model != null && model.IdProductoLinea != 0) ViewBag.EsEdicion = true;            
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -150,13 +148,12 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home");
             tkn = Session["StringToken"].ToString();
-            RespuestaDTO Resp = new RespuestaDTO();
+            ModelState.Clear();
             var Pagina = page ?? 1;
             ViewBag.Unidades = CatalogoServicio.ListaUnidadesMedida(tkn).ToPagedList(Pagina, 20); ;
             ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(tkn);
-            if (TempData["RespuestaDTO"] != null) Resp = (RespuestaDTO)TempData["RespuestaDTO"];
+            if (TempData["RespuestaDTO"] != null) ViewBag.MensajeError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
             if (model != null && model.IdUnidadMedida != 0) ViewBag.EsEdicion = true;
-            ViewBag.MensajeError = Validar(Resp);
             if (ViewBag.EsAdmin)
                 ViewBag.Empresas = CatalogoServicio.Empresas(tkn);
             else
@@ -228,8 +225,6 @@ namespace MVC.Presentacion.Controllers
             else
                 ViewBag.CuentasContables = CatalogoServicio.ListaCtaCtble(tkn);
             ViewBag.IdEmpresa = _idEmpresa;
-
-
             ViewBag.Categorias = CatalogoServicio.ListaCategorias(tkn);
             ViewBag.LineasProducto = CatalogoServicio.ListaLineasProducto(tkn);
             ViewBag.UnidadesMedida = CatalogoServicio.ListaUnidadesMedida(tkn);

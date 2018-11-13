@@ -28,7 +28,7 @@ public class Constantes {
     public static final String POST_RECARGA = "mobile/recarga/camioneta";
     public static final String POST_RECARGA_INCIAL = "mobile/recarga/inicial";
     public static final String POST_RECARGA_FINAL = "mobile/recarga/final";
-    public static final String GET_UNIDADES = "mobile/catalogo/unidades";
+    public static final String GET_UNIDADES = "mobile/catalogos/unidades";
     public static final String GET_CATALOGO_RECARGAS = "mobile/catalogos/recarga/{esEstacion}/{esPipa}/{esCamioneta}";
     public static final String GETCATALOGO_AUTOCONSUMO = "mobile/catalogos/autoconsumo/{esEstacion}/{esInventario}/{esPipas}/{esFinal}";
     public static final String POST_AUTOCONSUMO = "mobile/autoconsumo/{esFinal}";
@@ -49,4 +49,5 @@ public class Constantes {
     public static final String POST_CORTE = " mobile/corte-de-caja";
     public static final String GET_CATALOGOS_VENTA_GAS = "mobile/catalogos/venta-gas/{esLP}/{esCilindroConGas}/{esCilindro}";
     public static final String GET_CATALOGOS_VENTA_OTROS = "mobile/catalogos/otros";
+    public static final String GET_ORDEN_REFERENCIA = "mobile/ordenes/lista/ordenes/compra/{IdOrdenCompra}";
 }

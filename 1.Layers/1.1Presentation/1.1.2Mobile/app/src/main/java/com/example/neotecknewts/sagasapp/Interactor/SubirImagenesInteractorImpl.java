@@ -71,7 +71,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      * @param precargaPapeletaDTO Objeto de tipo {@link PrecargaPapeletaDTO} con los datos de la
      *                            papeleta
      * @param token {@link String} que reprecenta el token de usuario
-     * @param papeletaSQL Objeto {@link PapeletaSQL} que permite la conexion a la base de datos local
+     * @param papeletaSQL Objeto {@link PapeletaSQL} que permite la conexion a la base de datos
+     *                    local
      */
     @Override
     public void registrarPapeleta(PrecargaPapeletaDTO precargaPapeletaDTO,
@@ -101,10 +102,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -247,7 +250,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         Log.w("Genero_clave",clave_unica);
         Log.w("Consulta","Consulto si el servicio esta disponible");
         iniciarDescargaDTO.setClaveOperacion(clave_unica);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         String formato_fecha_operacion = f.format(new Date());
         iniciarDescargaDTO.setFechaDescarga(formato_fecha_operacion);
         //region Verifica si el servcio esta disponible
@@ -266,10 +270,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -392,14 +398,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
      */
     @Override
     public void registrarFinalizarDescarga(FinalizarDescargaDTO finalizarDescargaDTO,
-                                           String token, FinalizarDescargaSQL finalizarDescargaSQL) {
+                                           String token,
+                                           FinalizarDescargaSQL finalizarDescargaSQL) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "FD"+s.format(new Date());
         Log.w("Genero_clave",clave_unica);
         Log.w("Consulto","Consulto el servicio");
         finalizarDescargaDTO.setClaveOperacion(clave_unica);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         String formato_fecha_operacion = f.format(new Date());
         finalizarDescargaDTO.setFechaDescarga(formato_fecha_operacion);
         finalizarDescargaDTO.setTanquePrestado(false);
@@ -419,10 +427,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -462,7 +472,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         int intentos_post = 0;
         registra_descarga = true;
         /*while(intentos_post<3) {*/
-            Call<RespuestaFinalizarDescargaDTO> call = restClient.postFinalizarDescarga(finalizarDescargaDTO,
+            Call<RespuestaFinalizarDescargaDTO> call =
+                    restClient.postFinalizarDescarga(finalizarDescargaDTO,
                     token, "application/json");
             Log.w(TAG, retrofit.baseUrl().toString());
             call.enqueue(new Callback<RespuestaFinalizarDescargaDTO>() {
@@ -496,7 +507,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     }
 
                     if(response.code()>=300){
-                        registrar_finalizar_local(finalizarDescargaSQL,finalizarDescargaDTO,clave_unica);
+                        registrar_finalizar_local(finalizarDescargaSQL,finalizarDescargaDTO,
+                                clave_unica);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(finalizarDescargaSQL,token);
                         lisener.CrearRunable(Lisener.FinalizarDescarga);
@@ -506,7 +518,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 @Override
                 public void onFailure(Call<RespuestaFinalizarDescargaDTO> call, Throwable t) {
                     Log.e("error", t.toString());
-                    registrar_finalizar_local(finalizarDescargaSQL,finalizarDescargaDTO,clave_unica);
+                    registrar_finalizar_local(finalizarDescargaSQL,finalizarDescargaDTO,
+                            clave_unica);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(finalizarDescargaSQL,token);
                     lisener.CrearRunable(Lisener.FinalizarDescarga);
@@ -556,7 +569,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //region Verifica si el servcio esta disponible
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf = new
                 SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        lecturaDTO.setFechaAplicacion(sf.format(new Date()));
+        lecturaDTO.setFechaAplicacion((Date) Calendar.getInstance().getTime());
         Gson gsons = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -571,10 +584,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -592,7 +607,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
         //servicio_intentos = 3;
         if (servicio_intentos == 3) {
-            registrar_local(sagasSql,lecturaDTO,clave_unica);
+            registrar_local(sagasSql,lecturaDTO,clave_unica,false);
             registro_local = true;
         }
 
@@ -646,7 +661,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         }
                     }
                     if(response.code()>=300) {
-                        registrar_local(sagasSql, lecturaDTO, clave_unica);
+                        registrar_local(sagasSql, lecturaDTO, clave_unica,false);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(sagasSql,token);
                         lisener.CrearRunable(Lisener.LecturaInicial);
@@ -656,7 +671,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 @Override
                 public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                     Log.e("error", t.toString());
-                    registrar_local(sagasSql, lecturaDTO, clave_unica);
+                    registrar_local(sagasSql, lecturaDTO, clave_unica,false);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(sagasSql,token);
                     lisener.CrearRunable(Lisener.LecturaInicial);
@@ -702,7 +717,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //region Verifica si el servcio esta disponible
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf = new
                 SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        lecturaDTO.setFechaAplicacion(sf.format(new Date()));
+        lecturaDTO.setFechaAplicacion((Date) Calendar.getInstance().getTime());
         Gson gsons = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -717,10 +732,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -738,7 +755,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
         //servicio_intentos = 3;
         if (servicio_intentos == 3) {
-            registrar_local(sagasSql,lecturaDTO,clave_unica);
+            registrar_local(sagasSql,lecturaDTO,clave_unica,true);
             registro_local = true;
         }
 
@@ -791,7 +808,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                             subirImagenesPresenter.errorSolicitud(response.message());
                     }
                     if(response.code()>= 300){
-                        registrar_local(sagasSql,lecturaDTO,clave_unica);
+                        registrar_local(sagasSql,lecturaDTO,clave_unica,true);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(sagasSql,token);
                         lisener.CrearRunable(Lisener.LecturaFinal);
@@ -801,7 +818,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 @Override
                 public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                     Log.e("error", t.toString());
-                    registrar_local(sagasSql,lecturaDTO,clave_unica);
+                    registrar_local(sagasSql,lecturaDTO,clave_unica,true);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(sagasSql,token);
                     lisener.CrearRunable(Lisener.LecturaFinal);
@@ -871,10 +888,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -1026,10 +1045,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -1255,7 +1276,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                             subirImagenesPresenter.errorSolicitud(response.message());
                     }
                     if(response.code()>=300){
-                        registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,false);
+                        registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,
+                                false);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(sagasSql,token);
                         lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
@@ -1265,7 +1287,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 @Override
                 public void onFailure(Call<RespuestaLecturaInicialDTO> call, Throwable t) {
                     Log.e("error", t.toString());
-                    registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,false);
+                    registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,
+                            false);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
                     Lisener lisener = new Lisener(sagasSql,token);
                     lisener.CrearRunable(Lisener.LecturaInicialAlmacen);
@@ -1410,7 +1433,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                             subirImagenesPresenter.errorSolicitud(response.message());
                     }
                     if(response.code()>=300){
-                        registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,true);
+                        registrar_local_almacen(sagasSql,lecturaAlmacenDTO,clave_unica,
+                                true);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
                         Lisener lisener = new Lisener(sagasSql,token);
                         lisener.CrearRunable(Lisener.LecturaFinalAlmacen);
@@ -1786,7 +1810,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
-
+        autoconsumoDTO.setFechaRegistro(sf.format(new Date()));
         Gson gsons = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -1837,7 +1861,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -1848,9 +1872,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
 
             Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                         autoconsumoDTO,
-                        true,
+                       /* true,
                         false,
-                        false,
+                        false,*/
                         esAutoconsumoEstacionFinal,
                         token,
                         "application/json"
@@ -1891,7 +1915,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     }
                     if(response.code()>=300) {
                         registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
-                                SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION, esAutoconsumoEstacionFinal);
+                                SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION,
+                                esAutoconsumoEstacionFinal);
                         Lisener lisener = new Lisener(sagasSql, token);
                         lisener.CrearRunable(Lisener.Autoconsumo);
                         subirImagenesPresenter.onSuccessRegistroAndroid();
@@ -1903,7 +1928,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     Log.e("error", t.toString());
                     registro_local = true;
                     registrar_local_autoconsumo(sagasSql, autoconsumoDTO,
-                            SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION, esAutoconsumoEstacionFinal);
+                            SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION,
+                            esAutoconsumoEstacionFinal);
                     Lisener lisener = new Lisener(sagasSql, token);
                     lisener.CrearRunable(Lisener.Autoconsumo);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
@@ -1961,6 +1987,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
+        autoconsumoDTO.setFechaRegistro(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2013,7 +2040,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -2023,9 +2050,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         while(intentos_post<3) {*/
             Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                     autoconsumoDTO,
-                    false,
+                    /*false,
                     true,
-                    false,
+                    false,*/
                     esAutoconsumoInventarioFinal,
                     token,
                     "application/json"
@@ -2124,6 +2151,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
+        autoconsumoDTO.setFechaRegistro(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2140,10 +2168,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -2184,9 +2214,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         while(intentos_post<3) {*/
             Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                     autoconsumoDTO,
+                    /*false,
                     false,
-                    false,
-                    true,
+                    true,*/
                     esAutoconsumoPipaFinal,
                     token,
                     "application/json"
@@ -2324,7 +2354,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         if (servicio_intentos == 3) {
-            registrar_local_traspaso(sagasSql,traspasoDTO,esTraspasoEstacionFinal,SAGASSql.TIPO_TRASPASO_ESTACION);
+            registrar_local_traspaso(sagasSql,traspasoDTO,esTraspasoEstacionFinal,
+                    SAGASSql.TIPO_TRASPASO_ESTACION);
             registro_local = true;
         }
 
@@ -2422,6 +2453,17 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
     }
 
+    /**
+     * registrarTraspasoPipa
+     * Permite realizar el registro de un traspaso de pipa , tomara los datos que estan el
+     * el objeto dto {@link TraspasoDTO} para enviarlos al registro, en caso de que no
+     * reponda el servicio o no este disponible , los datos seran registrados en local y enviados
+     * para procesarce al api nuevamente.
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param traspasoDTO Objeto de tipo {@link TraspasoDTO} con los datos del traspaso
+     * @param esTraspasoPipaFinal Boolean que indica si el traspaso es final
+     */
     @Override
     public void registrarTraspasoPipa(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO,
                                       boolean esTraspasoPipaFinal) {
@@ -2431,7 +2473,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (esTraspasoPipaFinal)? "F":"I";
         clave_unica += s.format(new Date());
         traspasoDTO.setClaveOperacion(clave_unica);
-        traspasoDTO.setFecha((java.sql.Date) Calendar.getInstance().getTime());
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        traspasoDTO.setFecha((Date) Calendar.getInstance().getTime());
+        traspasoDTO.setFechaAplicacion(Calendar.getInstance().getTime().toString());
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2448,10 +2493,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -2569,6 +2616,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
     }
 
+    /**
+     * registrarCalibracionEstacion
+     * Permite realizar el registro de la calibración de la estación de carburación,
+     * se envia como parametro el objeto de tipo {@link CalibracionDTO} para su registro en la
+     * api , en caso de no registrarse o no estar disponible los dato se guardan en local
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param calibracionDTO Objeto de tipo {@link CalibracionDTO} con los datos a enviar
+     * @param esCalibracionEstacionFinal Boolean que determina si la calibración es final
+     */
     @Override
     public void registrarCalibracionEstacion(SAGASSql sagasSql, String token
             , CalibracionDTO calibracionDTO, boolean esCalibracionEstacionFinal) {
@@ -2577,7 +2634,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         String clave_unica = "CE";
         clave_unica += (esCalibracionEstacionFinal)? "F":"I";
         clave_unica += s.format(new Date());
+        Log.w("Clave",clave_unica);
         calibracionDTO.setClaveOperacion(clave_unica);
+        calibracionDTO.setFechaAplicacion((Date) Calendar.getInstance().getTime());
+        calibracionDTO.setFechaRegistro((Date) Calendar.getInstance().getTime());
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2594,10 +2654,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -2615,7 +2677,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         if (servicio_intentos == 3) {
-            registrar_local_calibracion(sagasSql,calibracionDTO);
+            registrar_local_calibracion(sagasSql,calibracionDTO,SAGASSql.TIPO_CALIBRACION_ESTACION,
+                    esCalibracionEstacionFinal);
             registro_local = true;
         }
 
@@ -2637,8 +2700,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         while(intentos_post<3) {*/
             Call<RespuestaTraspasoDTO> call = restClient.postCalibracion(
                     calibracionDTO,
-                    true,
-                    false,
+                    /*true,
+                    false,*/
                     esCalibracionEstacionFinal,
                     token,
                     "application/json"
@@ -2650,19 +2713,19 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                                        Response<RespuestaTraspasoDTO> response) {
                     RespuestaTraspasoDTO data = response.body();
                     if (response.isSuccessful()) {
-                        Log.w("IniciarCalibracion", "Success");
+                        Log.w("Iniciar Calibracion ", "Success");
                         subirImagenesPresenter.onSuccessRegistroRecarga();
                     } else {
                         registra_reacrga = false;
                         switch (response.code()) {
                             case 404:
-                                Log.w("Traspaso pipa", "not found");
+                                Log.w("Calibración estación", "not found");
                                 break;
                             case 500:
-                                Log.w("Traspaso pipa", "server broken");
+                                Log.w("Calibración estación", "server broken");
                                 break;
                             default:
-                                Log.w("Traspaso pipa", "" + response.code());
+                                Log.w("Calibración estación", "" + response.code());
                                 Log.w(" Error", response.message() + " " +
                                         response.raw().toString());
                                 break;
@@ -2672,13 +2735,16 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         }else {
                             subirImagenesPresenter.errorSolicitud(response.message());
                         }
-                        if(response.code()>=300){
-                            registrar_local_calibracion(sagasSql,calibracionDTO);
-                            subirImagenesPresenter.onSuccessRegistroAndroid();
-                            Lisener lisener = new Lisener(sagasSql,token);
-                            lisener.CrearRunable(Lisener.Calibracion);
-                        }
                         //registra_reacrga= false;
+                    }
+
+                    if(response.code()>=300){
+                        registrar_local_calibracion(sagasSql,calibracionDTO,
+                                SAGASSql.TIPO_CALIBRACION_ESTACION,
+                                esCalibracionEstacionFinal);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.Calibracion);
                     }
                 }
 
@@ -2686,7 +2752,9 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 public void onFailure(Call<RespuestaTraspasoDTO> call, Throwable t) {
                     Log.e("error", t.toString());
                     subirImagenesPresenter.errorSolicitud(t.getMessage());
-                    registrar_local_calibracion(sagasSql,calibracionDTO);
+                    registrar_local_calibracion(sagasSql,calibracionDTO,
+                            SAGASSql.TIPO_CALIBRACION_ESTACION,
+                            esCalibracionEstacionFinal);
                     Lisener lisener = new Lisener(sagasSql,token);
                     lisener.CrearRunable(Lisener.Calibracion);
                     subirImagenesPresenter.onSuccessRegistroAndroid();
@@ -2709,8 +2777,19 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         //endregion
     }
 
+    /**
+     * registrarCalibracionPipa
+     * Permite el registro de la calibracion de una pipa, toma como parametro los datos
+     * de un objeto {@link CalibracionDTO} con los datos de esta para ser enviado al api, en
+     * caso de que el api no responda se guardara en local
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param token Cadena de {@link String} con el token de seguirdad de la cuenta
+     * @param calibracionDTO Objeto de tipo {@link CalibracionDTO} con los datos a enviar
+     * @param esCalibracionPipaFinal boolean que determina si la calibracion es final
+     */
     @Override
-    public void registrarCalibracionPipa(SAGASSql sagasSql, String token, CalibracionDTO calibracionDTO,
+    public void registrarCalibracionPipa(SAGASSql sagasSql, String token,
+                                         CalibracionDTO calibracionDTO,
                                          boolean esCalibracionPipaFinal) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
@@ -2718,6 +2797,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (esCalibracionPipaFinal)? "F":"I";
         clave_unica += s.format(new Date());
         calibracionDTO.setClaveOperacion(clave_unica);
+        calibracionDTO.setFechaAplicacion((Date) Calendar.getInstance().getTime());
+        calibracionDTO.setFechaRegistro((Date) Calendar.getInstance().getTime());
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2734,10 +2815,12 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         esta_disponible= true;
 
         while (servicio_intentos<3) {
-            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,"application/json");
+            Call<RespuestaServicioDisponibleDTO> callS = restClientS.postServicio(token,
+                    "application/json");
             callS.enqueue(new Callback<RespuestaServicioDisponibleDTO>() {
                 @Override
-                public void onResponse(Call<RespuestaServicioDisponibleDTO> call, Response<RespuestaServicioDisponibleDTO> response) {
+                public void onResponse(Call<RespuestaServicioDisponibleDTO> call,
+                                       Response<RespuestaServicioDisponibleDTO> response) {
                     RespuestaServicioDisponibleDTO data = response.body();
                     esta_disponible = response.isSuccessful() && data.isExito();
                 }
@@ -2755,7 +2838,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
 
         if (servicio_intentos == 3) {
-            registrar_local_calibracion(sagasSql,calibracionDTO);
+            registrar_local_calibracion(sagasSql,calibracionDTO,SAGASSql.TIPO_CALIBRACION_PIPA,
+                    esCalibracionPipaFinal);
             registro_local = true;
         }
 
@@ -2767,18 +2851,18 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        int intentos_post = 0;
+        /*int intentos_post = 0;
         registra_reacrga = true;
-        while(intentos_post<3) {
+        while(intentos_post<3) {*/
             Call<RespuestaTraspasoDTO> call = restClient.postCalibracion(
                     calibracionDTO,
-                    false,
-                    true,
+                    /*false,
+                    true,*/
                     esCalibracionPipaFinal,
                     token,
                     "application/json"
@@ -2814,6 +2898,13 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                         }
                         registra_reacrga= false;
                     }
+                    if(response.code()>=300){
+                        registrar_local_calibracion(sagasSql,calibracionDTO,
+                                SAGASSql.TIPO_CALIBRACION_PIPA,esCalibracionPipaFinal);
+                        Lisener lisener = new Lisener(sagasSql,token);
+                        lisener.CrearRunable(Lisener.Calibracion);
+                        subirImagenesPresenter.onSuccessRegistroAndroid();
+                    }
                 }
 
                 @Override
@@ -2821,30 +2912,45 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                     Log.e("error", t.toString());
                     registra_reacrga = false;
                     subirImagenesPresenter.errorSolicitud(t.getMessage());
+                    registrar_local_calibracion(sagasSql,calibracionDTO,
+                            SAGASSql.TIPO_CALIBRACION_PIPA,esCalibracionPipaFinal);
+                    Lisener lisener = new Lisener(sagasSql,token);
+                    lisener.CrearRunable(Lisener.Calibracion);
+                    subirImagenesPresenter.onSuccessRegistroAndroid();
                 }
             });
-            intentos_post++;
+            /*intentos_post++;
             if(registra_reacrga){
                 break;
             }else{
                 intentos_post++;
-            }
-        }
-        if(intentos_post==3){
-            registrar_local_calibracion(sagasSql,calibracionDTO);
+            }*/
+        /*}*/
+        /*if(intentos_post==3){
+            registrar_local_calibracion(sagasSql,calibracionDTO,SAGASSql.TIPO_CALIBRACION_PIPA
+                    ,esCalibracionPipaFinal);
+            subirImagenesPresenter.onSuccessRegistroAndroid();
+            Lisener lisener = new Lisener(sagasSql,token);
+            lisener.CrearRunable(Lisener.Calibracion);
             registro_local = true;
         }
         if(registro_local ){
-            /*Lisener lisener = new Lisener(sagasSql,token);
-            lisener.CrearRunable(Lisener.RecargaCamioneta);*/
             subirImagenesPresenter.onSuccessRegistroAndroid();
-        }
+        }*/
         //endregion
     }
 
-    private void registrar_local_calibracion(SAGASSql sagasSql, CalibracionDTO calibracionDTO){
+    /**
+     * registrar_local_calibracion
+     * Permite realizar el registro de la calibración en el dispositivo en caso de que no se realice
+     * por medio del api, se gurada los datos que tiene el objeto {@link CalibracionDTO}
+     * @param sagasSql Objeto de tipo {@link SAGASSql} para registro en base de datos local
+     * @param calibracionDTO Objeto de tipo {@link CalibracionDTO} con los datos a enviar
+     */
+    private void registrar_local_calibracion(SAGASSql sagasSql, CalibracionDTO calibracionDTO,
+                                             String tipo,boolean esFinal){
         if(sagasSql.GetCalibracionByClaveOperacion(calibracionDTO.getClaveOperacion()).getCount()==0){
-            sagasSql.InsertarCalibracion(calibracionDTO,SAGASSql.TIPO_CALIBRACION_PIPA);
+            sagasSql.InsertarCalibracion(calibracionDTO,tipo,esFinal);
             if(sagasSql.GetFotografiasCalibracion(calibracionDTO.getClaveOperacion()).getCount()==0){
                 sagasSql.InsertarImagenesCalibracion(calibracionDTO);
             }
@@ -2958,15 +3064,25 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         }
     }
 
-    private void registrar_local(SAGASSql sagasSql, LecturaDTO lecturaDTO, String clave_unica) {
-        if(sagasSql.GetLecturaByClaveUnica(clave_unica).getCount()==0){
-            sagasSql.InsertLecturaInicial(lecturaDTO);
-            if(sagasSql.GetLecturaImagenesByClaveUnica(clave_unica).getCount()==0){
-                sagasSql.InsertLecturaImagenes(lecturaDTO);
+    private void registrar_local(SAGASSql sagasSql, LecturaDTO lecturaDTO, String clave_unica,
+                                 boolean esFinal ) {
+        if(esFinal) {
+            if(sagasSql.GetLecturaFinalByClaveProceso(clave_unica).getCount()==0){
+                sagasSql.IncertarLecturaFinal(lecturaDTO);
+                if(sagasSql.GetImagenesLecturaFinalByClaveOperacion(clave_unica).getCount()==0){
+                    sagasSql.IncertImagenesLecturaFinal(lecturaDTO);
+                }
             }
+        }else {
+            if (sagasSql.GetLecturaByClaveUnica(clave_unica).getCount() == 0) {
+                sagasSql.InsertLecturaInicial(lecturaDTO);
+                if (sagasSql.GetLecturaImagenesByClaveUnica(clave_unica).getCount() == 0) {
+                    sagasSql.InsertLecturaImagenes(lecturaDTO);
+                }
             /*if(sagasSql.GetLecturaP5000ByClaveUnica(clave_unica).getCount()==0){
                 sagasSql.InsertLecturaP5000(lecturaDTO);
             }*/
+            }
         }
     }
 

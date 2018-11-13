@@ -454,7 +454,10 @@ public class SAGASSql extends SQLiteOpenHelper {
                         "CantidadFotografias INTEGER,"+
                         "Tipo TEXT,"+
                         "Fecha DATETIME,"+
-                        "Falta BOOLEAN DEFAULT 1" +
+                        "Falta BOOLEAN DEFAULT 1," +
+                        "FechaAplicacion DATETIME,"+
+                        "PorcentajeMedidor2 DOUBLE,"+
+                        "EsFinal BOOLEAN DEFAULT 1" +
                 ")");
         //endregion
         //region Tabla de Imagenes Calibración
@@ -820,7 +823,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Integer EliminarLecturaFinal(String ClaveProceso){
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_LECTURA_FINALIZAR,
-                "WHERE ClaveProceso = '"+ClaveProceso+"'",null);
+                " WHERE ClaveProceso = '"+ClaveProceso+"'",null);
     }
 
     /**
@@ -1534,7 +1537,7 @@ public class SAGASSql extends SQLiteOpenHelper {
     public Cursor GetLecturaInicialCamionetaByClaveOperacion(String ClaveOperacion){
         return this.getReadableDatabase().rawQuery(
                 "SELECT * FROM "+TABLE_LECTURA_INICIAL_CAMIONETA+
-        " WHERE ClaveOperacion = "+ClaveOperacion,null);
+        " WHERE ClaveOperacion = '"+ClaveOperacion+"'",null);
     }
 
     public Integer EliminarLecturaInicialCamioneta(String ClaveOperacion){
@@ -2043,10 +2046,11 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Cursor GetCalibracionByClaveOperacion(String claveOperacion) {
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_CALIBRACION+
-        "WHERE ClaveOperacion = '"+claveOperacion+"'",null);
+        " WHERE ClaveOperacion = '"+claveOperacion+"'",null);
     }
 
-    public Long InsertarCalibracion(CalibracionDTO calibracionDTO, String tipoCalibracion) {
+    public Long InsertarCalibracion(CalibracionDTO calibracionDTO, String tipoCalibracion,
+                                    boolean esFinal) {
         ContentValues values = new ContentValues();
         values.put("Tipo",tipoCalibracion);
         values.put("ClaveOperacion",calibracionDTO.getClaveOperacion());
@@ -2060,13 +2064,17 @@ public class SAGASSql extends SQLiteOpenHelper {
         values.put("P5000",calibracionDTO.getP5000());
         values.put("Porcentaje",calibracionDTO.getPorcentaje());
         values.put("CantidadFotografias",calibracionDTO.getCantidadFotografias());
+        values.put("PorcentajeMedidor2",calibracionDTO.getPorcentajeMedidor2());
+        values.put("FechaAplicacion",calibracionDTO.getFechaAplicacion().toString());
+        values.put("Fecha",calibracionDTO.getFechaRegistro().toString());
+        values.put("EsFinal",esFinal);
 
         return this.getReadableDatabase().insert(TABLE_CALIBRACION,null,values);
     }
 
     public Cursor GetFotografiasCalibracion(String claveOperacion) {
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_CALIBRACION_IMAGENES+
-        "WHERE ClaveOperacion = '"+claveOperacion+"'",null);
+        " WHERE ClaveOperacion = '"+claveOperacion+"'",null);
     }
 
     public Long[] InsertarImagenesCalibracion(CalibracionDTO calibracionDTO) {
@@ -2223,6 +2231,36 @@ public class SAGASSql extends SQLiteOpenHelper {
           TABLE_ANTICIPOS,
           null,
           values
+        );
+    }
+
+    /**
+     * EliminarCalibracion
+     * Permite realizar el borrado de una calibración por medio del la clave de operación
+     * que se envia como parametro, retornara un valor de tipo {@link Integer} con el numero total
+     * de registros eliminados
+     * @param claveOperacion {@link String} que reprecenta la clave de operacion de la calibración
+     */
+    public Integer EliminarCalibracion(String claveOperacion) {
+        return this.getWritableDatabase().delete(
+                TABLE_CALIBRACION,
+                " WHERE ClaveOperacion = '"+claveOperacion+"'",
+                null
+        );
+    }
+
+    /**
+     * EliminarImagenesCalibracion
+     * Permite realizar la eliminación de las imagenes de la calibración, retornara un valor
+     * de tipo {@link Integer} que reprecenta el numero de registros eliminados
+     * @param claveOperacion {@link String} que reprecenta la clave de operacion de la calibración
+     * @return El número de registros eliminados
+     */
+    public Integer EliminarImagenesCalibracion(String claveOperacion) {
+        return this.getWritableDatabase().delete(
+                TABLE_CALIBRACION_IMAGENES,
+                " WHERE ClaveOperacion = '"+claveOperacion+"'",
+                null
         );
     }
 

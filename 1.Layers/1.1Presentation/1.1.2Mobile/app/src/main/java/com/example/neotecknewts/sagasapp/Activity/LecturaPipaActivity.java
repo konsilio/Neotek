@@ -85,7 +85,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>0) {
+                if(position>=0) {
                     for (AlmacenDTO almacenDTO :DatosTomaLecturaDto.getAlmacenes()){
                         if (almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
                             lecturaPipaDTO.setIdPipa(almacenDTO.getIdAlmacenGas());
@@ -117,7 +117,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position>0){
+                if (position>=0){
                     for (MedidorDTO medidor: MedidorDTOList){
                         if(medidor.getNombreTipoMedidor().equals(parent.getItemAtPosition(position)
                                 .toString())){
@@ -133,6 +133,7 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
             public void onNothingSelected(AdapterView<?> parent) {
                 lecturaPipaDTO.setIdTipoMedidor(0);
                 lecturaPipaDTO.setTipoMedidor("");
+                lecturaPipaDTO.setCantidadFotografias(0);
             }
         });
 
@@ -149,11 +150,11 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
     public void ValidateForm() {
         ArrayList<String> mensajes = new ArrayList<>();
         boolean error = false;
-        if(SLecturaPipaActivityListaPipa.getSelectedItemPosition()<=0){
+        if(SLecturaPipaActivityListaPipa.getSelectedItemPosition()<0){
             mensajes.add("La pipa es un valor requerido");
             error = true;
         }
-        if(SLecturaPipaActivityListaTipoMedidor.getSelectedItemPosition()<=0){
+        if(SLecturaPipaActivityListaTipoMedidor.getSelectedItemPosition()<0){
             mensajes.add("El tipo de medidor es un valor requerido");
             error = true;
         }
@@ -175,12 +176,9 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
             mensaje_dialogo.append("\n").append(texto);
         }
         dialogo.setMessage(mensaje_dialogo);
-        dialogo.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                SLecturaPipaActivityListaPipa.setFocusable(true);
-                dialog.dismiss();
-            }
+        dialogo.setPositiveButton(R.string.message_acept, (dialog, which) -> {
+            SLecturaPipaActivityListaPipa.setFocusable(true);
+            dialog.dismiss();
         });
         dialogo.create().show();
     }
@@ -192,24 +190,16 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
                 R.style.AlertDialog);
         builder.setTitle(R.string.title_alert_message);
         builder.setMessage(R.string.message_continuar);
-        builder.setNegativeButton(R.string.message_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.setPositiveButton(R.string.message_acept, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(LecturaPipaActivity.this,
-                        LecturaP5000Activity.class);
-                intent.putExtra("lecturaPipaDTO",lecturaPipaDTO);
-                intent.putExtra("EsLecturaInicial",false);
-                intent.putExtra("EsLecturaFinal",false);
-                intent.putExtra("EsLecturaInicialPipa",EsLecturaInicialPipa);
-                intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
-                startActivity(intent);
-            }
+        builder.setNegativeButton(R.string.message_cancel, (dialog, which) -> dialog.dismiss());
+        builder.setPositiveButton(R.string.message_acept, (dialog, which) -> {
+            Intent intent = new Intent(LecturaPipaActivity.this,
+                    LecturaP5000Activity.class);
+            intent.putExtra("lecturaPipaDTO",lecturaPipaDTO);
+            intent.putExtra("EsLecturaInicial",false);
+            intent.putExtra("EsLecturaFinal",false);
+            intent.putExtra("EsLecturaInicialPipa",EsLecturaInicialPipa);
+            intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
+            startActivity(intent);
         });
         builder.create().show();
     }
@@ -231,12 +221,14 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onSuccessMedidores(List<MedidorDTO> data) {
-        ListaMedidores = new String[data.size()+1];
+        //ListaMedidores = new String[data.size()+1];
+        ListaMedidores = new String[data.size()];
         MedidorDTOList = new ArrayList<>();
         MedidorDTOList = data;
-        ListaMedidores[0]= "Seleccione";
+        //ListaMedidores[0]= "Seleccione";
         for (int x =0; x< data.size();x++){
-            ListaMedidores[x+1] = data.get(x).getNombreTipoMedidor();
+            //ListaMedidores[x+1] = data.get(x).getNombreTipoMedidor();
+            ListaMedidores[x] = data.get(x).getNombreTipoMedidor();
         }
         SLecturaPipaActivityListaTipoMedidor.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaMedidores));
@@ -268,11 +260,13 @@ public class LecturaPipaActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onSuccessPipas(DatosTomaLecturaDto data) {
-        ListaPipas = new String[data.getAlmacenes().size()+1];
+        //ListaPipas = new String[data.getAlmacenes().size()+1];
+        ListaPipas = new String[data.getAlmacenes().size()];
         DatosTomaLecturaDto = data;
-        ListaPipas[0]= "Seleccione";
+        //ListaPipas[0]= "Seleccione";
         for (int x =0; x< data.getAlmacenes().size();x++){
-            ListaPipas[x+1] = data.getAlmacenes().get(x).getNombreAlmacen();
+            //ListaPipas[x+1] = data.getAlmacenes().get(x).getNombreAlmacen();
+            ListaPipas[x] = data.getAlmacenes().get(x).getNombreAlmacen();
         }
         SLecturaPipaActivityListaPipa.setAdapter(new ArrayAdapter<>(this,
                 R.layout.custom_spinner,ListaPipas));

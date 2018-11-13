@@ -1687,8 +1687,11 @@ namespace MVC.Presentacion.Agente
         }
         public void GuardarCentroCosto(CentroCostoCrearDTO dto, string tkn)
         {
-            this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraCentroCosto"];
-            GuardarCtroCosto(dto, tkn).Wait();
+            //this.ApiCatalgos = ConfigurationManager.AppSettings["PostRegistraCentroCosto"];
+            //GuardarCtroCosto(dto, tkn).Wait();
+
+            this.ApiRoute = ConfigurationManager.AppSettings["PostRegistraCentroCosto"];
+          LLamada(dto, tkn, MetodoRestConst.Post).Wait();
         }
         private async Task GuardarCtroCosto(CentroCostoCrearDTO _pcDTO, string token)
         {

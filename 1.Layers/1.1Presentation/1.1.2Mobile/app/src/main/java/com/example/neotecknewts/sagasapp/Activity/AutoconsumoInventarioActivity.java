@@ -65,11 +65,51 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
                  list_unidad
          ));
          presenter.getList(session.getToken(),EsAutoconsumoInventarioFinal);
-                 SAutoconsumoInvetarioActivityInventario.setOnItemSelectedListener(
+         SAutoconsumoInvetarioActivityInventario.setOnItemSelectedListener(
                  new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                 autoconsumoDTO.setIdCAlmacenGasSalida(1);
+                  if(list_unidad!=null && datosAutoconsumoDTO!= null
+                         && position>=0) {
+                    for (int x=0; x<datosAutoconsumoDTO.getEstacionEntradaDTOList().size();x++) {
+                        if(parent.getItemAtPosition(position).toString().equals(
+                                datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                                        .getNombreAlmacen()
+                        )) {
+
+                            autoconsumoDTO.setIdCAlmacenGasSalida(
+                                    datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                                    .getIdAlmacenGas()
+                            );
+                            autoconsumoDTO.setIdCAlmacenGasEntrada(
+                                    datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                                            .getIdAlmacenGas()
+                            );
+                            autoconsumoDTO.setP5000Salida(
+                                    datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                                            .getCantidadP5000()
+                            );
+                            autoconsumoDTO.setPorcentajeMedidor(
+                                    datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                                    .getPorcentajeMedidor()
+                            );
+                            autoconsumoDTO.setNombreEstacion(datosAutoconsumoDTO
+                                    .getEstacionEntradaDTOList().get(x)
+                                    .getNombreAlmacen()
+                            );
+                            autoconsumoDTO.setCantidadFotos(1
+                            );
+                            autoconsumoDTO.setNombreTipoMedidor(datosAutoconsumoDTO
+                                    .getEstacionEntradaDTOList().get(x)
+                                    .getMedidor().getNombreTipoMedidor()
+                            );
+                            autoconsumoDTO.setIdTipoMedidor(datosAutoconsumoDTO
+                                    .getEstacionEntradaDTOList().get(x)
+                                    .getIdTipoMedidor()
+                            );
+                        }
+                    }
+                 }
              }
 
              @Override
@@ -109,10 +149,19 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
 
     @Override
     public void onSuccessLista(DatosAutoconsumoDTO data) {
-
         if(data!=null){
-            list_unidad = new String[2];
+            list_unidad = new String[data.getEstacionEntradaDTOList().size()];
             datosAutoconsumoDTO = data;
+            for (int x=0;x<datosAutoconsumoDTO.getEstacionEntradaDTOList().size();x++){
+                list_unidad[x] = datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                        .getNombreAlmacen();
+            }
+            SAutoconsumoInvetarioActivityInventario.setAdapter(
+                    new ArrayAdapter<>(
+                    this,
+                    R.layout.custom_spinner,
+                    list_unidad)
+            );
         }
     }
 

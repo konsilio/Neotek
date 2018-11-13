@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,14 +55,14 @@ public class LecturaDTO implements Serializable {
     private String ClaveProceso;
 
     @SerializedName("FechaAplicacion")
-    private String FechaAplicacion;
+    private Date FechaAplicacion;
     //endregion
 
-    public String getFechaAplicacion() {
+    public Date getFechaAplicacion() {
         return FechaAplicacion;
     }
 
-    public void setFechaAplicacion(String fechaAplicacion) {
+    public void setFechaAplicacion(Date fechaAplicacion) {
         FechaAplicacion = fechaAplicacion;
     }
 

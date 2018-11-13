@@ -1,6 +1,7 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenReferenciaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaOrdenesCompraDTO;
 
 import java.util.List;
@@ -25,4 +26,8 @@ public interface RegistrarPapeletaPresenter {
     void onError();
 
     void onError(String mensaje);
+
+    void getOrderReferencia(String token, int idOrdenCompra,boolean esExpedidor);
+
+    void onSuccessReferencia(RespuestaOrdenReferenciaDTO data,boolean esExpedidor);
 }

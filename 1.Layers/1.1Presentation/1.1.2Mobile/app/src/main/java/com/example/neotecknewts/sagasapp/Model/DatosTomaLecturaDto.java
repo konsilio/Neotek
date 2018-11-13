@@ -6,9 +6,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatosTomaLecturaDto implements Serializable {
+public class DatosTomaLecturaDto extends RespuestaDTO  implements Serializable {
+
     @SerializedName("Almacenes")
     private List<AlmacenDTO> Almacenes;
+
     @SerializedName("Medidores")
     private List<MedidorDTO> Medidores;
 

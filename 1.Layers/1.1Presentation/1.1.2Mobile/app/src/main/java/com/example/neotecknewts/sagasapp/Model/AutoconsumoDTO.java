@@ -16,7 +16,7 @@ import java.util.List;
 
 public class AutoconsumoDTO implements Serializable{
 
-    @SerializedName("IdAlmacenGasSalida")
+    @SerializedName("IdCAlmacenGasSalida")
     private int IdCAlmacenGasSalida;
 
     @SerializedName("IdCAlmacenGasEntrada")
@@ -43,11 +43,17 @@ public class AutoconsumoDTO implements Serializable{
     @SerializedName("PorcentajeMedidor")
     private double PorcentajeMedidor;
 
-    @SerializedName("IdTipoMedor")
+    @SerializedName("IdTipoMedidor")
     private int IdTipoMedidor;
 
     @SerializedName("FechaAplicacion")
     private String FechaAplicacion;
+
+    @SerializedName("FechaRegistro")
+    private String FechaRegistro;
+
+    @SerializedName("NombreEstacion")
+    private String NombreEstacion;
 
     public AutoconsumoDTO (){
         this.ImagenesURI = new ArrayList<>();
@@ -140,5 +146,21 @@ public class AutoconsumoDTO implements Serializable{
 
     public void setFechaAplicacion(String fechaAplicacion) {
         FechaAplicacion = fechaAplicacion;
+    }
+
+    public String getNombreEstacion() {
+        return NombreEstacion;
+    }
+
+    public void setNombreEstacion(String nombreEstacion) {
+        NombreEstacion = nombreEstacion;
+    }
+
+    public String getFechaRegistro() {
+        return FechaRegistro;
+    }
+
+    public void setFechaRegistro(String fechaRegistro) {
+        FechaRegistro = fechaRegistro;
     }
 }

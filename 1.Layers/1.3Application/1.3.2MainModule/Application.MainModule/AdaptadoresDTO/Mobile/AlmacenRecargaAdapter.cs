@@ -71,19 +71,19 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new DatosRecargaDto()
             {
                 AlmacenesAlternos = almacenesAlternos.Select(x => ToDTO(x, tipoMedidores)).ToList(),
-                Camionetas = camionetas
+                Camionetas = camionetas,
+                Medidores = TipoMedidorAdapter.ToDto(tipoMedidores)
             };
         }
 
         public static AlmacenAlternoDto ToDTO(UnidadAlmacenGas almacenAlterno, List<TipoMedidorUnidadAlmacenGas> tipoMedidores)
         {
-            
             return new AlmacenAlternoDto()
             {
                 IdCAlmacen = almacenAlterno.IdCAlmacenGas,
                 NombreAlmacen = almacenAlterno.Numero,
                 IdAlmacenGas = almacenAlterno.IdAlmacenGas.Value,
-                P5000Actual = almacenAlterno.P5000Actual.Value,
+                P5000Actual = (almacenAlterno.P5000Actual.HasValue)?almacenAlterno.P5000Actual.Value:0,
                 Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x => x.IdTipoMedidor.Equals(almacenAlterno.IdTipoMedidor))),
                 PorcentajeActual = almacenAlterno.PorcentajeActual,
                 CantidadActualKg = almacenAlterno.CantidadActualKg,
@@ -138,7 +138,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new DatosRecargaDto()
             {
                 Pipas = pipasDto,
-                Estaciones = estacionesDto
+                Estaciones = estacionesDto,
+                Medidores = TipoMedidorAdapter.ToDto(tipoMedidores)
             };
         }
 

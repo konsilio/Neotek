@@ -157,7 +157,7 @@ public class Lisener{
                     completo = PuntoVenta();
                     break;
                 case Autoconsumo:
-                    completo = Autoconsumo();
+                    this.completo = Autoconsumo();
                     break;
                 case Calibracion:
                     completo = Calibracion();
@@ -176,7 +176,7 @@ public class Lisener{
         ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
         ScheduledFuture scheduledFuture = timer.
                 scheduleAtFixedRate(myTask, 10, 10, TimeUnit.SECONDS);
-        if(completo) {
+        if(this.completo) {
             scheduledFuture.cancel(false);
         }
     }
@@ -589,9 +589,15 @@ public class Lisener{
     //endregion
 
     //region Calibracion
+
+    /**
+     * Permite realizar en el envio de las calibraciónes pendientes en la base de datos,
+     * retornara un valor de tipo boolean si el envio de los datos fue exitoso
+     * @return boolean que determina si todos lo datos fueron enviados correctamente
+     */
     private boolean Calibracion() {
         if(ServicioDisponible()){
-            Log.w("Iniciando",new Date()+" Revisado de los autoconsumos");
+            Log.w("Iniciando",new Date()+" Revisado de las calibraciónes");
             Cursor cursor = sagasSql.GetAutoconsumos();
             if(cursor.moveToFirst()){
                 CalibracionDTO dto;
@@ -617,6 +623,75 @@ public class Lisener{
                                     cursor.getColumnIndex("NombreCAlmacenGas")
                             )
                     );
+                    dto.setFechaRegistro(new Date(
+                            cursor.getString(
+                                    cursor.getColumnIndex("FechaRegistro")
+                            ))
+                    );
+                    dto.setFechaAplicacion(new Date(
+                            cursor.getString(
+                                    cursor.getColumnIndex("FechaAplicacion")
+                            )
+                            )
+                    );
+
+                    dto.setP5000(
+                            cursor.getInt(
+                            cursor.getColumnIndex("P5000")
+                            )
+                    );
+
+                    dto.setPorcentaje(
+                            cursor.getDouble(
+                                    cursor.getColumnIndex("Porcentaje")
+                            )
+                    );
+
+                    dto.setPorcentajeCalibracion(
+                            cursor.getDouble(
+                                    cursor.getColumnIndex("PorcentajeCalibracion")
+                            )
+                    );
+
+                    dto.setIdDestinoCalibracion(
+                            cursor.getInt(
+                                    cursor.getColumnIndex("IdDestinoCalibracion")
+                            )
+                    );
+
+                    Cursor imagenes =sagasSql.GetFotografiasCalibracion(dto.getClaveOperacion());
+                    imagenes.moveToFirst();
+                    while (!imagenes.isAfterLast()){
+                        try {
+                            dto.getImagenes().add(
+                                imagenes.getString(
+                                        imagenes.getColumnIndex("Imagen")
+                                )
+                            );
+
+                            dto.getImagenesUri().add(new URI(
+                               imagenes.getString(
+                                       imagenes.getColumnIndex("Url")
+                               )
+                            ));
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        imagenes.moveToNext();
+                    }
+                    boolean esFinal = (
+                            cursor.getInt(
+                              cursor.getColumnIndex("EsFinal")
+                            )>0
+                            );
+                    String tipo = cursor.getString(
+                            cursor.getColumnIndex("Tipo")
+                    );
+                    Log.w("Enviando calibración",dto.getClaveOperacion());
+                    if(Registrar(dto,token,esFinal,tipo)){
+                        sagasSql.EliminarCalibracion(dto.getClaveOperacion());
+                        sagasSql.EliminarImagenesCalibracion(dto.getClaveOperacion());
+                    }
                     cursor.moveToNext();
                 }
             }
@@ -624,6 +699,55 @@ public class Lisener{
         }
         return (this.sagasSql.GetCalibraciones().getCount()==0);
 
+    }
+
+    /**
+     * Permite realizar el envio de los datos al api , tomara como parametros un objeto
+     * {@link CalibracionDTO} con los datos a enviar y un string con el token del usuario,
+     * tras finalizar retornara un boolean que reprecenta si el registro fue exitoso
+     * @param dto Objeto {@link CalibracionDTO} que contiene los datos de la calibración
+     * @param token String que reprecenta el token del usuario
+     * @param esFinal Determina si la calibración es final
+     * @param tipo Stirng que determina el tipo de calibración
+     * @return boolean que determina si el registro fue exitoso
+     */
+    private boolean Registrar(CalibracionDTO dto,String token,boolean esFinal, String tipo){
+        Log.w("Registro","Registrando en servicio "+dto.getClaveOperacion());
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .create();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constantes.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaTraspasoDTO> call = null;
+
+        restClient.postCalibracion(dto,
+                /*tipo.equals(SAGASSql.TIPO_CALIBRACION_ESTACION),
+                tipo.equals(SAGASSql.TIPO_CALIBRACION_PIPA),*/
+                esFinal,
+                token,
+                "application/json"
+                );
+        call.enqueue(new Callback<RespuestaTraspasoDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaTraspasoDTO> call,
+                                   Response<RespuestaTraspasoDTO> response) {
+                _registrado = call.isExecuted() && response.isSuccessful();
+                Log.w("Listo","Registro "+dto.getClaveOperacion());
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaTraspasoDTO> call, Throwable t) {
+                _registrado = false;
+                Log.e("Error","Error registro "+dto.getClaveOperacion());
+            }
+        });
+        Log.w("Registro","Registro en servicio "+dto.getClaveOperacion()+": "+
+                _registrado);
+        return _registrado;
     }
     //endregion
 
@@ -742,9 +866,9 @@ public class Lisener{
         RestClient restClient = retrofit.create(RestClient.class);
         Call<RespuestaRecargaDTO> call = restClient.postAutorconsumo(
                 dto,
-                Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION),
+                /*Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_ESTACION_CARBURACION),
                 Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_INVENTARIO_GENERAL),
-                Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_PIPAS),
+                Tipo.equals(SAGASSql.TIPO_AUTOCONSUMO_PIPAS),*/
                 esFinal,
                 token,
                 "application/json"

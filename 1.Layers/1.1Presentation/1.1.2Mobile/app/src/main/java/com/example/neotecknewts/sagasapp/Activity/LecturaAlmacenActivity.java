@@ -74,16 +74,18 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>0){
+                if(position>=0){
                     lecturaAlmacenDTO.setNombreTipoMedidor(
                             SLecturaAlmacenActivityListaMedidor.getItemAtPosition(position).
                                     toString()
                     );
                     for (MedidorDTO medidor:medidorDTOList){
-                        if(medidor.getNombreTipoMedidor().equals(SLecturaAlmacenActivityListaMedidor.getItemAtPosition(position).
+                        if(medidor.getNombreTipoMedidor().equals(
+                                SLecturaAlmacenActivityListaMedidor.getItemAtPosition(position).
                                 toString())){
                             lecturaAlmacenDTO.setIdTipoMedior(medidor.getIdTipoMedidor());
                             lecturaAlmacenDTO.setCantidadFotografias(medidor.getCantidadFotografias());
+                            lecturaAlmacenDTO.setNombreTipoMedidor(medidor.getNombreTipoMedidor());
                         }
                     }
                 }
@@ -94,13 +96,14 @@ public class LecturaAlmacenActivity extends AppCompatActivity implements Lectura
                 lecturaAlmacenDTO.setIdTipoMedior(0);
                 lecturaAlmacenDTO.setNombreTipoMedidor("");
                 lecturaAlmacenDTO.setCantidadFotografias(0);
+
             }
         });
         SLecturaAlmacenActivityListaAlmacen.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position>0){
+                if (position>=0){
                     for (AlmacenDTO almacenDTO :DatosTomaLecturaDtoList.getAlmacenes()){
                         if (almacenDTO.getNombreAlmacen().equals(parent.getItemAtPosition(position).toString())) {
                             lecturaAlmacenDTO.setIdAlmacen(almacenDTO.getIdAlmacenGas());

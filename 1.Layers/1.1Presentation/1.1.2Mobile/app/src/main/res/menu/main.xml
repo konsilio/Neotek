@@ -12,8 +12,16 @@
         android:id="@+id/pendientes"
         android:checkable="false"
         android:icon="@mipmap/ic_pendientes"
-        android:orderInCategory="0"
+        android:orderInCategory="1"
         android:title=""
         android:visible="false"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/salir"
+        android:checkable="false"
+        android:icon="@drawable/ic_action_logout"
+        android:orderInCategory="1"
+        android:title=""
+        android:visible="true"
         app:showAsAction="ifRoom" />
 </menu>

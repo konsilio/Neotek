@@ -19,7 +19,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
         {
             uow = new SagasDataUow();
         }
-
         public List<VentaPuntoDeVenta> Buscar()
         {
             bool noProcesados = false;
@@ -43,12 +42,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                ).ToList();
             }
         }
-
         public List<VentaMovimiento> BuscarTodos()
         {
             return uow.Repository<VentaMovimiento>().Get().ToList();
         }
-
         public List<VentaMovimiento> Buscar(short idEmpresa)
         {
             return uow.Repository<VentaMovimiento>().Get(x => x.IdEmpresa.Equals(idEmpresa)
@@ -66,37 +63,30 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaMovimiento>().Get(x => x.IdPuntoVenta.Equals(idPv)
                                                          ).ToList();
         }
-
         public VentaCajaGeneral BuscarGralPorCve(string cve)
         {
             return uow.Repository<VentaCajaGeneral>().GetSingle(x => x.FolioOperacionDia.Equals(cve));
         }
-
         public List<VentaPuntoDeVenta> BuscarPorCve(string cve)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.FolioOperacionDia.Equals(cve)).ToList();
         }
-
         public List<VentaPuntoDeVenta> BuscarTodosPV()
         {
             return uow.Repository<VentaPuntoDeVenta>().Get().ToList();
         }
-
         public List<VentaPuntoDeVenta> BuscarPorPV(int puntoDeVenta)
         {
             return uow.Repository<VentaPuntoDeVenta>().Get(x => x.IdPuntoVenta.Equals(puntoDeVenta)).ToList();
         }
-
         public List<VentaCorteAnticipoEC> BuscarPorCveEC(string cve)
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(x => x.FolioOperacionDia.Equals(cve)).ToList();
         }
-
         public List<VentaCorteAnticipoEC> BuscarPorIdPv(int idPv)
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get(x => x.IdPuntoVenta.Equals(idPv)).ToList();
-        }
-
+        }       
         public List<VentaCorteAnticipoEC> BuscarAnticiposC()
         {
             return uow.Repository<VentaCorteAnticipoEC>().Get().ToList();
@@ -298,11 +288,6 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
             }
             return _respuesta;
-        }
-
-        public List<VentaPuntoDeVenta> BuscarVentas()
-        {
-            return uow.Repository<VentaPuntoDeVenta>().GetAll().ToList();
         }
     }
 }

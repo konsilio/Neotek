@@ -1,23 +1,68 @@
+/*
+ * CalibracionDTO
+ * Clase que sirbe de modelo DTO para los datos de la calibración de gas
+ * @author Jorge Omar Tovar Martínez
+ * @company Neoteck
+ * @date   25/09/2018 16:30
+ * @udpate 07/11/2018 10:14
+ */
 package com.example.neotecknewts.sagasapp.Model;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CalibracionDTO implements Serializable {
+
+    @SerializedName("IdCAlmacenGas")
     private int IdCAlmacenGas;
+
+    @SerializedName("NombreCAlmacenGas")
     private String NombreCAlmacenGas;
+
+    @SerializedName("IdTipoMedidor")
     private int IdTipoMedidor;
+
+    @SerializedName("NombreMedidor")
     private String NombreMedidor;
+
+    @SerializedName("PorcentajeMedidor1")
     private double PorcentajeCalibracion;
+
+    @SerializedName("IdDestino")
     private int IdDestinoCalibracion;
+
+    @SerializedName("P5000")
     private int P5000;
+
+    @SerializedName("Porcentaje")
     private double Porcentaje;
+
+    @SerializedName("ClaveOperacion")
     private String ClaveOperacion;
+
+    @SerializedName("CantidadFotografias")
     private int CantidadFotografias;
+
+    @SerializedName("Imagenes")
     private List<String> Imagenes;
+
+    @SerializedName("ImagenesUri")
     private List<URI> ImagenesUri;
+
+    @SerializedName("FechaAplicacion")
+    private Date FechaAplicacion;
+
+    @SerializedName("FechaRegistro")
+    private Date FechaRegistro;
+
+    @SerializedName("PorcentajeMedidor2")
+    private double PorcentajeMedidor2;
+
 
     public CalibracionDTO(){
         this.Imagenes = new ArrayList<>();
@@ -118,5 +163,29 @@ public class CalibracionDTO implements Serializable {
 
     public void setNombreMedidor(String nombreMedidor) {
         NombreMedidor = nombreMedidor;
+    }
+
+    public Date getFechaAplicacion() {
+        return FechaAplicacion;
+    }
+
+    public void setFechaAplicacion(Date fechaAplicacion) {
+        FechaAplicacion = fechaAplicacion;
+    }
+
+    public Date getFechaRegistro() {
+        return FechaRegistro;
+    }
+
+    public void setFechaRegistro(Date fechaRegistro) {
+        FechaRegistro = fechaRegistro;
+    }
+
+    public double getPorcentajeMedidor2() {
+        return PorcentajeMedidor2;
+    }
+
+    public void setPorcentajeMedidor2(double porcentajeMedidor2) {
+        PorcentajeMedidor2 = porcentajeMedidor2;
     }
 }
