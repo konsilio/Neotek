@@ -75,7 +75,8 @@ namespace Application.MainModule.AdaptadoresDTO.Catalogo
             var Prod = ProductoServicio.Obtener(EmpresaServicio.Obtener(PVGasDTO.IdEmpresa));
             var factorLtaKg = EmpresaServicio.Obtener(PVGasDTO.IdEmpresa).FactorLitrosAKilos;
             var IdStatus = CalcularPreciosVentaServicio.GetEstatusPrecioVenta(PVGasDTO.PrecioVentaEstatus);
-            var IdPreVenta = PVGasDTO.IdPrecioVenta == 0 ? 1 : PVGasDTO.IdPrecioVenta + 1;
+            var IdPreVenta = PVGasDTO.IdPrecioVenta == 0 ? 1 : PrecioVentaGasServicio.ObtenerUltimoIdPrecioVenta() + 1;
+            
 
             return new PrecioVenta()
             {

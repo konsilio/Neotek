@@ -28,7 +28,8 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.IdTipoEvento = TipoEventoEnum.Inicial;
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;
-            
+            adapter.FechaAplicacion = rdto.FechaAplicacion;
+
             return AlmacenGasServicio.InsertarRecargaGas(adapter);
         }
 
@@ -38,6 +39,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.IdTipoEvento =  esFinal? TipoEventoEnum.Final:TipoEventoEnum.Inicial;
             adapter.DatosProcesados = false;
             adapter.FechaRegistro = DateTime.Now;
+            adapter.FechaAplicacion = rdto.FechaAplicacion;
             adapter.Fotografias = AlmacenRecargaAdapter.FromDTO(rdto.Imagenes);
 
             return AlmacenGasServicio.InsertarRecargaGas(adapter);

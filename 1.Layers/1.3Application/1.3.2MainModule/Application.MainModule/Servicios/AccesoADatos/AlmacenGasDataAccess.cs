@@ -515,7 +515,14 @@ namespace Application.MainModule.Servicios.AccesoADatos
                                                             && x.IdEstacionCarburacion != null
                                                             && x.Activo).ToList();
         }
-
+        public List<AlmacenGasMovimiento> BuscarMovimientos(string folio, short year, byte mes, byte dia)
+        {
+            return uow.Repository<AlmacenGasMovimiento>().Get(x => x.FolioOperacionDia.Equals(folio)
+                                                                //&& x.IdAlmacenGas.Equals(idAlmacenGas)
+                                                                && x.Year.Equals(year)
+                                                                && x.Mes.Equals(mes)
+                                                                && x.Dia.Equals(dia)).ToList();
+        }
 
         public List<AlmacenGasMovimiento> BuscarMovimientosEnInventario(short idEmpresa, short idAlmacenGas, short year, byte mes, byte dia)
         {

@@ -39,7 +39,7 @@ public class TraspasoEstacionInteractorImpl implements TraspasoEstacionInteracto
         RestClient restClient = retrofit.create(RestClient.class);
         Call<DatosTraspasoDTO> call = restClient.getDatosTraspaso(
                 true,
-                false,
+                /*false,*/
                 token,
                 "application/json"
         );

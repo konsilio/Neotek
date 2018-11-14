@@ -1,12 +1,14 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Activity.RecargaEstacionCarburacionView;
+import com.example.neotecknewts.sagasapp.Interactor.RecargaEstacionCarburacionInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.RecargaEstacionCarburacionInteractorImpl;
+import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
 import com.example.neotecknewts.sagasapp.R;
 
 public class RecargaEstacionCarburacionPresenterImpl implements RecargaEstacionCarburacionPresenter {
     RecargaEstacionCarburacionView view;
-    RecargaEstacionCarburacionInteractorImpl interactor;
+    RecargaEstacionCarburacionInteractor interactor;
     public RecargaEstacionCarburacionPresenterImpl(RecargaEstacionCarburacionView view){
         this.view = view;
         this.interactor = new RecargaEstacionCarburacionInteractorImpl(this);
@@ -25,7 +27,7 @@ public class RecargaEstacionCarburacionPresenterImpl implements RecargaEstacionC
     }
 
     @Override
-    public void onSuccesslista(Object datosRecargaDTO) {
+    public void onSuccesslista(DatosRecargaDto datosRecargaDTO) {
         view.onHiddenProgress();
         view.onSuccessLista(datosRecargaDTO);
     }

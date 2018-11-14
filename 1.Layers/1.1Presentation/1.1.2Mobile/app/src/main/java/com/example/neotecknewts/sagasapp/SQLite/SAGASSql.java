@@ -1685,7 +1685,7 @@ public class SAGASSql extends SQLiteOpenHelper {
         values.put("P5000Salida",recargaDTO.getP5000Salida());
         values.put("P5000Entrada",recargaDTO.getP5000Entrada());
         values.put("ClaveOperacion",recargaDTO.getClaveOperacion());
-        values.put("Tipo",tipo);
+        values.put("EsTipo",tipo);
         values.put("FechaAplicacion",recargaDTO.getFechaApliacacion());
         values.put("EsInicial",EsRecargaEstacionInicial);
         return db.insert(TABLE_RECARGAS,null,values);
@@ -1727,7 +1727,7 @@ public class SAGASSql extends SQLiteOpenHelper {
      */
     public Cursor GetRecargas(String tipo) {
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_RECARGAS_CILINDROS+
-                " WHERE Tipo = '"+tipo+"'",null);
+                " WHERE EsTipo = '"+tipo+"'",null);
     }
     //endregion
 
@@ -2074,7 +2074,7 @@ public class SAGASSql extends SQLiteOpenHelper {
 
     public Cursor GetFotografiasCalibracion(String claveOperacion) {
         return this.getReadableDatabase().rawQuery("SELECT * FROM "+TABLE_CALIBRACION_IMAGENES+
-        "WHERE ClaveOperacion = '"+claveOperacion+"'",null);
+        " WHERE ClaveOperacion = '"+claveOperacion+"'",null);
     }
 
     public Long[] InsertarImagenesCalibracion(CalibracionDTO calibracionDTO) {

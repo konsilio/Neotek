@@ -81,6 +81,10 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
                                     datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
                                     .getIdAlmacenGas()
                             );
+                            autoconsumoDTO.setIdCAlmacenGasEntrada(
+                                    datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
+                                            .getIdAlmacenGas()
+                            );
                             autoconsumoDTO.setP5000Salida(
                                     datosAutoconsumoDTO.getEstacionEntradaDTOList().get(x)
                                             .getCantidadP5000()
@@ -93,13 +97,15 @@ public class AutoconsumoInventarioActivity extends AppCompatActivity implements
                                     .getEstacionEntradaDTOList().get(x)
                                     .getNombreAlmacen()
                             );
-                            autoconsumoDTO.setCantidadFotos(datosAutoconsumoDTO
-                                    .getEstacionEntradaDTOList().get(x)
-                                    .getMedidor().getCantidadFotografias()
+                            autoconsumoDTO.setCantidadFotos(1
                             );
                             autoconsumoDTO.setNombreTipoMedidor(datosAutoconsumoDTO
                                     .getEstacionEntradaDTOList().get(x)
                                     .getMedidor().getNombreTipoMedidor()
+                            );
+                            autoconsumoDTO.setIdTipoMedidor(datosAutoconsumoDTO
+                                    .getEstacionEntradaDTOList().get(x)
+                                    .getIdTipoMedidor()
                             );
                         }
                     }

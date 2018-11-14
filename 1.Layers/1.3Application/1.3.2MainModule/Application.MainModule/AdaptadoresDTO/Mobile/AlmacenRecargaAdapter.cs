@@ -71,19 +71,19 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new DatosRecargaDto()
             {
                 AlmacenesAlternos = almacenesAlternos.Select(x => ToDTO(x, tipoMedidores)).ToList(),
-                Camionetas = camionetas
+                Camionetas = camionetas,
+                Medidores = TipoMedidorAdapter.ToDto(tipoMedidores)
             };
         }
 
         public static AlmacenAlternoDto ToDTO(UnidadAlmacenGas almacenAlterno, List<TipoMedidorUnidadAlmacenGas> tipoMedidores)
         {
-            
             return new AlmacenAlternoDto()
             {
                 IdCAlmacen = almacenAlterno.IdCAlmacenGas,
                 NombreAlmacen = almacenAlterno.Numero,
                 IdAlmacenGas = almacenAlterno.IdAlmacenGas.Value,
-                P5000Actual = almacenAlterno.P5000Actual.Value,
+                P5000Actual = (almacenAlterno.P5000Actual.HasValue)?almacenAlterno.P5000Actual.Value:0,
                 Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x => x.IdTipoMedidor.Equals(almacenAlterno.IdTipoMedidor))),
                 PorcentajeActual = almacenAlterno.PorcentajeActual,
                 CantidadActualKg = almacenAlterno.CantidadActualKg,
@@ -138,7 +138,8 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             return new DatosRecargaDto()
             {
                 Pipas = pipasDto,
-                Estaciones = estacionesDto
+                Estaciones = estacionesDto,
+                Medidores = TipoMedidorAdapter.ToDto(tipoMedidores)
             };
         }
 
@@ -146,7 +147,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
         {
             return new EstacionesDto()
             {
-                IdAlmacenGas = estacion.IdAlmacenGas.Value,
+                IdAlmacenGas = estacion.IdCAlmacenGas,
                 CantidadP5000 = estacion.P5000Actual,
                 IdTipoMedidor = estacion.IdTipoMedidor,
                 NombreAlmacen = estacion.Numero,
@@ -161,7 +162,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 IdTipoMedidor = pipa.IdTipoMedidor,
                 CantidadP5000 = pipa.P5000Actual,
-                IdAlmacenGas = pipa.IdAlmacenGas.Value,
+                IdAlmacenGas = pipa.IdCAlmacenGas,
                 Medidor = TipoMedidorAdapter.ToDto(tipoMedidores.Single(x=>x.IdTipoMedidor.Equals(pipa.IdTipoMedidor))),
                 NombreAlmacen = pipa.Numero,
                 PorcentajeMedidor = pipa.PorcentajeActual

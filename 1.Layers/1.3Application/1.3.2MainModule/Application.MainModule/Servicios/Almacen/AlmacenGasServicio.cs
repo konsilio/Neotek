@@ -442,7 +442,6 @@ namespace Application.MainModule.Servicios.Almacenes
 
                 reporte.Fecha = DateTime.Now;
                 reporte.ClaveReporte = "2018FG675DGD43";
-
                 return reporte;
             }
             else
@@ -452,8 +451,7 @@ namespace Application.MainModule.Servicios.Almacenes
                 var lfinal = BuscarLecturaPorFecha(idCAlmacenGas, TipoEventoEnum.Final,fecha);
                 var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
                 var ventas = PuntoVentaServicio.BuscarPorOperadorChofer(operador.IdOperadorChofer);
-                var venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
-                
+                var venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();               
 
                 //Falta agregar los valores de la venta de gas
                 var reporte = new ReporteAdapter().ToDto(almacen, tipoMedidor,linicial,lfinal);
@@ -492,6 +490,10 @@ namespace Application.MainModule.Servicios.Almacenes
             numOrden++;
 
             return (short)numOrden;
+        }
+        public static List<AlmacenGasMovimiento> ObtenerMovimientos(string folio ,DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().BuscarMovimientos(folio, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
         }
 
         public static List<AlmacenGasMovimiento> ObtenerMovimientosEnInventario(short idEmpresa, short idAlmacenGas, DateTime fecha)

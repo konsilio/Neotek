@@ -17,18 +17,18 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-            ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
-            if (ViewBag.EsSuperUser)
+            ViewBag.EsAdmin = TokenServicio.ObtenerEsAdministracionCentral(_tkn);
+            if (ViewBag.EsAdmin)
             {
                 ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
                 ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0, _tkn);
             }
             else
             {
-                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
+                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault().NombreComercial;
                 ViewBag.ListaPV = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
             }
-            ViewBag.Usuarios = TempData["Users"];
+          //  ViewBag.Usuarios = TempData["Users"];
 
             //if (TempData["RespuestaDTO"] != null)
             //{
@@ -44,7 +44,7 @@ namespace MVC.Presentacion.Controllers
             return View();
         }
 
-        public ActionResult AsignarChofer(PuntoVentaModel model, short idE, int id)
+        public ActionResult AsignarChofer(short idE, int idPV, string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
@@ -53,21 +53,80 @@ namespace MVC.Presentacion.Controllers
             {
                 ViewBag.Usuarios = lstusuarios;
             }
-            TempData["Users"] = lstusuarios;
-            ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
-            if (ViewBag.EsSuperUser)
+           // TempData["Users"] = lstusuarios;
+            //ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
+            //if (ViewBag.EsSuperUser)
+            //{
+
+            //    ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0, _tkn);
+            //}
+            //else
+            //{
+            //    ViewBag.ListaPV = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+            //}
+            ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(idPV, _tkn);
+            if (!string.IsNullOrEmpty(msj))
             {
-                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
-                ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0, _tkn);
+                ViewBag.Msj = msj;
+                if (!(bool)TempData["RespuestaDTO"])
+                    ViewBag.Tipo = "alert-danger";
+                else
+                    ViewBag.Tipo = "alert-success";
+                //ViewBag.Mensaje = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
             }
             else
-            {
-                ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
-                ViewBag.ListaPV = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
-            }
-            return View("Index");
+                ViewBag.Tipo = "alert-success";
+            return View();
+            //return RedirectToAction("Index");
         }
 
+        //public ActionResult AsignarChofer(PuntoVentaModel model, short idE, int id)
+        //{
+        //    if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
+        //    string _tkn = Session["StringToken"].ToString();
+        //    var lstusuarios = CatalogoServicio.ObtenerUsuarioOperador(idE, _tkn);
+        //    if (lstusuarios.Count() >= 1)
+        //    {
+        //        ViewBag.Usuarios = lstusuarios;
+        //    }
+        //    TempData["Users"] = lstusuarios;
+        //    ViewBag.EsSuperUser = TokenServicio.ObtenerEsSuperUsuario(_tkn);
+        //    if (ViewBag.EsSuperUser)
+        //    {
+        //        ViewBag.Empresas = CatalogoServicio.Empresas(_tkn);
+        //        ViewBag.ListaPV = CatalogoServicio.ListaPuntosVenta(0, _tkn);
+        //    }
+        //    else
+        //    {
+        //        ViewBag.Empresas = CatalogoServicio.Empresas(_tkn).SingleOrDefault(x => x.IdEmpresa.Equals(TokenServicio.ObtenerIdEmpresa(_tkn))).NombreComercial;
+        //        ViewBag.ListaPV = CatalogoServicio.ListaPuntosVentaId(TokenServicio.ObtenerIdEmpresa(_tkn), _tkn);
+        //    }
+        //    //return View("Index");
+        //    return RedirectToAction("Index");
+        //}
+
+        [HttpPost]
+        public ActionResult Guardar(PuntoVentaModel model)//int idChofer, int idPV)
+        {
+            string _tkn = Session["StringToken"].ToString();
+
+            List<PuntoVentaModel> mod = CatalogoServicio.ListaPuntosVenta(model.IdPuntoVenta, _tkn);
+            PuntoVentaModel nmodel = mod[0];
+
+            var respuesta = CatalogoServicio.ModificarOperador(nmodel, model.IdUsuario, _tkn);
+            if (respuesta.Exito)
+            {
+                TempData["RespuestaDTO"] = respuesta.Exito;
+                return RedirectToAction("AsignarChofer", new { idE = nmodel.IdEmpresa, idPV = nmodel.IdPuntoVenta, msj = string.Concat("Asignacion exitosa del Operador "),nmodel.OperadorChofer });
+            }
+
+            else
+            {
+                TempData["RespuestaDTO"] = respuesta.Exito;
+                return RedirectToAction("AsignarChofer", new { idE = nmodel.IdEmpresa, idPV = nmodel.IdPuntoVenta, msj = respuesta.MensajesError[0] });
+
+            }           
+        }
 
         public JsonResult Guardar(short idEmpresa, int idChofer, int idPV)
         {

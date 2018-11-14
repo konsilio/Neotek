@@ -238,6 +238,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                         false);
                 EsRecargaEstacionFinal = extras.getBoolean("EsRecargaEstacionFinal",
                         false);
+                setTitle(R.string.recarga);
             }else if(extras.getBoolean("EsRecargaPipaFinal")){
                 recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
                 cantidadFotos = recargaDTO.getCantidadFotosEntrada();
@@ -251,6 +252,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsRecargaEstacionInicial = false;
                 EsRecargaEstacionFinal = false;
                 textViewTitulo.setText("Fotografia "+ recargaDTO.getNombreMedidorEntrada());
+                setTitle(R.string.recarga);
             }else if(extras.getBoolean("EsAutoconsumoPipaInicial")||
                     extras.getBoolean("EsAutoconsumoPipaFinal")){
                 EsRecargaPipaFinal = false;
@@ -267,6 +269,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 autoconsumoDTO = (AutoconsumoDTO) extras.getSerializable("autoconsumoDTO");
                 textViewTitulo.setText("Fotografia del "+autoconsumoDTO.getNombreTipoMedidor());
                 cantidadFotos = autoconsumoDTO.getCantidadFotos();
+                setTitle(R.string.Autoconsumo);
             }else if(extras.getBoolean("EsTraspasoEstacionInicial",false)||
                     extras.getBoolean("EsTraspasoEstacionFinal",false)){
                 EsRecargaPipaFinal = false;
@@ -286,8 +289,9 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 traspasoDTO = (TraspasoDTO) extras.getSerializable("traspasoDTO");
                 textViewTitulo.setText("Fotografia del "+traspasoDTO.getNombreMedidor());
                 cantidadFotos = traspasoDTO.getCantidadDeFotos();
-            }else if(extras.getBoolean("EsTraspasoEstacionInicial",false)||
-                    extras.getBoolean("EsTraspasoEstacionFinal",false)){
+                setTitle(R.string.Traspaso);
+            }else if(extras.getBoolean("EsCalibracionEstacionInicial",false)||
+                    extras.getBoolean("EsCalibracionEstacionFinal",false)){
                 EsRecargaPipaFinal = false;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
@@ -307,11 +311,12 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsCalibracionEstacionFinal = extras.getBoolean("EsCalibracionEstacionFinal",
                         false);
                 calibracionDTO = (CalibracionDTO) extras.getSerializable("calibracionDTO");
-
+                setTitle(R.string.Calibracion);
                 textViewTitulo.setText("Fotografia del "+calibracionDTO.getNombreMedidor());
+                textViewMensaje.setText("Fotografia del "+calibracionDTO.getNombreMedidor());
                 cantidadFotos = calibracionDTO.getCantidadFotografias();
-            }else if(extras.getBoolean("EsTraspasoEstacionInicial",false)||
-                    extras.getBoolean("EsTraspasoEstacionFinal",false)){
+            }else if(extras.getBoolean("EsCalibracionPipaInicial",false)||
+                    extras.getBoolean("EsCalibracionPipaFinal",false)){
                 EsRecargaPipaFinal = false;
                 EsLecturaInicial = false;
                 EsLecturaFinal = false;
@@ -334,7 +339,9 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                         false);
                 calibracionDTO = (CalibracionDTO) extras.getSerializable("calibracionDTO");
                 textViewTitulo.setText("Fotografia del "+calibracionDTO.getNombreMedidor());
+                setTitle(R.string.Calibracion);
                 cantidadFotos = calibracionDTO.getCantidadFotografias();
+                textViewMensaje.setText("Fotografia del "+calibracionDTO.getNombreMedidor());
             }
 
         }

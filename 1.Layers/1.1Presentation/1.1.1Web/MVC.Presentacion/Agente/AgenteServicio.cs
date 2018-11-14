@@ -83,7 +83,8 @@ namespace MVC.Presentacion.Agente
         public List<VentaCorteAnticipoModel> _listaCajaGralEstacion;
         public List<AlmacenDTO> _listaAlmacen;
         public List<RegistroDTO> _listaRegistroAlmacen;
-    
+        public List<MovimientosGasModel> _ListaMovimientosGas;
+        public List<MovimientosGasCilindros> _ListaMovimientosGasC;
         public AgenteServicio()
         {
             UrlBase = ConfigurationManager.AppSettings["WebApiUrlBase"];
@@ -589,7 +590,6 @@ namespace MVC.Presentacion.Agente
                     client.Dispose();
                 }
                 _lstUserEmp = lus;
-
                 if (idEmpresa != 0)
                 {
                     _lstUserEmp = (from x in lus where x.IdEmpresa == idEmpresa select x).ToList();
@@ -598,8 +598,6 @@ namespace MVC.Presentacion.Agente
                 {
                     _lstUserEmp = (from x in lus where x.IdUsuario == idUser select x).ToList();
                 }
-
-
                 if (!String.IsNullOrEmpty(mail))
                 {
                     _lstUserEmp = (from x in lus where x.Email1 == mail select x).ToList();
@@ -1370,7 +1368,77 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutLiquidarCajaGralEst"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-        
+        public void BuscarListaMovGas(CajaGeneralCamionetaModel reporte, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutListaMovGas"];
+            GetListaMovimientosGas(reporte, tkn).Wait();
+        }
+        private async Task GetListaMovimientosGas(CajaGeneralCamionetaModel rep, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<MovimientosGasModel> lus = new List<MovimientosGasModel>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos,rep).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<MovimientosGasModel>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<MovimientosGasModel>();
+                    client.CancelPendingRequests();
+                    client.Dispose(); ;
+                }
+
+
+                _ListaMovimientosGas = lus;
+
+            }
+        }
+
+        public void BuscarListaMovGasCilindros(MovimientosGasCilindros reporte, string tkn)
+        {
+            this.ApiCatalgos = ConfigurationManager.AppSettings["PutListaMovGasCilindros"];
+            GetListaMovimientosGasC(reporte, tkn).Wait();
+        }
+        private async Task GetListaMovimientosGasC(MovimientosGasCilindros rep, string Token)
+        {
+            using (var client = new HttpClient())
+            {
+                List<MovimientosGasCilindros> lus = new List<MovimientosGasCilindros>();
+                client.BaseAddress = new Uri(UrlBase);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("appplication/json"));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token);
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync(ApiCatalgos, rep).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                        lus = await response.Content.ReadAsAsync<List<MovimientosGasCilindros>>();
+                    else
+                    {
+                        client.CancelPendingRequests();
+                        client.Dispose();
+                    }
+                }
+                catch (Exception)
+                {
+                    lus = new List<MovimientosGasCilindros>();
+                    client.CancelPendingRequests();
+                    client.Dispose();
+                }             
+
+                _ListaMovimientosGasC = lus;
+            }
+        }
 
         #endregion
         #region Paises

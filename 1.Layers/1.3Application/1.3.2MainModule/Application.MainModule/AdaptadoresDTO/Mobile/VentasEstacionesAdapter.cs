@@ -48,7 +48,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static VentaPuntoDeVenta FromDTO(VentaDTO venta, Cliente cliente, PuntoVenta punto_venta, AlmacenGas almacen,int idOrden,short idEmpresa)
+        public static VentaPuntoDeVenta FromDTO(VentaDTO venta, Cliente cliente, PuntoVenta punto_venta,int idOrden,short idEmpresa)
         {
             return new VentaPuntoDeVenta()
             {
@@ -66,11 +66,11 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdCliente = venta.IdCliente,
                 RFC = cliente.Rfc,
                 RazonSocial = cliente.RazonSocial,
-                VentaPuntoDeVentaDetalle = ToDTO(venta.Concepto, venta, punto_venta, almacen, idOrden, idEmpresa),
+                VentaPuntoDeVentaDetalle = ToDTO(venta.Concepto, venta, punto_venta, idOrden, idEmpresa),
             };
         }
 
-        public static ICollection<VentaPuntoDeVentaDetalle> ToDTO(List<ConceptoDTO> conceptos, VentaDTO venta, PuntoVenta punto_venta, AlmacenGas almacen, int idOrden, short idEmpresa)
+        public static ICollection<VentaPuntoDeVentaDetalle> ToDTO(List<ConceptoDTO> conceptos, VentaDTO venta, PuntoVenta punto_venta, int idOrden, short idEmpresa)
         {
             List<VentaPuntoDeVentaDetalle> list = new List<VentaPuntoDeVentaDetalle>();
             int idOrdenDetalle = 1;

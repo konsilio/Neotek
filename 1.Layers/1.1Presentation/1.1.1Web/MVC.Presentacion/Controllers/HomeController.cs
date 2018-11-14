@@ -17,6 +17,7 @@ namespace MVC.Presentacion.Controllers
         public ActionResult Index(LoginModel model = null)
         {
             Session["StringToken"] = null;
+            Session["Perfil"] = null;
             return View(AutenticacionServicio.InitIndex(model));
         }
         public ActionResult IndexError(LoginModel model)
@@ -38,6 +39,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null)
             {
+                Session["Perfil"] = null;
                 var respuesta = AutenticacionServicio.Autenticar(login.IdEmpresa, login.Usuario, SHA.GenerateSHA256String(login.Password));
                 if (respuesta.Exito)
                 {

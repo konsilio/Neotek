@@ -8,5 +8,6 @@ namespace Application.MainModule.DTOs.Mobile
         public List<CamionetaDto> Camionetas;
         public List<PipaDto> Pipas;
         public List<EstacionesDto> Estaciones;
+        public List<MedidorDto> Medidores;
     }
 }

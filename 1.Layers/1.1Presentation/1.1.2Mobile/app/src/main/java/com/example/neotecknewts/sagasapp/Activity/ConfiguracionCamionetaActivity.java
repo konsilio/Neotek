@@ -21,6 +21,7 @@ import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         ConfiguracionCamionetaView{
@@ -45,8 +46,13 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
             EsRecargaCamioneta = bundle.getBoolean("EsRecargaCamioneta",false);
             lecturaCamionetaDTO = (LecturaCamionetaDTO) bundle.
                     getSerializable("lecturaCamionetaDTO");
-            recargaDTO = (RecargaDTO) bundle.getSerializable("recargaDTO");
-            cilindrosDTOS = (ArrayList<CilindrosDTO>) bundle.getSerializable("cilindrosDTOS");
+
+            if(EsLecturaFinalCamioneta || EsLecturaFinalCamioneta)
+                cilindrosDTOS = (ArrayList<CilindrosDTO>) bundle.getSerializable("cilindrosDTOS");
+            if(EsRecargaCamioneta) {
+                recargaDTO = (RecargaDTO) bundle.getSerializable("recargaDTO");
+                cilindrosDTOS = (ArrayList<CilindrosDTO>) recargaDTO.getCilindros();
+            }
         }
         /*CilindrosDTO valor = new CilindrosDTO();
         valor.setCilindroKg("20kg.");
@@ -75,9 +81,9 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
         }else if (EsLecturaFinalCamioneta){
             TVCamposCamionetasHeaderTitulo.setText(getString(R.string.toma_de_lectura)+" final");
         }else if(EsRecargaCamioneta){
-            String estacion = (lecturaCamionetaDTO.getNombreCamioneta().isEmpty())? "":": "+
-                    lecturaCamionetaDTO.getNombreCamioneta();
-            TVCamposCamionetasHeaderTitulo.setText(R.string.recarga+" - Camioneta"+estacion);
+            String estacion = (recargaDTO.getNombreEstacionEntrada().isEmpty())? "":": "+
+                    recargaDTO.getNombreEstacionEntrada();
+            TVCamposCamionetasHeaderTitulo.setText(getString(R.string.recarga)+" - Camioneta"+estacion);
             TVCamposCamionetasHeaderInstrucciones.setText(R.string.registra_configuracion_recarga);
             TVCamposCamionetaHader.setVisibility(View.GONE);
         }
@@ -109,7 +115,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
                 View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
                 EditText editText = view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
                 //textView = view.findViewById(R.id.TVLecturaAlmacenActivityTitulo);
-                if (!editText.getText().toString().equals("")) {
+                if (!editText.getText().toString().equals("") && editText.getText()!=null) {
                     if (Integer.parseInt(editText.getText().toString()) <= 0) {
                         lista_errores.add("El valor para el cilindo del renglon "+
                                 String.valueOf(x+1)+" es requerido");
@@ -130,7 +136,8 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
             if(EsLecturaInicialCamioneta || EsLecturaFinalCamioneta) {
                 for (int x = 0; x < adapter.getItemCount(); x++) {
                     CilindrosDTO cilindrosDTO = adapter.getCilindro(x);
-                    View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
+                    //View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
+                    View view = RVConfiguracionCamionetasCilindros.getLayoutManager().findViewByPosition(x);
                     EditText editText = view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
                     TextView textView = view.findViewById(R.id.TVLecturaAlmacenActivityTitulo);
                     cilindrosDTO.setCantidad(Integer.parseInt(editText.getText().toString()));
@@ -140,18 +147,21 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
                 }
 
             }else if(EsRecargaCamioneta){
+                List<CilindrosDTO> cilindrosDTOS = new ArrayList<>();
                 for (int x =0; x<adapter.getItemCount();x++){
-                    View view = RVConfiguracionCamionetasCilindros.getChildAt(x);
-                    EditText editText = view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
+                    View view = RVConfiguracionCamionetasCilindros.getLayoutManager().findViewByPosition(x);
+
+                    EditText editText =  view.findViewById(R.id.ETConfiguracionCamionetasCantidad);
                     /*int[] datos = new int[2];
                     datos[0] = adapter.getCilindro(x).getIdCilindro();
                     datos[1] = Integer.parseInt(editText.getText().toString());*/
                     CilindrosDTO cilindro = new CilindrosDTO();
-                    cilindro.setCantidad(adapter.getCilindro(x).getCantidad());
+                    cilindro.setCantidad(Integer.parseInt(editText.getText().toString()));
                     cilindro.setCilindroKg(adapter.getCilindro(x).getCilindroKg());
                     cilindro.setIdCilindro(adapter.getCilindro(x).getIdCilindro());
-                    recargaDTO.getCilindros().add(cilindro);
+                    cilindrosDTOS.add(cilindro);
                 }
+                recargaDTO.setCilindros(cilindrosDTOS);
             }
             Registrar();
         }
@@ -172,6 +182,7 @@ public class ConfiguracionCamionetaActivity extends AppCompatActivity implements
             intent.putExtra("EsLecturaFinalCamioneta", EsLecturaFinalCamioneta);
             intent.putExtra("EsRecargaCamioneta",EsRecargaCamioneta);
             intent.putExtra("recargaDTO", recargaDTO);
+            startActivity(intent);
         }
     }
 

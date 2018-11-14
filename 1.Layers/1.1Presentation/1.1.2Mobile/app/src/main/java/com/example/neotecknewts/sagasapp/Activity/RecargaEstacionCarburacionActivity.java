@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
+import com.example.neotecknewts.sagasapp.Presenter.RecargaEstacionCarburacionPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RecargaEstacionCarburacionPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.Util.Session;
@@ -38,8 +40,9 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
     boolean EsRecargaEstacionInicial,EsRecargaEstacionFinal;
     Session session;
     ProgressDialog progressDialog;
-    RecargaEstacionCarburacionPresenterImpl presenter;
+    RecargaEstacionCarburacionPresenter presenter;
     String[] lista_pipas_salida,lista_meididores,lista_estacion;
+    DatosRecargaDto dto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +111,38 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                recargaDTO.setIdCAlmacenGasSalida(1);
+                if(dto!=null) {
+                    for (int x=0;x<dto.getPipasDTOS().size();x++) {
+                        if(dto.getPipasDTOS().get(x).getNombreAlmacen().equals(
+                                parent.getItemAtPosition(position).toString()
+                        )) {
+                            recargaDTO.setIdCAlmacenGasSalida(
+                                    dto.getPipasDTOS().get(x).getIdAlmacenGas()
+                            );
+
+                            recargaDTO.setProcentajeSalida(
+                                    dto.getPipasDTOS().get(x).getPorcentajeMedidor()
+                            );
+
+                            recargaDTO.setP5000Salida(
+                                    dto.getPipasDTOS().get(x).getCantidadP5000()
+                            );
+
+                            recargaDTO.setNombreEstacionSalida(
+                                    dto.getPipasDTOS().get(x).getNombreAlmacen()
+                            );
+
+                            for (int y=0;y<dto.getMedidorDTOS().size();y++){
+                                if(dto.getMedidorDTOS().get(y).getIdTipoMedidor()==
+                                        dto.getPipasDTOS().get(y).getIdTipoMedidor()
+                                        ){
+                                    SRecargaEstacionCarburacionActivityListaMedidorPipa
+                                            .setSelection(y);
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             @Override
@@ -120,9 +154,24 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                recargaDTO.setIdTipoMedidorSalida(1);
-                recargaDTO.setNombreMedidorSalida("Magnatel");
-                recargaDTO.setCantidadFotosSalida(1);
+                if(dto!=null) {
+                    for (int x=0;x<dto.getMedidorDTOS().size();x++) {
+                        if(dto.getMedidorDTOS().get(x).getNombreTipoMedidor().equals(
+                                parent.getItemAtPosition(position).toString()
+                        )) {
+                            recargaDTO.setIdTipoMedidorSalida(
+                                    dto.getMedidorDTOS().get(x).getIdTipoMedidor()
+                            );
+                            recargaDTO.setNombreMedidorSalida(
+                                    dto.getMedidorDTOS().get(x).getNombreTipoMedidor()
+                            );
+                            recargaDTO.setCantidadFotosSalida(
+                                    dto.getMedidorDTOS().get(x).getCantidadFotografias()
+                            );
+                        }
+                    }
+                }
+
             }
 
             @Override
@@ -136,7 +185,36 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                recargaDTO.setIdCAlmacenGasEntrada(1);
+                if(dto!=null) {
+                    for (int x=0;x<dto.getEstacionesDTOS().size();x++) {
+                        if(dto.getEstacionesDTOS().get(x).getNombreAlmacen().equals(
+                                parent.getItemAtPosition(position).toString()
+                        )) {
+                            recargaDTO.setIdCAlmacenGasEntrada(
+                                    dto.getEstacionesDTOS().get(x).getIdAlmacenGas()
+                            );
+                            recargaDTO.setP5000Entrada(
+                                    dto.getEstacionesDTOS().get(x).getCantidadP5000()
+                            );
+
+                            recargaDTO.setProcentajeEntrada(
+                                    dto.getEstacionesDTOS().get(x).getPorcentajeMedidor()
+                            );
+                            recargaDTO.setNombreEstacionEntrada(
+                                    dto.getEstacionesDTOS().get(x).getNombreAlmacen()
+                            );
+                            for (int y=0;y<dto.getMedidorDTOS().size();y++){
+                                if(dto.getMedidorDTOS().get(y).getIdTipoMedidor()==
+                                        dto.getEstacionesDTOS().get(y).getIdTipoMedidor()
+                                        ){
+                                    SRecargaEstacionCarburacionActivityListaMedidorPorcentualDestino
+                                            .setSelection(y);
+                                }
+                            }
+
+                        }
+                    }
+                }
             }
 
             @Override
@@ -148,9 +226,23 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                recargaDTO.setIdTipoMedidorEntrada(1);
-                recargaDTO.setNombreMedidorEntrada("Magnatel");
-                recargaDTO.setCantidadFotosEntrada(1);
+                if(dto!=null) {
+                    for (int x=0;x<dto.getMedidorDTOS().size();x++) {
+                        if(dto.getMedidorDTOS().get(x).getNombreTipoMedidor().equals(
+                                parent.getItemAtPosition(position).toString()
+                        )) {
+                            recargaDTO.setIdTipoMedidorEntrada(
+                                    dto.getMedidorDTOS().get(x).getIdTipoMedidor()
+                            );
+                            recargaDTO.setNombreMedidorEntrada(
+                                    dto.getMedidorDTOS().get(x).getNombreTipoMedidor()
+                            );
+                            recargaDTO.setCantidadFotosEntrada(
+                                    dto.getMedidorDTOS().get(x).getCantidadFotografias()
+                            );
+                        }
+                    }
+                }
             }
 
             @Override
@@ -266,10 +358,56 @@ public class RecargaEstacionCarburacionActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSuccessLista(Object datosRecargasDTO) {
-        lista_meididores= new String[2];
-        lista_estacion = new String[3];
-        lista_pipas_salida = new String[3];
+    public void onSuccessLista(DatosRecargaDto datosRecargasDTO) {
+        if(datosRecargasDTO!=null) {
+            dto = datosRecargasDTO;
+            if(datosRecargasDTO.getMedidorDTOS().size()>0){
+                lista_meididores = new String[datosRecargasDTO.getMedidorDTOS().size()];
+                for (int x =0; x<datosRecargasDTO.getMedidorDTOS().size();x++) {
+                    lista_meididores[x] =datosRecargasDTO.getMedidorDTOS().get(x)
+                            .getNombreTipoMedidor();
+                }
+                SRecargaEstacionCarburacionActivityListaMedidorPipa.setAdapter(new ArrayAdapter<>(
+                        this,
+                        R.layout.custom_spinner,
+                        lista_meididores
+                ));
+                SRecargaEstacionCarburacionActivityListaMedidorPorcentualDestino.setAdapter(
+                        new ArrayAdapter<>(
+                                this,
+                                R.layout.custom_spinner,
+                                lista_meididores
+                        )
+                );
+            }
+            if(datosRecargasDTO.getEstacionesDTOS().size()>0){
+                lista_estacion = new String[datosRecargasDTO.getEstacionesDTOS().size()];
+                for (int x =0; x<datosRecargasDTO.getEstacionesDTOS().size();x++){
+                    lista_estacion[x]=datosRecargasDTO.getEstacionesDTOS().get(x).getNombreAlmacen();
+                }
+                SRecargaEstacionCarburacionActivityListaEstacion.setAdapter(
+                        new ArrayAdapter<>(
+                                this,
+                                R.layout.custom_spinner,
+                                lista_estacion
+                        )
+                );
+            }
+
+            if(datosRecargasDTO.getPipasDTOS().size()>0){
+                lista_pipas_salida = new String[datosRecargasDTO.getPipasDTOS().size()];
+                for (int x=0;x<datosRecargasDTO.getPipasDTOS().size();x++){
+                    lista_pipas_salida[x] = datosRecargasDTO.getPipasDTOS().get(x).getNombreAlmacen();
+                }
+                SRecargaEstacionCarburacionActivityListaPipa.setAdapter(
+                        new ArrayAdapter<>(
+                                this,
+                                R.layout.custom_spinner,
+                                lista_pipas_salida
+                        )
+                );
+            }
+        }
 
     }
 }

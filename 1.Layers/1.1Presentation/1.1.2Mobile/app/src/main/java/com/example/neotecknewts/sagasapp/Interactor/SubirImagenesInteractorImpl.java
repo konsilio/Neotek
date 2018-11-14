@@ -1553,7 +1553,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         int intentos_post = 0;
         registra_reacrga = true;
         /*while(intentos_post<3) {*/
-            Call<RespuestaRecargaDTO> call = null;
+            /*Call<RespuestaRecargaDTO> call = null;
             if(EsRecargaEstacionInicial) {
                 restClient.postRecargaInicial(
                         recargaDTO, token, "application/json");
@@ -1561,7 +1561,14 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 restClient.postRecargaFinal(
                   recargaDTO,token,"application/json"
                 );
-            }
+            }*/
+            Call<RespuestaRecargaDTO> call = EsRecargaEstacionInicial ?
+                    restClient.postRecargaInicial(
+                    recargaDTO, token, "application/json"):
+                    restClient.postRecargaFinal(
+                            recargaDTO,token,"application/json"
+                    );
+
             Log.w("Url recarga estación ", retrofit.baseUrl().toString());
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
                 @Override
@@ -1810,7 +1817,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
-
+        autoconsumoDTO.setFechaRegistro(sf.format(new Date()));
         Gson gsons = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -1987,6 +1994,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
+        autoconsumoDTO.setFechaRegistro(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2039,7 +2047,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -2150,6 +2158,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         autoconsumoDTO.setFechaAplicacion(sf.format(new Date()));
+        autoconsumoDTO.setFechaRegistro(sf.format(new Date()));
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2632,8 +2641,10 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         String clave_unica = "CE";
         clave_unica += (esCalibracionEstacionFinal)? "F":"I";
         clave_unica += s.format(new Date());
+        Log.w("Clave",clave_unica);
         calibracionDTO.setClaveOperacion(clave_unica);
         calibracionDTO.setFechaAplicacion((Date) Calendar.getInstance().getTime());
+        calibracionDTO.setFechaRegistro((Date) Calendar.getInstance().getTime());
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2696,8 +2707,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         while(intentos_post<3) {*/
             Call<RespuestaTraspasoDTO> call = restClient.postCalibracion(
                     calibracionDTO,
-                    true,
-                    false,
+                    /*true,
+                    false,*/
                     esCalibracionEstacionFinal,
                     token,
                     "application/json"
@@ -2793,6 +2804,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         clave_unica += (esCalibracionPipaFinal)? "F":"I";
         clave_unica += s.format(new Date());
         calibracionDTO.setClaveOperacion(clave_unica);
+        calibracionDTO.setFechaAplicacion((Date) Calendar.getInstance().getTime());
+        calibracionDTO.setFechaRegistro((Date) Calendar.getInstance().getTime());
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2845,7 +2858,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -2855,8 +2868,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         while(intentos_post<3) {*/
             Call<RespuestaTraspasoDTO> call = restClient.postCalibracion(
                     calibracionDTO,
-                    false,
-                    true,
+                    /*false,
+                    true,*/
                     esCalibracionPipaFinal,
                     token,
                     "application/json"
