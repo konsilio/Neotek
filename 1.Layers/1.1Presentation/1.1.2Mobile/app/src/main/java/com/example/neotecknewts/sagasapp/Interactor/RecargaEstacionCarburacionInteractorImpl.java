@@ -2,6 +2,8 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
+import com.example.neotecknewts.sagasapp.Presenter.RecargaEstacionCarburacionPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RecargaEstacionCarburacionPresenterImpl;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
@@ -17,9 +19,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RecargaEstacionCarburacionInteractorImpl
         implements RecargaEstacionCarburacionInteractor {
-    RecargaEstacionCarburacionPresenterImpl presenter;
+    RecargaEstacionCarburacionPresenter presenter;
     public RecargaEstacionCarburacionInteractorImpl(
-            RecargaEstacionCarburacionPresenterImpl presenter) {
+            RecargaEstacionCarburacionPresenter presenter) {
         this.presenter = presenter;
     }
 
@@ -34,20 +36,20 @@ public class RecargaEstacionCarburacionInteractorImpl
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<Object> call = restClient.getCatalogsRecarga(
+        Call<DatosRecargaDto> call = restClient.getCatalogsRecarga(
                 true,
                 false,
                 false,
-                false,
+                /*false,*/
                 token,
                 "application/json"
         );
 
         Log.w("Url base",retrofit.baseUrl().toString());
 
-        call.enqueue(new Callback<Object>() {
+        call.enqueue(new Callback<DatosRecargaDto>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
+            public void onResponse(Call<DatosRecargaDto> call, Response<DatosRecargaDto> response) {
                 if(response.isSuccessful()){
                     presenter.onSuccesslista(response.body());
                 }else{
@@ -87,7 +89,7 @@ public class RecargaEstacionCarburacionInteractorImpl
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<DatosRecargaDto> call, Throwable t) {
                 Log.e("Error",t.getLocalizedMessage()+"\n"+t.getMessage() +
                         "\n"+ t.getCause());
                 presenter.onError("Se ha generado un error inesperado, intente nuevamente");

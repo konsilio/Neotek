@@ -1,6 +1,6 @@
 ﻿@using MVC.Presentacion.Models.Catalogos
 
-@model  UsuariosModel
+@model  UsuarioDTO
 
 @{
     ViewBag.Title = "Index";
@@ -55,35 +55,26 @@
                     </div>
                     <div class="body">
                         <div class="row clearfix">
-                            <div class="col-sm-12">
-                                <div class="row clearfix">
-                                    <div class="col-sm-3">
-                                        @*<div>*@
-                                        <strong>Gasera</strong>
-                                        @*</div>
-                                            <div>*@
-                                        @if (ViewBag.EsAdmin)
-                                        {
-                                            <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
-                                                @foreach (var lst in ViewBag.Empresas)
-                                                {
-                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                                }
-                                            </select>
-                                        }
-                                        else
-                                        {
-                                            @ViewBag.Empresas
-                                        }
-                                        @*</div>*@
-                                    </div>
-                                    <div class="col-md-9" style="padding-top:14px">
-                                        <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-primary btn-round float-right" />
-                                    </div>
+                            <div class="col-sm-3">
+                                <div>
+                                    <strong>Gasera:</strong>
+                                    @if (ViewBag.EsAdmin)
+                                    {
+                                        <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                            @foreach (var lst in ViewBag.Empresas)
+                                            {
+                                                <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                            }
+                                        </select>
+                                    }
+                                    else
+                                    {
+                                        @ViewBag.Empresas
+                                    }
                                 </div>
                             </div>
-
                         </div>
+                        <br />
                         <div class="row clearfix">
 
                         </div>
@@ -92,9 +83,10 @@
                             <div class="col-sm-12">
                                 <div class="row clearfix">
                                     <div class="col-sm-3">
-                                        <strong>Nombre</strong>
+                                        <strong>Nombre:</strong>
                                         <select id="ddlUser" name="IdUsuario" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
-                                            @foreach (var lst in ViewBag.Usuarios)
+                                            <option value="0">Seleccione uno</option>
+                                            @foreach (var lst in ViewBag.ListaUsuarios)
                                             {
                                                 <option value="@lst.IdUsuario">@lst.Nombre</option>
                                             }
@@ -102,21 +94,29 @@
                                     </div>
 
                                     <div class="col-sm-3">
-                                        <strong>E-mail (Acceso)</strong>
+                                        <strong>Correo Elect. (Acceso):</strong>
                                         <select id="ddlUser" name="Email1" class="form-control show-tick" data-live-search="true">
-                                            <option value="0">Seleccione..</option>
-                                            @foreach (var lst in ViewBag.Usuarios)
+                                            <option value="0">Seleccione uno</option>
+                                            @foreach (var lst in ViewBag.ListaUsuarios)
                                             {
                                                 <option value="@lst.Email1">@lst.Email1</option>
                                             }
                                         </select>
 
                                     </div>
-                                    <div class="col-lg-5 col-md-5 col-sm-6" style="padding-top:14px">
-                                        <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <div> &nbsp; </div>
+                                            <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <div> &nbsp; </div>
+                                            <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-primary btn-round float-right" />
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <br />

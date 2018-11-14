@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 
 public interface RecargaCamionetaView {
@@ -10,7 +11,7 @@ public interface RecargaCamionetaView {
 
     void hideProgress();
 
-    void onSuccessCamionetas(DatosTomaLecturaDto data);
+    void onSuccessCamionetas(DatosRecargaDto data);
 
     void onError(String mensaje);
 }

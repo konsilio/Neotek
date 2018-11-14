@@ -1,13 +1,15 @@
 package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Activity.RecargaPipaView;
+import com.example.neotecknewts.sagasapp.Interactor.RecargaPipaInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.RecargaPipaInteractorImpl;
+import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.R;
 
 public class RecargaPipaPresenterImpl implements RecargaPipaPresenter {
     RecargaPipaView view;
-    RecargaPipaInteractorImpl interactor;
+    RecargaPipaInteractor interactor;
     public RecargaPipaPresenterImpl(RecargaPipaView view){
         this.view = view;
         this.interactor = new RecargaPipaInteractorImpl(this);
@@ -19,7 +21,7 @@ public class RecargaPipaPresenterImpl implements RecargaPipaPresenter {
     }
 
     @Override
-    public void onSuccessList(DatosTomaLecturaDto data) {
+    public void onSuccessList(DatosRecargaDto data) {
         view.onHiddenProgress();
         view.onSuccessLista(data);
     }

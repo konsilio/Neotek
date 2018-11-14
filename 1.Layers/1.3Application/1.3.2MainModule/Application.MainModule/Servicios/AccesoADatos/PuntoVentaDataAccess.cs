@@ -193,6 +193,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<VentaPuntoDeVenta>().GetSingle(x=>x.FolioVenta.Equals(folioVenta));
         }
 
+        //public RespuestaDto InsertarMobile(VentaPuntoDeVenta venta, AlmacenGas _alm)
         public RespuestaDto InsertarMobile(VentaPuntoDeVenta venta)
         {
             RespuestaDto _respuesta = new RespuestaDto();
@@ -201,6 +202,8 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 try
                 {
                     uow.Repository<VentaPuntoDeVenta>().Insert(venta);
+                    //uow.Repository<AlmacenGas>().Update(_alm);
+
                     uow.SaveChanges();
                     _respuesta.EsInsercion = true;
                     _respuesta.Id = venta.IdPuntoVenta;

@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace DS.MainModule.Controllers
 {
-    [AllowAnonymous]
+    
     [RoutePrefix("api/seguridad")]
     public class SeguridadController : ApiController
     {
@@ -21,13 +21,13 @@ namespace DS.MainModule.Controllers
         {
             _seguridad = new Seguridad();
         }
-
+        [AllowAnonymous]
         [Route("servicio/disponible")]
         public HttpResponseMessage PostServicioDisponible()
         {
             return Request.CreateResponse(HttpStatusCode.OK, new RespuestaDto() { Exito = true });
         }
-
+        [AllowAnonymous]
         [Route("login")]
         public HttpResponseMessage PostLogin(AutenticacionDto autenticacionDto)
         {   

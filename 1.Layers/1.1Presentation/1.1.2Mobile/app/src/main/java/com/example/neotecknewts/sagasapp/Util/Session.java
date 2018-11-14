@@ -9,6 +9,8 @@ import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +55,8 @@ public class Session {
 
     public static final String KEY_NOMBRE = "name";
 
+    public static final String KEY_TIME_SESSION = "time";
+
     // Constructor
     public Session(Context context){
         this._context = context;
@@ -81,6 +85,9 @@ public class Session {
         editor.putString(KEY_FB_TOKEN,fb_token);
 
         editor.putString(KEY_NOMBRE,nombre);
+
+        editor.putString(KEY_TIME_SESSION,new Date().toString());
+
         // commit changes
         editor.commit();
     }
@@ -134,5 +141,12 @@ public class Session {
         editor.putString(KEY_PASS,"");
         //editor.putString(KEY_EMAIL,"");
         editor.commit();
+    }
+
+    public boolean isExpired(){
+        Date fecha_session = new Date(pref.getString(KEY_TIME_SESSION,Calendar.getInstance().getTime().toString()));
+        int diferencia=(int) ((new Date().getTime()-fecha_session.getTime())/1000);
+        boolean paso = (diferencia<=(23*3600000));
+        return paso;
     }
 }

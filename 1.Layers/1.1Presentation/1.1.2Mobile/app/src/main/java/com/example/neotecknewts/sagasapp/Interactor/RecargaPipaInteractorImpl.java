@@ -2,7 +2,9 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
+import com.example.neotecknewts.sagasapp.Presenter.RecargaPipaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RecargaPipaPresenterImpl;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
 import com.example.neotecknewts.sagasapp.Util.Constantes;
@@ -17,9 +19,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RecargaPipaInteractorImpl implements RecargaPipaInteractor {
-    RecargaPipaPresenterImpl presenter;
+    RecargaPipaPresenter presenter;
 
-    public RecargaPipaInteractorImpl(RecargaPipaPresenterImpl presenter) {
+    public RecargaPipaInteractorImpl(RecargaPipaPresenter presenter) {
         this.presenter = presenter;
     }
 
@@ -36,21 +38,21 @@ public class RecargaPipaInteractorImpl implements RecargaPipaInteractor {
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
+        Call<DatosRecargaDto> call = restClient.getCatalogsRecarga(
                 false,
                 true,
                 false,
-                EsRecargaPipaFinal,
+                /*EsRecargaPipaFinal,*/
                 token,
                 "application/json"
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 
-        call.enqueue(new Callback<DatosTomaLecturaDto>() {
+        call.enqueue(new Callback<DatosRecargaDto>() {
             @Override
-            public void onResponse(Call<DatosTomaLecturaDto> call, Response<DatosTomaLecturaDto> response) {
+            public void onResponse(Call<DatosRecargaDto> call, Response<DatosRecargaDto> response) {
                 if (response.isSuccessful()) {
-                    DatosTomaLecturaDto data = response.body();
+                    DatosRecargaDto data = response.body();
                     Log.w("Estatus","Success");
                     presenter.onSuccessList(data);
                 }
@@ -75,7 +77,7 @@ public class RecargaPipaInteractorImpl implements RecargaPipaInteractor {
             }
 
             @Override
-            public void onFailure(Call<DatosTomaLecturaDto> call, Throwable t) {
+            public void onFailure(Call<DatosRecargaDto> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.getMessage());
                 presenter.onError(t.getMessage());
             }

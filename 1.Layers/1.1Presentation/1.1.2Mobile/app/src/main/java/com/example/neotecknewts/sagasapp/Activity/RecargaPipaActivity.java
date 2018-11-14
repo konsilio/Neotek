@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.RecargaPipaPresenter;
@@ -34,6 +35,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
     Session session;
     String[] lista_almacen,lista_pipa,lista_medidor;
     ProgressDialog progressDialog;
+    DatosRecargaDto datosRecargaDto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,36 +68,113 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
 
         BtnRecargaPipaActivityAceptar = findViewById(R.id.BtnRecargaPipaActivityAceptar);
 
+        presenter.getLists(session.getToken(),EsRecargaPipaFinal);
+
         SRecargaPipaActivityAlmacen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                recargaDTO.setIdCAlmacenGasSalida(1);
+                if(datosRecargaDto.getEstacionesDTOS().size()>0) {
+                    for (int x=0;x<datosRecargaDto.getEstacionesDTOS().size();x++) {
+                        if(parent.getItemAtPosition(position).toString().equals(
+                                datosRecargaDto.getEstacionesDTOS().get(x).getNombreAlmacen()
+                        )) {
+                            recargaDTO.setIdCAlmacenGasSalida(
+                                    datosRecargaDto.getEstacionesDTOS().get(x).getIdAlmacenGas()
+                            );
+                            recargaDTO.setP5000Salida(
+                                    datosRecargaDto.getEstacionesDTOS().get(x).getCantidadP5000()
+                            );
+                            recargaDTO.setProcentajeSalida(
+                                    datosRecargaDto.getEstacionesDTOS().get(x)
+                                            .getPorcentajeMedidor()
+                            );
+                            recargaDTO.setNombreMedidorSalida(
+                                    datosRecargaDto.getEstacionesDTOS().get(x)
+                                            .getMedidor().getNombreTipoMedidor()
+                            );
+                            recargaDTO.setIdTipoMedidorSalida(
+                                    datosRecargaDto.getEstacionesDTOS().get(x).getIdTipoMedidor()
+                            );
+                            recargaDTO.setCantidadFotosSalida(
+                                    datosRecargaDto.getEstacionesDTOS().get(x).getMedidor()
+                                            .getCantidadFotografias()
+                            );
+                        }
+                    }
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 recargaDTO.setIdCAlmacenGasSalida(0);
+                recargaDTO.setP5000Salida(0);
+                recargaDTO.setNombreMedidorSalida("");
             }
         });
 
         SRecargaPipaActivityPipa.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                recargaDTO.setIdCAlmacenGasEntrada(1);
+                //recargaDTO.setIdCAlmacenGasEntrada(1);
+                if(datosRecargaDto.getPipasDTOS() !=null && datosRecargaDto!= null) {
+                    for (int x=0;x<datosRecargaDto.getPipasDTOS().size();x++) {
+                        if(parent.getItemAtPosition(position).toString().equals(
+                                datosRecargaDto.getPipasDTOS().get(x).getNombreAlmacen()
+                        )) {
+                            recargaDTO.setIdCAlmacenGasEntrada(
+                                    datosRecargaDto.getPipasDTOS().get(x).getIdAlmacenGas()
+                            );
+                            recargaDTO.setP5000Entrada(
+                                    datosRecargaDto.getPipasDTOS().get(x).getCantidadP5000()
+                            );
+                            recargaDTO.setProcentajeEntrada(
+                                    datosRecargaDto.getPipasDTOS().get(x)
+                                            .getPorcentajeMedidor()
+                            );
+                            recargaDTO.setNombreMedidorEntrada(
+                                    datosRecargaDto.getPipasDTOS().get(x)
+                                            .getMedidor().getNombreTipoMedidor()
+                            );
+                            recargaDTO.setIdTipoMedidorEntrada(
+                                    datosRecargaDto.getPipasDTOS().get(x).getIdTipoMedidor()
+                            );
+                            recargaDTO.setCantidadFotosEntrada(
+                                    datosRecargaDto.getPipasDTOS().get(x).getMedidor()
+                                            .getCantidadFotografias()
+                            );
+                        }
+                    }
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 recargaDTO.setIdCAlmacenGasEntrada(1);
+                recargaDTO.setP5000Entrada(0);
+                recargaDTO.setNombreMedidorEntrada("");
             }
         });
 
         SRecargaPipaActivityMedidor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                recargaDTO.setIdTipoMedidorEntrada(1);
-                recargaDTO.setNombreMedidorEntrada("Magnatel");
-                recargaDTO.setCantidadFotosEntrada(1);
+                if(datosRecargaDto.getMedidorDTOS().size()>0) {
+                    for (int x =0; x<datosRecargaDto.getMedidorDTOS().size();x++) {
+                     if(parent.getItemAtPosition(position).toString().equals(
+                             datosRecargaDto.getMedidorDTOS().get(x).getNombreTipoMedidor()
+                     )) {
+                         recargaDTO.setIdTipoMedidorEntrada(
+                                 datosRecargaDto.getMedidorDTOS().get(x).getIdTipoMedidor()
+                         );
+                         recargaDTO.setNombreMedidorEntrada(
+                                 datosRecargaDto.getMedidorDTOS().get(x).getNombreTipoMedidor()
+                         );
+                         recargaDTO.setCantidadFotosEntrada(
+                                 datosRecargaDto.getMedidorDTOS().get(x).getCantidadFotografias()
+                         );
+                     }
+                    }
+                }
             }
 
             @Override
@@ -138,7 +217,7 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
             TVRecargaPipaActivityTituloAlmacen.setVisibility(View.VISIBLE);
         }
 
-        presenter.getLists(session.getToken(),EsRecargaPipaFinal);
+
     }
 
     private  void mensajeError(ArrayList<String> mensajes){
@@ -190,27 +269,44 @@ public class RecargaPipaActivity extends AppCompatActivity implements RecargaPip
     }
 
     @Override
-    public void onSuccessLista(DatosTomaLecturaDto data) {
+    public void onSuccessLista(DatosRecargaDto data) {
         if(data!=null){
-            lista_almacen = new String[2];
-            lista_pipa = new String[2];
-            lista_medidor = new String[2];
-            SRecargaPipaActivityAlmacen.setAdapter(new ArrayAdapter<>(
-                    this,
-                    R.layout.custom_spinner,
-                    lista_almacen
-                    )
-            );
-            SRecargaPipaActivityPipa.setAdapter(new ArrayAdapter<>(
-                    this,
-                    R.layout.custom_spinner,
-                    lista_pipa
-            ));
-            SRecargaPipaActivityMedidor.setAdapter(new ArrayAdapter<>(
-                    this,
-                    R.layout.custom_spinner,
-                    lista_medidor
-            ));
+            datosRecargaDto = data;
+            lista_almacen = new String[data.getEstacionesDTOS().size()];
+            lista_pipa = new String[data.getPipasDTOS().size()];
+            lista_medidor = new String[data.getMedidorDTOS().size()];
+            if(!data.getMedidorDTOS().isEmpty()){
+                for (int x=0;x<data.getMedidorDTOS().size();x++){
+                    lista_medidor[x] = data.getMedidorDTOS().get(x).getNombreTipoMedidor();
+                }
+                SRecargaPipaActivityMedidor.setAdapter(new ArrayAdapter<>(
+                        this,
+                        R.layout.custom_spinner,
+                        lista_medidor
+                ));
+            }
+            if(!data.getEstacionesDTOS().isEmpty()){
+                for (int x=0;x<data.getEstacionesDTOS().size();x++){
+                    lista_almacen[x] = data.getEstacionesDTOS().get(x).getNombreAlmacen();
+                }
+                SRecargaPipaActivityAlmacen.setAdapter(new ArrayAdapter<>(
+                                this,
+                                R.layout.custom_spinner,
+                                lista_almacen
+                        )
+                );
+            }
+            if(!data.getPipasDTOS().isEmpty()){
+                for (int x=0;x<data.getPipasDTOS().size();x++){
+                    lista_pipa[x] = data.getPipasDTOS().get(x).getNombreAlmacen();
+                }
+
+                SRecargaPipaActivityPipa.setAdapter(new ArrayAdapter<>(
+                        this,
+                        R.layout.custom_spinner,
+                        lista_pipa
+                ));
+            }
         }
     }
 

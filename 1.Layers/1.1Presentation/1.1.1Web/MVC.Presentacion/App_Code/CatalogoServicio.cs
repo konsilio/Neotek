@@ -266,11 +266,27 @@ namespace MVC.Presentacion.App_Code
             return agente._RespuestaDTO;
         }
 
-        public static List<UsuariosModel> FiltrarBusquedaUsuario(UsuariosModel us, string token)
+        public static List<UsuariosModel> FiltrarBusquedaUsuario(UsuarioDTO us, string token)
         {
             var agente = new AgenteServicio();
             agente.FiltrarUsuarios(us.IdEmpresa, us.IdUsuario, us.Email1, token);
             return agente._lstUserEmp;
+
+            //var Usuarios = ListaUsuarios(TokenServicio.ObtenerIdEmpresa(token), token);
+            //List<UsuarioDTO> _lstUserEmp = new List<UsuarioDTO>();
+            //if (us.IdEmpresa != 0)
+            //{
+            //    _lstUserEmp = Usuarios.Where(x => x.IdEmpresa.Equals(us.IdEmpresa)).ToList();
+            //}
+            //if (us.IdUsuario != 0)
+            //{
+            //    _lstUserEmp = Usuarios.Where(x => x.IdUsuario.Equals(us.IdUsuario)).ToList();
+            //}
+            //if (!String.IsNullOrEmpty(us.Email1))
+            //{
+            //    _lstUserEmp = Usuarios.Where(x => x.Email1.Equals(us.Email1)).ToList();
+            //}
+            //return _lstUserEmp;
         }
 
         public static RespuestaDTO EliminarRolAlUsuario(UsuarioRolModel cc, int iduser, short idRol, string tkn)

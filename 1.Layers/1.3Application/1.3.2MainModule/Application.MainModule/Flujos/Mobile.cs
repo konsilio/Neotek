@@ -189,12 +189,15 @@ namespace Application.MainModule.Flujos
 
             var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
             var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
-            var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);
+            var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);     
+
+
+
 
             var cliente = ClienteServicio.Obtener(venta.IdCliente);
             var ventas = CajaGeneralServicio.ObtenerVentas();
             int orden = Orden(ventas);
-            var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta, almacen,orden, TokenServicio.ObtenerIdEmpresa());
+            var adapter = VentasEstacionesAdapter.FromDTO(venta, cliente, punto_venta,orden, TokenServicio.ObtenerIdEmpresa());
 
             adapter.OperadorChofer = operador.Nombre + " " + operador.Apellido1 + " " + operador.Apellido2;
             adapter.FolioVenta = venta.FolioVenta;

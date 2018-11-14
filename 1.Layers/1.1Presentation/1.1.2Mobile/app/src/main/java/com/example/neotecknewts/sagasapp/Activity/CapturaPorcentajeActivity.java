@@ -164,7 +164,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 iniciar=false;
                 finalizar=false;
                 almacen=false;
-
+                setTitle(R.string.toma_de_lectura);
             }else if (extras.getBoolean("EsLecturaInicialPipa") ||
                     extras.getBoolean("EsLecturaFinalPipa")){
                 lecturaPipaDTO = (LecturaPipaDTO) extras.getSerializable("lecturaPipaDTO");
@@ -191,6 +191,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 iniciar=false;
                 finalizar=false;
                 almacen=false;
+                setTitle(R.string.toma_de_lectura);
             }else if(extras.getBoolean("EsLecturaInicialAlmacen")||
                     extras.getBoolean("EsLecturaFinalAlmacen")){
                 lecturaAlmacenDTO = (LecturaAlmacenDTO) extras
@@ -218,6 +219,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                         "Toma de lectura final");
                 textView.setText("Registra el porcentaje del "+
                         lecturaAlmacenDTO.getNombreTipoMedidor()+"del almacén pral.");
+                setTitle(R.string.toma_de_lectura);
             }else if(extras.getBoolean("EsRecargaEstacionInicial") ||
                     extras.getBoolean("EsRecargaEstacionFinal")){
                 EsRecargaEstacionInicial = extras.getBoolean("EsRecargaEstacionInicial",
@@ -230,12 +232,13 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 textView.setText("Registra el porcentaje de la estación "+
                     recargaDTO.getNombreMedidorEntrada()
                 );
+                setTitle(R.string.recarga);
             }else if(extras.getBoolean("EsRecargaPipaFinal") ||
                     extras.getBoolean("EsRecargaPipaInicial")){
                 EsRecargaPipaFinal = extras.getBoolean("EsRecargaPipaFinal",false);
                 EsRecargaPipaInicial = extras.getBoolean("EsRecargaPipaInicial",false);
                 recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
-
+                setTitle(R.string.recarga);
             }else if(extras.getBoolean("EsAutoconsumoPipaInicial")|| extras.getBoolean("EsAutoconsumoPipaFinal")){
                 EsAutoconsumoPipaInicial = extras.getBoolean("EsAutoconsumoPipaInicial",false);
                 EsAutoconsumoPipaFinal = extras.getBoolean("EsAutoconsumoPipaFinal",false);
@@ -245,6 +248,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                         " de la pipa"
                 );
                 textViewTitulo.setText(autoconsumoDTO.getNombreTipoMedidor()+" - Pipa");
+                setTitle("Autoconsumo");
             }else if(extras.getBoolean("EsTraspasoEstacionInicial",false)|| extras.getBoolean("EsTraspasoEstacionFinal",false)){
                 EsTraspasoEstacionInicial = extras.getBoolean("EsTraspasoEstacionInicial",false);
                 EsTraspasoEstacionFinal = extras.getBoolean("EsTraspasoEstacionFinal",false);
@@ -256,6 +260,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                 else
                     textView.setText("Registra el porcentaje del "+traspasoDTO.getNombreMedidor()+" de" +
                             "la Pipa");
+                setTitle(R.string.Traspaso);
             }else if(extras.getBoolean("EsCalibracionEstacionInicial",false) ||
                     extras.getBoolean("EsCalibracionEstacionFinal",false)){
                 EsCalibracionEstacionInicial = extras.getBoolean("EsCalibracionEstacionInicial",
@@ -277,6 +282,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                     numberPickerDecimal.setValue(parte_decimal);
                 }
                 textView.setText("Registra el porcentaje del magnatel de la Estación");
+                setTitle(R.string.Calibracion);
             }else if(extras.getBoolean("EsCalibracionPipaInicial",false) ||
                     extras.getBoolean("EsCalibracionPipaFinal",false)){
                 EsCalibracionPipaInicial = extras.getBoolean("EsCalibracionPipaInicial",
@@ -289,6 +295,7 @@ public class CapturaPorcentajeActivity extends AppCompatActivity {
                         getString(R.string.Calibracion)+" - Final"
                 );
                 textView.setText("Registra el porcentaje del magnatel de la pipa");
+                setTitle(R.string.Calibracion);
             }
         }
 

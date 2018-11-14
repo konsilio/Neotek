@@ -1,5 +1,7 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
+
 import java.util.ArrayList;
 
 public interface RecargaEstacionCarburacionView {
@@ -9,5 +11,5 @@ public interface RecargaEstacionCarburacionView {
     void onShowProgress(int mensaje);
     void onHiddenProgress();
     void onError(String mensaje);
-    void onSuccessLista(Object datosRecargasDTO);
+    void onSuccessLista(DatosRecargaDto datosRecargasDTO);
 }

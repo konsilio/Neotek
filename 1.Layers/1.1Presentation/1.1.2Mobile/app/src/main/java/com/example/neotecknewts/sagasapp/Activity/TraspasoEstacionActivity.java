@@ -138,6 +138,47 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
     @Override
     public void onSuccessList(DatosTraspasoDTO dto) {
         datosTraspasoDTO = dto;
+        if(datosTraspasoDTO!=null){
+            if(datosTraspasoDTO.getEstaciones().size()>0){
+                for (int x=0;x<datosTraspasoDTO.getEstaciones().size();x++){
+                    lista_estacion_salida[0] = datosTraspasoDTO.getEstaciones()
+                            .get(x).getNombreAlmacen();
+                }
+                STraspasoEstacionActivityEstacionSalida.setAdapter(
+                        new ArrayAdapter<>(
+                                this,
+                                R.layout.custom_spinner,
+                                lista_estacion_salida
+                        )
+                );
+            }
+
+            if(datosTraspasoDTO.getMedidores().size()>0){
+                for (int x=0;x<datosTraspasoDTO.getMedidores().size();x++){
+                    lista_medidor[x] = datosTraspasoDTO.getMedidores().get(x)
+                            .getNombreTipoMedidor();
+                }
+                STraspasoEstacionActivityMedidor.setAdapter(
+                        new ArrayAdapter<>(
+                                this,
+                                R.layout.custom_spinner,
+                                lista_medidor
+                        )
+                );
+            }
+            if(datosTraspasoDTO.getPipas().size()>0){
+                for (int x=0;x<datosTraspasoDTO.getPipas().size();x++){
+                    lista_pipa_entrada[0]= datosTraspasoDTO.getPipas().get(x).getNombreAlmacen();
+                }
+                STraspasoEstacionActivityPipaEntrada.setAdapter(
+                        new ArrayAdapter<>(
+                                this,
+                                R.layout.custom_spinner,
+                                lista_pipa_entrada
+                        )
+                );
+            }
+        }
     }
 
     @Override

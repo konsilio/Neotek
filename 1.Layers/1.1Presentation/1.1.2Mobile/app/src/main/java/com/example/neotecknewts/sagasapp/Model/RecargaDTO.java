@@ -68,8 +68,14 @@ public class RecargaDTO implements Serializable {
     @SerializedName("CantidadFotosSalida")
     private int CantidadFotosSalida;
 
-    @SerializedName("FechaApliacacion")
+    @SerializedName("FechaAplicacion")
     private String FechaApliacacion;
+
+    @SerializedName("NombreEstacionSalida")
+    private String NombreEstacionSalida;
+
+    @SerializedName("NombreEstacionEntrada")
+    private String NombreEstacionEntrada;
 
     public RecargaDTO(){
         this.Imagenes = new ArrayList<>();
@@ -219,5 +225,21 @@ public class RecargaDTO implements Serializable {
 
     public void setFechaApliacacion(String fechaApliacacion) {
         FechaApliacacion = fechaApliacacion;
+    }
+
+    public String getNombreEstacionSalida() {
+        return NombreEstacionSalida;
+    }
+
+    public void setNombreEstacionSalida(String nombreEstacionSalida) {
+        NombreEstacionSalida = nombreEstacionSalida;
+    }
+
+    public String getNombreEstacionEntrada() {
+        return NombreEstacionEntrada;
+    }
+
+    public void setNombreEstacionEntrada(String nombreEstacionEntrada) {
+        NombreEstacionEntrada = nombreEstacionEntrada;
     }
 }
