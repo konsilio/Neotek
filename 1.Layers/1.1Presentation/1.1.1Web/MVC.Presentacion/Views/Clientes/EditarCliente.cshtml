@@ -13,370 +13,377 @@
 {
     <section class="content home">
         <div class="container-fluid">
-
-            <div class="row clearfix">
-                <div class="col-lg-7 col-md-7 col-sm-12">
-                    <h3>&nbsp;Catálogo / Clientes</h3>
+            <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Clientes</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Catálogos</li>
+                            <li class="breadcrumb-item">Clientes</li>
+                            <li class="breadcrumb-item">Edición</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="body">
-                    <div class="row clearfix">
-                        <div class="col-sm-3">
-                            <b>Gasera</b>
-                            <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
-                                @foreach (var lst in ViewBag.Empresas)
-                                {
-                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                }
-                            </select>
-                            @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
+                <div class="card">
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-sm-3">
+                                <b>Gasera</b>
+                                <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                    @foreach (var lst in ViewBag.Empresas)
+                                    {
+                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                    }
+                                </select>
+                                @Html.ValidationMessageFor(m => m.IdEmpresa, "", new { @class = "alert-danger" })
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2><strong>Fiscales</strong></h2>
-                        </div>
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        Tipo persona:*  <select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
-                                            <option value="0">Seleccione</option>
-                                            @foreach (var lst in ViewBag.TipoPersona)
-                                            {
-                                                <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
-                                            }
-                                        </select>
-                                        @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-8 col-md-8 col-sm-8">
-                                    <div class="form-group">
-                                        Regimen Fiscal:*  <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
-                                            @foreach (var lst in ViewBag.RegimenFiscal)
-                                            {
-                                                <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
-                                            }
-                                        </select>
-                                        @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
-                                    </div>
-                                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Fiscales</strong></h2>
                             </div>
-                            <div class="row clearfix">
-
-                                <div class="col-lg-8 col-md-8 col-sm-8">
-                                    <div class="form-group" id="hide_razonS">
-                                        Razón social:*
-                                        <input type="text" name="RazonSocial" id="txtRS" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].RazonSocial)" />
-                                        @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        Rfc:*
-                                        <input type="text" name="Rfc" id="txtRfc" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Rfc)" />
-                                        @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row clearfix" id="div_hideRP">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="card">
-                                        <div class="header">
-                                            <h2><strong>Representante Legal </strong></h2>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            Tipo Persona:*  <select id="ddlTipopersona" name="IdTipoPersona" class="form-control selectpicker z-index show-tick">
+                                                <option value="0">Seleccione</option>
+                                                @foreach (var lst in ViewBag.TipoPersona)
+                                                {
+                                                    <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
+                                                }
+                                            </select>
+                                            @Html.ValidationMessageFor(m => m.IdTipoPersona, "", new { @class = "alert-danger" })
                                         </div>
-                                        <div class="body">
-                                            <div class="row clearfix">
-                                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                                    <div class="form-group">
-                                                        Nombre completo: <input type="text" name="RepresentanteLegal" id="txtNomCom" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].RepresentanteLegal)" />
+                                    </div>
 
+                                    <div class="col-lg-8 col-md-8 col-sm-8">
+                                        <div class="form-group">
+                                            Régimen Fiscal:*  <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
+                                                @foreach (var lst in ViewBag.RegimenFiscal)
+                                                {
+                                                    <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
+                                                }
+                                            </select>
+                                            @Html.ValidationMessageFor(m => m.IdRegimenFiscal, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+
+                                    <div class="col-lg-8 col-md-8 col-sm-8">
+                                        <div class="form-group" id="hide_razonS">
+                                            Razón Social:*
+                                            <input type="text" name="RazonSocial" id="txtRS" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].RazonSocial)" />
+                                            @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            RFC:*
+                                            <input type="text" name="Rfc" id="txtRfc" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Rfc)" />
+                                            @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row clearfix" id="div_hideRP">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="card">
+                                            <div class="header">
+                                                <h2><strong>Representante Legal </strong></h2>
+                                            </div>
+                                            <div class="body">
+                                                <div class="row clearfix">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            Nombre completo: <input type="text" name="RepresentanteLegal" id="txtNomCom" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].RepresentanteLegal)" />
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <div class="form-group">
+                                                            <div>
+                                                                Teléfono:
+                                                                <input type="text" name="Telefono" id="txtTel" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Telefono)" />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                                    <div class="form-group">
-                                                        <div>
-                                                            Teléfono:
-                                                            <input type="text" name="Telefono" id="txtTel" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Telefono)" />
+                                                <div class="row clearfix">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            Dirección:
+                                                            <input type="text" name="Domicilio" id="txtNomCom" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Domicilio)" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <div class="form-group">
+                                                            Celular:
+                                                            <input type="text" name="Celular" id="txtTel" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Celular)" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row clearfix">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="form-group">
+                                                            Correo electrónico:
+                                                            <input type="text" name="CorreoElectronico" id="txtEmail" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].CorreoElectronico)" />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row clearfix">
-                                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                                    <div class="form-group">
-                                                        Dirección:
-                                                        <input type="text" name="Domicilio" id="txtNomCom" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Domicilio)" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                                    <div class="form-group">
-                                                        Celular:
-                                                        <input type="text" name="Celular" id="txtTel" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Celular)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                                    <div class="form-group">
-                                                        Correo electrónico:
-                                                        <input type="text" name="CorreoElectronico" id="txtEmail" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].CorreoElectronico)" />
-                                                    </div>
-                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix" id="div_hidePM">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            Nombres:* <input type="text" name="Nombre" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Nombre)" />
+                                            <input id="IdCliente" type="text" name="IdCliente" hidden="hidden" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].IdCliente)" />
+                                            @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Apellido 1:*
+                                                <input type="text" name="Apellido1" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Apellido1)" />
+                                                @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="row clearfix" id="div_hidePM">
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        Nombres:* <input type="text" name="Nombre" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Nombre)" />
-                                        <input id="IdCliente" type="text" name="IdCliente" hidden="hidden" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].IdCliente)" />
-                                        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "alert-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        <div>
-                                            Apellido 1:*
-                                            <input type="text" name="Apellido1" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Apellido1)" />
-                                            @Html.ValidationMessageFor(m => m.Apellido1, "", new { @class = "alert-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        <div>
-                                            Apellido 2:
-                                            <input type="text" name="Apellido2" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Apellido2)" />
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Apellido 2:
+                                                <input type="text" name="Apellido2" class="form-control" value="@((ViewBag.IdCliente==null)?"": ViewBag.IdCliente[0].Apellido2)" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </div>
-            </div>
-
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2><strong>Condicion del crédito y descuento</strong></h2>
-                        </div>
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-lg-2 col-md-2 col-sm-2">
-                                    <div class="form-group">
-                                        Límite de crédito:
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
-                                        Monto $ <input name="limiteCreditoMonto" type="number" value="@((ViewBag.IdCliente==null)?0:ViewBag.IdCliente[0].limiteCreditoMonto)" />
-
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
-                                        <div>
-                                            Dias <input name="limiteCreditoDias" type="number" value="@((ViewBag.IdCliente==null)?0:ViewBag.IdCliente[0].limiteCreditoDias)" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
-                                        <div>
-                                            Descuento $ x kilo:
-                                            <input name="DescuentoXKilo" type="number" value="@((ViewBag.IdCliente[0].DescuentoXKilo==null)?0:ViewBag.IdCliente[0].DescuentoXKilo)" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2><strong>Portal de facturación</strong></h2>
-                        </div>
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <div class="form-group">
-                                        <div class="col-lg-8 col-md-8 col-sm-8">
-                                            @Html.CheckBoxFor(m => m.AccesoPortal)
-                                            <label for="checkAcceso">
-                                                Acceso al portal de facturación
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2><strong>Contacto</strong></h2>
-                        </div>
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        Teléfono 1: <input id="txtTel1" name="Telefono1" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono1)" />
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        <div>
-                                            Celular 1:
-                                            <input id="txtCel1" type="text" name="Celular1" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Celular1)" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        <div>
-                                            Email 1:
-                                            <input id="txtEmail1" type="text" name="Email1" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Email1)" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row clearfix">
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        Teléfono 2:
-                                        <input id="txtTel2" name="Telefono2" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono2)" />
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        <div>
-                                            Celular 2:
-                                            <input id="txtCel2" name="Celular2" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Celular2)" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        <div>
-                                            Email 2:
-                                            <input id="txtEmail2" type="text" name="Email2" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Email2)" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row clearfix">
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        Teléfono 3:
-                                        <input id="txtTel3" name="Telefono3" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono3)" />
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        <div>
-                                            Celular 3:
-                                            <input id="txtCel3" type="text" name="Celular3" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Celular3)" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="form-group">
-                                        <div>
-                                            Email 3:
-                                            <input id="txtEmail3" type="text" name="Email3" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Email3)" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row clearfix">
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
-                                        <div>
-                                            Sitio web 1:
-                                            <input id="txtweb1" name="SitioWeb1" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].SitioWeb1)" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
-                                        <div>
-                                            Sitio web 2:
-                                            <input id="txtweb2" name="SitioWeb2" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].SitioWeb2)" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3">
-                                    <div class="form-group">
-                                        Sitio web 3:
-                                        <input id="txtweb3" name="SitioWeb3" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].SitioWeb3)" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="body">
                 <div class="row clearfix">
-                    <div class="col-lg-5 col-md-5 col-sm-5">
-                        <div class="form-group">
-                            <input type="submit" value="Regresar" id="btnRegresarIndexNC" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-left" />
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-7 col-sm-7">
-                        <div class="form-group">
-                            <input type="submit" id="btnGuardaEdicion" value="Actualizar" formmethod="post" class="btn btn-raised btn-primary float-right" />
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Condición del crédito y descuento</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <div class="form-group">
+                                            Límite de crédito:
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            Monto $ <input name="limiteCreditoMonto" type="number" value="@((ViewBag.IdCliente==null)?0:ViewBag.IdCliente[0].limiteCreditoMonto)" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <div>
+                                                Días <input name="limiteCreditoDias" type="number" value="@((ViewBag.IdCliente==null)?0:ViewBag.IdCliente[0].limiteCreditoDias)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <div>
+                                                Descuento $ x kilo:
+                                                <input name="DescuentoXKilo" type="number" value="@((ViewBag.IdCliente[0].DescuentoXKilo==null)?0:ViewBag.IdCliente[0].DescuentoXKilo)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @if (ViewBag.MessageError != null)
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Portal de facturación</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                @Html.CheckBoxFor(m => m.AccesoPortal)
+                                                <label for="checkAcceso">
+                                                    Acceso al portal de facturación
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="header">
+                                <h2><strong>Contacto</strong></h2>
+                            </div>
+                            <div class="body">
+                                <div class="row clearfix">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            Teléfono 1: <input id="txtTel1" name="Telefono1" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono1)" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Celular 1:
+                                                <input id="txtCel1" type="text" name="Celular1" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Celular1)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Email 1:
+                                                <input id="txtEmail1" type="text" name="Email1" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Email1)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            Teléfono 2:
+                                            <input id="txtTel2" name="Telefono2" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono2)" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Celular 2:
+                                                <input id="txtCel2" name="Celular2" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Celular2)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Email 2:
+                                                <input id="txtEmail2" type="text" name="Email2" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Email2)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            Teléfono 3:
+                                            <input id="txtTel3" name="Telefono3" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Telefono3)" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Celular 3:
+                                                <input id="txtCel3" type="text" name="Celular3" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Celular3)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="form-group">
+                                            <div>
+                                                Email 3:
+                                                <input id="txtEmail3" type="text" name="Email3" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].Email3)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <div>
+                                                Sitio web 1:
+                                                <input id="txtweb1" name="SitioWeb1" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].SitioWeb1)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            <div>
+                                                Sitio web 2:
+                                                <input id="txtweb2" name="SitioWeb2" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].SitioWeb2)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group">
+                                            Sitio web 3:
+                                            <input id="txtweb3" name="SitioWeb3" type="text" class="form-control" value="@((ViewBag.IdCliente==null)?"":ViewBag.IdCliente[0].SitioWeb3)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="body">
+                    <div class="row clearfix">
+                        <div class="col-lg-5 col-md-5 col-sm-5">
+                            <div class="form-group">
+                                <input type="submit" value="Regresar" id="btnRegresarIndexNC" formaction=@Url.Action("Index") class="btn btn-raised btn-round btn-primary float-left" />
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-7">
+                            <div class="form-group">
+                                <input type="submit" id="btnGuardaEdicion" value="Actualizar" formmethod="post" class="btn btn-raised btn-round btn-primary float-right" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (ViewBag.MessageError != null)
                 {
-                <div class="row clearfix">
-                    <div id="divMensajeError" class="container">
-                        <div class="alert alert-danger">
-                            <div class="alert-icon">
-                                <i class="zmdi zmdi-block"></i>
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MessageError</label>
+                                </strong>
                             </div>
-                            <strong>
-                                <label>@ViewBag.MessageError</label>
-                            </strong>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </section>
 }

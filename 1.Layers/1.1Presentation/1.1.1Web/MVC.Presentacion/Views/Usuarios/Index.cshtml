@@ -27,6 +27,7 @@
     });
 
 </script>
+
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
     <div class="loader">
@@ -109,7 +110,7 @@
                                                 <option value="@lst.Email1">@lst.Email1</option>
                                             }
                                         </select>
-                                        
+
                                     </div>
                                     <div class="col-lg-5 col-md-5 col-sm-6" style="padding-top:14px">
                                         <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
@@ -143,21 +144,21 @@
                                                     <td>@item.Celular1</td>
                                                     <td>@item.Telefono1</td>
                                                     <td>
-                                                        <a ID="lblCrear" href="@Url.Action("EditarUsuario", "Usuarios", new { id = item.IdUsuario })">
+                                                        <a href="@Url.Action("EditarUsuario", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">edit</i>
-                                                            <span class="icon-name"></span>
+                                                            <span>Editar usuario</span>
                                                         </a>
-                                                        <a ID="lbEdit" href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })">
+                                                        <a ID="lbEdit" href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="zmdi zmdi-settings"></i>
-                                                            <span class="icon-name"></span>
+                                                            <span>Actualiza credenciales</span>
                                                         </a>
-                                                        <a ID="lbEdit" href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })">
+                                                        <a ID="lbEdit" href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">dashboard</i>
-                                                            <span class="icon-name"></span>
+                                                            <span>Actualiza roles</span>
                                                         </a>
-                                                        <a ID="lbBorrar" href="@Url.Action("BorrarUsuario", "Usuarios", new {  id=item.IdUsuario } )">
+                                                        <a ID="lbBorrar" href="@Url.Action("BorrarUsuario", "Usuarios", new {  id=item.IdUsuario } )" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">delete</i>
-                                                            <span class="icon-name"></span>
+                                                            <span>Eliminar usuario</span>
                                                         </a>
                                                     </td>
                                                 </tr>

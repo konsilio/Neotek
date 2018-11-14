@@ -3,9 +3,6 @@
     ViewBag.Title = "Index";
 }
 <!-- Bootstrap Select Css -->
-@*<link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
-    <script src="~/Resources/js/lib/jquery-1.9.1.js"></script>*@
 <script src="~/Resources/js/Roles.js"></script>
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
@@ -57,7 +54,7 @@
             <div class="block-header">
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-12">
-                        <h2>Gaseras</h2>
+                        <h2>Roles</h2>
                         <ul class="breadcrumb padding-0">
                             <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
                             <li class="breadcrumb-item">Catálogos</li>
@@ -73,13 +70,7 @@
                         <div class="row clearfix">
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <b>Gasera</b>
-                                    @*<select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
-                                        @foreach (var lst in ViewBag.listaEmpresas)
-                                        {
-                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                        }
-                                        </select>*@
+                                    <b>Gasera</b>                                   
                                     <div>
                                         @if (ViewBag.EsAdmin)
                                         {

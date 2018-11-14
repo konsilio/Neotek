@@ -1,5 +1,4 @@
 ﻿body {
-  
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -32,7 +31,53 @@ textarea {
     background-color: #ffffff;
     border: 1px solid #dddddd;
 }
-.widthInherit.btn-group.bootstrap-select.form-control{
-    width:inherit
+
+.widthInherit.btn-group.bootstrap-select.form-control {
+    width: inherit;
 }
 
+a.tip {
+    text-decoration: none;
+}
+
+    a.tip:hover {
+        position: relative;
+    }
+
+    a.tip span {
+        display: none;
+    }
+
+    a.tip:hover span {
+        /*padding: 5px 15px;
+        display: inline-block;
+        z-index: 1;
+        background-color: #495057;
+        left: 0px;
+        margin: 5px;
+        position: absolute;
+        font-size: 10px;
+        top: -10px;
+        text-decoration: none;
+        border-radius: 6px;
+        color: white;
+        max-width: 80px;
+        min-width: 100px;
+        white-space: pre-wrap;*/
+        display: inline-block;
+        width: 120px;
+        background-color: #495057;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        font-size: 10px;
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        top: -5px;
+        right: 105%;
+        max-width: 80px;
+        min-width: 100px;
+        white-space: pre-wrap;
+    }

@@ -15,7 +15,7 @@ namespace Exceptions.MainModule.Validaciones
 
         public const string S0001 = "El campo '{0}' es obligatorio.";
         public const string S0002 = "El campo '{0}' requiere un mínimo de {2} caracteres y un máximo de {1}.";
-        public const string S0003 = "El Usuario y la contraseña no coinciden";
+        public const string S0003 = "El usuario y la contraseña no coinciden";
         public const string S0004 = "No se logró {0}. Si este mensaje persiste comuniquese con el administrador del sistema";
 
         public const string R0001 = "Error al guardar la requisición";
