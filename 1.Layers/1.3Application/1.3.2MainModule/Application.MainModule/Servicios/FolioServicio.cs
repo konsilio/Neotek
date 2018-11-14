@@ -52,5 +52,9 @@ namespace Application.MainModule.Servicios
             
             return numReq;
         }
+        //public static string GeneraNumeroReferenciaReporte(string Accion, string origen, DateTime fecha, short idAlmacen )
+        //{
+        //    string numRef = string.Empty;
+        //}
     }
 }

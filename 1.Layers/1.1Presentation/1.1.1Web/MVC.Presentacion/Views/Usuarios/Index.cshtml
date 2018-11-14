@@ -81,6 +81,7 @@
                                     <div class="col-sm-3">
                                         <strong>Nombre:</strong>
                                         <select id="ddlUser" name="IdUsuario" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                            <option value="0">Seleccione uno</option>
                                             @foreach (var lst in ViewBag.ListaUsuarios)
                                             {
                                                 <option value="@lst.IdUsuario">@lst.Nombre</option>
@@ -91,6 +92,7 @@
                                     <div class="col-sm-3">
                                         <strong>Correo Elect. (Acceso):</strong>
                                         <select id="ddlUser" name="Email1" class="form-control show-tick" data-live-search="true">
+                                            <option value="0">Seleccione uno</option>
                                             @foreach (var lst in ViewBag.ListaUsuarios)
                                             {
                                                 <option value="@lst.Email1">@lst.Email1</option>
