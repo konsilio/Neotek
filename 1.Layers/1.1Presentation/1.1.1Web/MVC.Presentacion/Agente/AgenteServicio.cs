@@ -589,7 +589,6 @@ namespace MVC.Presentacion.Agente
                     client.Dispose();
                 }
                 _lstUserEmp = lus;
-
                 if (idEmpresa != 0)
                 {
                     _lstUserEmp = (from x in lus where x.IdEmpresa == idEmpresa select x).ToList();
@@ -598,8 +597,6 @@ namespace MVC.Presentacion.Agente
                 {
                     _lstUserEmp = (from x in lus where x.IdUsuario == idUser select x).ToList();
                 }
-
-
                 if (!String.IsNullOrEmpty(mail))
                 {
                     _lstUserEmp = (from x in lus where x.Email1 == mail select x).ToList();
