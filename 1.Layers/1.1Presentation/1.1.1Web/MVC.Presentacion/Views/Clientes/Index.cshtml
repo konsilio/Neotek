@@ -30,32 +30,55 @@
     <section class="content home">
         <div class="container-fluid">
             <div class="block-header">
+                <div class="row clearfix">
+                    <div class="col-lg-5 col-md-5 col-sm-12">
+                        <h2>Clientes</h2>
+                        <ul class="breadcrumb padding-0">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                            <li class="breadcrumb-item">Catálogos</li>
+                            <li class="breadcrumb-item">Clientes</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="card">
+                    <div class="header">
+                    </div>
                     <div class="body">
                         <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="col-sm-3">
-                                    <b>Gasera</b>
-                                    <select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
-                                        @foreach (var lst in ViewBag.Empresas)
+                                    <div>
+                                        <strong>Gasera</strong>
+                                    </div>
+                                    <div>
+                                        @if (ViewBag.EsAdmin)
                                         {
-                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                            <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                                @foreach (var lst in ViewBag.Empresas)
+                                                {
+                                                    <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                                }
+                                            </select>
                                         }
-                                    </select>
+                                        else
+                                        {
+                                            @ViewBag.Empresas
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <br />
                         <div class="row clearfix">
                             <div class="col-md-12">
-                                <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-primary float-right" />
+                                <input id="BtnNuevo" type="submit" value="Nuevo" class="btn btn-raised btn-round btn-primary btn-round float-right" />
                             </div>
                         </div>
                         <br />
                         <div class="row clearfix">
                             <div class="col-sm-3">
                                 <b>Tipo persona</b>
-                                <select name="IdTipoPersona" id="ddlTipoPersona" class="form-control selectpicker z-index show-tick" data-live-search="true">
+                                <select name="IdTipoPersona" id="ddlTipoPersona" class="form-control show-tick" data-live-search="true">
                                     @foreach (var lst in ViewBag.TipoPersona)
                                     {
                                         <option value="@lst.IdTipoPersona">@lst.Descripcion</option>
@@ -63,7 +86,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-6">
-                                <b>Regimen Fiscal</b>
+                                <b>Régimen Fiscal</b>
                                 <select name="IdRegimenFiscal" class="form-control show-tick" data-live-search="true">
                                     @foreach (var lst in ViewBag.RegimenFiscal)
                                     {
@@ -77,78 +100,74 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <label for="txtRfc">
-                                                Rfc:
-                                            </label>
+                                            <b>RFC</b>
                                             <input type="text" name="Rfc" id="txtRfc" class="form-control" />
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="txtRS">
-                                                Razón social o Nombre completo
-                                            </label>
+                                            <b>Razón Social o Nombre Completo</b>
                                             <input type="text" name="RazonSocial" id="txtRS" class="form-control" />
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary float-left" />
+                                        <input type="submit" id="btnBuscar" name="Buscar" value="Buscar" formaction=@Url.Action("Buscar") formmethod="post" class="btn btn-raised btn-primary btn-round float-left" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card">
                             <div class="body">
-                                <div class="row clearfix">
+                                <div class="row clearfix blockquote blockquote-info btn-round">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
                                         <div class="table-responsive">
-                                            <table class="table table table-bordered table-striped table-hover js-basic-example dataTable" name="EmpresasGaseras">
+                                            <table class="table table table-striped table-hover" name="EmpresasGaseras">
                                                 <thead>
                                                     <tr>
                                                         <th>Gasera</th>
                                                         <th>Tipo Persona</th>
-                                                        <th>Regimen Fiscal</th>
+                                                        <th>Régimen Fiscal</th>
                                                         <th>Razón social</th>
                                                         <th>RFC</th>
                                                         <th>CreditoMonto</th>
                                                         <th>CreditoDias</th>
                                                         <th>Descuento</th>
                                                         <th>Celular</th>
-                                                        <th>Telefono</th>
-                                                        <th>Correo elect.</th>
+                                                        <th>Teléfono</th>
+                                                        <th>E-mail</th>
                                                         <th>Acciones</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach (var item in @ViewBag.Clientes)
                                                     {
-                                                        <tr>
-                                                            <td>@item.Empresa</td>
-                                                            <td>@item.TipoPersonaFiscal</td>
-                                                            <td>@item.RegimenFiscal</td>
-                                                            <td>@item.RazonSocial</td>
-                                                            <td>@item.Rfc</td>
-                                                            <td>@item.limiteCreditoMonto</td>
-                                                            <td>@item.limiteCreditoDias</td>
-                                                            <td>@item.DescuentoXKilo</td>
-                                                            <td>@item.Celular</td>
-                                                            <td>@item.Telefono1</td>
-                                                            <td>@item.Email1</td>
-                                                            <td>
-                                                                <a ID="lblCrear" href="@Url.Action("EditarCliente", "Clientes", new { id = item.IdCliente })">
-                                                                    <i class="material-icons">edit</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                                <a ID="lbEdit" href="@Url.Action("EditarLocaciones", "Clientes", new { id = item.IdCliente })">
-                                                                    <i class="material-icons">edit_location</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                                <a ID="lbBorrar" href="@Url.Action("BorrarClientes", "Clientes", new { id = item.IdCliente })">
-                                                                    <i class="material-icons">delete</i>
-                                                                    <span class="icon-name"></span>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
+                                                    <tr>
+                                                        <td>@item.Empresa</td>
+                                                        <td>@item.TipoPersonaFiscal</td>
+                                                        <td>@item.RegimenFiscal</td>
+                                                        <td>@item.RazonSocial</td>
+                                                        <td>@item.Rfc</td>
+                                                        <td>@item.limiteCreditoMonto</td>
+                                                        <td>@item.limiteCreditoDias</td>
+                                                        <td>@item.DescuentoXKilo</td>
+                                                        <td>@item.Celular</td>
+                                                        <td>@item.Telefono1</td>
+                                                        <td>@item.Email1</td>
+                                                        <td>
+                                                            <a ID="lblCrear" href="@Url.Action("EditarCliente", "Clientes", new { id = item.IdCliente })">
+                                                                <i class="material-icons">edit</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                            <a ID="lbEdit" href="@Url.Action("EditarLocaciones", "Clientes", new { id = item.IdCliente })">
+                                                                <i class="material-icons">edit_location</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                            <a ID="lbBorrar" href="@Url.Action("BorrarClientes", "Clientes", new { id = item.IdCliente })">
+                                                                <i class="material-icons">delete</i>
+                                                                <span class="icon-name"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
                                                     }
                                                 </tbody>
                                             </table>
@@ -174,7 +193,7 @@
                             </div>
                         </div>
                     </div>
-                }            
+                }
             </div>
         </div>
     </section>

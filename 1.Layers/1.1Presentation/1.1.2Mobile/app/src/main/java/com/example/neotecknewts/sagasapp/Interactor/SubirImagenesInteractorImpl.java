@@ -1553,7 +1553,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         int intentos_post = 0;
         registra_reacrga = true;
         /*while(intentos_post<3) {*/
-            Call<RespuestaRecargaDTO> call = null;
+            /*Call<RespuestaRecargaDTO> call = null;
             if(EsRecargaEstacionInicial) {
                 restClient.postRecargaInicial(
                         recargaDTO, token, "application/json");
@@ -1561,7 +1561,14 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 restClient.postRecargaFinal(
                   recargaDTO,token,"application/json"
                 );
-            }
+            }*/
+            Call<RespuestaRecargaDTO> call = EsRecargaEstacionInicial ?
+                    restClient.postRecargaInicial(
+                    recargaDTO, token, "application/json"):
+                    restClient.postRecargaFinal(
+                            recargaDTO,token,"application/json"
+                    );
+
             Log.w("Url recarga estación ", retrofit.baseUrl().toString());
             call.enqueue(new Callback<RespuestaRecargaDTO>() {
                 @Override

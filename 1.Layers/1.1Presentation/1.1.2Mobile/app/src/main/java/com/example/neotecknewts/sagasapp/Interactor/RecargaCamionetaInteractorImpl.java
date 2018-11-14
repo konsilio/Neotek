@@ -2,6 +2,9 @@ package com.example.neotecknewts.sagasapp.Interactor;
 
 import android.util.Log;
 
+import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
+import com.example.neotecknewts.sagasapp.Model.DatosReporteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Presenter.RecargaCamionetaPresenterImpl;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
@@ -36,22 +39,21 @@ public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteracto
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<DatosTomaLecturaDto> call = restClient.getEstacionesCarburacion(
+        Call<DatosRecargaDto> call = restClient.getCatalogsRecarga(
                 false,
                 false,
                 true,
-                false,
                 token,
                 "application/json"
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 
-        call.enqueue(new Callback<DatosTomaLecturaDto>() {
+        call.enqueue(new Callback<DatosRecargaDto>() {
             @Override
-            public void onResponse(Call<DatosTomaLecturaDto> call, Response<DatosTomaLecturaDto> response) {
+            public void onResponse(Call<DatosRecargaDto> call, Response<DatosRecargaDto> response) {
 
                 if (response.isSuccessful()) {
-                    DatosTomaLecturaDto data = response.body();
+                    DatosRecargaDto data = response.body();
                     Log.w("Estatus","Success");
                     recargaCamionetaPresenter.onSuccessCamionetas(data);
                 }
@@ -78,7 +80,7 @@ public class RecargaCamionetaInteractorImpl implements RecargaCamionetaInteracto
             }
 
             @Override
-            public void onFailure(Call<DatosTomaLecturaDto> call, Throwable t) {
+            public void onFailure(Call<DatosRecargaDto> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
                 recargaCamionetaPresenter.onError("Se ha generado un error: "+t.getMessage());
             }

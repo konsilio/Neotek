@@ -491,6 +491,10 @@ namespace Application.MainModule.Servicios.Almacenes
 
             return (short)numOrden;
         }
+        public static List<AlmacenGasMovimiento> ObtenerMovimientos(string folio ,DateTime fecha)
+        {
+            return new AlmacenGasDataAccess().BuscarMovimientos(folio, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
+        }
 
         public static List<AlmacenGasMovimiento> ObtenerMovimientosEnInventario(short idEmpresa, short idAlmacenGas, DateTime fecha)
         {

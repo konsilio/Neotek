@@ -229,6 +229,7 @@ namespace Application.MainModule.Flujos
             if (!resp.Exito) return resp;
 
             var puntoV = PuntoVentaAdapter.FromDto(cteDto);
+            puntoV.Activo = false;
             return PuntoVentaServicio.Eliminar(puntoV);
         }
 

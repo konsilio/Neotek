@@ -13,8 +13,23 @@
     <section class="content home">
         <div class="container-fluid">
             <div class="row clearfix">
-                <div class="col-lg-7 col-md-7 col-sm-12">
-                    <h3>&nbsp;Catálogo / Usuarios</h3>
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Usuarios</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item">Catálogo</li>
+                        <li class="breadcrumb-item">Usuarios</li>
+                        @if (ViewBag.IdUser == null)
+                        {
+                            <li class="breadcrumb-item">Nuevo</li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item">Edición</li>
+                        }
+
+                    </ul>
+
                 </div>
             </div>
             <div class="card">
@@ -58,7 +73,7 @@
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-2">
                                     <div class="form-group float-right">
-                                        Correo elect:*
+                                        E-mail:*
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
@@ -199,7 +214,7 @@
                             <div class="row clearfix">
                                 <div class="col-sm-05">
                                     <div class="form-group">
-                                        Correo elect. 2:
+                                        E-mail 2:
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
@@ -222,7 +237,7 @@
                             <div class="row clearfix">
                                 <div class="col-sm-05">
                                     <div class="form-group">
-                                        Correo elect. 3:
+                                        E-mail 3:
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
@@ -377,18 +392,18 @@
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            <input type="submit" id="btnRegresarIndex" formaction=@Url.Action("Index") value="Regresar" class="btn btn-raised btn-primary float-left" />
+                            <input type="submit" id="btnRegresarIndex" formaction=@Url.Action("Index") value="Regresar" class="btn btn-raised btn-primary btn-round float-left" />
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-7">
                         <div class="form-group">
                             @if (ViewBag.IdUser == null)
                             {
-                                <input type="submit" value="Crear" formaction="GuardarUsuario" formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                <input type="submit" value="Crear" formaction="GuardarUsuario" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
                             }
                             else
                             {
-                                <input type="submit" id="btnGuardaEdicion" value="Actualizar" formmethod="post" class="btn btn-raised btn-primary float-right" />
+                                <input type="submit" id="btnGuardaEdicion" value="Actualizar" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
                             }
                         </div>
                     </div>

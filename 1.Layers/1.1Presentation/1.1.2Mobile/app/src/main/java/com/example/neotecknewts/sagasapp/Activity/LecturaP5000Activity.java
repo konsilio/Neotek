@@ -102,9 +102,14 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 setTitle(R.string.toma_de_lectura);
             }else if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
                 recargaDTO = (RecargaDTO) b.getSerializable("recargaDTO");
-                max_p5000 = 5000;
-                p5000 = 5000;
-                setTitle(R.string.toma_de_lectura);
+                if(EsPrimeraLectura) {
+                    max_p5000 = recargaDTO.getP5000Salida();
+                    p5000 = recargaDTO.getP5000Salida();
+                }else{
+                    max_p5000 = recargaDTO.getP5000Entrada();
+                    p5000 = recargaDTO.getP5000Entrada();
+                }
+                setTitle(R.string.recarga);
             }else if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
                 autoconsumoDTO = (AutoconsumoDTO) b.getSerializable("autoconsumoDTO");
                 max_p5000 = autoconsumoDTO.getP5000Salida();
@@ -179,10 +184,20 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
 
         if(EsRecargaEstacionInicial||EsRecargaEstacionFinal){
             TVLecturaP5000Titulo.setText(getString(R.string.registra_la_lectura_del_p500_de_la_pipa));
-            if(EsLecturaInicial) {
-                TVLecturaP5000Titulo.setText(getString(R.string.p500) + " " + getString(R.string.Pipa));
+            if(EsPrimeraLectura) {
+                String nombre = recargaDTO.getNombreEstacionSalida().isEmpty()?"":
+                        recargaDTO.getNombreEstacionSalida();
+                TVLecturaP5000Titulo.setText(getString(R.string.p500) + " " +
+                        getString(R.string.Pipa)+": "+nombre);
+                TVLecturaP5000Tipo.setText(getString(R.string.p500)+
+                        nombre);
             }else{
-                TVLecturaP5000Titulo.setText(getString(R.string.p500) + " " + getString(R.string.Estacion));
+                String nombre = recargaDTO.getNombreEstacionEntrada().isEmpty()?"":
+                        recargaDTO.getNombreEstacionEntrada();
+                TVLecturaP5000Titulo.setText(getString(R.string.p500) + " " +
+                        getString(R.string.Estacion)+": "+nombre);
+                TVLecturaP5000Tipo.setText(getString(R.string.p500)+
+                        nombre);
             }
         }
 
@@ -370,7 +385,12 @@ public class LecturaP5000Activity extends AppCompatActivity implements LecturaP5
                 intent.putExtra("EsLecturaFinalPipa",EsLecturaFinalPipa);
                 intent.putExtra("EsFotoP5000",true);
             }else if(EsRecargaEstacionInicial||EsRecargaEstacionFinal){
-                recargaDTO.setP5000Salida(CantidadP500);
+                if(EsPrimeraLectura) {
+                    recargaDTO.setP5000Salida(CantidadP500);
+
+                }else{
+                    recargaDTO.setP5000Entrada(CantidadP500);
+                }
                 intent.putExtra("EsRecargaEstacionInicial",EsRecargaEstacionInicial);
                 intent.putExtra("EsRecargaEstacionFinal",EsRecargaEstacionFinal);
                 intent.putExtra("EsPrimeraLectura",EsPrimeraLectura);

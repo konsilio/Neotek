@@ -11,10 +11,17 @@
 {
     <section class="content home">
         <div class="container-fluid">
-            <div class="row clearfix">
-                <div class="col-lg-7 col-md-7 col-sm-12">
-                    <h3>&nbsp;Catálogo / Clientes</h3>
+            <div class="row clearfix">               
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Clientes</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Inicio", "Home")"><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item">Catálogo</li>
+                        <li class="breadcrumb-item">Clientes</li>
+                        <li class="breadcrumb-item">Nuevo</li>
+                    </ul>
                 </div>
+
             </div>
             <div class="card">
                 <div class="body">
@@ -55,7 +62,7 @@
 
                                 <div class="col-lg-8 col-md-8 col-sm-8">
                                     <div class="form-group">
-                                        Regimen Fiscal:*  <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
+                                        Régimen Fiscal:*  <select id="ddlRegimenF" name="IdRegimenFiscal" class="form-control selectpicker z-index show-tick">
                                             @foreach (var lst in ViewBag.Regimen)
                                             {
                                                 <option value="@lst.IdRegimenFiscal">@lst.Descripcion</option>
@@ -69,14 +76,14 @@
                             <div class="row clearfix">
                                 <div class="col-lg-8 col-md-8 col-sm-8">
                                     <div class="form-group" id="hide_razonS">
-                                        Razón social:*
+                                        Razón Social:*
                                         <input type="text" name="RazonSocial" id="txtRS" class="form-control" />
                                         @Html.ValidationMessageFor(m => m.RazonSocial, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="form-group">
-                                        Rfc:*
+                                        RFC:*
                                         <input type="text" name="Rfc" id="txtRfc" class="form-control" />
                                         @Html.ValidationMessageFor(m => m.Rfc, "", new { @class = "alert-danger" })
                                     </div>
@@ -92,7 +99,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                                     <div class="form-group">
-                                                        Nombre completo: <input type="text" name="RepresentanteLegal" id="txtNomCom" class="form-control" />
+                                                        Nombre Completo: <input type="text" name="RepresentanteLegal" id="txtNomCom" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-sm-4">
@@ -122,7 +129,7 @@
                                             <div class="row clearfix">
                                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                                     <div class="form-group">
-                                                        Correo electrónico:
+                                                        E-mail:
                                                         <input type="text" name="CorreoElectronico" id="txtEmail" class="form-control" />
                                                     </div>
                                                 </div>
@@ -166,7 +173,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="header">
-                            <h2><strong>Condicion del crédito y descuento</strong></h2>
+                            <h2><strong>Condición del crédito y descuento</strong></h2>
                         </div>
                         <div class="body">
                             <div class="row clearfix">
@@ -185,7 +192,7 @@
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="form-group">
                                         <div>
-                                            Dias <input name="limiteCreditoDias" type="number" />
+                                            Días <input name="limiteCreditoDias" type="number" />
                                         </div>
                                     </div>
                                 </div>
@@ -207,7 +214,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="card">
                         <div class="header">
-                            <h2><strong>Portal de facturación</strong></h2>
+                            <h2><strong>Portal de Facturación</strong></h2>
                         </div>
                         <div class="body">
                             <div class="row clearfix">
@@ -216,7 +223,7 @@
                                         <div class="col-lg-8 col-md-8 col-sm-8">
                                             @Html.CheckBoxFor(m => m.AccesoPortal)
                                             <label for="checkAcceso">
-                                                Acceso al portal de facturación
+                                                Acceso al portal de Facturación
                                             </label>
                                         </div>
                                     </div>
@@ -348,12 +355,12 @@
                 <div class="row clearfix">
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <div class="form-group">
-                            <input type="submit" value="Regresar" id="btnRegresarIndexNC" formaction=@Url.Action("Index") class="btn btn-raised btn-primary float-left" />
+                            <input type="submit" value="Regresar" id="btnRegresarIndexNC" formaction=@Url.Action("Index") class="btn btn-raised btn-primary btn-round float-left" />
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-7">
                         <div class="form-group">
-                            <input type="submit" value="Crear" formaction="GuardarCliente" formmethod="post" class="btn btn-raised btn-primary float-right" />
+                            <input type="submit" value="Crear" formaction="GuardarCliente" formmethod="post" class="btn btn-raised btn-primary btn-round float-right" />
 
                         </div>
                     </div>

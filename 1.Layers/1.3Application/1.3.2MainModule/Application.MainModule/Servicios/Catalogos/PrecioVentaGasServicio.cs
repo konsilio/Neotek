@@ -66,5 +66,10 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
+
+        public static int ObtenerUltimoIdPrecioVenta()
+        {
+            return new PrecioVentaDataAccess().BuscarUltimoRegistro().IdPrecioVenta;
+        }
     }
 }
