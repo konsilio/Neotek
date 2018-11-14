@@ -276,7 +276,7 @@ public interface RestClient {
                                                @Header("Content-type") String contentType
     );
     @GET(Constantes.GET_CATALOGO_TRASPASO)
-    Call<DatosTraspasoDTO> getDatosTraspaso(@Path(value = "esTraspaso") boolean esTraspaso,
+    Call<DatosTraspasoDTO> getDatosTraspaso(/*@Path(value = "esTraspaso") boolean esTraspaso,*/
                                             @Path(value = "esPipa")boolean esPipa,
                                             @Header("Authorization") String token,
                                             @Header("Content-type") String contentType

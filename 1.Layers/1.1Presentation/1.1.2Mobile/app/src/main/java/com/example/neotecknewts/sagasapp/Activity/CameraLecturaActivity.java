@@ -136,6 +136,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
                     " - "+lecturaDTO.getNombreEstacionCarburacion());
             NombreImagen = String.valueOf(lecturaDTO.getIdEstacionCarburacion())+"|"+
                     String.valueOf(lecturaDTO.getNombreTipoMedidor())+"|"+"Final";
+            setTitle(R.string.toma_de_lectura);
         }else if (EsLecturaInicialPipa){
             String pipa_nombre = lecturaPipaDTO.getNombrePipa().isEmpty()?
                     " ":" - "+lecturaPipaDTO.getNombrePipa();
@@ -143,6 +144,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
                     pipa_nombre);
             NombreImagen = String.valueOf(lecturaPipaDTO.getIdPipa())+"|"+
                     String.valueOf(lecturaPipaDTO.getTipoMedidor())+"|"+"Inicial";
+            setTitle(R.string.toma_de_lectura);
         }else if (EsLecturaFinalPipa){
             String pipa_nombre = lecturaPipaDTO.getNombrePipa().isEmpty()?
                     " ":" - "+lecturaPipaDTO.getNombrePipa();
@@ -150,6 +152,8 @@ public class CameraLecturaActivity extends AppCompatActivity {
                     pipa_nombre);
             NombreImagen = String.valueOf(lecturaPipaDTO.getIdPipa())+"|"+
                     String.valueOf(lecturaPipaDTO.getTipoMedidor())+"|"+"Final";
+            setTitle(R.string.toma_de_lectura);
+
         }
         if(EsRecargaEstacionInicial || EsRecargaEstacionFinal){
             if(EsPrimeraLectura){
@@ -163,6 +167,8 @@ public class CameraLecturaActivity extends AppCompatActivity {
                 NombreImagen = String.valueOf(recargaDTO.getIdCAlmacenGasSalida())+"|"+
                         String.valueOf(recargaDTO.getIdTipoMedidorSalida())+"|"+"Inicial";
             }
+            setTitle(R.string.recarga);
+
         }
         if(EsAutoconsumoEstacionInicial || EsAutoconsumoEstacionFinal){
             TVCameraLecturaActivityFotoEstacion.setText(
@@ -207,6 +213,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
             setTitle(getString(R.string.Autoconsumo));
         }
         if(EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
+            setTitle("Traspaso");
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
                             +" - " +getString(R.string.Estacion)
@@ -219,6 +226,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
                                     String.valueOf(traspasoDTO.getNombreMedidor())+"|"+"Final";
         }
         if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
+            setTitle("Traspaso");
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
                             +" - " +getString(R.string.Pipa)
