@@ -166,13 +166,13 @@
                                                             <td>@prov.Telefono1</td>
                                                             <td>@prov.Email1</td>
                                                             <td>
-                                                                <a href="@Url.Action("EditarProveedor", "Producto" , new { Id=prov.IdProveedor })">
+                                                                <a href="@Url.Action("EditarProveedor", "Producto" , new { Id=prov.IdProveedor })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                     <i class="material-icons">edit</i>
-                                                                    <span class="icon-name"></span>
+                                                                    <span>Editar proveedor</span>
                                                                 </a>
-                                                                <a href="@Url.Action("EliminarProveedor", "Producto" , new { Id=prov.IdProveedor})">
+                                                                <a href="@Url.Action("EliminarProveedor", "Producto" , new { Id=prov.IdProveedor})" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                     <i class="material-icons">delete</i>
-                                                                    <span class="icon-name"></span>
+                                                                    <span>Eliminar proveedor</span>
                                                                 </a>
                                                             </td>
                                                         </tr>

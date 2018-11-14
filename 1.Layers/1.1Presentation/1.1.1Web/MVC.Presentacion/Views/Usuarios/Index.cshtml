@@ -148,15 +148,15 @@
                                                             <i class="material-icons">edit</i>
                                                             <span>Editar usuario</span>
                                                         </a>
-                                                        <a ID="lbEdit" href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <a href="@Url.Action("ActualizaCredenciales", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="zmdi zmdi-settings"></i>
                                                             <span>Actualiza credenciales</span>
                                                         </a>
-                                                        <a ID="lbEdit" href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <a href="@Url.Action("ActualizaRoles", "Usuarios", new { id = item.IdUsuario })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">dashboard</i>
                                                             <span>Actualiza roles</span>
                                                         </a>
-                                                        <a ID="lbBorrar" href="@Url.Action("BorrarUsuario", "Usuarios", new {  id=item.IdUsuario } )" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
+                                                        <a href="@Url.Action("BorrarUsuario", "Usuarios", new {  id=item.IdUsuario } )" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">delete</i>
                                                             <span>Eliminar usuario</span>
                                                         </a>

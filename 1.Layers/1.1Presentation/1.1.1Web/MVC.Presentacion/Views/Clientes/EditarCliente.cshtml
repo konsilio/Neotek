@@ -30,7 +30,7 @@
                         <div class="row clearfix">
                             <div class="col-sm-3">
                                 <b>Gasera</b>
-                                <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true" onchange="">
+                                <select id="ddlEmpresas" name="IdEmpresa" class="form-control selectpicker z-index show-tick" data-live-search="true">
                                     @foreach (var lst in ViewBag.Empresas)
                                     {
                                         <option value="@lst.IdEmpresa">@lst.NombreComercial</option>

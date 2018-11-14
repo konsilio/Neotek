@@ -6,13 +6,14 @@
     <td>@Model.Descripcion </ td >
     <td>@Model.TipoCentroCosto </ td >
     <td>
-        <a href="@Url.Action("ActivarEditar", "CentroCosto", new { Id = Model.IdCentroCosto })">
+        <a href="@Url.Action("ActivarEditar", "CentroCosto", new { Id = Model.IdCentroCosto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">edit</i>
-            <span class="icon-name"></span>
+            <span>Activar editar</span>
         </a>
-        <a href="@Url.Action("Eliminar", "CentroCosto", new { Id = Model.IdCentroCosto})">
+        <a href="@Url.Action("Eliminar", "CentroCosto", new { Id = Model.IdCentroCosto})" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">delete</i>
-            <span class="icon-name"></span>        </a>
+            <span>Eliminar centro costo</span>
+        </a>
 
     </td>
 </tr>

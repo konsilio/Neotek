@@ -359,13 +359,13 @@
                                                             <td>No</td>}
 
                                                         <td>
-                                                            <a href="@Url.Action("EditarProducto", "Producto" , new { Id=prod.IdProducto })">
+                                                            <a href="@Url.Action("EditarProducto", "Producto" , new { Id=prod.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">edit</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Editar  producto</span>
                                                             </a>
-                                                            <a href="@Url.Action("EliminarProducto", "Producto" , new { Id=prod.IdProducto })">
+                                                            <a href="@Url.Action("EliminarProducto", "Producto" , new { Id=prod.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">delete</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Eliminar producto</span>
                                                             </a>
                                                         </td>
                                                     </tr>
