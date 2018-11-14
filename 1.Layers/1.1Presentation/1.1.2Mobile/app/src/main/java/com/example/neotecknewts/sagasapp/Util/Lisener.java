@@ -217,7 +217,7 @@ public class Lisener{
                     )
                             > 0;
                     String tipo = cursor.getString(
-                            cursor.getColumnIndex("Tipo"));
+                            cursor.getColumnIndex("EsTipo"));
                     Cursor imagenes = sagasSql.GetImagenesRecarga(recargaDTO.getClaveOperacion());
                     imagenes.moveToFirst();
                     while (!imagenes.isAfterLast()){

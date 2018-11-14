@@ -236,6 +236,9 @@
     <string name="selecciona_el_almacen">Selecciona el almacen</string>
     <string name="selecciona_el_tipo_de_medidor_de_la_pipa">Selecciona el tipo de medidor de la pipa:</string>
     <string name="error_conexion_lista_login">obtener las empresas por favor intente abriendo nuevamente la apliación</string>
+    <string name="calibracion_cilindros">Calibración cilindros</string>
+    <string name="calibraci_n_cilindro">Calibración-Cilindro</string>
+    <string name="registra_el_porcentajede_calibraci_n_configurada">Registra el porcentajede calibración configurada</string>
     <!--<string name="selecciona_la_unidad_de_entrada">Selecciona la unidad de entrada:</string>-->
     <string-array name="header_tabla_anticipo">
         <item># Tiket</item>

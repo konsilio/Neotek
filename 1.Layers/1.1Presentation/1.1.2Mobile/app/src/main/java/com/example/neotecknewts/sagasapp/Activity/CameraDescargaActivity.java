@@ -238,6 +238,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                         false);
                 EsRecargaEstacionFinal = extras.getBoolean("EsRecargaEstacionFinal",
                         false);
+                setTitle(R.string.recarga);
             }else if(extras.getBoolean("EsRecargaPipaFinal")){
                 recargaDTO = (RecargaDTO) extras.getSerializable("recargaDTO");
                 cantidadFotos = recargaDTO.getCantidadFotosEntrada();
@@ -251,6 +252,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 EsRecargaEstacionInicial = false;
                 EsRecargaEstacionFinal = false;
                 textViewTitulo.setText("Fotografia "+ recargaDTO.getNombreMedidorEntrada());
+                setTitle(R.string.recarga);
             }else if(extras.getBoolean("EsAutoconsumoPipaInicial")||
                     extras.getBoolean("EsAutoconsumoPipaFinal")){
                 EsRecargaPipaFinal = false;
@@ -267,6 +269,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 autoconsumoDTO = (AutoconsumoDTO) extras.getSerializable("autoconsumoDTO");
                 textViewTitulo.setText("Fotografia del "+autoconsumoDTO.getNombreTipoMedidor());
                 cantidadFotos = autoconsumoDTO.getCantidadFotos();
+                setTitle(R.string.Autoconsumo);
             }else if(extras.getBoolean("EsTraspasoEstacionInicial",false)||
                     extras.getBoolean("EsTraspasoEstacionFinal",false)){
                 EsRecargaPipaFinal = false;
@@ -286,6 +289,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
                 traspasoDTO = (TraspasoDTO) extras.getSerializable("traspasoDTO");
                 textViewTitulo.setText("Fotografia del "+traspasoDTO.getNombreMedidor());
                 cantidadFotos = traspasoDTO.getCantidadDeFotos();
+                setTitle(R.string.Traspaso);
             }else if(extras.getBoolean("EsCalibracionEstacionInicial",false)||
                     extras.getBoolean("EsCalibracionEstacionFinal",false)){
                 EsRecargaPipaFinal = false;

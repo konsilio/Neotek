@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ public class CamionetasAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHo
            return  new CamionetasHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position){
         ((CamionetasHolder) viewHolder).ETConfiguracionCamionetasCantidad.setText(

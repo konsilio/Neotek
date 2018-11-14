@@ -34,59 +34,74 @@
         android:supportsRtl="true"
         android:theme="@style/SagasTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".Activity.SplashActivity"
-            android:theme="@style/SagasTheme"
+        <activity
+            android:name=".Activity.SplashActivity"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:label="@string/app_name">
+            android:theme="@style/SagasTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SagasTheme">
-
-        </activity>
+            android:theme="@style/SagasTheme"></activity>
         <activity
             android:name=".Activity.MenuActivity"
             android:label="@string/activity_menu"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.IniciarDescargaActivity"
             android:label="@string/title_iniciar_descarga"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.FinalizarDescargaActivity"
             android:label="@string/title_finalizar_descarga"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.CapturaPorcentajeActivity"
             android:label="@string/activity_capturar_procentaje"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.RegistrarPapeletaActivity"
             android:label="@string/title_registro_papeleta"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.CameraPapeletaActivity"
             android:label="@string/title_registro_papeleta"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.VistaOrdenCompraActivity"
             android:label="@string/title_orden_compra"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.CameraDescargaActivity"
             android:label="@string/title_proceso_descarga"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.SubirImagenesActivity"
             android:label="@string/title_proceso_descarga"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
 
         <!--
@@ -124,106 +139,158 @@
         <activity
             android:name=".Activity.LecturaDatosActivity"
             android:label="@string/toma_de_lectura"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.LecturaP5000Activity"
             android:label="@string/toma_de_lectura"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.CameraLecturaActivity"
             android:label="@string/toma_de_lectura"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.LecturaPipaActivity"
             android:label="@string/Pipa"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.LecturaAlmacenActivity"
             android:label="@string/Almacen"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.LecturaCamionetaActivity"
             android:label="@string/Camioneta"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.ConfiguracionCamionetaActivity"
             android:label="@string/Camioneta"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.EnviarDartosActivity"
             android:label="@string/Camioneta"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.ReporteActivity"
             android:label="@string/Reporte"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.VerReporteActivity"
             android:label="@string/Reporte"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.RecargaCamionetaActivity"
             android:label="@string/Recarga_camioneta"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.RecargaEstacionCarburacionActivity"
             android:label="@string/Recarga_de_estacion"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.RecargaPipaActivity"
             android:label="@string/Recarga_pipa"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.AutoconsumoEstacionActivity"
             android:label="@string/Autoconsumo_estacion"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.AutoconsumoInventarioActivity"
             android:label="@string/Autoconsumo_inventario"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.AutoconsumoPipaActivity"
             android:label="@string/Autoconsumo"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.TraspasoEstacionActivity"
             android:label="@string/Traspaso"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.TraspasoPipaActivity"
             android:label="@string/Traspaso"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.CalibracionEstacionActivity"
             android:label="@string/Calibracion"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.CalibracionPipaActivity"
             android:label="@string/Calibracion"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.PorcentajeCalibracionActivity"
             android:label="@string/Calibracion"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.AnticipoEstacionCarburacionActivity"
             android:label="@string/Anticipo"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.AnticipoTablaActivity"
             android:label="@string/Anticipo"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.PuntoVentaSolicitarActivity"
             android:label="@string/Punto_de_venta"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.RegistroClienteActivity"
             android:label="@string/Punto_de_venta"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.BuscarClienteActivity"
             android:label="@string/Punto_de_venta"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:theme="@style/AppEnter" />
         <activity
             android:name=".Activity.VentaGasActivity"
@@ -249,6 +316,12 @@
             android:label="@string/Punto_de_venta"
             android:screenOrientation="portrait"
             android:theme="@style/AppEnter" />
+        <activity android:name=".Activity.PorcentajeCalibracionCilindroActivity"
+            android:label="@string/calibracion_cilindros"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
+            android:theme="@style/AppEnter"
+            />
     </application>
 
 </manifest>

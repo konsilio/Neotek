@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Activity.RecargaCamionetaView;
 import com.example.neotecknewts.sagasapp.Interactor.RecargaCamionetaInteractorImpl;
+import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 
 public class RecargaCamionetaPresenterImpl implements RecargaCamionetaPresenter {
@@ -21,7 +22,7 @@ public class RecargaCamionetaPresenterImpl implements RecargaCamionetaPresenter 
     }
 
     @Override
-    public void onSuccessCamionetas(DatosTomaLecturaDto data) {
+    public void onSuccessCamionetas(DatosRecargaDto data) {
         recargaCamionetaView.hideProgress();
         recargaCamionetaView.onSuccessCamionetas(data);
     }
