@@ -11,6 +11,7 @@ import com.example.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosClientesDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosEmpresaConfiguracionDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosPuntoVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosReporteDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTipoPersonaDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
@@ -244,11 +245,11 @@ public interface RestClient {
     Call<DatosReporteDTO> getUnidades(@Header("Authorization") String token,
                                       @Header("Content-Type") String contentType);
     @GET(Constantes.GET_CATALOGO_RECARGAS)
-    Call<Object> getCatalogsRecarga(
+    Call<DatosRecargaDto> getCatalogsRecarga(
             @Path(value = "esEstacion", encoded=true) boolean esEstacion,
             @Path(value = "esPipa", encoded=true)boolean esPipa,
             @Path(value = "esCamioneta", encoded=true)boolean esCamioneta,
-            @Path(value = "esFinalizar", encoded=true)boolean esFinalizar,
+           /* @Path(value = "esFinalizar", encoded=true)boolean esFinalizar,*/
             @Header("Authorization")String token,
             @Header("Content-Type") String contentType
     );
