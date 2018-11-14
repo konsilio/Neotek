@@ -266,7 +266,7 @@ namespace MVC.Presentacion.App_Code
             return agente._RespuestaDTO;
         }
 
-        public static List<UsuariosModel> FiltrarBusquedaUsuario(UsuariosModel us, string token)
+        public static List<UsuariosModel> FiltrarBusquedaUsuario(UsuarioDTO us, string token)
         {
             var agente = new AgenteServicio();
             agente.FiltrarUsuarios(us.IdEmpresa, us.IdUsuario, us.Email1, token);
