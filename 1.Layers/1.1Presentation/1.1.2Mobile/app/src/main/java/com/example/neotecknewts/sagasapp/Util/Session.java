@@ -145,8 +145,8 @@ public class Session {
 
     public boolean isExpired(){
         Date fecha_session = new Date(pref.getString(KEY_TIME_SESSION,Calendar.getInstance().getTime().toString()));
-        int diferencia=(int) ((new Date().getTime()-fecha_session.getTime())/1000);
-        boolean paso = (diferencia<=(23*3600000));
-        return paso;
+        int dias=(int) ((new Date().getTime()-fecha_session.getTime())/86400000);
+        Log.w("Han pasado",dias+" Dias");
+        return dias<=0;
     }
 }

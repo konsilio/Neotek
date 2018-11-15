@@ -65,12 +65,47 @@ public class TraspasoPipaActivity extends AppCompatActivity implements TraspasoP
         STraspasoPipaActivityPipaSalida.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                traspasoDTO.setIdCAlmacenGasSalida(1);
+                if (datosTraspasoDTO != null) {
+                    if(datosTraspasoDTO.getPipas().size()>0) {
+                        for (int x =0;x<datosTraspasoDTO.getPipas().size();x++) {
+                            if(datosTraspasoDTO.getPipas().get(x).getNombreAlmacen().equals(
+                                    parent.getItemAtPosition(position).toString()
+                            )) {
+                                traspasoDTO.setIdCAlmacenGasSalida(
+                                        datosTraspasoDTO.getPipas().get(x).getIdAlmacenGas()
+                                );
+                                traspasoDTO.setPorcentajeSalida(
+                                        datosTraspasoDTO.getPipas().get(x).getPorcentajeMedidor()
+                                );
+                                traspasoDTO.setP5000Salida(
+                                        datosTraspasoDTO.getPipas().get(x).getCantidadP5000()
+                                );
+                                traspasoDTO.setP5000SalidaInicial(
+                                        datosTraspasoDTO.getPipas().get(x).getCantidadP5000()
+                                );
+                                traspasoDTO.setIdTipoMedidorSalida(
+                                        datosTraspasoDTO.getPipas().get(x).getIdTipoMedidor()
+                                );
+                                traspasoDTO.setPorcentajeInicial(
+                                        datosTraspasoDTO.getPipas().get(x).getIdTipoMedidor()
+                                );
+                                traspasoDTO.setNombreEstacionTraspaso(
+                                        datosTraspasoDTO.getPipas().get(x).getNombreAlmacen()
+                                );
+                            }
+                        }
+                    }
+                }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 traspasoDTO.setIdCAlmacenGasSalida(0);
+                traspasoDTO.setPorcentajeSalida(0);
+                traspasoDTO.setP5000Salida(0);
+                traspasoDTO.setP5000SalidaInicial(0);
+                traspasoDTO.setIdTipoMedidorSalida(0);
+                traspasoDTO.setPorcentajeInicial(0);
+                traspasoDTO.setNombreEstacionTraspaso("");
 
             }
         });
@@ -78,12 +113,45 @@ public class TraspasoPipaActivity extends AppCompatActivity implements TraspasoP
         STraspasoPipaActivityPipaEntrada.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                traspasoDTO.setIdCAlmacenGasEntrada(1);
+                if (datosTraspasoDTO!=null) {
+                    if(datosTraspasoDTO.getPipas().size()>0) {
+                        for (int x=0;x<datosTraspasoDTO.getPipas().size();x++) {
+                            if (datosTraspasoDTO.getPipas().get(x).getNombreAlmacen().equals(
+                                    parent.getItemAtPosition(position).toString()
+                            )) {
+                                traspasoDTO.setIdCAlmacenGasEntrada(
+                                        datosTraspasoDTO.getPipas().get(x).getIdAlmacenGas()
+                                );
+                                traspasoDTO.setP5000Entrada(
+                                        datosTraspasoDTO.getPipas().get(x).getCantidadP5000()
+                                );
+                                traspasoDTO.setP5000EntradaInicial(
+                                        datosTraspasoDTO.getPipas().get(x).getCantidadP5000()
+                                );
+                                traspasoDTO.setNombreEstacionEntrada(
+                                        datosTraspasoDTO.getPipas().get(x).getNombreAlmacen()
+                                );
+                                traspasoDTO.setIdTipoMedidorSalida(
+                                        datosTraspasoDTO.getPipas().get(x).getIdTipoMedidor()
+                                );
+                                traspasoDTO.setNombreMedidor(
+                                        datosTraspasoDTO.getPipas().get(x).getMedidor().getNombreTipoMedidor()
+                                );
+                                traspasoDTO.setCantidadDeFotos(
+                                        datosTraspasoDTO.getPipas().get(x).getMedidor().getCantidadFotografias()
+                                );
+                            }
+                        }
+                    }
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 traspasoDTO.setIdCAlmacenGasEntrada(0);
+                traspasoDTO.setIdTipoMedidorSalida(0);
+                traspasoDTO.setNombreMedidor("");
+                traspasoDTO.setCantidadDeFotos(0);
             }
         });
         lista_pipa_salida = new String[]{"Pipa 1","Pipa 2"};
@@ -144,6 +212,36 @@ public class TraspasoPipaActivity extends AppCompatActivity implements TraspasoP
     @Override
     public void onSuccessLista(DatosTraspasoDTO dto) {
         datosTraspasoDTO = dto;
+        int predeterminada = 0;
+        if(datosTraspasoDTO!=null){
+            if(!datosTraspasoDTO.getPipas().isEmpty()){
+                lista_pipa_entrada= new String[datosTraspasoDTO.getPipas().size()];
+                for (int x =0; x<datosTraspasoDTO.getPipas().size();x++){
+                    lista_pipa_entrada[x]=datosTraspasoDTO.getPipas().get(x).getNombreAlmacen();
+                    if(datosTraspasoDTO.getPredeterminada()==datosTraspasoDTO.getPipas().get(x)
+                            .getIdAlmacenGas()){
+                        predeterminada = x;
+                    }
+                }
+                STraspasoPipaActivityPipaEntrada.setAdapter(new ArrayAdapter<>(
+                        this,
+                        R.layout.custom_spinner,
+                        lista_pipa_entrada
+                ));
+
+                lista_pipa_salida = new String[datosTraspasoDTO.getPipas().size()];
+                for (int x =0; x<datosTraspasoDTO.getPipas().size();x++){
+                    lista_pipa_salida[x]=datosTraspasoDTO.getPipas().get(x).getNombreAlmacen();
+                }
+                STraspasoPipaActivityPipaSalida.setAdapter(new ArrayAdapter<>(
+                        this,
+                        R.layout.custom_spinner,
+                        lista_pipa_salida
+                ));
+                //if(predeterminada>0)
+                STraspasoPipaActivityPipaEntrada.setSelection(predeterminada);
+            }
+        }
     }
 
     @Override
