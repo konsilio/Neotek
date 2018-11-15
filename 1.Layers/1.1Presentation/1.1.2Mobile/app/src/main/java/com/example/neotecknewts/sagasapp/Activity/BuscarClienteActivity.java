@@ -72,7 +72,13 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
         presenter = new BuscarClientePresenterImpl(this);
         session = new Session(this);
         presenter.getClientes(criterio,session.getToken());
-        ClientesAdapter adapter = new ClientesAdapter(list);
+        ClientesAdapter adapter = new ClientesAdapter(
+                list,
+                EsVentaCarburacion,
+                EsVentaCamioneta,
+                EsVentaPipa,
+                ventaDTO
+        );
         RVBuscarClienteActivityClientes.setAdapter(adapter);
     }
 
@@ -95,9 +101,15 @@ public class BuscarClienteActivity extends AppCompatActivity implements BuscarCl
 
     @Override
     public void onSuccessList(DatosClientesDTO dtos) {
-        /*if(dtos!=null && dtos.size()>0){
-            list = dtos;
-        }*/
+        if(dtos!=null && dtos.getList().size()>0){
+            list = dtos.getList();
+            ClientesAdapter adapter = new ClientesAdapter(list,
+                    EsVentaCarburacion,
+                    EsVentaCamioneta,
+                    EsVentaPipa,
+                    ventaDTO);
+            RVBuscarClienteActivityClientes.setAdapter(adapter);
+        }
     }
 
     @Override

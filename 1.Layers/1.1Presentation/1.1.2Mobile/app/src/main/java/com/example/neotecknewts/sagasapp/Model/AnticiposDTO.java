@@ -27,8 +27,11 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
     @SerializedName("NombreEstacion")
     private String NombreEstacion;
 
-    @SerializedName("IdCAlmacen")
+    @SerializedName("IdCAlmacenGas")
     private int IdCAlmacen;
+
+    @SerializedName("Tiket")
+    private String Tiket;
 
     public int getIdEstacion() {
         return IdEstacion;
@@ -92,5 +95,13 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
 
     public void setIdCAlmacen(int idCAlmacen) {
         IdCAlmacen = idCAlmacen;
+    }
+
+    public String getTiket() {
+        return Tiket;
+    }
+
+    public void setTiket(String tiket) {
+        Tiket = tiket;
     }
 }

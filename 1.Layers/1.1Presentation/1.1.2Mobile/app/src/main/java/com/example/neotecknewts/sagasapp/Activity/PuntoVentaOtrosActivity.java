@@ -223,18 +223,20 @@ public class PuntoVentaOtrosActivity extends AppCompatActivity implements PuntoV
             list_linea = new String[dtos.getLineas().size()+1];
             list_producto = new String[dtos.getProducto().size()+1];
 
+            list_categoria[0] = "Otros";
+            list_linea[0] = "Otros";
+            list_producto[0]= "Otros";
+
             for (int x =0 ;x<dtos.getCategorias().size();x++) {
-                list_categoria[x] = dtos.getCategorias().get(x).getCategoria();
+                list_categoria[x+1] = dtos.getCategorias().get(x).getCategoria();
             }
             for (int x =0 ;x<dtos.getLineas().size();x++) {
-                list_linea[x] = dtos.getLineas().get(x).getLinea();
+                list_linea[x+1] = dtos.getLineas().get(x).getLinea();
             }
             for (int x =0 ;x<dtos.getProducto().size();x++) {
-                list_producto[x] = dtos.getProducto().get(x).getProducto();
+                list_producto[x+1] = dtos.getProducto().get(x).getProducto();
             }
-            list_categoria[dtos.getCategorias().size()+1] = "Otros";
-            list_linea[dtos.getLineas().size()+1] = "Otros";
-            list_producto[dtos.getProducto().size()+1]= "Otros";
+
 
             SPuntoVentaOtrosCategoria.setAdapter(new ArrayAdapter<>(
                     this,

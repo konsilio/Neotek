@@ -164,19 +164,13 @@
                 android:id="@+id/ETPuntoVentaPagarActivityEfectivo"
                 android:layout_width="144dp"
                 android:layout_height="45dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="numberDecimal"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/BtnPuntoVentaPagarActivityConfirmar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/SPuntoVentaActivityCredito"
-                app:layout_constraintVertical_bias="0.314"
+                android:visibility="visible"
                 tools:ignore="LabelFor"
+                tools:layout_editor_absoluteX="456dp"
+                tools:layout_editor_absoluteY="623dp"
                 tools:targetApi="o" />
 
             <Button

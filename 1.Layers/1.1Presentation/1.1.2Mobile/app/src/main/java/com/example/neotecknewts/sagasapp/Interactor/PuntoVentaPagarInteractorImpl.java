@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Interactor;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.RespuestaPuntoVenta;
@@ -12,6 +13,9 @@ import com.example.neotecknewts.sagasapp.Util.Lisener;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,11 +46,14 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat f = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        ventaDTO.setFecha(f.format(new Date(ventaDTO.getFecha())));
         Call<RespuestaPuntoVenta> call = restClient.pagar(
                 ventaDTO,
-                esCamioneta,
+                /*esCamioneta,
                 esEstacion,
-                esPipa,
+                esPipa,*/
                 token,
                 "application/json"
         );

@@ -14,6 +14,7 @@ import com.example.neotecknewts.sagasapp.Util.Tabla;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class VentaGasActivity extends AppCompatActivity implements VentaGasActivityView{
@@ -32,6 +33,7 @@ public class VentaGasActivity extends AppCompatActivity implements VentaGasActiv
             EsVentaCamioneta = extras.getBoolean("EsVentaCamioneta",false);
             EsVentaCarburacion = extras.getBoolean("EsVentaCarburacion",false);
             EsVentaPipa = extras.getBoolean("EsVentaPipa",false);
+            ventaDTO.setFecha(new Date().toString());
         }
 
         BtnVentaGasActivityGasLp = findViewById(R.id.BtnVentaGasActivityGasLp);

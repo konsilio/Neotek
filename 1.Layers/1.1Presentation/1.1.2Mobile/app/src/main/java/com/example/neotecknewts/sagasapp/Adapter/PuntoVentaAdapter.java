@@ -2,18 +2,22 @@ package com.example.neotecknewts.sagasapp.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
 import com.example.neotecknewts.sagasapp.Model.ExistenciasDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.util.List;
 
 public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<ExistenciasDTO> items;
+    private final List<ExistenciasDTO> items;
     private boolean EsVentaCamioneta;
     private Context context;
     public PuntoVentaAdapter(List<ExistenciasDTO>  items,boolean EsVentaCamioneta,Context context){
@@ -35,7 +39,7 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 String.valueOf(this.items.get(position).getExistencias())
         );
         ((ExistenciasHolder)holder).PuntoVentaGasListaActivityTipoGas.setText(
-                this.items.get(position).getNombre()
+                this.items.get(position).getNombre().replace(",0000","Kg.")
         );
         ((ExistenciasHolder) holder).PuntoVentaGasListActivityTituloCantidad.setText(
                 this.EsVentaCamioneta ? this.context.getString(R.string.cantidad):
@@ -48,9 +52,14 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return this.items.size();
     }
 
-    private class ExistenciasHolder extends RecyclerView.ViewHolder {
+    public ExistenciasDTO getCilindro(int position) {
+        return  this.items.get(position);
+    }
+
+    public class ExistenciasHolder extends RecyclerView.ViewHolder {
         TextView PuntoVentaGasListaActivityCantidadGas,PuntoVentaGasListaActivityTipoGas,
                 PuntoVentaGasListActivityTituloCantidad;
+        EditText ETPuntoVentaGasListActivityCantidad;
         ExistenciasHolder(View view) {
             super(view);
             PuntoVentaGasListaActivityCantidadGas = view.findViewById(R.id.
@@ -59,6 +68,8 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     PuntoVentaGasListaActivityTipoGas);
             PuntoVentaGasListActivityTituloCantidad = view.findViewById(R.id.
                     PuntoVentaGasListActivityTituloCantidad);
+            ETPuntoVentaGasListActivityCantidad = view.findViewById(
+                    R.id.ETPuntoVentaGasListActivityCantidad);
         }
     }
 }

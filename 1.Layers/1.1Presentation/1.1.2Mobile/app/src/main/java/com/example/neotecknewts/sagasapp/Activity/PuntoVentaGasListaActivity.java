@@ -6,18 +6,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Adapter.PuntoVentaAdapter;
+import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
 import com.example.neotecknewts.sagasapp.Model.ConceptoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosPuntoVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.ExistenciasDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaGasListaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.PuntoVentaGasListaPresenterImpl;
@@ -31,7 +39,7 @@ import java.util.List;
 
 public class PuntoVentaGasListaActivity extends AppCompatActivity implements PuntoVentaGasListaView{
     RecyclerView RVPuntoVentaGasActivityListaGas;
-    TextView TVPuntoVentaGasListaActivityNombre;
+    //TextView TVPuntoVentaGasListaActivityNombre;
     Button BtnPuntoVetaGasListActivityOpciones,BtnPuntoVentaGasListaActivityGasListaAgregar,
             BtnPuntoVentaGasListActivityPagar;
     TableLayout TLPuntoVentaGasListaActivityConcepto;
@@ -47,6 +55,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
     PuntoVentaGasListaPresenter presenter;
     ProgressDialog progressDialog;
     Session session;
+    List<ExistenciasDTO> data_get;
 
     VentaDTO ventaDTO;
     PuntoVentaAdapter adapter;
@@ -77,7 +86,7 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         BtnPuntoVentaGasListActivityPagar.setVisibility(
                 EsVentaCamioneta? View.VISIBLE:View.GONE);
         RVPuntoVentaGasActivityListaGas = findViewById(R.id.RVPuntoVentaGasActivityListaGas);
-        TVPuntoVentaGasListaActivityNombre = findViewById(R.id.TVPuntoVentaGasListaActivityNombre);
+        //TVPuntoVentaGasListaActivityNombre = findViewById(R.id.TVPuntoVentaGasListaActivityNombre);
         TLPuntoVentaGasListaActivityConcepto = findViewById(R.id.
                 TLPuntoVentaGasListaActivityConcepto);
         SVPuntoVentaGasListActivitiyConcepto = findViewById(R.id.
@@ -95,12 +104,28 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
         });
 
         BtnPuntoVentaGasListaActivityGasListaAgregar.setOnClickListener(v->{
-            ConceptoDTO conceptoDTO = new ConceptoDTO();
-            conceptoDTO.setCantidad(30);
-            conceptoDTO.setConcepto("GAS LP");
-            conceptoDTO.setPUnitario(10.00);
-            conceptoDTO.setDescuento(0.10);
-            actualizarConceptos(conceptoDTO);
+            int size = data_get.size();
+            List<ConceptoDTO> conceptoDTOS = new ArrayList<>();
+            for (int x =0; x<RVPuntoVentaGasActivityListaGas.getChildCount();x++) {
+                View view = RVPuntoVentaGasActivityListaGas.getChildAt(x);
+                LinearLayout linearLayout= view.findViewById(R.id.Layout);
+                CardView card = linearLayout.findViewById(R.id.CVEstacionesCarburacionItem);
+                EditText editText = card.findViewById(R.id.CVEstacionesCarburacionItem).
+                        findViewById(R.id.ETPuntoVentaGasListActivityCantidad);
+                TextView TVTipo = card.findViewById(R.id.PuntoVentaGasListaActivityTipoGas);
+                if(editText.getText().toString().trim().length()>0) {
+                    ConceptoDTO conceptoDTO = new ConceptoDTO();
+                    conceptoDTO.setCantidad(Integer.parseInt(editText.getText().toString()));
+                    conceptoDTO.setConcepto(TVTipo.getText().toString());
+                    conceptoDTO.setPUnitario(data_get.get(x).getPrecioUnitario());
+                    conceptoDTO.setDescuento(data_get.get(x).getDescuento());
+                    conceptoDTOS.add(conceptoDTO);
+                    conceptoDTO.setIdTipoGas(data_get.get(x).getId());
+                }
+            }
+            for (int x=0;x<conceptoDTOS.size();x++){
+                actualizarConceptos(conceptoDTOS.get(x));
+            }
         });
         session = new Session(this);
         BtnPuntoVentaGasListActivityPagar.setOnClickListener(v->{
@@ -235,9 +260,10 @@ public class PuntoVentaGasListaActivity extends AppCompatActivity implements Pun
     }
 
     @Override
-    public void onSuccessListExistencia(DatosPuntoVentaDTO data) {
-        if(data.isExito()){
-            adapter = new PuntoVentaAdapter(data.getList(),EsVentaCamioneta,this);
+    public void onSuccessListExistencia(List<ExistenciasDTO> data) {
+        if(data!=null){
+            data_get = data;
+            adapter = new PuntoVentaAdapter(data,EsVentaCamioneta,this);
             RVPuntoVentaGasActivityListaGas.setAdapter(adapter);
         }else{
            // adapter = new PuntoVentaAdapter(data.getList());
