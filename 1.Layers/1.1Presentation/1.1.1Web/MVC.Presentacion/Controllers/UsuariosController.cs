@@ -48,7 +48,7 @@ namespace MVC.Presentacion.Controllers
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
             ViewBag.Empresas = CatalogoServicio.Empresas(_tok);
-            // ViewBag.IdUser.Count() = 0;
+            //ViewBag.IdUser = CatalogoServicio.ObtenerIdUsuario(0, _tok);
 
             if (TempData["RespuestaDTOError"] != null)
             {
