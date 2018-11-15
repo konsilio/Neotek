@@ -47,8 +47,8 @@ namespace MVC.Presentacion.App_Code
                     string path = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
                     string destinationFolder = ConfigurationManager.AppSettings["GuardarLogoEmpresa"];
                     string destinationFolderSave = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]); //1.0
-                    //string destinationFolderSave = Convertir.PhysicalPathToUrlPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
-
+                     //string destinationFolderSave = Convertir.PhysicalPathToUrlPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
+                    //C:\\Users\\Muhammad shahid\\Documents\\Visual Studio 2013\\Projects\\WebApplication_MVC1\\WebApplication\\misc\\flowers.jpg
                     //Checking file is available to save.  
                     if (UrlLogotipo180px != null)
                     {
@@ -159,12 +159,56 @@ namespace MVC.Presentacion.App_Code
             return agente._listaEmpresas.Where(x => x.EsAdministracionCentral.Equals(false)).ToList();
         }
         //consulta empresa mediante id
-        public static Empresa FiltrarEmpresa(Empresa model, int id, string tkn)
+        public static EmpresaModel FiltrarEmpresa(EmpresaModel model, int id, string tkn)
         {
-            List<EmpresaDTO> newList = Empresas(tkn).Where(x => x.IdEmpresa == id).ToList();
-            if (newList.Count != 0)
-                model.Empresas = newList;
+            EmpresaModel newList = getModel(Empresas(tkn).Where(x => x.IdEmpresa == id).ToList());          
+                model = newList;
             return model;
+        }
+
+        public static EmpresaModel getModel(List<EmpresaDTO> ent)
+        {
+            EmpresaModel nmodel = new EmpresaModel();
+            nmodel.NombreComercial = ent[0].NombreComercial;
+            nmodel.RazonSocial = ent[0].RazonSocial;
+            nmodel.Rfc = ent[0].Rfc;
+            nmodel.Persona1 = ent[0].Persona1;
+            nmodel.Persona2 = ent[0].Persona2;
+            nmodel.Persona3 = ent[0].Persona3;
+            nmodel.Telefono1 = ent[0].Telefono1;
+            nmodel.Telefono2 = ent[0].Telefono2;
+            nmodel.Telefono3 = ent[0].Telefono3;
+            nmodel.Celular1 = ent[0].Celular1;
+            nmodel.Celular2 = ent[0].Celular2;
+            nmodel.Celular3 = ent[0].Celular3;
+            nmodel.Email1 = ent[0].Email1;
+            nmodel.Email2 = ent[0].Email2;
+            nmodel.Email3 = ent[0].Email3;
+            nmodel.SitioWeb1 = ent[0].SitioWeb1;
+            nmodel.SitioWeb2 = ent[0].SitioWeb2;
+            nmodel.SitioWeb3 = ent[0].SitioWeb3;
+            nmodel.IdPais = ent[0].IdPais;
+            nmodel.IdEstadoRep = ent[0].IdEstadoRep;
+            nmodel.EstadoProvincia = ent[0].EstadoProvincia;
+            nmodel.Municipio = ent[0].Municipio;
+            nmodel.CodigoPostal = ent[0].CodigoPostal;
+            nmodel.Colonia = ent[0].Colonia;
+            nmodel.Calle = ent[0].Calle;
+            nmodel.NumExt = ent[0].NumExt;
+            nmodel.NumInt = ent[0].NumInt;
+            nmodel.UrlLogotipo180px = ent[0].UrlLogotipo180px;
+            nmodel.UrlLogotipo500px = ent[0].UrlLogotipo500px;
+            nmodel.UrlLogotipo1000px = ent[0].UrlLogotipo1000px;
+            nmodel.CierreInventario = ent[0].CierreInventario;
+            nmodel.FactorCompraLitroAKilos = ent[0].FactorCompraLitroAKilos;
+            nmodel.FactorFleteGas = ent[0].FactorFleteGas;
+            nmodel.FactorGalonALitros = ent[0].FactorGalonALitros;
+            nmodel.FactorLitrosAKilos = ent[0].FactorLitrosAKilos;
+            nmodel.InventarioCrítico = ent[0].InventarioCrítico;
+            nmodel.InventarioSano = ent[0].InventarioSano;
+            nmodel.MaxRemaGaseraMensual = ent[0].MaxRemaGaseraMensual;
+
+            return nmodel;
         }
         #endregion
 

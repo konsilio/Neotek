@@ -43,25 +43,47 @@ namespace MVC.Presentacion.Controllers
             return View();
         }
         //view
-        public ActionResult Nueva()
+        public ActionResult Nueva(string msj = null)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-            _tok = Session["StringToken"].ToString();           
+            _tok = Session["StringToken"].ToString();
             if (!TokenServicio.ObtenerEsAdministracionCentral(_tok))
-            {             
+            {
                 TempData["RespuestaDTOError"] = CatalogoServicio.SinPermisos();
                 return RedirectToAction("Index");
             }
-            EmpresaModel em = new EmpresaModel();
+
             //Se obtienen los paises         
             ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tok);
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
-            ViewBag.Empresas = null;
 
-            if (TempData["RespuestaDTOError"] != null) ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
-          
-            return View(em);
+            //if (TempData["RespuestaDTOError"] != null) ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+            if (!string.IsNullOrEmpty(msj))
+            {
+                ViewBag.Msj = msj;
+                if (!(bool)TempData["RespuestaDTO"])
+                    ViewBag.Tipo = "alert-danger";
+                else
+                    ViewBag.Tipo = "alert-success";
+                //ViewBag.Mensaje = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
+            }
+            else
+                ViewBag.Tipo = "alert-success";
+            if (TempData["model"] != null)
+            {
+                //ViewBag.Empresas = TempData["model"];                
+                ViewBag.EsEdicion = null;
+                return View((EmpresaModel)TempData["model"]);
+            }
+            if (TempData["modelEditar"] != null)
+            {
+                //ViewBag.Empresas = TempData["model"];                
+                ViewBag.EsEdicion = true;
+                return View((EmpresaModel)TempData["modelEditar"]);
+            }
+
+            return View();
         }
 
         [HttpPost]
@@ -75,14 +97,17 @@ namespace MVC.Presentacion.Controllers
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
-                TempData["RespuestaDTOError"] = respuesta;
                 return RedirectToAction("Index");
             }
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta.MensajesError;
-                return RedirectToAction("Nueva");
+                //TempData["RespuestaDTO"] = respuesta;
+                var ms =  Validar(respuesta);
+                TempData["model"] = Objemp;
+                TempData["modelEditar"] = null;
+                TempData["RespuestaDTO"] = respuesta.Exito;
+                return RedirectToAction("Nueva",  new { Objemp, msj = ms});
             }
         }
 
@@ -91,8 +116,8 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-            Empresa em = new Empresa();
-            ViewBag.Empresas = CatalogoServicio.FiltrarEmpresa(em, id, _tkn).Empresas.ToList();
+            EmpresaModel em = new EmpresaModel();
+            ViewBag.Empresas = CatalogoServicio.FiltrarEmpresa(em, id, _tkn);
 
             if (TempData["RespuestaDTOError"] != null)
             {
@@ -107,13 +132,14 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
-            Empresa em = new Empresa();
-            ViewBag.Empresas = CatalogoServicio.FiltrarEmpresa(em, id, _tkn).Empresas.ToList();
+            EmpresaModel em = new EmpresaModel();
+            TempData["modelEditar"] = CatalogoServicio.FiltrarEmpresa(em, id, _tkn);
             //Se obtienen los paises         
             ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
-            return View("Nueva");
+            //return View("Nueva", TempData["modelEditar"]);
+            return RedirectToAction("Nueva");
         }
 
         public ActionResult BorrarEmpresa(short id)
