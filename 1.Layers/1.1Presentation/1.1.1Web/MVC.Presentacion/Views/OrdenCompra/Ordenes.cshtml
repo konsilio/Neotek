@@ -35,7 +35,7 @@
                             <ul class="breadcrumb padding-0">
                                 <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
                                 <li class="breadcrumb-item">Compras</li>
-                                <li class="breadcrumb-item">Ordern de Compra</li>
+                                <li class="breadcrumb-item">Orden de Compra</li>
                             </ul>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                                                 <td><b>Fecha Requerida</b></td>
                                                 <td><b>Solicitante</b></td>
                                                 <td><b>Estatus</b></td>
-                                                <td><b>Accion</b></td>
+                                                <td><b>Acción</b></td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -82,9 +82,9 @@
                                                     <td>@_req.UsuarioSolicitante</td>
                                                     <td>Generar orden de compra</td>
                                                     <td>
-                                                        <a ID="lblAction" href="@Url.Action("OrdenCompra", "OrdenCompra", new { id = _req.IdRequisicion })">
+                                                        <a href="@Url.Action("OrdenCompra", "OrdenCompra", new { id = _req.IdRequisicion })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">launch</i>
-                                                            <span class="icon-name"></span>
+                                                            <span>Genera orden compra</span>
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -95,7 +95,7 @@
                             </div>
                             <div class="row clearfix text-center">
                                 <div class="col-md-5">
-                                    Pagina @(ViewBag.Requisiciones.PageCount < ViewBag.Requisiciones.PageNumber ? 0 : ViewBag.Requisiciones.PageNumber) de @ViewBag.Requisiciones.PageCount
+                                    Página @(ViewBag.Requisiciones.PageCount < ViewBag.Requisiciones.PageNumber ? 0 : ViewBag.Requisiciones.PageNumber) de @ViewBag.Requisiciones.PageCount
                                 </div>
                                 <div class="col-md-2"></div>
                                 <div class="col-md-5">
@@ -197,7 +197,7 @@
                                                 <td><strong>Proveedor</strong></td>
                                                 <td><strong>Importe</strong></td>
                                                 <td><strong>Estatus</strong></td>
-                                                <td><strong>Accion</strong></td>
+                                                <td><strong>Acción</strong></td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -214,16 +214,16 @@
                                                     <td>
                                                         @if (_oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Espera_autorizacion))
                                                         {
-                                                            <a ID="lbAutOC" href="@Url.Action("OrdenCompraAutorizacion", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
+                                                            <a ID="lbAutOC" href="@Url.Action("OrdenCompraAutorizacion", "OrdenCompra", new { id = _oc.IdOrdenCompra })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">spellcheck</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Autorización orden compra</span>
                                                             </a>
                                                         }
                                                         @if ((_oc.EsGas == false && _oc.EsTransporteGas == false) && _oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.Proceso_compra))
                                                         {
-                                                            <a ID="lbAgregarMercancia" href="@Url.Action("EntradaMercancia", "OrdenCompra", new { idOrden = _oc.IdOrdenCompra })">
+                                                            <a ID="lbAgregarMercancia" href="@Url.Action("EntradaMercancia", "OrdenCompra", new { idOrden = _oc.IdOrdenCompra })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons"> assignment_turned_in</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Agregar mercancía</span>
                                                             </a>
                                                             @*<a ID="lbPDF" href="@Url.Action("", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
                                     <i class="material-icons">picture_as_pdf</i>
@@ -239,23 +239,23 @@
                                                         }
                                                         @if (_oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.SolicitudPago))
                                                         {
-                                                            <a ID="lbAutOC" href="@Url.Action("OrdenCompraPago", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
+                                                            <a ID="lbAutOC" href="@Url.Action("OrdenCompraPago", "OrdenCompra", new { id = _oc.IdOrdenCompra })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">attach_money</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Pago orden compra</span>
                                                             </a>
                                                         }
                                                         @if ((_oc.EsGas == true || _oc.EsTransporteGas == true) && _oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.EnComplementoCompra))
                                                         {
-                                                            <a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraComplementoGas", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
+                                                            <a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraComplementoGas", "OrdenCompra", new { id = _oc.IdOrdenCompra })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">local_gas_station</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Visualizar orden compra</span>
                                                             </a>
                                                         }
                                                         @if ((_oc.EsGas == false && _oc.EsTransporteGas == false) && _oc.IdOrdenCompraEstatus.Equals(OrdenCompraEstatusEnum.EnComplementoCompra))
                                                         {
-                                                            <a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraComplemento", "OrdenCompra", new { id = _oc.IdOrdenCompra })">
+                                                            <a ID="lbVisualizarOC" href="@Url.Action("OrdenCompraComplemento", "OrdenCompra", new { id = _oc.IdOrdenCompra })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">input</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Visualizar orden compra</span>
                                                             </a>
                                                         }
                                                     </td>
@@ -267,7 +267,7 @@
                             </div>
                             <div class="row clearfix text-center">
                                 <div class="col-md-5">
-                                    Pagina @(ViewBag.Ordenes.PageCount < ViewBag.Ordenes.PageNumber ? 0 : ViewBag.Ordenes.PageNumber) de @ViewBag.Ordenes.PageCount
+                                    Página @(ViewBag.Ordenes.PageCount < ViewBag.Ordenes.PageNumber ? 0 : ViewBag.Ordenes.PageNumber) de @ViewBag.Ordenes.PageCount
                                 </div>
                                 <div class="col-md-2"></div>
                                 <div class="col-md-5">

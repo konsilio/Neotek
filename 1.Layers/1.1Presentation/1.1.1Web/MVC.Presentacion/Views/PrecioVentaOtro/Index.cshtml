@@ -339,9 +339,9 @@
                                                                 <td>@item.FechaVencimiento</td>
                                                                 <td>@item.PrecioVentaEstatus</td>
                                                                 <td>
-                                                                    <a ID="lbEdit" href="@Url.Action("EditarPrecioVentaOtro", "PrecioVentaOtro", new { id = item.IdPrecioVenta })">
+                                                                    <a href="@Url.Action("EditarPrecioVentaOtro", "PrecioVentaOtro", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">edit</i>
-                                                                        <span class="icon-name"></span>
+                                                                        <span>Editar precio venta</span>
                                                                     </a>
                                                                 </td>
                                                             </tr>

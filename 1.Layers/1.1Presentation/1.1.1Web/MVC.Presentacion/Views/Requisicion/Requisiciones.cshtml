@@ -156,11 +156,11 @@
                                                 <thead>
                                                     <tr>
                                                         <td><strong>Gasera</strong></td>
-                                                        <td><strong>No. Requisicion</strong></td>
+                                                        <td><strong>No. Requisición</strong></td>
                                                         <td><strong>Fecha Requerida</strong></td>
                                                         <td><strong>Solicitante</strong></td>
                                                         <td><strong>Estatus</strong></td>
-                                                        <td><strong>Accion</strong></td>
+                                                        <td><strong>Acción</strong></td>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="contenido">
@@ -179,9 +179,9 @@
                                                                         <i class="material-icons">picture_as_pdf</i>
                                                                         <span class="icon-name"></span>
                                                                     </a>*@
-                                                                    <a id="lbDgPDF" href="@Url.Action("RequisicionRevision", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })">
+                                                                    <a id="lbDgPDF" href="@Url.Action("RequisicionRevision", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">content_paste</i>
-                                                                        <span class="icon-name"></span>
+                                                                        <span>Requisición revisión</span>
                                                                     </a>
                                                                 }
                                                                 @if (req.IdRequisicionEstatus.Equals(3) || req.IdRequisicionEstatus.Equals(4))
@@ -190,9 +190,9 @@
                                                                         <i class="material-icons">picture_as_pdf</i>
                                                                         <span class="icon-name"></span>
                                                                     </a>*@
-                                                                    <a id="lbAutoriza" href="@Url.Action("RequisicionAutorizacion", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })">
+                                                                    <a id="lbAutoriza" href="@Url.Action("RequisicionAutorizacion", "Requisicion", new { Id = req.IdRequisicion, estatus = req.IdRequisicionEstatus })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">spellcheck</i>
-                                                                        <span class="icon-name"></span>
+                                                                        <span>Requisición autorización</span>
                                                                     </a>
                                                                 }
                                                             </td>
@@ -204,7 +204,7 @@
                                     </div>
                                     <div class="row clearfix text-center">
                                         <div class="col-md-5">
-                                            Pagina @(ViewBag.Requisiciones.PageCount < ViewBag.Requisiciones.PageNumber ? 0 : ViewBag.Requisiciones.PageNumber) de @ViewBag.Requisiciones.PageCount
+                                            Página @(ViewBag.Requisiciones.PageCount < ViewBag.Requisiciones.PageNumber ? 0 : ViewBag.Requisiciones.PageNumber) de @ViewBag.Requisiciones.PageCount
                                         </div>
                                         <div class="col-md-2"></div>
                                         <div class="col-md-5">

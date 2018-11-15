@@ -77,7 +77,7 @@
                         <br />
                         <div class="row clearfix">
                             <div class="col-sm-3">
-                                <b>Tipo persona</b>
+                                <b>Tipo Persona</b>
                                 <select name="IdTipoPersona" id="ddlTipoPersona" class="form-control show-tick" data-live-search="true">
                                     @foreach (var lst in ViewBag.TipoPersona)
                                     {
@@ -154,17 +154,17 @@
                                                         <td>@item.Telefono1</td>
                                                         <td>@item.Email1</td>
                                                         <td>
-                                                            <a ID="lblCrear" href="@Url.Action("EditarCliente", "Clientes", new { id = item.IdCliente })">
+                                                            <a ID="lblCrear" href="@Url.Action("EditarCliente", "Clientes", new { id = item.IdCliente })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">edit</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Editar cliente</span>
                                                             </a>
-                                                            <a ID="lbEdit" href="@Url.Action("EditarLocaciones", "Clientes", new { id = item.IdCliente })">
+                                                            <a ID="lbEdit" href="@Url.Action("EditarLocaciones", "Clientes", new { id = item.IdCliente })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">edit_location</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Editar locaciones</span>
                                                             </a>
-                                                            <a ID="lbBorrar" href="@Url.Action("BorrarClientes", "Clientes", new { id = item.IdCliente })">
+                                                            <a ID="lbBorrar" href="@Url.Action("BorrarClientes", "Clientes", new { id = item.IdCliente })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">delete</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Eliminar cliente</span>
                                                             </a>
                                                         </td>
                                                     </tr>

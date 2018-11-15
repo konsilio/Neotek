@@ -81,7 +81,7 @@ namespace MVC.Presentacion.Controllers
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;
+                TempData["RespuestaDTOError"] = respuesta.MensajesError;
                 return RedirectToAction("Nueva");
             }
         }

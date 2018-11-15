@@ -6,7 +6,23 @@
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/plugins/bootstrap-select/css/bootstrap-select.css" />
 <script src="~/Resources/js/Empresas.js"></script>
-<script src="~/Resources/js/lib/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+  $(function () {
+        $('select').on('change', function () {
+            if ($('#ddlPais').val() !== "1") {
+                $('#ddlEdo').parent().hide();
+                $('#txtEdoP').show();
+            }
+
+            if ($('#ddlPais').find('option:selected').val() == "1" || $('#ddlPais').find('option:selected').val() == "0") {
+                $('#ddlEdo').parent().show();
+                $('#txtEdoP').hide();
+            }
+
+        });
+
+  });
+</script>
 @using (Html.BeginForm((ViewBag.Empresas == null) ? "Crear" : "GuardaEdicionEmpresa", "Empresas", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <section class="content home">
@@ -28,7 +44,7 @@
                             {
                                 <li class="breadcrumb-item">Edición</li>
                             }
-                           
+
                         </ul>
                     </div>
                 </div>
