@@ -52,9 +52,18 @@ namespace Application.MainModule.Servicios
             
             return numReq;
         }
-        //public static string GeneraNumeroReferenciaReporte(string Accion, string origen, DateTime fecha, short idAlmacen )
-        //{
-        //    string numRef = string.Empty;
-        //}
+        public static string GeneraNumeroReferenciaReporte(string Accion, UnidadAlmacenGas almacenGas, DateTime fecha, short idAlmacen)
+        {
+            string numRef = string.Empty;
+            string origen = string.Empty;
+
+            if (almacenGas.IdPipa != null) origen = "P";
+            if (almacenGas.IdCamioneta != null) origen = "C";
+            if (almacenGas.IdEstacionCarburacion != null) origen = "E";
+            if (almacenGas.EsGeneral) origen = "A";            
+
+            numRef = string.Concat(Accion, origen, fecha.Year.ToString(), fecha.Month.ToString(), fecha.Day.ToString(), idAlmacen.ToString());
+            return numRef;
+        }
     }
 }

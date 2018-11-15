@@ -153,7 +153,10 @@ namespace Application.MainModule.Flujos
         #region Roles
         public List<RolDto> AllRoles(short id)
         {
-            return RolServicio.ListaAllRoles(id).ToList();
+            if (TokenServicio.EsSuperUsuario() || TokenServicio.ObtenerEsAdministracionCentral())            
+                return RolServicio.ListaAllRoles(id).ToList();
+            else            
+                return RolServicio.ListaAllRoles(TokenServicio.ObtenerIdEmpresa()).ToList();
         }
 
         public RespuestaDto AltaRoles(RolDto rolDto)

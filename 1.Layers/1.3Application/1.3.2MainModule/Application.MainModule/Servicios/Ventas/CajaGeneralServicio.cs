@@ -147,35 +147,29 @@ namespace Application.MainModule.Servicios.Ventas
                 MensajesError = new List<string>() { mensaje },
             };
         }
-
         public static void ProcesarVentasPuntosDeVenta()
         {
             ProcesarMovimientoVentas();
         }
-
         public static void ProcesarMovimientoVentas()
         {
             List<VentaPuntoDeVenta> ventaspv = ObtenerVentasPuntosVentaNoProc();//obtenerVentasPuntoVentaNoProc no procesadas
-
             if (ventaspv != null && ventaspv.Count > 0)
             {
                 ActualizarTotalesVentas(ventaspv); //se actualizan totales de VentasPuntoVenta
                 CargarAVentasMovimientos(ventaspv);//guardar Ventas (de VentaPuntoDeVenta) a Tabla VentasMovimiento
                 CargarEnAlmacenGasMov(ventaspv);//guardar registro en Almacen gas movimiento 
             }
-
             List<VentaCorteAnticipoEC> CortesAnticipos = ObtenerVentasCorteAnticipoNoProc();//Obtener existencia de anticipos no procesados
             if (CortesAnticipos != null && CortesAnticipos.Count() > 0)
             {
                 CargarAnticiposAMovimientos(CortesAnticipos);//Guardar Anticipos en Tabla VentasMovimiento
             }
-
         }
         public static VentaMovimiento ObtenerVentaMovimiento(int puntoventa, short orden)
         {
             return new CajaGeneralDataAccess().Buscar(puntoventa).Where(x => x.Orden.Equals(orden)).FirstOrDefault();
         }
-
         public static decimal ObtenerMovimientosJE(int jefeEstacion)
         {
             return new CajaGeneralDataAccess().BuscarTodos().Where(x => x.IdOperadorChofer.Equals(jefeEstacion)).OrderByDescending(w => w.Orden).FirstOrDefault().Saldo;
@@ -196,7 +190,6 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().Buscar();
         }
-
         public static void ActualizarTotalesVentas(List<VentaPuntoDeVenta> vm)
         {
             VentaPuntoDeVenta Updt = new VentaPuntoDeVenta();
@@ -268,7 +261,6 @@ namespace Application.MainModule.Servicios.Ventas
                 }
             }
         }
-
         public static void ActualizarSaldos(List<VentaMovimiento> vm, string from, decimal CSaldo)
         {
             VentaMovimiento Updt = new VentaMovimiento();
@@ -312,7 +304,6 @@ namespace Application.MainModule.Servicios.Ventas
             }
 
         }
-
         public static void CargarAnticiposMovimientos(VentaMovimiento entity)
         {
             VentaMovimiento lstFinal = new VentaMovimiento();
@@ -353,7 +344,6 @@ namespace Application.MainModule.Servicios.Ventas
                 ActualizarSaldos(_lMov.ToList(), "PuntosVenta", 0);
             }
         }
-
         public static void CargarMovimientos(VentaPuntoDeVenta movimiento, List<VentaPuntoDeVentaDetalle> detventas, Decimal LinicialF, Decimal Lfinal)
         {
             var almacenGas = new PuntoVentaDataAccess().Buscar(movimiento.IdPuntoVenta).IdCAlmacenGas;
@@ -364,9 +354,7 @@ namespace Application.MainModule.Servicios.Ventas
             AlmacenGasMovimiento apDescDto = CajaGeneralAdapter.FromEntity(unidadSalida, empresa, salidaGasMov, LinicialF, Lfinal);
 
             new AlmacenGasDescargaDataAccess().Insertar(apDescDto);
-
         }
-
         public static void CargarEnAlmacenGasMov(List<VentaPuntoDeVenta> lMov)
         {
             if (lMov != null && lMov.Count > 0)
@@ -420,7 +408,6 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().Buscar();
         }
-
         public static List<VentaPuntoDeVentaDetalle> ObtenerDetallesVentasNoProc(short empresa, short year, byte month, byte dia, short orden)
         {
             return new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, year, month, dia, orden);
@@ -430,7 +417,6 @@ namespace Application.MainModule.Servicios.Ventas
             bool noProcesados = false;
             return new CajaGeneralDataAccess().BuscarAnticiposC().Where(x => x.DatosProcesados.Equals(noProcesados)).OrderByDescending(x => x.FechaAplicacion).ToList();
         }
-
         public static List<RegistrarVentasMovimientosDTO> MergedLst(List<VentaPuntoDeVenta> pv, List<VentaCorteAnticipoEC> vca)
         {
             List<VentaPuntoDeVenta> Ventas = pv.AsEnumerable()
@@ -523,7 +509,6 @@ namespace Application.MainModule.Servicios.Ventas
 
             return lstFinal;
         }
-
         public static List<RegistrarVentasMovimientosDTO> MergeLstAnticipos(List<VentaCorteAnticipoEC> mov)
         {
             List<RegistrarVentasMovimientosDTO> lstFinal = mov.Select(v => new RegistrarVentasMovimientosDTO()
@@ -548,7 +533,6 @@ namespace Application.MainModule.Servicios.Ventas
             }).ToList();
             return lstFinal;
         }
-
         public static AlmacenGasMovimientoDto ToDto(VentaPuntoDeVenta v, List<VentaPuntoDeVentaDetalle> ventasdetalles)
         {
             decimal SalidaLt = 0;
@@ -623,7 +607,6 @@ namespace Application.MainModule.Servicios.Ventas
 
             return c;
         }
-
         public static List<AlmacenGasMovimiento> ObtenerUltimosMovimientosDeDescargasPorUnidadAlmacenGas(short idEmpresa, short idCAlmacenGas, DateTime fecha)
         {
             var ulMovDia = new AlmacenGasDataAccess().BuscarUltimoMovimientoPorUnidadAlamcenGasConTipoEvento(idEmpresa, idCAlmacenGas, TipoEventoEnum.Venta, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day);
@@ -635,7 +618,6 @@ namespace Application.MainModule.Servicios.Ventas
                 ulMovDia, ulMovMes, ulMovAnio
             };
         }
-
         public static TipoEventoConst IdentificarTipoEventoString(byte evento)
         {
             if (evento == 9)
@@ -643,7 +625,6 @@ namespace Application.MainModule.Servicios.Ventas
 
             return TipoEventoConst.Venta;
         }
-
         public static stringMovimiento IdentificarTipoMovimientoString(byte movimiento)
         {
             if (movimiento == 2)

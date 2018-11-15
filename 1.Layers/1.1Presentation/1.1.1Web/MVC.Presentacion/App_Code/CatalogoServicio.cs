@@ -251,11 +251,11 @@ namespace MVC.Presentacion.App_Code
             return agente._lstUserEmp;
         }
 
-        public static List<UsuariosModel> ObtenerIdUsuario(int id, string token)
+        public static UsuariosModel ObtenerIdUsuario(int id, string token)
         {
             var agente = new AgenteServicio();
             agente.BuscarUsuarioId(id, token);
-            return agente._lstUserEmp;
+            return agente._lstUserEmp[0];
         }
 
         public static RespuestaDTO CrearUsuario(UsuarioDTO cc, string tkn)

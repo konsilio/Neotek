@@ -40,8 +40,8 @@
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-lg-12">
-                                    <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser[0].Nombre + " " +ViewBag.IdUser[0].Apellido1 + " " +ViewBag.IdUser[0].Apellido2 )" />
-                                    <input type="text" name="IdUsuario" hidden="hidden" value="@ViewBag.IdUser[0].IdUsuario" readonly="readonly" id="IdUsuario" class="form-control" />
+                                    <input id="Nombre" type="text" name="Nombre" readonly="readonly" class="form-control" value="@((ViewBag.IdUser==null)?"":ViewBag.IdUser.Nombre + " " +ViewBag.IdUser.Apellido1 + " " +ViewBag.IdUser.Apellido2 )" />
+                                    <input type="text" name="IdUsuario" hidden="hidden" value="@ViewBag.IdUser.IdUsuario" readonly="readonly" id="IdUsuario" class="form-control" />
                                 </div>
 
                             </div><br />
@@ -78,21 +78,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var itemUser in @ViewBag.IdUser)
-                                    {
-                                        foreach (var item in @ViewBag.IdUser[0].Roles)
+                                    @*@foreach (var itemUser in @ViewBag.IdUser)
+                                    {*@
+                                        @foreach (var item in @ViewBag.IdUser.Roles)
                                         {
                                             <tr>
                                                 <th>@item.NombreRol</th>
                                                 <td>
-                                                    <a ID="lbBorrar" href="@Url.Action("BorrarRol", "Usuarios", new { id = item.IdRol, idUsr = itemUser.IdUsuario })">
+                                                    <a ID="lbBorrar" href="@Url.Action("BorrarRol", "Usuarios", new { id = item.IdRol, idUsr = ViewBag.IdUsuario })">
                                                         <i class="material-icons">delete</i>
                                                         <span class="icon-name"></span>
                                                     </a>
                                                 </td>
                                             </tr>
                                         }
-                                    }
+                                    @*}*@
                                 </tbody>
                             </table>
                         </div>

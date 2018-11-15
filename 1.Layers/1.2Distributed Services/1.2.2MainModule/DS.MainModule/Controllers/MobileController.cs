@@ -290,7 +290,7 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.corte(dto),Request);
         }
-
+        
         [Route("catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}")]
         public HttpResponseMessage GetVentasCortesAnticipos(short estacion,bool esAnticipos)
         {
@@ -312,8 +312,13 @@ namespace DS.MainModule.Controllers
         [Route("catalogos/venta-gas/otros")]
         public HttpResponseMessage GetOtros()
         {
-             return RespuestaHttp.crearRespuesta(_mobile.catalogoOtros(), Request); 
+            return RespuestaHttp.crearRespuesta(_mobile.catalogoOtros(), Request);
         }
-       
+        [Route("catalogos/venta-gas/catalgocilindros")]
+        public HttpResponseMessage GetCatalogosClilindro()
+        {
+            return RespuestaHttp.crearRespuesta(_mobile.CatalogosGas(), Request);
+        }
+
     }
 }
