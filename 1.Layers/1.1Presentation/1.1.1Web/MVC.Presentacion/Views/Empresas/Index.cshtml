@@ -55,11 +55,9 @@
                             <div class="col-sm-3">
                                 <div>
                                     <strong>Gasera</strong>
-                                </div>                            
-                                <div>
                                     @if (ViewBag.EsAdmin)
                                     {
-                                        <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                        <select id="empresas" name="IdEmpresa" class="form-control  z-index show-tick" data-live-search="true">
                                             @foreach (var lst in ViewBag.Empresas)
                                             {
                                                 <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
