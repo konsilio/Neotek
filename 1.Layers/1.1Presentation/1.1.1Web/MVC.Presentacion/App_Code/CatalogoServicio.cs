@@ -44,14 +44,16 @@ namespace MVC.Presentacion.App_Code
             {
                 try
                 {
+                    string path = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
                     string destinationFolder = ConfigurationManager.AppSettings["GuardarLogoEmpresa"];
-                    string destinationFolderSave = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
+                    string destinationFolderSave = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]); //1.0
+                    //string destinationFolderSave = Convertir.PhysicalPathToUrlPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
 
                     //Checking file is available to save.  
                     if (UrlLogotipo180px != null)
                     {
                         string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo180px.FileName));
-                        string pathSave = Path.Combine(destinationFolderSave, Path.GetFileName(UrlLogotipo180px.FileName));
+                        string pathSave = Path.Combine(path, Path.GetFileName(UrlLogotipo180px.FileName));
                         UrlLogotipo180px.SaveAs(pathSave);
                         Objemp.UrlLogotipo180px = pathBD;
                     }

@@ -177,13 +177,13 @@
                                                         <td>@item.OperadorChofer</td>
                                                     @*  *@
                                                     <td>
-                                                        <a ID="lbEdit" href="@Url.Action("AsignarChofer", "PuntoVenta" , new { idE = item.IdEmpresa,idPV=item.IdPuntoVenta })">
+                                                        <a href="@Url.Action("AsignarChofer", "PuntoVenta" , new { idE = item.IdEmpresa,idPV=item.IdPuntoVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">edit</i>
-                                                            <span class="icon-name"></span>
+                                                            <span>Asignar Chofer</span>
                                                         </a>
-                                                        <a ID="lbBorrar" href="@Url.Action("BorrarPuntoVenta", "PuntoVenta" , new {idE = item.IdEmpresa, id=item.IdPuntoVenta })">
+                                                        <a href="@Url.Action("BorrarPuntoVenta", "PuntoVenta" , new {idE = item.IdEmpresa, id=item.IdPuntoVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">delete</i>
-                                                            <span class="icon-name"></span>
+                                                            <span>Eliminar punto venta</span>
                                                         </a>
                                                     </td>
                                                 </tr>

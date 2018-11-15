@@ -366,13 +366,13 @@
                                                             @if (item.PrecioVentaEstatus == "Programado")
                                                             {
                                                                 <td>
-                                                                    <a ID="lbEdit" href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })">
+                                                                    <a href="@Url.Action("EditarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">edit</i>
-                                                                        <span class="icon-name"></span>
+                                                                        <span>Editar precio venta</span>
                                                                     </a>
-                                                                    <a ID="lbBorrar" href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })">
+                                                                    <a href="@Url.Action("BorrarPrecioVenta", "PrecioVenta", new { id = item.IdPrecioVenta })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">delete</i>
-                                                                        <span class="icon-name"></span>
+                                                                        <span>Eliminar precio venta</span>
                                                                     </a>
                                                                 </td>
                                                             }

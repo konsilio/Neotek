@@ -189,13 +189,13 @@
     }
     
     <td>
-        <a ID="lbEdit" href="@Url.Action("ActualizaNombreRol", "Roles", new { id = Model.IdRol })">
+        <a ID="lbEdit" href="@Url.Action("ActualizaNombreRol", "Roles", new { id = Model.IdRol })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">edit</i>
-            <span class="icon-name"></span>
+            <span>Editar nombre rol</span>
         </a>
-        <a ID="lbBorrar" href="@Url.Action("BorrarRol", "Roles", new { id = Model.IdRol })">
+        <a ID="lbBorrar" href="@Url.Action("BorrarRol", "Roles", new { id = Model.IdRol })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">delete</i>
-            <span class="icon-name"></span>
+            <span>Eliminar rol</span>
         </a>
     </td>
 </tr>

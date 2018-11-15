@@ -175,13 +175,13 @@
                                                         <td>@cat.Descripcion </td>
                                                         <td>@cat.Acronimo</td>
                                                         <td>
-                                                            <a href="@Url.Action("EditarUnidadMedida", "Producto", new { Id = cat.IdUnidadMedida })">
+                                                            <a href="@Url.Action("EditarUnidadMedida", "Producto", new { Id = cat.IdUnidadMedida })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">edit</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Editar unidad medida</span>
                                                             </a>
-                                                            <a href="@Url.Action("EliminarUnidadMedida", "Producto", new { Id = cat.IdUnidadMedida })">
+                                                            <a href="@Url.Action("EliminarUnidadMedida", "Producto", new { Id = cat.IdUnidadMedida })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">delete</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Eliminar unidad medida</span>
                                                             </a>
 
                                                         </td>

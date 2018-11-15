@@ -168,13 +168,13 @@
                                                         <td>@cat.Linea </td>
                                                         <td>@cat.Descripcion </td>
                                                         <td>
-                                                            <a href="@Url.Action("EditarLineaProducto", "Producto", new { Id = cat.IdProductoLinea })">
+                                                            <a href="@Url.Action("EditarLineaProducto", "Producto", new { Id = cat.IdProductoLinea })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">edit</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Editar linea producto</span>
                                                             </a>
-                                                            <a href="@Url.Action("EliminarLineaProducto", "Producto", new { Id = cat.IdProductoLinea })">
+                                                            <a href="@Url.Action("EliminarLineaProducto", "Producto", new { Id = cat.IdProductoLinea })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">delete</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Eliminar linea producto</span>
                                                             </a>
 
                                                         </td>

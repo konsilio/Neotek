@@ -3,10 +3,6 @@
 @{
     ViewBag.Title = "Index";
 }
-<style>
-    .eliminar {
-    }
-</style>
 
 <!-- Bootstrap Select Css -->
 <link rel="stylesheet" href="~/assets/plugins/jquery-datatable/dataTables.bootstrap4.min.css">
@@ -59,17 +55,9 @@
                             <div class="col-sm-3">
                                 <div>
                                     <strong>Gasera</strong>
-                                </div>
-                                @*<select name="IdEmpresa" id="ddlEmpresas" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                        @foreach (var lst in ViewBag.listaEmpresas)
-                                        {
-                                            <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
-                                        }
-                                    </select>*@
-                                <div>
                                     @if (ViewBag.EsAdmin)
                                     {
-                                        <select id="empresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                        <select id="empresas" name="IdEmpresa" class="form-control  z-index show-tick" data-live-search="true">
                                             @foreach (var lst in ViewBag.Empresas)
                                             {
                                                 <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
@@ -132,19 +120,19 @@
                                                     <td>@item.Telefono1</td>
                                                     <td>@item.Email1</td>
                                                     <td>
-                                                        <a ID="lblCrear" href="@Url.Action("EditarEmpresa", "Empresas", new { id = item.IdEmpresa })">
+                                                        <a href="@Url.Action("EditarEmpresa", "Empresas", new { id = item.IdEmpresa })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="material-icons">edit</i>
-                                                            <span class="icon-name"></span>
+                                                            <span>Editar empresa</span>
                                                         </a>
-                                                        <a ID="lbEdit" href="@Url.Action("ActualizaParametros", "Empresas", new { id = item.IdEmpresa })">
+                                                        <a href="@Url.Action("ActualizaParametros", "Empresas", new { id = item.IdEmpresa })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                             <i class="zmdi zmdi-settings"></i>
-                                                            <span class="icon-name"></span>
+                                                            <span>Actualizar parámetros</span>
                                                         </a>
                                                         @if (ViewBag.EsAdmin)
                                                         {
-                                                            <a href="#ModalConfirmacion" data-toggle="modal" data-id="@item.IdEmpresa" id="btnok" class="eliminar" onclick="javascript: AsignarEliminar(@item.IdEmpresa)" data-target="#ModalConfirmacion">
+                                                            <a href="#ModalConfirmacion" data-toggle="modal" data-id="@item.IdEmpresa" id="btnok" class="tip" onclick="javascript: AsignarEliminar(@item.IdEmpresa)" data-target="#ModalConfirmacion" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="material-icons">delete</i>
-                                                                <span class="icon-name"></span>
+                                                                <span>Eliminar empresa</span>
                                                             </a>
 
                                                             @*<a ID="lbBorrar" href="@Url.Action("BorrarEmpresa", "Empresas", new { id = item.IdEmpresa })">
