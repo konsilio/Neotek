@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 public class TraspasoDTO implements Serializable{
-
+    //region Requeridos en la api
     @SerializedName("IdCAlmacenGasSalida")
     private int IdCAlmacenGasSalida;
 
@@ -55,10 +55,26 @@ public class TraspasoDTO implements Serializable{
 
     @SerializedName("FechaAplicacion")
     private String FechaAplicacion;
+    //endregion
+    //region Requeridos en la app
+    @SerializedName("NombreEstacionTraspaso")
+    private String NombreEstacionTraspaso;
 
+    @SerializedName("PorcentajeInicial")
+    private double PorcentajeInicial;
+
+    @SerializedName("P5000SalidaInicial")
+    private int P5000SalidaInicial;
+
+    @SerializedName("NombreEstacionEntrada")
+    private String NombreEstacionEntrada;
+
+    @SerializedName("P5000EntradaInicial")
+    private int P5000EntradaInicial;
+    //endregion
     public TraspasoDTO(){
-        this.Imagenes = new ArrayList<>();
-        this.ImagenesUri = new ArrayList<>();
+        Imagenes = new ArrayList<>();
+        ImagenesUri = new ArrayList<>();
     }
 
     public int getIdCAlmacenGasSalida() {
@@ -163,5 +179,45 @@ public class TraspasoDTO implements Serializable{
 
     public void setFechaAplicacion(String fechaAplicacion) {
         FechaAplicacion = fechaAplicacion;
+    }
+
+    public String getNombreEstacionTraspaso() {
+        return NombreEstacionTraspaso;
+    }
+
+    public void setNombreEstacionTraspaso(String nombreEstacionTraspaso) {
+        NombreEstacionTraspaso = nombreEstacionTraspaso;
+    }
+
+    public double getPorcentajeInicial() {
+        return PorcentajeInicial;
+    }
+
+    public void setPorcentajeInicial(double porcentajeInicial) {
+        PorcentajeInicial = porcentajeInicial;
+    }
+
+    public int getP5000SalidaInicial() {
+        return P5000SalidaInicial;
+    }
+
+    public void setP5000SalidaInicial(int p5000SalidaInicial) {
+        P5000SalidaInicial = p5000SalidaInicial;
+    }
+
+    public String getNombreEstacionEntrada() {
+        return NombreEstacionEntrada;
+    }
+
+    public void setNombreEstacionEntrada(String nombreEstacionEntrada) {
+        NombreEstacionEntrada = nombreEstacionEntrada;
+    }
+
+    public int getP5000EntradaInicial() {
+        return P5000EntradaInicial;
+    }
+
+    public void setP5000EntradaInicial(int p5000EntradaInicial) {
+        P5000EntradaInicial = p5000EntradaInicial;
     }
 }

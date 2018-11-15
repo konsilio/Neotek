@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Date;
 
-public class AnticiposDTO extends CorteDTO implements Serializable {
+public class AnticiposDTO extends RespuestaDTO implements Serializable {
     @SerializedName("IdEstacion")
     private int IdEstacion;
 

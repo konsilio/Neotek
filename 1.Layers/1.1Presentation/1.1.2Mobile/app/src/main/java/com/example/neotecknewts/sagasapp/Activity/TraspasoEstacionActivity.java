@@ -71,12 +71,50 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
                  new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                traspasoDTO.setIdCAlmacenGasSalida(1);
-             }
+                 if (datosTraspasoDTO != null) {
+                     for (int x=0;x<datosTraspasoDTO.getEstaciones().size();x++) {
+                         if(parent.getItemAtPosition(position).toString().equals(
+                                 datosTraspasoDTO.getEstaciones().get(x).getNombreAlmacen()
+                         )) {
+                             traspasoDTO.setIdCAlmacenGasSalida(
+                                     datosTraspasoDTO.getEstaciones().get(x).getIdAlmacenGas()
+                             );
+                             traspasoDTO.setPorcentajeSalida(
+                                     datosTraspasoDTO.getEstaciones().get(x).getPorcentajeMedidor()
+                             );
+                             traspasoDTO.setP5000Salida(
+                                     datosTraspasoDTO.getEstaciones().get(x).getCantidadP5000()
+                             );
+                             traspasoDTO.setP5000SalidaInicial(
+                                     datosTraspasoDTO.getEstaciones().get(x).getCantidadP5000()
+                             );
+                             traspasoDTO.setIdTipoMedidorSalida(
+                                     datosTraspasoDTO.getEstaciones().get(x).getIdTipoMedidor()
+                             );
+                             traspasoDTO.setPorcentajeInicial(
+                                     datosTraspasoDTO.getEstaciones().get(x).getIdTipoMedidor()
+                             );
+                             traspasoDTO.setNombreEstacionTraspaso(
+                                     datosTraspasoDTO.getEstaciones().get(x).getNombreAlmacen()
+                             );
+                             for (int y=0;y<datosTraspasoDTO.getMedidores().size();y++) {
+                                 if(datosTraspasoDTO.getEstaciones().get(x).getIdTipoMedidor() ==
+                                         datosTraspasoDTO.getMedidores().get(y).getIdTipoMedidor()
+                                 ) {
+                                     STraspasoEstacionActivityMedidor.setSelection(y);
+                                 }
+                             }
+                         }
+                     }
 
+                 }
+             }
              @Override
              public void onNothingSelected(AdapterView<?> parent) {
-                traspasoDTO.setIdCAlmacenGasSalida(0);
+                 traspasoDTO.setIdCAlmacenGasSalida(0);
+                 traspasoDTO.setPorcentajeSalida(0);
+                 traspasoDTO.setP5000Entrada(0);
+                 traspasoDTO.setIdTipoMedidorSalida(0);
              }
          });
 
@@ -84,9 +122,23 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
                  new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                traspasoDTO.setIdTipoMedidorSalida(1);
-                traspasoDTO.setNombreMedidor("Magnatel");
-                traspasoDTO.setCantidadDeFotos(1);
+                 if(datosTraspasoDTO!=null) {
+                     for (int x=0;x<datosTraspasoDTO.getMedidores().size();x++) {
+                      if(parent.getItemAtPosition(position).toString().equals(
+                              datosTraspasoDTO.getMedidores().get(x).getNombreTipoMedidor()
+                      )) {
+                          traspasoDTO.setIdTipoMedidorSalida(
+                                  datosTraspasoDTO.getMedidores().get(x).getIdTipoMedidor()
+                          );
+                          traspasoDTO.setNombreMedidor(
+                                  datosTraspasoDTO.getMedidores().get(x).getNombreTipoMedidor()
+                          );
+                          traspasoDTO.setCantidadDeFotos(
+                                  datosTraspasoDTO.getMedidores().get(x).getCantidadFotografias()
+                          );
+                      }
+                     }
+                 }
              }
 
              @Override
@@ -101,12 +153,28 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
                  new AdapterView.OnItemSelectedListener() {
              @Override
              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                traspasoDTO.setIdCAlmacenGasEntrada(1);
+                 if(datosTraspasoDTO!=null) {
+                     for (int x = 0; x < datosTraspasoDTO.getPipas().size(); x++) {
+                         traspasoDTO.setIdCAlmacenGasEntrada(
+                                 datosTraspasoDTO.getPipas().get(x).getIdAlmacenGas()
+                         );
+                         traspasoDTO.setNombreEstacionEntrada(
+                                 datosTraspasoDTO.getPipas().get(x).getNombreAlmacen()
+                         );
+                         traspasoDTO.setP5000EntradaInicial(
+                                 datosTraspasoDTO.getPipas().get(x).getCantidadP5000()
+                         );
+                         traspasoDTO.setP5000Entrada(
+                                 datosTraspasoDTO.getPipas().get(x).getCantidadP5000()
+                         );
+                     }
+                 }
              }
 
              @Override
              public void onNothingSelected(AdapterView<?> parent) {
-                traspasoDTO.setIdCAlmacenGasEntrada(0);
+                 traspasoDTO.setIdCAlmacenGasEntrada(0);
+                 traspasoDTO.setP5000Entrada(0);
              }
          });
 
@@ -138,11 +206,18 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
     @Override
     public void onSuccessList(DatosTraspasoDTO dto) {
         datosTraspasoDTO = dto;
+        DatosTraspasoDTO.EstacionesDTO predeterminada = null;
+        int pos_predeterminda = 0;
         if(datosTraspasoDTO!=null){
             if(datosTraspasoDTO.getEstaciones().size()>0){
                 for (int x=0;x<datosTraspasoDTO.getEstaciones().size();x++){
-                    lista_estacion_salida[0] = datosTraspasoDTO.getEstaciones()
+                    lista_estacion_salida[x] = datosTraspasoDTO.getEstaciones()
                             .get(x).getNombreAlmacen();
+                    if((datosTraspasoDTO.getEstaciones().get(x).getIdAlmacenGas())==
+                            datosTraspasoDTO.getPredeterminada()) {
+                        predeterminada = datosTraspasoDTO.getEstaciones().get(x);
+                        pos_predeterminda = x;
+                    }
                 }
                 STraspasoEstacionActivityEstacionSalida.setAdapter(
                         new ArrayAdapter<>(
@@ -151,6 +226,7 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
                                 lista_estacion_salida
                         )
                 );
+                STraspasoEstacionActivityEstacionSalida.setSelection(pos_predeterminda);
             }
 
             if(datosTraspasoDTO.getMedidores().size()>0){
@@ -165,10 +241,18 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
                                 lista_medidor
                         )
                 );
+                if (predeterminada!=null){
+                    for (int x=0;x<datosTraspasoDTO.getMedidores().size();x++){
+                       if(predeterminada.getIdAlmacenGas()==
+                               datosTraspasoDTO.getMedidores().get(x).getIdTipoMedidor()){
+                           STraspasoEstacionActivityMedidor.setSelection(x);
+                       }
+                    }
+                }
             }
             if(datosTraspasoDTO.getPipas().size()>0){
                 for (int x=0;x<datosTraspasoDTO.getPipas().size();x++){
-                    lista_pipa_entrada[0]= datosTraspasoDTO.getPipas().get(x).getNombreAlmacen();
+                    lista_pipa_entrada[x]= datosTraspasoDTO.getPipas().get(x).getNombreAlmacen();
                 }
                 STraspasoEstacionActivityPipaEntrada.setAdapter(
                         new ArrayAdapter<>(
@@ -201,8 +285,10 @@ public class TraspasoEstacionActivity extends AppCompatActivity implements Trasp
 
     @Override
     public void onHiddeProgress() {
-        if(progressDialog!=null && progressDialog.isShowing())
+        if(progressDialog!=null && progressDialog.isShowing()) {
             progressDialog.hide();
+            progressDialog.dismiss();
+        }
     }
 
     @Override

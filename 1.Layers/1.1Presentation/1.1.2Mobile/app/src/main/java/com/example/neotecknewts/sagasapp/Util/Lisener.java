@@ -557,8 +557,8 @@ public class Lisener{
             RestClient restClient = retrofit.create(RestClient.class);
             Call<RespuestaTraspasoDTO> call = restClient.postTraspaso(
                     dto,
-                    tipo.equals(SAGASSql.TIPO_TRASPASO_ESTACION),
-                    tipo.equals(SAGASSql.TIPO_TRASPASO_PIPA),
+                    /*tipo.equals(SAGASSql.TIPO_TRASPASO_ESTACION),
+                    tipo.equals(SAGASSql.TIPO_TRASPASO_PIPA),*/
                     esFinal,
                     token,
                     "application/json"
