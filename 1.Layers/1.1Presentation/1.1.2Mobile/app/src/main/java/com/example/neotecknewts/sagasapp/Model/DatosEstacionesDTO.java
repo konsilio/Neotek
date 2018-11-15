@@ -9,11 +9,11 @@ public class DatosEstacionesDTO implements Serializable {
     @SerializedName("IdAlmacenGas")
     private int IdCAlmacenGas;
 
-    @SerializedName("NombreCAlmacen")
+    @SerializedName("NombreAlmacen")
     private String NombreCAlmacen;
 
     @SerializedName("Icono")
-    private String Icono;
+    private int Icono;
 
     public int getIdCAlmacenGas() {
         return IdCAlmacenGas;
@@ -31,11 +31,11 @@ public class DatosEstacionesDTO implements Serializable {
         NombreCAlmacen = nombreCAlmacen;
     }
 
-    public String getIcono() {
+    public int getIcono() {
         return Icono;
     }
 
-    public void setIcono(String icono) {
+    public void setIcono(int icono) {
         Icono = icono;
     }
 }

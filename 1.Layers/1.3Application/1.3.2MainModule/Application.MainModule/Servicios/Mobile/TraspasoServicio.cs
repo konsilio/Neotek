@@ -31,6 +31,7 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.FechaRegistro = DateTime.Now;
             adapter.FechaAplicacion = dto.FechaAplicacion;
             adapter.DatosProcesados = false;
+            adapter.Orden = orden;
 
             return AlmacenGasServicio.InsertarTraspaso(adapter);//Queda pendiente ver el metodo que se utilizara para el traspaso
         }
@@ -39,7 +40,7 @@ namespace Application.MainModule.Servicios.Mobile
         {
             var traspasos = AlmacenGasServicio.ObtenerTraspasosNoProcesadas();
             if (traspasos != null)
-                if (traspasos.Count != 0)
+                if (traspasos.Count == 0)
                     return traspasos.FindLast(x => x.Orden>0).Orden+1;
                 else
                     return 1;

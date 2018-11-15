@@ -79,5 +79,18 @@ namespace Application.MainModule.Servicios.Seguridad
                 MensajesError = new List<string>() { mensaje },
             };
         }
+
+
+        public static RespuestaDto BorrarSuperAdmin()
+        {
+            string mensaje = string.Format(Error.P0003, "El SuperAdmin");
+
+            return new RespuestaDto()
+            {
+                Exito = false,
+                Mensaje = mensaje,
+                MensajesError = new List<string>() { mensaje },
+            };
+        }
     }
 }

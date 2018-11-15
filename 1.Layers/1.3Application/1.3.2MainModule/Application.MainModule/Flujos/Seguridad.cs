@@ -102,6 +102,10 @@ namespace Application.MainModule.Flujos
             var user = UsuarioServicio.Obtener(id);
             if (user == null) return UsuarioServicio.NoExiste();
 
+            if (user.EsSuperAdmin)
+                return UsuarioServicio.BorrarSuperAdmin();
+            
+
             user = UsuarioAdapter.FromEntity(user);
             user.Activo = false;
             return UsuarioServicio.Actualizar(user);

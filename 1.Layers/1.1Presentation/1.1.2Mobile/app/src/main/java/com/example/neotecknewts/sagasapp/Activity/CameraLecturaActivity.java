@@ -35,6 +35,7 @@ import com.example.neotecknewts.sagasapp.Util.Utilidades;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.List;
 
 public class CameraLecturaActivity extends AppCompatActivity {
@@ -75,7 +76,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_lectura);
-        Permisos permisos  = new Permisos(CameraLecturaActivity.this);
+        permisos  = new Permisos(CameraLecturaActivity.this);
         permisos.permisos();
 
         Bundle b = getIntent().getExtras();
@@ -214,9 +215,17 @@ public class CameraLecturaActivity extends AppCompatActivity {
         }
         if(EsTraspasoEstacionInicial || EsTraspasoEstacionFinal){
             setTitle("Traspaso");
+            String nombre = "";
+            if(EsPrimeraParteTraspaso) {
+                 nombre = (traspasoDTO.getNombreEstacionTraspaso().isEmpty())?"":
+                        ": "+traspasoDTO.getNombreEstacionTraspaso();
+            }else{
+                 nombre = (traspasoDTO.getNombreEstacionEntrada().isEmpty())?"":
+                        ": "+traspasoDTO.getNombreEstacionEntrada();
+            }
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
-                            +" - " +getString(R.string.Estacion)
+                            +" - " +getString(R.string.Estacion)+nombre
             );
             NombreImagen =
                     (EsTraspasoEstacionInicial) ?
@@ -227,9 +236,17 @@ public class CameraLecturaActivity extends AppCompatActivity {
         }
         if(EsTraspasoPipaInicial || EsTraspasoPipaFinal){
             setTitle("Traspaso");
+            String title = "";
+            if(EsPasoIniciaLPipa) {
+                title = (traspasoDTO.getNombreEstacionTraspaso().isEmpty())?"":
+                        ": "+traspasoDTO.getNombreEstacionTraspaso();
+            }else{
+                title = (traspasoDTO.getNombreEstacionEntrada().isEmpty())?"":
+                        ": "+traspasoDTO.getNombreEstacionEntrada();
+            }
             TVCameraLecturaActivityFotoEstacion.setText(
                     getString(R.string.tomar_foto_estacion)
-                            +" - " +getString(R.string.Pipa)
+                            +" - " +getString(R.string.Pipa)+title
             );
             NombreImagen =
                     (EsTraspasoPipaInicial) ?
@@ -267,9 +284,9 @@ public class CameraLecturaActivity extends AppCompatActivity {
             setTitle(R.string.Calibracion);
         }
         BtnCameraLecturaTomarFoto.setOnClickListener(v -> {
-            List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
+            //List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
 
-            Log.w("Prueba","prueba"+permissions(permissionList));
+            //Log.w("Prueba","prueba"+permissions(permissionList));
 
            // if (permissions(permissionList)) {
 
@@ -514,7 +531,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
     private void openCameraIntent() {
 
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, (NombreImagen!=null)? NombreImagen:"New Picture");
+        values.put(MediaStore.Images.Media.TITLE, (NombreImagen!=null)? NombreImagen:new Date().toString());
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
         imageUri = getContentResolver().insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
@@ -524,7 +541,7 @@ public class CameraLecturaActivity extends AppCompatActivity {
 
 
     }
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    /*@RequiresApi(api = Build.VERSION_CODES.M)*/
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
@@ -549,10 +566,20 @@ public class CameraLecturaActivity extends AppCompatActivity {
 
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
+        //Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        int column_index = 0;
+        String cadena = "";
+        if (cursor != null) {
+            column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+            cursor.moveToFirst();
+            cadena =cursor.getString(column_index);
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return cadena;
     }
 }
