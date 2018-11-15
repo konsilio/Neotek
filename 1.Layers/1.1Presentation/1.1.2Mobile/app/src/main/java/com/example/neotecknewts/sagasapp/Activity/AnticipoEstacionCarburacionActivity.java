@@ -45,13 +45,8 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
         session = new Session(this);
         presenter = new AnticipoEstacionCarburacionPresenterImpl(this);
         presenter.getEstaciones(session.getToken());
-        EstacionesAdatper adatper = new EstacionesAdatper(this,getLista(),
-                EsAnticipo,
-                EsCorte
-        );
         setTitle((EsCorte)?getString(R.string.corte_de_caja):
                 getString(R.string.Anticipo));
-        RVAnticipoEstacionesCarburacionActivityContainer.setAdapter(adatper);
 
     }
 
@@ -59,8 +54,9 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
         //Coloco el Header;
         DatosEstacionesDTO header = new DatosEstacionesDTO();
         header.setNombreCAlmacen(getString(R.string.selecciona_la_estacion_de_carburacion));
-        if(list ==null){
-            list = new ArrayList<>();
+
+        /*if(list ==null){
+
             //Items
             for (int x = 0; x < 20; x++){
                 DatosEstacionesDTO item = new DatosEstacionesDTO();
@@ -68,7 +64,7 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
                 item.setIdCAlmacenGas(x);
                 list.add(item);
             }
-        }
+        }*/
         list.add(0,header);
 
         return  list;
@@ -117,6 +113,15 @@ public class AnticipoEstacionCarburacionActivity extends AppCompatActivity imple
 
         if(data!=null){
             list = data.getEstaciones();
+            DatosEstacionesDTO header = new DatosEstacionesDTO();
+            header.setNombreCAlmacen(getString(R.string.selecciona_la_estacion_de_carburacion));
+            list.add(0,header);
+            EstacionesAdatper adatper = new EstacionesAdatper(this,list,
+                    EsAnticipo,
+                    EsCorte
+            );
+
+            RVAnticipoEstacionesCarburacionActivityContainer.setAdapter(adatper);
         }
     }
 }

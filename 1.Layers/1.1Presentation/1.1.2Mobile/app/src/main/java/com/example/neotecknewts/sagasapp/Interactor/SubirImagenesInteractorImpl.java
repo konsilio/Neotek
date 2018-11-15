@@ -2312,7 +2312,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     @Override
     public void registrarTraspasoEstacion(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO,
                                           boolean esTraspasoEstacionFinal) {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+        /*@SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "TE";
         clave_unica += (esTraspasoEstacionFinal)? "F":"I";
@@ -2321,7 +2321,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         traspasoDTO.setFecha((Date) Calendar.getInstance().getTime());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        traspasoDTO.setFechaAplicacion(sf.format(new Date()));
+        traspasoDTO.setFechaAplicacion(sf.format(new Date()));*/
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2373,7 +2373,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -2383,8 +2383,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         while(intentos_post<3) {*/
             Call<RespuestaTraspasoDTO> call = restClient.postTraspaso(
                     traspasoDTO,
-                    true,
-                    false,
+                    /*true,
+                    false,*/
                     esTraspasoEstacionFinal,
                     token,
                     "application/json"
@@ -2474,7 +2474,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
     @Override
     public void registrarTraspasoPipa(SAGASSql sagasSql, String token, TraspasoDTO traspasoDTO,
                                       boolean esTraspasoPipaFinal) {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+        /*@SuppressLint("SimpleDateFormat") SimpleDateFormat s =
                 new SimpleDateFormat("ddMMyyyyhhmmssS");
         String clave_unica = "TP";
         clave_unica += (esTraspasoPipaFinal)? "F":"I";
@@ -2483,7 +2483,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sf =
                 new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         traspasoDTO.setFecha((Date) Calendar.getInstance().getTime());
-        traspasoDTO.setFechaAplicacion(Calendar.getInstance().getTime().toString());
+        traspasoDTO.setFechaAplicacion(Calendar.getInstance().getTime().toString());*/
         //region Verifica si el servcio esta disponible
 
         Gson gsons = new GsonBuilder()
@@ -2536,7 +2536,7 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constantes.BASE_URL+"/ras/")
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -2546,8 +2546,8 @@ public class SubirImagenesInteractorImpl implements SubirImagenesInteractor {
         while(intentos_post<3) {*/
             Call<RespuestaTraspasoDTO> call = restClient.postTraspaso(
                     traspasoDTO,
-                    false,
-                    true,
+                    /*false,
+                    true,*/
                     esTraspasoPipaFinal,
                     token,
                     "application/json"

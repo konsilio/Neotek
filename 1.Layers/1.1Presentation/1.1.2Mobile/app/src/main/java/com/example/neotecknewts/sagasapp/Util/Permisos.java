@@ -19,7 +19,10 @@ public class Permisos {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.INTERNET,
-            Manifest.permission.ACCESS_NETWORK_STATE
+            Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.STATUS_BAR,
+            Manifest.permission.WRITE_GSERVICES,
+            Manifest.permission.MEDIA_CONTENT_CONTROL
 
     };
     public Permisos(Activity activity){
