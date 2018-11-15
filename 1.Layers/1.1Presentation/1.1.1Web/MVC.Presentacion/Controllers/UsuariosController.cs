@@ -121,7 +121,7 @@ namespace MVC.Presentacion.Controllers
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
             ViewBag.IdUser = CatalogoServicio.ObtenerIdUsuario(id, _tkn);
-            ViewBag.AllRoles = CatalogoServicio.ObtenerTodosRoles(_tkn);
+            ViewBag.AllRoles = CatalogoServicio.ObtenerRoles(_tkn, ViewBag.IdUser.IdEmpresa);
             //if (TempData["RespuestaDTO"] != null)
             //{
             //    if (!((RespuestaDTO)TempData["RespuestaDTO"]).Exito)

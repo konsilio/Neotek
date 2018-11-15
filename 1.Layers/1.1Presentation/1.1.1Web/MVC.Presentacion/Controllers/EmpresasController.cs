@@ -147,14 +147,12 @@ namespace MVC.Presentacion.Controllers
             _tok = Session["StringToken"].ToString();
 
             var respuesta = CatalogoServicio.ActualizaConfigEmpresa(_Obj, _tok);
-
             if (respuesta.Exito)
             {
                 TempData["RespuestaDTO"] = respuesta.Mensaje;
                 TempData["RespuestaDTOError"] = null;
                 return RedirectToAction("Index");
             }
-
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;
