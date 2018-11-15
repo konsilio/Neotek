@@ -593,15 +593,18 @@ namespace MVC.Presentacion.Agente
                 if (idEmpresa != 0)
                 {
                     _lstUserEmp = (from x in lus where x.IdEmpresa == idEmpresa select x).ToList();
+                    if (idUser != 0 && idUser != -1)
+                    {
+                        _lstUserEmp = (from x in lus where x.IdUsuario == idUser select x).ToList();
+                       
+                    }
+                    if (!String.IsNullOrEmpty(mail) && mail != "0")
+                    {
+                        _lstUserEmp = (from x in lus where x.Email1 == mail select x).ToList();
+                       
+                    }
                 }
-                if (idUser != 0)
-                {
-                    _lstUserEmp = (from x in lus where x.IdUsuario == idUser select x).ToList();
-                }
-                if (!String.IsNullOrEmpty(mail))
-                {
-                    _lstUserEmp = (from x in lus where x.Email1 == mail select x).ToList();
-                }
+              
             }
         }
 
@@ -663,6 +666,7 @@ namespace MVC.Presentacion.Agente
                         resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                     else
                     {
+                        resp = await response.Content.ReadAsAsync<RespuestaDTO>();
                         client.CancelPendingRequests();
                         client.Dispose();
                     }
