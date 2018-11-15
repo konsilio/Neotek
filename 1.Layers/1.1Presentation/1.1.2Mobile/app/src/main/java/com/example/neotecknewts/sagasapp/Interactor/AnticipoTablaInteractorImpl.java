@@ -4,8 +4,11 @@ import android.util.Log;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosEstacionesDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaCorteDto;
+import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RespuestaServicioDisponibleDTO;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.RestClient;
@@ -15,6 +18,8 @@ import com.example.neotecknewts.sagasapp.Util.Lisener;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -132,7 +137,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
                     .addConverterFactory(GsonConverterFactory.create(gsons))
                     .build();
             RestClient restClient = retrofits.create(RestClient.class);
-
+            corteDTO.setFecha(new Date());
 
             Call<RespuestaCorteDto> call = restClient.
                     postCorte(corteDTO,token,"application/json");
@@ -166,6 +171,66 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
             presenter.onSuccessAndroid();
         }
     }
+
+    @Override
+    public void getAnticipos(String token,int estacion,boolean esAnticipos) {
+        String url = Constantes.BASE_URL;
+
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<RespuestaEstacionesVentaDTO> call = restClient.getAnticipo_y_Corte(
+                estacion,
+                esAnticipos,
+                token,
+                "application/json"
+        );
+        Log.w("Url base",retrofit.baseUrl().toString());
+
+        call.enqueue(new Callback<RespuestaEstacionesVentaDTO>() {
+            @Override
+            public void onResponse(Call<RespuestaEstacionesVentaDTO> call, Response<RespuestaEstacionesVentaDTO> response) {
+                RespuestaEstacionesVentaDTO data = response.body();
+                if (response.isSuccessful()) {
+                    Log.w("Estatus","Success");
+                    presenter.onSuccessList(data);
+                }
+                else {
+                    switch (response.code()) {
+                        case 404:
+                            Log.w("Error","not found");
+
+                            break;
+                        case 500:
+                            Log.w("Error", "server broken");
+
+                            break;
+                        default:
+                            Log.w("Error", "Error desconocido: "+response.code());
+
+                            break;
+                    }
+                    presenter.onError(response.message());
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaEstacionesVentaDTO> call, Throwable t) {
+                Log.e("error", "Error desconocido: "+t.toString());
+                presenter.onError(t.getLocalizedMessage());
+            }
+        });
+    }
+
 
     private void registra_local(AnticiposDTO anticiposDTO,SAGASSql sagasSql,String token){
         if(sagasSql.GetAnticipoByClaveOperacion(anticiposDTO.getClaveOperacion()).getCount()==0){

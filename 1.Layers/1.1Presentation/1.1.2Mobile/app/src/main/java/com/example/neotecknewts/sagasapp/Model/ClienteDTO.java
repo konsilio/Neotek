@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class ClienteDTO implements Serializable {
+public class ClienteDTO extends RespuestaDTO implements Serializable {
     @SerializedName("IdCliente")
     private int IdCliente;
 
@@ -26,7 +26,7 @@ public class ClienteDTO implements Serializable {
     @SerializedName("Celular")
     private String Celular;
 
-    @SerializedName("Telefono_fijo")
+    @SerializedName("TelefonoFijo")
     private String Telefono_fijo;
 
     @SerializedName("RFC")

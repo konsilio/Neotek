@@ -10,6 +10,7 @@ import com.example.neotecknewts.sagasapp.Model.DatosAutoconsumoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosCalibracionDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosClientesDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosEmpresaConfiguracionDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosEstacionesDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosPuntoVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosRecargaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosReporteDTO;
@@ -18,6 +19,7 @@ import com.example.neotecknewts.sagasapp.Model.DatosTomaLecturaDto;
 import com.example.neotecknewts.sagasapp.Model.DatosTraspasoDTO;
 import com.example.neotecknewts.sagasapp.Model.DatosVentaOtrosDTO;
 import com.example.neotecknewts.sagasapp.Model.EmpresaDTO;
+import com.example.neotecknewts.sagasapp.Model.ExistenciasDTO;
 import com.example.neotecknewts.sagasapp.Model.FinalizarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.IniciarDescargaDTO;
 import com.example.neotecknewts.sagasapp.Model.LecturaAlmacenDTO;
@@ -341,9 +343,9 @@ public interface RestClient {
     @POST(Constantes.POST_VENTA)
     Call<RespuestaPuntoVenta> pagar(
             @Body VentaDTO ventaDTO,
-            @Path(value = "esCamioneta") boolean esCamioneta,
+            /*@Path(value = "esCamioneta") boolean esCamioneta,
             @Path(value = "esEstacion") boolean esEstacion,
-            @Path(value = "esPipa") boolean esPipa,
+            @Path(value = "esPipa") boolean esPipa,*/
             @Header("Authorization") String token,
             @Header("Content-type") String contentType);
 
@@ -386,6 +388,18 @@ public interface RestClient {
     @POST(Constantes.GET_ORDEN_REFERENCIA)
     Call<RespuestaOrdenReferenciaDTO> getReferenciaOrden(
             @Path(value = "IdOrdenCompra") int idOrdenCompra,
+            @Header("Authorization") String token,
+            @Header("Content-type") String contenType
+    );
+    @GET(Constantes.GET_CATALOGOS_ANTICIPOS_CORTE_LISTA)
+    Call<RespuestaEstacionesVentaDTO> getAnticipo_y_Corte(
+            @Path(value = "estacion") int estacion,
+            @Path(value = "esAnticipos") boolean esAnticipos,
+            @Header("Authorization") String token,
+            @Header("Content-type") String contenType
+    );
+    @GET(Constantes.GET_CILINDROS_VENTA)
+    Call<List<ExistenciasDTO>> getListaExistencias(
             @Header("Authorization") String token,
             @Header("Content-type") String contenType
     );
