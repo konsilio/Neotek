@@ -76,7 +76,7 @@ public class DatosRecargaDto extends RespuestaDTO implements Serializable {
         @SerializedName("Medidor")
         private MedidorDTO Medidor;
 
-        @SerializedName("IdAlmacenGas")
+        @SerializedName("IdCAlmacen")
         private int IdAlmacenGas;
 
         @SerializedName("NombreAlmacen")
@@ -144,7 +144,7 @@ public class DatosRecargaDto extends RespuestaDTO implements Serializable {
         @SerializedName("Medidor")
         private MedidorDTO Medidor;
 
-        @SerializedName("IdAlmacenGas")
+        @SerializedName("IdCAlmacen")
         private int IdAlmacenGas;
 
         @SerializedName("Numero")
@@ -227,7 +227,7 @@ public class DatosRecargaDto extends RespuestaDTO implements Serializable {
         @SerializedName("Medidor")
         private MedidorDTO Medidor;
 
-        @SerializedName("IdAlmacenGas")
+        @SerializedName("IdCAlmacen")
         private int IdAlmacenGas;
 
         @SerializedName("NombreAlmacen")

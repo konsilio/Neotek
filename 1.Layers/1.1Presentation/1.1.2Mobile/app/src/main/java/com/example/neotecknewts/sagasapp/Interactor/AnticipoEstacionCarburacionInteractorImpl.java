@@ -29,10 +29,11 @@ public class AnticipoEstacionCarburacionInteractorImpl implements AnticipoEstaci
 
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(Constantes.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -49,10 +50,7 @@ public class AnticipoEstacionCarburacionInteractorImpl implements AnticipoEstaci
                 RespuestaEstacionesVentaDTO data = response.body();
                 if (response.isSuccessful()) {
                     Log.w("Estatus","Success");
-                    if(data.isExito())
-                        presenter.onSuccess(data);
-                    else
-                        presenter.onError(data);
+                    presenter.onSuccess(data);
                 }
                 else {
                     switch (response.code()) {

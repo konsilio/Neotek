@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -347,7 +349,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         }
 
         //deacuerdo a si la foto ya fue tomada se muestra o no el layout de la nitidez
-        if(fotoTomada==true){
+        if(fotoTomada){
             layoutTitle.setVisibility(View.GONE);
             layoutCameraButton.setVisibility(View.GONE);
             layoutNitidez.setVisibility(View.VISIBLE);
@@ -363,7 +365,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         final Button buttonFoto = (Button) findViewById(R.id.button_foto);
         buttonFoto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
+                List<String> permissionList = Utilidades.checkAndRequestPermissions(CameraDescargaActivity.this);
 
                 Log.w("Prueba","prueba"+permissions(permissionList));
 
@@ -377,7 +379,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         final Button buttonRetomarFoto =(Button) findViewById(R.id.button_foto_incorrecta);
         buttonRetomarFoto.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                List<String> permissionList = Utilidades.checkAndRequestPermissions(getApplicationContext());
+                List<String> permissionList = Utilidades.checkAndRequestPermissions(CameraDescargaActivity.this);
 
                 Log.w("Prueba","prueba"+permissions(permissionList));
 
@@ -538,7 +540,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     private void openCameraIntent() {
 
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE, "New Picture"+new Date().toString());
+        values.put(MediaStore.Images.Media.TITLE, new Date().toString()+"M");
         values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
         imageUri = getContentResolver().insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
@@ -547,7 +549,7 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
         startActivityForResult(intent, CAMERA_REQUEST);
 
     }
-
+    @RequiresApi(api = Build.VERSION_CODES.M)
     //metodo que se ejecuta al momento de obtener un resultado que proviene de la camara
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -585,11 +587,20 @@ public class CameraDescargaActivity extends AppCompatActivity implements CameraD
     //metodo que pasa de de uri a url
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
+        @SuppressLint("Recycle") Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        int column_index = 0;
+        String cadena = "";
+        if (cursor != null) {
+            column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+            cursor.moveToFirst();
+            cadena =cursor.getString(column_index);
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return cadena;
     }
 
     /**

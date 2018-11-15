@@ -314,10 +314,29 @@
                                             País:*
                                         </label>
                                         <select id="ddlPais" name="IdPais" class="form-control selectpicker z-index show-tick">
-                                            @foreach (var lst in ViewBag.ListaPaises)
+                                            @if (ViewBag.IdUser == null)
                                             {
-                                                <option value="@lst.IdPais">@lst.Pais</option>
+                                                foreach (var lst in ViewBag.ListaPaises)
+                                                {
+                                                    <option value="@lst.IdPais">@lst.Pais</option>
+                                                }
                                             }
+                                            else
+                                            {
+                                                foreach (var lst in ViewBag.ListaPaises)
+                                                {
+
+                                                    if (ViewBag.IdUser[0].IdPais == lst.IdPais)
+                                                    {
+                                                        <option value="@lst.IdPais" selected>@lst.Pais</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@lst.IdPais">@lst.Pais</option>
+                                                    }
+                                                }
+                                            }
+
                                         </select>
                                     </div>
                                 </div>
@@ -327,11 +346,33 @@
                                             Estado:*
                                         </label><input type="text" name="EstadoProvincia" style="display:none" id="txtEdoP" class="form-control" value="@((ViewBag.Empresas==null)?"":ViewBag.Empresas[0].EstadoProvincia)" />
 
+
                                         <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                            @foreach (var lst in ViewBag.ListaEstados)
-                                            {
-                                                <option value="@lst.IdEstadoRep">@lst.Estado</option>
-                                            }
+                                              @if (ViewBag.IdUser == null)
+                                              {
+                                                  foreach (var lst2 in ViewBag.ListaEstados)
+                                                  {
+                                                    <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
+                                                    }
+                                              }
+                                              else
+                                                {
+                                                    foreach (var lst2 in ViewBag.ListaEstados)
+                                                    {
+
+                                                        if (ViewBag.IdUser[0].IdEstadoRep == lst2.IdEstadoRep)
+                                                        {
+                                                            <option value="@lst2.IdEstadoRep" selected>@lst2.Estado</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
+                                                        }
+                                                    }
+                                                }
+
+
+                                              
                                         </select>
                                     </div>
                                 </div>

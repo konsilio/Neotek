@@ -33,9 +33,9 @@ namespace MVC.Presentacion.Controllers
             if (TempData["RespuestaDTOError"] != null)
             {
                 ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
-                TempData["RespuestaDTOError"] = ViewBag.MessageError;
+            //    TempData["RespuestaDTOError"] = ViewBag.MessageError;
             }
-            ViewBag.MessageError = TempData["RespuestaDTOError"];
+          //  ViewBag.MessageError = TempData["RespuestaDTOError"];
             return View(model);
         }
 
@@ -48,7 +48,7 @@ namespace MVC.Presentacion.Controllers
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
             ViewBag.Empresas = CatalogoServicio.Empresas(_tok);
-            // ViewBag.IdUser.Count() = 0;
+            //ViewBag.IdUser = CatalogoServicio.ObtenerIdUsuario(0, _tok);
 
             if (TempData["RespuestaDTOError"] != null)
             {
@@ -193,6 +193,11 @@ namespace MVC.Presentacion.Controllers
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
             ViewBag.Empresas = CatalogoServicio.Empresas(_tok);
             ViewBag.IdUser = CatalogoServicio.ObtenerTodosUsuarios(id, _tok);
+            if (TempData["RespuestaDTOError"] != null)
+            {
+                ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
+                //    TempData["RespuestaDTOError"] = ViewBag.MessageError;
+            }
             return View("Nuevo");
         }
         [HttpPost]
@@ -213,14 +218,28 @@ namespace MVC.Presentacion.Controllers
             else
             {
                 TempData["RespuestaDTOError"] = respuesta;
-                return RedirectToAction("Nuevo");
+                return RedirectToAction("EditarUsuario","Usuarios",new {id=_Obj.IdUsuario });
             }
 
         }
         public ActionResult BorrarUsuario(short id)
         {
+            
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             string _tkn = Session["StringToken"].ToString();
+
+            //// AMGO
+            
+            //var usrs = CatalogoServicio.ObtenerTodosUsuarios(0, _tkn);
+            //var usr = usrs.ToList<UsuariosModel>().FirstOrDefault(x => x.IdUsuario.Equals(id));
+            //if (usr.EsSuperAdmin)
+            //{
+            //    TempData["RespuestaDTO"] = "No es posible borrar un usuario con rol SuperAdmin.";
+            //    TempData["RespuestaDTOError"] = null;
+            //    return RedirectToAction("Index");
+            //}
+            //// AMGO
+
             var respuesta = CatalogoServicio.EliminaUsuarioSel(id, _tkn);
             if (respuesta.Exito)
             {

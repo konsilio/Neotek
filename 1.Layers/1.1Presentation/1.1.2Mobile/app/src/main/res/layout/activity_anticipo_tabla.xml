@@ -71,7 +71,7 @@
                         android:layout_weight="1"
                         android:text="@string/p5000"
                         android:textAlignment="center"
-                        android:textSize="24sp"
+                        android:textSize="18sp"
                         android:visibility="gone" />
 
                     <TextView
@@ -81,7 +81,8 @@
                         android:layout_weight="1"
                         android:text="@string/total"
                         android:textAlignment="textEnd"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:gravity="end" />
 
                     <TextView
                         android:id="@+id/TVAnticipoTablaActivityTotal"
@@ -153,7 +154,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text="@string/Final"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/TVAnticipoTableActivityFinal"
@@ -163,7 +164,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text=""
-                        android:textSize="24sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -175,7 +176,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text="@string/anticipos"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/TVAnticipoTableActivityAnticipos"
@@ -185,7 +186,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text=""
-                        android:textSize="24sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                 </TableRow>
@@ -203,7 +204,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text="@string/inicial"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/TVAnticipoTableActivityInicial"
@@ -213,7 +214,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text=""
-                        android:textSize="24sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -225,7 +226,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text="@string/monto_corte"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/TVAnticipoTableMontoDeCorte"
@@ -235,7 +236,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text=""
-                        android:textSize="24sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
                 </TableRow>
 
@@ -253,7 +254,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text="@string/litros"
-                        android:textSize="24sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/TVAnticipoTableActivityLitros"
@@ -263,7 +264,7 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:text=""
-                        android:textSize="24sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <Space
