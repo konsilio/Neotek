@@ -130,7 +130,7 @@ namespace MVC.Presentacion.App_Code
         public static RequisicionProductoDTO CrearProductoNuevo(RequisicionDTO model, string _tkn)
         {
             var prod = CatalogoServicio.ListaProductos(_tkn).FirstOrDefault(x => x.IdProducto.Equals(model.IdProducto));
-            var cc = CatalogoServicio.BuscarCentrosCosto(_tkn).FirstOrDefault(x => x.IdCentroCosto.Equals(model.IdCentroCosto));
+            var cc = CatalogoServicio.BuscarCentrosCosto(_tkn).FirstOrDefault(x => x.IdCentroCosto.Equals((byte)model.IdCentroCosto));
             var orden = model.Productos.Where(x => x.IdProducto.Equals(model.IdProducto)).ToList().Count + 1;
             return new RequisicionProductoDTO()
             {

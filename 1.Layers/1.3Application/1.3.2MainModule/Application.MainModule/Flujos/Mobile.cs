@@ -343,12 +343,11 @@ namespace Application.MainModule.Flujos
             return list; 
         }
 
-        public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(short idEstacion, bool esAnticipos)
+        public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(int idEstacion, bool esAnticipos)
         {
-            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
-            var puntoVenta = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(idEstacion));
-
-            var ventas = CajaGeneralServicio.ObtenerVentasPuntosVentaNoProc().OrderBy(x=>x.FechaRegistro).ToList();
+            var almacen = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdEstacionCarburacion.Equals(idEstacion));
+            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
+            var ventas = CajaGeneralServicio.ObtenerVentasPuntosVenta(puntosVenta.IdPuntoVenta).OrderBy(x=>x.FechaRegistro).ToList();
             
             return AnticiposCortesAdapter.ToDTO(ventas, esAnticipos);
         }

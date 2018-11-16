@@ -408,6 +408,10 @@ namespace Application.MainModule.Servicios.Ventas
         {
             return new CajaGeneralDataAccess().Buscar();
         }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPuntosVenta(int id)
+        {
+            return new CajaGeneralDataAccess().BuscarPorPV(id);
+        }
         public static List<VentaPuntoDeVentaDetalle> ObtenerDetallesVentasNoProc(short empresa, short year, byte month, byte dia, short orden)
         {
             return new CajaGeneralDataAccess().BuscarDetalleVenta(empresa, year, month, dia, orden);

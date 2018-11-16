@@ -290,9 +290,9 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.corte(dto),Request);
         }
-        
+        //[AllowAnonymous]
         [Route("catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}")]
-        public HttpResponseMessage GetVentasCortesAnticipos(short estacion,bool esAnticipos)
+        public HttpResponseMessage GetVentasCortesAnticipos(int estacion,bool esAnticipos)
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos),Request);
         }
