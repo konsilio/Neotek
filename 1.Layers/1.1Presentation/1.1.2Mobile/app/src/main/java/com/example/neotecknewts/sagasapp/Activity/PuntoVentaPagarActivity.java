@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.example.neotecknewts.sagasapp.Util.Tabla;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoVentaPagarView{
@@ -94,13 +96,26 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
         BtnPuntoVentaPagarActivityConfirmar.setOnClickListener(v->{
             ventaDTO.setFactura(SPuntoVentaPagarActivityFactura.isChecked());
             ventaDTO.setCredito(SPuntoVentaActivityCredito.isChecked());
+            boolean error = false;
             if(!SPuntoVentaActivityCredito.isChecked()) {
-                double efectivio = Double.valueOf(ETPuntoVentaPagarActivityEfectivo
-                        .getText().toString());
-                ventaDTO.setEfectivo(efectivio);
+                if(ETPuntoVentaPagarActivityEfectivo.getText().toString().trim().length()>0) {
+                    double efectivio = Double.valueOf(ETPuntoVentaPagarActivityEfectivo
+                            .getText().toString());
+                    ventaDTO.setEfectivo(efectivio);
+                }else{
+                    error = true;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);
+                    builder.setTitle(R.string.mensjae_error_campos);
+                    builder.setMessage("Es necesario indicar el monto pagado");
+                    builder.setPositiveButton(R.string.regresar, (dialogInterface, i) ->
+                            dialogInterface.dismiss());
+                    builder.create().show();
+                }
             }
-            presenter.pagar(ventaDTO,session.getToken(),EsVentaCamioneta,EsVentaCarburacion,
-                    EsVentaPipa,sagasSql);
+            if(!error) {
+                presenter.pagar(ventaDTO, session.getToken(), EsVentaCamioneta, EsVentaCarburacion,
+                        EsVentaPipa, sagasSql);
+            }
         });
         NumberFormat format = NumberFormat.getCurrencyInstance();
         lista = new ArrayList<>();
@@ -127,10 +142,13 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             subtotal += conceptoDTO.getSubtotal();
         }
         NumberFormat format = NumberFormat.getCurrencyInstance();
+        ventaDTO.setSubtotal(subtotal);
         TVPuntoVentaPagarActivitySubtotal.setText(format.format(subtotal));
         double iva = subtotal * 0.16;
+        ventaDTO.setIva(iva);
         TVPuntoVentaPagarActivityIva.setText(format.format(iva));
         double total = subtotal + iva;
+        ventaDTO.setTotal(total);
         TVPuntoVentaActivityPagarTotal.setText(format.format(total));
     }
 

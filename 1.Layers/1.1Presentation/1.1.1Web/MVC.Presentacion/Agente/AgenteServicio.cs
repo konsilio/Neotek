@@ -442,7 +442,7 @@ namespace MVC.Presentacion.Agente
             this.ApiRoute = ConfigurationManager.AppSettings["PutEmpresaConfig"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();
         }
-        public void GuardarEmpresaEdicion(EmpresaDTO dto, string tkn)
+        public void GuardarEmpresaEdicion(EmpresaModel dto, string tkn)
         {
             this.ApiRoute = ConfigurationManager.AppSettings["PutModificaEmpresas"];
             LLamada(dto, tkn, MetodoRestConst.Put).Wait();

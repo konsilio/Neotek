@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenter;
 import com.example.neotecknewts.sagasapp.Presenter.AnticipoTablaPresenterImpl;
 import com.example.neotecknewts.sagasapp.R;
@@ -49,6 +51,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     Session session;
     ProgressDialog progressDialog;
     SAGASSql sagasSql;
+    Tabla tabla;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +95,10 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         TVAnticipoTablaActivityP5000.setVisibility((EsCorte)? View.VISIBLE:View.GONE);
         TLAnticipoTablaActivityTabla = findViewById(R.id.TLAnticipoTablaActivityTabla);
         presenter = new AnticipoTablaPresenterImpl(this);
-        Tabla tabla = new Tabla(this, TLAnticipoTablaActivityTabla);
+        session = new Session(this);
+        presenter.getAnticipos(session.getToken()
+                ,EsAnticipo?anticiposDTO.getIdEstacion():corteDTO.getIdEstacion(),EsAnticipo);
+        tabla = new Tabla(this, TLAnticipoTablaActivityTabla);
         tabla.Cabecera(R.array.header_tabla_anticipo);
         elementos = new ArrayList<>();
         SPAnticipoTablaActivityFechaCorte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -108,13 +114,13 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         });
 
         NumberFormat format = NumberFormat.getCurrencyInstance();
-        for(int i = 0; i < 15; i++)
+       /* for(int i = 0; i < 15; i++)
         {
             elementos.add(new String[]{"201809180785236","18/09/2018",
                     format.format(i*100.00)});
             total += i*100;
         }
-        tabla.agregarFila(elementos);
+        tabla.agregarFila(elementos);*/
         session = new Session(this);
         sagasSql = new SAGASSql(this);
         TVAnticipoTablaActivityTotal.setText(format.format(total));
@@ -155,6 +161,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                             new SimpleDateFormat("ddMMyyyyhhmmssS");
                     String clave_unica = "ANT"+s.format(new Date());
                     anticiposDTO.setClaveOperacion(clave_unica);
+                    anticiposDTO.setTiket(clave_unica);
                     presenter.Anticipo(anticiposDTO,sagasSql,session.getToken());
                 }
             }
@@ -165,6 +172,16 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
             corteDTO.setLitrosCorte(0);
             corteDTO.setAnticipos(0);
             corteDTO.setMontoCorte(0);
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat s =
+                    new SimpleDateFormat("ddMMyyyyhhmmssS");
+            String fecha = "";/*SPAnticipoTablaActivityFechaCorte.getSelectedItem().toString();*/
+            /*if (fecha.equals("")){*/
+                corteDTO.setFecha(new Date());
+            /*}else{*/
+                //corteDTO.setFecha(new Date(fecha));
+            /*}*/
+            String clave_unica = "CC"+s.format(new Date());
+            corteDTO.setClaveOperacion(clave_unica);
             presenter.Corte(corteDTO,sagasSql,session.getToken());
             startIntent();
         }
@@ -229,6 +246,56 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
 
         });
         builder.create().show();
+    }
+
+    @Override
+    public void onSuccessList(RespuestaEstacionesVentaDTO data) {
+        NumberFormat format = NumberFormat.getCurrencyInstance();
+        if(data!=null){
+            if (EsAnticipo){
+                if(data.getAnticipos().size()>0){
+                   for (int x=0;x<data.getAnticipos().size();x++){
+                       elementos.add(new String[]{
+                               data.getAnticipos().get(x).getTiket() /*"201809180785236"*/,
+                               data.getAnticipos().get(x).getFecha().toString()/*"18/09/2018"*/,
+                               format.format(data.getAnticipos().get(x).getTotal())
+                       });
+                       total += data.getAnticipos().get(x).getTotal();
+                   }
+                }
+            }else{
+                if(data.getCortes().size()>0){
+                    for (int x=0;x<data.getCortes().size();x++){
+                        elementos.add(new String[]{
+                                data.getCortes().get(x).getTiket()/*"201809180785236"*/,
+                                data.getAnticipos().get(x).getFecha().toString()/*"18/09/2018"*/,
+                                format.format(data.getAnticipos().get(x).getTotal())/*format.format(i*100.00)*/
+                        });
+                        total += data.getCortes().get(x).getTotal();
+                    }
+                }
+                if(data.getFechasCorte()!=null){
+                    if(data.getFechasCorte().size()>0){
+                        SPAnticipoTablaActivityFechaCorte.setAdapter(new ArrayAdapter<>(
+                                this,
+                                R.layout.custom_spinner,
+                                data.getFechasCorte().toArray()
+                        ));
+                    }
+                }
+            }
+            if(!elementos.isEmpty()) {
+                tabla.agregarFila(elementos);
+            }else{
+                AlertDialog.Builder builder = new AlertDialog.Builder(this,
+                        R.style.AlertDialog);
+                builder.setTitle(R.string.title_alert_message);
+                builder.setMessage("No se han encontrado información");
+                builder.setPositiveButton(R.string.regresar, (dialogInterface, i) ->
+                {dialogInterface.dismiss();finish();});
+                builder.create().show();
+            }
+        }
     }
 
     private void startIntent(){

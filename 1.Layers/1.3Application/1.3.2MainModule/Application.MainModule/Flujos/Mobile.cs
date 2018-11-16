@@ -182,6 +182,7 @@ namespace Application.MainModule.Flujos
             return ReporteAlmacen;
         }
 
+
         public RespuestaDto Venta(VentaDTO venta)
         {
             var resp = VentaServicio.BuscarFolioVenta(venta);
@@ -189,10 +190,7 @@ namespace Application.MainModule.Flujos
 
             var punto_venta = PuntoVentaServicio.ObtenerPorUsuarioAplicacion();
             var operador = PuntoVentaServicio.ObtenerOperador(TokenServicio.ObtenerIdUsuario());
-            var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);     
-
-
-
+            //var almacen = AlmacenGasServicio.Obtener(punto_venta.IdCAlmacenGas);     
 
             var cliente = ClienteServicio.Obtener(venta.IdCliente);
             var ventas = CajaGeneralServicio.ObtenerVentas();
@@ -218,6 +216,8 @@ namespace Application.MainModule.Flujos
 
             return PuntoVentaServicio.InsertMobile(adapter);
         }
+
+
 
         public int Orden(List<VentaPuntoDeVenta> ventas)
         {
@@ -255,7 +255,6 @@ namespace Application.MainModule.Flujos
                 return AlmacenRecargaAdapter.ToDTO(pipas, estaciones, tipoMedidores);
             }
             return null;
-
         }
 
         public RespuestaDto Autoconsumo(AutoconsumoDTO dto,bool esFinal)
@@ -424,19 +423,15 @@ namespace Application.MainModule.Flujos
             else
                 return TraspasoAdapter.ToDTO(estaciones,pipas,predeterminada,medidores);
         }
-
         public RespuestaDto Traspaso(TraspasoDto dto,bool esFinal)
         {
             var resp = TraspasoServicio.EvaluarClaveOperacion(dto);
             if (resp.Exito) return resp;
-
             return TraspasoServicio.Traspaso(dto,esFinal,TokenServicio.ObtenerIdEmpresa());
         }
-
         public DatosAnticiposCorteDto Estaciones()
         {
             var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
-
             return AnticiposCortesAdapter.ToDTO(estaciones);
         }
 
@@ -489,6 +484,11 @@ namespace Application.MainModule.Flujos
                 return VentasEstacionesAdapter.ToDTOC(cilindros);
 
             return VentasEstacionesAdapter.ToDTO(camioneta);
+        }
+        public List<DatosGasVentaDto> CatalogosGas()
+        {
+            var cilindros = AlmacenGasServicio.ObtenerCilindros();
+            return VentasEstacionesAdapter.ToDTOC(cilindros);          
         }
     }
 }

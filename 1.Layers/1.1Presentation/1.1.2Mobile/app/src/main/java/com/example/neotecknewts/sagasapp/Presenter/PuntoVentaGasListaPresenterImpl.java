@@ -4,7 +4,10 @@ import com.example.neotecknewts.sagasapp.Activity.PuntoVentaGasListaView;
 import com.example.neotecknewts.sagasapp.Interactor.PuntoVentaGasListaInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.PuntoVentaGasListaInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.DatosPuntoVentaDTO;
+import com.example.neotecknewts.sagasapp.Model.ExistenciasDTO;
 import com.example.neotecknewts.sagasapp.R;
+
+import java.util.List;
 
 public class PuntoVentaGasListaPresenterImpl implements PuntoVentaGasListaPresenter {
     PuntoVentaGasListaView view;
@@ -29,7 +32,7 @@ public class PuntoVentaGasListaPresenterImpl implements PuntoVentaGasListaPresen
     }
 
     @Override
-    public void onSuccess(DatosPuntoVentaDTO data) {
+    public void onSuccess(List<ExistenciasDTO> data) {
         view.onHideProgress();
         view.onSuccessListExistencia(data);
     }

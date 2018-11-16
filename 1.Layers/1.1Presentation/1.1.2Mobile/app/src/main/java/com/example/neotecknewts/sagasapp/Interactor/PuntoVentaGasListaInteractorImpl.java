@@ -11,6 +11,8 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,19 +40,23 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
                 .build();
 
         RestClient restClient = retrofit.create(RestClient.class);
-        Call<DatosPuntoVentaDTO> call = restClient.getListaExistencias(
+        /*Call<DatosPuntoVentaDTO> call = restClient.getListaExistencias(
                 esGasLP,
                 esCilindroConGas,
                 esCilindro,
                 token,
                 "application/json"
+        );*/
+        Call<List<ExistenciasDTO>> call = restClient.getListaExistencias(
+                token,
+                "application/json"
         );
         Log.w("Url base",retrofit.baseUrl().toString());
 
-        call.enqueue(new Callback<DatosPuntoVentaDTO>() {
+        call.enqueue(new Callback<List<ExistenciasDTO>>() {
             @Override
-            public void onResponse(Call<DatosPuntoVentaDTO> call, Response<DatosPuntoVentaDTO> response) {
-                DatosPuntoVentaDTO data = response.body();
+            public void onResponse(Call<List<ExistenciasDTO>> call, Response<List<ExistenciasDTO>> response) {
+                List<ExistenciasDTO> data = response.body();
                 if (response.isSuccessful()) {
 
                     Log.w("Estatus","Success");
@@ -76,14 +82,14 @@ public class PuntoVentaGasListaInteractorImpl implements PuntoVentaGasListaInter
                     if(data==null) {
                         presenter.onError(mensaje);
                     }else{
-                        presenter.onError(data.getMensaje());
+                        presenter.onError(response.message());
                     }
                 }
 
             }
 
             @Override
-            public void onFailure(Call<DatosPuntoVentaDTO> call, Throwable t) {
+            public void onFailure(Call<List<ExistenciasDTO>> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
                 presenter.onError("Se ha generado un error: "+t.getMessage());
             }

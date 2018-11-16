@@ -46,6 +46,12 @@ public class VentaDTO implements Serializable {
     @SerializedName("FolioVenta")
     private String FolioVenta;
 
+    @SerializedName("Nombre")
+    private String Nombre;
+
+    @SerializedName("RFC")
+    private String RFC;
+
     public String getFecha() {
         return Fecha;
     }
@@ -152,5 +158,21 @@ public class VentaDTO implements Serializable {
 
     public void setFolioVenta(String folioVenta) {
         FolioVenta = folioVenta;
+    }
+
+    public String getNombre() {
+        return Nombre;
+    }
+
+    public void setNombre(String nombre) {
+        Nombre = nombre;
+    }
+
+    public String getRFC() {
+        return RFC;
+    }
+
+    public void setRFC(String RFC) {
+        this.RFC = RFC;
     }
 }

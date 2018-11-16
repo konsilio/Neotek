@@ -18,6 +18,13 @@ namespace MVC.Presentacion.Models.Catalogos
         //[StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
         //[Display(Name = "IdEmpresa")]
         //public int IdEmpresa { get; set; }
+        public short IdEmpresa { get; set; }
+        public bool EsAdministracionCentral { get; set; }
+        public byte IdAdministracionCentral { get; set; }
+        public System.DateTime FechaRegistro { get; set; }
+        public bool Activo { get; set; }
+
+
 
         [Required(ErrorMessage = eReq)]
         [StringLength(250, MinimumLength = 1, ErrorMessage = eTa)]
@@ -144,6 +151,8 @@ namespace MVC.Presentacion.Models.Catalogos
         public string UrlLogotipo1000px { get; set; }
         
         public System.DateTime CierreInventario { get; set; }
+
+        public String CierreInventarioS { get; set; }
         
         public decimal FactorCompraLitroAKilos { get; set; }
 

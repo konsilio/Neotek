@@ -287,15 +287,15 @@ public class VerReporteActivity extends AppCompatActivity {
                         "Tiket\t[{Clave-venta}]\n"+
                         "Fecha\t[{Fecha}]\n"+
                         "Hora\t[{Hora}]\n"+
-                        "---------------------------";
+                        "_________________________\n";
         if(!ventaDTO.isSinNumero()) {
             StringReporte += "\tCliente\n" +
                     "Razon Social\t[{Razon-social}]\n" +
                     "RFC\t[{RFC}]\n";
         }
-        StringReporte +="---------------------------------\n"+
+        StringReporte +="--------------------------------\n"+
                         "|Concepto|Cant.|P.Uni.|Desc|Subt|\n"+
-                        "---------------------------------\n"+
+                        "--------------------------------\n"+
                         "[{Concepto}]\n"+
                         "________________________________\n"+
                         "\tI.V.A. (16%) [{iva}]\n"+
@@ -307,24 +307,24 @@ public class VerReporteActivity extends AppCompatActivity {
             StringReporte += "\tVenta Contado\n";
         }
         StringReporte += "Le atendio [{Usuario}]"+
-                        "----------------------------------\n"+
+                        "\n--------------------------------\n"+
                         "Gas Mundial de Guerrero S.A de C.V.\n"+
                         "Av. Principal No. 5477 C.P. 56789\n"+
                         "www.gasmundialdeguerrero.com.mx\n\n"+
 
-                        "Facturación electrónica en :\n"+
+                        "Facturacion electronica en :\n"+
                         "www.gasmundialdeguerrero.com.mx/\n"+
                         "facturacion\n\n"+
                         "Folio Factura: [{Folio-factura}]\n\n"+
-                        "Gracias por su confianza,¡vuelva\n" +
+                        "Gracias por su confianza,vuelva\n" +
                         "pronto!"
                     ;
         StringReporte = StringReporte.replace("[{Clave-venta}]",ventaDTO.getFolioVenta());
         HtmlReporte = HtmlReporte.replace("[{Clave-venta}]",ventaDTO.getFolioVenta());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
                 new SimpleDateFormat("dd/MM/yyyy");
-        StringReporte = StringReporte.replace("[{Fecha}]",fdate.format(ventaDTO.getFecha()));
-        HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(ventaDTO.getFecha()));
+        StringReporte = StringReporte.replace("[{Fecha}]",ventaDTO.getFecha());
+        HtmlReporte = HtmlReporte.replace("[{Fecha}]",ventaDTO.getFecha());
         StringReporte = StringReporte.replace("[{Hora}]",ventaDTO.getHora());
         HtmlReporte = HtmlReporte.replace("[{Hora}]",ventaDTO.getHora());
         StringReporte = StringReporte.replace("[{Razon-social}]","");
@@ -377,9 +377,11 @@ public class VerReporteActivity extends AppCompatActivity {
         StringReporte = StringReporte.replace("[{Folio-factura}]",ventaDTO.getFolioVenta());
         HtmlReporte = HtmlReporte.replace("[{Folio-factura}]",ventaDTO.getFolioVenta());
         StringReporte = StringReporte.replace("[{Usuario}]",
-                session.getAttribute(Session.KEY_NOMBRE));
+                ""
+                /*session.getAttribute(Session.KEY_NOMBRE)*/);
         HtmlReporte = HtmlReporte.replace("[{Usuario}]",
-                session.getAttribute(Session.KEY_NOMBRE));
+                ""
+                /*session.getAttribute(Session.KEY_NOMBRE)*/);
         ;
     }
 
@@ -551,10 +553,10 @@ public class VerReporteActivity extends AppCompatActivity {
                 "[{Estacion}]\n" +
                 "Monto anticipado: \t" +
                 "[{Monto-anticipo}]\n\n"+
-                "Entregué:\n"+
-                "[{Usuario-entrego}]__________\n\n"+
-                "Recibí\n"+
-                        "[{Usuario-recibi}]__________\n\n";
+                "Entregue:\n"+
+                "[{Usuario-entrego}]\n____________________________\n\n"+
+                "Recibi\n"+
+                        "[{Usuario-recibi}]\n________________________\n\n";
         HtmlReporte = HtmlReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
         StringReporte = StringReporte.replace("[{ClaveTraspaso}]",anticiposDTO.getClaveOperacion());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
@@ -571,9 +573,9 @@ public class VerReporteActivity extends AppCompatActivity {
         StringReporte = StringReporte.replace("[{Monto-anticipo}]","$"+String.valueOf(
                 anticiposDTO.getAnticipar()));
         StringReporte = StringReporte.replace("[{Usuario-entrego}]",
-                anticiposDTO.getNombreEstacion());
+                "");
         StringReporte = StringReporte.replace("[{Usuario-recibi}]",
-                anticiposDTO.getNombreEstacion());
+                "");
     }
 
     private void GenerarReporteTraspasoPipa(TraspasoDTO traspasoDTO) {

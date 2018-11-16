@@ -17,15 +17,12 @@ namespace Application.MainModule.Servicios.Mobile
         {
             return GasServicio.EvaluarClaveOperacion(Venta);
         }
-
         public static RespuestaDto EvaluarClaveOperacion(AnticipoDto dto)
         {
             return GasServicio.EvaluarClaveOperacion(dto);
         }
-
         public static RespuestaDto Anticipo(AnticipoDto dto,short idEmpresa,int idUsuario, List<VentaCorteAnticipoEC> anticipos,UnidadAlmacenGas estacion)
         {
-
             var idOrden = orden(anticipos);
             
             var puntos = PuntoVentaServicio.ObtenerIdEmp(idEmpresa);
@@ -48,7 +45,6 @@ namespace Application.MainModule.Servicios.Mobile
                       
             return GasServicio.Anticipo(adapter); 
         }
-
         public static int orden(List<VentaCorteAnticipoEC> anticipos)
         {
             if (anticipos != null)
@@ -59,22 +55,18 @@ namespace Application.MainModule.Servicios.Mobile
             else
                 return 1;
         }
-
         public static List<VentaCorteAnticipoEC> ObtenerAnticipos(short idEmpresa)
         {
             return GasServicio.ObtenerAnticipos(idEmpresa);
         }
-
         public static RespuestaDto EvaluarClaveOperacion(CorteDto dto)
         {
             return GasServicio.EvaluarClaveOperacion(dto);
         }
-
         public static List<VentaCorteAnticipoEC> ObtenerCortes(short idEmpresa)
         {
             return GasServicio.ObtenerCortes(idEmpresa);
         }
-
         public static RespuestaDto Corte(CorteDto dto, short idEmpresa, int idUsuario,List<VentaCorteAnticipoEC> cortes,UnidadAlmacenGas estacion)
         {
             var idOrden = orden(cortes);
@@ -96,6 +88,13 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.PuntoVenta = estacion.Numero;
             adapter.FechaAplicacion = dto.Fecha;
             return GasServicio.Corte(adapter);
+        }
+        public static int ObtenerIdCamioneta(int idUsuario)
+        {
+            var chofis = OperadorChoferServicio.ObtenerPorUsuario(idUsuario);
+            var puntoVenta = PuntoVentaServicio.BuscarPorOperadorChofer(chofis.IdOperadorChofer);
+
+            return puntoVenta.ToList().FirstOrDefault(x => x.IdOperadorChofer.Equals(chofis.IdOperadorChofer)).UnidadesAlmacen.IdCamioneta ?? 0;
         }
     }
 }

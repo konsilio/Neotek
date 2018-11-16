@@ -23,13 +23,8 @@
 </script>
 <script src="~/assets/plugins/bootstrap-notify/bootstrap-notify.js"></script>
 <script src="~/assets/js/pages/ui/notifications.js"></script>
-<script type="text/javascript">
-    var message = '@ViewBag.Msj';
-    var tipo = '@ViewBag.Tipo';
-    if (message != '') {
-        $(window).on("load", showNotification(tipo, message, 'top', 'center', '', ''));
-    }
-</script>
+
+
 @using (Html.BeginForm((ViewBag.EsEdicion == null) ? "Crear" : "GuardaEdicionEmpresa", "Empresas", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <section class="content home">
@@ -83,6 +78,21 @@
                         </div>
                     </div>
                 </div>
+                @if (ViewBag.MessageError != null)
+                {
+                    <div class="row clearfix">
+                        <div id="divMensajeError" class="container">
+                            <div class="alert alert-danger">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-block"></i>
+                                </div>
+                                <strong>
+                                    <label>@ViewBag.MessageError</label>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                }
                 <div class="row clearfix">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="card">
@@ -401,21 +411,7 @@
                         </div>
                     </div>
                 </div>
-                @if (ViewBag.MessageError != null)
-                {
-                    <div class="row clearfix">
-                        <div id="divMensajeError" class="container">
-                            <div class="alert alert-danger">
-                                <div class="alert-icon">
-                                    <i class="zmdi zmdi-block"></i>
-                                </div>
-                                <strong>
-                                    <label>@ViewBag.MessageError</label>
-                                </strong>
-                            </div>
-                        </div>
-                    </div>
-                }
+            
             </div>
         </div>
     </section>

@@ -989,9 +989,9 @@ public class Lisener{
         RestClient restClient = retrofit.create(RestClient.class);
         Call<RespuestaPuntoVenta> call = restClient.pagar(
                 ventaDTO,
-                esCamioneta,
+                /*esCamioneta,
                 esEstacion,
-                esPipa,
+                esPipa,*/
                 token,
                 "application/json"
         );

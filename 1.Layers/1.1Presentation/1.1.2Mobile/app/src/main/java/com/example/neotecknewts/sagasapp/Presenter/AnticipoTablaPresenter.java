@@ -2,6 +2,8 @@ package com.example.neotecknewts.sagasapp.Presenter;
 
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosEstacionesDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
 public interface AnticipoTablaPresenter {
@@ -16,4 +18,8 @@ public interface AnticipoTablaPresenter {
     void onError(Object ob);
 
     void Corte(CorteDTO corteDTO, SAGASSql sagasSql, String token);
+
+    void getAnticipos(String token, int IdEstacion,boolean esAnticipos);
+
+    void onSuccessList(RespuestaEstacionesVentaDTO data);
 }

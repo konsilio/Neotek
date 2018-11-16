@@ -4,6 +4,10 @@ using Sagas.MainModule.Entidades;
 using Application.MainModule.DTOs.Mobile;
 using System;
 using Application.MainModule.DTOs.Respuesta;
+using Application.MainModule.Servicios.Almacenes;
+using Application.MainModule.Servicios.Catalogos;
+using Application.MainModule.Servicios.Mobile;
+using Application.MainModule.Servicios.Seguridad;
 
 namespace Application.MainModule.AdaptadoresDTO.Mobile
 {
@@ -93,9 +97,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                     Subtotal = concepto.Subtotal,
                     IdProducto = concepto.IdProducto,
                     DescuentoTotal = concepto.Descuento,
-                    CantidadLt = concepto.LitrosDespachados,
-                    
-                });
+                    CantidadLt = concepto.LitrosDespachados,  
+                    CantidadKg = CalcularGasServicio.ObtenerKilogramosDesdeLitros(concepto.LitrosDespachados, EmpresaServicio.Obtener(idEmpresa).FactorLitrosAKilos),
+            });
                 idOrdenDetalle++;
             }
             return list;
@@ -139,12 +143,28 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             List<DatosGasVentaDto> list = new List<DatosGasVentaDto>();
             foreach (var cilindro in cilindros)
             {
-                list.Add(new DatosGasVentaDto()
+                var IdCamioneta = VentaServicio.ObtenerIdCamioneta(TokenServicio.ObtenerIdUsuario());
+                if (IdCamioneta != 0)
                 {
-                    Nombre = "Cilindro "+ cilindro.CapacidadKg,
-                    PrecioUnitario =cilindro.Precio,
-                    Id = cilindro.IdCilindro
-                });
+                    list.Add(new DatosGasVentaDto()
+                    {
+                        Nombre = "Cilindro " + cilindro.CapacidadKg,
+                        PrecioUnitario = cilindro.Precio,
+                        Id = cilindro.IdCilindro,                        
+                        Existencia = cilindro.CilindrosCamionetas.FirstOrDefault(x => x.IdCilindro.Equals(cilindro.IdCilindro) && x.IdCamioneta.Equals(IdCamioneta)).Cantidad
+                    });
+                }
+                else
+                {
+
+                    list.Add(new DatosGasVentaDto()
+                    {
+                        Nombre = "Cilindro " + cilindro.CapacidadKg,
+                        PrecioUnitario = cilindro.Precio,
+                        Id = cilindro.IdCilindro,
+                        
+                    });
+                }
             }
             return list;
         }
