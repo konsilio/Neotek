@@ -212,8 +212,10 @@ namespace Application.MainModule.Flujos
             adapter.FechaAplicacion = venta.Fecha;
 
             if (!venta.SinNumero)
+            {
                 adapter.IdCliente = venta.IdCliente;
-
+                adapter.RFC = cliente.Rfc;
+            }
             return PuntoVentaServicio.InsertMobile(adapter);
         }
 
