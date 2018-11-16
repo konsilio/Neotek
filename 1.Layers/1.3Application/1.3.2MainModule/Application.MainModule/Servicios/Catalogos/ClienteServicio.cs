@@ -97,5 +97,10 @@ namespace Application.MainModule.Servicios.Catalogos
                 MensajesError = new List<string>() { mensaje },
             };
         }
+
+        public static Cliente BuscarClientePorRFC(string rfc)
+        {
+            return new ClientesDataAccess().Buscar(rfc);
+        }
     }
 }

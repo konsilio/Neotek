@@ -56,16 +56,20 @@ namespace Application.MainModule.Servicios.AccesoADatos
 
         public Cliente Buscar(ClienteDTO cliente)
         {
-            return uow.Repository<Cliente>().GetSingle(
+
+            var respuesta = uow.Repository<Cliente>().GetSingle(
                 x =>
                 x.Nombre.Equals(cliente.Nombre) &&
                 x.Apellido1.ToLower().Equals(cliente.Apellido1) &&
                 x.Apellido2.ToLower().Equals(cliente.Apellido2) &&
                 x.Telefono.Equals(cliente.TelefonoFijo) &&
-                x.Celular.Equals(cliente.Celular) &&
-                x.IdTipoPersona.Equals(cliente.IdTipoPersona) &&
-                x.IdRegimenFiscal.Equals(cliente.IdTipoRegimen)
+                x.Celular.Equals(cliente.Celular)
+                && !x.Telefono.Equals(null)
+                && !x.Celular.Equals(null) 
+                && !x.Nombre.Equals(null)
+                && !x.Apellido2.Equals(null)
                 );
+            return respuesta;
         }
 
         public List<Cliente> BuscadorClientes(string criterio,short idEmpresa)
@@ -204,6 +208,10 @@ namespace Application.MainModule.Servicios.AccesoADatos
                 }
             }
             return _respuesta;
+        }
+        public object Buscar(string rfc)
+        {
+            return uow.Repository<Cliente>().GetSingle(x => x.Rfc.Equals(rfc));
         }
     }
 }
