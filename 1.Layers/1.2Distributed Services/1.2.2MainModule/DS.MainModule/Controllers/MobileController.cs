@@ -59,6 +59,7 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.ObtenerMenu(), Request);
         }
 
+
         [Route("obtener/medidores")]
         public HttpResponseMessage GetObtenerMedidores()
         {

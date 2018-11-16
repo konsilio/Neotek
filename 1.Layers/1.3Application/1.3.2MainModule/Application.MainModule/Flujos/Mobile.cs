@@ -164,11 +164,11 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto registrarCliente(ClienteDTO cliente)
         {
-            var resp = ClientesServicio.EvaluarCliente(cliente);
-            if (resp.IdCliente!=0)
-                return ClientesServicio.Modificar(cliente,TokenServicio.ObtenerIdEmpresa());
-            else
-                return ClientesServicio.Registar(cliente,TokenServicio.ObtenerIdEmpresa());
+            //var resp = ClientesServicio.EvaluarCliente(cliente);
+           // if (resp.IdCliente!=0)
+           //     return ClientesServicio.Modificar(cliente,TokenServicio.ObtenerIdEmpresa());
+            //else
+               return ClientesServicio.Registar(cliente,TokenServicio.ObtenerIdEmpresa());
         }
 
         public DatosClientesDto BuscadorClientes(string criterio)
@@ -211,8 +211,12 @@ namespace Application.MainModule.Flujos
             adapter.ClienteConCredito = venta.TieneCredito;
             adapter.FechaAplicacion = venta.Fecha;
 
-            if (!venta.SinNumero)
-                adapter.IdCliente = venta.IdCliente;
+            if (!venta.SinNumero || venta.IdCliente==0)
+            {
+                Cliente clienteGenerico = ClienteServicio.BuscarClientePorRFC("XAXX010101000");
+                adapter.IdCliente = clienteGenerico.IdCliente;
+                adapter.RFC = clienteGenerico.Rfc;
+            }
 
             return PuntoVentaServicio.InsertMobile(adapter);
         }
