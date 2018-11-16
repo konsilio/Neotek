@@ -36,8 +36,8 @@
                                                 <label for="txtNomC">
                                                     Nombre Comercial:*
                                                 </label>
-                                                <input type="text" name="NombreComercial" value="@ViewBag.Empresas[0].NombreComercial" readonly="readonly" id="NombreComercial" class="form-control" />
-                                                <input type="text" name="IdEmpresa" hidden="hidden" value="@ViewBag.Empresas[0].IdEmpresa" readonly="readonly" id="IdEmpresa" class="form-control" />
+                                                <input type="text" name="NombreComercial" value="@ViewBag.Empresas.NombreComercial" readonly="readonly" id="NombreComercial" class="form-control" />
+                                                <input type="text" name="IdEmpresa" hidden="hidden" value="@ViewBag.Empresas.IdEmpresa" readonly="readonly" id="IdEmpresa" class="form-control" />
                                             </div>
                                         </div>
                                     </div>
@@ -60,15 +60,15 @@
                                                 <label for="txtfactlk">
                                                     Factor de conversión de litros a kilogramos:*
                                                 </label>
-                                                <input type="text" name="FactorLitrosAKilos" value="@ViewBag.Empresas[0].FactorLitrosAKilos" id="txtfactlk" class="form-control" />
+                                                <input type="text" name="FactorLitrosAKilos" value="@ViewBag.Empresas.FactorLitrosAKilos" id="txtfactlk" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-lg-6 col-md-6 col-sm-6">
                                                 <label for="txtInv">
-                                                    % Inventario sano (limite Inferior):*
+                                                    % Inventario sano (límite Inferior):*
                                                 </label>
-                                                <input type="text" name="InventarioSano" value="@ViewBag.Empresas[0].InventarioSano" id="txtInv" class="form-control" />
+                                                <input type="text" name="InventarioSano" value="@ViewBag.Empresas.InventarioSano" id="txtInv" class="form-control" />
                                             </div>
                                         </div>
                                     </div>
@@ -80,7 +80,7 @@
                                                 <label for="txtfactgl">
                                                     Factor de conversión de galón litros:*
                                                 </label>
-                                                <input type="text" name="FactorGalonALitros" value="@ViewBag.Empresas[0].FactorGalonALitros" id="txtfactgl" class="form-control" />
+                                                <input type="text" name="FactorGalonALitros" value="@ViewBag.Empresas.FactorGalonALitros" id="txtfactgl" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -88,7 +88,7 @@
                                                 <label for="txtInv">
                                                     % Inventario crítico (límite Superior):*
                                                 </label>
-                                                <input type="text" name="InventarioCrítico" value="@ViewBag.Empresas[0].InventarioCrítico" id="txtInvc" class="form-control" />
+                                                <input type="text" name="InventarioCrítico" value="@ViewBag.Empresas.InventarioCrítico" id="txtInvc" class="form-control" />
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
                                                     Factor de conversión de litros a kilogramos
                                                     (En compra de gas):*
                                                 </label>
-                                                <input type="text" name="FactorCompraLitroAKilos" value="@ViewBag.Empresas[0].FactorCompraLitroAKilos" id="txtfact3" class="form-control" />
+                                                <input type="text" name="FactorCompraLitroAKilos" value="@ViewBag.Empresas.FactorCompraLitroAKilos" id="txtfact3" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -110,7 +110,7 @@
                                                     $ Cantidad máxima de Remanente
                                                     para la gasera
                                                 </label>
-                                                <input type="text" name="MaxRemaGaseraMensual" value="@ViewBag.Empresas[0].MaxRemaGaseraMensual" id="txtCant" class="form-control" />
+                                                <input type="text" name="MaxRemaGaseraMensual" value="@ViewBag.Empresas.MaxRemaGaseraMensual" id="txtCant" class="form-control" />
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +122,7 @@
                                                 <label for="txtfactgl">
                                                     Factor de transporte de gas:*
                                                 </label>
-                                                <input type="text" name="FactorFleteGas" value="@ViewBag.Empresas[0].FactorFleteGas" id="txtfactT" class="form-control" />
+                                                <input type="text" name="FactorFleteGas" value="@ViewBag.Empresas.FactorFleteGas" id="txtfactT" class="form-control" />
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -130,7 +130,7 @@
                                                 <label for="txtInv">
                                                     Cierre de inventario(Hora)
                                                 </label>
-                                                <input type="text" name="CierreInventario" id="txtCE" value="@ViewBag.Empresas[0].CierreInventario" class="form-control" />
+                                                <input type="text" name="CierreInventario" id="txtCE" value="@ViewBag.Empresas.CierreInventarioS" class="form-control" />
                                             </div>
                                         </div>
                                     </div>

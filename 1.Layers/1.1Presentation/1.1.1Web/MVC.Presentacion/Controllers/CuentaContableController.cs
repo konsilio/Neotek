@@ -66,7 +66,7 @@ namespace MVC.Presentacion.Controllers
                         model.Numero = string.Empty;
                         model.Descripcion = string.Empty;
                         ViewBag.Empresas = CatalogoServicio.Empresas(token);
-                        return View("CuentaContable", CatalogoServicio.InitCtaContable(token));
+                        return RedirectToAction("CuentaContable");
                     }
                     else
                     {

@@ -47,9 +47,9 @@ namespace MVC.Presentacion.App_Code
                     string path = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
                     string destinationFolder = ConfigurationManager.AppSettings["GuardarLogoEmpresa"];
                     string destinationFolderSave = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]); //1.0
-                     //string destinationFolderSave = Convertir.PhysicalPathToUrlPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
-                    //C:\\Users\\Muhammad shahid\\Documents\\Visual Studio 2013\\Projects\\WebApplication_MVC1\\WebApplication\\misc\\flowers.jpg
-                    //Checking file is available to save.  
+                                                                                                                                      //string destinationFolderSave = Convertir.PhysicalPathToUrlPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
+                                                                                                                                      //C:\\Users\\Muhammad shahid\\Documents\\Visual Studio 2013\\Projects\\WebApplication_MVC1\\WebApplication\\misc\\flowers.jpg
+                                                                                                                                      //Checking file is available to save.  
                     if (UrlLogotipo180px != null)
                     {
                         string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo180px.FileName));
@@ -85,7 +85,7 @@ namespace MVC.Presentacion.App_Code
             return Objemp;
         }
 
-        public static EmpresaDTO guardarLogosEmpresaDto(EmpresaDTO Objemp, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px)
+        public static EmpresaModel guardarLogosEmpresaDto(EmpresaModel Objemp, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px)
         {
             if (UrlLogotipo180px != null || UrlLogotipo500px != null || UrlLogotipo1000px != null)
             {
@@ -139,7 +139,7 @@ namespace MVC.Presentacion.App_Code
             agente.GuardarEmpresaConfiguracion(cc, tkn);
             return agente._RespuestaDTO;
         }
-        public static RespuestaDTO ActualizaEdicionEmpresa(EmpresaDTO cc, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px, string tkn)
+        public static RespuestaDTO ActualizaEdicionEmpresa(EmpresaModel cc, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px, string tkn)
         {
             guardarLogosEmpresaDto(cc, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px);
             var agente = new AgenteServicio();
@@ -161,8 +161,9 @@ namespace MVC.Presentacion.App_Code
         //consulta empresa mediante id
         public static EmpresaModel FiltrarEmpresa(EmpresaModel model, int id, string tkn)
         {
-            EmpresaModel newList = getModel(Empresas(tkn).Where(x => x.IdEmpresa == id).ToList());          
-                model = newList;
+            EmpresaModel newList = getModel(Empresas(tkn).Where(x => x.IdEmpresa == id).ToList());
+            model = newList;
+            model.CierreInventarioS = model.CierreInventario.ToShortTimeString();
             return model;
         }
 
@@ -286,7 +287,7 @@ namespace MVC.Presentacion.App_Code
 
         public static RespuestaDTO AgregarRolAlUsuario(UsuarioRolModel cc, string tkn)
         {
-          //  AgregarIdRolToList(cc, tkn);
+            //  AgregarIdRolToList(cc, tkn);
             var agente = new AgenteServicio();
             agente.GuardarRolesAsig(cc, tkn);
             return agente._RespuestaDTO;
@@ -812,7 +813,7 @@ namespace MVC.Presentacion.App_Code
         public static List<RolDto> ObtenerRoles(string token, short emp)
         {
             var agente = new AgenteServicio();
-            agente.BuscarRoles(token,emp);
+            agente.BuscarRoles(token, emp);
             return agente._lstaAllRoles;
         }
 
@@ -1119,9 +1120,9 @@ namespace MVC.Presentacion.App_Code
         public static List<RolCompras> ObtenerRolesCom(string token)
         {
             var agente = new AgenteServicio();
-            agente.BuscarRolesCompras(token);           
+            agente.BuscarRolesCompras(token);
             return agente._lstaRolesCom;
-           
+
         }
         public static List<RolMovilCompra> ObtenerRolesMovilCompra(string token)
         {
@@ -1165,7 +1166,7 @@ namespace MVC.Presentacion.App_Code
             if (cc.ListaRoles != null)
             {
                 //AddPermisosRoles(cc, xroles);
-               // agente.GuardarPermisos(xroles, tkn);
+                // agente.GuardarPermisos(xroles, tkn);
                 agente.GuardarPermisos(cc.ListaRoles, tkn);
             }
 

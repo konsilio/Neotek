@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MVC.Presentacion.Models.Catalogos
 {
-
+    [Serializable]
     public class EmpresaDTO 
     {
         public short IdEmpresa { get; set; }
@@ -49,8 +49,7 @@ namespace MVC.Presentacion.Models.Catalogos
         public decimal FactorGalonALitros { get; set; }
         public decimal FactorCompraLitroAKilos { get; set; }
         public decimal FactorFleteGas { get; set; }
-        public string UrlLogotipoMenu { get; set; }
-        public string UrlLogotipoLogin { get; set; }
+
         public string UrlLogotipo180px { get; set; }
         public string UrlLogotipo500px { get; set; }
         public string UrlLogotipo1000px { get; set; }

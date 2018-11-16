@@ -225,7 +225,7 @@
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-md-6">
-                                    <b>Banco</b>
+                                    <b>Banco *</b>
                                     <select name="IdBanco" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var lst in ViewBag.Bancos)
                                         {
@@ -250,7 +250,7 @@
                             </div>
                             <div class="row clearfix">
                                 <div class="col-md-6">
-                                    <b>Forma de pago</b>
+                                    <b>Forma de pago *</b>
                                     <select name="IdFormaDePago" class="form-control selectpicker show-tick" data-live-search="true">
                                         @foreach (var lst in ViewBag.FormasPago)
                                         {
@@ -290,7 +290,7 @@
                                         <b>Nombre del Contacto</b>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="zmdi zmdi-account-circle"></i></span>
-                                            @Html.TextBoxFor(m => m.Persona1, new { @class = "form-control", @placeholder = "Nombre del primer contacto" })
+                                            @Html.TextBoxFor(m => m.Persona1, new { @class = "form-control", @placeholder = "Nombre del primer contacto" }) *
                                         </div>
                                         <div>
                                             @Html.ValidationMessageFor(m => m.Persona1, "", new { @class = "alert-danger" })
@@ -316,7 +316,7 @@
                                         <b>Teléfono</b>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="zmdi zmdi-phone"></i></span>
-                                            @Html.TextBoxFor(m => m.Telefono1, new { @class = "form-control mobile-phone-number", @placeholder = "Ej: +00 (000) 000-00-00" })
+                                            @Html.TextBoxFor(m => m.Telefono1, new { @class = "form-control mobile-phone-number", @placeholder = "Ej: +00 (000) 000-00-00" }) *
                                         </div>
                                         <div>
                                             @Html.ValidationMessageFor(m => m.Telefono1, "", new { @class = "alert-danger" })

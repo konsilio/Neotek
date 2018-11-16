@@ -52,33 +52,20 @@ namespace MVC.Presentacion.Controllers
                 TempData["RespuestaDTOError"] = CatalogoServicio.SinPermisos();
                 return RedirectToAction("Index");
             }
-
             //Se obtienen los paises         
             ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tok);
             //Se obtienen los estados 
             ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tok);
-
-            //if (TempData["RespuestaDTOError"] != null) ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTOError"]);
-            if (!string.IsNullOrEmpty(msj))
-            {
-                ViewBag.Msj = msj;
-                if (!(bool)TempData["RespuestaDTO"])
-                    ViewBag.Tipo = "alert-danger";
-                else
-                    ViewBag.Tipo = "alert-success";
-                //ViewBag.Mensaje = ((RespuestaDTO)TempData["RespuestaDTO"]).Mensaje;
-            }
-            else
-                ViewBag.Tipo = "alert-success";
             if (TempData["model"] != null)
             {
-                //ViewBag.Empresas = TempData["model"];                
+                if (TempData["RespuestaDTO"] != null) ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
                 ViewBag.EsEdicion = null;
                 return View((EmpresaModel)TempData["model"]);
             }
             if (TempData["modelEditar"] != null)
             {
-                //ViewBag.Empresas = TempData["model"];                
+                //ViewBag.Empresas = TempData["model"];   
+                if (TempData["RespuestaDTO"] != null) ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
                 ViewBag.EsEdicion = true;
                 return View((EmpresaModel)TempData["modelEditar"]);
             }
@@ -91,8 +78,7 @@ namespace MVC.Presentacion.Controllers
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
             _tok = Session["StringToken"].ToString();
-
-            var respuesta = CatalogoServicio.create(Objemp, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
+                        var respuesta = CatalogoServicio.create(Objemp, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
 
             if (respuesta.Exito)
             {
@@ -104,9 +90,8 @@ namespace MVC.Presentacion.Controllers
             {
                 //TempData["RespuestaDTO"] = respuesta;
                 var ms =  Validar(respuesta);
-                TempData["model"] = Objemp;
-                TempData["modelEditar"] = null;
-                TempData["RespuestaDTO"] = respuesta.Exito;
+                TempData["model"] = Objemp;            
+                TempData["RespuestaDTO"] = respuesta;
                 return RedirectToAction("Nueva",  new { Objemp, msj = ms});
             }
         }
@@ -135,9 +120,9 @@ namespace MVC.Presentacion.Controllers
             EmpresaModel em = new EmpresaModel();
             TempData["modelEditar"] = CatalogoServicio.FiltrarEmpresa(em, id, _tkn);
             //Se obtienen los paises         
-            ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
-            //Se obtienen los estados 
-            ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
+            //ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
+            ////Se obtienen los estados 
+            //ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
             //return View("Nueva", TempData["modelEditar"]);
             return RedirectToAction("Nueva");
         }
@@ -187,12 +172,10 @@ namespace MVC.Presentacion.Controllers
         }
 
         [HttpPost]
-        public ActionResult GuardaEdicionEmpresa(EmpresaDTO _Obj, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px)
+        public ActionResult GuardaEdicionEmpresa(EmpresaModel _Obj, HttpPostedFileBase UrlLogotipo180px, HttpPostedFileBase UrlLogotipo500px, HttpPostedFileBase UrlLogotipo1000px)
         {
             if (Session["StringToken"] == null) return RedirectToAction("Index", "Home", AutenticacionServicio.InitIndex(new Models.Seguridad.LoginModel()));
-
             _tok = Session["StringToken"].ToString();
-
             var respuesta = CatalogoServicio.ActualizaEdicionEmpresa(_Obj, UrlLogotipo180px, UrlLogotipo500px, UrlLogotipo1000px, _tok);
 
             if (respuesta.Exito)
@@ -204,8 +187,9 @@ namespace MVC.Presentacion.Controllers
 
             else
             {
-                TempData["RespuestaDTOError"] = respuesta;
-                return RedirectToAction("Nueva", _Obj);
+                TempData["RespuestaDTO"] = respuesta;
+                TempData["modelEditar"] = _Obj;
+                return RedirectToAction("Nueva");
             }
         }
         private string Validar(RespuestaDTO Resp = null)
