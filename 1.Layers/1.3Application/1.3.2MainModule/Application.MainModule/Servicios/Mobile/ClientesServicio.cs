@@ -57,7 +57,6 @@ namespace Application.MainModule.Servicios.Mobile
         public static DatosClientesDto BuscadorClientes(string criterio)
         {
             var clientes =  ClienteServicio.BuscadorClientes(criterio);
-
             return ClienteAdapter.FromDTO(clientes); 
         }
     }

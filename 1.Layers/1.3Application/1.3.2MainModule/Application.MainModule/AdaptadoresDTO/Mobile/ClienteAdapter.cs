@@ -47,6 +47,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
 
         private static ClienteDTO FormDTO(Cliente cliente)
         {
+
             return new ClienteDTO()
             {
                 IdCliente = cliente.IdCliente,
@@ -57,7 +58,9 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 TelefonoFijo = cliente.Telefono,
                 Celular = cliente.Celular,
                 IdTipoRegimen = cliente.IdRegimenFiscal.Value,
-                IdTipoPersona = cliente.IdTipoPersona.Value
+                IdTipoPersona = cliente.IdTipoPersona.Value,
+                RFC = cliente.Rfc,
+                Credito = (cliente.limiteCreditoDias <= 0 && cliente.limiteCreditoMonto > 0) ? true : false
             };
         }
     }

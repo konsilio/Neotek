@@ -1,5 +1,7 @@
 package com.example.neotecknewts.sagasapp.Activity;
 
+import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
+
 public interface AnticipoTablaView {
     void VerificarCampos();
 
@@ -14,4 +16,6 @@ public interface AnticipoTablaView {
     void onSuccessAndroid();
 
     void onError(Object ob);
+
+    void onSuccessList(RespuestaEstacionesVentaDTO data);
 }

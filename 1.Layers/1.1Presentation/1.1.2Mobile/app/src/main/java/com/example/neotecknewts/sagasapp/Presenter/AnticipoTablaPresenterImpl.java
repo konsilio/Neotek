@@ -5,6 +5,8 @@ import com.example.neotecknewts.sagasapp.Interactor.AnticipoTablaInteractor;
 import com.example.neotecknewts.sagasapp.Interactor.AnticipoTablaInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.AnticiposDTO;
 import com.example.neotecknewts.sagasapp.Model.CorteDTO;
+import com.example.neotecknewts.sagasapp.Model.DatosEstacionesDTO;
+import com.example.neotecknewts.sagasapp.Model.RespuestaEstacionesVentaDTO;
 import com.example.neotecknewts.sagasapp.R;
 import com.example.neotecknewts.sagasapp.SQLite.SAGASSql;
 
@@ -49,5 +51,17 @@ public class AnticipoTablaPresenterImpl implements AnticipoTablaPresenter {
     public void Corte(CorteDTO corteDTO, SAGASSql sagasSql, String token) {
         view.onShowProgress(R.string.message_cargando);
         interactor.Corte(corteDTO,sagasSql,token);
+    }
+
+    @Override
+    public void getAnticipos(String token,int idEstacion,boolean esAnticipos) {
+        view.onShowProgress(R.string.message_cargando);
+        interactor.getAnticipos(token,idEstacion,esAnticipos);
+    }
+
+    @Override
+    public void onSuccessList(RespuestaEstacionesVentaDTO data) {
+        view.HiddeProgress();
+        view.onSuccessList(data);
     }
 }

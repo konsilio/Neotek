@@ -20,6 +20,9 @@ public class ExistenciasDTO implements Serializable {
     @SerializedName("Nombre")
     private String Nombre;
 
+    @SerializedName("Cantidad")
+    private String cantidad;
+
     public int getId() {
         return Id;
     }
@@ -58,5 +61,12 @@ public class ExistenciasDTO implements Serializable {
 
     public void setNombre(String nombre) {
         Nombre = nombre;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad= cantidad;
+    }
+    public String getCantidad(){
+        return  this.cantidad;
     }
 }

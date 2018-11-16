@@ -23,5 +23,6 @@ namespace Application.MainModule.DTOs.Mobile
         public string TelefonoFijo { get; set; }
         public string RFC { get; set; }
         public string RazonSocial { get; set; }
+        public bool Credito { get; set; }
     }
 }

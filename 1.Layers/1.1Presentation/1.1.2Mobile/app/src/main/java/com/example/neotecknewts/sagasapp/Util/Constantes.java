@@ -43,11 +43,13 @@ public class Constantes {
     public static final String GET_LIST_EXISTENCIAS = "mobile/existencias/lista/{esGasLP}/{esCilindroConGas}/{esCilindro}";
     public static final String GET_CATALOGO_PRODUCTO = "mobile/catalogos/venta-gas/otros";
     public static final String POST_VENTA = "mobile/venta";
-    public static final String POST_ANTICIPO = "mobile/anticipo/";
+    public static final String POST_ANTICIPO = "mobile/anticipos";
     public static final String GET_CATALOGO_VENTAS_ESTACIONES = "mobile/catalogos/anticipo-y-corte/estaciones";
     public static final String GET_REPORTE = "mobile/reportes/reporte-dia/{fecha}/{idCAlmacenGas}";
-    public static final String POST_CORTE = " mobile/corte-de-caja";
+    public static final String POST_CORTE = "mobile/corte-de-caja";
     public static final String GET_CATALOGOS_VENTA_GAS = "mobile/catalogos/venta-gas/{esLP}/{esCilindroConGas}/{esCilindro}";
     public static final String GET_CATALOGOS_VENTA_OTROS = "mobile/catalogos/otros";
     public static final String GET_ORDEN_REFERENCIA = "mobile/ordenes/lista/ordenes/compra/{IdOrdenCompra}";
+    public static final String GET_CILINDROS_VENTA = "mobile/catalogos/venta-gas/catalgocilindros";
+    public static final String GET_CATALOGOS_ANTICIPOS_CORTE_LISTA = "mobile/catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}";
 }
