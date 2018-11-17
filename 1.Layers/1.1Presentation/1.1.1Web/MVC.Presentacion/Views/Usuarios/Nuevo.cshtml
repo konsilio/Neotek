@@ -8,7 +8,7 @@
 @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
 <link href="~/Resources/css/CreateForm.css" rel="stylesheet" />
 <script type="text/javascript">
-  $(function () {
+    $(function () {
         $('select').on('change', function () {
             if ($('#ddlPais').val() !== "1") {
                 $('#ddlEdo').parent().hide();
@@ -22,7 +22,7 @@
 
         });
 
-  });
+    });
 </script>
 @using (Html.BeginForm((ViewBag.IdUser == null) ? "GuardarUsuario" : "GuardaEdicionUsuario", "Usuarios", FormMethod.Post))
 {
@@ -336,8 +336,8 @@
                                                     }
                                                 }
                                             }
-
                                         </select>
+                                        @Html.ValidationMessageFor(m => m.IdPais, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">
@@ -348,32 +348,31 @@
 
 
                                         <select name="IdEstadoRep" id="ddlEdo" class="form-control selectpicker z-index show-tick" data-live-search="true">
-                                              @if (ViewBag.IdUser == null)
-                                              {
-                                                  foreach (var lst2 in ViewBag.ListaEstados)
-                                                  {
-                                                    <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
-                                                    }
-                                              }
-                                              else
+                                            @if (ViewBag.IdUser == null)
+                                            {
+                                                foreach (var lst2 in ViewBag.ListaEstados)
                                                 {
-                                                    foreach (var lst2 in ViewBag.ListaEstados)
-                                                    {
+                                                    <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                foreach (var lst2 in ViewBag.ListaEstados)
+                                                {
 
-                                                        if (ViewBag.IdUser[0].IdEstadoRep == lst2.IdEstadoRep)
-                                                        {
-                                                            <option value="@lst2.IdEstadoRep" selected>@lst2.Estado</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
-                                                        }
+                                                    if (ViewBag.IdUser[0].IdEstadoRep == lst2.IdEstadoRep)
+                                                    {
+                                                        <option value="@lst2.IdEstadoRep" selected>@lst2.Estado</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@lst2.IdEstadoRep">@lst2.Estado</option>
                                                     }
                                                 }
+                                            }
 
-
-                                              
                                         </select>
+                                        @Html.ValidationMessageFor(m => m.IdEstadoRep, "", new { @class = "alert-danger" })
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-3">

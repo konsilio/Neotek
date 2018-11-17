@@ -63,10 +63,10 @@ namespace MVC.Presentacion.Controllers
                 return View((EmpresaModel)TempData["model"]);
             }
             if (TempData["modelEditar"] != null)
-            {
-                //ViewBag.Empresas = TempData["model"];   
+            {              
                 if (TempData["RespuestaDTO"] != null) ViewBag.MessageError = Validar((RespuestaDTO)TempData["RespuestaDTO"]);
                 ViewBag.EsEdicion = true;
+                ViewBag.Empresa = TempData["modelEditar"];
                 return View((EmpresaModel)TempData["modelEditar"]);
             }
 
@@ -119,11 +119,7 @@ namespace MVC.Presentacion.Controllers
             string _tkn = Session["StringToken"].ToString();
             EmpresaModel em = new EmpresaModel();
             TempData["modelEditar"] = CatalogoServicio.FiltrarEmpresa(em, id, _tkn);
-            //Se obtienen los paises         
-            //ViewBag.ListaPaises = CatalogoServicio.GetPaises(_tkn);
-            ////Se obtienen los estados 
-            //ViewBag.ListaEstados = CatalogoServicio.GetEstados(_tkn);
-            //return View("Nueva", TempData["modelEditar"]);
+           
             return RedirectToAction("Nueva");
         }
 

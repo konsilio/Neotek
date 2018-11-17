@@ -164,6 +164,7 @@ namespace MVC.Presentacion.App_Code
             EmpresaModel newList = getModel(Empresas(tkn).Where(x => x.IdEmpresa == id).ToList());
             model = newList;
             model.CierreInventarioS = model.CierreInventario.ToShortTimeString();
+            model.IdEmpresa = (short)id;
             return model;
         }
 

@@ -87,7 +87,6 @@ namespace Application.MainModule.Servicios.Ventas
 
         public static decimal ObtenerSaldoActual(int puntoventa)//Movimientos
         {
-
             return new CajaGeneralDataAccess().Buscar(puntoventa).OrderByDescending(x => x.Orden).FirstOrDefault().Saldo;
 
         }
@@ -105,6 +104,113 @@ namespace Application.MainModule.Servicios.Ventas
 
             return value;//Descendingreturn new CajaGeneralDataAccess().Buscar(puntoventa).OrderBy(x => x.Orden).FirstOrDefault().Saldo;
 
+        }
+        public static decimal ObtenerUltimoSaldoActual(int puntoventa, DateTime fecha)//Movimientos
+        {
+            if (new CajaGeneralDataAccess().BuscarUltimoMovSaldo(puntoventa, fecha) != null)
+                return new CajaGeneralDataAccess().BuscarUltimoMovSaldo(puntoventa, fecha).Saldo;
+            else
+                return 0;
+        }
+
+        public static VentaPuntoDeVenta ObtenerUltimoSaldoEfectivo(int puntoventa, DateTime fecha)//VentaPuntoDeVenta-Efectivo
+        {
+               return new CajaGeneralDataAccess().BuscarUltimoMovimiento(puntoventa, fecha);          
+        }
+
+        public static decimal ObtenerSaldoActual(int puntoventa, string Tipo, DateTime fecha)//puntos de venta
+        {
+            decimal value = 0;
+            VentaPuntoDeVenta _Obj = ObtenerUltimoSaldoEfectivo(puntoventa, fecha);
+
+            if (Tipo == "TotalDia")
+            {
+                if (_Obj != null)
+                    value = _Obj.TotalDia;               
+            }
+        
+            if (Tipo == "TotalMes")
+            {
+                if (_Obj != null)
+                    value = _Obj.TotalMes;
+            }
+            if (Tipo == "TotalAnio")
+            {
+                if (_Obj != null)
+                    value = _Obj.TotalAnio;
+            }
+
+            if (Tipo == "TotalAcumDia")
+            {
+                if (_Obj != null)
+                    value = _Obj.TotalAcumDia;
+            }
+            if (Tipo == "TotalAcumMes")
+            {
+                if (_Obj != null)
+                    value = _Obj.TotalAcumMes;
+            }
+
+            if (Tipo == "TotalAcumAnio")
+            {
+                if (_Obj != null)
+                    value = _Obj.TotalAcumAnio;
+            }
+
+            if (Tipo == "IvaDia")
+            {
+                if (_Obj != null)
+                    value = _Obj.IvaDia;
+            }
+
+            if (Tipo == "IvaMes")
+            {
+                if (_Obj != null)
+                    value = _Obj.IvaMes;
+            }
+            if (Tipo == "IvaAnio")
+            {
+                if (_Obj != null)
+                    value = _Obj.IvaAnio;
+            }
+
+            if (Tipo == "SubtotalDia")
+            {
+                if (_Obj != null)
+                    value = _Obj.SubtotalDia;
+            }
+
+            if (Tipo == "SubtotalMes")
+            {
+                if (_Obj != null)
+                    value = _Obj.SubtotalMes;
+            }
+
+            if (Tipo == "SubtotalAnio")
+            {
+                if (_Obj != null)
+                    value = _Obj.SubtotalAnio;
+            }
+
+            if (Tipo == "DescuentoDia")
+            {
+                if (_Obj != null)
+                    value = _Obj.DescuentoDia;
+            }
+
+            if (Tipo == "DescuentoMes")
+            {
+                if (_Obj != null)
+                    value = _Obj.DescuentoMes;
+            }
+
+            if (Tipo == "DescuentoAnio")
+            {
+                if (_Obj != null)
+                    value = _Obj.DescuentoAnio;
+            }
+
+            return value;
         }
         public static decimal ObtenerSaldoActual(int puntoventa, int position, string Tipo, int p, short anio, byte mes, byte dia)//puntos de venta
         {
@@ -289,7 +395,7 @@ namespace Application.MainModule.Servicios.Ventas
             return value;
         }
 
-        public static decimal ObtenerUltimoSaldoDia(int puntoventa, int position, string Tipo, int p)//puntps de venta
+        public static decimal ObtenerUltimoSaldoDia(int puntoventa, int position, string Tipo, int p)//puntos de venta
         {
             // return new CajaGeneralDataAccess().BuscarPorPV(puntoventa).Where(x => x.Orden == (orden - 1)).FirstOrDefault().TotalDia;//.OrderByDescending(x => x.Orden).FirstOrDefault().TotalDia;
 

@@ -218,13 +218,13 @@
                                                                 <td>@prodReq.Aplicacion</td>
                                                                 <td>@prodReq.CentroCosto</td>
                                                                 <td>
-                                                                    <a ID="lbEdit" href="@Url.Action("Editar", "Requisicion" , new { id=prodReq.IdProducto })">
+                                                                    <a ID="lbEdit" href="@Url.Action("Editar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">edit</i>
-                                                                        <span class="icon-name"></span>
+                                                                        <span>Editar</span>
                                                                     </a>
-                                                                    <a ID="lbBorrar" href="@Url.Action("Borrar", "Requisicion" , new { id=prodReq.IdProducto })">
+                                                                    <a ID="lbBorrar" href="@Url.Action("Borrar", "Requisicion" , new { id=prodReq.IdProducto })" class="tip" role="button" aria-haspopup="true" aria-expanded="false">
                                                                         <i class="material-icons">delete</i>
-                                                                        <span class="icon-name"></span>
+                                                                        <span>Eliminar</span>
                                                                     </a>
                                                                 </td>
                                                             </tr>
@@ -279,7 +279,7 @@
                     <div class="modal-body">
                         <div class="body">
                             <div class="col-sm-12">
-                                <textarea name="MotivoCancela" class="form-control" Rows="5" placeholder="Cual es el motivo de la cancelacion..."></textarea>
+                                <textarea name="MotivoCancela" class="form-control" Rows="5" placeholder="Cual es el motivo de la cancelación..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -294,7 +294,7 @@
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="title" id="ModalConfirmacionLabel">¿Esta seguro?</h4>
+                        <h4 class="title" id="ModalConfirmacionLabel">¿Está seguro?</h4>
                     </div>
                     <div class="modal-footer">
                         @if (ViewBag.OtraAccion == null)
