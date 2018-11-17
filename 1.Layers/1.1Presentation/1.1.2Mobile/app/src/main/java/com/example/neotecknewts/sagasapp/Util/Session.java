@@ -57,6 +57,7 @@ public class Session {
 
     public static final String KEY_TIME_SESSION = "time";
 
+    public static final String KEY_ID_USUARIO = "id";
     // Constructor
     public Session(Context context){
         this._context = context;
@@ -66,7 +67,7 @@ public class Session {
 
 
     public void createLoginSession(String password, String email, String token, int idEmpresa,
-                                   String fb_token,String mensaje,String nombre){
+                                   String fb_token,String mensaje,String nombre,int idUsuario){
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -87,6 +88,8 @@ public class Session {
         editor.putString(KEY_NOMBRE,nombre);
 
         editor.putString(KEY_TIME_SESSION,new Date().toString());
+
+        editor.putInt(KEY_ID_USUARIO,idUsuario);
 
         // commit changes
         editor.commit();

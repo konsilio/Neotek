@@ -35,6 +35,9 @@ public class ClienteDTO extends RespuestaDTO implements Serializable {
     @SerializedName("RazonSocial")
     private String RazonSocial;
 
+    @SerializedName("Credito")
+    private boolean Credito;
+
     public int getIdCliente() {
         return IdCliente;
     }
@@ -113,5 +116,13 @@ public class ClienteDTO extends RespuestaDTO implements Serializable {
 
     public void setRazonSocial(String razonSocial) {
         RazonSocial = razonSocial;
+    }
+
+    public boolean isCredito() {
+        return Credito;
+    }
+
+    public void setCredito(boolean credito) {
+        Credito = credito;
     }
 }

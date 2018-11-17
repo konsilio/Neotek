@@ -66,6 +66,13 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ventaDTO.setRFC(
                         items.get(position).getRFC()
                 );
+                if(items.get(position).isCredito()) {
+                    ventaDTO.setCredito(true);
+                    ventaDTO.setTieneCredito(true);
+                }else{
+                    ventaDTO.setCredito(false);
+                    ventaDTO.setTieneCredito(false);
+                }
                 Intent intent = new Intent(view.getContext(),
                         VentaGasActivity.class);
                 intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);

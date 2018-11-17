@@ -52,6 +52,9 @@ public class VentaDTO implements Serializable {
     @SerializedName("RFC")
     private String RFC;
 
+    @SerializedName("TieneCredito")
+    private boolean TieneCredito;
+
     public String getFecha() {
         return Fecha;
     }
@@ -174,5 +177,13 @@ public class VentaDTO implements Serializable {
 
     public void setRFC(String RFC) {
         this.RFC = RFC;
+    }
+
+    public boolean isTieneCredito() {
+        return TieneCredito;
+    }
+
+    public void setTieneCredito(boolean tieneCredito) {
+        TieneCredito = tieneCredito;
     }
 }

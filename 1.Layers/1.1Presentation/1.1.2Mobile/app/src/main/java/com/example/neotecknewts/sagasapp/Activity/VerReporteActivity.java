@@ -34,6 +34,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,6 +78,7 @@ public class VerReporteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_reporte);
         Bundle bundle = getIntent().getExtras();
+        session = new Session(this);
         if(bundle!=null){
             EsReporteDelDia = bundle.getBoolean("EsReporteDelDia",false);
             EsRecargaEstacionInicial = bundle.getBoolean("EsRecargaEstacionInicial",
@@ -216,8 +218,6 @@ public class VerReporteActivity extends AppCompatActivity {
         });
         WVVerReporteActivityReporte.loadDataWithBaseURL(null, HtmlReporte,
                 "text/HTML", "UTF-8", null);
-
-        session = new Session(this);
     }
 
     private void GenerarReporte(VentaDTO ventaDTO) {
@@ -369,18 +369,26 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{iva}]",String.valueOf(ventaDTO.getIva()));
         StringReporte = StringReporte.replace("[{Total}]",String.valueOf(ventaDTO.getTotal()));
         HtmlReporte = HtmlReporte.replace("[{Total}]",String.valueOf(ventaDTO.getTotal()));
-        StringReporte = StringReporte.replace("[{Cambio}]",String.valueOf(ventaDTO.getCambio()));
-        HtmlReporte = HtmlReporte.replace("[{Cambio}]",String.valueOf(ventaDTO.getCambio()));
+        NumberFormat dformat = new DecimalFormat("#.####");
+        StringReporte = StringReporte.replace("[{Cambio}]",String.valueOf(
+                dformat.format(ventaDTO.getCambio())
+        ));
+        HtmlReporte = HtmlReporte.replace("[{Cambio}]",String.valueOf(
+                dformat.format(ventaDTO.getCambio())
+        ));
 
         StringReporte = StringReporte.replace("[{Folio-factura}]",ventaDTO.getFolioVenta());
         HtmlReporte = HtmlReporte.replace("[{Folio-factura}]",ventaDTO.getFolioVenta());
         StringReporte = StringReporte.replace("[{Folio-factura}]",ventaDTO.getFolioVenta());
         HtmlReporte = HtmlReporte.replace("[{Folio-factura}]",ventaDTO.getFolioVenta());
+
+        String nombre = session.getAttribute(Session.KEY_NOMBRE)==null?"":session.getAttribute(Session.KEY_NOMBRE);
+
         StringReporte = StringReporte.replace("[{Usuario}]",
-                ""
+                nombre
                 /*session.getAttribute(Session.KEY_NOMBRE)*/);
         HtmlReporte = HtmlReporte.replace("[{Usuario}]",
-                ""
+                nombre
                 /*session.getAttribute(Session.KEY_NOMBRE)*/);
         ;
     }
@@ -505,6 +513,13 @@ public class VerReporteActivity extends AppCompatActivity {
                 corteDTO.getNombreEstacion());
         StringReporte = StringReporte.replace("[{Estacion}]",
                 corteDTO.getNombreEstacion());
+
+        HtmlReporte = HtmlReporte.replace("[{Entrego-nombre}]]",
+                session.getAttribute(Session.KEY_NOMBRE)==null?"":session.getAttribute(Session.KEY_NOMBRE));
+        StringReporte = StringReporte.replace("[{Entrego-nombre}]",
+                session.getAttribute(Session.KEY_NOMBRE)==null?"":session.getAttribute(Session.KEY_NOMBRE));
+
+
     }
 
     private void GenerarReporteAnticipo() {
@@ -572,10 +587,10 @@ public class VerReporteActivity extends AppCompatActivity {
                 anticiposDTO.getAnticipar()));
         StringReporte = StringReporte.replace("[{Monto-anticipo}]","$"+String.valueOf(
                 anticiposDTO.getAnticipar()));
-        StringReporte = StringReporte.replace("[{Usuario-entrego}]",
-                "");
-        StringReporte = StringReporte.replace("[{Usuario-recibi}]",
-                "");
+        HtmlReporte = HtmlReporte.replace("[{Entrego-nombre}]]",
+                session.getAttribute(Session.KEY_NOMBRE)==null?"":session.getAttribute(Session.KEY_NOMBRE));
+        StringReporte = StringReporte.replace("[{Entrego-nombre}]",
+                session.getAttribute(Session.KEY_NOMBRE)==null?"":session.getAttribute(Session.KEY_NOMBRE));
     }
 
     private void GenerarReporteTraspasoPipa(TraspasoDTO traspasoDTO) {
