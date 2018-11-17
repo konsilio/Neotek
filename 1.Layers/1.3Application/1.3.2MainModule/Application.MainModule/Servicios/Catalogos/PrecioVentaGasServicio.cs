@@ -46,7 +46,10 @@ namespace Application.MainModule.Servicios.Catalogos
             List<PrecioVentaDTO> lPventas = AdaptadoresDTO.Catalogo.PrecioVentaGasAdapter.ToDTO(new PrecioVentaDataAccess().BuscarTodos(IdEmpresa));
             return lPventas;
         }
-
+        public static PrecioVenta ObtenerPrecioVigente(short idEmpresa)
+        {
+            return new PrecioVentaDataAccess().BuscarPrecioVentaVigente(idEmpresa);
+        }
         public static RespuestaDto Eliminar(PrecioVenta cteLoc)
         {
             return new PrecioVentaDataAccess().Eliminar(cteLoc);

@@ -209,7 +209,7 @@ namespace Application.MainModule.Servicios.AccesoADatos
             }
             return _respuesta;
         }
-        public object Buscar(string rfc)
+        public Cliente Buscar(string rfc)
         {
             return uow.Repository<Cliente>().GetSingle(x => x.Rfc.Equals(rfc));
         }

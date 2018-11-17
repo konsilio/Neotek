@@ -297,6 +297,11 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos),Request);
         }
+        [Route("consulta/precioventa/vigente")]
+        public HttpResponseMessage GetPreciosVentaVigente()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ObtenerPrecioVentaVigente());
+        }
         /// <summary>
         /// Permite retornar los catalogos de venta de gas 
         /// Flata ver donde se extrae
