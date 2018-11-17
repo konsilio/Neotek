@@ -2,6 +2,7 @@ package com.example.neotecknewts.sagasapp.Activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -119,8 +120,7 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(datos!=null) {
                     if(position>=0) {
-                        if(tipoPersonaDTO_Seleccionada.getRegimenes().size()<=0 &&
-                                SRegistroClienteActivityTipoPersona.getSelectedItem().toString().equals("Moral")
+                        if(tipoPersonaDTO_Seleccionada.getRegimenes().size()>0
                                 ) {
                             for (RegimenesDTO regimenDTO : tipoPersonaDTO_Seleccionada.getRegimenes()) {
                                 if (regimenDTO.getDescripcion().equals(parent.getItemAtPosition(position).toString())) {
@@ -145,6 +145,17 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
 
     private void colocarRegimen(TipoPersonaDTO tipo,boolean esMoral) {
         if(tipo.getRegimenes().size()>0 && esMoral){
+            lista_regimen_fiscal = new String[tipo.getRegimenes().size()];
+            for (int x = 0;x<tipo.getRegimenes().size();x++) {
+                lista_regimen_fiscal[x] = tipo.getRegimenes().get(x).getDescripcion();
+            }
+            SRegistroClienteActivityRegimenFiscal.setAdapter(new ArrayAdapter<>(
+                    this,
+                    R.layout.custom_spinner,
+                    lista_regimen_fiscal
+            ));
+        }
+        if(!esMoral){
             lista_regimen_fiscal = new String[tipo.getRegimenes().size()];
             for (int x = 0;x<tipo.getRegimenes().size();x++) {
                 lista_regimen_fiscal[x] = tipo.getRegimenes().get(x).getDescripcion();
@@ -310,6 +321,36 @@ public class RegistroClienteActivity extends AppCompatActivity implements Regist
 
     @Override
     public void setIdCliente(RespuestaClienteDTO data) {
-        //clienteDTO.setIdCliente();
+        clienteDTO.setIdCliente(data.getId());
+        ventaDTO.setIdCliente(data.getId());
+        ventaDTO.setNombre(clienteDTO.getNombre());
+        ventaDTO.setCredito(false);
+        ventaDTO.setSinNumero(false);
+        if(EsVentaCamioneta) {
+            Intent intent = new Intent(RegistroClienteActivity.this,
+                    VentaGasActivity.class);
+            intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa", EsVentaPipa);
+            intent.putExtra("ventaDTO", ventaDTO);
+            startActivity(intent);
+        }else if(EsVentaCarburacion){
+            Intent intent = new Intent(RegistroClienteActivity.this,
+                    PuntoVentaGasListaActivity.class);
+            intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa", EsVentaPipa);
+            intent.putExtra("ventaDTO", ventaDTO);
+            startActivity(intent);
+
+        }else  if (EsVentaPipa){
+            Intent intent = new Intent(RegistroClienteActivity.this,
+                    PuntoVentaGasListaActivity.class);
+            intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+            intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+            intent.putExtra("EsVentaPipa", EsVentaPipa);
+            intent.putExtra("ventaDTO", ventaDTO);
+            startActivity(intent);
+        }
     }
 }

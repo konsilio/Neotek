@@ -93,6 +93,12 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
             intent.putExtra("ventaDTO",ventaDTO);
             startActivity(intent);
         });
+        if(ventaDTO.isCredito()){
+            SPuntoVentaActivityCredito.setChecked(ventaDTO.isCredito());
+            ETPuntoVentaPagarActivityEfectivo.setVisibility(View.GONE);
+        }else{
+            ETPuntoVentaPagarActivityEfectivo.setVisibility(View.VISIBLE);
+        }
         BtnPuntoVentaPagarActivityConfirmar.setOnClickListener(v->{
             ventaDTO.setFactura(SPuntoVentaPagarActivityFactura.isChecked());
             ventaDTO.setCredito(SPuntoVentaActivityCredito.isChecked());
@@ -102,6 +108,7 @@ public class PuntoVentaPagarActivity extends AppCompatActivity implements PuntoV
                     double efectivio = Double.valueOf(ETPuntoVentaPagarActivityEfectivo
                             .getText().toString());
                     ventaDTO.setEfectivo(efectivio);
+                    ventaDTO.setCambio(ventaDTO.getEfectivo()-ventaDTO.getTotal());
                 }else{
                     error = true;
                     AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.AlertDialog);

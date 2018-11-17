@@ -36,4 +36,12 @@ public class PuntoVentaGasListaPresenterImpl implements PuntoVentaGasListaPresen
         view.onHideProgress();
         view.onSuccessListExistencia(data);
     }
+
+    @Override
+    public void getListaVenta(String token, boolean esGasLP, boolean esCilindroGas, boolean esCilindro) {
+        view.onShowProgress(R.string.message_cargando);
+        interactor.getListEstacionGas(
+                 token,  esGasLP,  esCilindroGas,  esCilindro
+        );
+    }
 }

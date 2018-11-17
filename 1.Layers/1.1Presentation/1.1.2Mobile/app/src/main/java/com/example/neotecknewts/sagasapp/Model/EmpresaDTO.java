@@ -4,113 +4,114 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by neotecknewts on 02/08/18.
  */
 
-public class EmpresaDTO {
-    @SerializedName("IdEmpresa")
+public class EmpresaDTO implements Serializable {
+    @SerializedName("<IdEmpresa>k__BackingField")
     private short IdEmpresa;
 
-    @SerializedName("EsAdministracionCentral")
+    @SerializedName("<EsAdministracionCentral>k__BackingField")
     private boolean EsAdministracionCentral;
 
-    @SerializedName("NombreComercial")
+    @SerializedName("<NombreComercial>k__BackingField")
     private String NombreComercial;
 
-    @SerializedName("FechaRegistro")
+    @SerializedName("<FechaRegistro>k__BackingField")
     private Date FechaRegistro;
 
-    @SerializedName("IdPais")
+    @SerializedName("<IdPais>k__BackingField")
     private byte IdPais;
 
-    @SerializedName("IdEstadoRep")
+    @SerializedName("<IdEstadoRep>k__BackingField")
     private Byte IdEstadoRep;
 
-    @SerializedName("EstadoProvincia")
+    @SerializedName("<EstadoProvincia>k__BackingField")
     private String EstadoProvincia;
 
-    @SerializedName("Municipio")
+    @SerializedName("<Municipio>k__BackingField")
     private String Municipio;
 
-    @SerializedName("CodigoPostal")
+    @SerializedName("<CodigoPostal>k__BackingField")
     private String CodigoPostal;
 
-    @SerializedName("Colonia")
+    @SerializedName("Colonia>k__BackingField")
     private String Colonia;
 
-    @SerializedName("Calle")
+    @SerializedName("<Calle>k__BackingField")
     private String Calle;
 
-    @SerializedName("NumExt")
+    @SerializedName("<NumExt>k__BackingField")
     private String NumExt;
 
-    @SerializedName("NumInt")
+    @SerializedName("<NumInt>k__BackingField")
     private String NumInt;
 
-    @SerializedName("Telefono1")
+    @SerializedName("<Telefono1>k__BackingField")
     private String Telefono1;
 
-    @SerializedName("Telefono2")
+    @SerializedName("<Telefono2>k__BackingField")
     private String Telefono2;
 
-    @SerializedName("Telefono3")
+    @SerializedName("Telefono3>k__BackingField")
     private String Telefono3;
 
-    @SerializedName("Celular1")
+    @SerializedName("<Celular1>k__BackingField")
     private String Celular1;
 
-    @SerializedName("Celular2")
+    @SerializedName("<Celular2>k__BackingField")
     private String Celular2;
 
-    @SerializedName("Celular3")
+    @SerializedName("<Celular3>k__BackingField")
     private String Celular3;
 
-    @SerializedName("Email1")
+    @SerializedName("<Email1>k__BackingField")
     private String Email1;
 
-    @SerializedName("Email2")
+    @SerializedName("<Email2>k__BackingField")
     private String Email2;
 
-    @SerializedName("Email3")
+    @SerializedName("<Email3>k__BackingField")
     private String Email3;
 
-    @SerializedName("SitioWeb1")
+    @SerializedName("<SitioWeb1>k__BackingField")
     private String SitioWeb1;
 
-    @SerializedName("SitioWeb2")
+    @SerializedName("<SitioWeb2>k__BackingField")
     private String SitioWeb2;
 
-    @SerializedName("SitioWeb3")
+    @SerializedName("<SitioWeb3>k__BackingField")
     private String SitioWeb3;
 
-    @SerializedName("Rfc")
+    @SerializedName("<Rfc>k__BackingField")
     private String Rfc;
 
-    @SerializedName("RazonSocial")
+    @SerializedName("<RazonSocial>k__BackingField")
     private String RazonSocial;
 
-    @SerializedName("FactorLitrosAKilos")
+    @SerializedName("<FactorLitrosAKilos>k__BackingField")
     private Double FactorLitrosAKilos;
 
-    @SerializedName("CierreInventario")
+    @SerializedName("<CierreInventario>k__BackingField")
     private Date CierreInventario;
 
-    @SerializedName("InventarioSano")
+    @SerializedName("<InventarioSano>k__BackingField")
     private byte InventarioSano;
 
-    @SerializedName("InventarioCrítico")
+    @SerializedName("<InventarioCrítico")
     private byte InventarioCrítico;
 
-    @SerializedName("MaxRemaGaseraMensual")
+    @SerializedName("<MaxRemaGaseraMensual>k__BackingField")
     private Double MaxRemaGaseraMensual;
 
-    @SerializedName("UrlLogotipoMenu")
+    @SerializedName("<UrlLogotipoMenu>k__BackingField")
     private String UrlLogotipoMenu;
 
-    @SerializedName("UrlLogotipoLogin")
+    @SerializedName("<UrlLogotipoLogin>k__BackingField")
     private String UrlLogotipoLogin;
 
     public short getIdEmpresa() {
