@@ -134,9 +134,9 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return _respuesta;
         }
 
-        public object BuscarVentasTipoPago(int idPuntoVenta, DateTime fecha, bool esCredito)
+        public List<VentaPuntoDeVenta> BuscarVentasTipoPago(int idPuntoVenta, DateTime fecha, bool esCredito)
         {
-            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.PuntoVenta.Equals(idPuntoVenta) && x.FechaRegistro.Equals(fecha) && x.VentaACredito.Equals(esCredito));
+            return uow.Repository<VentaPuntoDeVenta>().Get(x => x.PuntoVenta.Equals(idPuntoVenta) && x.FechaRegistro.Equals(fecha) && x.VentaACredito.Equals(esCredito)).ToList();
         }
 
         public RespuestaDto Eliminar(PuntoVenta cteL)

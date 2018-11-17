@@ -61,9 +61,22 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static VentaCajaGeneral FromDTO(AnticipoDto dto, short idEmpresa, Usuario usuario, PuntoVenta puntoVenta,OperadorChofer operador, Usuario entrega)
+        public static VentaCajaGeneral FromDTO(AnticipoDto dto, short idEmpresa, Usuario usuario, PuntoVenta puntoVenta,OperadorChofer operador, Usuario entrega,List<VentaPuntoDeVenta> deContado,List<VentaPuntoDeVenta> creditos)
         {
-
+            decimal deContadoTotal=0,creditoTotal=0;
+            decimal descuentoContado = 0, descuentoCredito = 0,descuentoTotal = 0;
+            foreach (var contado in deContado)
+            {
+                deContadoTotal += contado.Total;
+                descuentoContado += contado.Descuento;
+                descuentoTotal += contado.Descuento;
+            }
+            foreach (var credito in creditos)
+            {
+                creditoTotal += credito.Total;
+                descuentoCredito += credito.Descuento;
+                descuentoTotal += credito.Descuento;
+            }
             return new VentaCajaGeneral()
             {
                 IdCAlmacenGas = dto.IdCAlmacenGas,
@@ -77,15 +90,15 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdUsuarioEntrega = entrega.IdUsuario,
                 FolioOperacionDia = dto.ClaveOperacion,
                 VentaTotal = dto.Total,
-                VentaTotalContado = dto.Total,//cambiar
-                VentaTotalCredito = dto.Total,//cambiar
-                OtrasVentas = dto.Total,//Cambiar
+                VentaTotalContado = deContadoTotal,//cambiar
+                VentaTotalCredito = creditoTotal,//cambiar
+                OtrasVentas = 0,//Cambiar
                 DescuentoOtrasVentas = 0,
-                DescuentoCredito = 0,
-                DescuentoContado = 0,
+                DescuentoCredito = descuentoCredito,
+                DescuentoContado = descuentoContado,
                 DescuentoTotal = 0,
                 TodoCorrecto =false,
-                PuntoVenta = "",
+                PuntoVenta  = puntoVenta.UnidadesAlmacen.Numero,
                 OperadorChofer =  operador.Usuario.Nombre+" "+operador.Usuario.Apellido1+" "+operador.Usuario.Apellido2,
                 UsuarioEntrega = entrega.Nombre +" "+ entrega.Apellido1+" "+entrega.Apellido2,
                 UsuarioRecibe = usuario.Nombre + " " + usuario.Apellido1 + " " + usuario.Apellido2,
@@ -154,8 +167,22 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             };
         }
 
-        public static VentaCajaGeneral FromDTO(CorteDto dto, short idEmpresa, Usuario usuario, PuntoVenta puntoVenta, OperadorChofer operador, Usuario entrega)
+        public static VentaCajaGeneral FromDTO(CorteDto dto, short idEmpresa, Usuario usuario, PuntoVenta puntoVenta, OperadorChofer operador, Usuario entrega, List<VentaPuntoDeVenta> deContado, List<VentaPuntoDeVenta> creditos)
         {
+            decimal deContadoTotal = 0, creditoTotal = 0;
+            decimal descuentoContado = 0, descuentoCredito = 0,descuentoTotal =0 ;
+            foreach (var contado in deContado)
+            {
+                deContadoTotal += contado.Total;
+                descuentoContado += contado.Descuento;
+                descuentoTotal += contado.Descuento;
+            }
+            foreach (var credito in creditos)
+            {
+                creditoTotal += credito.Total;
+                descuentoCredito += credito.Descuento;
+                descuentoTotal += credito.Descuento;
+            }
             return new VentaCajaGeneral()
             {
                 IdCAlmacenGas = dto.IdCAlmacenGas,
@@ -169,15 +196,15 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 IdUsuarioEntrega = entrega.IdUsuario,
                 FolioOperacionDia = dto.ClaveOperacion,
                 VentaTotal = dto.Total,
-                VentaTotalContado = dto.Total,//cambiar
-                VentaTotalCredito = dto.Total,//cambiar
+                VentaTotalContado = creditoTotal,//cambiar
+                VentaTotalCredito = deContadoTotal,//cambiar
                 OtrasVentas = dto.Total,//Cambiar
                 DescuentoOtrasVentas = 0,
-                DescuentoCredito = 0,
-                DescuentoContado = 0,
-                DescuentoTotal = 0,
+                DescuentoCredito = descuentoCredito,
+                DescuentoContado = descuentoContado,
+                DescuentoTotal = descuentoTotal,
                 TodoCorrecto = false,
-                PuntoVenta = "",
+                PuntoVenta = puntoVenta.UnidadesAlmacen.Numero,
                 OperadorChofer = operador.Usuario.Nombre + " " + operador.Usuario.Apellido1 + " " + operador.Usuario.Apellido2,
                 UsuarioEntrega = entrega.Nombre + " " + entrega.Apellido1 + " " + entrega.Apellido2,
                 UsuarioRecibe = usuario.Nombre + " " + usuario.Apellido1 + " " + usuario.Apellido2,

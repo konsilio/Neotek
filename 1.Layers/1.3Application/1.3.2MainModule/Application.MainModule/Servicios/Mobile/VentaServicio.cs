@@ -51,7 +51,9 @@ namespace Application.MainModule.Servicios.Mobile
             var anticipo = GasServicio.Anticipo(adapter);
             if (anticipo.Exito)
             {
-                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, idEmpresa, usuario, PuntoVenta, operador, entrega);
+                var deContado = PuntoVentaServicio.ObtenerVentasContado(PuntoVenta.IdPuntoVenta, dto.Fecha);
+                var credito = PuntoVentaServicio.ObtenerVentasCredito(PuntoVenta.IdPuntoVenta, dto.Fecha);
+                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, idEmpresa, usuario, PuntoVenta, operador, entrega,deContado,credito);
                 return PuntoVentaServicio.InsertMobil(corteCajaGeneral);
             }
                 
