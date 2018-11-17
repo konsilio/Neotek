@@ -1,11 +1,16 @@
 package com.example.neotecknewts.sagasapp.Model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Date;
 
 public class AnticiposDTO extends RespuestaDTO implements Serializable {
+    @SerializedName("IdAnticipo")
+    @Expose
+    private int IdAnticipo;
+
     @SerializedName("IdEstacion")
     private int IdEstacion;
 
@@ -103,5 +108,13 @@ public class AnticiposDTO extends RespuestaDTO implements Serializable {
 
     public void setTiket(String tiket) {
         Tiket = tiket;
+    }
+
+    public int getIdAnticipo() {
+        return IdAnticipo;
+    }
+
+    public void setIdAnticipo(int idAnticipo) {
+        IdAnticipo = idAnticipo;
     }
 }

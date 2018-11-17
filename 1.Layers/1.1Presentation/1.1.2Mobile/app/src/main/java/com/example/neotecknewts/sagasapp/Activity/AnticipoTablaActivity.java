@@ -52,6 +52,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     ProgressDialog progressDialog;
     SAGASSql sagasSql;
     Tabla tabla;
+    RespuestaEstacionesVentaDTO datos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,12 +105,21 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
         SPAnticipoTablaActivityFechaCorte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                corteDTO.setFecha(new Date(adapterView.getItemAtPosition(i).toString()));
+                if(i>=0 && EsCorte) {
+                    if (datos != null) {
+                        for (int x = 0; x < datos.getFechasCorte().size(); x++) {
+                            if (datos.getFechasCorte().get(x).equals(
+                                    adapterView.getItemAtPosition(i).toString())) {
+                                corteDTO.setFecha(new Date(datos.getFechasCorte().get(x)));
+                            }
+                        }
+                    }
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                //corteDTO.setFecha(null);
+                corteDTO.setFecha(null);
             }
         });
 
@@ -251,6 +261,7 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
     @Override
     public void onSuccessList(RespuestaEstacionesVentaDTO data) {
         NumberFormat format = NumberFormat.getCurrencyInstance();
+        datos = data;
         if(data!=null){
             if (EsAnticipo){
                 if(data.getAnticipos().size()>0){
@@ -268,18 +279,23 @@ public class AnticipoTablaActivity extends AppCompatActivity implements Anticipo
                     for (int x=0;x<data.getCortes().size();x++){
                         elementos.add(new String[]{
                                 data.getCortes().get(x).getTiket()/*"201809180785236"*/,
-                                data.getAnticipos().get(x).getFecha().toString()/*"18/09/2018"*/,
-                                format.format(data.getAnticipos().get(x).getTotal())/*format.format(i*100.00)*/
+                                data.getCortes().get(x).getFecha()==null?"":data.getCortes().get(x).getFecha().toString()/*"18/09/2018"*/,
+                                format.format(data.getCortes().get(x).getTotal())/*format.format(i*100.00)*/
                         });
                         total += data.getCortes().get(x).getTotal();
                     }
                 }
                 if(data.getFechasCorte()!=null){
                     if(data.getFechasCorte().size()>0){
+                        String[] fechas = new String[data.getFechasCorte()
+                                .size()];
+                        for (int x=0; x<data.getFechasCorte().size();x++){
+                            fechas[x] = data.getFechasCorte().get(x);
+                        }
                         SPAnticipoTablaActivityFechaCorte.setAdapter(new ArrayAdapter<>(
-                                this,
+                             this,
                                 R.layout.custom_spinner,
-                                data.getFechasCorte().toArray()
+                                fechas
                         ));
                     }
                 }
