@@ -53,5 +53,5 @@ public class Constantes {
     public static final String GET_ORDEN_REFERENCIA = "mobile/ordenes/lista/ordenes/compra/{IdOrdenCompra}";
     public static final String GET_CILINDROS_VENTA = "mobile/catalogos/venta-gas/catalgocilindros";
     public static final String GET_CATALOGOS_ANTICIPOS_CORTE_LISTA = "mobile/catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}";
-    public static final String GET_PRECIO_VENTA = "mobile/consulta/precioventa/vigente"
+    public static final String GET_PRECIO_VENTA = "mobile/consulta/precioventa/vigente";
 }
