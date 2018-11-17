@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.AdaptadoresDTO.Mobile;
+using Application.MainModule.Servicios.Almacenes;
 
 namespace Application.MainModule.Servicios.Mobile
 {
@@ -21,14 +22,19 @@ namespace Application.MainModule.Servicios.Mobile
         {
             return GasServicio.EvaluarClaveOperacion(dto);
         }
-        public static RespuestaDto Anticipo(AnticipoDto dto,short idEmpresa,int idUsuario, List<VentaCorteAnticipoEC> anticipos,UnidadAlmacenGas estacion)
+        public static RespuestaDto Anticipo(AnticipoDto dto,short idEmpresa,Usuario usuario, List<VentaCorteAnticipoEC> anticipos,UnidadAlmacenGas estacion)
         {
             var idOrden = orden(anticipos);
             
             var puntos = PuntoVentaServicio.ObtenerIdEmp(idEmpresa);
             var PuntoVenta = puntos.Find(x => x.IdCAlmacenGas.Equals(dto.IdCAlmacenGas));
+            var almacen = AlmacenGasServicio.Obtener(PuntoVenta.IdCAlmacenGas);
+            var estaciones = EstacionCarburacionServicio.ObtenerTodas();
 
-            var adapter = AnticiposCortesAdapter.FromDto(dto, idEmpresa, idUsuario, PuntoVenta);
+            var adapter = AnticiposCortesAdapter.FromDto(dto, idEmpresa, usuario.IdUsuario, PuntoVenta);
+
+            var entrega = PuntoVenta.Empresa.Usuario.Single(x => x.EsAdministracionCentral);
+            var operador = PuntoVenta.OperadorChofer;
 
             adapter.Orden = (short)idOrden;
             adapter.FechaAplicacion = dto.Fecha;
@@ -42,9 +48,16 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.TipoOperacion = "Anticipo";
             adapter.IdTipoOperacion = 1;
             adapter.PuntoVenta = estacion.Numero;
-                      
+            var anticipo = GasServicio.Anticipo(adapter);
+            if (anticipo.Exito)
+            {
+                var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, idEmpresa, usuario, PuntoVenta, operador, entrega);
+                return PuntoVentaServicio.InsertMobil(corteCajaGeneral);
+            }
+                
             return GasServicio.Anticipo(adapter); 
         }
+
         public static int orden(List<VentaCorteAnticipoEC> anticipos)
         {
             if (anticipos != null)
