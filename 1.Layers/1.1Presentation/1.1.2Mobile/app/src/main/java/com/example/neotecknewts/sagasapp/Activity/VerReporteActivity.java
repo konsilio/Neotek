@@ -149,11 +149,11 @@ public class VerReporteActivity extends AppCompatActivity {
                 GenerarReporteCorteCaja();
             }
             if(EsVentaCamioneta || EsVentaCarburacion || EsVentaPipa){
-                if(EsVentaCamioneta) {
+                //if(EsVentaCamioneta) {
                     setTitle("Nota de venta");
                     ventaDTO = (VentaDTO) bundle.getSerializable("ventaDTO");
                     GenerarReporte(ventaDTO);
-                }
+                //}
             }
 
         }
@@ -323,10 +323,13 @@ public class VerReporteActivity extends AppCompatActivity {
         HtmlReporte = HtmlReporte.replace("[{Clave-venta}]",ventaDTO.getFolioVenta());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat fdate=
                 new SimpleDateFormat("dd/MM/yyyy");
-        StringReporte = StringReporte.replace("[{Fecha}]",ventaDTO.getFecha());
-        HtmlReporte = HtmlReporte.replace("[{Fecha}]",ventaDTO.getFecha());
-        StringReporte = StringReporte.replace("[{Hora}]",ventaDTO.getHora());
-        HtmlReporte = HtmlReporte.replace("[{Hora}]",ventaDTO.getHora());
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat tdate =
+                new SimpleDateFormat("HH:mm");
+        Date registro = new Date();
+        StringReporte = StringReporte.replace("[{Fecha}]",fdate.format(registro));
+        HtmlReporte = HtmlReporte.replace("[{Fecha}]",fdate.format(registro));
+        StringReporte = StringReporte.replace("[{Hora}]",tdate.format(registro));
+        HtmlReporte = HtmlReporte.replace("[{Hora}]",tdate.format(registro));
         StringReporte = StringReporte.replace("[{Razon-social}]","");
         HtmlReporte = HtmlReporte.replace("[{Razon-social}]","");
         StringReporte = StringReporte.replace("[{RFC}]","");
@@ -334,18 +337,19 @@ public class VerReporteActivity extends AppCompatActivity {
 
         StringBuilder Conpecto = new StringBuilder();
         StringBuilder ConpectoHtml = new StringBuilder();
+        NumberFormat dformat = new DecimalFormat("#.00");
         for (ConceptoDTO conceptoDTO: ventaDTO.getConcepto()){
             Conpecto.append("|").append(conceptoDTO.getConcepto())
                     .append("|").append(String.valueOf(conceptoDTO.getCantidad()))
-                    .append("|").append(String.valueOf(conceptoDTO.getPUnitario()))
-                    .append("|").append(String.valueOf(conceptoDTO.getDescuento()))
-                    .append("|").append(String.valueOf(conceptoDTO.getSubtotal())).append("|\n");
+                    .append("|$ ").append(String.valueOf(dformat.format(conceptoDTO.getPUnitario())))
+                    .append("|$ ").append(String.valueOf(dformat.format(conceptoDTO.getDescuento())))
+                    .append("|$ ").append(String.valueOf(dformat.format(conceptoDTO.getSubtotal()))).append("|\n");
 
             ConpectoHtml.append("<tr><td>").append(conceptoDTO.getConcepto())
                     .append("</td><td>").append(String.valueOf(conceptoDTO.getCantidad()))
-                    .append("</td><td>").append(String.valueOf(conceptoDTO.getPUnitario()))
-                    .append("</td><td>").append(String.valueOf(conceptoDTO.getDescuento()))
-                    .append("</td><td>").append(String.valueOf(conceptoDTO.getSubtotal()))
+                    .append("</td><td>$ ").append(String.valueOf(dformat.format(conceptoDTO.getPUnitario())))
+                    .append("</td><td>$ ").append(String.valueOf(dformat.format(conceptoDTO.getDescuento())))
+                    .append("</td><td>$ ").append(String.valueOf(dformat.format(conceptoDTO.getSubtotal())))
                     .append("</tr>");
         }
         StringReporte = StringReporte.replace("[{Concepto}]",Conpecto);
@@ -362,18 +366,23 @@ public class VerReporteActivity extends AppCompatActivity {
                     String.valueOf(ventaDTO.getIva()));
         }
         if(!ventaDTO.isCredito()) {
-            StringReporte = StringReporte.replace("[{Efectivo}]", String.valueOf(ventaDTO.getEfectivo()));
-            HtmlReporte = HtmlReporte.replace("[{Efectivo}]", String.valueOf(ventaDTO.getEfectivo()));
+            StringReporte = StringReporte.replace("[{Efectivo}]", "$"+String.valueOf(
+                    dformat.format(ventaDTO.getEfectivo())));
+            HtmlReporte = HtmlReporte.replace("[{Efectivo}]", "$"+String.valueOf(dformat.format(ventaDTO.getEfectivo())));
         }
-        StringReporte = StringReporte.replace("[{iva}]",String.valueOf(ventaDTO.getIva()));
-        HtmlReporte = HtmlReporte.replace("[{iva}]",String.valueOf(ventaDTO.getIva()));
-        StringReporte = StringReporte.replace("[{Total}]",String.valueOf(ventaDTO.getTotal()));
-        HtmlReporte = HtmlReporte.replace("[{Total}]",String.valueOf(ventaDTO.getTotal()));
-        NumberFormat dformat = new DecimalFormat("#.####");
-        StringReporte = StringReporte.replace("[{Cambio}]",String.valueOf(
+        StringReporte = StringReporte.replace("[{iva}]","$"+String.valueOf(
+                dformat.format(ventaDTO.getIva())));
+        HtmlReporte = HtmlReporte.replace("[{iva}]","$"+String.valueOf(
+                dformat.format(ventaDTO.getIva())));
+        StringReporte = StringReporte.replace("[{Total}]","$"+String.valueOf(
+                dformat.format(ventaDTO.getTotal())));
+        HtmlReporte = HtmlReporte.replace("[{Total}]","$"+String.valueOf(
+                dformat.format(ventaDTO.getTotal())));
+
+        StringReporte = StringReporte.replace("[{Cambio}]","$"+String.valueOf(
                 dformat.format(ventaDTO.getCambio())
         ));
-        HtmlReporte = HtmlReporte.replace("[{Cambio}]",String.valueOf(
+        HtmlReporte = HtmlReporte.replace("[{Cambio}]","$"+String.valueOf(
                 dformat.format(ventaDTO.getCambio())
         ));
 

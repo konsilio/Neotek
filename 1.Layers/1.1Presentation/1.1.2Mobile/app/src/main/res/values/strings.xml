@@ -23,8 +23,8 @@
     <string name="porcentaje_medidor">¿Porcentaje del medidor?</string>
     <string name="porcentaje_medidor_tractor_message">Registra el porcentaje del medidor del tractor</string>
     <string name="porcentaje_medidor_almacen_message">Registra el porcentaje del medidor del almacen</string>
-    <string name="message_imagen_nitida">¿La imagen esta nitida?</string>
-    <string name="message_nitida_si">Si,esta nitida/bien tomada</string>
+    <string name="message_imagen_nitida">¿La imagen esta nítida?</string>
+    <string name="message_nitida_si">Si,esta nítida/bien tomada</string>
     <string name="message_nitida_no">No, esta borrosa/mal tomada</string>
     <string name="cargando_imagenes_inicio">Espere un momento...</string>
     <string name="cargando_imagenes_fin">Proceso finalizado</string>

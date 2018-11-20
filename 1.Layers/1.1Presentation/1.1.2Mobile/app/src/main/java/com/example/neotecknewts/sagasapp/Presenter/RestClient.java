@@ -29,6 +29,7 @@ import com.example.neotecknewts.sagasapp.Model.LecturaPipaDTO;
 import com.example.neotecknewts.sagasapp.Model.MedidorDTO;
 import com.example.neotecknewts.sagasapp.Model.MenuDTO;
 import com.example.neotecknewts.sagasapp.Model.PrecargaPapeletaDTO;
+import com.example.neotecknewts.sagasapp.Model.PrecioVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.RecargaDTO;
 import com.example.neotecknewts.sagasapp.Model.ReporteDto;
 import com.example.neotecknewts.sagasapp.Model.RespuestaAnticipoDTO;
@@ -402,6 +403,19 @@ public interface RestClient {
     );
     @GET(Constantes.GET_CILINDROS_VENTA)
     Call<List<ExistenciasDTO>> getListaExistencias(
+            @Header("Authorization") String token,
+            @Header("Content-type") String contenType
+    );
+
+    /**
+     * getPrecioVenta
+     * Permite extraer los valores de venta de gas
+     * @param token String que reprecenta el token de usuario
+     * @param contentType Reprecenta el tipo de contenid
+     * @return Un objeto de tipo {@link PrecioVentaDTO} con los valores de gas
+     */
+    @GET(Constantes.GET_PRECIO_VENTA)
+    Call<PrecioVentaDTO> getPrecioVenta(
             @Header("Authorization") String token,
             @Header("Content-type") String contenType
     );

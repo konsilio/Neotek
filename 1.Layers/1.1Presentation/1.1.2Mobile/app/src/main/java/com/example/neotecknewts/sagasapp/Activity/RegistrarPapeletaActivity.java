@@ -199,12 +199,12 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
                     papeletaDTO.setIdOrdenCompraExpedidor(ordenCompraDTOExpedidor.getIdOrdenCompra());
                     papeletaDTO.setIdOrdenCompraExpedidor(ordenCompraDTOExpedidor.getIdProveedor());
                     editTextNombreExpedidor.setEnabled(false);
-                    if (position >= 0 && inicial_expedidor) {
+                    /*if (position >= 0 && inicial_expedidor) {
                         presenter.getOrderReferencia(session.getToken(),
                                 ordenCompraDTOExpedidor.getIdOrdenCompra(),
                                 true
                         );
-                    }
+                    }*/
                 }
 
             }
@@ -227,12 +227,12 @@ public class RegistrarPapeletaActivity extends AppCompatActivity implements Regi
                     papeletaDTO.setIdOrdenCompraPorteador(ordenCompraDTOPorteador.getIdOrdenCompra());
                     papeletaDTO.setIdOrdenCompraPorteador(ordenCompraDTOPorteador.getIdProveedor());
                     editTextNombrePorteador.setEnabled(false);
-                    if (position >= 0 && inicial_porteador) {
+                 /*   if (position >= 0 && inicial_porteador) {
                         presenter.getOrderReferencia(session.getToken(),
                                 ordenCompraDTOPorteador.getIdOrdenCompra(),
                                 false
                         );
-                    }
+                    }*/
                 }
             }
 

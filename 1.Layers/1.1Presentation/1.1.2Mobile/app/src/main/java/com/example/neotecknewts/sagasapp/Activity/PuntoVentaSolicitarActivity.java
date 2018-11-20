@@ -51,7 +51,6 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
                 ETPuntoVentaSolicitarActivityBuscador);
         ventaDTO = new VentaDTO();
         Date actual = new Date();
-        //ventaDTO.setFecha(new SimpleDateFormat("yyyy-MM-dd").format(actual));
         ventaDTO.setHora(new SimpleDateFormat("hh:mm:ss.SSS").format(actual));
         ventaDTO.setCredito(false);
         /*SimpleDateFormat s =
@@ -63,21 +62,21 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
             String codigo = String.valueOf(actual.getYear())+
                     Integer.toHexString(Integer.parseInt(s.format(actual)));
             Log.w("codigo",codigo);
-            ventaDTO.setFolioVenta(codigo);
+            ventaDTO.setFolioVenta(codigo.toUpperCase());
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.Camioneta));
         }else if(EsVentaCarburacion){
             //String codigo = s.format(new Date())+"VEC"+getRandomString(4);
             String codigo = String.valueOf(actual.getYear())+
                     Integer.toHexString(Integer.parseInt(s.format(actual)));
             Log.w("codigo",codigo);
-            ventaDTO.setFolioVenta(codigo);
+            ventaDTO.setFolioVenta(codigo.toUpperCase());
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.Estacion));
         }else if(EsVentaPipa){
             //String codigo = s.format(new Date())+"VEC"+getRandomString(4);
             String codigo = String.valueOf(actual.getYear())+
                     Integer.toHexString(Integer.parseInt(s.format(actual)));
             Log.w("codigo",codigo);
-            ventaDTO.setFolioVenta(codigo);
+            ventaDTO.setFolioVenta(codigo.toUpperCase());
             PuntoVentaSolicitarActivityTitulo.setText(getString(R.string.pipa));
         }
         Log.w("FolioVenta",ventaDTO.getFolioVenta());
@@ -92,6 +91,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
         ventaDTO.setIdCliente(Constantes.IdClienteGeneral);
         ventaDTO.setCredito(false);
         ventaDTO.setFactura(false);
+        ventaDTO.setFecha(new Date().toString());
         if(EsVentaCamioneta) {
             Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                     VentaGasActivity.class);
@@ -122,6 +122,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
 
     @Override
     public void RegistrarCliente() {
+        ventaDTO.setFecha(new Date().toString());
         Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                 RegistroClienteActivity.class);
         intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
@@ -134,6 +135,7 @@ public class PuntoVentaSolicitarActivity extends AppCompatActivity implements Pu
     @Override
     public void Buscar() {
         if(ETPuntoVentaSolicitarActivityBuscador.getText().length()>0) {
+            ventaDTO.setFecha(new Date().toString());
             Intent intent = new Intent(PuntoVentaSolicitarActivity.this,
                     BuscarClienteActivity.class);
             intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);

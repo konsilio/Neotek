@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.neotecknewts.sagasapp.Activity.PuntoVentaGasListaActivity;
 import com.example.neotecknewts.sagasapp.Activity.VentaGasActivity;
 import com.example.neotecknewts.sagasapp.Model.ClienteDTO;
 import com.example.neotecknewts.sagasapp.Model.VentaDTO;
@@ -73,13 +74,23 @@ public class ClientesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     ventaDTO.setCredito(false);
                     ventaDTO.setTieneCredito(false);
                 }
-                Intent intent = new Intent(view.getContext(),
-                        VentaGasActivity.class);
-                intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
-                intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
-                intent.putExtra("EsVentaPipa", EsVentaPipa);
-                intent.putExtra("ventaDTO",ventaDTO);
-               view.getContext().startActivity(intent);
+                if(EsVentaCamioneta) {
+                    Intent intent = new Intent(view.getContext(),
+                            VentaGasActivity.class);
+                    intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+                    intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+                    intent.putExtra("EsVentaPipa", EsVentaPipa);
+                    intent.putExtra("ventaDTO", ventaDTO);
+                    view.getContext().startActivity(intent);
+                }else{
+                    Intent intent = new Intent(view.getContext(),
+                            PuntoVentaGasListaActivity.class);
+                    intent.putExtra("EsVentaCarburacion", EsVentaCarburacion);
+                    intent.putExtra("EsVentaCamioneta", EsVentaCamioneta);
+                    intent.putExtra("EsVentaPipa", EsVentaPipa);
+                    intent.putExtra("ventaDTO", ventaDTO);
+                    view.getContext().startActivity(intent);
+                }
             }
         });
 
