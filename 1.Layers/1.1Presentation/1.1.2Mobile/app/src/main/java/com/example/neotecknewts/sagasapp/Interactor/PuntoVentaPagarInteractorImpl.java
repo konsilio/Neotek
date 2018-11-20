@@ -37,6 +37,7 @@ public class PuntoVentaPagarInteractorImpl implements PuntoVentaPagarInteractor 
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 

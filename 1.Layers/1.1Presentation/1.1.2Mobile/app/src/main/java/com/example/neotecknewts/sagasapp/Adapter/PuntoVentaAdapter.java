@@ -12,12 +12,14 @@ import android.widget.TextView;
 
 import com.example.neotecknewts.sagasapp.Model.CilindrosDTO;
 import com.example.neotecknewts.sagasapp.Model.ExistenciasDTO;
+import com.example.neotecknewts.sagasapp.Model.PrecioVentaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.util.List;
 
 public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final List<ExistenciasDTO> items;
+    public PrecioVentaDTO precioVentaDTO;
     private boolean EsVentaCamioneta;
     private Context context;
     public TextView Total,Descuento,Subtotal,Iva,PrecioLitro;
@@ -55,35 +57,56 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    PrecioLitro.setText(editText.getText().toString());
-                    Descuento.setText(editText.getText().toString());
-                    Subtotal.setText(editText.getText().toString());
-                    Iva.setText(editText.getText().toString());
-                    Total.setText(editText.getText().toString());
-                    cantidad = editText;
-                    existencia = items.get(position);
+                    if(esVentaGas) {
+                        if(!editText.getText().toString().isEmpty()) {
+                            PrecioLitro.setText(String.valueOf(precioVentaDTO.getPrecioSalidaLt()));
+                            Descuento.setText(String.valueOf(0));
+                            double sub = precioVentaDTO.getPrecioSalidaLt() *
+                                    Integer.parseInt(editText.getText().toString());
+                            Subtotal.setText(String.valueOf(sub));
+                            double iva = sub * 0.16;
+                            Iva.setText(String.valueOf(sub * 0.16));
+                            Total.setText(String.valueOf(sub + iva));
+                            cantidad = editText;
+                            existencia = items.get(position);
+                        }
+                    }
                 }
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    PrecioLitro.setText(editText.getText().toString());
-                    Descuento.setText(editText.getText().toString());
-                    Subtotal.setText(editText.getText().toString());
-                    Iva.setText(editText.getText().toString());
-                    Total.setText(editText.getText().toString());
-                    cantidad = editText;
-                    existencia = items.get(position);
+                    if(esVentaGas) {
+                        if(!editText.getText().toString().isEmpty()) {
+                            PrecioLitro.setText(String.valueOf(precioVentaDTO.getPrecioSalidaLt()));
+                            Descuento.setText(String.valueOf(0));
+                            double sub = precioVentaDTO.getPrecioSalidaLt() *
+                                    Integer.parseInt(editText.getText().toString());
+                            Subtotal.setText(String.valueOf(sub));
+                            double iva = sub * 0.16;
+                            Iva.setText(String.valueOf(sub * 0.16));
+                            Total.setText(String.valueOf(sub + iva));
+                            cantidad = editText;
+                            existencia = items.get(position);
+                        }
+                    }
                 }
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    PrecioLitro.setText(editText.getText().toString());
-                    Descuento.setText(editText.getText().toString());
-                    Subtotal.setText(editText.getText().toString());
-                    Iva.setText(editText.getText().toString());
-                    Total.setText(editText.getText().toString());
-                    cantidad = editText;
-                    existencia = items.get(position);
+                    if(esVentaGas) {
+                        if(!editText.getText().toString().isEmpty()) {
+                            PrecioLitro.setText(String.valueOf(precioVentaDTO.getPrecioSalidaLt()));
+                            Descuento.setText(String.valueOf(0));
+                            double sub = precioVentaDTO.getPrecioSalidaLt() *
+                                    Integer.parseInt(editText.getText().toString());
+                            Subtotal.setText(String.valueOf(sub));
+                            double iva = sub * 0.16;
+                            Iva.setText(String.valueOf(sub * 0.16));
+                            Total.setText(String.valueOf(sub + iva));
+                            cantidad = editText;
+                            existencia = items.get(position);
+                        }
+                    }
                 }
             });
         }

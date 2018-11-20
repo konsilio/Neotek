@@ -94,6 +94,9 @@ public class VentaGasActivity extends AppCompatActivity implements VentaGasActiv
             if(ventaDTO.getConcepto().size()>0) {
                 Intent intent = new Intent(VentaGasActivity.this,
                         PuntoVentaPagarActivity.class);
+                intent.putExtra("EsVentaCarburacion",EsVentaCarburacion);
+                intent.putExtra("EsVentaCamioneta",EsVentaCamioneta);
+                intent.putExtra("EsVentaPipa",EsVentaPipa);
                 intent.putExtra("ventaDTO", ventaDTO);
                 startActivity(intent);
             }else{
