@@ -1,4 +1,5 @@
 ﻿using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.AccesoADatos;
 using Application.MainModule.Servicios.Almacenes;
@@ -229,6 +230,43 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             return luDTO;
         }
 
+        public static TanquesDto ToDTO(VentaPuntoDeVentaDetalle pv, decimal cilindrosVendidos)
+        {
+            var Nombre = "";
+            if (pv.CantidadKg == 20)
+            {
+                Nombre = "20 kg";
+            }
+            if (pv.CantidadKg == 30)
+            {
+                Nombre = "30 kg";
+            }
+            else
+            {
+                Nombre = "45 kg";
+            }
+            TanquesDto usDTO = new TanquesDto()
+            {
+                NombreTanque = Nombre,
+                Normal = (int)cilindrosVendidos,
+                Venta = 0,
+            };
+
+
+            return usDTO;
+        }
+
+        public static List<TanquesDto> ToDTOT(List<VentaPuntoDeVentaDetalle> lu)
+        {
+            decimal totalVentas = 0;
+            foreach (var x in lu)
+            {
+                totalVentas += x.CantidadProducto.Value;
+            }
+            List<TanquesDto> luDTO = lu.ToList().Select(x => ToDTO(x, totalVentas)).ToList();
+
+            return luDTO;
+        }
 
         public static AlmacenGasMovimientoDto ToDTO(AlmacenGasMovimiento pv)
         {
@@ -1007,29 +1045,23 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
 
         }
 
-        public static VPuntoVentaDetalleDTO ToDTOC(VPuntoVentaDetalleDTO pv, VentaCajaGeneral entidad)
+        public static ReporteDiaDTO ToDTOC(VPuntoVentaDetalleDTO pv, VentaCajaGeneral entidad, UnidadAlmacenGas almacen, List<TanquesDto> tanques, decimal k)
         {
 
-            VPuntoVentaDetalleDTO usDTO = new VPuntoVentaDetalleDTO()
+            ReporteDiaDTO usDTO = new ReporteDiaDTO()
             {
-                IdEmpresa = pv.IdEmpresa,
-                Year = pv.Year,
-                Mes = pv.Mes,
-                Dia = pv.Dia,
-                Orden = pv.Orden,
-                CantidadProducto = pv.CantidadProducto,
-                //Camioneta Reporte del dia Camioneta
-                CantidadTotalProd = 0,//totalCilindros, - Normal Ventas (Ventas)
-                Concepto = "",//concepto, - Tanques de:
-                Total = 0,//(totalCilindros * pv.DescuentoUnitarioLt), (Kilos de venta)
-                Salida = "", //LecturaInicial Clindro
-                Recepcion = "",//LecturaFinal Clindro
-                FolioOperacion = entidad.FolioOperacionDia,
-                totalCredito = entidad.VentaTotalCredito,
-                totalContado = entidad.VentaTotalContado,
-                PrecioLitro = pv.PrecioUnitarioLt,
+                IdCAlmacenGas = almacen.IdCamioneta.Value,
+                NombreCAlmacen = almacen.Numero,
+                ClaveReporte = entidad.FolioOperacionDia,
+                Fecha = pv.FechaRegistro,
                 Carburacion = 0,
-                FechaRegistro = pv.FechaRegistro,
+                KilosDeVenta = k,
+                Precio = pv.PrecioUnitarioKg.Value,
+                OtrasVentasTotal = 0,
+                Importe = entidad.VentaTotalContado,
+                ImporteCredito = entidad.VentaTotalCredito,
+                OtrasVentas = new List<OtrasVentasDto>(),
+                Tanques = tanques
 
             };
 
@@ -1037,9 +1069,29 @@ namespace Application.MainModule.AdaptadoresDTO.Ventas
             return usDTO;
         }
 
-        public static List<VPuntoVentaDetalleDTO> ToDtoC(List<VPuntoVentaDetalleDTO> lu, VentaCajaGeneral entidad)
+        public static List<ReporteDiaDTO> ToDtoC(List<VPuntoVentaDetalleDTO> lu, VentaCajaGeneral entidad, UnidadAlmacenGas almacen, List<TanquesDto> tanques)
         {
-            List<VPuntoVentaDetalleDTO> luDTO = lu.ToList().Select(x => ToDTOC(x, entidad)).ToList();
+            var capacidad = 0;
+
+            //Obtener Kilos venta
+            decimal kgVentas = 0;
+            foreach (var x in tanques)
+            {
+                if (x.NombreTanque == "20 kg")
+                {
+                    capacidad = 20;
+                }
+                if (x.NombreTanque == "30 kg")
+                {
+                    capacidad = 30;
+                }
+                else
+                {
+                    capacidad = 45;
+                }
+                kgVentas += CalcularPreciosVentaServicio.ObtenerKilosVenta(capacidad, x.Normal);
+            }
+            List<ReporteDiaDTO> luDTO = lu.ToList().Select(x => ToDTOC(x, entidad, almacen, tanques, kgVentas)).ToList();
             return luDTO;
         }
     }

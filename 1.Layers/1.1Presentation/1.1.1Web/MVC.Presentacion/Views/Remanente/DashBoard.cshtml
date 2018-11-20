@@ -1,0 +1,148 @@
+﻿
+<div class="page-loader-wrapper">
+    <div class="loader">
+        <div class="m-t-30"><img src="~/assets/images/LogoCorpKonsilio183x183.png" width="48" height="48" alt="Alpino"></div>
+        <p>Espere por favor</p>
+    </div>
+</div>
+<section class="content home">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row clearfix">
+                <div class="col-lg-5 col-md-5 col-sm-12">
+                    <h2>Compras</h2>
+                    <ul class="breadcrumb padding-0">
+                        <li class="breadcrumb-item"><a href=@Url.Action("Inicio", "Home")><i class="zmdi zmdi-home"></i></a></li>
+                        <li class="breadcrumb-item">Remanenete</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="card">
+                    <div class="header">
+                        Resumen de<strong> remanente</strong>
+                    </div>
+                    <div class="body">
+                        <div class="row clearfix">
+                            <div class="col-md-4">
+                                <b>Gasera:</b>
+                                <select id="ddlEmpresas" name="IdEmpresa" class="form-control show-tick" data-live-search="true">
+                                    <option value="0">Seleccione uno</option>
+                                    @foreach (var lst in ViewBag.Empresas)
+                                    {
+                                        <option value="@lst.IdEmpresa">@lst.NombreComercial</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select id="ddlTipoRema" name="idTipoRema" class="form-control show-tick" data-live-search="true">
+                                    <option value="0">Seleccione uno</option>
+                                    <option value="1">General</option>
+                                    <option value="2">Por unidad de Venta</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select id="ddlTipoRema" name="idUnidadVenta" class="form-control show-tick" data-live-search="true">
+                                    <option value="0">Seleccione uno</option>
+                                    @foreach (var lst in ViewBag.UnidadesVenta)
+                                    {
+                                        <option value="@lst.IdUnidad">@lst.NombreUnidad</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                     
+                        @*Remanenten General*@
+                        <div class="row clearfix blockquote blockquote-info btn-round">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td><strong>Inv. Inicial del mes</strong></td>
+                                            <td><strong>Compras descargas</strong></td>
+                                            <td><strong>Ventas (Camionetas y Pipas)</strong></td>
+                                            <td><strong>Carburación</strong></td>
+                                            <td><strong>Inv. Final(Libro)</strong></td>
+                                            <td><strong>Inv. Fisicio</strong></td>
+                                            <td><strong>Gas sobrante</strong></td>
+                                            <td><strong>Rema (%)</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-3">Remanente Generado al :</div>
+                            <div class="col-md-3"> (Toneladas)</div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-3">Remanente de Venta</div>
+                            <div class="col-md-3">$ 0.00</div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-3">Remanente de Transporte</div>
+                            <div class="col-md-3"> 0.00</div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-3">Total de Remanente Determinado</div>
+                            <div class="col-md-3"> 0.00</div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-3">Gas Sobrante (O faltante)</div>
+                            <div class="col-md-3"> 0.00</div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-md-3">0.00</div>
+                        </div>
+                        @*Remanente por unidad de venta*@
+                        <div class="row clearfix blockquote blockquote-info btn-round">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td><strong>01</strong></td>
+                                            <td><strong>02</strong></td>
+                                            <td><strong>03</strong></td>
+                                            <td><strong>04</strong></td>
+                                            <td><strong>05</strong></td>
+                                            <td><strong>06</strong></td>
+                                            <td><strong>07</strong></td>
+                                            <td><strong>08</strong></td>
+                                            <td><strong>09</strong></td>
+                                            <td><strong>10</strong></td>
+                                            <td><strong>11</strong></td>
+                                            <td><strong>12</strong></td>
+                                            <td><strong>13</strong></td>
+                                            <td><strong>14</strong></td>
+                                            <td><strong>15</strong></td>
+                                            <td><strong>16</strong></td>
+                                            <td><strong>17</strong></td>
+                                            <td><strong>18</strong></td>
+                                            <td><strong>19</strong></td>
+                                            <td><strong>20</strong></td>
+                                            <td><strong>21</strong></td>
+                                            <td><strong>22</strong></td>
+                                            <td><strong>23</strong></td>
+                                            <td><strong>24</strong></td>
+                                            <td><strong>25</strong></td>
+                                            <td><strong>26</strong></td>
+                                            <td><strong>27</strong></td>
+                                            <td><strong>28</strong></td>
+                                            <td><strong>29</strong></td>
+                                            <td><strong>30</strong></td>
+                                            <td><strong>31</strong></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

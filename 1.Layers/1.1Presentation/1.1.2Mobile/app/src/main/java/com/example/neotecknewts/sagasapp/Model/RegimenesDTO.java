@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class RegimenesDTO implements Serializable {
+public class RegimenesDTO extends RespuestaDTO implements Serializable {
     @SerializedName("IdRegimenFiscal")
     private int IdRegimenFiscal;
 

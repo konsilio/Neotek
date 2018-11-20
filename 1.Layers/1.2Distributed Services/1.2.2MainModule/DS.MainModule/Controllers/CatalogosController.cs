@@ -276,7 +276,11 @@ namespace DS.MainModule.Controllers
             _catalogos.UpdateStatus(idEmpresa);
             return Request.CreateResponse(HttpStatusCode.OK, _catalogos.PreciosVentaIdEmpresa(idEmpresa));
         }
-
+        [Route("consulta/precioventa/vigente")]
+        public HttpResponseMessage GetPreciosVentaVigente()
+        {         
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ObtenerPrecioVentaVigente());
+        }
         [Route("consulta/estatustipofecha")]
         public HttpResponseMessage GetTiposFecha()
         {

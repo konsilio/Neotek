@@ -12,4 +12,6 @@ public interface PuntoVentaGasListaPresenter {
     void onError(String s);
 
     void onSuccess(List<ExistenciasDTO> data);
+
+    void getListaVenta(String token, boolean esGasLP, boolean esCilindroGas, boolean esCilindro);
 }

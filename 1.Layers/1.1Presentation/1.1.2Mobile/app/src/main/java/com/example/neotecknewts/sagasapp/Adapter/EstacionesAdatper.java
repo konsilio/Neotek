@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,15 +62,6 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
         final DatosEstacionesDTO mObject = getItem(position);
         anticiposDTO = new AnticiposDTO();
         corteDTO = new CorteDTO();
-        if(EsAnticipo) {
-
-            anticiposDTO.setIdEstacion(mObject.getIdCAlmacenGas());
-            anticiposDTO.setNombreEstacion(mObject.getNombreCAlmacen());
-        }else if(EsCorte){
-            corteDTO.setIdEstacion(mObject.getIdCAlmacenGas());
-            corteDTO.setNombreEstacion(mObject.getNombreCAlmacen());
-        }
-
         if(holder instanceof HeaderViewHolder){
             ((HeaderViewHolder)holder).header.setText(mObject.getNombreCAlmacen());
             ((HeaderViewHolder) holder).title.setText((EsCorte) ?
@@ -80,6 +72,15 @@ public class EstacionesAdatper extends RecyclerView.Adapter<RecyclerView.ViewHol
             ((ItemViewHolder)holder).cardView.setOnClickListener(v -> {
                 Intent intent = new Intent(v.getContext(),AnticipoTablaActivity.class);
                 //intent.putExtra("IdCAlmacenGas",mObject.getIdCAlmacenGas());
+                if(EsAnticipo) {
+                    Log.w("Estación",this.getItem(position).getNombreCAlmacen());
+                    Log.w("Id",this.getItem(position).getNombreCAlmacen());
+                    anticiposDTO.setIdEstacion(getItem(position).getIdCAlmacenGas());
+                    anticiposDTO.setNombreEstacion(getItem(position).getNombreCAlmacen());
+                }else if(EsCorte){
+                    corteDTO.setIdEstacion(mObject.getIdCAlmacenGas());
+                    corteDTO.setNombreEstacion(mObject.getNombreCAlmacen());
+                }
                 intent.putExtra("EsAnticipo",EsAnticipo);
                 intent.putExtra("EsCorte",EsCorte);
                 intent.putExtra("anticiposDTO",anticiposDTO);

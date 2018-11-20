@@ -59,6 +59,7 @@ namespace DS.MainModule.Controllers
             return RespuestaHttp.crearRespuesta(_mobile.ObtenerMenu(), Request);
         }
 
+
         [Route("obtener/medidores")]
         public HttpResponseMessage GetObtenerMedidores()
         {
@@ -290,11 +291,16 @@ namespace DS.MainModule.Controllers
         {
             return RespuestaHttp.crearRespuesta(_mobile.corte(dto),Request);
         }
-        
+        //[AllowAnonymous]
         [Route("catalogos/anticipo-y-corte/ventas/{estacion}/{esAnticipos}")]
-        public HttpResponseMessage GetVentasCortesAnticipos(short estacion,bool esAnticipos)
+        public HttpResponseMessage GetVentasCortesAnticipos(int estacion,bool esAnticipos)
         {
             return RespuestaHttp.crearRespuesta(_mobile.CatalogoVentasAnticiposCorte(estacion, esAnticipos),Request);
+        }
+        [Route("consulta/precioventa/vigente")]
+        public HttpResponseMessage GetPreciosVentaVigente()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK, _catalogos.ObtenerPrecioVentaVigente());
         }
         /// <summary>
         /// Permite retornar los catalogos de venta de gas 

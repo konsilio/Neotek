@@ -421,6 +421,12 @@ namespace Application.MainModule.Flujos
 
             return PrecioVentaGasServicio.ObtenerPreciosVentaIdEmp(IdEmpresa).ToList();
         }
+        public PrecioVentaDTO ObtenerPrecioVentaVigente()
+        {
+            var pv = PrecioVentaGasServicio.ObtenerPrecioVigente(TokenServicio.ObtenerIdEmpresa());
+            //var pv = PrecioVentaGasServicio.ObtenerPrecioVigente((short)2); (Test)
+            return PrecioVentaGasAdapter.ToDTO(pv);
+        }
         public RespuestaDto EliminaPreciosVenta(PrecioVentaDTO cteDto)
         {
             var resp = PermisosServicio.PuedeEliminarPrecioVentaGas();

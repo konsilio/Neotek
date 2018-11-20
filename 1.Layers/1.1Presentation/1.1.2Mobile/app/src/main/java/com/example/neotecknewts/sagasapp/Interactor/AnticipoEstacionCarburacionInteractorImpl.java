@@ -24,9 +24,6 @@ public class AnticipoEstacionCarburacionInteractorImpl implements AnticipoEstaci
 
     @Override
     public void getEstaciones(String token) {
-        RespuestaEstacionesVentaDTO data = null;
-        String url = Constantes.BASE_URL;
-
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")

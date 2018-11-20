@@ -164,11 +164,11 @@ namespace Application.MainModule.Flujos
 
         public RespuestaDto registrarCliente(ClienteDTO cliente)
         {
-            var resp = ClientesServicio.EvaluarCliente(cliente);
-            if (resp.IdCliente!=0)
-                return ClientesServicio.Modificar(cliente,TokenServicio.ObtenerIdEmpresa());
-            else
-                return ClientesServicio.Registar(cliente,TokenServicio.ObtenerIdEmpresa());
+            //var resp = ClientesServicio.EvaluarCliente(cliente);
+           // if (resp.IdCliente!=0)
+           //     return ClientesServicio.Modificar(cliente,TokenServicio.ObtenerIdEmpresa());
+            //else
+               return ClientesServicio.Registar(cliente,TokenServicio.ObtenerIdEmpresa());
         }
 
         public DatosClientesDto BuscadorClientes(string criterio)
@@ -211,8 +211,12 @@ namespace Application.MainModule.Flujos
             adapter.ClienteConCredito = venta.TieneCredito;
             adapter.FechaAplicacion = venta.Fecha;
 
-            if (!venta.SinNumero)
-                adapter.IdCliente = venta.IdCliente;
+            if (!venta.SinNumero || venta.IdCliente==0)
+            {
+                Cliente clienteGenerico = ClienteServicio.BuscarClientePorRFC("XAXX010101000");
+                adapter.IdCliente = clienteGenerico.IdCliente;
+                adapter.RFC = clienteGenerico.Rfc;
+            }
 
             return PuntoVentaServicio.InsertMobile(adapter);
         }
@@ -343,12 +347,11 @@ namespace Application.MainModule.Flujos
             return list; 
         }
 
-        public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(short idEstacion, bool esAnticipos)
+        public DatosAnticiposCorteDto CatalogoVentasAnticiposCorte(int idEstacion, bool esAnticipos)
         {
-            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
-            var puntoVenta = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(idEstacion));
-
-            var ventas = CajaGeneralServicio.ObtenerVentasPuntosVentaNoProc().OrderBy(x=>x.FechaRegistro).ToList();
+            var almacen = AlmacenGasServicio.ObtenerEstaciones(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdEstacionCarburacion.Equals(idEstacion));
+            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa()).FirstOrDefault(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
+            var ventas = CajaGeneralServicio.ObtenerVentasPuntosVenta(puntosVenta.IdPuntoVenta).OrderBy(x=>x.FechaRegistro).ToList();
             
             return AnticiposCortesAdapter.ToDTO(ventas, esAnticipos);
         }

@@ -1,13 +1,14 @@
 package com.example.neotecknewts.sagasapp.Model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Date;
 
 public class CorteDTO extends RespuestaDTO implements Serializable {
-    @SerializedName("Id")
-    private int Id;
+    @SerializedName("IdCorte")
+    private int IdCorte;
 
     @SerializedName("Tiket")
     private String Tiket;
@@ -49,11 +50,11 @@ public class CorteDTO extends RespuestaDTO implements Serializable {
     private String Hora;
 
     public int getId() {
-        return Id;
+        return IdCorte;
     }
 
     public void setId(int id) {
-        Id = id;
+        IdCorte = id;
     }
 
     public String getTiket() {

@@ -1,5 +1,6 @@
 package com.example.neotecknewts.sagasapp.Model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -9,14 +10,19 @@ import java.util.List;
 public class RespuestaEstacionesVentaDTO extends RespuestaDTO implements Serializable {
 
     @SerializedName("estaciones")
+    @Expose
     private List<DatosEstacionesDTO> estaciones;
 
     @SerializedName("anticipos")
+    @Expose
     private List<AnticiposDTO>anticipos;
 
     @SerializedName("cortes")
+    @Expose
     private List<CorteDTO> cortes;
 
+    @SerializedName("fechasCorte")
+    @Expose
     private List<String> fechasCorte;
 
     public  RespuestaEstacionesVentaDTO(){

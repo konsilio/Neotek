@@ -17,6 +17,9 @@ abstract class RespuestaDTO {
     @SerializedName("MensajesError")
     private String MensajesError;
 
+    @SerializedName("Id")
+    private int Id;
+
     public boolean isExito() {
         return Exito;
     }
@@ -39,5 +42,13 @@ abstract class RespuestaDTO {
 
     public void setMensajesError(String mensajesError) {
         MensajesError = mensajesError;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 }

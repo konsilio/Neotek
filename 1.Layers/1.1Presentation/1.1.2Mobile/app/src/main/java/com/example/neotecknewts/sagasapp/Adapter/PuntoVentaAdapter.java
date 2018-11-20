@@ -20,6 +20,11 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private final List<ExistenciasDTO> items;
     private boolean EsVentaCamioneta;
     private Context context;
+    public TextView Total,Descuento,Subtotal,Iva,PrecioLitro;
+    public boolean esVentaGas;
+    public EditText cantidad;
+    public ExistenciasDTO existencia;
+
     public PuntoVentaAdapter(List<ExistenciasDTO>  items,boolean EsVentaCamioneta,Context context){
         this.items = items;
         this.EsVentaCamioneta = EsVentaCamioneta;
@@ -45,6 +50,43 @@ public class PuntoVentaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 this.EsVentaCamioneta ? this.context.getString(R.string.cantidad):
                         this.context.getString(R.string.litros_despachados)
         );
+        EditText editText = ((ExistenciasHolder) holder).ETPuntoVentaGasListActivityCantidad;
+        if(esVentaGas) {
+            editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    PrecioLitro.setText(editText.getText().toString());
+                    Descuento.setText(editText.getText().toString());
+                    Subtotal.setText(editText.getText().toString());
+                    Iva.setText(editText.getText().toString());
+                    Total.setText(editText.getText().toString());
+                    cantidad = editText;
+                    existencia = items.get(position);
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    PrecioLitro.setText(editText.getText().toString());
+                    Descuento.setText(editText.getText().toString());
+                    Subtotal.setText(editText.getText().toString());
+                    Iva.setText(editText.getText().toString());
+                    Total.setText(editText.getText().toString());
+                    cantidad = editText;
+                    existencia = items.get(position);
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    PrecioLitro.setText(editText.getText().toString());
+                    Descuento.setText(editText.getText().toString());
+                    Subtotal.setText(editText.getText().toString());
+                    Iva.setText(editText.getText().toString());
+                    Total.setText(editText.getText().toString());
+                    cantidad = editText;
+                    existencia = items.get(position);
+                }
+            });
+        }
     }
 
     @Override

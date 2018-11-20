@@ -99,7 +99,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
                 ClaveOperacion = venta.FolioVenta,
                 Tiket = venta.FolioVenta,
                 Fecha = venta.FechaRegistro,
-                Id = (short) venta.IdPuntoVenta,
+                IdCorte = (short) venta.IdPuntoVenta,
                 Monto = venta.Total,
                 Total = venta.Total
             };
@@ -116,7 +116,7 @@ namespace Application.MainModule.AdaptadoresDTO.Mobile
             {
                 Tiket = venta.FolioVenta,
                 Fecha = venta.FechaRegistro,
-                Id = (short)venta.IdPuntoVenta,
+                IdAnticipo = (short)venta.IdPuntoVenta,
                 Total = venta.Total,
                 Monto = venta.Total,
                 ClaveOperacion = venta.FolioVenta,

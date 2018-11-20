@@ -177,6 +177,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
         String url = Constantes.BASE_URL;
 
         Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create();
 
@@ -226,7 +227,7 @@ public class AnticipoTablaInteractorImpl implements AnticipoTablaInteractor {
             @Override
             public void onFailure(Call<RespuestaEstacionesVentaDTO> call, Throwable t) {
                 Log.e("error", "Error desconocido: "+t.toString());
-                presenter.onError(t.getLocalizedMessage());
+                presenter.onError(t.getMessage());
             }
         });
     }

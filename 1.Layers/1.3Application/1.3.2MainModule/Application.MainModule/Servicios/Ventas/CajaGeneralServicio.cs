@@ -1,6 +1,7 @@
 ﻿using Application.MainModule.AdaptadoresDTO.Almacenes;
 using Application.MainModule.AdaptadoresDTO.Ventas;
 using Application.MainModule.DTOs.Almacen;
+using Application.MainModule.DTOs.Mobile;
 using Application.MainModule.DTOs.Respuesta;
 using Application.MainModule.DTOs.Ventas;
 using Application.MainModule.Servicios.AccesoADatos;
@@ -44,10 +45,10 @@ namespace Application.MainModule.Servicios.Ventas
             }
             return lventafinal;
         }
+       
         //Camioneta Reporte del dia
-        public static List<VPuntoVentaDetalleDTO> ObtenerRepCamionetas(short unidad, DateTime fecha)
+        public static List<ReporteDiaDTO> ObtenerRepCamionetas(short unidad, DateTime fecha)
         {
-
             var puntoVenta = PuntoVentaServicio.Obtener(unidad).IdPuntoVenta;
 
             //Obtener Venta Detalle por PV, Fecha
@@ -56,16 +57,31 @@ namespace Application.MainModule.Servicios.Ventas
             //Obtener Lt vendidos- AlmacenGasMovimiento
             var Ltvendidos = AlmacenGasServicio.ObtenerMovimientos(FolioOperacion, fecha).FirstOrDefault().SalidaLt;
 
-            //Obtener PrecioLt
+            //Obtener Preciokg
             List<VentaPuntoDeVentaDetalle> _lst = new CajaGeneralDataAccess().BuscarDetalleVenta(null, (short)fecha.Year, (byte)fecha.Month, (byte)fecha.Day, null).ToList();
             List<VPuntoVentaDetalleDTO> lstDto = CajaGeneralAdapter.ToDTO(_lst);
-            var PrecioLt = _lst.FirstOrDefault().PrecioUnitarioLt;
+            var PrecioKg = _lst.FirstOrDefault().PrecioUnitarioKg;
 
             //Obtener importe contado - imp credito
             var importes = ObtenerCG(FolioOperacion);
- 
-            List<VPuntoVentaDetalleDTO> lPventas = CajaGeneralAdapter.ToDtoC(lstDto, importes);
-            return lPventas;
+
+            //obtener unidad almacen
+            var almacen = AlmacenGasServicio.ObtenerAlmacen(unidad);
+
+            //obtener tanques,  NombreTanque=Cantidad Clindros, Normal= cantidad cilindros venta, Venta = Clindros vendidos completos (cilindro y gas)
+            List<TanquesDto> tanques = new List<TanquesDto>();          
+            var resultantList = _lst
+                   .GroupBy(s => s.CantidadKg)
+                   .Select(grp => grp.ToList())
+                   .ToList();
+            foreach (var list in resultantList)
+            {
+                List<TanquesDto> lventas = CajaGeneralAdapter.ToDTOT(list);
+                tanques.AddRange(lventas);              
+            }          
+
+            List<ReporteDiaDTO> lRventas = CajaGeneralAdapter.ToDtoC(lstDto, importes, almacen, tanques);
+            return lRventas;
         }
 
         //Pipa Reporte del dia
@@ -408,6 +424,10 @@ namespace Application.MainModule.Servicios.Ventas
         public static List<VentaPuntoDeVenta> ObtenerVentasPuntosVentaNoProc()
         {
             return new CajaGeneralDataAccess().Buscar();
+        }
+        public static List<VentaPuntoDeVenta> ObtenerVentasPuntosVenta(int id)
+        {
+            return new CajaGeneralDataAccess().BuscarPorPV(id);
         }
         public static List<VentaPuntoDeVentaDetalle> ObtenerDetallesVentasNoProc(short empresa, short year, byte month, byte dia, short orden)
         {

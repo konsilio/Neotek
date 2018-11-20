@@ -3,6 +3,7 @@ using Application.MainModule.UnitOfWork;
 using Exceptions.MainModule;
 using Exceptions.MainModule.Validaciones;
 using Sagas.MainModule.Entidades;
+using Sagas.MainModule.ObjetosValor.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,11 @@ namespace Application.MainModule.Servicios.AccesoADatos
             return uow.Repository<PrecioVenta>().Get(x => x.IdEmpresa.Equals(idEmpresa)
                                                          && x.Activo)
                                                          .ToList();
+        }
+        public PrecioVenta BuscarPrecioVentaVigente(short idEmpresa)
+        {
+            return uow.Repository<PrecioVenta>().GetSingle(x => x.IdEmpresa.Equals(idEmpresa)
+                                                         && x.IdPrecioVentaEstatus.Equals(EstatusPrecioVentaEnum.Vigente));
         }
         public PrecioVenta BuscarIdPV(short IdPrecioVenta)
         {
