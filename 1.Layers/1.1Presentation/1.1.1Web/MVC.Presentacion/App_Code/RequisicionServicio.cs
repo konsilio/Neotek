@@ -118,13 +118,19 @@ namespace MVC.Presentacion.App_Code
             newModel.Cantidad = prod.Cantidad;
             return newModel;
         }
+        //public static RequisicionDTO EditarProducto(RequisicionDTO dto, List<RequisicionProductoDTO> Prodcutos, string _tkn)
+        //{
+        //    foreach (var p in Prodcutos)
+        //    {
+        //        p.
+        //    }
+        //}
         public static RequisicionDTO ActivarBorrar(RequisicionDTO model, int id, List<RequisicionProductoDTO> Prodcutos, string _tkn)
         {
             var newModel = model;
             newModel.FechaRequerida = model.FechaRequerida;
             newModel.Productos = Prodcutos.Where(x => !x.IdProducto.Equals(id)).ToList();
-            //newModel.CentrosCostos = CatalogoServicio.BuscarCentrosCosto(_tkn);
-            //newModel.Productos = CatalogoServicio.ListaProductos(_tkn);
+            
             return newModel;
         }
         public static RequisicionProductoDTO CrearProductoNuevo(RequisicionDTO model, string _tkn)

@@ -59,15 +59,15 @@
                                                 }
                                                 else
                                                 {
-                                                    @ViewBag.Empresas                                                  
-                                                }                                               
+                                                    @ViewBag.Empresas
+                                                }
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     @*<label>Número de Requisición:</label>&nbsp;
-                                                    <Label ID="lblIdRequisicion">@Model.NumeroRequisicion</Label>*@
+                                                        <Label ID="lblIdRequisicion">@Model.NumeroRequisicion</Label>*@
                                                 </div>
                                             </div>
                                         </div>
@@ -136,14 +136,14 @@
                                             <div class="col-lg-4">
                                                 <b>Producto:</b>
                                                 <select id="productos" name="IdProducto" class="form-control z-index show-tick" data-live-search="true">
-                                                    <option value="0">No hay productos</option>                                                 
+                                                    <option value="0">No hay productos</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-2">
                                                 <strong>
                                                     <label>Cantidad: <b id="unidadPord"></b> </label>
                                                 </strong>
-                                                @Html.TextBoxFor(m => m.Cantidad, Model.Cantidad.ToString(), new { @class="form-control", @type="number" })                                                
+                                                @Html.TextBoxFor(m => m.Cantidad, Model.Cantidad.ToString(), new { @class = "form-control", @type = "number" })
                                                 @Html.ValidationMessageFor(m => m.Cantidad, "", new { @class = "alert-danger" })
                                             </div>
                                             <div class="col-lg-3">
@@ -172,19 +172,19 @@
                                             </div>
                                         </div>
                                         <br />
-                                        <div class="row clearfix js-sweetalert">
+                                        <div class="row clearfix">
                                             <div class="col-md-8">
                                                 <b>Aplicación:</b>
                                                 <div class="form-group">
-                                                    <input type="text" placeholder="Comentarios..." Class="form-control" name="Aplicacion" />
+                                                     @Html.TextBoxFor(m => m.Aplicacion, new { @class = "form-control"})
+                                                    @*<input type="text" placeholder="Comentarios..." Class="form-control" name="Aplicacion" />*@
                                                 </div>
                                                 @*<asp:Label runat="server" ID="reqApli" CssClass="alert-danger" Visible="false" Text="Campo requerido" />*@
                                             </div>
-                                            <div class="col-md-2 col-md-6">
+                                            <div class="col-md-4">
                                                 <label>&nbsp; </label>
-                                                <div class="form-group">
-                                                    <input type="submit" value="Agregar" formaction="Agregar" class="btn btn-danger btn-simple btn-round btn-sm" />
-                                                    @* <button id="btnAgregar" class="btn btn-danger btn-simple btn-round btn-sm" onclick="location.href='@Url.Action(" Agregar", "Requisicion" )'"></button>*@
+                                                <div class="form-group">                                                  
+                                                        <input type="submit" value="Agregar" formaction="Agregar" class="btn btn-danger btn-simple btn-round btn-sm" />
                                                 </div>
                                             </div>
                                         </div>
@@ -218,10 +218,10 @@
                                                                 <td>@prodReq.Aplicacion</td>
                                                                 <td>@prodReq.CentroCosto</td>
                                                                 <td>
-                                                                    <a ID="lbEdit" href="@Url.Action("Editar", "Requisicion" , new { id=prodReq.IdProducto })">
+                                                                    @*<a ID="lbEdit" href="@Url.Action("Editar", "Requisicion" , new { id=prodReq.IdProducto })">
                                                                         <i class="material-icons">edit</i>
                                                                         <span class="icon-name"></span>
-                                                                    </a>
+                                                                    </a>*@
                                                                     <a ID="lbBorrar" href="@Url.Action("Borrar", "Requisicion" , new { id=prodReq.IdProducto })">
                                                                         <i class="material-icons">delete</i>
                                                                         <span class="icon-name"></span>
@@ -323,5 +323,3 @@
         </div>
     }
 </body>
-
-

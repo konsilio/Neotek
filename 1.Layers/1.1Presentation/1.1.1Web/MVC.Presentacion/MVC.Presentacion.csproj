@@ -265,6 +265,7 @@
     <Compile Include="Controllers\PrecioVentaOtroController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\PuntoVentaController.cs" />
+    <Compile Include="Controllers\RemanenteController.cs" />
     <Compile Include="Controllers\RequisicionController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\Shared\MainController.cs" />
@@ -11525,6 +11526,7 @@
     <Content Include="Views\OrdenCompra\_ProductComplementoPartial.cshtml" />
     <Content Include="Views\Shared\Error404.cshtml" />
     <Content Include="Views\PuntoVenta\AsignarChofer.cshtml" />
+    <Content Include="Views\Remanente\DashBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
