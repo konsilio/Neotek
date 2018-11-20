@@ -434,9 +434,7 @@ namespace Application.MainModule.Servicios.Almacenes
             var almacen = ObtenerAlmacen(idCAlmacenGas);
             var reportes = new AlmacenGasDataAccess().ObtenerReportes();
             int orden = ordenReportes(reportes);
-
-
-
+            
             if (almacen.IdCamioneta !=null && almacen.IdCamioneta>0)
             {
                 var cilindros = new AlmacenGasDataAccess().BuscarTodosCilindros(TokenServicio.ObtenerIdEmpresa());

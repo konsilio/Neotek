@@ -478,6 +478,11 @@ namespace Application.MainModule.Servicios.Ventas
             return Total + TotalDia;
         }
 
+        public static decimal ObtenerKilosVenta(decimal capacidad, decimal cantidad)
+        {
+            return capacidad * cantidad;
+        }
+
         public static short ObtenerConsecutivoOrden()
         {
             return new CajaGeneralDataAccess().BuscarTodos().OrderByDescending(x => x.Orden).FirstOrDefault().Orden;

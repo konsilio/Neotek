@@ -49,7 +49,9 @@ namespace MVC.Presentacion.App_Code
                     string destinationFolderSave = Convertir.GetPhysicalPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]); //1.0
                                                                                                                                       //string destinationFolderSave = Convertir.PhysicalPathToUrlPath(ConfigurationManager.AppSettings["GuardarLogoEmpresa"]);
                                                                                                                                       //C:\\Users\\Muhammad shahid\\Documents\\Visual Studio 2013\\Projects\\WebApplication_MVC1\\WebApplication\\misc\\flowers.jpg
-                                                                                                                                      //Checking file is available to save.  
+                    //orjres.Save(Server.MapPath("~/Content/images/pics" + kapakname));
+                    //orjres.Save(Server.MapPath("~/Content/images/pics/" + kapakname));
+                    //Checking file is available to save.  
                     if (UrlLogotipo180px != null)
                     {
                         string pathBD = Path.Combine(destinationFolder + "/" + Path.GetFileName(UrlLogotipo180px.FileName));
