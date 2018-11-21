@@ -456,18 +456,24 @@ namespace Application.MainModule.Flujos
             if (resp.Exito) return resp;
 
             var cortes = VentaServicio.ObtenerCortes(TokenServicio.ObtenerIdEmpresa());
-            var estacion = AlmacenGasServicio.ObtenerAlmacen(dto.IdCAlmacenGas);
-            var puntoventa = estacion.PuntosVenta.Single(x => x.IdCAlmacenGas.Equals(estacion.IdCAlmacenGas));
-            var entrega = puntoventa.Empresa.Usuario.Single(x => x.EsAdministracionCentral);
-            var deContado = PuntoVentaServicio.ObtenerVentasContado(puntoventa.IdPuntoVenta, dto.Fecha);
-            var credito = PuntoVentaServicio.ObtenerVentasCredito(puntoventa.IdPuntoVenta, dto.Fecha);
+            var estaciones = EstacionCarburacionServicio.ObtenerTodas(TokenServicio.ObtenerIdEmpresa());
+            var estacion = estaciones.Find(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
+            var almacenes = AlmacenGasServicio.ObtenerAlmacenes(TokenServicio.ObtenerIdEmpresa());
+            var almacen = almacenes.Find(x =>x.IdEstacionCarburacion.Value.Equals(dto.IdCAlmacenGas));
+            var puntosVenta = PuntoVentaServicio.ObtenerIdEmp(TokenServicio.ObtenerIdEmpresa());
+            var puntoventa = puntosVenta.Find(x => x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
+            var entrega = puntoventa.OperadorChofer.Usuario;
+            
+            var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, puntoventa,almacen);
 
-            var corte = VentaServicio.Corte(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerIdUsuario(), cortes, estacion);
-            if (corte.Exito)
+           /* if (corte.Exito)
             {
+                var deContado = PuntoVentaServicio.ObtenerVentasContado(puntoventa.IdPuntoVenta, dto.Fecha);
+                var credito = PuntoVentaServicio.ObtenerVentasCredito(puntoventa.IdPuntoVenta, dto.Fecha);
+
                 var corteCajaGeneral = AnticiposCortesAdapter.FromDTO(dto, TokenServicio.ObtenerIdEmpresa(), TokenServicio.ObtenerUsuarioAplicacion(), puntoventa, puntoventa.OperadorChofer, entrega, deContado,credito);
                 return PuntoVentaServicio.InsertMobil(corteCajaGeneral);
-            }
+            }*/
 
             return corte;
         }

@@ -27,15 +27,18 @@ namespace Application.MainModule.Servicios.Mobile
             var idOrden = orden(anticipos);
             
             var puntos = PuntoVentaServicio.ObtenerIdEmp(idEmpresa);
-            var PuntoVenta = puntos.Find(x => x.IdCAlmacenGas.Equals(dto.IdCAlmacenGas));
-            var almacen = AlmacenGasServicio.Obtener(PuntoVenta.IdCAlmacenGas);
-            var estaciones = EstacionCarburacionServicio.ObtenerTodas();
+            var estaciones = EstacionCarburacionServicio.ObtenerTodas(idEmpresa);
+            var estacionVenta = estaciones.Find(x => x.IdEstacionCarburacion.Equals(dto.IdCAlmacenGas));
+            var almacenGas = AlmacenGasServicio.ObtenerAlmacenes(idEmpresa);
+            var almacen = almacenGas.Find(x => x.IdEstacionCarburacion.Equals(estacionVenta.IdEstacionCarburacion));
+            var PuntoVenta = puntos.Find(x =>x.IdCAlmacenGas.Equals(almacen.IdCAlmacenGas));
+            //var almacen = AlmacenGasServicio.Obtener(PuntoVenta.IdCAlmacenGas);
 
             var adapter = AnticiposCortesAdapter.FromDto(dto, idEmpresa, usuario.IdUsuario, PuntoVenta);
 
-            var entrega = PuntoVenta.Empresa.Usuario.Single(x => x.EsAdministracionCentral);
+            var entrega = PuntoVenta.OperadorChofer.Usuario;
             var operador = PuntoVenta.OperadorChofer;
-
+            adapter.IdCAlmacenGas = almacen.IdCAlmacenGas;
             adapter.Orden = (short)idOrden;
             adapter.FechaAplicacion = dto.Fecha;
             adapter.Dia = (byte) dto.Fecha.Day;
@@ -47,9 +50,11 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.DatosProcesados = false;
             adapter.TipoOperacion = "Anticipo";
             adapter.IdTipoOperacion = 1;
-            adapter.PuntoVenta = estacion.Numero;
+            adapter.PuntoVenta = PuntoVenta.UnidadesAlmacen.Numero;
+            adapter.OperadorChofer = operador.Usuario.Nombre + " " + operador.Usuario.Apellido1 + " " + operador.Usuario.Apellido2;
             var anticipo = GasServicio.Anticipo(adapter);
-            if (anticipo.Exito)
+
+            /*if (anticipo.Exito)
             {
                 var deContado = PuntoVentaServicio.ObtenerVentasContado(PuntoVenta.IdPuntoVenta, dto.Fecha);
                 var credito = PuntoVentaServicio.ObtenerVentasCredito(PuntoVenta.IdPuntoVenta, dto.Fecha);
@@ -57,7 +62,8 @@ namespace Application.MainModule.Servicios.Mobile
                 return PuntoVentaServicio.InsertMobil(corteCajaGeneral);
             }
                 
-            return GasServicio.Anticipo(adapter); 
+            */
+            return anticipo;
         }
 
         public static int orden(List<VentaCorteAnticipoEC> anticipos)
@@ -82,14 +88,15 @@ namespace Application.MainModule.Servicios.Mobile
         {
             return GasServicio.ObtenerCortes(idEmpresa);
         }
-        public static RespuestaDto Corte(CorteDto dto, short idEmpresa, int idUsuario,List<VentaCorteAnticipoEC> cortes,UnidadAlmacenGas estacion)
+        public static RespuestaDto Corte(CorteDto dto, short idEmpresa, int idUsuario,List<VentaCorteAnticipoEC> cortes,PuntoVenta puntoVenta,UnidadAlmacenGas almacen)
         {
             var idOrden = orden(cortes);
-            var puntos = PuntoVentaServicio.ObtenerIdEmp(idEmpresa);
-            var PuntoVenta = puntos.Find(x => x.IdCAlmacenGas.Equals(dto.IdCAlmacenGas));
+            //var puntos = PuntoVentaServicio.ObtenerIdEmp(idEmpresa);
+            //var PuntoVenta = puntos.Find(x => x.IdCAlmacenGas.Equals(dto.IdCAlmacenGas));
 
-            var adapter = AnticiposCortesAdapter.FromDto(dto, idEmpresa, idUsuario, PuntoVenta);
+            var adapter = AnticiposCortesAdapter.FromDto(dto, idEmpresa, idUsuario, puntoVenta);
 
+            adapter.IdCAlmacenGas = almacen.IdCAlmacenGas;
             adapter.Orden = (short)idOrden;
             adapter.FechaAplicacion = dto.Fecha;
             adapter.Dia = (byte)dto.Fecha.Day;
@@ -100,8 +107,9 @@ namespace Application.MainModule.Servicios.Mobile
             adapter.DatosProcesados = false;
             adapter.TipoOperacion = "Corte caja";
             adapter.IdTipoOperacion = 2;
-            adapter.PuntoVenta = estacion.Numero;
+            adapter.PuntoVenta = almacen.Numero;
             adapter.FechaAplicacion = dto.Fecha;
+            adapter.OperadorChofer = puntoVenta.OperadorChofer.Usuario.Nombre + "" + puntoVenta.OperadorChofer.Usuario.Apellido1 + puntoVenta.OperadorChofer.Usuario.Apellido2;
             return GasServicio.Corte(adapter);
         }
         public static int ObtenerIdCamioneta(int idUsuario)
