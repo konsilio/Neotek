@@ -5,6 +5,7 @@ import com.example.neotecknewts.sagasapp.Interactor.PuntoVentaGasListaInteractor
 import com.example.neotecknewts.sagasapp.Interactor.PuntoVentaGasListaInteractorImpl;
 import com.example.neotecknewts.sagasapp.Model.DatosPuntoVentaDTO;
 import com.example.neotecknewts.sagasapp.Model.ExistenciasDTO;
+import com.example.neotecknewts.sagasapp.Model.PrecioVentaDTO;
 import com.example.neotecknewts.sagasapp.R;
 
 import java.util.List;
@@ -43,5 +44,18 @@ public class PuntoVentaGasListaPresenterImpl implements PuntoVentaGasListaPresen
         interactor.getListEstacionGas(
                  token,  esGasLP,  esCilindroGas,  esCilindro
         );
+    }
+
+    @Override
+    public void getPrecioVenta(String token) {
+        //view.onShowProgress(R.string.message_cargando);
+        interactor.getPrecioVenta(token);
+    }
+
+    @Override
+    public void onSuccessPrecioVenta(PrecioVentaDTO data) {
+        //view.onHideProgress();
+        view.onSuccessPrecioVenta(data);
+
     }
 }
