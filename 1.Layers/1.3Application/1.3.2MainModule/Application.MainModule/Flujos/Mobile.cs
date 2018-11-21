@@ -493,5 +493,9 @@ namespace Application.MainModule.Flujos
             var cilindros = AlmacenGasServicio.ObtenerCilindros();
             return VentasEstacionesAdapter.ToDTOC(cilindros);          
         }
+        public ClienteDTO BuscarClientePorRFC(string rfc)
+        {
+            return  ClienteAdapter.ToDTO(ClienteServicio.BuscarClientePorRFC(rfc));
+        }
     }
 }

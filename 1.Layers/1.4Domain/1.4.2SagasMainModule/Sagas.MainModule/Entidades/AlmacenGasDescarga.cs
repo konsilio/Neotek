@@ -57,7 +57,7 @@ namespace Sagas.MainModule.Entidades
         public string NombreResponsable { get; set; }
         public Nullable<decimal> PorcenMagnatelOcular { get; set; }
         public Nullable<System.DateTime> FechaEntraGas { get; set; }
-    
+            
         public virtual AlmacenGas AlmacenGasTotal { get; set; }
         public virtual UnidadAlmacenGas UnidadAlmacen { get; set; }
         public virtual TipoMedidorUnidadAlmacenGas MedidorAlamcen { get; set; }

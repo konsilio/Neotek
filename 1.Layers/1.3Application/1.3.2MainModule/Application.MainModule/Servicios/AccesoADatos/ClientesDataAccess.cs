@@ -211,7 +211,16 @@ namespace Application.MainModule.Servicios.AccesoADatos
         }
         public Cliente Buscar(string rfc)
         {
-            return uow.Repository<Cliente>().GetSingle(x => x.Rfc.Equals(rfc));
+            try
+            {
+                return uow.Repository<Cliente>().GetSingle(x => x.Rfc.Equals(rfc));
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
     }
 }
